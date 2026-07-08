@@ -31,6 +31,8 @@ class GroundTruth:
     note_chars_removed: int = 0
     figure_chars_excluded: int = 0
     phrase_chars_removed: int = 0
+    disputed_chars: int = 0
+    disputed_pages: list[int] = field(default_factory=list)
     note_strip_failures: list[str] = field(default_factory=list)
 
     def joined(self) -> str:
@@ -101,6 +103,16 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
 
         if pno in fig_pages:
             gt.figure_chars_excluded += len(norm)
+            gt.pages[pno] = ""
+            continue
+
+        # poppler's OWN garble of the broken-CMap section ('=word=word=' —
+        # spaces decoded as '='): the witnesses disagree, so this page's gt
+        # cannot arbitrate; itemized as engine-disputed
+        if cfg.shifted_cmap_repair and re.search(r"=\w+=\w+=\w+", norm):
+            gt.disputed_chars += len(norm)
+            gt.disputed_pages.append(pno)
+            gt.pages_raw[pno] = norm
             gt.pages[pno] = ""
             continue
 

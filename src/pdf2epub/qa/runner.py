@@ -117,8 +117,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     # engine-disputed pages: the two witnesses disagree on what the text IS
     # (broken source CMaps decode differently per engine) — neither side is
     # ground truth; these pages live in the agent's render-review queue
-    disputed = 0
-    disputed_pages = []
+    disputed = gt.disputed_chars
+    disputed_pages = list(gt.disputed_pages)
     for p in doc.pages:
         if p.engine_agreement is not None and p.engine_agreement < 90 \
                 and gt.pages.get(p.number):
@@ -142,8 +142,13 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     # probes; gt excision misses are gate-2 bookkeeping (the unexcised text
     # stays in the coverage denominator) — informational here
     fails: list[str] = []
+    disputed_set = set(disputed_pages)
+    n_undecidable = 0
     for nid, note in sorted(flow.notes.items()):
         pno = int(nid[1:5])
+        if pno in disputed_set or pno + 1 in disputed_set:
+            n_undecidable += 1  # gt can't read this page; render review covers it
+            continue
         body = normalize(_unsub(" ".join(p.text() for p in note.paragraphs)))
         raw = gt.pages_raw.get(pno, "") + " " + gt.pages_raw.get(pno + 1, "")
         # three probes: dehyphenation/space seams can break any single one
@@ -154,7 +159,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     n_note_items = sum(len(list(d.root.iter(f"{_X}li"))) for d in notes_docs)
     lines = [f"{len(flow.notes)} notes; {n_note_items} endnote items in EPUB; "
              f"{len(fails)} placement failures; "
-             f"{len(gt.note_strip_failures)} gt-excision misses (info, in coverage)"]
+             f"{len(gt.note_strip_failures)} gt-excision misses (info, in coverage); "
+             f"{n_undecidable} on engine-disputed pages (render review)"]
     lines += fails[:8]
     gates.append(("3 footnotes", not fails, lines))
 

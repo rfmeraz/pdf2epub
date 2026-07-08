@@ -46,3 +46,23 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
 - Lessons: contents-page part-headers need drop overrides when they duplicate
   outline entries; gate 8 exempts title/toc-entry/titletext paragraphs (headings
   legitimately mirror running-head text).
+
+## islam-and-buddhism — 2026-07-08
+
+- Source: `Islam and Buddhism.pdf` (InDesign CS3/2010, PDF 1.3, 170 pp). Result:
+  `epubcheck: clean`; QA `Overall: PASS` (coverage 99.78%, 197/197 notes, 168-entry
+  page-list, byte-reproducible).
+- The hard book: zero bookmarks/links (pure printed-TOC source); broken `SecN:`
+  /PageLabels (printed-folio labels with backfill); and a **-0x1D-shifted ToUnicode
+  CMap** in the closing essay — deterministically repaired (266 runs, verified
+  highmap) with poppler's differently-garbled pages (138-145, 67K chars) excluded
+  from coverage as ENGINE-DISPUTED (neither witness can arbitrate; render review
+  covers them — FLAG for human spot-read of the essay section).
+- 36 generated overrides for flush-left subsection heads (typographically identical
+  to body text; identified by exact TOC-title match) + 51 generated join overrides
+  for hyphen-seam paragraph breaks. Gate 6 tolerates the book's own ±1 TOC/print
+  discrepancy (Epilogue). No ebook ISBN -> urn:uuid (FLAG). Cover from p.1 JPEG.
+- Heuristics promoted to code (third book = strong signal): italic-twin pstyle
+  fold for break decisions; role-override implies break; in-run/cross-run
+  lower-only dehyphenation; marker-line gt excision fallback; engine-disputed
+  page exclusion.
