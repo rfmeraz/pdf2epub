@@ -32,7 +32,21 @@ Field notes, verified facts, and lessons. Read before nontrivial changes; keep c
 - **Link annotations**: filter to internal GoTo; URI links exist in the wild (BoK has 4).
 - Engine cross-check: PyMuPDF (primary) vs poppler pdftotext per-page similarity is the
   extraction-confidence signal. Engines witness, never co-author: disagreement flags a page
-  for render review; nothing auto-merges.
+  for render review; nothing auto-merges. The poppler witness MUST be cropped to the trim
+  box (`PdfDoc.trim_crop_box`, MediaBox top-left coords) — poppler reads the MediaBox, so
+  uncropped it sees slug lines on otherwise-empty pages and scores them 0 vs MuPDF's
+  correctly-empty CropBox view.
+- **Internal TOC links are LINK_NAMED (kind 4), not LINK_GOTO** in all four test books
+  (InDesign named destinations); PyMuPDF reports the target as a 1-BASED page-number
+  STRING (verified vs pypdf). Handle both kinds.
+- **Two-column back matter (BoK index pp. ~322–337) interleaves under y-sorted line
+  order** — the agreement score flags exactly those pages. The extract-stage baseline
+  merge (needed to reunite heading+folio fragments) also fuses same-baseline runs across
+  columns; runs keep their bboxes, so a column-aware flow pass can re-split at the column
+  gap for pages the agent marks as columned. Until that exists, multi-column pages
+  escalate per the skill.
+- PyMuPDF's page space is CropBox-anchored: slug text outside the CropBox never appears
+  in get_text at all (poppler differs). The TrimBox clip only fires when trim ⊂ crop.
 
 ## Verification baselines
 
