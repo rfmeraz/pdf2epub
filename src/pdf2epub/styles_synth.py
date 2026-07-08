@@ -25,8 +25,13 @@ def build_catalog(ctx) -> dict[str, SynthStyle]:
             st.point_size = float(size)
         except ValueError:
             family = base
-        if "italic" in family.lower():
-            st.font_style = "Italic"
+        # NO font-style from the family name: run-level italics already carry
+        # <i> (MuPDF italic flags cover 100% of italic-family chars on the
+        # test corpus), and a class-level italic wrongly sweeps the roman
+        # runs of MIXED paragraphs along (BoK p.xx: roman narration around an
+        # italic Qurʾān quote rendered all-italic). QA gate 15 (emphasis
+        # conservation) guards the inverse failure — an italic font whose
+        # runs are NOT flagged would show up as lost italics.
         flags = cfg.charstyles.get(family)
         if flags and flags.smallcaps:
             st.capitalization = "SmallCaps"

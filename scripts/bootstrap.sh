@@ -6,7 +6,8 @@ PY="${HOME}/pyenv/bin/python"
 PIP="${HOME}/pyenv/bin/pip"
 
 echo "== python deps (into ~/pyenv) =="
-"$PIP" install --quiet PyMuPDF lxml PyYAML rapidfuzz Pillow fonttools pytest
+"$PIP" install --quiet PyMuPDF lxml PyYAML rapidfuzz Pillow fonttools pytest \
+  websocket-client
 "$PIP" install --quiet -e "$REPO_DIR"
 
 echo "== epubcheck (own vendored copy) =="
@@ -42,5 +43,9 @@ echo "== poppler CLI (QA ground truth + engine cross-check) =="
 for tool in pdftotext pdfinfo pdfimages; do
   command -v "$tool" >/dev/null || { echo "MISSING: $tool (dnf install poppler-utils)"; exit 1; }
 done
+
+echo "== chrome (qa --visual EPUB-slice renders; warn-only) =="
+command -v google-chrome >/dev/null || command -v chromium >/dev/null || \
+  echo "NOTE: no chrome/chromium — 'pdf2epub qa --visual' will skip EPUB-side renders (PDF panels + manifest still produced)"
 
 echo "bootstrap OK"

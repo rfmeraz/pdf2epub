@@ -98,3 +98,24 @@ verified against the print render). Body-size centered clusters are now
 centered PARAGRAPHS; MR's 13pt aphorism quotes likewise; nbsp+space visible
 gaps before honorific readings collapsed (0 remaining in all books). All
 four: epubcheck clean, QA Overall: PASS, tests green.
+
+### 2026-07-08 addendum — typographic-fidelity gates + two shipped defects fixed
+
+QA grew gates 13-17 (typography: size fidelity, centered witness, emphasis,
+heading census, per-page signature diff — 13/14/16/17 gating) and gate 18
+(`qa --visual`: sampled print-vs-EPUB contact sheets + PUA glyph pairs for
+agent grading). Validated against the pre-fix EPUBs at 3cfca48: gates 14/16/17
+fire on all four old builds; current builds silent (matrix in NOTES.md).
+
+The new gates found two REAL defects in shipped, Overall:PASS books; all four
+rebuilt after fixing:
+- mixed-emphasis paragraphs with an italic-family pstyle rendered ENTIRELY
+  italic (class font-style swept the roman runs along; BoK Qurʾān-quote
+  paragraph p.xx, MR/I&B similar) — styles_synth no longer emits font-style
+  from the family name; run-level <i> markup carries italics.
+- I&B shipped a garbled h3 '%LEOLRJUDSK\' (= 'Bibliography', shifted CMap)
+  in body + nav on the bibliography pages — single-word shifted lines carry
+  no space marker; is_shifted_run gained a word-shape detector and the
+  heading now reads 'Bibliography'.
+
+All four: epubcheck clean, QA Overall: PASS with promoted gates, tests green.

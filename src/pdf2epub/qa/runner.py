@@ -1,4 +1,7 @@
-"""QA gate suite: 12 gates, gates 1-10 must pass; 11-12 informational.
+"""QA gate suite: 18 gates. Gates 1-10 must pass; 11-12 informational;
+13-17 (typographic fidelity) report would-PASS/would-FAIL and gate once
+promoted via typography.GATING; 18 (--visual) emits agent-graded contact
+sheets and is always informational.
 
 Ground truth and expectations are re-derived deterministically from
 (source PDF, book.yaml) — the same inputs the build used — via an
@@ -45,7 +48,15 @@ def _doc_text(d) -> str:
     return " ".join(parts) if parts else " ".join(body.itertext())
 
 
-def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
+def _read_css(ep) -> str:
+    for item in ep.manifest.values():
+        if item.get("media_type") == "text/css":
+            return ep.read(item["href"]).decode("utf-8")
+    return ""
+
+
+def run_qa(epub: Path, config: Path, reference: Path | None = None,
+           visual: bool = False, visual_pages: int = 14) -> int:
     cfg = load_config(config)
     quiet = lambda m: None  # noqa: E731
     gates: list[tuple[str, bool | None, list[str]]] = []
@@ -143,12 +154,12 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     # stays in the coverage denominator) — informational here
     fails: list[str] = []
     disputed_set = set(disputed_pages)
-    n_undecidable = 0
+    undecidable_note_pages: list[int] = []  # visual QA samples these
     for nid, note in sorted(flow.notes.items()):
         pno = int(nid[1:5])
         if pno in disputed_set or pno + 1 in disputed_set:
-            n_undecidable += 1  # gt can't read this page; render review covers it
-            continue
+            undecidable_note_pages.append(pno)  # gt can't read this page;
+            continue                            # render review covers it
         body = normalize(_unsub(" ".join(p.text() for p in note.paragraphs)))
         raw = gt.pages_raw.get(pno, "") + " " + gt.pages_raw.get(pno + 1, "")
         # three probes: dehyphenation/space seams can break any single one
@@ -160,7 +171,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     lines = [f"{len(flow.notes)} notes; {n_note_items} endnote items in EPUB; "
              f"{len(fails)} placement failures; "
              f"{len(gt.note_strip_failures)} gt-excision misses (info, in coverage); "
-             f"{n_undecidable} on engine-disputed pages (render review)"]
+             f"{len(undecidable_note_pages)} on engine-disputed pages "
+             "(render review)"]
     lines += fails[:8]
     gates.append(("3 footnotes", not fails, lines))
 
@@ -241,6 +253,26 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
         gates.append(("12 reference scorecard (info)", None,
                       [f"{r.metric}: ours={r.ours} ref={r.reference} [{r.verdict}]"
                        for r in rows]))
+
+    # ---- gates 13-17: typographic fidelity (informational until promoted
+    # via typography.GATING after the regression-corpus matrix is clean)
+    from . import typography
+
+    for g in typography.run_typography_checks(
+            doc=doc, res=res, flow=flow, cfg=cfg, labels=labels,
+            in_flow=in_flow, body_docs=body_docs,
+            css_text=_read_css(ep), source_entries=source_entries):
+        gates.append((g.name, (g.ok if g.name in typography.GATING else None),
+                      g.lines))
+
+    # ---- gate 18 (info, --visual): sampled contact sheets for agent grading
+    if visual:
+        from .visual import run_visual
+
+        vres = run_visual(epub, cfg, doc, flow, res, labels, disputed_pages,
+                          undecidable_note_pages, epub.parent / "qa_visual",
+                          cap=visual_pages, say=quiet)
+        gates.append(("18 visual sample (info)", None, vres.gate_lines))
 
     # ---- report
     overall = all(ok for _, ok, _ in gates if ok is not None)

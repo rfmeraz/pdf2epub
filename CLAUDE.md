@@ -33,7 +33,7 @@ only the skill's hard-stop list; everything else proceeds with safe defaults + h
 ```bash
 ~/pyenv/bin/pdf2epub init  books/<slug>/package --workspace books/<slug>
 ~/pyenv/bin/pdf2epub build books/<slug>/book.yaml [--upto <stage>] [--dump-ir]
-~/pyenv/bin/pdf2epub qa    books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml [--reference <epub>]
+~/pyenv/bin/pdf2epub qa    books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml [--reference <epub>] [--visual]
 ~/pyenv/bin/pytest -q                 # unit tests
 bash scripts/bootstrap.sh             # one-time machine setup (pip, epubcheck jar, fonts)
 ```
@@ -55,8 +55,11 @@ typed FlowDoc IR (furniture strip, footnote split, paragraph join with dehyphena
 drop-cap reattachment, textfix, printed-TOC rebuild, exact PageAnchors). `core/` is the
 back-end forked from idml2epub: role application, CJK lang tagging, XHTML emitter, synthetic
 CSS, nav, OFL font subsetting, deterministic packager, and the EPUB-generic QA gates.
-`qa/` runs 12 gates; ground truth is poppler-extracted, trim-cropped, footnote-stripped page
-text through the same textfix/normalize chain the flow used.
+`qa/` runs 18 gates; text ground truth is poppler-extracted, trim-cropped, footnote-stripped
+page text through the same textfix/normalize chain the flow used; gates 13-17 grade
+typographic fidelity (shipped CSS+markup vs raw extract geometry, sliced per source page via
+the pagebreak anchors), and `--visual` (gate 18) emits sampled print-vs-EPUB contact sheets
+plus PUA glyph pairs into `build/qa_visual/` for agent grading.
 
 ## Conventions and constraints
 

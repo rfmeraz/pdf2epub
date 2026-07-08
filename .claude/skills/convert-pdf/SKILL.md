@@ -72,15 +72,22 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
   9-10pt block quotes near footnote regions → check gate 3 counts; folio
   offsets → `label_overrides`.
 
-## Step 4 — Visual QA (you are the proofreader)
+## Step 4 — Visual QA (you are the proofreader; the tool builds your desk)
 
-- Render 6-10 EPUB spreads (`ebook-convert <epub> out.pdf` then render pages,
-  or open files directly) and compare side-by-side with the source renders:
-  heading hierarchy, paragraph boundaries, footnote links, special glyphs,
-  small caps, drop caps.
-- Targeted probes: one honorific renders correctly; one hyphen-joined word
-  ('tradi-/tion' → 'tradition'); one drop-cap paragraph; tap-test three deep
-  TOC entries; page-list spot-check against two known printed pages.
+- Run `~/pyenv/bin/pdf2epub qa <epub> --config <book.yaml> --visual`. Gate 18
+  samples 10-20 pages (every pstyle cluster, drop caps, PUA glyphs, figures,
+  disputed pages, seeded-random) and writes `build/qa_visual/`: side-by-side
+  contact sheets (print LEFT, EPUB slice RIGHT), PUA glyph crop pairs, figure
+  dHash verdicts, and `manifest.md` — your grading sheet.
+- Read `build/qa_visual/manifest.md`, then Read EVERY `sheets/p####.png` and
+  grade each checklist item against the print panel (content may start/end
+  mid-paragraph — grade typography and presence, not pagination). Read every
+  `glyphs/u*.png` pair (source glyph vs substituted reading). Any figure
+  `review` verdict: open its pair image.
+- A failed checklist item is stop-the-line, same as a gate-2 missing segment:
+  fix via config or a flow.override, rebuild, re-run.
+- Manual probes the tool cannot do: tap-test three deep TOC entries in a
+  reader; page-list spot-check against two known printed pages.
 
 ## Step 5 — Ledger, commit, handoff
 

@@ -132,6 +132,41 @@ def test_anchor_per_page_monotone(tmp_path):
     assert [a.ordinal for a in anchors] == [1, 2]
 
 
+def test_para_lines_provenance(tmp_path):
+    # every kept line of a joined paragraph lands in res.para_lines under the
+    # paragraph's src key, in order — including cross-page continuations
+    pages = [_page(1, [
+        _line("First paragraph line one", 100),
+        _line("continues here and then", 113.5),
+        _line("spills toward the page end", 127),
+    ]), _page(2, [
+        _line("finishing on the next page.", 100),
+        _line("Second paragraph starts indented", 113.5, x0=90.0),
+    ])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    paras = _paras(res.flow)
+    assert len(paras) == 2
+    key0 = (paras[0].src.story_id, paras[0].src.psr_index)
+    key1 = (paras[1].src.story_id, paras[1].src.psr_index)
+    assert res.para_lines[key0] == [(1, 0), (1, 1), (1, 2), (2, 0)]
+    assert res.para_lines[key1] == [(2, 1)]
+    # every flow paragraph has provenance
+    assert {(p.src.story_id, p.src.psr_index) for p in paras} <= set(res.para_lines)
+
+
+def test_is_shifted_run_wordshape():
+    from pdf2epub.textfix import is_shifted_run, repair_shifted_cmap
+
+    assert is_shifted_run("WKH\x03ERRN")            # control marker (space)
+    assert is_shifted_run("%LEOLRJUDSK\\")          # marker-less single word
+    assert repair_shifted_cmap("%LEOLRJUDSK\\", {})[0] == "Bibliography"
+    # real text must never shape-match: capitals shift to backtick-range
+    # junk, digits to capitals, lowercase is outside the shifted range
+    for real in ("BIBLIOGRAPHY", "COPYRIGHT", "2004", "$40,50%", "Fig.7",
+                 "plain text", "NNW-by-W"):
+        assert not is_shifted_run(real), real
+
+
 def test_textfix_functions():
     assert expand_ligatures("ﬁnal ﬂow")[0] == "final flow"
     t, n = restore_spaces('say,"If I went.Then')

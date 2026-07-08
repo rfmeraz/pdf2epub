@@ -57,8 +57,22 @@ _SHIFT_MARKERS = set("\x01\x02\x03\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17"
 _CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 
 
+_SHIFTED_WORD_RE = re.compile(r"[\x24-\x5f]{4,}")
+
+
 def is_shifted_run(text: str) -> bool:
-    return any(c in _SHIFT_MARKERS for c in text)
+    if any(c in _SHIFT_MARKERS for c in text):
+        return True
+    # single-WORD shifted lines carry no \x03 space marker ('%LEOLRJUDSK\' =
+    # 'Bibliography', an I&B heading that shipped garbled): detect by shape —
+    # the whole line sits in the shifted-letter range and un-shifting yields
+    # a real word (leading letter, lowercase tail). Real text can't do this:
+    # true capitals shift to '`'-range junk, digits to capitals.
+    t = text.strip()
+    if _SHIFTED_WORD_RE.fullmatch(t):
+        shifted = "".join(chr(ord(c) + 0x1D) for c in t)
+        return bool(re.fullmatch(r"[A-Za-z][a-z]+", shifted))
+    return False
 
 
 def repair_shifted_cmap(text: str, highmap: dict[str, str]) -> tuple[str, int]:

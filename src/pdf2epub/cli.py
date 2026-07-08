@@ -39,6 +39,12 @@ def main(argv: list[str] | None = None) -> int:
     p_qa.add_argument("--config", type=Path, required=True, help="Path to book.yaml")
     p_qa.add_argument("--reference", type=Path,
                       help="Reference EPUB for the comparison scorecard")
+    p_qa.add_argument("--visual", action="store_true",
+                      help="Gate 18: sampled print-vs-EPUB contact sheets + "
+                           "glyph/figure pixel checks into build/qa_visual/ "
+                           "(informational, agent-graded)")
+    p_qa.add_argument("--visual-pages", type=int, default=14, metavar="N",
+                      help="Visual sample size target (clamped 6..24)")
 
     args = parser.parse_args(argv)
 
@@ -58,7 +64,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "qa":
         from .qa.runner import run_qa
 
-        return run_qa(args.epub, args.config, reference=args.reference)
+        return run_qa(args.epub, args.config, reference=args.reference,
+                      visual=args.visual, visual_pages=args.visual_pages)
     return 2
 
 

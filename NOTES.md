@@ -120,3 +120,65 @@ and put it in the nav). Fixes promoted to code + config doctrine:
 - **Standard post-build audit**: scan emitted h1–h3 for sentence-like text
   (>55 chars ending in punctuation). It found every false-heading class the
   user's screenshot pointed at, plus one more (MR aphorism quotes).
+
+## Typographic fidelity QA — gates 13-18 (2026-07-08)
+
+Design record for the five deterministic typography gates + the visual
+sampler; regression baselines below are the acceptance contract.
+
+- **Architecture**: EPUB side reads the SHIPPED artifact (css/styles.css via
+  core/qa_cssresolve, markup sliced per source page via core/qa_pageslice);
+  PDF side reads raw extract-IR geometry through FlowResult.para_lines
+  provenance. Anchor pairing is ORDINAL (k-th pagebreak == k-th in-flow page)
+  — folio labels collide across roman/arabic; count mismatch degrades every
+  check to one info line (fail-safe, never false-fires).
+- **Centering witness ≠ line_pstyle** (that was the buggy rule): block-level,
+  one-directional (verifies claims only), stop-veto + midpoint-agreement.
+  Neutrality means flush at BOTH edges (≤6pt) — width-based neutrality would
+  have exonerated BoK p.206 (91%-wide line starting at the indent). Accept
+  region ⊇ current line_pstyle's /center region for col_w ≥ 180pt.
+- **Gate 17 compares structure only (size bucket + class-centering)**:
+  per-paragraph italic FRACTIONS are irreducibly noisy across witnesses (PUA
+  readings without lang tags dilute one denominator; I&B bibliography ~50%,
+  BoK Qurʾān quotes ~0.75 knife-edge every threshold). Graded emphasis is
+  gate 15's job (permanently informational; would-FAIL at ≥2 page findings
+  or book |Δfrac| > 0.03).
+- **Line matcher hygiene** (gates 14/16): exclude the flow's own stripped
+  furniture (a heading's running-head echo on the NEXT page fuses with the
+  folio and matches its text); tiny blocks (<8 chars) match exact-only
+  (partial_ratio aligns the SHORTER side — any line containing '1' scores
+  100 vs a chapter numeral); fuzzy requires the line to fit INSIDE the block
+  (+12 chars slack); space-insensitive matching for MR's prepress-lost
+  spaces (unmatched dropped 514→239); duplicate-instance fallback (MR p.70:
+  same aphorism printed as a left verse line AND a centered head — any
+  single full-coverage centered instance sustains the claim).
+- **TRUE POSITIVES the gates found in shipped, Overall:PASS books** (both
+  fixed + rebuilt, all four books): (1) class-level `font-style: italic` from
+  italic-family pstyles swept the roman runs of MIXED paragraphs along (BoK
+  p.xx Qurʾān-quote paragraph rendered all-italic; MR/I&B too) — styles_synth
+  no longer emits font-style from the family name; run-level <i> covers 100%
+  of italic-family chars on the corpus (verified against extract IRs), and
+  test_styles_synth pins the rule. (2) I&B shipped a GARBLED h3
+  '%LEOLRJUDSK\' (= 'Bibliography', -0x1D shifted CMap) into body + nav —
+  single-WORD shifted lines carry no \x03 space marker, so is_shifted_run
+  gained a word-shape detector (whole line in the shifted range AND
+  un-shifting yields a real word; real caps/digits shift to junk, so
+  precision holds — test_flow covers both directions).
+- **Regression matrix (acceptance contract, final code)**: pre-fix EPUBs at
+  3cfca48 → gate 14 fires 42/27/68/87 (BoK/HU/I&B/MR), gate 16 fires 56+9 /
+  29+2 / 69+33 / 149+38 (suspects + h3 audit), gate 17 fires 43/16/39/65
+  pages, gate 15 advises on the 3 books with italic clusters. Current
+  builds: all five gates SILENT on all four books. GATING = {13, 14, 16, 17}
+  flipped on that evidence; any future threshold tuning must keep every
+  expected-FIRE cell firing.
+- **Visual QA (gate 18, `qa --visual`)**: CDP over system google-chrome
+  (websocket-client; PUT /json/new since Chrome 111;
+  --allow-file-access-from-files for file:// css/font subresources;
+  Page.captureScreenshot captureBeyondViewport + clip does arbitrary-height
+  slices with no scrolling; document.fonts.ready before offsets). Chrome
+  launch is ~0.2s here — cheap enough to run per book. Sampling is
+  phenomenon-first (every pstyle cluster, rarest first; PUA/dropcap/figure/
+  disputed firsts; ≥3 seeded-random from sha256) — errors are systematic per
+  cluster, so one sample per phenomenon beats volume. dHash hand-rolled
+  (10 lines) instead of an imagehash dep. Pillow can't shape multi-char
+  Arabic without libraqm — glyph pairs note 'shaping approximate'.

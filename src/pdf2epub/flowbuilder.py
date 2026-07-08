@@ -69,6 +69,11 @@ class FlowResult:
     # ground truth excises exactly these (template sets diverge between the
     # engines for short-lived heads)
     furniture_texts: dict[int, list[str]] = field(default_factory=dict)
+    # (story_id, psr_index) -> RAW (page, line idx) of every line the paragraph
+    # consumed — Paragraph.src keeps only the first line; QA re-derives
+    # per-paragraph geometry (sizes, insets, emphasis) from the extract IR
+    para_lines: dict[tuple[str, int], list[tuple[int, int]]] = \
+        field(default_factory=dict)
 
 
 @dataclass(slots=True)
@@ -388,7 +393,9 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                                       src=SourceRef(f"p{L.page:04d}", L.idx))
                 open_is_body = (L.ps == body_ps)
             _append_line(open_para, L, cfg, doc, counts, glue=prev_dropcap)
-            para_last_page[(open_para.src.story_id, open_para.src.psr_index)] = L.page
+            key = (open_para.src.story_id, open_para.src.psr_index)
+            para_last_page[key] = L.page
+            res.para_lines.setdefault(key, []).append((L.page, L.idx))
             prev_dropcap = is_dropcap
             if act and act.startswith("role:"):
                 res.role_overrides_by_line[(L.page, L.idx)] = act.split(":", 1)[1]
