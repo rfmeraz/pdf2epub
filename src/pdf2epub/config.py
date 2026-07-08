@@ -1,0 +1,425 @@
+"""Per-book configuration (book.yaml): metadata + all per-book judgment points.
+
+The schema records the JP-P1..P8 judgments the conversion agent makes; a build
+is a pure function of (source PDF, this file). Unknown keys are ERRORS — a
+typo'd judgment silently ignored is worse than a failed build.
+
+Duck-type contract: the forked core/ modules read these attributes off cfg:
+title, subtitle, creators, publisher, language, additional_languages,
+isbn_epub, isbn_print, date, cover, accessibility_summary, slug, include_ncx,
+split_at_roles, warn_over_files, toc_handling, strip_toc_page_numbers,
+fonts_subset, body_style (alias of styles.body_pstyle), build_dir,
+resolve_workspace().
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from pathlib import Path
+
+import yaml
+
+from .core.roles import StyleRule
+
+
+class ConfigError(Exception):
+    pass
+
+
+@dataclass(slots=True)
+class PageRange:
+    first: int
+    last: int
+
+    def __contains__(self, page: int) -> bool:
+        return self.first <= page <= self.last
+
+
+@dataclass(slots=True)
+class RoleOverride:
+    page: int
+    role: str
+    class_: str | None = None
+
+
+@dataclass(slots=True)
+class FlowOverride:
+    page: int
+    line: int  # RAW extraction line index within the page (see ir/extract.json)
+    action: str  # join | break | drop | keep | role:<role>
+    note: str = ""
+
+
+@dataclass(slots=True)
+class CharStyleFlags:
+    smallcaps: bool = False
+    symbol: bool = False
+
+
+@dataclass(slots=True)
+class PuaRule:
+    action: str  # char | drop
+    char: str | None = None
+    lang: str | None = None
+    note: str = ""
+
+
+@dataclass(slots=True)
+class FontEmbed:
+    family: str
+    file: str
+    style: str = "normal"  # normal | italic
+    script: str = "latin"  # latin | cjk (cjk drives the :lang() CSS stack)
+    lang: str | None = None
+
+
+@dataclass(slots=True)
+class FigurePages:
+    pages: list[int]
+    alt_template: str = "Image of page {label}"
+    lang: str | None = None
+
+
+@dataclass(slots=True)
+class CoverRender:
+    page: int
+    box: str = "trim"  # trim | media
+    dpi: int = 300
+
+
+@dataclass(slots=True)
+class PdfBookConfig:
+    path: Path  # config file location; relative paths resolve against its parent
+
+    # source
+    source_folder: Path = Path()
+    pdf: str = ""
+    sha256: str = ""  # pinned by init; build refuses a different file
+
+    # metadata (JP-P5) — publisher has NO default: generic tool
+    title: str = ""
+    subtitle: str | None = None
+    creators: list[dict] = field(default_factory=list)
+    publisher: str = ""
+    language: str = "en"
+    additional_languages: list[str] = field(default_factory=list)
+    isbn_epub: str | None = None
+    isbn_print: str | None = None
+    date: str | None = None
+    cover: str | None = None            # packaged image path (workspace-relative)
+    cover_render: CoverRender | None = None
+    cover_synthesize: bool = False      # deterministic typographic cover fallback
+    accessibility_summary: str = ""
+
+    # pages (JP-P2)
+    pages_cover: list[int] = field(default_factory=list)
+    pages_front: PageRange | None = None
+    pages_body: PageRange | None = None
+    pages_back: PageRange | None = None
+    pages_exclude: list[int] = field(default_factory=list)
+    label_source: str = "pdf-page-labels"  # pdf-page-labels | printed-folios | synthetic
+    label_overrides: dict[int, str] = field(default_factory=dict)
+    role_overrides: list[RoleOverride] = field(default_factory=list)
+
+    # furniture (JP-P2)
+    top_band: float = 0.0      # PDF points from trim top; 0 = analyzer default
+    bottom_band: float = 0.0   # PDF points from trim bottom
+    repeat_min_pages: int = 3
+    furniture_extra: list[str] = field(default_factory=list)
+    furniture_keep: list[str] = field(default_factory=list)
+
+    # styles (JP-P1)
+    body_pstyle: str = ""
+    pstyle_map: dict[str, StyleRule] = field(default_factory=dict)
+    charstyles: dict[str, CharStyleFlags] = field(default_factory=dict)
+    unmapped_role: str = "p"
+    fail_on_unmapped: bool = False
+
+    # flow joining knobs
+    indent_threshold: float = 9.0   # pt of first-line indent that starts a paragraph
+    gap_factor: float = 1.6         # vgap >= factor x median leading = block break
+    dehyphenate: str = "lower-only"  # lower-only | off
+    restore_spaces: bool = False
+    join_center_lines: bool = True
+    reattach_dropcaps: bool = True
+    flow_overrides: list[FlowOverride] = field(default_factory=list)
+
+    # footnotes (JP-P4)
+    footnote_policy: str = "none"   # none | markers
+    footnote_marker: str = "digits"  # digits | asterisk
+    footnote_region_max_size: float = 0.0  # pt; 0 = body size - 1.5
+
+    # toc (JP-P3)
+    toc_source: str = "outline"     # outline | printed | links
+    toc_printed_pages: list[int] = field(default_factory=list)
+    toc_handling: str = "rebuild"   # rebuild | drop (the in-body contents page)
+    strip_toc_page_numbers: bool = True
+    nav_depth: int = 2
+
+    # glyphs (JP-P6)
+    pua_map: dict[str, PuaRule] = field(default_factory=dict)
+    fail_on_unmapped_pua: bool = False
+
+    # fonts (JP-P7)
+    fonts_embed: list[FontEmbed] = field(default_factory=list)
+    fonts_subset: bool = True
+
+    # languages (JP-P8)
+    cjk_han_only: str = "zh"
+    lang_overrides: list[dict] = field(default_factory=list)
+
+    # split
+    split_at_roles: list[str] = field(default_factory=lambda: ["h1"])
+    warn_over_files: int = 90
+
+    # images (JP-P4b)
+    raster_dpi: int = 300
+    max_pixels: int = 1600
+    image_alt: dict[str, str] = field(default_factory=dict)
+    decorative: list[str] = field(default_factory=list)
+    figure_pages: list[FigurePages] = field(default_factory=list)
+
+    # output
+    slug: str = "book"
+    include_ncx: bool = True
+
+    # ------------------------------------------------------------------
+
+    @property
+    def body_style(self) -> str:
+        """Alias for the forked emit_css, which reads cfg.body_style."""
+        return self.body_pstyle
+
+    @property
+    def workspace(self) -> Path:
+        return self.path.parent
+
+    @property
+    def build_dir(self) -> Path:
+        return self.workspace / "build"
+
+    @property
+    def analysis_dir(self) -> Path:
+        return self.workspace / "analysis"
+
+    def pdf_path(self) -> Path:
+        p = Path(self.pdf)
+        return p if p.is_absolute() else self.source_folder / p
+
+    def resolve_workspace(self, name: str) -> Path:
+        p = Path(name)
+        return p if p.is_absolute() else self.workspace / p
+
+    def in_flow_pages(self, n_pages: int) -> list[int]:
+        skip = set(self.pages_cover) | set(self.pages_exclude)
+        return [p for p in range(1, n_pages + 1) if p not in skip]
+
+
+def _check_keys(section: str, data: dict, allowed: set[str]) -> None:
+    unknown = set(data) - allowed
+    if unknown:
+        raise ConfigError(f"unknown key(s) in {section}: {', '.join(sorted(unknown))}")
+
+
+def _page_range(section: str, data) -> PageRange | None:
+    if data is None:
+        return None
+    _check_keys(section, data, {"first", "last"})
+    return PageRange(first=int(data["first"]), last=int(data["last"]))
+
+
+def load_config(path: Path) -> PdfBookConfig:
+    path = path.expanduser().resolve()
+    data = yaml.safe_load(path.read_text()) or {}
+    _check_keys("book.yaml", data, {
+        "source", "metadata", "pages", "furniture", "styles", "flow",
+        "footnotes", "toc", "glyphs", "fonts", "languages", "split",
+        "images", "output",
+    })
+    cfg = PdfBookConfig(path=path)
+
+    src = data.get("source", {})
+    _check_keys("source", src, {"folder", "pdf", "sha256"})
+    folder = src.get("folder")
+    if not folder:
+        raise ConfigError("source.folder is required")
+    cfg.source_folder = Path(folder).expanduser()
+    if not cfg.source_folder.is_absolute():
+        # relative to the config file, so in-repo packages travel with a clone
+        cfg.source_folder = (path.parent / cfg.source_folder).resolve()
+    cfg.pdf = src.get("pdf") or ""
+    if not cfg.pdf:
+        raise ConfigError("source.pdf is required")
+    cfg.sha256 = src.get("sha256", "")
+
+    md = data.get("metadata", {})
+    _check_keys("metadata", md, {
+        "title", "subtitle", "creators", "publisher", "language",
+        "additional_languages", "isbn_epub", "isbn_print", "date", "cover",
+        "cover_render", "cover_synthesize", "accessibility_summary",
+    })
+    cfg.title = md.get("title", "")
+    cfg.subtitle = md.get("subtitle")
+    cfg.creators = md.get("creators", []) or []
+    cfg.publisher = md.get("publisher", "") or ""
+    cfg.language = md.get("language", cfg.language)
+    cfg.additional_languages = md.get("additional_languages", []) or []
+    cfg.isbn_epub = md.get("isbn_epub") or None
+    cfg.isbn_print = md.get("isbn_print") or None
+    cfg.date = str(md.get("date")) if md.get("date") is not None else None
+    cfg.cover = md.get("cover")
+    cr = md.get("cover_render")
+    if cr:
+        _check_keys("metadata.cover_render", cr, {"page", "box", "dpi"})
+        cfg.cover_render = CoverRender(page=int(cr["page"]),
+                                       box=cr.get("box", "trim"),
+                                       dpi=int(cr.get("dpi", 300)))
+    cfg.cover_synthesize = bool(md.get("cover_synthesize", False))
+    cfg.accessibility_summary = md.get("accessibility_summary", "")
+
+    pg = data.get("pages", {})
+    _check_keys("pages", pg, {
+        "cover", "front", "body", "back", "exclude", "label_source",
+        "label_overrides", "role_overrides",
+    })
+    cfg.pages_cover = list(pg.get("cover", []) or [])
+    cfg.pages_front = _page_range("pages.front", pg.get("front"))
+    cfg.pages_body = _page_range("pages.body", pg.get("body"))
+    cfg.pages_back = _page_range("pages.back", pg.get("back"))
+    cfg.pages_exclude = list(pg.get("exclude", []) or [])
+    cfg.label_source = pg.get("label_source", cfg.label_source)
+    if cfg.label_source not in ("pdf-page-labels", "printed-folios", "synthetic"):
+        raise ConfigError(f"pages.label_source invalid: {cfg.label_source}")
+    cfg.label_overrides = {int(k): str(v) for k, v in (pg.get("label_overrides") or {}).items()}
+    for ro in pg.get("role_overrides", []) or []:
+        _check_keys("pages.role_overrides[]", ro, {"page", "role", "class"})
+        cfg.role_overrides.append(RoleOverride(page=int(ro["page"]), role=ro["role"],
+                                               class_=ro.get("class")))
+
+    fu = data.get("furniture", {})
+    _check_keys("furniture", fu, {"top_band", "bottom_band", "repeat_min_pages",
+                                  "extra", "keep"})
+    cfg.top_band = float(fu.get("top_band", 0.0))
+    cfg.bottom_band = float(fu.get("bottom_band", 0.0))
+    cfg.repeat_min_pages = int(fu.get("repeat_min_pages", cfg.repeat_min_pages))
+    cfg.furniture_extra = list(fu.get("extra", []) or [])
+    cfg.furniture_keep = list(fu.get("keep", []) or [])
+
+    st = data.get("styles", {})
+    _check_keys("styles", st, {"body_pstyle", "pstyle_map", "charstyles",
+                               "unmapped_role", "fail_on_unmapped"})
+    cfg.body_pstyle = st.get("body_pstyle", "")
+    for name, rule in (st.get("pstyle_map") or {}).items():
+        if isinstance(rule, str):
+            cfg.pstyle_map[name] = StyleRule(role=rule)
+        else:
+            _check_keys(f"styles.pstyle_map[{name}]", rule, {"role", "class"})
+            cfg.pstyle_map[name] = StyleRule(role=rule["role"], class_=rule.get("class"))
+    for fam, flags in (st.get("charstyles") or {}).items():
+        _check_keys(f"styles.charstyles[{fam}]", flags, {"smallcaps", "symbol"})
+        cfg.charstyles[fam] = CharStyleFlags(smallcaps=bool(flags.get("smallcaps", False)),
+                                             symbol=bool(flags.get("symbol", False)))
+    cfg.unmapped_role = st.get("unmapped_role", cfg.unmapped_role)
+    cfg.fail_on_unmapped = bool(st.get("fail_on_unmapped", False))
+
+    fl = data.get("flow", {})
+    _check_keys("flow", fl, {"indent_threshold", "gap_factor", "dehyphenate",
+                             "restore_spaces", "join_center_lines",
+                             "reattach_dropcaps", "overrides"})
+    cfg.indent_threshold = float(fl.get("indent_threshold", cfg.indent_threshold))
+    cfg.gap_factor = float(fl.get("gap_factor", cfg.gap_factor))
+    cfg.dehyphenate = fl.get("dehyphenate", cfg.dehyphenate)
+    if cfg.dehyphenate not in ("lower-only", "off"):
+        raise ConfigError(f"flow.dehyphenate invalid: {cfg.dehyphenate}")
+    cfg.restore_spaces = bool(fl.get("restore_spaces", False))
+    cfg.join_center_lines = bool(fl.get("join_center_lines", True))
+    cfg.reattach_dropcaps = bool(fl.get("reattach_dropcaps", True))
+    for ov in fl.get("overrides", []) or []:
+        _check_keys("flow.overrides[]", ov, {"page", "line", "action", "note"})
+        action = ov["action"]
+        if action not in ("join", "break", "drop", "keep") and not action.startswith("role:"):
+            raise ConfigError(f"flow.overrides action invalid: {action}")
+        cfg.flow_overrides.append(FlowOverride(page=int(ov["page"]), line=int(ov["line"]),
+                                               action=action, note=ov.get("note", "")))
+
+    fn = data.get("footnotes", {})
+    _check_keys("footnotes", fn, {"policy", "marker", "region_max_size"})
+    cfg.footnote_policy = fn.get("policy", cfg.footnote_policy)
+    if cfg.footnote_policy not in ("none", "markers"):
+        raise ConfigError(f"footnotes.policy invalid: {cfg.footnote_policy}")
+    cfg.footnote_marker = fn.get("marker", cfg.footnote_marker)
+    if cfg.footnote_marker not in ("digits", "asterisk"):
+        raise ConfigError(f"footnotes.marker invalid: {cfg.footnote_marker}")
+    cfg.footnote_region_max_size = float(fn.get("region_max_size", 0.0))
+
+    tc = data.get("toc", {})
+    _check_keys("toc", tc, {"source", "printed_pages", "handling",
+                            "strip_page_numbers", "nav_depth"})
+    cfg.toc_source = tc.get("source", cfg.toc_source)
+    if cfg.toc_source not in ("outline", "printed", "links"):
+        raise ConfigError(f"toc.source invalid: {cfg.toc_source}")
+    cfg.toc_printed_pages = list(tc.get("printed_pages", []) or [])
+    cfg.toc_handling = tc.get("handling", cfg.toc_handling)
+    cfg.strip_toc_page_numbers = bool(tc.get("strip_page_numbers", True))
+    cfg.nav_depth = int(tc.get("nav_depth", cfg.nav_depth))
+
+    gl = data.get("glyphs", {})
+    _check_keys("glyphs", gl, {"pua_map", "fail_on_unmapped_pua"})
+    for cp, rule in (gl.get("pua_map") or {}).items():
+        _check_keys(f"glyphs.pua_map[{cp!r}]", rule, {"action", "char", "lang", "note"})
+        action = rule["action"]
+        if action not in ("char", "drop"):
+            raise ConfigError(f"glyphs.pua_map action invalid: {action}")
+        if action == "char" and not rule.get("char"):
+            raise ConfigError(f"glyphs.pua_map[{cp!r}]: action char requires 'char'")
+        cfg.pua_map[cp] = PuaRule(action=action, char=rule.get("char"),
+                                  lang=rule.get("lang"), note=rule.get("note", ""))
+    cfg.fail_on_unmapped_pua = bool(gl.get("fail_on_unmapped_pua", False))
+
+    fo = data.get("fonts", {})
+    _check_keys("fonts", fo, {"embed", "subset"})
+    for fe in fo.get("embed", []) or []:
+        _check_keys("fonts.embed[]", fe, {"family", "file", "style", "script", "lang"})
+        cfg.fonts_embed.append(FontEmbed(family=fe["family"], file=fe["file"],
+                                         style=fe.get("style", "normal"),
+                                         script=fe.get("script", "latin"),
+                                         lang=fe.get("lang")))
+    cfg.fonts_subset = bool(fo.get("subset", True))
+
+    lg = data.get("languages", {})
+    _check_keys("languages", lg, {"cjk_han_only", "overrides"})
+    cfg.cjk_han_only = lg.get("cjk_han_only", cfg.cjk_han_only)
+    cfg.lang_overrides = lg.get("overrides", []) or []
+
+    sp = data.get("split", {})
+    _check_keys("split", sp, {"at_roles", "warn_over_files"})
+    cfg.split_at_roles = sp.get("at_roles", cfg.split_at_roles)
+    cfg.warn_over_files = int(sp.get("warn_over_files", cfg.warn_over_files))
+
+    im = data.get("images", {})
+    _check_keys("images", im, {"raster_dpi", "max_pixels", "alt", "decorative",
+                               "figure_pages"})
+    cfg.raster_dpi = int(im.get("raster_dpi", cfg.raster_dpi))
+    cfg.max_pixels = int(im.get("max_pixels", cfg.max_pixels))
+    cfg.image_alt = im.get("alt", {}) or {}
+    cfg.decorative = list(im.get("decorative", []) or [])
+    for fp in im.get("figure_pages", []) or []:
+        _check_keys("images.figure_pages[]", fp, {"pages", "alt_template", "lang"})
+        pages: list[int] = []
+        for item in fp["pages"]:
+            if isinstance(item, str) and "-" in item:
+                a, b = item.split("-", 1)
+                pages.extend(range(int(a), int(b) + 1))
+            else:
+                pages.append(int(item))
+        cfg.figure_pages.append(FigurePages(pages=pages,
+                                            alt_template=fp.get("alt_template",
+                                                                "Image of page {label}"),
+                                            lang=fp.get("lang")))
+
+    out = data.get("output", {})
+    _check_keys("output", out, {"slug", "include_ncx"})
+    cfg.slug = out.get("slug", cfg.slug)
+    cfg.include_ncx = bool(out.get("include_ncx", True))
+
+    return cfg
