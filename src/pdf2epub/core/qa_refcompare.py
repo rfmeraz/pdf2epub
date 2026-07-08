@@ -103,7 +103,7 @@ def _stats(ep: LoadedEpub) -> dict:
         s["font_obfuscation"] = False
 
     # a11y metadata
-    from .epubload import opf_metadata
+    from .qa_epubload import opf_metadata
 
     opf = opf_metadata(ep)
     s["a11y_metas"] = sum(

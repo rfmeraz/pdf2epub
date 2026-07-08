@@ -26,3 +26,23 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
   tight high-dpi crops is cheap and decisive.
 - Visual QA: text probes all pass (honorifics, dehyphenation, drop caps, basmala, deep TOC,
   page-list). Reader-app spread comparison deferred to human inspection. FLAG.
+
+## harmonious-unity — 2026-07-07 (PDF-only benchmark)
+
+- Source: `Harmonious Unity EBOOK.pdf` (InDesign 20.5/2026, 152 pp) — ONLY the print
+  PDF; the idml2epub EPUB of the same book served purely as the `qa --reference`
+  scorecard. Result: `epubcheck: clean`; QA `Overall: PASS` (coverage 99.92%,
+  152-entry page-list, byte-reproducible). Scorecard vs the IDML-derived EPUB:
+  118 vs 88 semantic headings (finer chapter nav), text parity.
+- Judgments: outline TOC (70 bookmarks, three witnesses agree); vertical Chinese
+  source text (pp.79–145) as figure pages with per-page alt (mirror-bound section
+  reads back-to-front in physical order — same known limitation as the reference;
+  FLAG); five-pillars calligraphy plate (p.33) as figure with descriptive alt;
+  Noto Serif CJK SC subset embedded for inline CJK (MS Mincho/Arial Unicode are
+  proprietary); SYNTHESIZED typographic cover (the PDF carries none; the reference
+  used cover art from the manual EPUB — FLAG: supply real cover art); no ebook
+  ISBN → urn:uuid (FLAG); two flow.overrides dropping the part-header divider
+  repeated inside the printed Contents (it shadowed the real part opener).
+- Lessons: contents-page part-headers need drop overrides when they duplicate
+  outline entries; gate 8 exempts title/toc-entry/titletext paragraphs (headings
+  legitimately mirror running-head text).

@@ -1,0 +1,8109 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/personal/fons_vitae/pdf2epub/books/harmonious-unity/package/Harmonious Unity EBOOK.pdf",
+  "sha256": "53e5953d23a8b16ab122f084ee4f609fee33838028f862662569c56c5550b687",
+  "producer": "Adobe PDF Library 17.0",
+  "n_pages": 152,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "Gentium-Italic",
+    "raw_family": "Gentium-Italic",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "1": {
+    "id": 1,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "2": {
+    "id": 2,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 28.0,
+    "color": "#231f20"
+   },
+   "3": {
+    "id": 3,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "4": {
+    "id": 4,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "5": {
+    "id": 5,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 11.0,
+    "color": "#2e3092"
+   },
+   "6": {
+    "id": 6,
+    "family": "ArialUnicodeMS",
+    "raw_family": "ArialUnicodeMS",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "7": {
+    "id": 7,
+    "family": "Gentium-SC700",
+    "raw_family": "Gentium-SC700",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "8": {
+    "id": 8,
+    "family": "Gentium-SC700",
+    "raw_family": "Gentium-SC700",
+    "size": 7.5,
+    "color": "#231f20"
+   },
+   "9": {
+    "id": 9,
+    "family": "Gentium-SC700",
+    "raw_family": "Gentium-SC700",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "10": {
+    "id": 10,
+    "family": "Gentium-SC700",
+    "raw_family": "Gentium-SC700",
+    "size": 8.5,
+    "color": "#231f20"
+   },
+   "11": {
+    "id": 11,
+    "family": "Gentium-Italic-SC700",
+    "raw_family": "Gentium-Italic-SC700",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "12": {
+    "id": 12,
+    "family": "Gentium-Italic-SC700",
+    "raw_family": "Gentium-Italic-SC700",
+    "size": 8.5,
+    "color": "#231f20"
+   },
+   "13": {
+    "id": 13,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 31.5,
+    "color": "#231f20"
+   },
+   "14": {
+    "id": 14,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "15": {
+    "id": 15,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "16": {
+    "id": 16,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 6.5,
+    "color": "#231f20"
+   },
+   "17": {
+    "id": 17,
+    "family": "Gentium",
+    "raw_family": "Gentium",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "18": {
+    "id": 18,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "19": {
+    "id": 19,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 20.0,
+    "color": "#000000"
+   },
+   "20": {
+    "id": 20,
+    "family": "YuGothic-Regular",
+    "raw_family": "YuGothic-Regular",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "21": {
+    "id": 21,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "22": {
+    "id": 22,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 18.0,
+    "color": "#000000"
+   },
+   "23": {
+    "id": 23,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "24": {
+    "id": 24,
+    "family": "PMingLiU",
+    "raw_family": "PMingLiU",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "25": {
+    "id": 25,
+    "family": "YuGothic-Regular",
+    "raw_family": "YuGothic-Regular",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "26": {
+    "id": 26,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 18.5,
+    "color": "#000000"
+   },
+   "27": {
+    "id": 27,
+    "family": "MS-Mincho",
+    "raw_family": "MS-Mincho",
+    "size": 17.0,
+    "color": "#000000"
+   },
+   "28": {
+    "id": 28,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 9.5,
+    "color": "#000000"
+   },
+   "29": {
+    "id": 29,
+    "family": "PMingLiU",
+    "raw_family": "PMingLiU",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "30": {
+    "id": 30,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 20.0,
+    "color": "#000000"
+   },
+   "31": {
+    "id": 31,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 19.5,
+    "color": "#000000"
+   },
+   "32": {
+    "id": 32,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 17.0,
+    "color": "#000000"
+   },
+   "33": {
+    "id": 33,
+    "family": "YuGothic-Regular",
+    "raw_family": "YuGothic-Regular",
+    "size": 9.5,
+    "color": "#000000"
+   },
+   "34": {
+    "id": 34,
+    "family": "PMingLiU",
+    "raw_family": "PMingLiU",
+    "size": 9.5,
+    "color": "#000000"
+   },
+   "35": {
+    "id": 35,
+    "family": "YuGothic-Regular",
+    "raw_family": "YuGothic-Regular",
+    "size": 20.0,
+    "color": "#000000"
+   },
+   "36": {
+    "id": 36,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 16.0,
+    "color": "#000000"
+   },
+   "37": {
+    "id": 37,
+    "family": "MS-PMincho",
+    "raw_family": "MS-PMincho",
+    "size": 18.0,
+    "color": "#000000"
+   },
+   "38": {
+    "id": 38,
+    "family": "HGPGyoshotai",
+    "raw_family": "HGPGyoshotai",
+    "size": 72.0,
+    "color": "#000000"
+   },
+   "39": {
+    "id": 39,
+    "family": "HGPGyoshotai",
+    "raw_family": "HGPGyoshotai",
+    "size": 36.0,
+    "color": "#000000"
+   },
+   "40": {
+    "id": 40,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 36.0,
+    "color": "#000000"
+   }
+  },
+  "outline": [
+   {
+    "level": 1,
+    "title": "Foreword",
+    "target_page": 9
+   },
+   {
+    "level": 2,
+    "title": "Acknowledgment",
+    "target_page": 22
+   },
+   {
+    "level": 2,
+    "title": "Introduction:  \nLiu Zhi’s Way of Islam",
+    "target_page": 23
+   },
+   {
+    "level": 2,
+    "title": "The Exposition of the \nFive Pillars of Islam",
+    "target_page": 37
+   },
+   {
+    "level": 2,
+    "title": "Introduction",
+    "target_page": 37
+   },
+   {
+    "level": 2,
+    "title": "Chapter 1: The Origin",
+    "target_page": 39
+   },
+   {
+    "level": 2,
+    "title": "Chapter 2: The Principle",
+    "target_page": 39
+   },
+   {
+    "level": 2,
+    "title": "Chapter 3: Love and Aversion",
+    "target_page": 40
+   },
+   {
+    "level": 2,
+    "title": "Chapter 4: The Outer Senses",
+    "target_page": 40
+   },
+   {
+    "level": 2,
+    "title": "Chapter 5: The Inner Virtues",
+    "target_page": 41
+   },
+   {
+    "level": 2,
+    "title": "Chapter 6: The Virtues \nof Heart and Nature",
+    "target_page": 41
+   },
+   {
+    "level": 2,
+    "title": "Chapter 7: The Balanced State \nand Distorted Change",
+    "target_page": 42
+   },
+   {
+    "level": 2,
+    "title": "Chapter 8: The Rite of Remembrance",
+    "target_page": 43
+   },
+   {
+    "level": 2,
+    "title": "Chapter 9: The Law of Remembrance",
+    "target_page": 43
+   },
+   {
+    "level": 2,
+    "title": "Chapter 10: The Meaning \nof Remembrance",
+    "target_page": 44
+   },
+   {
+    "level": 2,
+    "title": "Chapter 11: The Principle \nof Remembrance",
+    "target_page": 44
+   },
+   {
+    "level": 2,
+    "title": "Chapter 12: The Proof of Remembrance",
+    "target_page": 45
+   },
+   {
+    "level": 2,
+    "title": "Chapter 13: The Rite of Worship",
+    "target_page": 46
+   },
+   {
+    "level": 2,
+    "title": "Chapter 14: The Manner of Worship",
+    "target_page": 47
+   },
+   {
+    "level": 2,
+    "title": "Chapter 15: The Essence of Worship",
+    "target_page": 47
+   },
+   {
+    "level": 2,
+    "title": "Chapter 16: The Principle of Worship",
+    "target_page": 49
+   },
+   {
+    "level": 2,
+    "title": "Chapter 17: The Proof of Worship",
+    "target_page": 49
+   },
+   {
+    "level": 2,
+    "title": "Chapter 18: The Rite of Fasting",
+    "target_page": 50
+   },
+   {
+    "level": 2,
+    "title": "Chapter 19: The Practice of Fasting",
+    "target_page": 51
+   },
+   {
+    "level": 2,
+    "title": "Chapter 20: The Meaning of Fasting",
+    "target_page": 51
+   },
+   {
+    "level": 2,
+    "title": "Chapter 21: The Principle of Fasting",
+    "target_page": 52
+   },
+   {
+    "level": 2,
+    "title": "Chapter 22: The Proof of Fasting",
+    "target_page": 52
+   },
+   {
+    "level": 2,
+    "title": "Chapter 23: The Rite of Almsgiving",
+    "target_page": 53
+   },
+   {
+    "level": 2,
+    "title": "Chapter 24: The Practice of Almsgiving",
+    "target_page": 54
+   },
+   {
+    "level": 2,
+    "title": "Chapter 25: The Meaning of Almsgiving",
+    "target_page": 54
+   },
+   {
+    "level": 2,
+    "title": "Chapter 26: The Principle of Almsgiving",
+    "target_page": 55
+   },
+   {
+    "level": 2,
+    "title": "Chapter 27: The Proof of Almsgiving",
+    "target_page": 55
+   },
+   {
+    "level": 2,
+    "title": "Chapter 28: The Rite of Pilgrimage",
+    "target_page": 56
+   },
+   {
+    "level": 2,
+    "title": "Chapter 29: The Practice of Pilgrimage",
+    "target_page": 57
+   },
+   {
+    "level": 2,
+    "title": "Chapter 30: The Meaning of Pilgrimage",
+    "target_page": 58
+   },
+   {
+    "level": 2,
+    "title": "Chapter 31: The Principle of Pilgrimage",
+    "target_page": 58
+   },
+   {
+    "level": 2,
+    "title": "Chapter 32: The Proof of Pilgrimage",
+    "target_page": 59
+   },
+   {
+    "level": 2,
+    "title": "Chapter 33: The Five Devotions",
+    "target_page": 60
+   },
+   {
+    "level": 2,
+    "title": "Chapter 34: The Gatherings",
+    "target_page": 62
+   },
+   {
+    "level": 2,
+    "title": "Chapter 35: The Counsel of Worship",
+    "target_page": 62
+   },
+   {
+    "level": 2,
+    "title": "Chapter 36: The Measure of Worship",
+    "target_page": 63
+   },
+   {
+    "level": 2,
+    "title": "Chapter 37: The Symbols of Worship",
+    "target_page": 63
+   },
+   {
+    "level": 2,
+    "title": "Chapter 38: The Origins of Worship",
+    "target_page": 64
+   },
+   {
+    "level": 2,
+    "title": "Chapter 39: Sincerity of Heart",
+    "target_page": 64
+   },
+   {
+    "level": 2,
+    "title": "Chapter 40: The Five Symbols",
+    "target_page": 65
+   },
+   {
+    "level": 2,
+    "title": "Chapter 41: The Gates of Virtue",
+    "target_page": 65
+   },
+   {
+    "level": 2,
+    "title": "Chapter 42: Drought and Rain",
+    "target_page": 65
+   },
+   {
+    "level": 2,
+    "title": "Chapter 43 : The Five Blessings",
+    "target_page": 65
+   },
+   {
+    "level": 2,
+    "title": "Chapter 44: The Five Breaths",
+    "target_page": 66
+   },
+   {
+    "level": 2,
+    "title": "Chapter 45: The Transformations",
+    "target_page": 66
+   },
+   {
+    "level": 2,
+    "title": "Chapter 46: Unceasing Practice",
+    "target_page": 66
+   },
+   {
+    "level": 2,
+    "title": "Chapter 47: The Whole Body",
+    "target_page": 67
+   },
+   {
+    "level": 2,
+    "title": "Chapter 48: Belonging and Intent",
+    "target_page": 67
+   },
+   {
+    "level": 2,
+    "title": "Chapter 49: Forgetfulness \nand Aspiration",
+    "target_page": 68
+   },
+   {
+    "level": 2,
+    "title": "Chapter 50: The Opening of the Senses",
+    "target_page": 68
+   },
+   {
+    "level": 2,
+    "title": "Chapter 51: The Effects of Devotion",
+    "target_page": 69
+   },
+   {
+    "level": 2,
+    "title": "Chapter 52: The Three Ultimates",
+    "target_page": 70
+   },
+   {
+    "level": 2,
+    "title": "Chapter 53: The Symbols of Law",
+    "target_page": 71
+   },
+   {
+    "level": 2,
+    "title": "Chapter 54: The Constant Virtue",
+    "target_page": 71
+   },
+   {
+    "level": 2,
+    "title": "Chapter 55: The Role \nand Power of the Five Pillars",
+    "target_page": 72
+   },
+   {
+    "level": 2,
+    "title": "Chapter 56: The Universal Principle",
+    "target_page": 72
+   },
+   {
+    "level": 2,
+    "title": "Chapter 57: The Sacred Law",
+    "target_page": 72
+   },
+   {
+    "level": 2,
+    "title": "Chapter 58: The Ladder of Law",
+    "target_page": 73
+   },
+   {
+    "level": 2,
+    "title": "Chapter 59: Simplicity and Depth",
+    "target_page": 73
+   },
+   {
+    "level": 2,
+    "title": "Chapter 60: Position and Nurture",
+    "target_page": 73
+   },
+   {
+    "level": 2,
+    "title": "Chapter 61: The Sacred \nand the Common",
+    "target_page": 74
+   },
+   {
+    "level": 2,
+    "title": "Chapter 62: Loyalty and Filial Piety",
+    "target_page": 74
+   },
+   {
+    "level": 2,
+    "title": "Chapter 63: Tawhid",
+    "target_page": 75
+   },
+   {
+    "level": 2,
+    "title": "Chinese Text",
+    "target_page": 77
+   },
+   {
+    "level": 2,
+    "title": "Chinese Text",
+    "target_page": 146
+   }
+  ],
+  "links": [
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     121.1,
+     199.24,
+     136.05
+    ],
+    "target_page": 9
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     133.6,
+     351.97,
+     148.53
+    ],
+    "target_page": 22
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     146.11,
+     348.99,
+     161.03
+    ],
+    "target_page": 23
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     183.63,
+     363.84,
+     198.56
+    ],
+    "target_page": 23
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     196.13,
+     369.0,
+     211.06
+    ],
+    "target_page": 39
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     208.63,
+     369.0,
+     223.56
+    ],
+    "target_page": 39
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     221.13,
+     369.0,
+     236.06
+    ],
+    "target_page": 40
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     233.63,
+     369.0,
+     248.56
+    ],
+    "target_page": 40
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     246.13,
+     369.0,
+     261.06
+    ],
+    "target_page": 41
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     258.63,
+     369.0,
+     273.56
+    ],
+    "target_page": 41
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     271.13,
+     369.0,
+     286.06
+    ],
+    "target_page": 42
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     283.63,
+     369.0,
+     298.56
+    ],
+    "target_page": 43
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     333.63,
+     369.0,
+     348.56
+    ],
+    "target_page": 43
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     346.13,
+     369.0,
+     361.06
+    ],
+    "target_page": 44
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     358.63,
+     358.68,
+     373.56
+    ],
+    "target_page": 44
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     371.13,
+     369.0,
+     386.06
+    ],
+    "target_page": 45
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     383.63,
+     358.68,
+     398.56
+    ],
+    "target_page": 45
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     433.63,
+     358.68,
+     448.56
+    ],
+    "target_page": 46
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     446.13,
+     358.68,
+     461.06
+    ],
+    "target_page": 47
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     458.63,
+     358.68,
+     473.56
+    ],
+    "target_page": 48
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     471.13,
+     358.68,
+     486.06
+    ],
+    "target_page": 49
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     483.63,
+     369.0,
+     498.56
+    ],
+    "target_page": 50
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     533.63,
+     363.84,
+     548.56
+    ],
+    "target_page": 50
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     546.13,
+     369.0,
+     561.06
+    ],
+    "target_page": 51
+   },
+   {
+    "page": 5,
+    "rect": [
+     72.0,
+     558.63,
+     358.68,
+     573.56
+    ],
+    "target_page": 51
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     72.71,
+     349.68,
+     87.63
+    ],
+    "target_page": 52
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     85.21,
+     349.68,
+     100.13
+    ],
+    "target_page": 52
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     135.21,
+     349.68,
+     150.13
+    ],
+    "target_page": 53
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     147.71,
+     349.68,
+     162.63
+    ],
+    "target_page": 53
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     160.21,
+     349.68,
+     175.13
+    ],
+    "target_page": 54
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     172.71,
+     349.68,
+     187.63
+    ],
+    "target_page": 54
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     185.21,
+     349.68,
+     200.13
+    ],
+    "target_page": 55
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     235.21,
+     349.68,
+     250.13
+    ],
+    "target_page": 56
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     247.71,
+     349.68,
+     262.63
+    ],
+    "target_page": 56
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     260.21,
+     349.68,
+     275.13
+    ],
+    "target_page": 57
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     272.71,
+     349.68,
+     287.63
+    ],
+    "target_page": 58
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     285.21,
+     349.68,
+     300.13
+    ],
+    "target_page": 59
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     297.71,
+     349.68,
+     312.63
+    ],
+    "target_page": 60
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     310.21,
+     349.68,
+     325.13
+    ],
+    "target_page": 61
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     322.71,
+     349.68,
+     337.63
+    ],
+    "target_page": 62
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     335.21,
+     349.68,
+     350.13
+    ],
+    "target_page": 62
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     347.71,
+     349.68,
+     362.63
+    ],
+    "target_page": 63
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     360.21,
+     349.68,
+     375.13
+    ],
+    "target_page": 63
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     372.71,
+     349.68,
+     387.63
+    ],
+    "target_page": 63
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     385.21,
+     349.68,
+     400.13
+    ],
+    "target_page": 64
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     397.71,
+     349.68,
+     412.63
+    ],
+    "target_page": 64
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     410.21,
+     349.68,
+     425.13
+    ],
+    "target_page": 64
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     422.71,
+     349.68,
+     437.63
+    ],
+    "target_page": 65
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     435.21,
+     349.68,
+     450.13
+    ],
+    "target_page": 65
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     447.71,
+     349.68,
+     462.63
+    ],
+    "target_page": 65
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     460.21,
+     349.68,
+     475.13
+    ],
+    "target_page": 66
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     472.71,
+     349.68,
+     487.63
+    ],
+    "target_page": 66
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     485.21,
+     349.68,
+     500.13
+    ],
+    "target_page": 67
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     497.71,
+     349.68,
+     512.63
+    ],
+    "target_page": 67
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     510.21,
+     349.68,
+     525.13
+    ],
+    "target_page": 68
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     522.71,
+     349.68,
+     537.63
+    ],
+    "target_page": 69
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     535.21,
+     349.68,
+     550.13
+    ],
+    "target_page": 70
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     547.71,
+     349.68,
+     562.63
+    ],
+    "target_page": 70
+   },
+   {
+    "page": 6,
+    "rect": [
+     63.0,
+     560.21,
+     349.68,
+     575.13
+    ],
+    "target_page": 71
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     72.71,
+     358.68,
+     87.63
+    ],
+    "target_page": 71
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     85.21,
+     358.68,
+     100.13
+    ],
+    "target_page": 71
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     97.71,
+     358.68,
+     112.63
+    ],
+    "target_page": 72
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     110.21,
+     358.68,
+     125.13
+    ],
+    "target_page": 72
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     122.71,
+     358.68,
+     137.63
+    ],
+    "target_page": 72
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     135.21,
+     358.68,
+     150.13
+    ],
+    "target_page": 73
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     147.71,
+     358.68,
+     162.63
+    ],
+    "target_page": 73
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     160.21,
+     369.0,
+     175.13
+    ],
+    "target_page": 74
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     210.23,
+     129.72,
+     225.16
+    ],
+    "target_page": 146
+   }
+  ],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   0,
+   0,
+   432,
+   648
+  ],
+  "warnings": [
+   "1 image-only page(s) (no usable text layer): [33] — OCR is out of scope; ship as figure pages only if content is verifiable from renders",
+   "engine agreement below 90 on 66 page(s): [79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93]… — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "Gentium@11",
+  "body_size": 11.0,
+  "clusters": [
+   {
+    "pstyle": "Gentium@11",
+    "family": "Gentium",
+    "size": 11.0,
+    "n_lines": 1991,
+    "n_chars": 117056,
+    "n_pages": 68,
+    "first_page": 4,
+    "samples": [
+     "Published in 2026 by",
+     "Louisville, KY 40207",
+     "http://www.fonsvitae.com"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "MS-PMincho@11",
+    "family": "MS-PMincho",
+    "size": 11.0,
+    "n_lines": 3141,
+    "n_chars": 7903,
+    "n_pages": 58,
+    "first_page": 78,
+    "samples": [
+     "吾朝朝穆課賊齋逆禮巴念其五唯聖小",
+     "聖房之罕之害之者之也之殆功欲人人",
+     "因來效默效一效、效贍效天者窒、、性"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Gentium@11/center",
+    "family": "Gentium",
+    "size": 11.0,
+    "n_lines": 83,
+    "n_chars": 4258,
+    "n_pages": 16,
+    "first_page": 4,
+    "samples": [
+     "49 Mockingbird Valley Drive",
+     "No part of this book may be reproduced",
+     "in any form without prior permission of"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Gentium-Italic@11",
+    "family": "Gentium-Italic",
+    "size": 11.0,
+    "n_lines": 64,
+    "n_chars": 3382,
+    "n_pages": 12,
+    "first_page": 6,
+    "samples": [
+     "Contents, continued",
+     "iu Zhi’s The Exposition of the Five Pillars of Islam ([五功释义]), first",
+     "on the Nature and Principle of the Heaven [天方性理校注], pp. 378–397,"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MS-PMincho@10",
+    "family": "MS-PMincho",
+    "size": 10.0,
+    "n_lines": 465,
+    "n_chars": 1933,
+    "n_pages": 5,
+    "first_page": 92,
+    "samples": [
+     "故吾是吾速是吾母是吾核是母魯是朝課齋禮念開",
+     "氣聖故聖來故聖撒故聖子故撒格故、、、、、",
+     "苛一於然一惟性至經晌一若及昏日身日惟隱心時五"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "Gentium@18/center",
+    "family": "Gentium",
+    "size": 18.0,
+    "n_lines": 99,
+    "n_chars": 1876,
+    "n_pages": 39,
+    "first_page": 1,
+    "samples": [
+     "The Harmonious Unity",
+     "Liu Zhi’s Sino-Islamic Interpretation",
+     "of the Five-Fold Path"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MS-PMincho@9.5",
+    "family": "MS-PMincho",
+    "size": 9.5,
+    "n_lines": 367,
+    "n_chars": 1285,
+    "n_pages": 4,
+    "first_page": 111,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.5pt)"
+   },
+   {
+    "pstyle": "MS-PMincho@11/center",
+    "family": "MS-PMincho",
+    "size": 11.0,
+    "n_lines": 406,
+    "n_chars": 1075,
+    "n_pages": 48,
+    "first_page": 79,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Gentium-SC700@7.5/center",
+    "family": "Gentium-SC700",
+    "size": 7.5,
+    "n_lines": 30,
+    "n_chars": 1037,
+    "n_pages": 30,
+    "first_page": 10,
+    "samples": [
+     "The Harmonious Unity",
+     "The Harmonious Unity",
+     "The Harmonious Unity"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (7.5pt), frequent"
+   },
+   {
+    "pstyle": "Gentium-Italic@11/center",
+    "family": "Gentium-Italic",
+    "size": 11.0,
+    "n_lines": 40,
+    "n_chars": 840,
+    "n_pages": 35,
+    "first_page": 1,
+    "samples": [
+     "Contents, continued",
+     "天方性理], Nature and Principle of the Heaven), Tianfang Dianli",
+     "([天方典礼], Rituals of the Heaven), Tianfang Zhisheng Shilu (["
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Gentium@18",
+    "family": "Gentium",
+    "size": 18.0,
+    "n_lines": 17,
+    "n_chars": 593,
+    "n_pages": 14,
+    "first_page": 40,
+    "samples": [
+     "Chapter 4: The Outer Senses",
+     "Chapter 12: The Proof of Remembrance",
+     "Chapter 21: The Principle of Fasting"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Gentium-SC700@8.5/center",
+    "family": "Gentium-SC700",
+    "size": 8.5,
+    "n_lines": 10,
+    "n_chars": 334,
+    "n_pages": 8,
+    "first_page": 9,
+    "samples": [
+     "and Its Presence in Chinese Classic Literature",
+     "The “Dao” of the five pillars of Islam:",
+     "Liu Zhi’s Vernacular Articulation of Islamic Spirituality"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (8.5pt), frequent"
+   },
+   {
+    "pstyle": "Gentium@9",
+    "family": "Gentium",
+    "size": 9.0,
+    "n_lines": 9,
+    "n_chars": 318,
+    "n_pages": 5,
+    "first_page": 38,
+    "samples": [
+     "1.  Numbers of Heaven refer to odd numbers, namely 1,3,5,7,9.",
+     "2.  Numbers of Earth refer to even numbers, namely 2,4,6,8,10.",
+     "3.  The sum of the numbers of Heaven (1+3+5+7+9) and the sum of the numbers"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Gentium@10/center",
+    "family": "Gentium",
+    "size": 10.0,
+    "n_lines": 123,
+    "n_chars": 281,
+    "n_pages": 123,
+    "first_page": 5,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "MS-Mincho@20",
+    "family": "MS-Mincho",
+    "size": 20.0,
+    "n_lines": 189,
+    "n_chars": 189,
+    "n_pages": 34,
+    "first_page": 79,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Gentium-Italic-SC700@8.5/center",
+    "family": "Gentium-Italic-SC700",
+    "size": 8.5,
+    "n_lines": 3,
+    "n_chars": 179,
+    "n_pages": 3,
+    "first_page": 9,
+    "samples": [
+     "I. The Author of The Exposition of the Five Pillars of Islam",
+     "II. Summary of The Exposition of the Five Pillars of Islam",
+     "III. A Survey of Editions of Exposition of the Five Pillars"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.5pt)"
+   },
+   {
+    "pstyle": "Gentium-SC700@8.5",
+    "family": "Gentium-SC700",
+    "size": 8.5,
+    "n_lines": 5,
+    "n_chars": 158,
+    "n_pages": 4,
+    "first_page": 27,
+    "samples": [
+     "The Wisdom of Heaven",
+     "The Wisdom of Earth",
+     "The Wisdom of Humanity"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.5pt)"
+   },
+   {
+    "pstyle": "MS-PMincho@20",
+    "family": "MS-PMincho",
+    "size": 20.0,
+    "n_lines": 93,
+    "n_chars": 113,
+    "n_pages": 26,
+    "first_page": 114,
+    "samples": [
+     ""
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Gentium@28/center",
+    "family": "Gentium",
+    "size": 28.0,
+    "n_lines": 20,
+    "n_chars": 110,
+    "n_pages": 4,
+    "first_page": 3,
+    "samples": [
+     "The Harmonious Unity",
+     "The Exposition of the",
+     "Five Pillars of Islam"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 28.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "MS-PMincho@10/center",
+    "family": "MS-PMincho",
+    "size": 10.0,
+    "n_lines": 30,
+    "n_chars": 73,
+    "n_pages": 5,
+    "first_page": 92,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "Gentium@31.5",
+    "family": "Gentium",
+    "size": 31.5,
+    "n_lines": 62,
+    "n_chars": 62,
+    "n_pages": 38,
+    "first_page": 9,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 31.5pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Gentium@28",
+    "family": "Gentium",
+    "size": 28.0,
+    "n_lines": 2,
+    "n_chars": 56,
+    "n_pages": 2,
+    "first_page": 77,
+    "samples": [
+     "of the Five Pillars of Islam",
+     "of the Five Pillars of Islam"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 28.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Gentium@10",
+    "family": "Gentium",
+    "size": 10.0,
+    "n_lines": 13,
+    "n_chars": 35,
+    "n_pages": 13,
+    "first_page": 14,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "MS-Mincho@11",
+    "family": "MS-Mincho",
+    "size": 11.0,
+    "n_lines": 21,
+    "n_chars": 21,
+    "n_pages": 21,
+    "first_page": 82,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MS-PMincho@9.5/center",
+    "family": "MS-PMincho",
+    "size": 9.5,
+    "n_lines": 9,
+    "n_chars": 20,
+    "n_pages": 2,
+    "first_page": 126,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.5pt)"
+   },
+   {
+    "pstyle": "YuGothic-Regular@11",
+    "family": "YuGothic-Regular",
+    "size": 11.0,
+    "n_lines": 14,
+    "n_chars": 18,
+    "n_pages": 12,
+    "first_page": 79,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "ArialUnicodeMS@10",
+    "family": "ArialUnicodeMS",
+    "size": 10.0,
+    "n_lines": 2,
+    "n_chars": 14,
+    "n_pages": 2,
+    "first_page": 12,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "MS-Mincho@18",
+    "family": "MS-Mincho",
+    "size": 18.0,
+    "n_lines": 12,
+    "n_chars": 12,
+    "n_pages": 3,
+    "first_page": 92,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MS-PMincho@17",
+    "family": "MS-PMincho",
+    "size": 17.0,
+    "n_lines": 10,
+    "n_chars": 10,
+    "n_pages": 3,
+    "first_page": 126,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 17.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MS-PMincho@16",
+    "family": "MS-PMincho",
+    "size": 16.0,
+    "n_lines": 4,
+    "n_chars": 6,
+    "n_pages": 1,
+    "first_page": 143,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MS-Mincho@17",
+    "family": "MS-Mincho",
+    "size": 17.0,
+    "n_lines": 5,
+    "n_chars": 5,
+    "n_pages": 1,
+    "first_page": 111,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 17.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "HGPGyoshotai@72/center",
+    "family": "HGPGyoshotai",
+    "size": 72.0,
+    "n_lines": 5,
+    "n_chars": 5,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 72.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "MS-Mincho@18.5",
+    "family": "MS-Mincho",
+    "size": 18.5,
+    "n_lines": 3,
+    "n_chars": 3,
+    "n_pages": 1,
+    "first_page": 110,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.5pt >= 1.35x body"
+   },
+   {
+    "pstyle": "YuGothic-Regular@10",
+    "family": "YuGothic-Regular",
+    "size": 10.0,
+    "n_lines": 3,
+    "n_chars": 3,
+    "n_pages": 1,
+    "first_page": 112,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "YuGothic-Regular@11/center",
+    "family": "YuGothic-Regular",
+    "size": 11.0,
+    "n_lines": 2,
+    "n_chars": 3,
+    "n_pages": 2,
+    "first_page": 113,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "MS-PMincho@19.5",
+    "family": "MS-PMincho",
+    "size": 19.5,
+    "n_lines": 3,
+    "n_chars": 3,
+    "n_pages": 1,
+    "first_page": 120,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 19.5pt >= 1.35x body"
+   },
+   {
+    "pstyle": "HGPGyoshotai@36",
+    "family": "HGPGyoshotai",
+    "size": 36.0,
+    "n_lines": 3,
+    "n_chars": 3,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "MS-Mincho@11/center",
+    "family": "MS-Mincho",
+    "size": 11.0,
+    "n_lines": 2,
+    "n_chars": 2,
+    "n_pages": 2,
+    "first_page": 85,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "PMingLiU@11",
+    "family": "PMingLiU",
+    "size": 11.0,
+    "n_lines": 2,
+    "n_chars": 2,
+    "n_pages": 2,
+    "first_page": 103,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MS-Mincho@20/center",
+    "family": "MS-Mincho",
+    "size": 20.0,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 85,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "YuGothic-Regular@20",
+    "family": "YuGothic-Regular",
+    "size": 20.0,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 138,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "MS-PMincho@16/center",
+    "family": "MS-PMincho",
+    "size": 16.0,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 143,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MS-PMincho@18",
+    "family": "MS-PMincho",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 144,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@36",
+    "family": "TimesNewRomanPSMT",
+    "size": 36.0,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "#u Zh#",
+    "count": 19,
+    "pages": [
+     21,
+     39,
+     41,
+     43,
+     45,
+     47,
+     49,
+     51
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Exposition of the Five Pillars of Isla#",
+    "count": 19,
+    "pages": [
+     38,
+     40,
+     42,
+     44,
+     46,
+     48,
+     50,
+     52
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Harmonious Unity",
+    "count": 11,
+    "pages": [
+     10,
+     12,
+     14,
+     16,
+     18,
+     20,
+     24,
+     26
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Forewor#",
+    "count": 5,
+    "pages": [
+     11,
+     13,
+     15,
+     17,
+     19
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ntroduction: Liu Zhi's Way of Isla#",
+    "count": 4,
+    "pages": [
+     25,
+     27,
+     29,
+     31
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 47.2,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 98.5,
+  "folio_mismatches": [
+   {
+    "page": 6,
+    "printed": "C",
+    "label": "vi"
+   },
+   {
+    "page": 7,
+    "printed": "C",
+    "label": "vii"
+   }
+  ],
+  "label_source_proposal": "pdf-page-labels",
+  "printed_folios": {
+   "5": "v",
+   "6": "C",
+   "7": "C",
+   "8": "viii",
+   "9": "ix",
+   "10": "x",
+   "11": "xi",
+   "12": "xii",
+   "13": "xiii",
+   "14": "xiv",
+   "15": "xv",
+   "16": "xvi",
+   "17": "xvii",
+   "18": "xviii",
+   "19": "xix",
+   "20": "xx",
+   "21": "xxi",
+   "22": "xxii",
+   "23": "xxiii",
+   "24": "xxiv",
+   "25": "xxv",
+   "26": "xxvi",
+   "27": "xxvii",
+   "28": "xxviii",
+   "29": "xxix",
+   "30": "xxx",
+   "31": "xxxi",
+   "32": "xxxii",
+   "37": "3",
+   "38": "4",
+   "39": "5",
+   "40": "6",
+   "41": "7",
+   "42": "8",
+   "43": "9",
+   "44": "10",
+   "45": "11",
+   "46": "12",
+   "47": "13",
+   "48": "14",
+   "49": "15",
+   "50": "16",
+   "51": "17",
+   "52": "18",
+   "53": "19",
+   "54": "20",
+   "55": "21",
+   "56": "22",
+   "57": "23",
+   "58": "24",
+   "59": "25",
+   "60": "26",
+   "61": "27",
+   "62": "28",
+   "63": "29",
+   "64": "30",
+   "65": "31",
+   "66": "32",
+   "67": "33",
+   "68": "34",
+   "69": "35",
+   "70": "36",
+   "71": "37",
+   "72": "38",
+   "73": "39",
+   "74": "40",
+   "75": "41",
+   "78": "44",
+   "79": "45",
+   "80": "46",
+   "81": "47",
+   "82": "48",
+   "83": "49",
+   "84": "50",
+   "85": "51",
+   "86": "52",
+   "87": "53",
+   "88": "54",
+   "89": "55",
+   "90": "56",
+   "91": "57",
+   "92": "58",
+   "93": "59",
+   "94": "60",
+   "95": "61",
+   "96": "62",
+   "97": "63",
+   "98": "64",
+   "99": "65",
+   "100": "66",
+   "101": "67",
+   "102": "68",
+   "103": "69",
+   "104": "70",
+   "105": "71",
+   "106": "72",
+   "107": "73",
+   "108": "74",
+   "109": "75",
+   "110": "76",
+   "111": "77",
+   "112": "78",
+   "113": "79",
+   "114": "80",
+   "115": "81",
+   "116": "82",
+   "117": "83",
+   "118": "84",
+   "119": "85",
+   "120": "86",
+   "121": "87",
+   "122": "88",
+   "123": "89",
+   "124": "90",
+   "125": "91",
+   "126": "92",
+   "127": "93",
+   "128": "94",
+   "129": "95",
+   "130": "96",
+   "131": "97",
+   "132": "98",
+   "133": "99",
+   "134": "100",
+   "135": "101",
+   "136": "102",
+   "137": "103",
+   "138": "104",
+   "139": "105",
+   "140": "106",
+   "141": "107",
+   "142": "108",
+   "143": "109",
+   "144": "110",
+   "145": "111",
+   "146": "112"
+  },
+  "headings": [
+   {
+    "page": 1,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "﻿"
+   },
+   {
+    "page": 1,
+    "pstyle": "Gentium@18/center",
+    "text": "The Harmonious Unity"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "﻿"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@28/center",
+    "text": "The Harmonious Unity"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "Liu Zhi’s Sino-Islamic Interpretation"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "of the Five-Fold Path"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "by"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "Foreword by Wang Genming"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "Introduction and Translation"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "by Naoki Yamamoto"
+   },
+   {
+    "page": 3,
+    "pstyle": "Gentium@18/center",
+    "text": "FONS VITAE"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "Fons Vitae"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "49 Mockingbird Valley Drive"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "No part of this book may be reproduced"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "in any form without prior permission of"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "the publishers. All rights reserved."
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "NO AI TRAINING: Without in any way limiting the"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "publisher’s exclusive rights under copyright, any use"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "of this publication to “train” generative artificial intel­"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "ligence (AI) technologies to generate text is expressly"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "prohibited. The publisher reserves all rights to license"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "uses of this work for generative AI training and devel­"
+   },
+   {
+    "page": 4,
+    "pstyle": "Gentium@11/center",
+    "text": "This book was typeset by Neville Blakemore, Jr."
+   },
+   {
+    "page": 5,
+    "pstyle": "Gentium@18/center",
+    "text": "Contents"
+   },
+   {
+    "page": 5,
+    "pstyle": "Gentium@11/center",
+    "text": "The Exposition of the Five Pillars of Islam"
+   },
+   {
+    "page": 7,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Contents, continued"
+   },
+   {
+    "page": 7,
+    "pstyle": "Gentium@11/center",
+    "text": "The Exposition of the Five Pillars of Islam"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@18/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "Liu Zhi (ca. 1660–1730), an Islamic scholar of the early Qing"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "period. Style name: Jielian (字介廉); in his later years, self-"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "designated as Yizhai (一斋 ). A native of Shangyuan, Jiangsu"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "(江苏上元, present-day Nanjing 南京), and a member of the"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "Hui ethnic group. He first studied the Confucian classics,"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "historical texts, as well as Buddhist and Daoist scriptures."
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "Later, he delved deeply into Arabic and Persian, focusing on"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "Islamic theology. His numerous writings and translations"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium@11/center",
+    "text": "include such widely transmitted works as Tianfang Xingli (["
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "天方性理], Nature and Principle of the Heaven), Tianfang Dianli"
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "([天方典礼], Rituals of the Heaven), Tianfang Zhisheng Shilu (["
+   },
+   {
+    "page": 9,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "天方至圣实录], Authentic Record of the Most Noble Sage of the"
+   },
+   {
+    "page": 10,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Wugeng Yue ([五更月], The Five Phases of the Moon) and Zhen­"
+   },
+   {
+    "page": 11,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 11,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "•  Tianfang Dianli ([天方典礼], p. 555, Rituals of the Heaven)"
+   },
+   {
+    "page": 11,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "•  Wugeng Yue ([五更月], p. 592, The Five Phase of the Moon)"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "The Five Pillars of the Sacred Teaching—Declaration,"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "Prayer, Fasting, Almsgiving, and Pilgrimage—are pre­"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "scribed to guide humanity in cultivating the Way and"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "returning to its original root. The Declaration is to know"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "one’s return; Prayer is to tread the path of return; Fasting"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "severs attachment to worldly things; Almsgiving eradi­"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "cates selfishness; and Pilgrimage fulfills the divine com­"
+   },
+   {
+    "page": 13,
+    "pstyle": "Gentium@11/center",
+    "text": "mand and returns to the Real. By observing these, the Way"
+   },
+   {
+    "page": 14,
+    "pstyle": "Gentium@11/center",
+    "text": "five classical virtues – benevolence, righteousness, propri­"
+   },
+   {
+    "page": 14,
+    "pstyle": "Gentium@11/center",
+    "text": "sluggishness; honesty becomes dullness and ignorance; gen­"
+   },
+   {
+    "page": 15,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 16,
+    "pstyle": "Gentium@11/center",
+    "text": "at noon, and a remedy in illness—granting peace amidst ad­"
+   },
+   {
+    "page": 16,
+    "pstyle": "Gentium@11/center",
+    "text": "ceaselessly circulating cycle, without beginning or end."
+   },
+   {
+    "page": 16,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "the body or bowing the head, fasts without renouncing food or de­"
+   },
+   {
+    "page": 16,
+    "pstyle": "Gentium@11/center",
+    "text": "does not mean abandoning the practice, but rather attain­"
+   },
+   {
+    "page": 16,
+    "pstyle": "Gentium@11/center",
+    "text": "wood and the will, Almsgiving to water and knowledge, Pil­"
+   },
+   {
+    "page": 17,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 17,
+    "pstyle": "Gentium@11/center",
+    "text": "the cosmos, and reflecting all beings, even the divine."
+   },
+   {
+    "page": 19,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 21,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 22,
+    "pstyle": "Gentium@18/center",
+    "text": "Acknowledgment"
+   },
+   {
+    "page": 23,
+    "pstyle": "Gentium@18/center",
+    "text": "Introduction:"
+   },
+   {
+    "page": 23,
+    "pstyle": "Gentium@18/center",
+    "text": "Liu Zhi’s Way of Islam"
+   },
+   {
+    "page": 24,
+    "pstyle": "Gentium@11/center",
+    "text": "“I write my manuscripts myself, transcribe them myself,"
+   },
+   {
+    "page": 24,
+    "pstyle": "Gentium@11/center",
+    "text": "“I have searched every bookstore for books on Heaven,"
+   },
+   {
+    "page": 24,
+    "pstyle": "Gentium@11/center",
+    "text": "“I know no moment of peace. My brothers and relatives"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Introduction:  Liu Zhi’s Way of Islam"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "“This [anguish of loneliness] might be recognized as the"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "solitude of Islam in China, and indeed of religion itself in"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "the Chinese context. Confronted with the harsh realities"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "of life, the overwhelming power of the state, and the vast"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "ocean of Chinese culture, any religion that seeks to remain"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "faithful to its principles will find itself confined to loneli­"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "ness, with its very survival at risk. In the blood-soaked his­"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "tory of Hui Muslims during the Qing Dynasty, Liu Jielian’s"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "writings become all the more astonishing with each read­"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "ing.” (Zhang Chengzhi, China as Seen through Islam: Ethnicity,"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "“The Five Pillars serve as the pathways of cultivation, guid­"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "ing humanity toward harmony with Heaven (the divine"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "truth). The first is the practice of Dhikr (Remembrance of"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "the True Lord), the second is the act of Salah (Rendering"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "reverence to the True Lord), the third is the discipline of"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "Sawm (Fasting as an act of purification), the fourth is the"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "virtue of Zakat (Charity through giving), and the fifth is"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "the journey of Hajj (Pilgrimage to the sacred sanctuary)."
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "These Five Pillars are not merely commands of the True"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "Lord but are practices exemplified by the Prophet as a"
+   },
+   {
+    "page": 25,
+    "pstyle": "Gentium@11/center",
+    "text": "model for all humankind, providing a clear and universal"
+   },
+   {
+    "page": 27,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Introduction:  Liu Zhi’s Way of Islam"
+   },
+   {
+    "page": 29,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Introduction:  Liu Zhi’s Way of Islam"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Introduction:  Liu Zhi’s Way of Islam"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "Shahada: This practice directs the heart toward God and"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "purifies thought, restoring inner purity. It parallels East"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "Asian practices of introspection and self-reflection, which"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "Prayer: Through physical gestures of reverence, prayer"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "connects humans with Heaven, facilitating a state of align­"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "Fasting: Abstaining from physical desires helps to remove"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "distractions and achieve spiritual purification, curbing im­"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "Zakat: Acts of charity transcend material attachments and"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "promote social harmony by fostering generosity and ethi­"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "Pilgrimage: The journey to sacred places symbolizes a"
+   },
+   {
+    "page": 31,
+    "pstyle": "Gentium@11/center",
+    "text": "spiritual return to the source, transcending the material"
+   },
+   {
+    "page": 35,
+    "pstyle": "Gentium@28/center",
+    "text": "The Exposition of the"
+   },
+   {
+    "page": 35,
+    "pstyle": "Gentium@28/center",
+    "text": "Five Pillars of Islam"
+   },
+   {
+    "page": 35,
+    "pstyle": "Gentium@18/center",
+    "text": "by"
+   },
+   {
+    "page": 35,
+    "pstyle": "Gentium@18/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 37,
+    "pstyle": "Gentium@18/center",
+    "text": "The Exposition of the"
+   },
+   {
+    "page": 37,
+    "pstyle": "Gentium@18/center",
+    "text": "Five Pillars of Islam"
+   },
+   {
+    "page": 37,
+    "pstyle": "Gentium@18/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 39,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 39,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 1: The Origin"
+   },
+   {
+    "page": 39,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 39,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 2: The Principle"
+   },
+   {
+    "page": 39,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 40,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 3: Love and Aversion"
+   },
+   {
+    "page": 40,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 40,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 4: The Outer Senses"
+   },
+   {
+    "page": 40,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 41,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 41,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 5: The Inner Virtues"
+   },
+   {
+    "page": 41,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 41,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 6: The Virtues"
+   },
+   {
+    "page": 41,
+    "pstyle": "Gentium@18/center",
+    "text": "of Heart and Nature"
+   },
+   {
+    "page": 41,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 42,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 7: The Balanced State"
+   },
+   {
+    "page": 42,
+    "pstyle": "Gentium@18/center",
+    "text": "and Distorted Change"
+   },
+   {
+    "page": 43,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 43,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 8: The Rite of Remembrance"
+   },
+   {
+    "page": 43,
+    "pstyle": "Gentium@31.5",
+    "text": "R"
+   },
+   {
+    "page": 43,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 9: The Law of Remembrance"
+   },
+   {
+    "page": 43,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 44,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 10: The Meaning"
+   },
+   {
+    "page": 44,
+    "pstyle": "Gentium@18/center",
+    "text": "of Remembrance"
+   },
+   {
+    "page": 44,
+    "pstyle": "Gentium@31.5",
+    "text": "R"
+   },
+   {
+    "page": 44,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 11: The Principle"
+   },
+   {
+    "page": 44,
+    "pstyle": "Gentium@18/center",
+    "text": "of Remembrance"
+   },
+   {
+    "page": 44,
+    "pstyle": "Gentium@31.5",
+    "text": "B"
+   },
+   {
+    "page": 45,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 45,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 12: The Proof of Remembrance"
+   },
+   {
+    "page": 45,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 46,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 13: The Rite of Worship"
+   },
+   {
+    "page": 46,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 47,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 47,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 14: The Manner of Worship"
+   },
+   {
+    "page": 47,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 47,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 15: The Essence of Worship"
+   },
+   {
+    "page": 47,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 49,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 49,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 16: The Principle of Worship"
+   },
+   {
+    "page": 49,
+    "pstyle": "Gentium@31.5",
+    "text": "A"
+   },
+   {
+    "page": 49,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 17: The Proof of Worship"
+   },
+   {
+    "page": 49,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 50,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 18: The Rite of Fasting"
+   },
+   {
+    "page": 50,
+    "pstyle": "Gentium@31.5",
+    "text": "F"
+   },
+   {
+    "page": 51,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 51,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 19: The Practice of Fasting"
+   },
+   {
+    "page": 51,
+    "pstyle": "Gentium@31.5",
+    "text": "F"
+   },
+   {
+    "page": 51,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 20: The Meaning of Fasting"
+   },
+   {
+    "page": 51,
+    "pstyle": "Gentium@31.5",
+    "text": "A"
+   },
+   {
+    "page": 52,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 21: The Principle of Fasting"
+   },
+   {
+    "page": 52,
+    "pstyle": "Gentium@31.5",
+    "text": "F"
+   },
+   {
+    "page": 52,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 22: The Proof of Fasting"
+   },
+   {
+    "page": 52,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 53,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 53,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 23: The Rite of Almsgiving"
+   },
+   {
+    "page": 53,
+    "pstyle": "Gentium@31.5",
+    "text": "A"
+   },
+   {
+    "page": 54,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 24: The Practice of Almsgiving"
+   },
+   {
+    "page": 54,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 54,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 25: The Meaning of Almsgiving"
+   },
+   {
+    "page": 54,
+    "pstyle": "Gentium@31.5",
+    "text": "A"
+   },
+   {
+    "page": 55,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 55,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 26: The Principle of Almsgiving"
+   },
+   {
+    "page": 55,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 55,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 27: The Proof of Almsgiving"
+   },
+   {
+    "page": 55,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 56,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 28: The Rite of Pilgrimage"
+   },
+   {
+    "page": 56,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 57,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 57,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 29: The Practice of Pilgrimage"
+   },
+   {
+    "page": 57,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 58,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 30: The Meaning of Pilgrimage"
+   },
+   {
+    "page": 58,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 58,
+    "pstyle": "Gentium@11/center",
+    "text": "yearning for truth wanes. The pilgrim embarks on a jour­"
+   },
+   {
+    "page": 58,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 31: The Principle of Pilgrimage"
+   },
+   {
+    "page": 58,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 59,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 59,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 32: The Proof of Pilgrimage"
+   },
+   {
+    "page": 59,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 60,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 33: The Five Devotions"
+   },
+   {
+    "page": 60,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 61,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 62,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 34: The Gatherings"
+   },
+   {
+    "page": 62,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 62,
+    "pstyle": "Gentium@11/center",
+    "text": "hen people gather together in worship, it is called “the As­"
+   },
+   {
+    "page": 62,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 35: The Counsel of Worship"
+   },
+   {
+    "page": 62,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 63,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 63,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 36: The Measure of Worship"
+   },
+   {
+    "page": 63,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 63,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 37: The Symbols of Worship"
+   },
+   {
+    "page": 63,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 64,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 38: The Origins of Worship"
+   },
+   {
+    "page": 64,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 64,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 39: Sincerity of Heart"
+   },
+   {
+    "page": 64,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 65,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 65,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 40: The Five Symbols"
+   },
+   {
+    "page": 65,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 41: The Gates of Virtue"
+   },
+   {
+    "page": 65,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 42: Drought and Rain"
+   },
+   {
+    "page": 65,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 43 : The Five Blessings"
+   },
+   {
+    "page": 65,
+    "pstyle": "Gentium@31.5",
+    "text": "R"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 44: The Five Breaths"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@11/center",
+    "text": "ithin the Five Pillars of Islam lies a path of ceaseless circula­"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 45: The Transformations"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 46: Unceasing Practice"
+   },
+   {
+    "page": 66,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 67,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 67,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 47: The Whole Body"
+   },
+   {
+    "page": 67,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 67,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 48: Belonging and Intent"
+   },
+   {
+    "page": 67,
+    "pstyle": "Gentium@31.5",
+    "text": "R"
+   },
+   {
+    "page": 68,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 49: Forgetfulness"
+   },
+   {
+    "page": 68,
+    "pstyle": "Gentium@18/center",
+    "text": "and Aspiration"
+   },
+   {
+    "page": 68,
+    "pstyle": "Gentium@31.5",
+    "text": "W"
+   },
+   {
+    "page": 68,
+    "pstyle": "Gentium@11/center",
+    "text": "hen remembrance reaches a state of selflessness, one be­"
+   },
+   {
+    "page": 68,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 50: The Opening of the Senses"
+   },
+   {
+    "page": 68,
+    "pstyle": "Gentium@31.5",
+    "text": "R"
+   },
+   {
+    "page": 69,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 69,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 51: The Effects of Devotion"
+   },
+   {
+    "page": 69,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 70,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 52: The Three Ultimates"
+   },
+   {
+    "page": 71,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 71,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 53: The Symbols of Law"
+   },
+   {
+    "page": 71,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 71,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 54: The Constant Virtue"
+   },
+   {
+    "page": 71,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 55: The Role"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@18",
+    "text": "and Power of the Five Pillars"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 56: The Universal Principle"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 57: The Sacred Law"
+   },
+   {
+    "page": 72,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 73,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 73,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 58: The Ladder of Law"
+   },
+   {
+    "page": 73,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 59: Simplicity and Depth"
+   },
+   {
+    "page": 73,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 73,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 60: Position and Nurture"
+   },
+   {
+    "page": 73,
+    "pstyle": "Gentium@31.5",
+    "text": "H"
+   },
+   {
+    "page": 74,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 61: The Sacred"
+   },
+   {
+    "page": 74,
+    "pstyle": "Gentium@18/center",
+    "text": "and the Common"
+   },
+   {
+    "page": 74,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 74,
+    "pstyle": "Gentium@18",
+    "text": "Chapter 62: Loyalty and Filial Piety"
+   },
+   {
+    "page": 74,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 75,
+    "pstyle": "Gentium-Italic@11/center",
+    "text": "Chapter 63: Tawhid"
+   },
+   {
+    "page": 75,
+    "pstyle": "Gentium@18/center",
+    "text": "Chapter 63: Tawhid"
+   },
+   {
+    "page": 75,
+    "pstyle": "Gentium@31.5",
+    "text": "T"
+   },
+   {
+    "page": 75,
+    "pstyle": "Gentium@11/center",
+    "text": "End of “The Exposition on the Five Pillars of Rites.”"
+   },
+   {
+    "page": 77,
+    "pstyle": "Gentium@28/center",
+    "text": "The Exposition"
+   },
+   {
+    "page": 77,
+    "pstyle": "Gentium@28",
+    "text": "of the Five Pillars of Islam"
+   },
+   {
+    "page": 77,
+    "pstyle": "Gentium@18/center",
+    "text": "by"
+   },
+   {
+    "page": 77,
+    "pstyle": "Gentium@18/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 77,
+    "pstyle": "Gentium@18/center",
+    "text": "Chinese Text"
+   },
+   {
+    "page": 79,
+    "pstyle": "MS-Mincho@20",
+    "text": "一"
+   },
+   {
+    "page": 79,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "脫其其"
+   },
+   {
+    "page": 79,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是耳交處事事五"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-Mincho@20",
+    "text": "忠"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "以聞朋夫君親功"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "曰功矣矣之"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "日手、。。間"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-Mincho@20",
+    "text": "二"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "功弗"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "不握也"
+   },
+   {
+    "page": 80,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "為義"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "即凡智賢如不凡智賢聖若五"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-Mincho@20",
+    "text": "聖"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "勉愚者人飲知愚之之之聖功"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而而聖不、觀"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "終知而人知人"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "不而其食治其者"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "得不味者其理知效全也"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "其食者也味也此此此。"
+   },
+   {
+    "page": 81,
+    "pstyle": "MS-Mincho@20",
+    "text": "一"
+   },
+   {
+    "page": 82,
+    "pstyle": "MS-Mincho@20",
+    "text": "位"
+   },
+   {
+    "page": 82,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 82,
+    "pstyle": "MS-Mincho@20",
+    "text": "六"
+   },
+   {
+    "page": 82,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 82,
+    "pstyle": "MS-Mincho@20",
+    "text": "章"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-Mincho@20",
+    "text": "簡"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "難"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-Mincho@20",
+    "text": "九"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "其"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "何"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "以"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "行"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "哉"
+   },
+   {
+    "page": 83,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "至齋課拜念天聖"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-Mincho@20",
+    "text": "法"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎物、、、、位人"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "其而高設"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "忘登欲"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "天忘遠教"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "己物之登"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、己、、"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "斯之之之之故將"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "得斯有牽法意其以"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "朝至也也也也階為"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "覲乎。。。。次人"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之其層陟"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "實天疊天"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者者、之"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-Mincho@20",
+    "text": "八"
+   },
+   {
+    "page": 84,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣矣階"
+   },
+   {
+    "page": 85,
+    "pstyle": "MS-Mincho@20",
+    "text": "法"
+   },
+   {
+    "page": 85,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 85,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 85,
+    "pstyle": "MS-Mincho@20",
+    "text": "七"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-Mincho@20",
+    "text": "普"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "節"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-Mincho@20",
+    "text": "六"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-Mincho@20",
+    "text": "章"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "冒"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "神"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "祗"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "力"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "省"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "於"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "穆"
+   },
+   {
+    "page": 86,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 87,
+    "pstyle": "MS-Mincho@20",
+    "text": "功"
+   },
+   {
+    "page": 87,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 87,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 87,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 87,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 88,
+    "pstyle": "MS-Mincho@20",
+    "text": "常"
+   },
+   {
+    "page": 88,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 88,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 88,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 89,
+    "pstyle": "MS-Mincho@20",
+    "text": "法"
+   },
+   {
+    "page": 89,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 89,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 90,
+    "pstyle": "MS-Mincho@20",
+    "text": "三"
+   },
+   {
+    "page": 90,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 90,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 90,
+    "pstyle": "MS-Mincho@20",
+    "text": "章"
+   },
+   {
+    "page": 91,
+    "pstyle": "MS-Mincho@20",
+    "text": "功"
+   },
+   {
+    "page": 91,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 91,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 92,
+    "pstyle": "MS-Mincho@18",
+    "text": "第"
+   },
+   {
+    "page": 92,
+    "pstyle": "MS-Mincho@18",
+    "text": "五"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "果朝課齋禮是朝課齋禮念"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-Mincho@20",
+    "text": "忘"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "能不不不不故至至至至至"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是趨財食身不所斂色身心"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也蹌貨色者以趨非非、、"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "五動禮念"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "背、、者向、、"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "官無無定善善者者"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "開私欲皆通課齋也也"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "焉無非非禮身善者者。。"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "非矣矣矣念者。。"
+   },
+   {
+    "page": 93,
+    "pstyle": "MS-Mincho@20",
+    "text": "九"
+   },
+   {
+    "page": 94,
+    "pstyle": "MS-Mincho@20",
+    "text": "屬"
+   },
+   {
+    "page": 94,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 94,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 94,
+    "pstyle": "MS-Mincho@20",
+    "text": "八"
+   },
+   {
+    "page": 95,
+    "pstyle": "MS-Mincho@20",
+    "text": "全"
+   },
+   {
+    "page": 95,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 95,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 95,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 95,
+    "pstyle": "MS-Mincho@20",
+    "text": "七"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-Mincho@20",
+    "text": "無"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "未此者細不能者心之間"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者之不"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、否讀細大躬"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則者按者不"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-Mincho@20",
+    "text": "六"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、言不"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "標化。章"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "衆不"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也捐"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。不"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "拜"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "誠"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "敬"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "間"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也"
+   },
+   {
+    "page": 96,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 97,
+    "pstyle": "MS-Mincho@20",
+    "text": "參"
+   },
+   {
+    "page": 97,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 97,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 97,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 97,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 98,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 98,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 98,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 98,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 99,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 99,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 99,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 99,
+    "pstyle": "MS-Mincho@20",
+    "text": "章"
+   },
+   {
+    "page": 100,
+    "pstyle": "MS-Mincho@20",
+    "text": "旱"
+   },
+   {
+    "page": 100,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 100,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 101,
+    "pstyle": "MS-Mincho@20",
+    "text": "德"
+   },
+   {
+    "page": 101,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 101,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 101,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 101,
+    "pstyle": "MS-Mincho@20",
+    "text": "一"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-Mincho@20",
+    "text": "四"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "精"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-Mincho@20",
+    "text": "章"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也"
+   },
+   {
+    "page": 102,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "修是聖朝齋捐臨念如念"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-Mincho@20",
+    "text": "誠"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "道故人而而課拜而之而"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、人：精自不不誠。誠"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "砂萬恪省樂恭、、"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "不猶臨"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "謹猶猶未拜"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "其未未念而"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-Mincho@20",
+    "text": "三"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "心猶捐拜也不"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "意猶未也也。恭"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "哉成未齋。。、"
+   },
+   {
+    "page": 103,
+    "pstyle": "MS-Mincho@20",
+    "text": "九"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-Mincho@20",
+    "text": "拜"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-Mincho@20",
+    "text": "三"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-Mincho@20",
+    "text": "八"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "謂、"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "卓德"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "越也"
+   },
+   {
+    "page": 104,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "於。"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-Mincho@20",
+    "text": "儀"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也降"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者、"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-Mincho@20",
+    "text": "三"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "分"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-Mincho@20",
+    "text": "七"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者"
+   },
+   {
+    "page": 105,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-Mincho@20",
+    "text": "禮"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "天五抬有誼己行十天有數"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-Mincho@20",
+    "text": "三"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-Mincho@20",
+    "text": "六"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。。太、。章"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "恩也"
+   },
+   {
+    "page": 106,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而。"
+   },
+   {
+    "page": 107,
+    "pstyle": "MS-Mincho@20",
+    "text": "衆"
+   },
+   {
+    "page": 107,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 107,
+    "pstyle": "MS-Mincho@20",
+    "text": "三"
+   },
+   {
+    "page": 107,
+    "pstyle": "MS-Mincho@20",
+    "text": "五"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-Mincho@20",
+    "text": "聚"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "聚一一"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "統會聚"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-Mincho@20",
+    "text": "十"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "統一"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "身切"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "繁"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "統"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "於"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "一"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是也"
+   },
+   {
+    "page": 108,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "為。"
+   },
+   {
+    "page": 110,
+    "pstyle": "MS-Mincho@18.5",
+    "text": "二"
+   },
+   {
+    "page": 111,
+    "pstyle": "MS-Mincho@17",
+    "text": "朝"
+   },
+   {
+    "page": 111,
+    "pstyle": "MS-Mincho@17",
+    "text": "第"
+   },
+   {
+    "page": 111,
+    "pstyle": "MS-Mincho@17",
+    "text": "三"
+   },
+   {
+    "page": 112,
+    "pstyle": "MS-Mincho@18",
+    "text": "第"
+   },
+   {
+    "page": 112,
+    "pstyle": "MS-Mincho@18",
+    "text": "三"
+   },
+   {
+    "page": 112,
+    "pstyle": "MS-Mincho@18",
+    "text": "十"
+   },
+   {
+    "page": 112,
+    "pstyle": "MS-Mincho@18",
+    "text": "章"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-Mincho@20",
+    "text": "朝"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "謹"
+   },
+   {
+    "page": 113,
+    "pstyle": "YuGothic-Regular@11/center",
+    "text": "內"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-Mincho@20",
+    "text": "第"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-Mincho@20",
+    "text": "九"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-Mincho@20",
+    "text": "章"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "功昭"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "行對"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之越"
+   },
+   {
+    "page": 113,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "中。"
+   },
+   {
+    "page": 114,
+    "pstyle": "MS-PMincho@20",
+    "text": "朝"
+   },
+   {
+    "page": 114,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "天入夕、初"
+   },
+   {
+    "page": 114,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "朝覲駐也"
+   },
+   {
+    "page": 114,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "厥撫母。"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@20",
+    "text": "課"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@20",
+    "text": "十"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、化。"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 115,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、課"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@20",
+    "text": "課"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@20",
+    "text": "十"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@20",
+    "text": "六"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "反"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "非"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "具"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "累"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣"
+   },
+   {
+    "page": 116,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "一人舍民真課"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@20",
+    "text": "課"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "舉惟其吾主者"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而主"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之、、、"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "私甘施"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "其普之"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "物利、"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、、"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "也如仁"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。身也"
+   },
+   {
+    "page": 117,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@20",
+    "text": "課"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "捐"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@20",
+    "text": "十"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "義仁"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@20",
+    "text": "四"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "俠者"
+   },
+   {
+    "page": 118,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 119,
+    "pstyle": "MS-PMincho@20",
+    "text": "課"
+   },
+   {
+    "page": 119,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "非、四貨"
+   },
+   {
+    "page": 119,
+    "pstyle": "MS-PMincho@20",
+    "text": "十"
+   },
+   {
+    "page": 119,
+    "pstyle": "MS-PMincho@20",
+    "text": "三"
+   },
+   {
+    "page": 119,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 120,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "散。。之念色"
+   },
+   {
+    "page": 120,
+    "pstyle": "MS-PMincho@19.5",
+    "text": "章"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "故先抑且求食"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@20",
+    "text": "齋"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "曰天其食道色"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "齋而天後減生"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "屬於之天食、"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "真情之色"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、以"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主、需、"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "報以日於道"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之食色"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "性色、"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、、"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "憶沉色"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎淪為"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "先於累"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "天後者"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之天也"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "景、、"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則先不"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "幾天食"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "復日不"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎漸色"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "先蔽為"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "天塞樂"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣而者"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。不也"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣"
+   },
+   {
+    "page": 121,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@20",
+    "text": "齋"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則抑欲"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@20",
+    "text": "十"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "養"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "身"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "其"
+   },
+   {
+    "page": 122,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "心"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@20",
+    "text": "齋"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "嗜絕耳欲"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "輟妄心"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是不妄"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "不妄之"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "能思法"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "制、也"
+   },
+   {
+    "page": 123,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "嗜。"
+   },
+   {
+    "page": 124,
+    "pstyle": "MS-PMincho@20",
+    "text": "齋"
+   },
+   {
+    "page": 124,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "守不茹初也"
+   },
+   {
+    "page": 124,
+    "pstyle": "MS-PMincho@20",
+    "text": "八"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@20",
+    "text": "拜"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "障以順"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "吾蓋則。"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。念順乎"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "功"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "形是拜然"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "即、德"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "當性"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是也裡"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "為。也"
+   },
+   {
+    "page": 125,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "順。"
+   },
+   {
+    "page": 126,
+    "pstyle": "MS-PMincho@17",
+    "text": "拜"
+   },
+   {
+    "page": 126,
+    "pstyle": "MS-PMincho@17",
+    "text": "章"
+   },
+   {
+    "page": 127,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "坐首天頂"
+   },
+   {
+    "page": 127,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "礦木獸人"
+   },
+   {
+    "page": 128,
+    "pstyle": "MS-PMincho@17",
+    "text": "拜"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "聖是身夫拜"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@20",
+    "text": "拜"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "人故至拜必"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "：拜必、"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "心"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "虛"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "毋、"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "顧慢"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、主"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "毋而"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "搔慢"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "逆"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "首主"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、無也"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "謬"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "逆"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "禍"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "謬"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "不"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "登"
+   },
+   {
+    "page": 129,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@20",
+    "text": "拜"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "數、"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "儀夜"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而昏是"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "成禮也"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "所"
+   },
+   {
+    "page": 130,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@20",
+    "text": "念"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "時"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "昧我。。"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "際"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "念"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "動"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "思"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "而"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "非"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "念"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣"
+   },
+   {
+    "page": 131,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "又經念人人"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@20",
+    "text": "念"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "曰曰人以與"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "念"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "念真為無"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "物"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "毋主物間"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "二臨、也"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、人、"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "只"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、心物念"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "物"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "奉之於"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "事而非主"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "毋不主者"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "二見。、"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。人正"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "二以以"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之惟物示"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "云一為其"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "者念幻無"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、專、間"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "矣"
+   },
+   {
+    "page": 132,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "超聖夫本身念"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@20",
+    "text": "念"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎人念然之、"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎之之。"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "焉忘"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。吾"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "是無造之"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "本"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "原、之原"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "然"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "始本也"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "至"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "返然。"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "清"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "染"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "本"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "然"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "至"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "真"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "念"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "妄"
+   },
+   {
+    "page": 133,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 134,
+    "pstyle": "MS-PMincho@20",
+    "text": "念"
+   },
+   {
+    "page": 134,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "曰關正之天也鑑法"
+   },
+   {
+    "page": 134,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "存"
+   },
+   {
+    "page": 134,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "念又經凡念"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@20",
+    "text": "念"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主曰曰屬者"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無主行"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "過者、"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主主食理也"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "則之節"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "無。、"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "自。一、"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "我動"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "勤離"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "慎乎"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、道"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "自、"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "主心"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "祐念"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之不"
+   },
+   {
+    "page": 135,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "。忘"
+   },
+   {
+    "page": 136,
+    "pstyle": "MS-PMincho@17",
+    "text": "正"
+   },
+   {
+    "page": 137,
+    "pstyle": "MS-PMincho@20",
+    "text": "心"
+   },
+   {
+    "page": 137,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 137,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "有憶喜"
+   },
+   {
+    "page": 138,
+    "pstyle": "YuGothic-Regular@20",
+    "text": "內"
+   },
+   {
+    "page": 138,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、動微"
+   },
+   {
+    "page": 139,
+    "pstyle": "MS-PMincho@20",
+    "text": "外"
+   },
+   {
+    "page": 139,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 140,
+    "pstyle": "MS-PMincho@20",
+    "text": "愛"
+   },
+   {
+    "page": 140,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 141,
+    "pstyle": "MS-PMincho@20",
+    "text": "本"
+   },
+   {
+    "page": 141,
+    "pstyle": "MS-PMincho@20",
+    "text": "章"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@20",
+    "text": "原"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "天純"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、源"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "歸、自"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "之而"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "路返"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、焉"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "齋道"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "以、"
+   },
+   {
+    "page": 142,
+    "pstyle": "YuGothic-Regular@11/center",
+    "text": "絕而"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "返"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "乎"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "課其"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "以本"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "忘初"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "己也"
+   },
+   {
+    "page": 142,
+    "pstyle": "MS-PMincho@11/center",
+    "text": "、。"
+   },
+   {
+    "page": 143,
+    "pstyle": "MS-PMincho@16",
+    "text": "明"
+   },
+   {
+    "page": 143,
+    "pstyle": "MS-PMincho@16",
+    "text": "教教"
+   },
+   {
+    "page": 143,
+    "pstyle": "MS-PMincho@16",
+    "text": "用禮"
+   },
+   {
+    "page": 145,
+    "pstyle": "HGPGyoshotai@72/center",
+    "text": "五"
+   },
+   {
+    "page": 145,
+    "pstyle": "HGPGyoshotai@72/center",
+    "text": "功"
+   },
+   {
+    "page": 145,
+    "pstyle": "HGPGyoshotai@72/center",
+    "text": "釋"
+   },
+   {
+    "page": 145,
+    "pstyle": "HGPGyoshotai@72/center",
+    "text": "義"
+   },
+   {
+    "page": 145,
+    "pstyle": "HGPGyoshotai@36",
+    "text": "劉"
+   },
+   {
+    "page": 145,
+    "pstyle": "HGPGyoshotai@36",
+    "text": "智"
+   },
+   {
+    "page": 146,
+    "pstyle": "Gentium@28/center",
+    "text": "The Exposition"
+   },
+   {
+    "page": 146,
+    "pstyle": "Gentium@28",
+    "text": "of the Five Pillars of Islam"
+   },
+   {
+    "page": 146,
+    "pstyle": "Gentium@18/center",
+    "text": "by"
+   },
+   {
+    "page": 146,
+    "pstyle": "Gentium@18/center",
+    "text": "Liu Zhi"
+   },
+   {
+    "page": 146,
+    "pstyle": "Gentium@18/center",
+    "text": "Chinese Text"
+   }
+  ],
+  "toc_pages": [
+   5,
+   6,
+   7
+  ],
+  "toc_entries": [
+   {
+    "page": 5,
+    "text": "Foreword by Wang Genming (王根明)",
+    "label": "ix",
+    "target": 9
+   },
+   {
+    "page": 5,
+    "text": "Acknowledgment",
+    "label": "xxii",
+    "target": 22
+   },
+   {
+    "page": 5,
+    "text": "Introduction:  Liu Zhi’s Way of Islam",
+    "label": "xxiii",
+    "target": 23
+   },
+   {
+    "page": 5,
+    "text": "Introduction",
+    "label": "3",
+    "target": 23
+   },
+   {
+    "page": 5,
+    "text": "Chapter 1: The Origin",
+    "label": "5",
+    "target": 39
+   },
+   {
+    "page": 5,
+    "text": "Chapter 2: The Principle",
+    "label": "5",
+    "target": 39
+   },
+   {
+    "page": 5,
+    "text": "Chapter 3: Love and Aversion",
+    "label": "6",
+    "target": 40
+   },
+   {
+    "page": 5,
+    "text": "Chapter 4: The Outer Senses",
+    "label": "6",
+    "target": 40
+   },
+   {
+    "page": 5,
+    "text": "Chapter 5: The Inner Virtues",
+    "label": "7",
+    "target": 41
+   },
+   {
+    "page": 5,
+    "text": "Chapter 6: The Virtues of Heart and Nature",
+    "label": "7",
+    "target": 41
+   },
+   {
+    "page": 5,
+    "text": "Chapter 7: The Balanced State and Distorted Change",
+    "label": "8",
+    "target": 42
+   },
+   {
+    "page": 5,
+    "text": "Chapter 8: The Rite of Remembrance",
+    "label": "9",
+    "target": 43
+   },
+   {
+    "page": 5,
+    "text": "Chapter 9: The Law of Remembrance",
+    "label": "9",
+    "target": 43
+   },
+   {
+    "page": 5,
+    "text": "Chapter 10: The Meaning of Remembrance",
+    "label": "10",
+    "target": 44
+   },
+   {
+    "page": 5,
+    "text": "Chapter 11: The Principle of Remembrance",
+    "label": "10",
+    "target": 44
+   },
+   {
+    "page": 5,
+    "text": "Chapter 12: The Proof of Remembrance",
+    "label": "11",
+    "target": 45
+   },
+   {
+    "page": 5,
+    "text": "Chapter 13: The Rite of Worship",
+    "label": "12",
+    "target": 45
+   },
+   {
+    "page": 5,
+    "text": "Chapter 14: The Manner of Worship",
+    "label": "13",
+    "target": 46
+   },
+   {
+    "page": 5,
+    "text": "Chapter 15: The Essence of Worship",
+    "label": "13",
+    "target": 47
+   },
+   {
+    "page": 5,
+    "text": "Chapter 16: The Principle of Worship",
+    "label": "15",
+    "target": 48
+   },
+   {
+    "page": 5,
+    "text": "Chapter 17: The Proof of Worship",
+    "label": "15",
+    "target": 49
+   },
+   {
+    "page": 5,
+    "text": "Chapter 18: The Rite of Fasting",
+    "label": "16",
+    "target": 50
+   },
+   {
+    "page": 5,
+    "text": "Chapter 19: The Practice of Fasting",
+    "label": "17",
+    "target": 50
+   },
+   {
+    "page": 5,
+    "text": "Chapter 20: The Meaning of Fasting",
+    "label": "17",
+    "target": 51
+   },
+   {
+    "page": 5,
+    "text": "Chapter 21: The Principle of Fasting",
+    "label": "18",
+    "target": 51
+   },
+   {
+    "page": 6,
+    "text": "Chapter 22: The Proof of Fasting",
+    "label": "18",
+    "target": 52
+   },
+   {
+    "page": 6,
+    "text": "Chapter 23: The Rite of Almsgiving",
+    "label": "19",
+    "target": 52
+   },
+   {
+    "page": 6,
+    "text": "Chapter 24: The Practice of Almsgiving",
+    "label": "20",
+    "target": 53
+   },
+   {
+    "page": 6,
+    "text": "Chapter 25: The Meaning of Almsgiving",
+    "label": "20",
+    "target": 53
+   },
+   {
+    "page": 6,
+    "text": "Chapter 26: The Principle of Almsgiving",
+    "label": "21",
+    "target": 54
+   },
+   {
+    "page": 6,
+    "text": "Chapter 27: The Proof of Almsgiving",
+    "label": "21",
+    "target": 54
+   },
+   {
+    "page": 6,
+    "text": "Chapter 28: The Rite of Pilgrimage",
+    "label": "22",
+    "target": 55
+   },
+   {
+    "page": 6,
+    "text": "Chapter 29: The Practice of Pilgrimage",
+    "label": "23",
+    "target": 56
+   },
+   {
+    "page": 6,
+    "text": "Chapter 30: The Meaning of Pilgrimage",
+    "label": "24",
+    "target": 56
+   },
+   {
+    "page": 6,
+    "text": "Chapter 31: The Principle of Pilgrimage",
+    "label": "24",
+    "target": 57
+   },
+   {
+    "page": 6,
+    "text": "Chapter 32: The Proof of Pilgrimage",
+    "label": "25",
+    "target": 58
+   },
+   {
+    "page": 6,
+    "text": "Chapter 33: The Five Devotions",
+    "label": "26",
+    "target": 59
+   },
+   {
+    "page": 6,
+    "text": "Chapter 34: The Gatherings",
+    "label": "28",
+    "target": 60
+   },
+   {
+    "page": 6,
+    "text": "Chapter 35: The Counsel of Worship",
+    "label": "28",
+    "target": 61
+   },
+   {
+    "page": 6,
+    "text": "Chapter 36: The Measure of Worship",
+    "label": "29",
+    "target": 62
+   },
+   {
+    "page": 6,
+    "text": "Chapter 37: The Symbols of Worship",
+    "label": "29",
+    "target": 62
+   },
+   {
+    "page": 6,
+    "text": "Chapter 38: The Origins of Worship",
+    "label": "30",
+    "target": 63
+   },
+   {
+    "page": 6,
+    "text": "Chapter 39: Sincerity of Heart",
+    "label": "30",
+    "target": 63
+   },
+   {
+    "page": 6,
+    "text": "Chapter 40: The Five Symbols",
+    "label": "31",
+    "target": 63
+   },
+   {
+    "page": 6,
+    "text": "Chapter 41: The Gates of Virtue",
+    "label": "31",
+    "target": 64
+   },
+   {
+    "page": 6,
+    "text": "Chapter 42: Drought and Rain",
+    "label": "31",
+    "target": 64
+   },
+   {
+    "page": 6,
+    "text": "Chapter 43 : The Five Blessings",
+    "label": "31",
+    "target": 64
+   },
+   {
+    "page": 6,
+    "text": "Chapter 44: The Five Breaths",
+    "label": "32",
+    "target": 65
+   },
+   {
+    "page": 6,
+    "text": "Chapter 45: The Transformations",
+    "label": "32",
+    "target": 65
+   },
+   {
+    "page": 6,
+    "text": "Chapter 46: Unceasing Practice",
+    "label": "32",
+    "target": 65
+   },
+   {
+    "page": 6,
+    "text": "Chapter 47: The Whole Body",
+    "label": "33",
+    "target": 66
+   },
+   {
+    "page": 6,
+    "text": "Chapter 48: Belonging and Intent",
+    "label": "33",
+    "target": 66
+   },
+   {
+    "page": 6,
+    "text": "Chapter 49: Forgetfulness and Aspiration",
+    "label": "34",
+    "target": 67
+   },
+   {
+    "page": 6,
+    "text": "Chapter 50: The Opening of the Senses",
+    "label": "34",
+    "target": 67
+   },
+   {
+    "page": 6,
+    "text": "Chapter 51: The Effects of Devotion",
+    "label": "35",
+    "target": 68
+   },
+   {
+    "page": 6,
+    "text": "Chapter 52: The Three Ultimates",
+    "label": "36",
+    "target": 69
+   },
+   {
+    "page": 6,
+    "text": "Chapter 53: The Symbols of Law",
+    "label": "37",
+    "target": 70
+   },
+   {
+    "page": 6,
+    "text": "Chapter 54: The Constant Virtue",
+    "label": "37",
+    "target": 70
+   },
+   {
+    "page": 6,
+    "text": "Chapter 55: The Role and Power of the Five Pillars",
+    "label": "38",
+    "target": 71
+   },
+   {
+    "page": 7,
+    "text": "Chapter 56: The Universal Principle",
+    "label": "38",
+    "target": 71
+   },
+   {
+    "page": 7,
+    "text": "Chapter 57: The Sacred Law",
+    "label": "38",
+    "target": 71
+   },
+   {
+    "page": 7,
+    "text": "Chapter 58: The Ladder of Law",
+    "label": "39",
+    "target": 72
+   },
+   {
+    "page": 7,
+    "text": "Chapter 59: Simplicity and Depth",
+    "label": "39",
+    "target": 72
+   },
+   {
+    "page": 7,
+    "text": "Chapter 60: Position and Nurture",
+    "label": "39",
+    "target": 72
+   },
+   {
+    "page": 7,
+    "text": "Chapter 61: The Sacred and the Common",
+    "label": "40",
+    "target": 73
+   },
+   {
+    "page": 7,
+    "text": "Chapter 62: Loyalty and Filial Piety",
+    "label": "40",
+    "target": 73
+   },
+   {
+    "page": 7,
+    "text": "Chinese Text",
+    "label": "112",
+    "target": 146
+   }
+  ],
+  "toc_witness_table": [
+   {
+    "outline": "Foreword",
+    "level": 1,
+    "target": 9,
+    "printed": "Foreword by Wang Genming (王根明)",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Acknowledgment",
+    "level": 2,
+    "target": 22,
+    "printed": "Acknowledgment",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Introduction:  \nLiu Zhi’s Way of Islam",
+    "level": 2,
+    "target": 23,
+    "printed": "Introduction:  Liu Zhi’s Way of Islam",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Exposition of the \nFive Pillars of Islam",
+    "level": 2,
+    "target": 37,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Introduction",
+    "level": 2,
+    "target": 37,
+    "printed": "Introduction:  Liu Zhi’s Way of Islam",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 1: The Origin",
+    "level": 2,
+    "target": 39,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 2: The Principle",
+    "level": 2,
+    "target": 39,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 3: Love and Aversion",
+    "level": 2,
+    "target": 40,
+    "printed": "Chapter 3: Love and Aversion",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 4: The Outer Senses",
+    "level": 2,
+    "target": 40,
+    "printed": "Chapter 4: The Outer Senses",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 5: The Inner Virtues",
+    "level": 2,
+    "target": 41,
+    "printed": "Chapter 5: The Inner Virtues",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 6: The Virtues \nof Heart and Nature",
+    "level": 2,
+    "target": 41,
+    "printed": "Chapter 6: The Virtues of Heart and Nature",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 7: The Balanced State \nand Distorted Change",
+    "level": 2,
+    "target": 42,
+    "printed": "Chapter 7: The Balanced State and Distorted Change",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 8: The Rite of Remembrance",
+    "level": 2,
+    "target": 43,
+    "printed": "Chapter 8: The Rite of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 9: The Law of Remembrance",
+    "level": 2,
+    "target": 43,
+    "printed": "Chapter 9: The Law of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 10: The Meaning \nof Remembrance",
+    "level": 2,
+    "target": 44,
+    "printed": "Chapter 10: The Meaning of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 11: The Principle \nof Remembrance",
+    "level": 2,
+    "target": 44,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 12: The Proof of Remembrance",
+    "level": 2,
+    "target": 45,
+    "printed": "Chapter 12: The Proof of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 13: The Rite of Worship",
+    "level": 2,
+    "target": 46,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 14: The Manner of Worship",
+    "level": 2,
+    "target": 47,
+    "printed": "Chapter 14: The Manner of Worship",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 15: The Essence of Worship",
+    "level": 2,
+    "target": 47,
+    "printed": "Chapter 15: The Essence of Worship",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 16: The Principle of Worship",
+    "level": 2,
+    "target": 49,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 17: The Proof of Worship",
+    "level": 2,
+    "target": 49,
+    "printed": "Chapter 12: The Proof of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 18: The Rite of Fasting",
+    "level": 2,
+    "target": 50,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 19: The Practice of Fasting",
+    "level": 2,
+    "target": 51,
+    "printed": "Chapter 19: The Practice of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 20: The Meaning of Fasting",
+    "level": 2,
+    "target": 51,
+    "printed": "Chapter 10: The Meaning of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 21: The Principle of Fasting",
+    "level": 2,
+    "target": 52,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 22: The Proof of Fasting",
+    "level": 2,
+    "target": 52,
+    "printed": "Chapter 22: The Proof of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 23: The Rite of Almsgiving",
+    "level": 2,
+    "target": 53,
+    "printed": "Chapter 23: The Rite of Almsgiving",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 24: The Practice of Almsgiving",
+    "level": 2,
+    "target": 54,
+    "printed": "Chapter 19: The Practice of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 25: The Meaning of Almsgiving",
+    "level": 2,
+    "target": 54,
+    "printed": "Chapter 20: The Meaning of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 26: The Principle of Almsgiving",
+    "level": 2,
+    "target": 55,
+    "printed": "Chapter 2: The Principle",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 27: The Proof of Almsgiving",
+    "level": 2,
+    "target": 55,
+    "printed": "Chapter 22: The Proof of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 28: The Rite of Pilgrimage",
+    "level": 2,
+    "target": 56,
+    "printed": "Chapter 8: The Rite of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 29: The Practice of Pilgrimage",
+    "level": 2,
+    "target": 57,
+    "printed": "Chapter 19: The Practice of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 30: The Meaning of Pilgrimage",
+    "level": 2,
+    "target": 58,
+    "printed": "Chapter 10: The Meaning of Remembrance",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 31: The Principle of Pilgrimage",
+    "level": 2,
+    "target": 58,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 32: The Proof of Pilgrimage",
+    "level": 2,
+    "target": 59,
+    "printed": "Chapter 22: The Proof of Fasting",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 33: The Five Devotions",
+    "level": 2,
+    "target": 60,
+    "printed": "Chapter 33: The Five Devotions",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 34: The Gatherings",
+    "level": 2,
+    "target": 62,
+    "printed": "Chapter 34: The Gatherings",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 35: The Counsel of Worship",
+    "level": 2,
+    "target": 62,
+    "printed": "Chapter 35: The Counsel of Worship",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 36: The Measure of Worship",
+    "level": 2,
+    "target": 63,
+    "printed": "Chapter 36: The Measure of Worship",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 37: The Symbols of Worship",
+    "level": 2,
+    "target": 63,
+    "printed": "Chapter 37: The Symbols of Worship",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 38: The Origins of Worship",
+    "level": 2,
+    "target": 64,
+    "printed": "Chapter 1: The Origin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 39: Sincerity of Heart",
+    "level": 2,
+    "target": 64,
+    "printed": "Chapter 39: Sincerity of Heart",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 40: The Five Symbols",
+    "level": 2,
+    "target": 65,
+    "printed": "Chapter 40: The Five Symbols",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 41: The Gates of Virtue",
+    "level": 2,
+    "target": 65,
+    "printed": "Chapter 34: The Gatherings",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 42: Drought and Rain",
+    "level": 2,
+    "target": 65,
+    "printed": "Chapter 42: Drought and Rain",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 43 : The Five Blessings",
+    "level": 2,
+    "target": 65,
+    "printed": "Chapter 40: The Five Symbols",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 44: The Five Breaths",
+    "level": 2,
+    "target": 66,
+    "printed": "Chapter 43 : The Five Blessings",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 45: The Transformations",
+    "level": 2,
+    "target": 66,
+    "printed": "Chapter 45: The Transformations",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 46: Unceasing Practice",
+    "level": 2,
+    "target": 66,
+    "printed": "Chapter 46: Unceasing Practice",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 47: The Whole Body",
+    "level": 2,
+    "target": 67,
+    "printed": "Chapter 47: The Whole Body",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 48: Belonging and Intent",
+    "level": 2,
+    "target": 67,
+    "printed": "Chapter 48: Belonging and Intent",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 49: Forgetfulness \nand Aspiration",
+    "level": 2,
+    "target": 68,
+    "printed": "Chapter 49: Forgetfulness and Aspiration",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 50: The Opening of the Senses",
+    "level": 2,
+    "target": 68,
+    "printed": "Chapter 50: The Opening of the Senses",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 51: The Effects of Devotion",
+    "level": 2,
+    "target": 69,
+    "printed": "Chapter 51: The Effects of Devotion",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 52: The Three Ultimates",
+    "level": 2,
+    "target": 70,
+    "printed": "Chapter 52: The Three Ultimates",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 53: The Symbols of Law",
+    "level": 2,
+    "target": 71,
+    "printed": "Chapter 37: The Symbols of Worship",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 54: The Constant Virtue",
+    "level": 2,
+    "target": 71,
+    "printed": "Chapter 54: The Constant Virtue",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 55: The Role \nand Power of the Five Pillars",
+    "level": 2,
+    "target": 72,
+    "printed": "Chapter 55: The Role and Power of the Five Pillars",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 56: The Universal Principle",
+    "level": 2,
+    "target": 72,
+    "printed": "Chapter 56: The Universal Principle",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 57: The Sacred Law",
+    "level": 2,
+    "target": 72,
+    "printed": "Chapter 57: The Sacred Law",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 58: The Ladder of Law",
+    "level": 2,
+    "target": 73,
+    "printed": "Chapter 58: The Ladder of Law",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 59: Simplicity and Depth",
+    "level": 2,
+    "target": 73,
+    "printed": "Chapter 59: Simplicity and Depth",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 60: Position and Nurture",
+    "level": 2,
+    "target": 73,
+    "printed": "Chapter 60: Position and Nurture",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 61: The Sacred \nand the Common",
+    "level": 2,
+    "target": 74,
+    "printed": "Chapter 57: The Sacred Law",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 62: Loyalty and Filial Piety",
+    "level": 2,
+    "target": 74,
+    "printed": "Chapter 62: Loyalty and Filial Piety",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 63: Tawhid",
+    "level": 2,
+    "target": 75,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chinese Text",
+    "level": 2,
+    "target": 77,
+    "printed": "Chinese Text",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chinese Text",
+    "level": 2,
+    "target": 146,
+    "printed": "Chinese Text",
+    "heading_on_target": true
+   }
+  ],
+  "toc_source_proposal": "outline",
+  "footnote_pages": [
+   38,
+   43
+  ],
+  "footnote_marker_census": {
+   "digit": 8
+  },
+  "footnote_samples": [
+   {
+    "page": 38,
+    "text": "1.  Numbers of Heaven refer to odd numbers, namely 1,3,5,7,9. 2.  Numbers of Earth refer to even numbers, namely 2,4,6,8,10. 3.  The sum of the number"
+   },
+   {
+    "page": 43,
+    "text": "4.  Based on Quran 3:191. 5.  Quran 2:152."
+   }
+  ],
+  "footnote_policy_proposal": "none",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 12.5,
+  "indent_histogram": {
+   "6": 4,
+   "7": 2,
+   "8": 26,
+   "9": 149,
+   "15": 5,
+   "16": 2,
+   "17": 32,
+   "18": 204,
+   "19": 6,
+   "20": 2,
+   "26": 2,
+   "27": 75,
+   "30": 1,
+   "51": 1
+  },
+  "indent_threshold_proposal": 6.8,
+  "eol_hyphen_count": 7,
+  "lost_space_count": 0,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [
+   9,
+   23,
+   37,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   62,
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   75,
+   145
+  ],
+  "pua_census": [],
+  "cjk_pages": [
+   {
+    "page": 5,
+    "chars": 3,
+    "vertical_lines": 0
+   },
+   {
+    "page": 9,
+    "chars": 62,
+    "vertical_lines": 0
+   },
+   {
+    "page": 10,
+    "chars": 131,
+    "vertical_lines": 0
+   },
+   {
+    "page": 11,
+    "chars": 155,
+    "vertical_lines": 0
+   },
+   {
+    "page": 12,
+    "chars": 117,
+    "vertical_lines": 0
+   },
+   {
+    "page": 13,
+    "chars": 4,
+    "vertical_lines": 0
+   },
+   {
+    "page": 14,
+    "chars": 26,
+    "vertical_lines": 0
+   },
+   {
+    "page": 18,
+    "chars": 4,
+    "vertical_lines": 0
+   },
+   {
+    "page": 19,
+    "chars": 149,
+    "vertical_lines": 0
+   },
+   {
+    "page": 20,
+    "chars": 46,
+    "vertical_lines": 0
+   },
+   {
+    "page": 21,
+    "chars": 62,
+    "vertical_lines": 0
+   },
+   {
+    "page": 22,
+    "chars": 14,
+    "vertical_lines": 0
+   },
+   {
+    "page": 23,
+    "chars": 4,
+    "vertical_lines": 0
+   },
+   {
+    "page": 26,
+    "chars": 6,
+    "vertical_lines": 0
+   },
+   {
+    "page": 28,
+    "chars": 1,
+    "vertical_lines": 0
+   },
+   {
+    "page": 30,
+    "chars": 3,
+    "vertical_lines": 0
+   },
+   {
+    "page": 31,
+    "chars": 3,
+    "vertical_lines": 0
+   },
+   {
+    "page": 32,
+    "chars": 2,
+    "vertical_lines": 0
+   },
+   {
+    "page": 79,
+    "chars": 220,
+    "vertical_lines": 23
+   },
+   {
+    "page": 80,
+    "chars": 115,
+    "vertical_lines": 14
+   },
+   {
+    "page": 81,
+    "chars": 158,
+    "vertical_lines": 16
+   },
+   {
+    "page": 82,
+    "chars": 91,
+    "vertical_lines": 10
+   },
+   {
+    "page": 83,
+    "chars": 102,
+    "vertical_lines": 12
+   },
+   {
+    "page": 84,
+    "chars": 89,
+    "vertical_lines": 16
+   },
+   {
+    "page": 85,
+    "chars": 64,
+    "vertical_lines": 11
+   },
+   {
+    "page": 86,
+    "chars": 73,
+    "vertical_lines": 9
+   },
+   {
+    "page": 87,
+    "chars": 78,
+    "vertical_lines": 10
+   },
+   {
+    "page": 88,
+    "chars": 48,
+    "vertical_lines": 8
+   },
+   {
+    "page": 89,
+    "chars": 253,
+    "vertical_lines": 21
+   },
+   {
+    "page": 90,
+    "chars": 67,
+    "vertical_lines": 9
+   },
+   {
+    "page": 91,
+    "chars": 266,
+    "vertical_lines": 21
+   },
+   {
+    "page": 92,
+    "chars": 271,
+    "vertical_lines": 24
+   },
+   {
+    "page": 93,
+    "chars": 136,
+    "vertical_lines": 15
+   },
+   {
+    "page": 94,
+    "chars": 180,
+    "vertical_lines": 10
+   },
+   {
+    "page": 95,
+    "chars": 70,
+    "vertical_lines": 7
+   },
+   {
+    "page": 96,
+    "chars": 183,
+    "vertical_lines": 16
+   },
+   {
+    "page": 97,
+    "chars": 45,
+    "vertical_lines": 7
+   },
+   {
+    "page": 98,
+    "chars": 49,
+    "vertical_lines": 8
+   },
+   {
+    "page": 99,
+    "chars": 23,
+    "vertical_lines": 5
+   },
+   {
+    "page": 100,
+    "chars": 42,
+    "vertical_lines": 8
+   },
+   {
+    "page": 101,
+    "chars": 55,
+    "vertical_lines": 9
+   },
+   {
+    "page": 102,
+    "chars": 69,
+    "vertical_lines": 13
+   },
+   {
+    "page": 103,
+    "chars": 130,
+    "vertical_lines": 19
+   },
+   {
+    "page": 104,
+    "chars": 83,
+    "vertical_lines": 12
+   },
+   {
+    "page": 105,
+    "chars": 71,
+    "vertical_lines": 12
+   },
+   {
+    "page": 106,
+    "chars": 179,
+    "vertical_lines": 18
+   },
+   {
+    "page": 107,
+    "chars": 170,
+    "vertical_lines": 24
+   },
+   {
+    "page": 108,
+    "chars": 117,
+    "vertical_lines": 13
+   },
+   {
+    "page": 109,
+    "chars": 420,
+    "vertical_lines": 25
+   },
+   {
+    "page": 110,
+    "chars": 330,
+    "vertical_lines": 25
+   },
+   {
+    "page": 111,
+    "chars": 269,
+    "vertical_lines": 16
+   },
+   {
+    "page": 112,
+    "chars": 236,
+    "vertical_lines": 17
+   },
+   {
+    "page": 113,
+    "chars": 140,
+    "vertical_lines": 12
+   },
+   {
+    "page": 114,
+    "chars": 195,
+    "vertical_lines": 21
+   },
+   {
+    "page": 115,
+    "chars": 153,
+    "vertical_lines": 13
+   },
+   {
+    "page": 116,
+    "chars": 118,
+    "vertical_lines": 14
+   },
+   {
+    "page": 117,
+    "chars": 101,
+    "vertical_lines": 12
+   },
+   {
+    "page": 118,
+    "chars": 109,
+    "vertical_lines": 12
+   },
+   {
+    "page": 119,
+    "chars": 179,
+    "vertical_lines": 14
+   },
+   {
+    "page": 120,
+    "chars": 179,
+    "vertical_lines": 16
+   },
+   {
+    "page": 121,
+    "chars": 132,
+    "vertical_lines": 11
+   },
+   {
+    "page": 122,
+    "chars": 149,
+    "vertical_lines": 16
+   },
+   {
+    "page": 123,
+    "chars": 158,
+    "vertical_lines": 15
+   },
+   {
+    "page": 124,
+    "chars": 96,
+    "vertical_lines": 11
+   },
+   {
+    "page": 125,
+    "chars": 217,
+    "vertical_lines": 14
+   },
+   {
+    "page": 126,
+    "chars": 280,
+    "vertical_lines": 16
+   },
+   {
+    "page": 127,
+    "chars": 167,
+    "vertical_lines": 14
+   },
+   {
+    "page": 128,
+    "chars": 154,
+    "vertical_lines": 16
+   },
+   {
+    "page": 129,
+    "chars": 139,
+    "vertical_lines": 10
+   },
+   {
+    "page": 130,
+    "chars": 215,
+    "vertical_lines": 15
+   },
+   {
+    "page": 131,
+    "chars": 166,
+    "vertical_lines": 17
+   },
+   {
+    "page": 132,
+    "chars": 120,
+    "vertical_lines": 15
+   },
+   {
+    "page": 133,
+    "chars": 98,
+    "vertical_lines": 14
+   },
+   {
+    "page": 134,
+    "chars": 114,
+    "vertical_lines": 11
+   },
+   {
+    "page": 135,
+    "chars": 90,
+    "vertical_lines": 11
+   },
+   {
+    "page": 136,
+    "chars": 346,
+    "vertical_lines": 16
+   },
+   {
+    "page": 137,
+    "chars": 116,
+    "vertical_lines": 8
+   },
+   {
+    "page": 138,
+    "chars": 134,
+    "vertical_lines": 11
+   },
+   {
+    "page": 139,
+    "chars": 89,
+    "vertical_lines": 13
+   },
+   {
+    "page": 140,
+    "chars": 122,
+    "vertical_lines": 14
+   },
+   {
+    "page": 141,
+    "chars": 210,
+    "vertical_lines": 13
+   },
+   {
+    "page": 142,
+    "chars": 99,
+    "vertical_lines": 11
+   },
+   {
+    "page": 143,
+    "chars": 88,
+    "vertical_lines": 11
+   },
+   {
+    "page": 144,
+    "chars": 344,
+    "vertical_lines": 26
+   },
+   {
+    "page": 145,
+    "chars": 6,
+    "vertical_lines": 5
+   }
+  ],
+  "figure_pages_proposal": [
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119,
+   120,
+   121,
+   122,
+   123,
+   124,
+   125,
+   126,
+   127,
+   128,
+   129,
+   130,
+   131,
+   132,
+   133,
+   134,
+   135,
+   136,
+   137,
+   138,
+   139,
+   140,
+   141,
+   142,
+   143,
+   144
+  ],
+  "rtl_chars": 2,
+  "column_suspect_pages": [],
+  "low_agreement_pages": [
+   {
+    "page": 79,
+    "score": 37.2
+   },
+   {
+    "page": 80,
+    "score": 38.9
+   },
+   {
+    "page": 81,
+    "score": 66.1
+   },
+   {
+    "page": 82,
+    "score": 69.6
+   },
+   {
+    "page": 83,
+    "score": 64.4
+   },
+   {
+    "page": 84,
+    "score": 38.2
+   },
+   {
+    "page": 85,
+    "score": 76.6
+   },
+   {
+    "page": 86,
+    "score": 70.1
+   },
+   {
+    "page": 87,
+    "score": 77.5
+   },
+   {
+    "page": 88,
+    "score": 75.6
+   },
+   {
+    "page": 89,
+    "score": 55.7
+   },
+   {
+    "page": 90,
+    "score": 72.0
+   },
+   {
+    "page": 91,
+    "score": 44.3
+   },
+   {
+    "page": 92,
+    "score": 54.5
+   },
+   {
+    "page": 93,
+    "score": 68.3
+   },
+   {
+    "page": 94,
+    "score": 71.4
+   },
+   {
+    "page": 95,
+    "score": 75.0
+   },
+   {
+    "page": 96,
+    "score": 37.4
+   },
+   {
+    "page": 97,
+    "score": 72.0
+   },
+   {
+    "page": 98,
+    "score": 82.5
+   },
+   {
+    "page": 99,
+    "score": 77.9
+   },
+   {
+    "page": 100,
+    "score": 77.2
+   },
+   {
+    "page": 101,
+    "score": 68.3
+   },
+   {
+    "page": 102,
+    "score": 50.5
+   },
+   {
+    "page": 103,
+    "score": 45.7
+   },
+   {
+    "page": 104,
+    "score": 55.2
+   },
+   {
+    "page": 105,
+    "score": 66.2
+   },
+   {
+    "page": 106,
+    "score": 38.2
+   },
+   {
+    "page": 107,
+    "score": 41.5
+   },
+   {
+    "page": 108,
+    "score": 54.5
+   },
+   {
+    "page": 109,
+    "score": 37.3
+   },
+   {
+    "page": 110,
+    "score": 28.1
+   },
+   {
+    "page": 111,
+    "score": 32.2
+   },
+   {
+    "page": 112,
+    "score": 28.7
+   },
+   {
+    "page": 113,
+    "score": 34.0
+   },
+   {
+    "page": 114,
+    "score": 30.7
+   },
+   {
+    "page": 115,
+    "score": 33.6
+   },
+   {
+    "page": 116,
+    "score": 35.4
+   },
+   {
+    "page": 117,
+    "score": 37.2
+   },
+   {
+    "page": 118,
+    "score": 34.5
+   },
+   {
+    "page": 119,
+    "score": 32.4
+   },
+   {
+    "page": 120,
+    "score": 30.1
+   },
+   {
+    "page": 121,
+    "score": 36.6
+   },
+   {
+    "page": 122,
+    "score": 30.5
+   },
+   {
+    "page": 123,
+    "score": 32.6
+   },
+   {
+    "page": 124,
+    "score": 33.5
+   },
+   {
+    "page": 125,
+    "score": 32.2
+   },
+   {
+    "page": 126,
+    "score": 30.2
+   },
+   {
+    "page": 127,
+    "score": 31.0
+   },
+   {
+    "page": 128,
+    "score": 27.1
+   },
+   {
+    "page": 129,
+    "score": 42.3
+   },
+   {
+    "page": 130,
+    "score": 31.4
+   },
+   {
+    "page": 131,
+    "score": 38.6
+   },
+   {
+    "page": 132,
+    "score": 38.8
+   },
+   {
+    "page": 133,
+    "score": 43.0
+   },
+   {
+    "page": 134,
+    "score": 34.2
+   },
+   {
+    "page": 135,
+    "score": 42.0
+   },
+   {
+    "page": 136,
+    "score": 28.8
+   },
+   {
+    "page": 137,
+    "score": 40.6
+   },
+   {
+    "page": 138,
+    "score": 40.1
+   },
+   {
+    "page": 139,
+    "score": 31.9
+   },
+   {
+    "page": 140,
+    "score": 33.9
+   },
+   {
+    "page": 141,
+    "score": 31.2
+   },
+   {
+    "page": 142,
+    "score": 48.4
+   },
+   {
+    "page": 143,
+    "score": 39.6
+   },
+   {
+    "page": 144,
+    "score": 29.6
+   }
+  ],
+  "image_only_pages": [
+   33
+  ],
+  "cover_proposal": {
+   "mode": "synthesize",
+   "reason": "page 1 is text (29 chars, 0 images) — no cover in PDF"
+  },
+  "flagged_pages": [
+   1,
+   5,
+   6,
+   7,
+   9,
+   23,
+   33,
+   37,
+   38,
+   43,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88
+  ],
+  "warnings": []
+ }
+}

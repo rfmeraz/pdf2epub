@@ -162,10 +162,13 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
                   [f"{agree.matched}/{agree.source_total} source entries in nav "
                    f"(nav extra: {agree.nav_extra})"] + agree.missing[:6]))
 
-    # ---- gate 8: furniture leak
+    # ---- gate 8: furniture leak (toc-entry <p>s legitimately mirror the
+    # running-head text — they ARE the heading titles)
+    _skip_cls = ("toc-entry", "titletext", "contents-head")
     para_texts = [" ".join(p.itertext()) for d in body_docs
-                  for p in d.root.iter(f"{_X}p")]
-    leaks = pdfchecks.check_furniture_leak(para_texts, gt.furniture_templates)
+                  for p in d.root.iter(f"{_X}p")
+                  if not any(c in (p.get("class") or "") for c in _skip_cls)]
+    leaks = pdfchecks.check_furniture_leak(para_texts, gt.furniture_templates, cfg.title)
     gates.append(("8 furniture leak", not leaks, leaks[:6]))
 
     # ---- gate 9: hyphen residue — measured against the ground truth's own

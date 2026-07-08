@@ -71,14 +71,20 @@ def check_toc_agreement(nav_entries: list[tuple[int, str]],
 
 
 def check_furniture_leak(paragraph_texts: list[str],
-                         furniture_templates: set[str]) -> list[str]:
-    """Spine paragraphs that ARE furniture or printer slugs. Gates at zero."""
+                         furniture_templates: set[str],
+                         book_title: str = "") -> list[str]:
+    """Spine paragraphs that ARE furniture or printer slugs. Gates at zero.
+    The book title is exempt: half-title/title pages legitimately repeat the
+    exact text the running heads carry."""
     from ..analyze import furniture_template
 
+    title_fold = _fold(book_title) if book_title else None
     leaks = []
     for t in paragraph_texts:
         ts = t.strip()
         if not ts or len(ts) > 120:
+            continue
+        if title_fold and _fold(ts) == title_fold:
             continue
         if furniture_template(ts) in furniture_templates:
             leaks.append(ts[:80])

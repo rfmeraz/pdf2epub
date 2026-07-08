@@ -1,0 +1,146 @@
+# The Harmonious Unity — final judgments (agent conversion, 2026-07-07).
+# PDF-ONLY conversion of idml2epub's test book; that pipeline's committed EPUB
+# is the qa --reference benchmark (never an input). Metadata judgments mirror
+# the idml2epub book.yaml (the worked example for this same title).
+
+source:
+  folder: "package"
+  pdf: "Harmonious Unity EBOOK.pdf"
+  sha256: "53e5953d23a8b16ab122f084ee4f609fee33838028f862662569c56c5550b687"
+
+metadata:
+  title: "The Harmonious Unity"
+  subtitle: "Liu Zhi's Sino-Islamic Interpretation of the Five-Fold Path"
+  creators:
+    - {name: "Liu Zhi", role: aut}
+    - {name: "Naoki Yamamoto", role: trl}
+    - {name: "Wang Genming", role: aui}   # foreword
+  publisher: "Fons Vitae"
+  language: en
+  additional_languages: [zh]
+  isbn_epub:                       # none assigned; urn:uuid ships — FLAGGED
+  isbn_print: "979-889640-0141"
+  date: "2026"
+  cover: assets/cover.jpg
+  cover_synthesize: true           # NO cover in the PDF (p.1 is a text
+                                   # half-title, zero images) — FLAGGED
+  accessibility_summary: >
+    Reflowable EPUB with structural navigation and a page list matching the
+    print edition. The classical Chinese source text is reproduced as page
+    images of the original vertical typesetting, with descriptive
+    alternative text.
+
+pages:
+  cover: []
+  front: {first: 1, last: 34}      # roman folios; arabic '1' at physical 35
+  body:  {first: 35, last: 152}
+  exclude: []
+  label_source: pdf-page-labels    # the one clean /PageLabels book of the four
+  label_overrides: {}
+  role_overrides:
+    - {page: 1, role: half-title}
+    - {page: 2, role: title-page}
+    - {page: 3, role: p}           # copyright
+
+furniture:
+  top_band: 0
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+
+styles:
+  body_pstyle: "Gentium@11"
+  pstyle_map:
+    "Gentium@11":                    {role: p}
+    "Gentium@11/center":             {role: h3}
+    "Gentium-Italic@11":             {role: p}
+    "Gentium-Italic@11/center":      {role: h3}
+    "Gentium@18/center":             {role: h1}   # chapter heads
+    "Gentium@18":                    {role: h1}
+    "Gentium@28/center":             {role: title-page}
+    "Gentium@28":                    {role: title-page}
+    "Gentium@31.5":                  {role: p}    # drop caps (reattached)
+    "Gentium@9":                     {role: footnote}
+    "Gentium@10":                    {role: p}
+    "Gentium@10/center":             {role: p}
+    "Gentium-SC700@7.5/center":      {role: drop} # running heads (small caps)
+    "Gentium-SC700@8.5/center":      {role: h3}   # subtitle lines
+    "Gentium-SC700@8.5":             {role: h3}
+    "Gentium-Italic-SC700@8.5/center": {role: h3}
+    "MS-PMincho@11":                 {role: p}
+    "MS-PMincho@11/center":          {role: p}
+    "MS-PMincho@10":                 {role: p}
+    "MS-PMincho@10/center":          {role: p}
+    "MS-PMincho@9.5":                {role: p}
+    "MS-PMincho@9.5/center":         {role: p}
+    "MS-PMincho@16":                 {role: p}
+    "MS-PMincho@17":                 {role: p}
+    "MS-PMincho@19.5":               {role: p}
+    "MS-PMincho@20":                 {role: p}
+    "MS-Mincho@11":                  {role: p}
+    "MS-Mincho@17":                  {role: p}
+    "MS-Mincho@18":                  {role: p}
+    "MS-Mincho@18.5":                {role: p}
+    "MS-Mincho@20":                  {role: p}
+    "YuGothic-Regular@11":           {role: p}
+    "YuGothic-Regular@10":           {role: p}
+    "ArialUnicodeMS@10":             {role: p}
+    "HGPGyoshotai@72/center":        {role: title-page}
+    "HGPGyoshotai@36":               {role: title-page}
+  charstyles: {}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 6.8
+  gap_factor: 1.6
+  dehyphenate: lower-only
+  restore_spaces: false
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides:
+    - {page: 5, line: 5, action: drop, note: "part-header divider inside the printed Contents; as h3 it shadowed the real part opener for ordercheck"}
+    - {page: 7, line: 10, action: drop, note: "same part-header repeated on the second Contents page (label vii)"}
+
+footnotes: {policy: none, marker: digits}   # translated text uses inline notes
+
+toc:
+  source: outline            # 70 bookmarks; 68 links + printed TOC corroborate
+  printed_pages: [5, 6, 7]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:
+  pua_map: {}                # analyzer: none found
+  fail_on_unmapped_pua: true
+  gt_strip_phrases: []
+
+fonts:
+  embed:
+    - {family: "Noto Serif CJK SC",
+       file: "/usr/share/fonts/google-noto-serif-cjk-fonts/NotoSerifCJK-Regular.ttc",
+       script: cjk, lang: zh}   # inline CJK in front matter/body stays live;
+                                # MS Mincho/Arial Unicode are proprietary
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages:
+    - pages: [33]
+      alt_template: "Calligraphy plate: the five Chinese characters of the Five Pillars — 念 (remembrance), 禮 (ritual prayer), 齋 (fasting), 課 (dues), 朝 (pilgrimage) — arranged in a circle"
+    # The classical Chinese source text (vertical typesetting, mirror-bound:
+    # the section reads back-to-front in physical order — same known
+    # limitation as the idml2epub reference EPUB; FLAGGED)
+    - pages: ["79-145"]
+      alt_template: "Original vertical Chinese text of The Exposition of the Five Pillars of Islam, printed page {label}"
+      lang: zh
+
+output: {slug: harmonious-unity, include_ncx: true}

@@ -1,0 +1,126 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+source:
+  folder: "package"
+  pdf: "Harmonious Unity EBOOK.pdf"
+  sha256: "53e5953d23a8b16ab122f084ee4f609fee33838028f862662569c56c5550b687"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> urn:uuid (flagged)
+  isbn_print:
+  date:
+  cover: assets/cover.jpg     # produced by cover_synthesize at build time
+  cover_synthesize: true      # no cover in the PDF — flagged in handoff
+  # cover evidence: page 1 is text (29 chars, 0 images) — no cover in PDF
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: []
+  front: {first: 1, last: 1}   # FILL-ME-IN: no arabic folio '1' found
+  body:  {first: 2, last: 152}   # FILL-ME-IN
+  exclude: []
+  label_source: pdf-page-labels   # folio-vs-label agreement: 98.5%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 47.2
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 19p): '#u Zh#'
+  # repeated (top, 19p): 'The Exposition of the Five Pillars of Isla#'
+  # repeated (top, 11p): 'The Harmonious Unity'
+  # repeated (top, 5p): 'Forewor#'
+  # repeated (top, 4p): "#ntroduction: Liu Zhi's Way of Isla#"
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "Gentium@11"
+  pstyle_map:
+    "Gentium@11": {role: p}   # high: dominant text cluster
+    "MS-PMincho@11": {role: p}   # low: body-like
+    "Gentium@11/center": {role: h3}   # low: centered, body-sized
+    "Gentium-Italic@11": {role: p}   # low: body-like
+    "MS-PMincho@10": {role: p}   # low: smaller than body (10.0pt)
+    "Gentium@18/center": {role: h1}   # medium: size 18.0pt >= 1.35x body
+    "MS-PMincho@9.5": {role: p}   # low: smaller than body (9.5pt)
+    "MS-PMincho@11/center": {role: h3}   # low: centered, body-sized
+    "Gentium-SC700@7.5/center": {role: footnote}   # low: small (7.5pt), frequent
+    "Gentium-Italic@11/center": {role: h3}   # low: centered, body-sized
+    "Gentium@18": {role: h1}   # medium: size 18.0pt >= 1.35x body
+    "Gentium-SC700@8.5/center": {role: footnote}   # low: small (8.5pt), frequent
+    "Gentium@9": {role: p}   # low: smaller than body (9.0pt)
+    "Gentium@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "MS-Mincho@20": {role: title-page}   # medium: size 20.0pt >= 1.8x body
+    "Gentium-Italic-SC700@8.5/center": {role: p}   # low: smaller than body (8.5pt)
+    "Gentium-SC700@8.5": {role: p}   # low: smaller than body (8.5pt)
+    "MS-PMincho@20": {role: title-page}   # medium: size 20.0pt >= 1.8x body
+    "Gentium@28/center": {role: title-page}   # medium: size 28.0pt >= 1.8x body
+    "MS-PMincho@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "Gentium@31.5": {role: title-page}   # medium: size 31.5pt >= 1.8x body
+    "Gentium@28": {role: title-page}   # medium: size 28.0pt >= 1.8x body
+    "Gentium@10": {role: p}   # low: smaller than body (10.0pt)
+    "MS-Mincho@11": {role: p}   # low: body-like
+    "MS-PMincho@9.5/center": {role: p}   # low: smaller than body (9.5pt)
+    "YuGothic-Regular@11": {role: p}   # low: body-like
+    "MS-Mincho@18": {role: h1}   # medium: size 18.0pt >= 1.35x body
+    "MS-PMincho@17": {role: h1}   # medium: size 17.0pt >= 1.35x body
+    "MS-PMincho@16": {role: h1}   # medium: size 16.0pt >= 1.35x body
+    "MS-Mincho@17": {role: h1}   # medium: size 17.0pt >= 1.35x body
+    "HGPGyoshotai@72/center": {role: title-page}   # medium: size 72.0pt >= 1.8x body
+    "MS-Mincho@18.5": {role: h1}   # medium: size 18.5pt >= 1.35x body
+    "YuGothic-Regular@10": {role: p}   # low: smaller than body (10.0pt)
+    "MS-PMincho@19.5": {role: h1}   # medium: size 19.5pt >= 1.35x body
+    "HGPGyoshotai@36": {role: title-page}   # medium: size 36.0pt >= 1.8x body
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 6.8
+  gap_factor: 1.6             # median leading measured: 12.5pt
+  dehyphenate: lower-only
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: none   # regions on 2 pages; census {'digit': 8}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: outline   # outline=70 printed=67 links=68
+  printed_pages: [5, 6, 7]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  # live CJK needs: {family: "Noto Serif CJK SC", file: /usr/share/fonts/google-noto-serif-cjk-fonts/NotoSerifCJK-Regular.ttc, script: cjk, lang: zh}
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages:
+    - {pages: [79, 80, 81, 82, 83, 84, 85, 86, 87, 89, 90, 91, 92, 93, 94, 95, 96, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144], alt_template: "FILL-ME-IN describing page {label}", lang: zh}
+
+output: {slug: harmonious-unity, include_ncx: true}
