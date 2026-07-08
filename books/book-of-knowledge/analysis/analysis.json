@@ -1,0 +1,6184 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/personal/fons_vitae/pdf2epub/books/book-of-knowledge/package/adult-The_Book_of_Knowledge_cover and TOC links.pdf",
+  "sha256": "48ea4f71a48e94390a19ffa705f992bb2853bb0c70f3d5e8f63c9df24086704d",
+  "producer": "Adobe PDF Library 10.0.1",
+  "n_pages": 338,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "Helvetica-Bold",
+    "raw_family": "Helvetica-Bold",
+    "size": 10.0,
+    "color": "#c1c1c1"
+   },
+   "1": {
+    "id": 1,
+    "family": "Helvetica",
+    "raw_family": "Helvetica",
+    "size": 8.0,
+    "color": "#c1c1c1"
+   },
+   "2": {
+    "id": 2,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "3": {
+    "id": 3,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "4": {
+    "id": 4,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "5": {
+    "id": 5,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "6": {
+    "id": 6,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 48.0,
+    "color": "#231f20"
+   },
+   "7": {
+    "id": 7,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 33.0,
+    "color": "#231f20"
+   },
+   "8": {
+    "id": 8,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 36.0,
+    "color": "#231f20"
+   },
+   "9": {
+    "id": 9,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 24.0,
+    "color": "#231f20"
+   },
+   "10": {
+    "id": 10,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 24.0,
+    "color": "#231f20"
+   },
+   "11": {
+    "id": 11,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 28.0,
+    "color": "#231f20"
+   },
+   "12": {
+    "id": 12,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 22.0,
+    "color": "#231f20"
+   },
+   "13": {
+    "id": 13,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 22.0,
+    "color": "#231f20"
+   },
+   "14": {
+    "id": 14,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 21.0,
+    "color": "#231f20"
+   },
+   "15": {
+    "id": 15,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 21.0,
+    "color": "#231f20"
+   },
+   "16": {
+    "id": 16,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 13.0,
+    "color": "#231f20"
+   },
+   "17": {
+    "id": 17,
+    "family": "Minion-SemiBold",
+    "raw_family": "Minion-SemiBold",
+    "size": 15.0,
+    "color": "#231f20"
+   },
+   "18": {
+    "id": 18,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "19": {
+    "id": 19,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "20": {
+    "id": 20,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 36.0,
+    "color": "#231f20"
+   },
+   "21": {
+    "id": 21,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "22": {
+    "id": 22,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 52.5,
+    "color": "#231f20"
+   },
+   "23": {
+    "id": 23,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "24": {
+    "id": 24,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 11.0,
+    "color": "#ed1c24"
+   },
+   "25": {
+    "id": 25,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "26": {
+    "id": 26,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 6.5,
+    "color": "#231f20"
+   },
+   "27": {
+    "id": 27,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "28": {
+    "id": 28,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "29": {
+    "id": 29,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "30": {
+    "id": 30,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 24.0,
+    "color": "#231f20"
+   },
+   "31": {
+    "id": 31,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 35.5,
+    "color": "#231f20"
+   },
+   "32": {
+    "id": 32,
+    "family": "Minion-SemiBold",
+    "raw_family": "Minion-SemiBold",
+    "size": 13.0,
+    "color": "#231f20"
+   },
+   "33": {
+    "id": 33,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "34": {
+    "id": 34,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 13.0,
+    "color": "#231f20"
+   },
+   "35": {
+    "id": 35,
+    "family": "Minion-SemiBold",
+    "raw_family": "Minion-SemiBold",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "36": {
+    "id": 36,
+    "family": "Minion-SemiBold",
+    "raw_family": "Minion-SemiBold",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "37": {
+    "id": 37,
+    "family": "Minion-Bold",
+    "raw_family": "Minion-Bold",
+    "size": 13.0,
+    "color": "#231f20"
+   },
+   "38": {
+    "id": 38,
+    "family": "BriosoPro-Regular",
+    "raw_family": "BriosoPro-Regular",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "39": {
+    "id": 39,
+    "family": "BriosoPro-Regular",
+    "raw_family": "BriosoPro-Regular",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "40": {
+    "id": 40,
+    "family": "Minion-SemiBold",
+    "raw_family": "Minion-SemiBold",
+    "size": 14.0,
+    "color": "#231f20"
+   },
+   "41": {
+    "id": 41,
+    "family": "Minion-Bold",
+    "raw_family": "Minion-Bold",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "42": {
+    "id": 42,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 8.5,
+    "color": "#231f20"
+   },
+   "43": {
+    "id": 43,
+    "family": "Minion-Italic",
+    "raw_family": "Minion-Italic",
+    "size": 8.5,
+    "color": "#231f20"
+   },
+   "44": {
+    "id": 44,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 32.0,
+    "color": "#231f20"
+   },
+   "45": {
+    "id": 45,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 8.5,
+    "color": "#231f20"
+   },
+   "46": {
+    "id": 46,
+    "family": "Minion",
+    "raw_family": "Minion",
+    "size": 10.5,
+    "color": "#231f20"
+   },
+   "47": {
+    "id": 47,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "48": {
+    "id": 48,
+    "family": "Honorifics",
+    "raw_family": "Honorifics",
+    "size": 10.5,
+    "color": "#231f20"
+   }
+  },
+  "outline": [
+   {
+    "level": 1,
+    "title": "Cover",
+    "target_page": 1
+   },
+   {
+    "level": 1,
+    "title": "Title",
+    "target_page": 4
+   },
+   {
+    "level": 1,
+    "title": "Copyright",
+    "target_page": 5
+   },
+   {
+    "level": 1,
+    "title": "Contents",
+    "target_page": 6
+   },
+   {
+    "level": 1,
+    "title": "Foreword",
+    "target_page": 9
+   },
+   {
+    "level": 1,
+    "title": "Publisher’s Note",
+    "target_page": 26
+   },
+   {
+    "level": 1,
+    "title": "Translator’s Preface",
+    "target_page": 28
+   },
+   {
+    "level": 1,
+    "title": "Acknowledgments",
+    "target_page": 35
+   },
+   {
+    "level": 1,
+    "title": "Author’s Introduction",
+    "target_page": 39
+   },
+   {
+    "level": 2,
+    "title": "Outline",
+    "target_page": 40
+   },
+   {
+    "level": 2,
+    "title": "Previous Works on the Subject",
+    "target_page": 43
+   },
+   {
+    "level": 2,
+    "title": "Arrangement of this Book",
+    "target_page": 44
+   },
+   {
+    "level": 2,
+    "title": "Outward and Inward Knowledge",
+    "target_page": 44
+   },
+   {
+    "level": 1,
+    "title": "The Book of Knowledge",
+    "target_page": 48
+   },
+   {
+    "level": 1,
+    "title": "Chapter 1",
+    "target_page": 50
+   },
+   {
+    "level": 2,
+    "title": "The Virtue of Knowledge",
+    "target_page": 50
+   },
+   {
+    "level": 2,
+    "title": "Textual Evidence from the Qur?an",
+    "target_page": 50
+   },
+   {
+    "level": 2,
+    "title": "The Prophetic Reports",
+    "target_page": 52
+   },
+   {
+    "level": 2,
+    "title": "The Traditions of the Companions and Others",
+    "target_page": 56
+   },
+   {
+    "level": 2,
+    "title": "The Virtue of Learning",
+    "target_page": 61
+   },
+   {
+    "level": 2,
+    "title": "Verses from the Qur?an",
+    "target_page": 61
+   },
+   {
+    "level": 2,
+    "title": "The Prophetic Reports",
+    "target_page": 61
+   },
+   {
+    "level": 2,
+    "title": "The Traditions of the Companions and Others",
+    "target_page": 62
+   },
+   {
+    "level": 2,
+    "title": "The Virtues of Teaching",
+    "target_page": 64
+   },
+   {
+    "level": 2,
+    "title": "Verses from the Qur?an",
+    "target_page": 64
+   },
+   {
+    "level": 2,
+    "title": "The Prophetic Reports",
+    "target_page": 65
+   },
+   {
+    "level": 2,
+    "title": "The Traditions of the Companions and Others",
+    "target_page": 67
+   },
+   {
+    "level": 2,
+    "title": "Rational Proofs",
+    "target_page": 70
+   },
+   {
+    "level": 2,
+    "title": "Elucidation",
+    "target_page": 73
+   },
+   {
+    "level": 1,
+    "title": "Chapter 2",
+    "target_page": 77
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of Knowledge that is Compulsory for each Individual",
+    "target_page": 77
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Knowledge that is a Communal Obligation",
+    "target_page": 84
+   },
+   {
+    "level": 2,
+    "title": "Imams of Jurisprudence",
+    "target_page": 110
+   },
+   {
+    "level": 2,
+    "title": "Imam al-Shafi?i",
+    "target_page": 110
+   },
+   {
+    "level": 2,
+    "title": "Imam Malik",
+    "target_page": 118
+   },
+   {
+    "level": 2,
+    "title": "Imam Abu ?anifa",
+    "target_page": 121
+   },
+   {
+    "level": 2,
+    "title": "Imam A?mad Ibn ?anbal and Sufyan",
+    "target_page": 123
+   },
+   {
+    "level": 1,
+    "title": "Chapter 3",
+    "target_page": 125
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation on the Reason Some Knowledge is Blameworthy",
+    "target_page": 125
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Names of the Disciplines that have been Altered",
+    "target_page": 133
+   },
+   {
+    "level": 2,
+    "title": "The First Term: Jurisprudence",
+    "target_page": 134
+   },
+   {
+    "level": 2,
+    "title": "The Second Term: Knowledge (?ilm)",
+    "target_page": 137
+   },
+   {
+    "level": 2,
+    "title": "The Third Term: Unity (taw?id)",
+    "target_page": 138
+   },
+   {
+    "level": 2,
+    "title": "The Fourth Term: Remembrance and Admonition",
+    "target_page": 141
+   },
+   {
+    "level": 2,
+    "title": "The Fifth Term: Wisdom (?ikma)",
+    "target_page": 151
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Praiseworthy Elements in the Praiseworthy Disciplines",
+    "target_page": 153
+   },
+   {
+    "level": 1,
+    "title": "Chapter 4",
+    "target_page": 163
+   },
+   {
+    "level": 2,
+    "title": "Knowledge of Variant Opinions and the Perils of Disputation",
+    "target_page": 163
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Duplicity Involved in Comparing these Disputations with the Deliberations of the Companions and the Mutual Consultations of the Predecessors",
+    "target_page": 166
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Perils of Disputation and the Destruction of Morals that Results from it",
+    "target_page": 174
+   },
+   {
+    "level": 1,
+    "title": "Chapter 5",
+    "target_page": 185
+   },
+   {
+    "level": 2,
+    "title": "On the Comportment Incumbent upon the Student and the Teacher",
+    "target_page": 185
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Functions of the Guide and the Teacher",
+    "target_page": 206
+   },
+   {
+    "level": 1,
+    "title": "Chapter 6",
+    "target_page": 217
+   },
+   {
+    "level": 2,
+    "title": "The Perils of the Pursuit of Knowledge",
+    "target_page": 217
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Traits of the Scholars of the Hereafter and of the Reprehensible Scholars",
+    "target_page": 217
+   },
+   {
+    "level": 2,
+    "title": "The Traditions from the Companions",
+    "target_page": 219
+   },
+   {
+    "level": 2,
+    "title": "The Traits of the Scholars of the Hereafter",
+    "target_page": 222
+   },
+   {
+    "level": 2,
+    "title": "?atim al-A?amm",
+    "target_page": 237
+   },
+   {
+    "level": 2,
+    "title": "Letter to Imam Malik b. Anas",
+    "target_page": 244
+   },
+   {
+    "level": 2,
+    "title": "Imam ?Ali on Scholars of the Hereafter",
+    "target_page": 259
+   },
+   {
+    "level": 2,
+    "title": "Scholars of the Hereafter and Certitude",
+    "target_page": 261
+   },
+   {
+    "level": 2,
+    "title": "Increase and Decrease of Certitude",
+    "target_page": 267
+   },
+   {
+    "level": 2,
+    "title": "Most Worthy Acts",
+    "target_page": 273
+   },
+   {
+    "level": 2,
+    "title": "Worldly Scholars",
+    "target_page": 277
+   },
+   {
+    "level": 2,
+    "title": "Remembrance and Admonition",
+    "target_page": 280
+   },
+   {
+    "level": 2,
+    "title": "Invented Matters",
+    "target_page": 283
+   },
+   {
+    "level": 1,
+    "title": "Chapter 7",
+    "target_page": 294
+   },
+   {
+    "level": 2,
+    "title": "On the Intellect and Its Noble Nature: Its Real Nature and Categories",
+    "target_page": 294
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Noble Nature of the Intellect",
+    "target_page": 294
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation of the Real Nature of the Intellect and its Categories",
+    "target_page": 300
+   },
+   {
+    "level": 2,
+    "title": "An Elucidation on People’s Disparities in the Intellect",
+    "target_page": 307
+   },
+   {
+    "level": 1,
+    "title": "Bibliography",
+    "target_page": 314
+   },
+   {
+    "level": 2,
+    "title": "Works in Western Languages",
+    "target_page": 314
+   },
+   {
+    "level": 2,
+    "title": "Works in Arabic",
+    "target_page": 314
+   },
+   {
+    "level": 1,
+    "title": "Indexes",
+    "target_page": 322
+   },
+   {
+    "level": 2,
+    "title": "Qur?anic Verses Cited",
+    "target_page": 322
+   },
+   {
+    "level": 2,
+    "title": "Index",
+    "target_page": 324
+   },
+   {
+    "level": 1,
+    "title": "About the translator",
+    "target_page": 337
+   }
+  ],
+  "links": [
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     500.38,
+     366.53,
+     513.87
+    ],
+    "target_page": 77
+   },
+   {
+    "page": 6,
+    "rect": [
+     99.0,
+     512.88,
+     367.0,
+     526.37
+    ],
+    "target_page": 77
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     525.38,
+     369.89,
+     538.87
+    ],
+    "target_page": 84
+   },
+   {
+    "page": 6,
+    "rect": [
+     99.0,
+     537.88,
+     368.55,
+     551.37
+    ],
+    "target_page": 84
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     345.88,
+     367.0,
+     359.37
+    ],
+    "target_page": 67
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     395.88,
+     368.55,
+     409.37
+    ],
+    "target_page": 67
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     445.88,
+     367.0,
+     459.37
+    ],
+    "target_page": 67
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     232.38,
+     367.0,
+     245.87
+    ],
+    "target_page": 43
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     257.38,
+     364.0,
+     270.87
+    ],
+    "target_page": 44
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     244.88,
+     360.1,
+     258.37
+    ],
+    "target_page": 44
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     308.38,
+     360.83,
+     334.87
+    ],
+    "target_page": 50
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     408.38,
+     361.74,
+     434.87
+    ],
+    "target_page": 64
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     358.38,
+     368.0,
+     384.87
+    ],
+    "target_page": 61
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     550.38,
+     367.0,
+     576.87
+    ],
+    "target_page": 110
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     207.38,
+     368.29,
+     220.87
+    ],
+    "target_page": 39
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     278.88,
+     367.0,
+     292.37
+    ],
+    "target_page": 48
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     333.38,
+     367.0,
+     346.87
+    ],
+    "target_page": 65
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     383.38,
+     367.0,
+     396.87
+    ],
+    "target_page": 65
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     433.38,
+     367.0,
+     446.87
+    ],
+    "target_page": 65
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     182.38,
+     368.11,
+     195.87
+    ],
+    "target_page": 28
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     169.88,
+     365.49,
+     183.37
+    ],
+    "target_page": 26
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     194.88,
+     365.35,
+     208.37
+    ],
+    "target_page": 35
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     458.38,
+     368.55,
+     471.87
+    ],
+    "target_page": 70
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     470.88,
+     368.61,
+     484.37
+    ],
+    "target_page": 73
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     295.88,
+     367.0,
+     309.37
+    ],
+    "target_page": 50
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     487.88,
+     367.0,
+     501.37
+    ],
+    "target_page": 77
+   },
+   {
+    "page": 6,
+    "rect": [
+     72.0,
+     157.38,
+     369.6,
+     170.87
+    ],
+    "target_page": 9
+   },
+   {
+    "page": 6,
+    "rect": [
+     85.5,
+     219.88,
+     367.0,
+     233.37
+    ],
+    "target_page": 40
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     305.88,
+     370.7,
+     319.37
+    ],
+    "target_page": 166
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     318.38,
+     361.53,
+     331.87
+    ],
+    "target_page": 166
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     330.88,
+     365.0,
+     344.37
+    ],
+    "target_page": 166
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.51,
+     464.88,
+     365.8,
+     478.37
+    ],
+    "target_page": 217
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.01,
+     477.38,
+     365.01,
+     490.87
+    ],
+    "target_page": 217
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     343.38,
+     370.42,
+     356.87
+    ],
+    "target_page": 174
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     355.88,
+     368.0,
+     369.37
+    ],
+    "target_page": 174
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     238.88,
+     362.02,
+     252.37
+    ],
+    "target_page": 153
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     251.38,
+     368.0,
+     264.87
+    ],
+    "target_page": 153
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     151.38,
+     363.18,
+     164.87
+    ],
+    "target_page": 133
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     163.88,
+     368.0,
+     177.37
+    ],
+    "target_page": 133
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     385.38,
+     363.14,
+     398.87
+    ],
+    "target_page": 185
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     397.88,
+     368.0,
+     411.37
+    ],
+    "target_page": 185
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     410.38,
+     367.89,
+     423.87
+    ],
+    "target_page": 206
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     422.88,
+     368.0,
+     436.37
+    ],
+    "target_page": 206
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     280.88,
+     370.59,
+     294.37
+    ],
+    "target_page": 163
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     293.38,
+     365.0,
+     306.87
+    ],
+    "target_page": 163
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     126.38,
+     365.56,
+     139.87
+    ],
+    "target_page": 125
+   },
+   {
+    "page": 7,
+    "rect": [
+     99.0,
+     138.88,
+     368.0,
+     152.37
+    ],
+    "target_page": 125
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     213.88,
+     368.0,
+     227.37
+    ],
+    "target_page": 141
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.51,
+     502.38,
+     365.01,
+     515.87
+    ],
+    "target_page": 222
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.51,
+     552.38,
+     368.01,
+     565.87
+    ],
+    "target_page": 261
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     452.38,
+     361.23,
+     465.87
+    ],
+    "target_page": 217
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.51,
+     489.88,
+     368.01,
+     503.37
+    ],
+    "target_page": 219
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.51,
+     564.88,
+     368.01,
+     578.37
+    ],
+    "target_page": 267
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     176.38,
+     368.0,
+     189.87
+    ],
+    "target_page": 134
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.51,
+     527.38,
+     363.29,
+     540.87
+    ],
+    "target_page": 244
+   },
+   {
+    "page": 7,
+    "rect": [
+     85.5,
+     71.88,
+     365.07,
+     85.37
+    ],
+    "target_page": 118
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     113.88,
+     368.0,
+     127.37
+    ],
+    "target_page": 125
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     268.38,
+     365.0,
+     281.87
+    ],
+    "target_page": 163
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     372.88,
+     365.0,
+     386.37
+    ],
+    "target_page": 185
+   },
+   {
+    "page": 7,
+    "rect": [
+     72.0,
+     439.88,
+     368.0,
+     453.37
+    ],
+    "target_page": 217
+   },
+   {
+    "page": 7,
+    "rect": [
+     84.71,
+     85.26,
+     364.29,
+     98.74
+    ],
+    "target_page": 121
+   },
+   {
+    "page": 7,
+    "rect": [
+     84.71,
+     97.26,
+     364.29,
+     110.74
+    ],
+    "target_page": 123
+   },
+   {
+    "page": 7,
+    "rect": [
+     82.25,
+     188.26,
+     364.75,
+     201.74
+    ],
+    "target_page": 137
+   },
+   {
+    "page": 7,
+    "rect": [
+     83.25,
+     202.26,
+     365.75,
+     215.74
+    ],
+    "target_page": 138
+   },
+   {
+    "page": 7,
+    "rect": [
+     82.25,
+     227.26,
+     364.75,
+     240.74
+    ],
+    "target_page": 151
+   },
+   {
+    "page": 7,
+    "rect": [
+     82.75,
+     516.26,
+     362.25,
+     529.74
+    ],
+    "target_page": 237
+   },
+   {
+    "page": 7,
+    "rect": [
+     81.75,
+     541.26,
+     361.25,
+     554.74
+    ],
+    "target_page": 259
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     136.38,
+     366.52,
+     149.87
+    ],
+    "target_page": 294
+   },
+   {
+    "page": 8,
+    "rect": [
+     98.99,
+     148.88,
+     363.12,
+     162.37
+    ],
+    "target_page": 294
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     173.88,
+     365.16,
+     187.37
+    ],
+    "target_page": 300
+   },
+   {
+    "page": 8,
+    "rect": [
+     98.99,
+     186.38,
+     366.99,
+     199.87
+    ],
+    "target_page": 300
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     198.88,
+     369.99,
+     212.37
+    ],
+    "target_page": 307
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     161.38,
+     369.99,
+     174.87
+    ],
+    "target_page": 294
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     94.38,
+     369.99,
+     107.87
+    ],
+    "target_page": 280
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     228.38,
+     369.99,
+     241.87
+    ],
+    "target_page": 314
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     69.38,
+     372.72,
+     82.87
+    ],
+    "target_page": 273
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     81.88,
+     369.99,
+     95.37
+    ],
+    "target_page": 277
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     106.88,
+     369.99,
+     120.37
+    ],
+    "target_page": 283
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     240.88,
+     369.99,
+     254.37
+    ],
+    "target_page": 314
+   },
+   {
+    "page": 8,
+    "rect": [
+     71.99,
+     215.88,
+     369.99,
+     229.37
+    ],
+    "target_page": 314
+   },
+   {
+    "page": 8,
+    "rect": [
+     71.99,
+     123.88,
+     369.99,
+     137.37
+    ],
+    "target_page": 294
+   },
+   {
+    "page": 8,
+    "rect": [
+     71.99,
+     257.38,
+     364.76,
+     282.87
+    ],
+    "target_page": 322
+   },
+   {
+    "page": 8,
+    "rect": [
+     85.49,
+     281.38,
+     372.67,
+     294.87
+    ],
+    "target_page": 324
+   }
+  ],
+  "uri_link_count": 4,
+  "trim_crop_box": [
+   24,
+   24,
+   431,
+   648
+  ],
+  "warnings": [
+   "4 external URI link annotation(s) present — not modeled (internal GoTo links only)",
+   "1 image-only page(s) (no usable text layer): [338] — OCR is out of scope; ship as figure pages only if content is verifiable from renders",
+   "engine agreement below 90 on 15 page(s): [322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336] — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "Minion@11",
+  "body_size": 11.0,
+  "clusters": [
+   {
+    "pstyle": "Minion@11",
+    "family": "Minion",
+    "size": 11.0,
+    "n_lines": 8609,
+    "n_chars": 529960,
+    "n_pages": 299,
+    "first_page": 9,
+    "samples": [
+     "lmost a thousand years ago, in the city of Ṭūs in northern",
+     "Iran, the pious wife of a simple wool carder gave birth to a",
+     "boy they would name Muḥammad. At an early age, he was"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "Minion@8.5",
+    "family": "Minion",
+    "size": 8.5,
+    "n_lines": 1205,
+    "n_chars": 77430,
+    "n_pages": 213,
+    "first_page": 50,
+    "samples": [
+     "1\tAbū Ṭālib al-Makkī, Qūt al-qulūb, 1:139.",
+     "2\tAbū Ṭālib al-Makkī, Qūt al-qulūb, 1:138.",
+     "3\tAl-Bukhārī, 71; Muslim, 1037; and the addition of, “and inspires him with right"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (8.5pt), frequent"
+   },
+   {
+    "pstyle": "Minion@10",
+    "family": "Minion",
+    "size": 10.0,
+    "n_lines": 570,
+    "n_chars": 29931,
+    "n_pages": 162,
+    "first_page": 3,
+    "samples": [
+     "The Forty Books of the Revival of the Religious Sciences (Iḥyāʾ ʿulūm al-dīn)",
+     "The Quarter of Worship",
+     "(1) \tThe Book of Knowledge"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "Minion@9",
+    "family": "Minion",
+    "size": 9.0,
+    "n_lines": 772,
+    "n_chars": 26982,
+    "n_pages": 24,
+    "first_page": 11,
+    "samples": [
+     "1\tRichard J. McCarthy, Al-Ghazali: Deliverance from Error, (Louisville, KY:",
+     "Fons Vitae, n.d.), 78–79, with minor changes.",
+     "burgh University Press, 1963), 23–24, with minor changes."
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Minion-Italic@11",
+    "family": "Minion-Italic",
+    "size": 11.0,
+    "n_lines": 237,
+    "n_chars": 14453,
+    "n_pages": 74,
+    "first_page": 12,
+    "samples": [
+     "(Revival of the Religious Sciences).",
+     "The Qurʾān commands us to Read, in the name of your Lord, who",
+     "created: created man of clotted blood. Read, for your Lord is most"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Minion-Italic@10",
+    "family": "Minion-Italic",
+    "size": 10.0,
+    "n_lines": 171,
+    "n_chars": 8668,
+    "n_pages": 161,
+    "first_page": 8,
+    "samples": [
+     "Imām Al-Ghazālī: The Proof of Islamxi",
+     "Imām Al-Ghazālī: The Proof of Islamxiii",
+     "Imām Al-Ghazālī: The Proof of Islamxv"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "Minion@11/center",
+    "family": "Minion",
+    "size": 11.0,
+    "n_lines": 140,
+    "n_chars": 7758,
+    "n_pages": 32,
+    "first_page": 9,
+    "samples": [
+     "Hamza Yusuf Hanson",
+     "I reflected on my intention in my public teaching, and I",
+     "saw that it was not directed purely for God’s sake but was"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Minion-Italic@8.5",
+    "family": "Minion-Italic",
+    "size": 8.5,
+    "n_lines": 84,
+    "n_chars": 4822,
+    "n_pages": 56,
+    "first_page": 53,
+    "samples": [
+     "wa-l-mutafaqqih, 129–130.",
+     "12\t Al-Bayhaqī, Shuʿab al-īmān, 1576; Ibn ʿAbd al-Barr, Jāmiʿ bayān al-ʿilm wa-faḍlih,",
+     "Jāmiʿ bayān al-ʿilm wa-faḍlih, 205."
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (8.5pt), frequent"
+   },
+   {
+    "pstyle": "Minion@9/center",
+    "family": "Minion",
+    "size": 9.0,
+    "n_lines": 31,
+    "n_chars": 1704,
+    "n_pages": 10,
+    "first_page": 324,
+    "samples": [
+     "149, 235ʿAlī b. Abī Ṭālib, 9, 95, 124, 149, 151,",
+     "192210, 228, 231, 233, 234, 235,",
+     "160, 191conduct, 32, 149, 163, 212, 228"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Minion@12/center",
+    "family": "Minion",
+    "size": 12.0,
+    "n_lines": 45,
+    "n_chars": 1423,
+    "n_pages": 37,
+    "first_page": 2,
+    "samples": [
+     "THE book of knowledge",
+     "The Revival of the Religious Sciences",
+     "Other Books on al-Ghazālī and Previous Translations"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "Minion@8.5/center",
+    "family": "Minion",
+    "size": 8.5,
+    "n_lines": 16,
+    "n_chars": 1192,
+    "n_pages": 15,
+    "first_page": 67,
+    "samples": [
+     "ers benefited from, or a pious child who prays for him [for the deceased].”",
+     "its treatment] has been transmitted. Abū Ṭālib al-Makkī, Qūt al-qulūb, 1:129.",
+     "Were it not for the imāms, the paths would not be safe for us"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (8.5pt), frequent"
+   },
+   {
+    "pstyle": "BriosoPro-Regular@12/center",
+    "family": "BriosoPro-Regular",
+    "size": 12.0,
+    "n_lines": 21,
+    "n_chars": 1091,
+    "n_pages": 4,
+    "first_page": 50,
+    "samples": [
+     "On the virtue of knowledge, education, learning,",
+     "and evidence founded on transmission and reason.",
+     "On praiseworthy knowledge and blameworthy"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "Minion-SemiBold@13/center",
+    "family": "Minion-SemiBold",
+    "size": 13.0,
+    "n_lines": 29,
+    "n_chars": 852,
+    "n_pages": 20,
+    "first_page": 39,
+    "samples": [
+     "Author’s Introduction",
+     "Textual Evidence from the Qurʾān",
+     "The [Prophetic] Reports"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "Minion@10/center",
+    "family": "Minion",
+    "size": 10.0,
+    "n_lines": 36,
+    "n_chars": 841,
+    "n_pages": 21,
+    "first_page": 5,
+    "samples": [
+     "First published in 2015 by",
+     "49 Mockingbird Valley Drive",
+     "Louisville, KY 40207 USA"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "Minion@10.5",
+    "family": "Minion",
+    "size": 10.5,
+    "n_lines": 12,
+    "n_chars": 832,
+    "n_pages": 12,
+    "first_page": 73,
+    "samples": [
+     "The noblest of all these human activities are the most fundamental;",
+     "The second is that of the caliphs, kings, and sultans. Their authority",
+     "It is immediately obligatory to instruct him, if he has not converted"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.5pt)"
+   },
+   {
+    "pstyle": "Minion-Italic@9",
+    "family": "Minion-Italic",
+    "size": 9.0,
+    "n_lines": 10,
+    "n_chars": 433,
+    "n_pages": 8,
+    "first_page": 13,
+    "samples": [
+     "2\tW. M. Watt, A Muslim Intellectual: A Study of al-Ghazali (Edinburgh: Edin-",
+     "5\tSaʿīd Aʿrāb, Maʿ al-Qaḍī Abī Bakr bin al-ʿArabī, 41–43.",
+     "10\t In the Garden of Myrtles: Studies in Early Islamic Mysticism, trans. Birgitta"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Minion-Italic@11/center",
+    "family": "Minion-Italic",
+    "size": 11.0,
+    "n_lines": 11,
+    "n_chars": 428,
+    "n_pages": 6,
+    "first_page": 37,
+    "samples": [
+     "Iḥyāʾ ʿulūm al-dīn",
+     "In the name of God, the Merciful, the Compassionate",
+     "In the name of God, the Merciful, the Compassionate"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Minion-Italic@8.5/center",
+    "family": "Minion-Italic",
+    "size": 8.5,
+    "n_lines": 4,
+    "n_chars": 319,
+    "n_pages": 3,
+    "first_page": 75,
+    "samples": [
+     "but man [undertook to] bear it. Indeed, he was unjust and ignorant [33:72].",
+     "people said to him, Do not exult. Indeed, God does not like the exultant [28:76].",
+     "except for those who believe and do righteous deeds—and few are they [38:24]."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.5pt)"
+   },
+   {
+    "pstyle": "Minion@12",
+    "family": "Minion",
+    "size": 12.0,
+    "n_lines": 3,
+    "n_chars": 175,
+    "n_pages": 2,
+    "first_page": 46,
+    "samples": [
+     "The first book of the Quarter of Worship and the opening",
+     "An Elucidation of the Duplicity Involved in Comparing these",
+     "Disputations with the Deliberations of the Companions and"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Minion-SemiBold@15/center",
+    "family": "Minion-SemiBold",
+    "size": 15.0,
+    "n_lines": 5,
+    "n_chars": 94,
+    "n_pages": 5,
+    "first_page": 6,
+    "samples": [
+     "Imām Al-Ghazālī: The Proof of Islam",
+     "Publisher’s Note",
+     "Translator’s Preface"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 15.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Minion-Italic@12/center",
+    "family": "Minion-Italic",
+    "size": 12.0,
+    "n_lines": 3,
+    "n_chars": 78,
+    "n_pages": 2,
+    "first_page": 2,
+    "samples": [
+     "Iḥyāʾ ʿulūm al-dīn",
+     "book of the Revival of the Religious Sciences"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "Minion@21",
+    "family": "Minion",
+    "size": 21.0,
+    "n_lines": 2,
+    "n_chars": 60,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "with an Introduction and Notes",
+     "by K e n n et h Ho n e rka m p"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 21.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion@22",
+    "family": "Minion",
+    "size": 22.0,
+    "n_lines": 2,
+    "n_chars": 57,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "Translated from the Arabic",
+     "with a Foreword by Hamza Yusuf"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 22.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion-Bold@13/center",
+    "family": "Minion-Bold",
+    "size": 13.0,
+    "n_lines": 3,
+    "n_chars": 47,
+    "n_pages": 3,
+    "first_page": 48,
+    "samples": [
+     "The Book of Knowledge",
+     "Qurʾānic Verses Cited"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "Minion-SemiBold@14/center",
+    "family": "Minion-SemiBold",
+    "size": 14.0,
+    "n_lines": 2,
+    "n_chars": 43,
+    "n_pages": 2,
+    "first_page": 50,
+    "samples": [
+     "The Virtue of Knowledge",
+     "About the translator"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "Minion@28",
+    "family": "Minion",
+    "size": 28.0,
+    "n_lines": 2,
+    "n_chars": 37,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "The revival of the",
+     "religious sciences"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 28.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion-Italic@24",
+    "family": "Minion-Italic",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 32,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "Book 1 of the Iḥyāʾ ʿulūm al-dīn"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion@32",
+    "family": "Minion",
+    "size": 32.0,
+    "n_lines": 28,
+    "n_chars": 31,
+    "n_pages": 28,
+    "first_page": 52,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 32.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion@36",
+    "family": "Minion",
+    "size": 36.0,
+    "n_lines": 2,
+    "n_chars": 28,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "K N O W L E D G E"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Helvetica@8",
+    "family": "Helvetica",
+    "size": 8.0,
+    "n_lines": 1,
+    "n_chars": 27,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "fonsvitae.ghazali@gmail.com"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.0pt)"
+   },
+   {
+    "pstyle": "Honorifics@11/center",
+    "family": "Honorifics",
+    "size": 11.0,
+    "n_lines": 5,
+    "n_chars": 25,
+    "n_pages": 5,
+    "first_page": 10,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Minion-Italic@33",
+    "family": "Minion-Italic",
+    "size": 33.0,
+    "n_lines": 1,
+    "n_chars": 23,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "K i t ā b a l - ʿ i l m"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 33.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion-SemiBold@12/center",
+    "family": "Minion-SemiBold",
+    "size": 12.0,
+    "n_lines": 1,
+    "n_chars": 21,
+    "n_pages": 1,
+    "first_page": 46,
+    "samples": [
+     "The Book of Knowledge"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "Minion@13/center",
+    "family": "Minion",
+    "size": 13.0,
+    "n_lines": 2,
+    "n_chars": 14,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "Honorifics@36/center",
+    "family": "Honorifics",
+    "size": 36.0,
+    "n_lines": 12,
+    "n_chars": 12,
+    "n_pages": 12,
+    "first_page": 8,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion@52.5",
+    "family": "Minion",
+    "size": 52.5,
+    "n_lines": 11,
+    "n_chars": 11,
+    "n_pages": 11,
+    "first_page": 9,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 52.5pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion@48",
+    "family": "Minion",
+    "size": 48.0,
+    "n_lines": 1,
+    "n_chars": 10,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 48.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Minion-SemiBold@11",
+    "family": "Minion-SemiBold",
+    "size": 11.0,
+    "n_lines": 1,
+    "n_chars": 8,
+    "n_pages": 1,
+    "first_page": 238,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Helvetica-Bold@10",
+    "family": "Helvetica-Bold",
+    "size": 10.0,
+    "n_lines": 1,
+    "n_chars": 7,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "BriosoPro-Regular@18/center",
+    "family": "BriosoPro-Regular",
+    "size": 18.0,
+    "n_lines": 7,
+    "n_chars": 7,
+    "n_pages": 7,
+    "first_page": 50,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Honorifics@18",
+    "family": "Honorifics",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 3,
+    "n_pages": 1,
+    "first_page": 26,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Honorifics@24",
+    "family": "Honorifics",
+    "size": 24.0,
+    "n_lines": 2,
+    "n_chars": 2,
+    "n_pages": 1,
+    "first_page": 26,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Honorifics@35.5",
+    "family": "Honorifics",
+    "size": 35.5,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 38,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 35.5pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Honorifics@36",
+    "family": "Honorifics",
+    "size": 36.0,
+    "n_lines": 1,
+    "n_chars": 1,
+    "n_pages": 1,
+    "first_page": 47,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "#book of knowledge | chapter #",
+    "count": 127,
+    "pages": [
+     51,
+     53,
+     55,
+     57,
+     59,
+     61,
+     63,
+     65
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Perils of [the Pursuit of] Knowledge#",
+    "count": 38,
+    "pages": [
+     218,
+     220,
+     222,
+     224,
+     226,
+     228,
+     230,
+     232
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#book of knowledge",
+    "count": 26,
+    "pages": [
+     7,
+     11,
+     13,
+     15,
+     17,
+     19,
+     21,
+     23
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ām Al-Ghazālī: The Proof of Isla#",
+    "count": 9,
+    "pages": [
+     9,
+     10,
+     12,
+     14,
+     16,
+     18,
+     20,
+     22
+    ],
+    "band": "top"
+   },
+   {
+    "text": "[Imāms of Jurisprudence]#",
+    "count": 8,
+    "pages": [
+     110,
+     112,
+     114,
+     116,
+     118,
+     120,
+     122,
+     124
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ndex#",
+    "count": 6,
+    "pages": [
+     326,
+     328,
+     330,
+     332,
+     334,
+     336
+    ],
+    "band": "top"
+   },
+   {
+    "text": "An Elucidation on the Reason Some Knowledge is Blameworthy #",
+    "count": 4,
+    "pages": [
+     126,
+     128,
+     130,
+     132
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Translator's Preface#",
+    "count": 3,
+    "pages": [
+     30,
+     32,
+     34
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Author's Introduction#",
+    "count": 3,
+    "pages": [
+     40,
+     42,
+     44
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Traditions of the Companions and Others#",
+    "count": 3,
+    "pages": [
+     56,
+     58,
+     60
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Virtues of Teaching#",
+    "count": 3,
+    "pages": [
+     64,
+     66,
+     68
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Bibliography#",
+    "count": 3,
+    "pages": [
+     316,
+     318,
+     320
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 28.9,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 100.0,
+  "folio_mismatches": [],
+  "label_source_proposal": "pdf-page-labels",
+  "printed_folios": {
+   "6": "vii",
+   "7": "viii",
+   "8": "ix",
+   "9": "x",
+   "10": "xi",
+   "11": "xii",
+   "12": "xiii",
+   "13": "xiv",
+   "14": "xv",
+   "15": "xvi",
+   "16": "xvii",
+   "17": "xviii",
+   "18": "xix",
+   "19": "xx",
+   "20": "xxi",
+   "21": "xxii",
+   "22": "xxiii",
+   "23": "xxiv",
+   "24": "xxv",
+   "26": "xxvii",
+   "27": "xxviii",
+   "28": "xxix",
+   "29": "xxx",
+   "30": "xxxi",
+   "31": "xxxii",
+   "32": "xxxiii",
+   "33": "xxxiv",
+   "34": "xxxv",
+   "35": "xxxvi",
+   "36": "xxxvii",
+   "39": "xl",
+   "40": "xli",
+   "41": "xlii",
+   "42": "xliii",
+   "43": "xliv",
+   "44": "xlv",
+   "45": "xlvi",
+   "48": "1",
+   "50": "3",
+   "51": "4",
+   "52": "5",
+   "53": "6",
+   "54": "7",
+   "55": "8",
+   "56": "9",
+   "57": "10",
+   "58": "11",
+   "59": "12",
+   "60": "13",
+   "61": "14",
+   "62": "15",
+   "63": "16",
+   "64": "17",
+   "65": "18",
+   "66": "19",
+   "67": "20",
+   "68": "21",
+   "69": "22",
+   "70": "23",
+   "71": "24",
+   "72": "25",
+   "73": "26",
+   "74": "27",
+   "75": "28",
+   "76": "29",
+   "77": "30",
+   "78": "31",
+   "79": "32",
+   "80": "33",
+   "81": "34",
+   "82": "35",
+   "83": "36",
+   "84": "37",
+   "85": "38",
+   "86": "39",
+   "87": "40",
+   "88": "41",
+   "89": "42",
+   "90": "43",
+   "91": "44",
+   "92": "45",
+   "93": "46",
+   "94": "47",
+   "95": "48",
+   "96": "49",
+   "97": "50",
+   "98": "51",
+   "99": "52",
+   "100": "53",
+   "101": "54",
+   "102": "55",
+   "103": "56",
+   "104": "57",
+   "105": "58",
+   "106": "59",
+   "107": "60",
+   "108": "61",
+   "109": "62",
+   "110": "63",
+   "111": "64",
+   "112": "65",
+   "113": "66",
+   "114": "67",
+   "115": "68",
+   "116": "69",
+   "117": "70",
+   "118": "71",
+   "119": "72",
+   "120": "73",
+   "121": "74",
+   "122": "75",
+   "123": "76",
+   "124": "77",
+   "125": "78",
+   "126": "79",
+   "127": "80",
+   "128": "81",
+   "129": "82",
+   "130": "83",
+   "131": "84",
+   "132": "85",
+   "133": "86",
+   "134": "87",
+   "135": "88",
+   "136": "89",
+   "137": "90",
+   "138": "91",
+   "139": "92",
+   "140": "93",
+   "141": "94",
+   "142": "95",
+   "143": "96",
+   "144": "97",
+   "145": "98",
+   "146": "99",
+   "147": "100",
+   "148": "101",
+   "149": "102",
+   "150": "103",
+   "151": "104",
+   "152": "105",
+   "153": "106",
+   "154": "107",
+   "155": "108",
+   "156": "109",
+   "157": "110",
+   "158": "111",
+   "159": "112",
+   "160": "113",
+   "161": "114",
+   "162": "115",
+   "163": "116",
+   "164": "117",
+   "165": "118",
+   "166": "119",
+   "167": "120",
+   "168": "121",
+   "169": "122",
+   "170": "123",
+   "171": "124",
+   "172": "125",
+   "173": "126",
+   "174": "127",
+   "175": "128",
+   "176": "129",
+   "177": "130",
+   "178": "131",
+   "179": "132",
+   "180": "133",
+   "181": "134",
+   "182": "135",
+   "183": "136",
+   "184": "137",
+   "185": "138",
+   "186": "139",
+   "187": "140",
+   "188": "141",
+   "189": "142",
+   "190": "143",
+   "191": "144",
+   "192": "145",
+   "193": "146",
+   "194": "147",
+   "195": "148",
+   "196": "149",
+   "197": "150",
+   "198": "151",
+   "199": "152",
+   "200": "153",
+   "201": "154",
+   "202": "155",
+   "203": "156",
+   "204": "157",
+   "205": "158",
+   "206": "159",
+   "207": "160",
+   "208": "161",
+   "209": "162",
+   "210": "163",
+   "211": "164",
+   "212": "165",
+   "213": "166",
+   "214": "167",
+   "215": "168",
+   "216": "169",
+   "217": "170",
+   "218": "171",
+   "219": "172",
+   "220": "173",
+   "221": "174",
+   "222": "175",
+   "223": "176",
+   "224": "177",
+   "225": "178",
+   "226": "179",
+   "227": "180",
+   "228": "181",
+   "229": "182",
+   "230": "183",
+   "231": "184",
+   "232": "185",
+   "233": "186",
+   "234": "187",
+   "235": "188",
+   "236": "189",
+   "237": "190",
+   "238": "191",
+   "239": "192",
+   "240": "193",
+   "241": "194",
+   "242": "195",
+   "243": "196",
+   "244": "197",
+   "245": "198",
+   "246": "199",
+   "247": "200",
+   "248": "201",
+   "249": "202",
+   "250": "203",
+   "251": "204",
+   "252": "205",
+   "253": "206",
+   "254": "207",
+   "255": "208",
+   "256": "209",
+   "257": "210",
+   "258": "211",
+   "259": "212",
+   "260": "213",
+   "261": "214",
+   "262": "215",
+   "263": "216",
+   "264": "217",
+   "265": "218",
+   "266": "219",
+   "267": "220",
+   "268": "221",
+   "269": "222",
+   "270": "223",
+   "271": "224",
+   "272": "225",
+   "273": "226",
+   "274": "227",
+   "275": "228",
+   "276": "229",
+   "277": "230",
+   "278": "231",
+   "279": "232",
+   "280": "233",
+   "281": "234",
+   "282": "235",
+   "283": "236",
+   "284": "237",
+   "285": "238",
+   "286": "239",
+   "287": "240",
+   "288": "241",
+   "289": "242",
+   "290": "243",
+   "291": "244",
+   "292": "245",
+   "293": "246",
+   "294": "247",
+   "295": "248",
+   "296": "249",
+   "297": "250",
+   "298": "251",
+   "299": "252",
+   "300": "253",
+   "301": "254",
+   "302": "255",
+   "303": "256",
+   "304": "257",
+   "305": "258",
+   "306": "259",
+   "307": "260",
+   "308": "261",
+   "309": "262",
+   "310": "263",
+   "311": "264",
+   "312": "265",
+   "313": "266",
+   "314": "267",
+   "315": "268",
+   "316": "269",
+   "317": "270",
+   "318": "271",
+   "319": "272",
+   "320": "273",
+   "321": "274",
+   "322": "275",
+   "323": "276",
+   "324": "277",
+   "325": "278",
+   "326": "279",
+   "327": "280",
+   "328": "281",
+   "329": "282",
+   "330": "283",
+   "331": "284",
+   "332": "285",
+   "333": "286",
+   "334": "287",
+   "335": "288",
+   "336": "289"
+  },
+  "headings": [
+   {
+    "page": 2,
+    "pstyle": "Minion@12/center",
+    "text": "THE book of knowledge"
+   },
+   {
+    "page": 2,
+    "pstyle": "Minion-Italic@12/center",
+    "text": "Kitāb al-ʿilm"
+   },
+   {
+    "page": 2,
+    "pstyle": "Minion@12/center",
+    "text": "Book 1 of"
+   },
+   {
+    "page": 2,
+    "pstyle": "Minion@12/center",
+    "text": "The Revival of the Religious Sciences"
+   },
+   {
+    "page": 2,
+    "pstyle": "Minion-Italic@12/center",
+    "text": "Iḥyāʾ ʿulūm al-dīn"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@48",
+    "text": "Al-Ghazālī"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion-Italic@33",
+    "text": "K i t ā b a l - ʿ i l m"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@36",
+    "text": "The BOOK of"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@36",
+    "text": "K N O W L E D G E"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion-Italic@24",
+    "text": "Book 1 of the Iḥyāʾ ʿulūm al-dīn"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@28",
+    "text": "The revival of the"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@28",
+    "text": "religious sciences"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@22",
+    "text": "Translated from the Arabic"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@21",
+    "text": "with an Introduction and Notes"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@21",
+    "text": "by K e n n et h Ho n e rka m p"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@22",
+    "text": "with a Foreword by Hamza Yusuf"
+   },
+   {
+    "page": 4,
+    "pstyle": "Minion@13/center",
+    "text": "Fons Vitae"
+   },
+   {
+    "page": 6,
+    "pstyle": "Minion-SemiBold@15/center",
+    "text": "Contents"
+   },
+   {
+    "page": 8,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 9,
+    "pstyle": "Minion-SemiBold@15/center",
+    "text": "Imām Al-Ghazālī: The Proof of Islam"
+   },
+   {
+    "page": 9,
+    "pstyle": "Minion@11/center",
+    "text": "Hamza Yusuf Hanson"
+   },
+   {
+    "page": 9,
+    "pstyle": "Minion@52.5",
+    "text": "A"
+   },
+   {
+    "page": 10,
+    "pstyle": "Honorifics@11/center",
+    "text": "  "
+   },
+   {
+    "page": 11,
+    "pstyle": "Minion@11/center",
+    "text": "I reflected on my intention in my public teaching, and I"
+   },
+   {
+    "page": 11,
+    "pstyle": "Minion@11/center",
+    "text": "saw that it was not directed purely for God’s sake but was"
+   },
+   {
+    "page": 11,
+    "pstyle": "Minion@11/center",
+    "text": "instigated and motivated by my personal quest for fame and"
+   },
+   {
+    "page": 11,
+    "pstyle": "Minion@11/center",
+    "text": "prestige. So I became certain that I was on the brink of a"
+   },
+   {
+    "page": 11,
+    "pstyle": "Minion@11/center",
+    "text": "crumbling bank and already on the verge of falling into the"
+   },
+   {
+    "page": 11,
+    "pstyle": "Honorifics@11/center",
+    "text": "  "
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "I had read thousands of books; then I left the people of Islam"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "with their religion and their manifest sciences in these books"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "and embarked on the open sea, plunging into the literature"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "that the people of Islam rejected. All this was in quest of truth."
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "At an early age, I fled from the conformity of the opinions"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "of others (taqlīd). But now I have returned from everything"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "to the word of truth: hold to the religion of the old women."
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "If the Truth does not grasp me by the grace of His justice"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "so that I die in the religion of the old women and the result"
+   },
+   {
+    "page": 12,
+    "pstyle": "Minion@11/center",
+    "text": "of my life is sealed at my departure with the purity of the"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "people of Truth and the word of sincerity, “There is no deity"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "The thirst for grasping the real meanings of things was"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "indeed my wont and practice from my early years and in the"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "prime of my life. It was an instinctive, natural disposition"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "placed in my makeup by God, Most High, not something"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "due to my own choosing and contriving. As a result, the fet-"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "ters of servile conformism (taqlīd) fell away from me, and"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "inherited beliefs lost their hold on me when I was still quite"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "young, for I saw that the children of Christians always grew"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "up embracing Christianity, and the children of Jews always"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "grew up adhering to Judaism, and the children of Muslims"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "always grew up following the religion of Islam. I also heard"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "the tradition related from the Apostle of God—God’s bless-"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "ing and peace upon him—in which he said, “Every infant"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "is born endowed with the fiṭra: then his parents make him"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "a Jew or Christian or Magian.” Consequently, I felt an inner"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "urge to seek the true meaning of the original fiṭra and the"
+   },
+   {
+    "page": 13,
+    "pstyle": "Minion@11/center",
+    "text": "true meaning of the beliefs arising through slavish aping of"
+   },
+   {
+    "page": 13,
+    "pstyle": "Honorifics@11/center",
+    "text": "  "
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "He was completely inner-focused on the divine and had left"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "the world behind him. When I entered into his presence, I"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "said, “You are the lost thing I have been looking for all of my"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "life. You are the Imām who will guide me.” Our meeting was"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "an epiphany of inward knowledge. I witnessed something"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "from him that is ineffable. He was a man whom if you saw"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "him, you saw a manifest spiritual state. If you knew him,"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "you knew a vast ocean. Each time I questioned him, I was"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "filled with inner joy at the response. I maintained visits at"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "the retreat and placed myself upon his carpet. I benefitted"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "from his seclusion and his spiritual activities. It was as if he"
+   },
+   {
+    "page": 18,
+    "pstyle": "Minion@11/center",
+    "text": "relinquished any other occupations to be with me in order"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "When that light arose upon me, dispelling what had previ-"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "ously enveloped me of darkness and gloom, I said, “This is"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "what I have been seeking in truth! This, by the sacred trust"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "of God, is the goal of every seeker, the destination of every"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "I read with him several of his books and heard from him the"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "entire Iḥyāʾ ʿUlūm al-Dīn. I asked a question of one seeking"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "to understand his creed and unveil his path so that I could"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "unravel the secrets of his symbolic language that he alludes"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "to in his works that indicate complete understanding. So he"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "began to answer as a wayfarer on a sound path would to a fel-"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "low seeker. He answered me orally as well as in his own hand."
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "I discussed matters with Abū Ḥāmid when I first met him in"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "Jerusalem in Jumāda al-Awwal, 490/1096. He had disciplined"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "his soul with Sufic exercises for around five years prior to our"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "meeting. He was completely engaged in that and had taken"
+   },
+   {
+    "page": 19,
+    "pstyle": "Minion@11/center",
+    "text": "solitary retreat as his companion and rejected every group.5"
+   },
+   {
+    "page": 19,
+    "pstyle": "Honorifics@11/center",
+    "text": "  "
+   },
+   {
+    "page": 20,
+    "pstyle": "Minion@11/center",
+    "text": "Among the grievous faults of the foul scholars is their"
+   },
+   {
+    "page": 20,
+    "pstyle": "Minion@11/center",
+    "text": "overzealousness for the “truth.” They hold their opponents"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "in contempt and belittlement. This leads to false claims of"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "equivalency and reciprocity. This excites in them incentives"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "that compel them to advocate falsehood and further rein-"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "forces in them the desire to cling to the positions attributed"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "to them. Had they brought forth more empathy, mercy, and"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "sincerity in their private dealings rather than their zealous"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "and belittling attacks, they would have succeeded. But upon"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "realizing that stature is gained through devotees, and nothing"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "increases one’s followers like fanaticism, zeal, cursing, and"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "ad hominem attacks, they took such means as their wont and"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "tools and called it, “defending the religion and protecting"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "Muslims.” In reality, it is nothing more than causing oth-"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "ers to perish and establishing heresies in their hearts . . . ."
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "Maybe the one hearing this will say, “People oppose what"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "they don’t know.” Please, don’t think that. You are dealing"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "with an expert. So accept this advice from one who wasted"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "a good deal of his life in the very thing he is describing. In"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "fact, he was the best of the bunch, one-upping those who"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "went before him in achieving such tools of disputation and"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "exposition. Finally, God inspired him with discrimination"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "and revealed his faults to him, enabling him to abandon"
+   },
+   {
+    "page": 21,
+    "pstyle": "Minion@11/center",
+    "text": "such things and preoccupy himself with his own salvation."
+   },
+   {
+    "page": 21,
+    "pstyle": "Honorifics@11/center",
+    "text": "  "
+   },
+   {
+    "page": 22,
+    "pstyle": "Minion@11/center",
+    "text": "The fourth and final group among humanity filled with delu-"
+   },
+   {
+    "page": 22,
+    "pstyle": "Minion@11/center",
+    "text": "sion are the Sufis, and how great has delusion overwhelmed"
+   },
+   {
+    "page": 22,
+    "pstyle": "Minion@11/center",
+    "text": "those of this age with the exception of the one protected by"
+   },
+   {
+    "page": 22,
+    "pstyle": "Minion@11/center",
+    "text": "God. They are deluded in their dress, their talk, and their"
+   },
+   {
+    "page": 22,
+    "pstyle": "Minion@11/center",
+    "text": "appearance. They mimic the sincere among the true Sufis"
+   },
+   {
+    "page": 26,
+    "pstyle": "Minion-SemiBold@15/center",
+    "text": "Publisher’s Note"
+   },
+   {
+    "page": 26,
+    "pstyle": "Minion@11/center",
+    "text": "On mention of God"
+   },
+   {
+    "page": 26,
+    "pstyle": "Honorifics@18",
+    "text": " "
+   },
+   {
+    "page": 26,
+    "pstyle": "Minion@11/center",
+    "text": "them more prophets"
+   },
+   {
+    "page": 26,
+    "pstyle": "Minion@11/center",
+    "text": "Exalted and Most HighOn mention of God"
+   },
+   {
+    "page": 26,
+    "pstyle": "Honorifics@24",
+    "text": ""
+   },
+   {
+    "page": 26,
+    "pstyle": "Minion@11/center",
+    "text": " On mention of one or"
+   },
+   {
+    "page": 26,
+    "pstyle": "Honorifics@24",
+    "text": ""
+   },
+   {
+    "page": 27,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 28,
+    "pstyle": "Minion-SemiBold@15/center",
+    "text": "Translator’s Preface"
+   },
+   {
+    "page": 28,
+    "pstyle": "Minion@52.5",
+    "text": "T"
+   },
+   {
+    "page": 31,
+    "pstyle": "Minion@12/center",
+    "text": "Other Books on al-Ghazālī and Previous Translations"
+   },
+   {
+    "page": 34,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 35,
+    "pstyle": "Minion-SemiBold@15/center",
+    "text": "Acknowledgments"
+   },
+   {
+    "page": 36,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 37,
+    "pstyle": "Minion@11/center",
+    "text": "The Revival of the Religious Sciences"
+   },
+   {
+    "page": 37,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "Iḥyāʾ ʿulūm al-dīn"
+   },
+   {
+    "page": 38,
+    "pstyle": "Honorifics@35.5",
+    "text": ""
+   },
+   {
+    "page": 39,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Author’s Introduction"
+   },
+   {
+    "page": 39,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "In the name of God, the Merciful, the Compassionate"
+   },
+   {
+    "page": 39,
+    "pstyle": "Minion@52.5",
+    "text": "F"
+   },
+   {
+    "page": 40,
+    "pstyle": "Minion@12/center",
+    "text": "[Outline]"
+   },
+   {
+    "page": 41,
+    "pstyle": "Minion@11/center",
+    "text": "8.\tThe Etiquette of the Recitation of the Qurʾān"
+   },
+   {
+    "page": 41,
+    "pstyle": "Minion@11/center",
+    "text": "15.\tThe Proprieties of Friendship and Brotherhood"
+   },
+   {
+    "page": 41,
+    "pstyle": "Minion@11/center",
+    "text": "18.\t The Proprieties of the Audition and Ecstasy"
+   },
+   {
+    "page": 41,
+    "pstyle": "Minion@11/center",
+    "text": "21.\t The Exposition of the Wonders of the Heart"
+   },
+   {
+    "page": 42,
+    "pstyle": "Minion@11/center",
+    "text": "27.\tThe Censure of Greed and the Love of Wealth"
+   },
+   {
+    "page": 42,
+    "pstyle": "Minion@11/center",
+    "text": "The Quarter of Deliverance also comprises ten books:"
+   },
+   {
+    "page": 42,
+    "pstyle": "Minion@11/center",
+    "text": "36.\t On Love, Longing, Intimacy, and Contentment"
+   },
+   {
+    "page": 42,
+    "pstyle": "Minion@11/center",
+    "text": "40.\t On the Remembrance of Death and the Hereafter"
+   },
+   {
+    "page": 43,
+    "pstyle": "Minion@12/center",
+    "text": "[Previous Works on the Subject]"
+   },
+   {
+    "page": 44,
+    "pstyle": "Minion@12/center",
+    "text": "[Arrangement of this Book]"
+   },
+   {
+    "page": 44,
+    "pstyle": "Minion@12/center",
+    "text": "[Outward and Inward Knowledge]"
+   },
+   {
+    "page": 45,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 46,
+    "pstyle": "Minion-SemiBold@12/center",
+    "text": "The Book of Knowledge"
+   },
+   {
+    "page": 46,
+    "pstyle": "Minion-Italic@12/center",
+    "text": "book of the Revival of the Religious Sciences"
+   },
+   {
+    "page": 47,
+    "pstyle": "Honorifics@36",
+    "text": ""
+   },
+   {
+    "page": 48,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "In the name of God, the Merciful, the Compassionate"
+   },
+   {
+    "page": 48,
+    "pstyle": "Minion-Bold@13/center",
+    "text": "The Book of Knowledge"
+   },
+   {
+    "page": 50,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "On the virtue of knowledge, education, learning,"
+   },
+   {
+    "page": 50,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "and evidence founded on transmission and reason."
+   },
+   {
+    "page": 50,
+    "pstyle": "Minion-SemiBold@14/center",
+    "text": "The Virtue of Knowledge"
+   },
+   {
+    "page": 50,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Textual Evidence from the Qurʾān"
+   },
+   {
+    "page": 50,
+    "pstyle": "Minion@52.5",
+    "text": "G"
+   },
+   {
+    "page": 52,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "The [Prophetic] Reports"
+   },
+   {
+    "page": 52,
+    "pstyle": "Minion@32",
+    "text": "T"
+   },
+   {
+    "page": 56,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "The Traditions of the Companions and Others"
+   },
+   {
+    "page": 56,
+    "pstyle": "Minion@32",
+    "text": "ʿA"
+   },
+   {
+    "page": 57,
+    "pstyle": "Minion@11/center",
+    "text": "Pride belongs only to the people of knowledge, as they are"
+   },
+   {
+    "page": 57,
+    "pstyle": "Minion@11/center",
+    "text": "With knowledge gain victory and you will live forever"
+   },
+   {
+    "page": 61,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "The Virtue of Learning"
+   },
+   {
+    "page": 61,
+    "pstyle": "Minion@12/center",
+    "text": "Verses [from the Qurʾān]"
+   },
+   {
+    "page": 61,
+    "pstyle": "Minion@12/center",
+    "text": "The [Prophetic] Reports"
+   },
+   {
+    "page": 62,
+    "pstyle": "Minion@12/center",
+    "text": "The Traditions [of the Companions and Others]"
+   },
+   {
+    "page": 64,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "The Virtues of Teaching"
+   },
+   {
+    "page": 64,
+    "pstyle": "Minion@12/center",
+    "text": "Verses [from the Qurʾān]"
+   },
+   {
+    "page": 65,
+    "pstyle": "Minion@12/center",
+    "text": "The [Prophetic] Reports"
+   },
+   {
+    "page": 67,
+    "pstyle": "Minion@12/center",
+    "text": "The Traditions [of the Companions and Others]"
+   },
+   {
+    "page": 70,
+    "pstyle": "Minion@11/center",
+    "text": "We seek God’s  most excellent outcome for all deeds."
+   },
+   {
+    "page": 70,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Rational Proofs"
+   },
+   {
+    "page": 70,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 73,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Elucidation"
+   },
+   {
+    "page": 76,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "On praiseworthy knowledge and blameworthy"
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "knowledge, their categories and rulings, including an"
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "elucidation of what is compulsory for each individual and"
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "what is compulsory for the community as a whole, and the"
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "elucidation of the extent to which the fields of theology"
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "and jurisprudence are parts of the Islamic disciplines,"
+   },
+   {
+    "page": 77,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "and the excellence of the knowledge of the hereafter."
+   },
+   {
+    "page": 77,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "An Elucidation of Knowledge that is"
+   },
+   {
+    "page": 77,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Compulsory for each Individual"
+   },
+   {
+    "page": 77,
+    "pstyle": "Minion@52.5",
+    "text": "T"
+   },
+   {
+    "page": 84,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "An Elucidation of the Knowledge"
+   },
+   {
+    "page": 84,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "that is a Communal Obligation"
+   },
+   {
+    "page": 84,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 96,
+    "pstyle": "Minion@11/center",
+    "text": "Be content with he who conceals his slander from you"
+   },
+   {
+    "page": 110,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "[Imāms of Jurisprudence]"
+   },
+   {
+    "page": 110,
+    "pstyle": "Minion@12/center",
+    "text": "Imām al-Shāfiʿī "
+   },
+   {
+    "page": 110,
+    "pstyle": "Minion@32",
+    "text": "T"
+   },
+   {
+    "page": 118,
+    "pstyle": "Minion@12/center",
+    "text": "Imām Mālik "
+   },
+   {
+    "page": 118,
+    "pstyle": "Minion@32",
+    "text": "H"
+   },
+   {
+    "page": 121,
+    "pstyle": "Minion@12/center",
+    "text": "Imām Abū Ḥanīfa "
+   },
+   {
+    "page": 121,
+    "pstyle": "Minion@32",
+    "text": "H"
+   },
+   {
+    "page": 123,
+    "pstyle": "Minion@12/center",
+    "text": "Imām Aḥmad Ibn Ḥanbal and Sufyān "
+   },
+   {
+    "page": 123,
+    "pstyle": "Minion@32",
+    "text": "T"
+   },
+   {
+    "page": 124,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "On what the common folk consider to be the"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "laudable sciences, and what is not part of them; and"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "the elucidation of the reason certain sciences are"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "blameworthy and the elucidation of the changing names"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "applied to the sciences, these being jurisprudence,"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "knowledge, unity, admonition, and wisdom, and"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "including the elucidation of the laudable aspects of the"
+   },
+   {
+    "page": 125,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "legal sciences as well as the blameworthy among them."
+   },
+   {
+    "page": 125,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "An Elucidation on the Reason"
+   },
+   {
+    "page": 125,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Some Knowledge is Blameworthy"
+   },
+   {
+    "page": 125,
+    "pstyle": "Minion@52.5",
+    "text": "Y"
+   },
+   {
+    "page": 133,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "An Elucidation of the Names of the Disciplines"
+   },
+   {
+    "page": 133,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "that have been Altered"
+   },
+   {
+    "page": 133,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 134,
+    "pstyle": "Minion@12/center",
+    "text": "The First Term: Jurisprudence"
+   },
+   {
+    "page": 137,
+    "pstyle": "Minion@12/center",
+    "text": "The Second Term: Knowledge (ʿilm)"
+   },
+   {
+    "page": 138,
+    "pstyle": "Minion@12/center",
+    "text": "The Third Term: Unity (tawḥīd)"
+   },
+   {
+    "page": 141,
+    "pstyle": "Minion@12/center",
+    "text": "The Fourth Term: Remembrance and Admonition"
+   },
+   {
+    "page": 151,
+    "pstyle": "Minion@12/center",
+    "text": "The Fifth Term: Wisdom (ḥikma)"
+   },
+   {
+    "page": 153,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "An Elucidation of the Praiseworthy Elements in"
+   },
+   {
+    "page": 153,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "the Praiseworthy Disciplines"
+   },
+   {
+    "page": 153,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 162,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 163,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "On the reason people turn their attention to the"
+   },
+   {
+    "page": 163,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "knowledge of variant opinions and a detailed elucidation"
+   },
+   {
+    "page": 163,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "of the perils of polemics and disputation, including"
+   },
+   {
+    "page": 163,
+    "pstyle": "BriosoPro-Regular@12/center",
+    "text": "the conditions incumbent for its permissibility."
+   },
+   {
+    "page": 163,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "[Knowledge of Variant Opinions and"
+   },
+   {
+    "page": 163,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "the Perils of Disputation]"
+   },
+   {
+    "page": 163,
+    "pstyle": "Minion@52.5",
+    "text": "K"
+   },
+   {
+    "page": 166,
+    "pstyle": "Minion@12/center",
+    "text": "the Mutual Consultations of the Predecessors"
+   },
+   {
+    "page": 166,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 174,
+    "pstyle": "Minion@12/center",
+    "text": "An Elucidation of the Perils of Disputation and the"
+   },
+   {
+    "page": 174,
+    "pstyle": "Minion@12/center",
+    "text": "Destruction of Morals that Results from it"
+   },
+   {
+    "page": 174,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 184,
+    "pstyle": "Minion@11/center",
+    "text": "and establish preeminence [over them]."
+   },
+   {
+    "page": 184,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 185,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "On the Comportment Incumbent upon the"
+   },
+   {
+    "page": 185,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Student and the Teacher"
+   },
+   {
+    "page": 185,
+    "pstyle": "Minion@52.5",
+    "text": "W"
+   },
+   {
+    "page": 185,
+    "pstyle": "Minion@11/center",
+    "text": "may be categorized under ten headings:"
+   },
+   {
+    "page": 193,
+    "pstyle": "Minion@11/center",
+    "text": "be the first of your people to rise to his service.15"
+   },
+   {
+    "page": 206,
+    "pstyle": "Minion@11/center",
+    "text": "This should suffice, with regard to the role of the student."
+   },
+   {
+    "page": 206,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "An Elucidation of the Functions of"
+   },
+   {
+    "page": 206,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "the Guide and the Teacher"
+   },
+   {
+    "page": 206,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 207,
+    "pstyle": "Minion@11/center",
+    "text": "I became as though I were the wick of a lamp, ignited"
+   },
+   {
+    "page": 214,
+    "pstyle": "Minion@11/center",
+    "text": "For they enter each night ignorant of their true worth"
+   },
+   {
+    "page": 214,
+    "pstyle": "Minion@11/center",
+    "text": "So I am not at the point where I garland beasts with them"
+   },
+   {
+    "page": 214,
+    "pstyle": "Minion@11/center",
+    "text": "And if not [it would remain] put away and hidden with me"
+   },
+   {
+    "page": 214,
+    "pstyle": "Minion@11/center",
+    "text": "For whoever grants knowledge to the ignorant wastes it"
+   },
+   {
+    "page": 216,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 217,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "The Perils of [the Pursuit of] Knowledge"
+   },
+   {
+    "page": 217,
+    "pstyle": "Minion@12/center",
+    "text": "An Elucidation of the Traits of the Scholars of the"
+   },
+   {
+    "page": 217,
+    "pstyle": "Minion@12/center",
+    "text": "Hereafter and of the Reprehensible Scholars"
+   },
+   {
+    "page": 217,
+    "pstyle": "Minion@52.5",
+    "text": "W"
+   },
+   {
+    "page": 219,
+    "pstyle": "Minion@12/center",
+    "text": "The Traditions [from the Companions]"
+   },
+   {
+    "page": 219,
+    "pstyle": "Minion@32",
+    "text": "ʿU"
+   },
+   {
+    "page": 222,
+    "pstyle": "Minion@12/center",
+    "text": "[The Traits of the Scholars of the Hereafter]"
+   },
+   {
+    "page": 222,
+    "pstyle": "Minion@32",
+    "text": "A"
+   },
+   {
+    "page": 227,
+    "pstyle": "Minion@11/center",
+    "text": "leave even the most forbearing man in dismay.’”46"
+   },
+   {
+    "page": 232,
+    "pstyle": "Minion@11/center",
+    "text": "Great shame upon you should such you yourself commit"
+   },
+   {
+    "page": 237,
+    "pstyle": "Minion@12/center",
+    "text": "[Ḥātim al-Aṣamm]"
+   },
+   {
+    "page": 243,
+    "pstyle": "Minion@11/center",
+    "text": "They replied, ‘This is the city of the Messenger of God .’"
+   },
+   {
+    "page": 243,
+    "pstyle": "Minion@11/center",
+    "text": "He asked, “Where are the palaces of the Companions ”"
+   },
+   {
+    "page": 244,
+    "pstyle": "Minion@12/center",
+    "text": "[Letter to Imām Mālik b. Anas ]"
+   },
+   {
+    "page": 244,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "In the Name of God the Merciful the Compassionate"
+   },
+   {
+    "page": 244,
+    "pstyle": "Minion@11/center",
+    "text": "May the Blessings of God be upon His Messenger"
+   },
+   {
+    "page": 244,
+    "pstyle": "Minion@11/center",
+    "text": "Muḥammad among the Foremost and the Very Last"
+   },
+   {
+    "page": 244,
+    "pstyle": "Minion@11/center",
+    "text": "From Yaḥyā b. Yazīd b. ʿAbd al-Malik to Mālik b. Anas"
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "May the peace of God be with you."
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "In the Name of God the Merciful the Compassionate"
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion@11/center",
+    "text": "May the Blessings of God be upon Muḥammad, his"
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion@11/center",
+    "text": "family, his Companions, and Peace"
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "May the peace of God be upon you."
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion@32",
+    "text": "Y"
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion@11/center",
+    "text": "or might save with God, He is the Exalted, the Mighty."
+   },
+   {
+    "page": 245,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "Greetings of peace to you."
+   },
+   {
+    "page": 257,
+    "pstyle": "Minion@11/center",
+    "text": "And Ibn ʿUmar  would say, “Ask Saʿīd b. al-Musayyab.”149"
+   },
+   {
+    "page": 259,
+    "pstyle": "Minion@12/center",
+    "text": "[Imām ʿAlī  on Scholars of the Hereafter]"
+   },
+   {
+    "page": 259,
+    "pstyle": "Minion@32",
+    "text": "ʿA"
+   },
+   {
+    "page": 261,
+    "pstyle": "Minion@12/center",
+    "text": "[Scholars of the Hereafter and Certitude]"
+   },
+   {
+    "page": 261,
+    "pstyle": "Minion@32",
+    "text": "A"
+   },
+   {
+    "page": 267,
+    "pstyle": "Minion@12/center",
+    "text": "[Increase and Decrease of Certitude]"
+   },
+   {
+    "page": 267,
+    "pstyle": "Minion@32",
+    "text": "A"
+   },
+   {
+    "page": 273,
+    "pstyle": "Minion@12/center",
+    "text": "[Most Worthy Acts]"
+   },
+   {
+    "page": 277,
+    "pstyle": "Minion@11/center",
+    "text": "Evil have I known though not for evil’s sake but to avoid"
+   },
+   {
+    "page": 277,
+    "pstyle": "Minion@12/center",
+    "text": "[Worldly Scholars]"
+   },
+   {
+    "page": 277,
+    "pstyle": "Minion@32",
+    "text": "A"
+   },
+   {
+    "page": 279,
+    "pstyle": "Minion@11/center",
+    "text": "He [Ḥudhayfa] was known as the master of the secret.204"
+   },
+   {
+    "page": 279,
+    "pstyle": "Minion@11/center",
+    "text": "They are not known nor their intentions well apprised,"
+   },
+   {
+    "page": 279,
+    "pstyle": "Minion@11/center",
+    "text": "While people remain heedless of that which they seek,"
+   },
+   {
+    "page": 279,
+    "pstyle": "Minion@11/center",
+    "text": "The majority of them are oblivious to the path of truth."
+   },
+   {
+    "page": 280,
+    "pstyle": "Minion@12/center",
+    "text": "[Remembrance and Admonition]"
+   },
+   {
+    "page": 280,
+    "pstyle": "Minion@32",
+    "text": "F"
+   },
+   {
+    "page": 283,
+    "pstyle": "Minion@12/center",
+    "text": "[Invented Matters]"
+   },
+   {
+    "page": 283,
+    "pstyle": "Minion@32",
+    "text": "A"
+   },
+   {
+    "page": 293,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 294,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "On the Intellect and Its Noble Nature:"
+   },
+   {
+    "page": 294,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Its Real Nature and Categories"
+   },
+   {
+    "page": 294,
+    "pstyle": "Minion@12/center",
+    "text": "An Elucidation of the Noble Nature of the Intellect"
+   },
+   {
+    "page": 294,
+    "pstyle": "Minion@52.5",
+    "text": "K"
+   },
+   {
+    "page": 300,
+    "pstyle": "Minion@12/center",
+    "text": "An Elucidation of the Real Nature of"
+   },
+   {
+    "page": 300,
+    "pstyle": "Minion@12/center",
+    "text": "the Intellect and its Categories"
+   },
+   {
+    "page": 300,
+    "pstyle": "Minion@32",
+    "text": "K"
+   },
+   {
+    "page": 303,
+    "pstyle": "Minion@11/center",
+    "text": "In addressing this, ʿAlī [may God enoble his face] said,19"
+   },
+   {
+    "page": 303,
+    "pstyle": "Minion@11/center",
+    "text": "[Knowledge acquired through] hearing affords no benefit"
+   },
+   {
+    "page": 307,
+    "pstyle": "Minion@12/center",
+    "text": "An Elucidation on People’s Disparities in the Intellect"
+   },
+   {
+    "page": 307,
+    "pstyle": "Minion@32",
+    "text": "P"
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion@11/center",
+    "text": "This should suffice in the elucidation of the intellect."
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion@11/center",
+    "text": "God knows best where rectitude lies."
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "The Book of Knowledge is complete."
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion@11/center",
+    "text": "Being the first book of the Quarter of Worship"
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "From the books of The Revival of the Religious Sciences"
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion@11/center",
+    "text": "Praise be to God, Lord of the worlds"
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion@11/center",
+    "text": "May God send blessings of peace upon the best of His"
+   },
+   {
+    "page": 313,
+    "pstyle": "Minion-Italic@11/center",
+    "text": "[The Principles of the Creed]"
+   },
+   {
+    "page": 314,
+    "pstyle": "Minion-SemiBold@13/center",
+    "text": "Bibliography"
+   },
+   {
+    "page": 314,
+    "pstyle": "Minion@12/center",
+    "text": "Works in Western Languages"
+   },
+   {
+    "page": 314,
+    "pstyle": "Minion@12/center",
+    "text": "Works in Arabic"
+   },
+   {
+    "page": 321,
+    "pstyle": "Honorifics@36/center",
+    "text": ""
+   },
+   {
+    "page": 322,
+    "pstyle": "Minion-Bold@13/center",
+    "text": "Qurʾānic Verses Cited"
+   },
+   {
+    "page": 324,
+    "pstyle": "Minion-Bold@13/center",
+    "text": "Index"
+   },
+   {
+    "page": 337,
+    "pstyle": "Minion-SemiBold@14/center",
+    "text": "About the translator"
+   }
+  ],
+  "toc_pages": [
+   6,
+   7,
+   8
+  ],
+  "toc_entries": [
+   {
+    "page": 6,
+    "text": "Foreword",
+    "label": "x",
+    "target": 9
+   },
+   {
+    "page": 6,
+    "text": "Publisher’s Note",
+    "label": "xxvii",
+    "target": 26
+   },
+   {
+    "page": 6,
+    "text": "Translator’s Preface",
+    "label": "xxix",
+    "target": 28
+   },
+   {
+    "page": 6,
+    "text": "Acknowledgments",
+    "label": "xxxvi",
+    "target": 35
+   },
+   {
+    "page": 6,
+    "text": "Author’s Introduction",
+    "label": "xl",
+    "target": 39
+   },
+   {
+    "page": 6,
+    "text": "Outline",
+    "label": "xli",
+    "target": 40
+   },
+   {
+    "page": 6,
+    "text": "Previous Works on the Subject",
+    "label": "xliv",
+    "target": 43
+   },
+   {
+    "page": 6,
+    "text": "Arrangement of this Book",
+    "label": "xlv",
+    "target": 44
+   },
+   {
+    "page": 6,
+    "text": "Outward and Inward Knowledge",
+    "label": "xlv",
+    "target": 44
+   },
+   {
+    "page": 6,
+    "text": "The Book of Knowledge",
+    "label": "1",
+    "target": 48
+   },
+   {
+    "page": 6,
+    "text": "Chapter 1",
+    "label": "3",
+    "target": 50
+   },
+   {
+    "page": 6,
+    "text": "The Virtue of Knowledge",
+    "label": "3",
+    "target": 50
+   },
+   {
+    "page": 6,
+    "text": "Textual Evidence from the Qurʾān",
+    "label": "3",
+    "target": 50
+   },
+   {
+    "page": 6,
+    "text": "The Prophetic Reports",
+    "label": "5",
+    "target": 65
+   },
+   {
+    "page": 6,
+    "text": "The Traditions of the Companions and Others",
+    "label": "9",
+    "target": 67
+   },
+   {
+    "page": 6,
+    "text": "The Virtue of Learning",
+    "label": "14",
+    "target": 61
+   },
+   {
+    "page": 6,
+    "text": "Verses from the Qurʾān",
+    "label": "14",
+    "target": 61
+   },
+   {
+    "page": 6,
+    "text": "The Prophetic Reports",
+    "label": "14",
+    "target": 65
+   },
+   {
+    "page": 6,
+    "text": "The Traditions of the Companions and Others",
+    "label": "15",
+    "target": 67
+   },
+   {
+    "page": 6,
+    "text": "The Virtues of Teaching",
+    "label": "17",
+    "target": 64
+   },
+   {
+    "page": 6,
+    "text": "Verses from the Qurʾān",
+    "label": "17",
+    "target": 64
+   },
+   {
+    "page": 6,
+    "text": "The Prophetic Reports",
+    "label": "18",
+    "target": 65
+   },
+   {
+    "page": 6,
+    "text": "The Traditions of the Companions and Others",
+    "label": "20",
+    "target": 67
+   },
+   {
+    "page": 6,
+    "text": "Rational Proofs",
+    "label": "23",
+    "target": 70
+   },
+   {
+    "page": 6,
+    "text": "Elucidation",
+    "label": "26",
+    "target": 73
+   },
+   {
+    "page": 6,
+    "text": "Chapter 2",
+    "label": "30",
+    "target": 77
+   },
+   {
+    "page": 6,
+    "text": "each Individual",
+    "label": "30",
+    "target": 77
+   },
+   {
+    "page": 6,
+    "text": "Obligation",
+    "label": "37",
+    "target": 84
+   },
+   {
+    "page": 6,
+    "text": "Imāms of Jurisprudence",
+    "label": "63",
+    "target": 110
+   },
+   {
+    "page": 6,
+    "text": "Imām al-Shāfiʿī ",
+    "label": "63",
+    "target": 110
+   },
+   {
+    "page": 7,
+    "text": "Imām Mālik ",
+    "label": "71",
+    "target": 118
+   },
+   {
+    "page": 7,
+    "text": "Imām Abū Ḥanīfa ",
+    "label": "74",
+    "target": 121
+   },
+   {
+    "page": 7,
+    "text": "Imām Aḥmad Ibn Ḥanbal and Sufyān ",
+    "label": "76",
+    "target": 123
+   },
+   {
+    "page": 7,
+    "text": "Chapter 3",
+    "label": "78",
+    "target": 125
+   },
+   {
+    "page": 7,
+    "text": "Blameworthy",
+    "label": "78",
+    "target": 125
+   },
+   {
+    "page": 7,
+    "text": "have been Altered",
+    "label": "86",
+    "target": 133
+   },
+   {
+    "page": 7,
+    "text": "The First Term: Jurisprudence",
+    "label": "87",
+    "target": 134
+   },
+   {
+    "page": 7,
+    "text": "The Second Term: Knowledge (ʿilm)",
+    "label": "90",
+    "target": 137
+   },
+   {
+    "page": 7,
+    "text": "The Third Term: Unity (tawḥīd)",
+    "label": "91",
+    "target": 138
+   },
+   {
+    "page": 7,
+    "text": "The Fourth Term: Remembrance and Admonition",
+    "label": "94",
+    "target": 141
+   },
+   {
+    "page": 7,
+    "text": "The Fifth Term: Wisdom (ḥikma)",
+    "label": "104",
+    "target": 151
+   },
+   {
+    "page": 7,
+    "text": "Praiseworthy Disciplines",
+    "label": "106",
+    "target": 153
+   },
+   {
+    "page": 7,
+    "text": "Chapter 4",
+    "label": "116",
+    "target": 163
+   },
+   {
+    "page": 7,
+    "text": "the Perils of Disputation",
+    "label": "116",
+    "target": 163
+   },
+   {
+    "page": 7,
+    "text": "and the Mutual Consultations of the Predecessors",
+    "label": "119",
+    "target": 166
+   },
+   {
+    "page": 7,
+    "text": "Destruction of Morals that Results from it",
+    "label": "127",
+    "target": 174
+   },
+   {
+    "page": 7,
+    "text": "Chapter 5",
+    "label": "138",
+    "target": 185
+   },
+   {
+    "page": 7,
+    "text": "Teacher",
+    "label": "138",
+    "target": 185
+   },
+   {
+    "page": 7,
+    "text": "and the Teacher",
+    "label": "159",
+    "target": 206
+   },
+   {
+    "page": 7,
+    "text": "Chapter 6",
+    "label": "170",
+    "target": 217
+   },
+   {
+    "page": 7,
+    "text": "The Perils of the Pursuit of Knowledge",
+    "label": "170",
+    "target": 217
+   },
+   {
+    "page": 7,
+    "text": "and of the Reprehensible Scholars",
+    "label": "170",
+    "target": 217
+   },
+   {
+    "page": 7,
+    "text": "The Traditions from the Companions",
+    "label": "172",
+    "target": 219
+   },
+   {
+    "page": 7,
+    "text": "The Traits of the Scholars of the Hereafter",
+    "label": "175",
+    "target": 222
+   },
+   {
+    "page": 7,
+    "text": "Ḥātim al-Aṣamm",
+    "label": "190",
+    "target": 237
+   },
+   {
+    "page": 7,
+    "text": "Letter to Imām Mālik b. Anas ",
+    "label": "197",
+    "target": 244
+   },
+   {
+    "page": 7,
+    "text": "Imām ʿAlī  on Scholars of the Hereafter",
+    "label": "212",
+    "target": 259
+   },
+   {
+    "page": 7,
+    "text": "Scholars of the Hereafter and Certitude",
+    "label": "214",
+    "target": 261
+   },
+   {
+    "page": 7,
+    "text": "Increase and Decrease of Certitude",
+    "label": "220",
+    "target": 267
+   },
+   {
+    "page": 8,
+    "text": "Contents",
+    "label": "ix",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Most Worthy Acts",
+    "label": "226",
+    "target": 273
+   },
+   {
+    "page": 8,
+    "text": "Worldly Scholars",
+    "label": "230",
+    "target": 277
+   },
+   {
+    "page": 8,
+    "text": "Remembrance and Admonition",
+    "label": "233",
+    "target": 280
+   },
+   {
+    "page": 8,
+    "text": "Invented Matters",
+    "label": "236",
+    "target": 283
+   },
+   {
+    "page": 8,
+    "text": "Chapter 7",
+    "label": "247",
+    "target": 294
+   },
+   {
+    "page": 8,
+    "text": "Categories",
+    "label": "247",
+    "target": 294
+   },
+   {
+    "page": 8,
+    "text": "An Elucidation of the Noble Nature of the Intellect",
+    "label": "247",
+    "target": 294
+   },
+   {
+    "page": 8,
+    "text": "and its Categories",
+    "label": "253",
+    "target": 300
+   },
+   {
+    "page": 8,
+    "text": "An Elucidation on People’s Disparities in the Intellect",
+    "label": "260",
+    "target": 307
+   },
+   {
+    "page": 8,
+    "text": "Bibliography",
+    "label": "267",
+    "target": 314
+   },
+   {
+    "page": 8,
+    "text": "Works in Western Languages",
+    "label": "267",
+    "target": 314
+   },
+   {
+    "page": 8,
+    "text": "Works in Arabic",
+    "label": "267",
+    "target": 314
+   },
+   {
+    "page": 8,
+    "text": "Qurʾānic Verses Cited",
+    "label": "275",
+    "target": 322
+   },
+   {
+    "page": 8,
+    "text": "Index",
+    "label": "277",
+    "target": 324
+   }
+  ],
+  "toc_witness_table": [
+   {
+    "outline": "Cover",
+    "level": 1,
+    "target": 1,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Title",
+    "level": 1,
+    "target": 4,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Copyright",
+    "level": 1,
+    "target": 5,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Contents",
+    "level": 1,
+    "target": 6,
+    "printed": "Contents",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Foreword",
+    "level": 1,
+    "target": 9,
+    "printed": "Foreword",
+    "heading_on_target": false
+   },
+   {
+    "outline": "Publisher’s Note",
+    "level": 1,
+    "target": 26,
+    "printed": "Publisher’s Note",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Translator’s Preface",
+    "level": 1,
+    "target": 28,
+    "printed": "Translator’s Preface",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Acknowledgments",
+    "level": 1,
+    "target": 35,
+    "printed": "Acknowledgments",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Author’s Introduction",
+    "level": 1,
+    "target": 39,
+    "printed": "Author’s Introduction",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Outline",
+    "level": 2,
+    "target": 40,
+    "printed": "Outline",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Previous Works on the Subject",
+    "level": 2,
+    "target": 43,
+    "printed": "Previous Works on the Subject",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Arrangement of this Book",
+    "level": 2,
+    "target": 44,
+    "printed": "Arrangement of this Book",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Outward and Inward Knowledge",
+    "level": 2,
+    "target": 44,
+    "printed": "Outward and Inward Knowledge",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Book of Knowledge",
+    "level": 1,
+    "target": 48,
+    "printed": "The Book of Knowledge",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 1",
+    "level": 1,
+    "target": 50,
+    "printed": "Chapter 1",
+    "heading_on_target": false
+   },
+   {
+    "outline": "The Virtue of Knowledge",
+    "level": 2,
+    "target": 50,
+    "printed": "The Virtue of Knowledge",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Textual Evidence from the Qur?an",
+    "level": 2,
+    "target": 50,
+    "printed": "Textual Evidence from the Qurʾān",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Prophetic Reports",
+    "level": 2,
+    "target": 52,
+    "printed": "The Prophetic Reports",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Traditions of the Companions and Others",
+    "level": 2,
+    "target": 56,
+    "printed": "The Traditions of the Companions and Others",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Virtue of Learning",
+    "level": 2,
+    "target": 61,
+    "printed": "The Virtue of Learning",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Verses from the Qur?an",
+    "level": 2,
+    "target": 61,
+    "printed": "Verses from the Qurʾān",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Prophetic Reports",
+    "level": 2,
+    "target": 61,
+    "printed": "The Prophetic Reports",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Traditions of the Companions and Others",
+    "level": 2,
+    "target": 62,
+    "printed": "The Traditions of the Companions and Others",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Virtues of Teaching",
+    "level": 2,
+    "target": 64,
+    "printed": "The Virtues of Teaching",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Verses from the Qur?an",
+    "level": 2,
+    "target": 64,
+    "printed": "Verses from the Qurʾān",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Prophetic Reports",
+    "level": 2,
+    "target": 65,
+    "printed": "The Prophetic Reports",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Traditions of the Companions and Others",
+    "level": 2,
+    "target": 67,
+    "printed": "The Traditions of the Companions and Others",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Rational Proofs",
+    "level": 2,
+    "target": 70,
+    "printed": "Rational Proofs",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Elucidation",
+    "level": 2,
+    "target": 73,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 2",
+    "level": 1,
+    "target": 77,
+    "printed": "Chapter 1",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of Knowledge that is Compulsory for each Individual",
+    "level": 2,
+    "target": 77,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Knowledge that is a Communal Obligation",
+    "level": 2,
+    "target": 84,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Imams of Jurisprudence",
+    "level": 2,
+    "target": 110,
+    "printed": "Imāms of Jurisprudence",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Imam al-Shafi?i",
+    "level": 2,
+    "target": 110,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Imam Malik",
+    "level": 2,
+    "target": 118,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Imam Abu ?anifa",
+    "level": 2,
+    "target": 121,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Imam A?mad Ibn ?anbal and Sufyan",
+    "level": 2,
+    "target": 123,
+    "printed": "Imām Aḥmad Ibn Ḥanbal and Sufyān ",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 3",
+    "level": 1,
+    "target": 125,
+    "printed": "Chapter 1",
+    "heading_on_target": false
+   },
+   {
+    "outline": "An Elucidation on the Reason Some Knowledge is Blameworthy",
+    "level": 2,
+    "target": 125,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Names of the Disciplines that have been Altered",
+    "level": 2,
+    "target": 133,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The First Term: Jurisprudence",
+    "level": 2,
+    "target": 134,
+    "printed": "The First Term: Jurisprudence",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Second Term: Knowledge (?ilm)",
+    "level": 2,
+    "target": 137,
+    "printed": "The Second Term: Knowledge (ʿilm)",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Third Term: Unity (taw?id)",
+    "level": 2,
+    "target": 138,
+    "printed": "The Third Term: Unity (tawḥīd)",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Fourth Term: Remembrance and Admonition",
+    "level": 2,
+    "target": 141,
+    "printed": "The Fourth Term: Remembrance and Admonition",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Fifth Term: Wisdom (?ikma)",
+    "level": 2,
+    "target": 151,
+    "printed": "The Fifth Term: Wisdom (ḥikma)",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Praiseworthy Elements in the Praiseworthy Disciplines",
+    "level": 2,
+    "target": 153,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 4",
+    "level": 1,
+    "target": 163,
+    "printed": "Chapter 1",
+    "heading_on_target": false
+   },
+   {
+    "outline": "Knowledge of Variant Opinions and the Perils of Disputation",
+    "level": 2,
+    "target": 163,
+    "printed": "the Perils of Disputation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Duplicity Involved in Comparing these Disputations with the Deliberations of the Companions and the Mutual Consultations of the Predecessors",
+    "level": 2,
+    "target": 166,
+    "printed": "The Traditions of the Companions and Others",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Perils of Disputation and the Destruction of Morals that Results from it",
+    "level": 2,
+    "target": 174,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 5",
+    "level": 1,
+    "target": 185,
+    "printed": "Chapter 1",
+    "heading_on_target": false
+   },
+   {
+    "outline": "On the Comportment Incumbent upon the Student and the Teacher",
+    "level": 2,
+    "target": 185,
+    "printed": "Teacher",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Functions of the Guide and the Teacher",
+    "level": 2,
+    "target": 206,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 6",
+    "level": 1,
+    "target": 217,
+    "printed": "Chapter 1",
+    "heading_on_target": false
+   },
+   {
+    "outline": "The Perils of the Pursuit of Knowledge",
+    "level": 2,
+    "target": 217,
+    "printed": "The Perils of the Pursuit of Knowledge",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Traits of the Scholars of the Hereafter and of the Reprehensible Scholars",
+    "level": 2,
+    "target": 217,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Traditions from the Companions",
+    "level": 2,
+    "target": 219,
+    "printed": "The Traditions of the Companions and Others",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Traits of the Scholars of the Hereafter",
+    "level": 2,
+    "target": 222,
+    "printed": "The Traits of the Scholars of the Hereafter",
+    "heading_on_target": true
+   },
+   {
+    "outline": "?atim al-A?amm",
+    "level": 2,
+    "target": 237,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Letter to Imam Malik b. Anas",
+    "level": 2,
+    "target": 244,
+    "printed": "Letter to Imām Mālik b. Anas ",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Imam ?Ali on Scholars of the Hereafter",
+    "level": 2,
+    "target": 259,
+    "printed": "Imām ʿAlī  on Scholars of the Hereafter",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Scholars of the Hereafter and Certitude",
+    "level": 2,
+    "target": 261,
+    "printed": "Scholars of the Hereafter and Certitude",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Increase and Decrease of Certitude",
+    "level": 2,
+    "target": 267,
+    "printed": "Increase and Decrease of Certitude",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Most Worthy Acts",
+    "level": 2,
+    "target": 273,
+    "printed": "Most Worthy Acts",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Worldly Scholars",
+    "level": 2,
+    "target": 277,
+    "printed": "Worldly Scholars",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Remembrance and Admonition",
+    "level": 2,
+    "target": 280,
+    "printed": "The Fourth Term: Remembrance and Admonition",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Invented Matters",
+    "level": 2,
+    "target": 283,
+    "printed": "Invented Matters",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter 7",
+    "level": 1,
+    "target": 294,
+    "printed": "Chapter 1",
+    "heading_on_target": false
+   },
+   {
+    "outline": "On the Intellect and Its Noble Nature: Its Real Nature and Categories",
+    "level": 2,
+    "target": 294,
+    "printed": "Categories",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Noble Nature of the Intellect",
+    "level": 2,
+    "target": 294,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation of the Real Nature of the Intellect and its Categories",
+    "level": 2,
+    "target": 300,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "An Elucidation on People’s Disparities in the Intellect",
+    "level": 2,
+    "target": 307,
+    "printed": "Elucidation",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Bibliography",
+    "level": 1,
+    "target": 314,
+    "printed": "Bibliography",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Works in Western Languages",
+    "level": 2,
+    "target": 314,
+    "printed": "Works in Western Languages",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Works in Arabic",
+    "level": 2,
+    "target": 314,
+    "printed": "Works in Arabic",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Indexes",
+    "level": 1,
+    "target": 322,
+    "printed": "Index",
+    "heading_on_target": false
+   },
+   {
+    "outline": "Qur?anic Verses Cited",
+    "level": 2,
+    "target": 322,
+    "printed": "Qurʾānic Verses Cited",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Index",
+    "level": 2,
+    "target": 324,
+    "printed": "Index",
+    "heading_on_target": true
+   },
+   {
+    "outline": "About the translator",
+    "level": 1,
+    "target": 337,
+    "printed": null,
+    "heading_on_target": true
+   }
+  ],
+  "toc_source_proposal": "outline",
+  "footnote_pages": [
+   11,
+   13,
+   19,
+   22,
+   29,
+   30,
+   31,
+   32,
+   33,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   74,
+   75,
+   77,
+   78,
+   79,
+   81,
+   82,
+   83,
+   85,
+   86,
+   87,
+   88,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99,
+   101,
+   102,
+   103,
+   104,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119,
+   120,
+   121,
+   122,
+   123,
+   126,
+   127,
+   128,
+   129,
+   130,
+   132,
+   133,
+   135,
+   136,
+   137,
+   138,
+   139,
+   141,
+   142,
+   143,
+   144,
+   145,
+   146,
+   147,
+   148,
+   149,
+   150,
+   151,
+   152,
+   153,
+   155,
+   156,
+   157,
+   158,
+   160,
+   161,
+   162,
+   164,
+   165,
+   168,
+   169,
+   170,
+   171,
+   172,
+   175,
+   176,
+   180,
+   182,
+   183,
+   185,
+   186,
+   187,
+   188,
+   189,
+   190,
+   191,
+   193,
+   194,
+   195,
+   196,
+   198,
+   203,
+   204,
+   207,
+   209,
+   211,
+   212,
+   213,
+   214,
+   216,
+   217,
+   218,
+   219,
+   220,
+   221,
+   223,
+   224,
+   225,
+   226,
+   227,
+   228,
+   229,
+   230,
+   231,
+   232,
+   233,
+   234,
+   235,
+   236,
+   237,
+   239,
+   244,
+   247,
+   248,
+   249,
+   250,
+   251,
+   252,
+   253,
+   254,
+   255,
+   256,
+   257,
+   258,
+   259,
+   260,
+   261,
+   262,
+   263,
+   264,
+   265,
+   266,
+   267,
+   270,
+   271,
+   272,
+   273,
+   274,
+   275,
+   276,
+   278,
+   279,
+   281,
+   282,
+   284,
+   285,
+   286,
+   287,
+   288,
+   289,
+   290,
+   291,
+   292,
+   294,
+   295,
+   296,
+   297,
+   298,
+   299,
+   300,
+   301,
+   303,
+   304,
+   305,
+   306,
+   310,
+   312,
+   313,
+   322,
+   323,
+   324,
+   325,
+   326,
+   327,
+   328,
+   329,
+   330,
+   331,
+   332,
+   333,
+   334,
+   335,
+   336
+  ],
+  "footnote_marker_census": {
+   "digit": 671
+  },
+  "footnote_samples": [
+   {
+    "page": 11,
+    "text": "1\tRichard J. McCarthy, Al-Ghazali: Deliverance from Error, (Louisville, KY:  Fons Vitae, n.d.), 78–79, with minor changes."
+   },
+   {
+    "page": 13,
+    "text": "2\tW. M. Watt, A Muslim Intellectual: A Study of al-Ghazali (Edinburgh: Edin- burgh University Press, 1963), 23–24, with minor changes. 3\tRichard J. Mc"
+   },
+   {
+    "page": 19,
+    "text": "4\t Saʿīd Aʿrāb, Maʿ al-Qaḍī Abī Bakr bin al-ʿArabī (Beirut: Dār al-Gharab  al‑Islāmī, 1987), 219–221. 5\tSaʿīd Aʿrāb, Maʿ al-Qaḍī Abī Bakr bin al-ʿArab"
+   },
+   {
+    "page": 22,
+    "text": "6\t al-Ghazālī, Majmūʿa Rasāʾil al-imām al-Ghazālī, prepared by Ibrahim Amin  Muhammad, (Cairo: al-maktab al-Tawfikia, n.d.), 462."
+   },
+   {
+    "page": 29,
+    "text": "7\tErnest Gellner, Legitimation of Belief (Cambridge: Cambridge University  Press, 1957), 206. 8\t Gellner, Legitimation, 207."
+   }
+  ],
+  "footnote_policy_proposal": "markers",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 13.5,
+  "indent_histogram": {
+   "5": 1,
+   "9": 50,
+   "10": 2,
+   "11": 4,
+   "13": 1,
+   "16": 3,
+   "17": 4,
+   "18": 1290,
+   "19": 6,
+   "20": 14,
+   "21": 2,
+   "22": 12,
+   "23": 4,
+   "26": 3,
+   "27": 36,
+   "28": 1,
+   "29": 2,
+   "31": 26,
+   "32": 15,
+   "33": 9,
+   "35": 4,
+   "36": 86,
+   "38": 2,
+   "47": 2,
+   "49": 1,
+   "50": 15,
+   "54": 11
+  },
+  "indent_threshold_proposal": 13.5,
+  "eol_hyphen_count": 311,
+  "lost_space_count": 0,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [
+   9,
+   28,
+   35,
+   39,
+   50,
+   52,
+   56,
+   70,
+   73,
+   77,
+   84,
+   110,
+   118,
+   121,
+   123,
+   125,
+   133,
+   153,
+   163,
+   166,
+   174,
+   185,
+   206,
+   217,
+   219,
+   222,
+   237,
+   244,
+   245,
+   259,
+   261,
+   267,
+   273,
+   277,
+   280,
+   283,
+   294,
+   300,
+   307
+  ],
+  "pua_census": [
+   {
+    "char": "",
+    "hex": "U+F072",
+    "count": 87,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     6,
+     7,
+     58,
+     59,
+     61
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F074",
+    "count": 4,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     7,
+     123,
+     165,
+     237
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F068",
+    "count": 126,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     7,
+     26,
+     56,
+     57,
+     59
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F08D",
+    "count": 27,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     8,
+     10,
+     11,
+     13,
+     19
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F048",
+    "count": 5,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     19,
+     41,
+     43
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F062",
+    "count": 72,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     50,
+     51,
+     54,
+     56
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F06E",
+    "count": 28,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     54,
+     65,
+     84,
+     88
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F070",
+    "count": 8,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     74,
+     84,
+     143,
+     239
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F063",
+    "count": 4,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     50,
+     148,
+     173
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F067",
+    "count": 293,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     52,
+     53,
+     54,
+     55
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F06A",
+    "count": 27,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     86,
+     90,
+     105,
+     106
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F069",
+    "count": 3,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     26,
+     144,
+     299
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F023",
+    "count": 2,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     38,
+     47
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F047",
+    "count": 1,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     39
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F094",
+    "count": 253,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     40,
+     45,
+     50,
+     51,
+     54
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F044",
+    "count": 1,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     40
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F04D",
+    "count": 1,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     43
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F051",
+    "count": 1,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     44
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F093",
+    "count": 32,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     45,
+     60,
+     66,
+     71,
+     75
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F06B",
+    "count": 29,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     50,
+     53,
+     57,
+     59,
+     60
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F071",
+    "count": 4,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     57,
+     192,
+     212,
+     267
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F06D",
+    "count": 2,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     129,
+     280
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F073",
+    "count": 7,
+    "families": [
+     "Honorifics"
+    ],
+    "pages": [
+     165,
+     166,
+     240,
+     241,
+     251
+    ]
+   }
+  ],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 0,
+  "column_suspect_pages": [
+   325,
+   329,
+   331,
+   332,
+   334
+  ],
+  "low_agreement_pages": [
+   {
+    "page": 322,
+    "score": 53.5
+   },
+   {
+    "page": 323,
+    "score": 56.3
+   },
+   {
+    "page": 324,
+    "score": 57.2
+   },
+   {
+    "page": 325,
+    "score": 54.9
+   },
+   {
+    "page": 326,
+    "score": 56.9
+   },
+   {
+    "page": 327,
+    "score": 57.9
+   },
+   {
+    "page": 328,
+    "score": 59.3
+   },
+   {
+    "page": 329,
+    "score": 56.3
+   },
+   {
+    "page": 330,
+    "score": 56.3
+   },
+   {
+    "page": 331,
+    "score": 58.6
+   },
+   {
+    "page": 332,
+    "score": 60.4
+   },
+   {
+    "page": 333,
+    "score": 57.4
+   },
+   {
+    "page": 334,
+    "score": 56.8
+   },
+   {
+    "page": 335,
+    "score": 55.7
+   },
+   {
+    "page": 336,
+    "score": 60.4
+   }
+  ],
+  "image_only_pages": [
+   338
+  ],
+  "cover_proposal": {
+   "mode": "render",
+   "page": 1,
+   "reason": "page 1 is image-dominated (2 image(s), 34 chars)"
+  },
+  "flagged_pages": [
+   1,
+   6,
+   7,
+   8,
+   9,
+   11,
+   13,
+   19,
+   26,
+   28,
+   38,
+   39,
+   40,
+   43,
+   44,
+   45,
+   48,
+   50,
+   57,
+   129,
+   165,
+   322,
+   323,
+   324,
+   325,
+   326,
+   327,
+   328,
+   329,
+   330,
+   331,
+   332,
+   338
+  ],
+  "warnings": []
+ }
+}

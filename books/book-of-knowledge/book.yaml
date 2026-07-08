@@ -1,0 +1,182 @@
+# The Book of Knowledge — final judgments (agent conversion, 2026-07-07).
+# Every decision traces to analysis/structure_report.md or a page render;
+# glyph identifications verified on analysis/glyph-grid*.png (350 dpi crops)
+# against the book's own legend (Publisher's Note, p.26 render).
+
+source:
+  folder: "package"
+  pdf: "adult-The_Book_of_Knowledge_cover and TOC links.pdf"
+  sha256: "48ea4f71a48e94390a19ffa705f992bb2853bb0c70f3d5e8f63c9df24086704d"
+
+metadata:                     # from title (p.4) + copyright (p.5) page text
+  title: "The Book of Knowledge"
+  subtitle: "Book 1 of the Revival of the Religious Sciences"
+  creators:
+    - {name: "Abū Ḥāmid al-Ghazālī", role: aut}
+    - {name: "Kenneth Honerkamp", role: trl}
+    - {name: "Hamza Yusuf", role: aui}   # foreword
+  publisher: "Fons Vitae"
+  language: en
+  additional_languages: []
+  isbn_epub: "978-1-941610-21-3"   # printed on the copyright page (eBook ISBN)
+  isbn_print: "978-1-941610-15-2"
+  date: "2015"
+  cover: assets/cover.jpg
+  cover_render: {page: 1, box: trim, dpi: 300}   # p.1 is the cover JPEG
+
+pages:
+  cover: [1]
+  front: {first: 2, last: 47}    # roman folios; body folio '1' prints on p.48
+  body:  {first: 48, last: 338}
+  # Index (pp.324-336) is set in two print columns; single-column line order
+  # interleaves the columns (engine-agreement flagged exactly these pages).
+  # Its page references remain reachable via the EPUB page-list. FLAGGED in
+  # handoff. p.338 is an image-only closing page (no text layer).
+  exclude: [324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 338]
+  label_source: pdf-page-labels   # folio-vs-label agreement 100% on 325 pages
+  label_overrides: {}
+  role_overrides:
+    - {page: 2, role: half-title}
+    - {page: 3, role: half-title}
+    - {page: 4, role: title-page}
+    - {page: 5, role: p}          # copyright page: plain text
+
+furniture:
+  top_band: 28.9
+  repeat_min_pages: 3
+  extra: ["Contents"]             # 'Contentsix' head on TOC pages 7-8 (2 repeats only)
+  keep: []
+
+styles:
+  body_pstyle: "Minion@11"
+  pstyle_map:
+    "Minion@11":                  {role: p}      # dominant cluster
+    "Minion@8.5":                 {role: footnote}
+    "Minion@10":                  {role: p}      # block quotes/front lists (sized via CSS)
+    "Minion@9":                   {role: footnote}
+    "Minion-Italic@11":           {role: p}
+    "Minion-Italic@10":           {role: p}
+    "Minion@11/center":           {role: h3}     # attributions/dividers (below nav_depth)
+    "Minion-Italic@8.5":          {role: footnote}
+    "Minion@9/center":            {role: footnote}
+    "Minion@12/center":           {role: h2}
+    "Minion@8.5/center":          {role: footnote}
+    "BriosoPro-Regular@12/center": {role: h2}    # chapter subtitle lines
+    "Minion-SemiBold@13/center":  {role: h2}
+    "Minion@10/center":           {role: p}
+    "Minion@10.5":                {role: p}
+    "Minion-Italic@9":            {role: footnote}
+    "Minion-Italic@11/center":    {role: h3}
+    "Minion-Italic@8.5/center":   {role: p}
+    "Minion@12":                  {role: p}
+    "Minion-SemiBold@15/center":  {role: h1}     # section heads (Foreword etc.)
+    "Minion-Italic@12/center":    {role: h2}
+    "Minion@21":                  {role: title-page}
+    "Minion@22":                  {role: title-page}
+    "Minion-Bold@13/center":      {role: h2}
+    "Minion-SemiBold@14/center":  {role: h2}
+    "BriosoPro-Regular@18/center": {role: h1}    # big chapter numerals
+    "Minion-Italic@24":           {role: title-page}
+    "Minion-Italic@33":           {role: title-page}
+    "Minion-SemiBold@11":         {role: p}
+    "Minion-SemiBold@12/center":  {role: h3}
+    "Minion@13/center":           {role: h3}
+    "Minion@28":                  {role: title-page}
+    "Minion@36":                  {role: title-page}
+    "Minion@48":                  {role: title-page}
+    "Minion@31.5":                {role: p}      # drop caps (reattached by flow)
+    "Minion@52.5":                {role: p}
+    "Minion@32":                  {role: p}
+    "BriosoPro-Regular@11":       {role: p}
+    "BriosoPro-Regular@11/center": {role: h3}
+    "Honorifics@11":              {role: p}
+    "Honorifics@11/center":       {role: p}
+    "Honorifics@14":              {role: p}
+    "Honorifics@17":              {role: p}
+    "Honorifics@36":              {role: p}
+    "Honorifics@36/center":       {role: p}
+    "Honorifics@18":              {role: p}
+    "Honorifics@24":              {role: p}
+    "Honorifics@35.5":            {role: p}
+    "Helvetica@9":                {role: drop}   # stray production text if any
+  charstyles:
+    Honorifics: {symbol: true}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 13.5
+  gap_factor: 1.6
+  dehyphenate: lower-only
+  restore_spaces: false
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides:
+    # hanging-indent turnovers the indent rule misreads as new paragraphs
+    # (all verified: each continues a hyphenated word from the line above)
+    - {page: 43, line: 22, action: join, note: "numbered-list turnover 'dif-/ficult'"}
+    - {page: 236, line: 16, action: join, note: "Quran-quote turnover 'destruc-/tion'"}
+    - {page: 239, line: 16, action: join, note: "quote turnover 'atten-/tion'"}
+    - {page: 276, line: 14, action: join, note: "quote turnover 'sub-/missive'"}
+
+footnotes:
+  policy: markers
+  marker: digits
+
+toc:
+  source: outline            # 79 hierarchical bookmarks; corroborated by 83
+  printed_pages: [6, 7, 8]   # links and the printed Contents parse (74 entries)
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:
+  # Honorifics font, PUA codepoints. Rendered as their English readings per
+  # the book's OWN legend (Publisher's Note, p.26) — the print glyphs are
+  # calligraphic phrases; parenthesized readings are the standard scholarly
+  # convention and avoid RTL layout risk. Each verified on a 350dpi crop
+  # (analysis/glyph-grid.png, glyph-grid2.png). FLAGGED in handoff: publisher
+  # may prefer Arabic glyph chars + an embedded Arabic font later.
+  pua_map:
+    "": {action: char, char: " (may the peace and blessings of God be upon him)", note: "salla llahu alayhi wa-sallam, compact; verified p.52 crop; x292"}
+    "": {action: char, char: " (exalted is He)", note: "ta'ala; verified p.40 crop; x253"}
+    "": {action: char, char: " (may God be pleased with him)", note: "radiya llahu anhu; verified p.7 crop; x125"}
+    "": {action: char, char: " (may God have mercy on him)", note: "rahimahu llah; verified p.6 crop; x87"}
+    "": {action: char, char: " (mighty and majestic is He)", note: "azza wa-jalla; verified p.50 crop; x71"}
+    "": {action: char, char: " (glorified is He)", note: "subhanahu; verified p.45 crop; x32"}
+    "": {action: char, char: " (may God be pleased with them both)", note: "anhuma dual (Ibn Abbas); verified p.50 crop; x29"}
+    "": {action: char, char: " (peace be upon him)", note: "alayhi s-salam; verified p.54 crop; x27"}
+    "": {action: drop, note: "geometric star section ornament; verified p.8 crop; x27"}
+    "": {action: char, char: " (may God be pleased with them)", note: "anhum plural; verified p.86 crop; x26"}
+    "": {action: char, char: " (peace be upon them)", note: "alayhim; verified p.74 crop; x7"}
+    "": {action: char, char: " (may God have mercy on them)", note: "rahimahum; verified p.165 crop; x7"}
+    "": {action: char, char: " (may the peace and blessings of God be upon him)", note: "salla llahu... spelled large; verified p.19 crop; x5"}
+    "": {action: char, char: " (peace be upon him)", note: "alayhi s-salam variant; verified p.57 crop (David); x4"}
+    "": {action: char, char: " (may God have mercy on them both)", note: "rahimahuma dual (Ibn Hanbal and Sufyan); verified p.7 crop; x4"}
+    "": {action: char, char: " (exalted and most high is He)", note: "subhanahu wa-ta'ala; legend row 3 + p.50 crop; x3"}
+    "": {action: char, char: " (may God be pleased with her)", note: "anha (A'isha); verified p.144 crop; x2"}
+    "": {action: char, char: " (may the peace and blessings of God be upon him)", note: "salla... variant; verified p.129 crop; x2"}
+    "": {action: char, char: " (mighty and majestic is He)", note: "azza wa-jalla large; verified p.40 crop; x1"}
+    "": {action: char, char: " (may the peace and blessings of God be upon him and his family)", note: "wa-ala alihi form; verified p.39 crop; x1"}
+    "": {action: char, char: " (may God be pleased with them)", note: "anhum large; verified p.43 crop; x1"}
+    "": {action: char, char: " (peace be upon them)", note: "alayhim large; verified p.44 crop; x1"}
+    "": {action: char, char: "In the name of God, the Merciful, the Compassionate", note: "full basmala calligraphy line; verified p.38 crop; x2"}
+  fail_on_unmapped_pua: true
+  gt_strip_phrases: []
+
+fonts:
+  embed: []      # readings are English text; no special glyphs remain
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: book-of-knowledge, include_ncx: true}

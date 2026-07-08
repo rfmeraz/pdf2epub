@@ -65,6 +65,10 @@ class FlowResult:
     # note_id -> printed marker ('7', '*') — QA strips these tokens from
     # ground truth (the EPUB renumbers its noterefs)
     note_markers: dict[str, str] = field(default_factory=dict)
+    # page -> normalized texts of furniture lines the flow stripped; the QA
+    # ground truth excises exactly these (template sets diverge between the
+    # engines for short-lived heads)
+    furniture_texts: dict[int, list[str]] = field(default_factory=dict)
 
 
 @dataclass(slots=True)
@@ -143,13 +147,16 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 tpl = furniture_template(ln.text())
                 if is_folio_line(t_norm):
                     counts["furniture-folio"] += 1
+                    res.furniture_texts.setdefault(p.number, []).append(t_norm)
                     continue
                 if tpl in fur:
                     counts["furniture-head"] += 1
+                    res.furniture_texts.setdefault(p.number, []).append(t_norm)
                     continue
                 if (head_base is not None and abs(ln.y0 - head_base) <= 3
                         and re.search(r"^#|#$", tpl)):
                     counts["furniture-baseline"] += 1
+                    res.furniture_texts.setdefault(p.number, []).append(t_norm)
                     continue
                 if near_top and top_band and ln.y0 <= p.trim[1] + top_band:
                     warns.append(_Warn(

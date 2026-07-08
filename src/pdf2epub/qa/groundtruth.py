@@ -38,7 +38,8 @@ class GroundTruth:
 
 
 def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
-                       note_texts_by_page: dict[int, list[str]]) -> GroundTruth:
+                       note_texts_by_page: dict[int, list[tuple[str, str]]],
+                       stripped_lines: dict[int, list[str]] | None = None) -> GroundTruth:
     gt = GroundTruth()
     raw_pages = poppler_page_texts(pdf, crop=doc.trim_crop_box)
     in_flow = set(cfg.in_flow_pages(doc.n_pages))
@@ -60,12 +61,24 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
         raw = raw_pages[pno - 1]
         lines = [ln for ln in raw.split("\n") if ln.strip()]
         kept = []
+        # the flow's exact stripped lines for this page (fused MuPDF forms
+        # like '14book of knowledge'; poppler splits folio and head, so also
+        # match on the digit/roman-stripped remainder)
+        page_stripped = set()
+        for s in (stripped_lines or {}).get(pno, []):
+            page_stripped.add(s)
+            page_stripped.add(re.sub(r"^[\divxlcdm]+\s*|\s*[\divxlcdm]+$", "", s,
+                                     flags=re.I).strip())
         for i, ln in enumerate(lines):
             first_or_last = i <= 1 or i >= len(lines) - 2
             if first_or_last:
-                if is_folio_line(normalize(ln)):
+                n = normalize(ln)
+                if is_folio_line(n):
                     continue
                 if furniture_template(ln).strip("#").strip() in canon:
+                    continue
+                if n in page_stripped or n.strip("0123456789ivxlcdmIVXLCDM ") in \
+                        {p.strip("0123456789ivxlcdmIVXLCDM ") for p in page_stripped}:
                     continue
             kept.append(ln)
         text = "\n".join(kept)

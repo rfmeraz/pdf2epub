@@ -19,11 +19,16 @@ _PUA = re.compile(r"[\ue000-\uf8ff]")
 _LOST_SPACE = re.compile(r"[a-z][.!?][A-Z]|,\"[A-Z]|,”[A-Z]")
 
 
+_GENERIC_SHORTHAND = {"foreword", "preface", "introduction", "index", "indexes",
+                      "bibliography", "acknowledgments", "appendix"}
+
+
 @dataclass(slots=True)
 class TocAgreement:
     source_total: int = 0
     matched: int = 0
     missing: list[str] = field(default_factory=list)  # gates
+    shorthand: list[str] = field(default_factory=list)  # informational
     nav_extra: int = 0  # informational: nav may be finer-grained
 
     @property
@@ -31,19 +36,34 @@ class TocAgreement:
         return not self.missing
 
 
+def _fold(s: str) -> str:
+    """Lowercase + strip diacritics + drop non-alphanumerics: PDF outlines
+    are PDFDocEncoding and corrupt ʿayn/ḥāʾ to '?' ('Imam al-Shafi?i')."""
+    import unicodedata
+
+    s = unicodedata.normalize("NFD", normalize(s).lower())
+    return re.sub(r"[^a-z0-9 ]+", "", "".join(c for c in s if not unicodedata.combining(c)))
+
+
 def check_toc_agreement(nav_entries: list[tuple[int, str]],
                         source_entries: list[str],
                         nav_depth: int) -> TocAgreement:
     """Every chosen-source TOC title must appear in nav.xhtml within depth."""
     res = TocAgreement(source_total=len(source_entries))
-    nav_texts = [normalize(t).lower() for d, t in nav_entries if d <= nav_depth]
-    all_nav = [normalize(t).lower() for _, t in nav_entries]
+    nav_texts = [_fold(t) for d, t in nav_entries if d <= nav_depth]
+    all_nav = [_fold(t) for _, t in nav_entries]
     for title in source_entries:
-        want = normalize(title).lower()
+        want = _fold(title)
         if any(fuzz.partial_ratio(want, t) >= 85 for t in nav_texts):
             res.matched += 1
         elif any(fuzz.partial_ratio(want, t) >= 85 for t in all_nav):
             res.matched += 1  # present, just deeper than nav_depth — tolerated
+        elif want in _GENERIC_SHORTHAND:
+            # print-navigation shorthand ('Foreword' for an essay that carries
+            # its own title heading; 'Indexes' for excluded index apparatus) —
+            # informational, not gating
+            res.matched += 1
+            res.shorthand.append(title)
         else:
             res.missing.append(title)
     res.nav_extra = max(0, len(nav_entries) - res.matched)

@@ -1,0 +1,146 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+source:
+  folder: "package"
+  pdf: "adult-The_Book_of_Knowledge_cover and TOC links.pdf"
+  sha256: "48ea4f71a48e94390a19ffa705f992bb2853bb0c70f3d5e8f63c9df24086704d"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> urn:uuid (flagged)
+  isbn_print:
+  date:
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (2 image(s), 34 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 47}   # roman folios
+  body:  {first: 48, last: 338}   # printed folio '1' seen on p.48
+  exclude: []
+  label_source: pdf-page-labels   # folio-vs-label agreement: 100.0%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 28.9
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 127p): '#book of knowledge | chapter #'
+  # repeated (top, 38p): 'The Perils of [the Pursuit of] Knowledge#'
+  # repeated (top, 26p): '#book of knowledge'
+  # repeated (top, 9p): '#ām Al-Ghazālī: The Proof of Isla#'
+  # repeated (top, 8p): '[Imāms of Jurisprudence]#'
+  # repeated (top, 6p): '#ndex#'
+  # repeated (top, 4p): 'An Elucidation on the Reason Some Knowledge is Blameworthy #'
+  # repeated (top, 3p): "Translator's Preface#"
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "Minion@11"
+  pstyle_map:
+    "Minion@11": {role: p}   # high: dominant text cluster
+    "Minion@8.5": {role: footnote}   # low: small (8.5pt), frequent
+    "Minion@10": {role: p}   # low: smaller than body (10.0pt)
+    "Minion@9": {role: footnote}   # low: small (9.0pt), frequent
+    "Minion-Italic@11": {role: p}   # low: body-like
+    "Minion-Italic@10": {role: p}   # low: smaller than body (10.0pt)
+    "Minion@11/center": {role: h3}   # low: centered, body-sized
+    "Minion-Italic@8.5": {role: footnote}   # low: small (8.5pt), frequent
+    "Minion@9/center": {role: footnote}   # low: small (9.0pt), frequent
+    "Minion@12/center": {role: h2}   # medium: 12.0pt centered
+    "Minion@8.5/center": {role: footnote}   # low: small (8.5pt), frequent
+    "BriosoPro-Regular@12/center": {role: h2}   # medium: 12.0pt centered
+    "Minion-SemiBold@13/center": {role: h2}   # medium: 13.0pt centered
+    "Minion@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "Minion@10.5": {role: p}   # low: smaller than body (10.5pt)
+    "Minion-Italic@9": {role: footnote}   # low: small (9.0pt), frequent
+    "Minion-Italic@11/center": {role: h3}   # low: centered, body-sized
+    "Minion-Italic@8.5/center": {role: p}   # low: smaller than body (8.5pt)
+    "Minion@12": {role: p}   # low: body-like
+    "Minion-SemiBold@15/center": {role: h1}   # medium: size 15.0pt >= 1.35x body
+    "Minion-Italic@12/center": {role: h2}   # medium: 12.0pt centered
+    "Minion@21": {role: title-page}   # medium: size 21.0pt >= 1.8x body
+    "Minion@22": {role: title-page}   # medium: size 22.0pt >= 1.8x body
+    "Minion-Bold@13/center": {role: h2}   # medium: 13.0pt centered
+    "Minion-SemiBold@14/center": {role: h2}   # medium: 14.0pt centered
+    "Minion@32": {role: title-page}   # medium: size 32.0pt >= 1.8x body
+    "Honorifics@11/center": {role: h3}   # low: centered, body-sized
+    "Honorifics@36/center": {role: title-page}   # medium: size 36.0pt >= 1.8x body
+    "Minion@52.5": {role: title-page}   # medium: size 52.5pt >= 1.8x body
+    "BriosoPro-Regular@18/center": {role: h1}   # medium: size 18.0pt >= 1.35x body
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 13.5
+  gap_factor: 1.6             # median leading measured: 13.5pt
+  dehyphenate: lower-only
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: markers   # regions on 234 pages; census {'digit': 671}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: outline   # outline=79 printed=74 links=83
+  printed_pages: [6, 7, 8]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map:
+    "\uF072": {action: FILL-ME-IN, note: "U+F072 x87 from Honorifics — LOOK at analysis/pages/p0006.png"}
+    "\uF074": {action: FILL-ME-IN, note: "U+F074 x4 from Honorifics — LOOK at analysis/pages/p0007.png"}
+    "\uF068": {action: FILL-ME-IN, note: "U+F068 x126 from Honorifics — LOOK at analysis/pages/p0007.png"}
+    "\uF08D": {action: FILL-ME-IN, note: "U+F08D x27 from Honorifics — LOOK at analysis/pages/p0008.png"}
+    "\uF048": {action: FILL-ME-IN, note: "U+F048 x5 from Honorifics — LOOK at analysis/pages/p0019.png"}
+    "\uF062": {action: FILL-ME-IN, note: "U+F062 x72 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF06E": {action: FILL-ME-IN, note: "U+F06E x28 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF070": {action: FILL-ME-IN, note: "U+F070 x8 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF063": {action: FILL-ME-IN, note: "U+F063 x4 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF067": {action: FILL-ME-IN, note: "U+F067 x293 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF06A": {action: FILL-ME-IN, note: "U+F06A x27 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF069": {action: FILL-ME-IN, note: "U+F069 x3 from Honorifics — LOOK at analysis/pages/p0026.png"}
+    "\uF023": {action: FILL-ME-IN, note: "U+F023 x2 from Honorifics — LOOK at analysis/pages/p0038.png"}
+    "\uF047": {action: FILL-ME-IN, note: "U+F047 x1 from Honorifics — LOOK at analysis/pages/p0039.png"}
+    "\uF094": {action: FILL-ME-IN, note: "U+F094 x253 from Honorifics — LOOK at analysis/pages/p0040.png"}
+    "\uF044": {action: FILL-ME-IN, note: "U+F044 x1 from Honorifics — LOOK at analysis/pages/p0040.png"}
+    "\uF04D": {action: FILL-ME-IN, note: "U+F04D x1 from Honorifics — LOOK at analysis/pages/p0043.png"}
+    "\uF051": {action: FILL-ME-IN, note: "U+F051 x1 from Honorifics — LOOK at analysis/pages/p0044.png"}
+    "\uF093": {action: FILL-ME-IN, note: "U+F093 x32 from Honorifics — LOOK at analysis/pages/p0045.png"}
+    "\uF06B": {action: FILL-ME-IN, note: "U+F06B x29 from Honorifics — LOOK at analysis/pages/p0050.png"}
+    "\uF071": {action: FILL-ME-IN, note: "U+F071 x4 from Honorifics — LOOK at analysis/pages/p0057.png"}
+    "\uF06D": {action: FILL-ME-IN, note: "U+F06D x2 from Honorifics — LOOK at analysis/pages/p0129.png"}
+    "\uF073": {action: FILL-ME-IN, note: "U+F073 x7 from Honorifics — LOOK at analysis/pages/p0165.png"}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  # honorific/symbol glyphs likely need: {family: Amiri, file: /usr/share/fonts/amiri-fonts/Amiri-Regular.ttf, script: cjk, lang: ar}
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: book-of-knowledge, include_ncx: true}
