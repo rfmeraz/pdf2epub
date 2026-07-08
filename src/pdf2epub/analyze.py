@@ -1,0 +1,584 @@
+"""Deterministic evidence gathering: PdfDoc -> Analysis (analysis/analysis.json).
+
+Nothing here decides anything about the book — it computes the evidence the
+conversion agent uses to write book.yaml, with proposals + confidence so the
+draft config is reviewable. All agent decisions must trace back to a number
+or sample in this file's output.
+"""
+
+from __future__ import annotations
+
+import re
+from collections import Counter, defaultdict
+from dataclasses import asdict, dataclass, field
+
+from rapidfuzz import fuzz
+
+from .core.textnorm import is_folio_line, normalize
+from .pdfmodel import PdfDoc, PdfLine, PdfPage
+
+_ROMAN = re.compile(r"^[ivxlcdm]+$", re.I)
+_EOL_HYPHEN = re.compile(r"[A-Za-z]-$")
+_LOST_SPACE = re.compile(r"[a-z][.!?,;:][\"”’]?[A-Z“\"]")
+_CJK = re.compile(r"[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff]")
+_RTL = re.compile(r"[\u0590-\u08ff\ufb1d-\ufdff\ufe70-\ufeff]")
+_PUA = re.compile(r"[\ue000-\uf8ff]")
+
+CENTER_TOL = 10.0   # pt: |line center - column center| below this = centered
+CENTER_INSET = 10.0  # pt: centered lines start/end clear of both column edges
+
+
+# ------------------------------------------------------------------ pstyles
+
+@dataclass(slots=True)
+class ColumnGeometry:
+    """Modal edges of the justified text column (NOT the trim box — a book's
+    text column is itself centered on the page, so trim-relative centering
+    calls every full body line 'centered'; verified on Book of Knowledge)."""
+    col_left: float
+    col_right: float
+
+    @property
+    def center(self) -> float:
+        return (self.col_left + self.col_right) / 2
+
+
+def column_geometry(doc: PdfDoc) -> ColumnGeometry:
+    """Modal x0/x1 of long lines = the column edges. Shared by analyze and flow
+    so pstyles derived in both places are identical."""
+    widths = [ln.x1 - ln.x0 for p in doc.pages for ln in p.lines]
+    if not widths:
+        return ColumnGeometry(0.0, 1.0)
+    wmax = max(widths)
+    lefts: Counter[int] = Counter()
+    rights: Counter[int] = Counter()
+    for p in doc.pages:
+        for ln in p.lines:
+            if (ln.x1 - ln.x0) >= 0.55 * wmax:
+                lefts[round(ln.x0)] += 1
+                rights[round(ln.x1)] += 1
+    col_left = float(lefts.most_common(1)[0][0]) if lefts else 0.0
+    col_right = float(rights.most_common(1)[0][0]) if rights else wmax
+    return ColumnGeometry(col_left, col_right)
+
+
+def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry) -> str:
+    """Cluster key for a line: DominantFamily@size[/center]. Centered means
+    visually centered WITHIN the text column: indented from both edges with
+    the midpoint on the column center."""
+    fid = ln.dominant_font()
+    f = doc.fonts.get(fid)
+    if f is None:
+        return "?@0"
+    base = f"{f.family}@{f.size:g}"
+    line_c = (ln.x0 + ln.x1) / 2
+    if (abs(line_c - geo.center) <= CENTER_TOL
+            and ln.x0 >= geo.col_left + CENTER_INSET
+            and ln.x1 <= geo.col_right - CENTER_INSET):
+        return base + "/center"
+    return base
+
+
+@dataclass(slots=True)
+class Cluster:
+    pstyle: str
+    family: str
+    size: float
+    n_lines: int = 0
+    n_chars: int = 0
+    n_pages: int = 0
+    first_page: int = 0
+    samples: list[str] = field(default_factory=list)
+    role: str = "p"
+    confidence: str = "low"
+    reason: str = ""
+
+
+@dataclass(slots=True)
+class Analysis:
+    body_pstyle: str = ""
+    body_size: float = 0.0
+    clusters: list[Cluster] = field(default_factory=list)
+    # furniture
+    repeated_lines: list[dict] = field(default_factory=list)  # {text, count, pages, band}
+    top_band: float = 0.0
+    bottom_band: float = 0.0
+    # folio / labels
+    folio_agreement_pct: float | None = None
+    folio_mismatches: list[dict] = field(default_factory=list)
+    label_source_proposal: str = "pdf-page-labels"
+    printed_folios: dict[int, str] = field(default_factory=dict)
+    # headings & TOC witnesses
+    headings: list[dict] = field(default_factory=list)  # {page, pstyle, text}
+    toc_pages: list[int] = field(default_factory=list)
+    toc_entries: list[dict] = field(default_factory=list)  # {page, text, label, target}
+    toc_witness_table: list[dict] = field(default_factory=list)
+    toc_source_proposal: str = "outline"
+    # footnotes
+    footnote_pages: list[int] = field(default_factory=list)
+    footnote_marker_census: dict[str, int] = field(default_factory=dict)
+    footnote_samples: list[dict] = field(default_factory=list)
+    footnote_policy_proposal: str = "none"
+    footnote_marker_proposal: str = "digits"
+    # joining stats
+    median_leading: float = 0.0
+    indent_histogram: dict[str, int] = field(default_factory=dict)
+    indent_threshold_proposal: float = 9.0
+    eol_hyphen_count: int = 0
+    lost_space_count: int = 0
+    restore_spaces_proposal: bool = False
+    dropcap_pages: list[int] = field(default_factory=list)
+    # glyphs / languages
+    pua_census: list[dict] = field(default_factory=list)
+    cjk_pages: list[dict] = field(default_factory=list)   # {page, chars, vertical_lines}
+    figure_pages_proposal: list[int] = field(default_factory=list)
+    rtl_chars: int = 0
+    # layout anomalies
+    column_suspect_pages: list[int] = field(default_factory=list)
+    low_agreement_pages: list[dict] = field(default_factory=list)
+    image_only_pages: list[int] = field(default_factory=list)
+    # cover
+    cover_proposal: dict = field(default_factory=dict)
+    # render queue for the agent
+    flagged_pages: list[int] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+
+
+# ------------------------------------------------------------------ helpers
+
+def _band_stats(doc: PdfDoc) -> tuple[float, float]:
+    """Propose top/bottom furniture bands from where isolated first/last lines sit."""
+    firsts, lasts = [], []
+    for p in doc.pages:
+        if len(p.lines) < 3:
+            continue
+        ys = sorted(ln.y0 for ln in p.lines)
+        firsts.append(ys[0])
+        gap_to_body = ys[1] - ys[0]
+        if gap_to_body < 6:
+            firsts.pop()  # first line flows straight into body: no head band here
+        lasts.append(max(ln.y1 for ln in p.lines))
+    # a head band exists when many pages have a detached first line
+    top = 0.0
+    if len(firsts) >= max(3, len(doc.pages) // 10):
+        firsts.sort()
+        top = firsts[int(len(firsts) * 0.8)] + 4  # cover 80% of detached heads
+    return round(top, 1), 0.0
+
+
+def _detect_furniture(doc: PdfDoc, in_flow: list[PdfPage], min_pages: int = 3):
+    """Repeated running-head candidates. TOP band only, plus folio-only last
+    lines — scanning generic bottom lines drags footnote citations in
+    (verified on Book of Knowledge: 'Abū Ṭālib al-Makkī' x18 templated)."""
+    counter: Counter[str] = Counter()
+    where: dict[str, list[int]] = defaultdict(list)
+    band: dict[str, str] = {}
+    for p in in_flow:
+        cands = [("top", ln) for ln in p.lines[:2]]
+        if p.lines and is_folio_line(normalize(p.lines[-1].text())):
+            cands.append(("bottom", p.lines[-1]))
+        for pos, ln in cands:
+            t = normalize(ln.text())
+            # folio digits vary page-to-page; template them so heads with folios
+            # repeat. Digits are often FUSED to the head text ('14book of
+            # knowledge', 'Others13' — BoK), so template every digit run; roman
+            # folios only at the line edges ('civil' is all roman letters).
+            t_tpl = re.sub(r"\d+", "#", t)
+            t_tpl = re.sub(r"^[ivxlcdm]+\b|\b[ivxlcdm]+$", "#", t_tpl, flags=re.I).strip()
+            if not t_tpl or len(t_tpl) > 60:
+                continue
+            counter[t_tpl] += 1
+            if p.number not in where[t_tpl]:
+                where[t_tpl].append(p.number)
+            band.setdefault(t_tpl, pos)
+    out = []
+    for t, c in counter.most_common():
+        if c >= min_pages and t != "#":
+            out.append({"text": t, "count": c, "pages": where[t][:8], "band": band[t]})
+    return out
+
+
+_FOLIO_BAND = 50.0  # pt from trim top/bottom: printed folios live here
+
+
+def _plausible_folio(t: str) -> bool:
+    if t.isdigit():
+        return 0 < int(t) < 1000  # '2015' on a copyright page is not a folio
+    return bool(_ROMAN.match(t)) and len(t) <= 8
+
+
+def _printed_folio(p: PdfPage) -> str | None:
+    """Folio printed on the page: a folio-only line, or a folio run at the
+    edge of a running-head line — but only within the top/bottom bands
+    (a chapter-opener's big '1' sits mid-page and is NOT a folio; BoK)."""
+    if not p.lines:
+        return None
+    for ln in (p.lines[0], p.lines[-1]):
+        in_band = (ln.y0 <= p.trim[1] + _FOLIO_BAND) or (ln.y1 >= p.trim[3] - _FOLIO_BAND)
+        if not in_band:
+            continue
+        t = ln.text().strip()
+        if is_folio_line(t) and _plausible_folio(t):
+            return t
+        if len(ln.runs) > 1:
+            for r in (ln.runs[0], ln.runs[-1]):
+                rt = r.text.strip()
+                if rt and _plausible_folio(rt) and (rt.isdigit() or _ROMAN.match(rt)):
+                    return rt
+        # fused folio: leading/trailing digits glued to the head text
+        m = re.match(r"^(\d{1,3})\D", t) or re.search(r"\D(\d{1,3})$", t)
+        if m and _plausible_folio(m.group(1)):
+            return m.group(1)
+    return None
+
+
+_TOC_LINE = re.compile(
+    r"^(?P<title>.*?[^\s.·․])\s*(?:[.·․](?:\s*[.·․])+|\s{2,})\s*"
+    r"(?P<folio>\d{1,4}|[ivxlcdm]{1,8})\s*$", re.I)
+
+
+def _trailing_folio_entry(ln: PdfLine) -> tuple[str, str] | None:
+    """(title, label) for a printed-TOC line.
+
+    Two shapes in the wild: folio separated by leader dots INSIDE a shared
+    span ('Foreword . . . . x' — BoK), or folio as its own gap-separated run
+    with no leaders (Me and Rumi)."""
+    text = ln.text().strip()
+    m = _TOC_LINE.match(text)
+    if m and len(m.group("title")) >= 2:
+        return m.group("title"), m.group("folio").lower()
+    if len(ln.runs) >= 2:
+        last = ln.runs[-1]
+        lt = last.text.strip().rstrip(".")
+        if lt and (lt.isdigit() or _ROMAN.match(lt)) and _plausible_folio(lt):
+            body = "".join(r.text for r in ln.runs[:-1]).strip()
+            body = re.sub(r"[.․·\s]+$", "", body)
+            if len(body) >= 2 and last.x0 - ln.runs[-2].x1 >= 6:
+                return body, lt.lower()
+    return None
+
+
+# ------------------------------------------------------------------ analyze
+
+def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
+    a = Analysis()
+    n = doc.n_pages
+    in_flow = [p for p in doc.pages if p.lines]
+    geo = column_geometry(doc)
+
+    # ---- clusters
+    clusters: dict[str, Cluster] = {}
+    page_seen: dict[str, set[int]] = defaultdict(set)
+    for p in in_flow:
+        for ln in p.lines:
+            ps = line_pstyle(ln, doc, geo)
+            fid = ln.dominant_font()
+            f = doc.fonts.get(fid)
+            c = clusters.get(ps)
+            if c is None:
+                c = clusters[ps] = Cluster(pstyle=ps, family=f.family if f else "?",
+                                           size=f.size if f else 0.0, first_page=p.number)
+            c.n_lines += 1
+            c.n_chars += len(ln.text())
+            page_seen[ps].add(p.number)
+            if len(c.samples) < 3 and 15 < len(ln.text()) < 90:
+                c.samples.append(ln.text().strip())
+    for ps, c in clusters.items():
+        c.n_pages = len(page_seen[ps])
+    body = max(clusters.values(), key=lambda c: c.n_chars, default=None)
+    if body is None:
+        a.warnings.append("no text clusters found — is this a scanned PDF?")
+        return a
+    a.body_pstyle = body.pstyle
+    a.body_size = body.size
+
+    # role guesses
+    for c in sorted(clusters.values(), key=lambda c: -c.n_chars):
+        ratio = c.size / body.size if body.size else 1.0
+        centered = c.pstyle.endswith("/center")
+        if c.pstyle == body.pstyle:
+            c.role, c.confidence, c.reason = "p", "high", "dominant text cluster"
+        elif ratio >= 1.8:
+            c.role, c.confidence, c.reason = "title-page", "medium", f"size {c.size}pt >= 1.8x body"
+        elif ratio >= 1.35:
+            c.role, c.confidence, c.reason = "h1", "medium", f"size {c.size}pt >= 1.35x body"
+        elif ratio >= 1.03 and centered:
+            c.role, c.confidence, c.reason = "h2", "medium", f"{c.size}pt centered"
+        elif centered and ratio >= 0.97:
+            c.role, c.confidence, c.reason = "h3", "low", "centered, body-sized"
+        elif ratio <= 0.85 and c.n_lines >= 10:
+            c.role, c.confidence, c.reason = "footnote", "low", f"small ({c.size}pt), frequent"
+        elif ratio < 0.97:
+            c.role, c.confidence, c.reason = "p", "low", f"smaller than body ({c.size}pt)"
+        else:
+            c.role, c.confidence, c.reason = "p", "low", "body-like"
+        a.clusters.append(c)
+
+    # ---- furniture
+    a.top_band, a.bottom_band = _band_stats(doc)
+    a.repeated_lines = _detect_furniture(doc, in_flow, min_repeat_pages)
+
+    # ---- printed folios vs /PageLabels
+    agree = 0
+    total = 0
+    for p in in_flow:
+        pf = _printed_folio(p)
+        if pf:
+            a.printed_folios[p.number] = pf
+            if p.label is not None:
+                total += 1
+                if normalize(pf).lower() == normalize(p.label).lower():
+                    agree += 1
+                elif len(a.folio_mismatches) < 20:
+                    a.folio_mismatches.append({"page": p.number, "printed": pf,
+                                               "label": p.label})
+    if total:
+        a.folio_agreement_pct = round(100 * agree / total, 1)
+        if a.folio_agreement_pct >= 97:
+            a.label_source_proposal = "pdf-page-labels"
+        elif len(a.printed_folios) >= n // 3:
+            a.label_source_proposal = "printed-folios"
+        else:
+            a.label_source_proposal = "synthetic"
+    elif a.printed_folios:
+        a.label_source_proposal = "printed-folios"
+    else:
+        a.label_source_proposal = "pdf-page-labels" if any(p.label for p in doc.pages) else "synthetic"
+
+    # ---- headings timeline
+    heading_pstyles = {c.pstyle for c in a.clusters if c.role in ("h1", "h2", "h3", "title-page")}
+    for p in in_flow:
+        for ln in p.lines:
+            ps = line_pstyle(ln, doc, geo)
+            if ps in heading_pstyles:
+                t = ln.text().strip()
+                if t and not is_folio_line(t):
+                    a.headings.append({"page": p.number, "pstyle": ps, "text": t[:90]})
+
+    # ---- printed-TOC detection + parse
+    link_pages = Counter(l.page for l in doc.links)
+    for p in in_flow[:40]:  # contents lives in front matter
+        entries = [e for e in (_trailing_folio_entry(ln) for ln in p.lines) if e]
+        has_contents_head = any("contents" in normalize(ln.text()).lower()
+                                for ln in p.lines[:6])
+        if len(entries) >= 5 or (has_contents_head and len(entries) >= 2) \
+                or (link_pages.get(p.number, 0) >= 5):
+            a.toc_pages.append(p.number)
+            for title, label in entries:
+                # target filled by the geometric link pairing pass below
+                a.toc_entries.append({"page": p.number, "text": title,
+                                      "label": label, "target": None})
+    # geometric link pairing: entry line y-center inside link rect
+    if a.toc_pages and doc.links:
+        by_page: dict[int, list] = defaultdict(list)
+        for l in doc.links:
+            by_page[l.page].append(l)
+        for p in doc.pages:
+            if p.number not in a.toc_pages:
+                continue
+            ents = [e for e in a.toc_entries if e["page"] == p.number]
+            lns = [ln for ln in p.lines if _trailing_folio_entry(ln)]
+            for e, ln in zip(ents, lns):
+                yc = (ln.y0 + ln.y1) / 2
+                for l in by_page.get(p.number, []):
+                    if l.rect[1] - 2 <= yc <= l.rect[3] + 2:
+                        e["target"] = l.target_page
+                        break
+
+    # ---- three-way witness table (outline | printed entry | heading on target page)
+    heads_by_page: dict[int, list[str]] = defaultdict(list)
+    for h in a.headings:
+        heads_by_page[h["page"]].append(h["text"])
+    for o in doc.outline:
+        printed = next((e for e in a.toc_entries
+                        if fuzz.partial_ratio(normalize(e["text"]).lower(),
+                                              normalize(o.title).lower()) >= 85), None)
+        cands = heads_by_page.get(o.target_page, []) + heads_by_page.get(o.target_page + 1, [])
+        head_score = max((fuzz.partial_ratio(normalize(o.title).lower(), normalize(c).lower())
+                          for c in cands), default=0)
+        a.toc_witness_table.append({
+            "outline": o.title, "level": o.level, "target": o.target_page,
+            "printed": printed["text"] if printed else None,
+            "heading_on_target": head_score >= 80,
+        })
+    if len(doc.outline) >= 10:
+        a.toc_source_proposal = "outline"
+    elif a.toc_entries:
+        a.toc_source_proposal = "printed"
+    elif doc.links:
+        a.toc_source_proposal = "links"
+    else:
+        a.toc_source_proposal = "printed"
+        a.warnings.append("no outline, no links, no printed-TOC parse — TOC needs agent attention")
+
+    # ---- footnotes
+    marker_census: Counter[str] = Counter()
+    region_starts: Counter[str] = Counter()
+    for p in in_flow:
+        # bottom region: trailing small-font lines — but skip past the folio /
+        # bottom furniture first (I&B ends every page with a 10pt folio line
+        # BELOW the 9pt notes, which otherwise breaks the scan immediately)
+        tail = list(reversed(p.lines))
+        i = 0
+        while i < len(tail) and tail[i].y1 >= p.trim[3] - _FOLIO_BAND and \
+                is_folio_line(normalize(tail[i].text())):
+            i += 1
+        region = []
+        for ln in tail[i:]:
+            f = doc.fonts.get(ln.dominant_font())
+            if f and f.size <= body.size - 1.5 and not ln.vertical:
+                region.append(ln)
+            else:
+                break
+        region.reverse()
+        text = " ".join(ln.text() for ln in region).strip()
+        if region and len(text) > 30:
+            a.footnote_pages.append(p.number)
+            if len(a.footnote_samples) < 5:
+                a.footnote_samples.append({"page": p.number, "text": text[:150]})
+            m = re.match(r"^(\d{1,3})[.)]\s|^([*†‡])", text)
+            if m:
+                region_starts["digit" if m.group(1) else "*"] += 1
+        for ln in p.lines:
+            for r in ln.runs:
+                t = r.text.strip()
+                if r.superscript and (t.isdigit() or t in ("*", "†", "‡")):
+                    marker_census["*" if t in ("*", "†", "‡") else "digit"] += 1
+                elif t == "*" and len(t) == len(r.text.strip()):
+                    marker_census["*-inline"] += 1
+    a.footnote_marker_census = dict(marker_census)
+    if len(a.footnote_pages) >= 5:
+        a.footnote_policy_proposal = "markers"
+        # note-body leading pattern beats the superscript census: old PDFs
+        # (I&B 2010) carry no superscript flags at all
+        if region_starts:
+            a.footnote_marker_proposal = region_starts.most_common(1)[0][0]
+            if a.footnote_marker_proposal == "*":
+                a.footnote_marker_proposal = "asterisk"
+        else:
+            digit = marker_census.get("digit", 0)
+            star = marker_census.get("*", 0) + marker_census.get("*-inline", 0)
+            a.footnote_marker_proposal = "digits" if digit >= star else "asterisk"
+        if a.footnote_marker_proposal == "digit":
+            a.footnote_marker_proposal = "digits"
+
+    # ---- joining stats
+    leadings: list[float] = []
+    indents: Counter[int] = Counter()
+    body_left: Counter[float] = Counter()
+    for p in in_flow:
+        body_lines = [ln for ln in p.lines
+                      if line_pstyle(ln, doc, geo) == body.pstyle]
+        for prev, cur in zip(body_lines, body_lines[1:]):
+            d = cur.y0 - prev.y0
+            if 5 < d < 40:
+                leadings.append(d)
+        for ln in body_lines:
+            body_left[round(ln.x0)] += 1
+    base_left = body_left.most_common(1)[0][0] if body_left else 0
+    for p in in_flow:
+        for ln in p.lines:
+            if line_pstyle(ln, doc, geo) == body.pstyle:
+                off = round(ln.x0) - base_left
+                if 2 < off < 60:
+                    indents[off] += 1
+                t = ln.text().rstrip()
+                if _EOL_HYPHEN.search(t):
+                    a.eol_hyphen_count += 1
+                a.lost_space_count += len(_LOST_SPACE.findall(t))
+    if leadings:
+        leadings.sort()
+        a.median_leading = round(leadings[len(leadings) // 2], 1)
+    a.indent_histogram = {str(k): v for k, v in sorted(indents.items())}
+    if indents:
+        common = [k for k, v in indents.items() if v >= max(indents.values()) * 0.5]
+        if common:
+            a.indent_threshold_proposal = round(min(common) * 0.75, 1)
+    a.restore_spaces_proposal = a.lost_space_count > n  # ~1 defect/page = systemic
+
+    # drop caps: oversized 1-2 char line starting a page/paragraph
+    for p in in_flow:
+        for ln in p.lines:
+            f = doc.fonts.get(ln.dominant_font())
+            t = ln.text().strip()
+            if f and body.size and f.size >= 2 * body.size and 1 <= len(t) <= 2 and t.isalpha():
+                a.dropcap_pages.append(p.number)
+                break
+
+    # ---- PUA + languages
+    pua: dict[str, dict] = {}
+    for p in in_flow:
+        cjk_chars = 0
+        vert = 0
+        for ln in p.lines:
+            txt = ln.text()
+            cjk_chars += len(_CJK.findall(txt))
+            a.rtl_chars += len(_RTL.findall(txt))
+            if ln.vertical:
+                vert += 1
+            for ch in _PUA.findall(txt):
+                rec = pua.setdefault(ch, {"char": ch, "hex": f"U+{ord(ch):04X}",
+                                          "count": 0, "families": set(), "pages": []})
+                rec["count"] += 1
+                fid = ln.dominant_font()
+                for r in ln.runs:
+                    if ch in r.text:
+                        fid = r.font_id
+                        break
+                f = doc.fonts.get(fid)
+                if f:
+                    rec["families"].add(f.family)
+                if len(rec["pages"]) < 5 and p.number not in rec["pages"]:
+                    rec["pages"].append(p.number)
+        if cjk_chars:
+            a.cjk_pages.append({"page": p.number, "chars": cjk_chars, "vertical_lines": vert})
+            if vert >= 3 and cjk_chars > 50:
+                a.figure_pages_proposal.append(p.number)
+    a.pua_census = [{**r, "families": sorted(r["families"])} for r in pua.values()]
+
+    # ---- layout anomalies
+    for p in in_flow:
+        mids = [ln for ln in p.lines if p.trim[1] + 60 < ln.y0 < p.trim[3] - 60]
+        if len(mids) >= 12:
+            lefts = sorted(ln.x0 for ln in mids)
+            col_w = p.trim[2] - p.trim[0]
+            split = p.trim[0] + col_w / 2
+            left_col = sum(1 for x in lefts if x < split - col_w * 0.1)
+            right_col = sum(1 for x in lefts if x > split + col_w * 0.05)
+            if left_col >= 6 and right_col >= 6 and not any(ln.vertical for ln in mids):
+                # two clusters of line-starts -> suspect columns
+                starts_right = [x for x in lefts if x > split]
+                if starts_right and min(starts_right) - max(
+                        [x for x in lefts if x <= split] or [p.trim[0]]) > 30:
+                    a.column_suspect_pages.append(p.number)
+    a.image_only_pages = [p.number for p in doc.pages if p.image_only]
+    a.low_agreement_pages = [{"page": p.number, "score": p.engine_agreement}
+                             for p in doc.pages
+                             if p.engine_agreement is not None and p.engine_agreement < 90]
+
+    # ---- cover proposal
+    p1 = doc.pages[0]
+    if p1.image_only or (p1.n_images > 0 and p1.n_chars < 200):
+        a.cover_proposal = {"mode": "render", "page": 1, "reason":
+                            f"page 1 is image-dominated ({p1.n_images} image(s), {p1.n_chars} chars)"}
+    else:
+        a.cover_proposal = {"mode": "synthesize", "reason":
+                            f"page 1 is text ({p1.n_chars} chars, {p1.n_images} images) — no cover in PDF"}
+
+    # ---- agent render queue
+    flagged = set(a.toc_pages) | set(a.figure_pages_proposal[:5]) | \
+        set(p["page"] for p in a.low_agreement_pages[:10]) | \
+        set(x["pages"][0] for x in a.pua_census if x["pages"]) | \
+        set(a.footnote_pages[:2]) | set(a.column_suspect_pages[:4]) | \
+        set(a.dropcap_pages[:2]) | {1} | set(a.image_only_pages[:4])
+    body_start = next((p.number for p in in_flow
+                       if a.printed_folios.get(p.number, "").isdigit()), None)
+    if body_start:
+        flagged.add(body_start)
+    a.flagged_pages = sorted(x for x in flagged if 1 <= x <= n)
+    return a
+
+
+def analysis_to_dict(a: Analysis) -> dict:
+    d = asdict(a)
+    return d

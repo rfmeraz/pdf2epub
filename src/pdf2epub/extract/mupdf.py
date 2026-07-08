@@ -43,7 +43,9 @@ class _FontTable:
 
     def intern(self, raw_family: str, size: float, color: str) -> int:
         family = _SUBSET_PREFIX.sub("", raw_family)
-        size = round(size, 1)
+        # quantize to 0.5pt: InDesign optical sizing scatters one body style
+        # across 10.8/10.9/11.0/11.1pt (verified on Book of Knowledge)
+        size = round(size * 2) / 2
         key = (family, size, color)
         fid = self.by_key.get(key)
         if fid is None:
