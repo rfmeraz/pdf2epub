@@ -182,3 +182,31 @@ sampler; regression baselines below are the acceptance contract.
   cluster, so one sample per phenomenon beats volume. dHash hand-rolled
   (10 lines) instead of an imagehash dep. Pillow can't shape multi-char
   Arabic without libraqm — glyph pairs note 'shaping approximate'.
+
+## Justified-block last lines: the second false-centering class (2026-07-08)
+
+User-reported (BoK p.185 'may be categorized under ten headings:', p.193 'be
+the first of your people to rise to his service.'): the short LAST line of a
+justified block whose left edge is inset — quote indent (x0=108) or drop-cap
+wrap (x0=122) — clears the 21fc8ed 12%-inset floor on BOTH sides whenever its
+midpoint lands near column center, so line_pstyle marked it /center and it
+broke out as its own centered paragraph. Four instances in BoK (also p.184,
+p.227 — same shape, unreported); zero in the other three books.
+
+- Fix promoted to code doctrine: `continues_justified_block` (prev raw line
+  same x0 ±2pt, x1 ≥ col_right−6, one normal leading above) → a body-size
+  line continuing a justified block is NEVER /center, whatever its midpoint.
+  Shared by line_pstyle (all call sites now pass the raw predecessor) and
+  gate 14's witness (candidates carry (line, prev) pairs).
+- Why gate 14 missed it: the witness's stop-veto was CAPPED below the
+  deep-inset floor to honor the superset doctrine ('never fire on what
+  line_pstyle accepts') — x0=108/122 are massively attested stops, but the
+  cap excluded them. **The doctrine protected the buggy rule.** Lesson: a
+  witness that by construction cannot disagree with the code it audits
+  verifies consistency, not truth — every witness needs at least one
+  evidence path the audited rule does not consult (here: the predecessor
+  line's geometry, which line_pstyle never looked at).
+- Rejected fix shape for the record: a blunt 'x0 at any attested stop' veto
+  would have de-centered 21 BoK + 35 MR lines including GENUINE title-page
+  centering and MR verse lines — the predecessor-line signal is what makes
+  the rule surgical (4 hits, all true positives).

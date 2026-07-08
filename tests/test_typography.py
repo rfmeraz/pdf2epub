@@ -127,26 +127,45 @@ def test_witness_bok206_replica():
     # single body-size line starting at the paragraph indent whose midpoint
     # happens to land near center: NOT genuinely centered; reason names the stop
     ln = _line("This should suffice as accidental centering", x0=86.0, width=262.0)
-    ok, why = genuinely_centered([ln], _pdoc([_ppage(1, [ln])]), GEO,
+    ok, why = genuinely_centered([(ln, None)], _pdoc([_ppage(1, [ln])]), GEO,
                                  _stops(), "Serif")
     assert not ok and "stop" in why
+
+
+def test_witness_justified_block_last_line():
+    # BoK p.185/p.193 shape: quote-indent / drop-cap-wrap last line whose
+    # midpoint lands near center; the FULL previous line at the same x0
+    # proves it's a paragraph line — refuted even though insets pass
+    doc = _pdoc([_ppage(1, [])])
+    prev = _line("and responsibilities are numerous; their varying",
+                 y=100.0, x0=122.0, width=240.0)
+    ln = _line("may be categorized under ten headings:",
+               y=113.5, x0=122.0, width=174.0)   # mid=209, insets 50/66
+    ok, why = genuinely_centered([(ln, prev)], doc, GEO, _stops(), "Serif")
+    assert not ok and "justified block" in why
+    # same line WITHOUT a full-right predecessor (stacked centered lines):
+    # the veto stays out and the deep-inset path decides
+    short_prev = _line("a short centered line", y=100.0, x0=140.0, width=154.0)
+    ok, _ = genuinely_centered([(ln, short_prev)], doc, GEO, _stops(), "Serif")
+    assert ok
 
 
 def test_witness_accepts_genuine_cases():
     doc = _pdoc([_ppage(1, [])])
     # deep-inset single body line, off any stop (superset of line_pstyle rule)
     ln = _line("a genuinely centered epigraph", x0=107.0, width=220.0)
-    assert genuinely_centered([ln], doc, GEO, _stops(), "Serif")[0]
+    assert genuinely_centered([(ln, None)], doc, GEO, _stops(), "Serif")[0]
     # display-size wide head: midpoint alone decides
     big = _line("CHAPTER HEAD WIDE", x0=80.0, width=274.0, font=BIG)
-    assert genuinely_centered([big], doc, GEO, _stops(), "Serif")[0]
+    assert genuinely_centered([(big, None)], doc, GEO, _stops(), "Serif")[0]
     # multi-line body block: varying widths, agreeing midpoints
     l1 = _line("longer centered line of a poem", x0=87.0, width=260.0)
     l2 = _line("short centered line", x0=97.0, width=240.0)
-    assert genuinely_centered([l1, l2], doc, GEO, _stops(), "Serif")[0]
+    assert genuinely_centered([(l1, None), (l2, l1)], doc, GEO, _stops(),
+                              "Serif")[0]
     # full-width lines are neutral -> claim stands
     full = _line("a completely full width body line", x0=72.0, width=290.0)
-    ok, why = genuinely_centered([full], doc, GEO, _stops(), "Serif")
+    ok, why = genuinely_centered([(full, None)], doc, GEO, _stops(), "Serif")
     assert ok and "indistinguishable" in why
 
 
@@ -154,12 +173,27 @@ def test_witness_rejects_shallow_and_offcenter():
     doc = _pdoc([_ppage(1, [])])
     # shallow inset, not at a stop
     ln = _line("slightly indented ragged line", x0=95.0, width=244.0)
-    ok, why = genuinely_centered([ln], doc, GEO, _stops(), "Serif")
+    ok, why = genuinely_centered([(ln, None)], doc, GEO, _stops(), "Serif")
     assert not ok and "inset" in why
     # off-center display line
     big = _line("HEAD", x0=72.0, width=100.0, font=BIG)
-    ok, why = genuinely_centered([big], doc, GEO, _stops(), "Serif")
+    ok, why = genuinely_centered([(big, None)], doc, GEO, _stops(), "Serif")
     assert not ok and "mid offset" in why
+
+
+def test_line_pstyle_justified_block_veto():
+    from pdf2epub.analyze import line_pstyle
+
+    doc = _pdoc([_ppage(1, [])])
+    prev = _line("full quote line reaching the right margin here",
+                 y=100.0, x0=108.0, width=254.0)
+    last = _line("be the first of your people to rise.", y=113.5,
+                 x0=108.0, width=212.0)          # mid=214: false-center shape
+    assert line_pstyle(last, doc, GEO, prev) == "Serif@11"
+    assert line_pstyle(last, doc, GEO, None) == "Serif@11/center"
+    # display-size lines keep the lenient rule even after a full line
+    big = _line("WIDE HEAD", y=113.5, x0=130.0, width=174.0, font=BIG)
+    assert line_pstyle(big, doc, GEO, prev).endswith("/center")
 
 
 # ---------------------------------------------------------------- gate 13

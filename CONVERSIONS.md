@@ -119,3 +119,15 @@ rebuilt after fixing:
   heading now reads 'Bibliography'.
 
 All four: epubcheck clean, QA Overall: PASS with promoted gates, tests green.
+
+### 2026-07-08 addendum 2 — justified-block last-line false centering (user-reported)
+
+BoK: the short last line of an INSET justified block (quote indent, drop-cap
+wrap) false-centered whenever its midpoint landed near column center — the
+12%-inset rule can't see it because the whole block is inset ('may be
+categorized under ten headings:' p.185, 'be the first of your people…' p.193,
+plus two unreported instances p.184/p.227; zero in the other books). New
+doctrine in line_pstyle + gate 14's witness: a body-size line continuing a
+justified block (previous raw line at the same x0 reaching the right margin)
+is never /center. BoK rebuilt: all four lines rejoin their paragraphs;
+epubcheck clean, QA PASS.

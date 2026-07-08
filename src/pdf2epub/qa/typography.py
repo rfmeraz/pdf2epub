@@ -26,7 +26,8 @@ from difflib import SequenceMatcher
 
 from rapidfuzz import fuzz
 
-from ..analyze import ColumnGeometry, column_geometry
+from ..analyze import ColumnGeometry, column_geometry, \
+    continues_justified_block
 from ..core.emit_css import _css_class
 from ..core.model import Paragraph
 from ..core.qa_cssresolve import parse_stylesheet, resolve_block, \
@@ -194,22 +195,25 @@ def left_stops(doc, geo: ColumnGeometry, in_flow: list[int]) -> tuple[float, ...
     return tuple(sorted(float(x) for x, n in cnt.items() if n >= 3))
 
 
-def genuinely_centered(lines, doc, geo: ColumnGeometry, stops: tuple[float, ...],
+def genuinely_centered(pairs, doc, geo: ColumnGeometry, stops: tuple[float, ...],
                        body_famroot: str) -> tuple[bool, str]:
     """Verify a centering CLAIM against raw source geometry (gate 14 only —
     one-directional; column-filling lines are neutral, never positive
-    evidence). Neutral means flush at BOTH edges — a wide line that starts at
-    the paragraph indent is exactly the BoK p.206 bug shape and must stay
-    informative, so width alone never exonerates."""
+    evidence). ``pairs`` are (line, raw predecessor on its page). Neutral
+    means flush at BOTH edges — a wide line that starts at the paragraph
+    indent is exactly the BoK p.206 bug shape and must stay informative, so
+    width alone never exonerates. A line CONTINUING a justified block (prev
+    same x0, full-right — quote-indent/drop-cap-wrap last lines, BoK p.193 &
+    p.185) is a paragraph line regardless of its midpoint."""
     col_w = geo.col_right - geo.col_left
-    informative = [ln for ln in lines
+    informative = [(ln, prev) for ln, prev in pairs
                    if ln.x0 - geo.col_left > FULL_EDGE_TOL
                    or geo.col_right - ln.x1 > FULL_EDGE_TOL]
     if not informative:
         return True, "all lines column-filling (center-indistinguishable)"
     body = geo.body_size
     strict = []
-    for ln in informative:
+    for ln, prev in informative:
         f = doc.fonts.get(ln.dominant_font())
         size = f.size if f else 0.0
         fam = f.family if f else ""
@@ -220,6 +224,9 @@ def genuinely_centered(lines, doc, geo: ColumnGeometry, stops: tuple[float, ...]
                 return False, (f"display line mid offset "
                                f"{abs(mid - geo.center):.1f}pt > {MID_TOL:g}pt")
         else:
+            if continues_justified_block(ln, prev, size, geo):
+                return False, ("continues a justified block (prev line same "
+                               "x0, full-right) — a paragraph's last line")
             strict.append(ln)
     if len(strict) >= 2:
         mids = [(ln.x0 + ln.x1) / 2 for ln in strict]
@@ -256,10 +263,12 @@ def _page_candidates(doc, cache: dict, pno: int,
         got = []
         if 1 <= pno <= doc.n_pages:
             fur = set(furniture.get(pno, []))
-            for ln in doc.page(pno).lines:
+            lines = doc.page(pno).lines
+            for i, ln in enumerate(lines):
                 t = normalize(_PUA_RE.sub("", ln.text()))
                 if len(t) >= 4 and not is_folio_line(t) and t not in fur:
-                    got.append((t, t.replace(" ", ""), ln))
+                    got.append((t, t.replace(" ", ""), ln,
+                                lines[i - 1] if i else None))
         cache[pno] = got
     return got
 
@@ -282,23 +291,23 @@ def match_source_lines(doc, cache: dict, pno: int, block_text: str,
     min_len = max(8.0, min(16.0, 0.3 * len(norm_block)))
     out = []
     for pg in (pno, pno + 1):
-        for t, t_ns, ln in _page_candidates(doc, cache, pg, furniture):
+        for t, t_ns, ln, prev in _page_candidates(doc, cache, pg, furniture):
             if len(norm_block) < 8:
                 # tiny block (chapter numeral '1'): exact match only —
                 # partial_ratio aligns the SHORTER side, so any line
                 # containing the digit would score 100
                 if t == norm_block:
-                    out.append(ln)
+                    out.append((ln, prev))
                 continue
             if len(t) < min_len:
                 continue
             if t in norm_block or (len(t_ns) >= 8 and t_ns in block_ns):
-                out.append(ln)
+                out.append((ln, prev))
             elif len(t) <= len(norm_block) + 12 and \
                     fuzz.partial_ratio(t, norm_block) >= 90:
                 # fuzzy only when the line could plausibly fit INSIDE the
                 # block (dehyphenation/space-seam slack)
-                out.append(ln)
+                out.append((ln, prev))
     return out
 
 
@@ -359,21 +368,21 @@ def check_centered_witness(slices, rules, doc, geo, stops, body_famroot,
             if src.split(":", 1)[1] in DESIGN_CENTER:
                 continue
             n_claims += 1
-            lines = match_source_lines(doc, cache, page, blk.text, furniture)
-            if not lines:
+            pairs = match_source_lines(doc, cache, page, blk.text, furniture)
+            if not pairs:
                 n_unmatched += 1
                 continue
-            ok, why = genuinely_centered(lines, doc, geo, stops, body_famroot)
-            if not ok and len(lines) > 1:
+            ok, why = genuinely_centered(pairs, doc, geo, stops, body_famroot)
+            if not ok and len(pairs) > 1:
                 # the same text can print TWICE at different geometry (MR
                 # p.70: a verse line AND a centered aphorism head) — the
                 # claim stands if any single full-coverage instance is
                 # genuinely centered
                 blk_len = len(normalize(_PUA_RE.sub("", blk.text)))
-                for ln in lines:
+                for ln, prev in pairs:
                     t = normalize(_PUA_RE.sub("", ln.text()))
                     if len(t) >= 0.6 * blk_len and \
-                            genuinely_centered([ln], doc, geo, stops,
+                            genuinely_centered([(ln, prev)], doc, geo, stops,
                                                body_famroot)[0]:
                         ok = True
                         break
@@ -470,12 +479,12 @@ def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
             if page in skip_pages:
                 continue
             n_heads += 1
-            lines = match_source_lines(doc, cache, page, blk.text, furniture)
-            if not lines:
+            pairs = match_source_lines(doc, cache, page, blk.text, furniture)
+            if not pairs:
                 n_unmatched += 1
                 continue
             evidence = False
-            for ln in lines:
+            for ln, _ in pairs:
                 f = doc.fonts.get(ln.dominant_font())
                 if f and (f.size >= geo.body_size + 1.0
                           or _fam_root(f.family) != body_famroot

@@ -139,7 +139,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             if act == "drop":
                 counts["override-drop"] += 1
                 continue
-            L = _L(p.number, idx, ln, line_pstyle(ln, doc, geo))
+            L = _L(p.number, idx, ln,
+                   line_pstyle(ln, doc, geo, p.lines[idx - 1] if idx else None))
             if act == "keep":
                 counts["override-keep"] += 1
                 kept.append(L)

@@ -70,13 +70,31 @@ def column_geometry(doc: PdfDoc) -> ColumnGeometry:
     return ColumnGeometry(col_left, col_right, body_size)
 
 
-def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry) -> str:
+def continues_justified_block(ln: PdfLine, prev: PdfLine | None,
+                              size: float, geo: ColumnGeometry) -> bool:
+    """True when ``ln`` visually continues a justified block: the previous
+    raw line shares its left edge, reaches the right margin, and sits one
+    normal leading above. Such a line is a paragraph's LAST line whatever
+    its midpoint says — the shape of every false-centering report so far
+    (quote-block last lines, drop-cap wrap last lines)."""
+    return (prev is not None
+            and abs(prev.x0 - ln.x0) <= 2.0
+            and prev.x1 >= geo.col_right - 6.0
+            and 0 < ln.y0 - prev.y0 <= 2.0 * max(size, 8.0))
+
+
+def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry,
+                prev: PdfLine | None = None) -> str:
     """Cluster key for a line: DominantFamily@size[/center]. Centered means
     visually centered WITHIN the text column: inset from BOTH edges by at
     least 12% of the column width. A line starting at the body first-line
     indent whose length lands its midpoint near center is a PARAGRAPH, not a
     centered line ('This should suffice…', BoK p.206: x0 = indent, |center
-    offset| = 1.6pt — print shows an ordinary indented paragraph)."""
+    offset| = 1.6pt — print shows an ordinary indented paragraph). The same
+    accident inside an INSET justified block (quote indent, drop-cap wrap:
+    BoK p.193 'be the first of your people…', p.185 'may be categorized…')
+    clears any inset floor, so a body-size line continuing a justified block
+    (``prev``: same x0, full-right, normal leading) is never /center."""
     fid = ln.dominant_font()
     f = doc.fonts.get(fid)
     if f is None:
@@ -88,6 +106,8 @@ def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry) -> str:
     # display-size heads legitimately span most of the column
     if geo.body_size and f.size <= geo.body_size + 1.0:
         inset = max(CENTER_INSET, 0.12 * col_w)
+        if continues_justified_block(ln, prev, f.size, geo):
+            return base
     else:
         inset = CENTER_INSET
     if (abs(line_c - geo.center) <= CENTER_TOL
@@ -296,8 +316,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     clusters: dict[str, Cluster] = {}
     page_seen: dict[str, set[int]] = defaultdict(set)
     for p in in_flow:
-        for ln in p.lines:
-            ps = line_pstyle(ln, doc, geo)
+        for i, ln in enumerate(p.lines):
+            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None)
             fid = ln.dominant_font()
             f = doc.fonts.get(fid)
             c = clusters.get(ps)
@@ -374,8 +394,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     # ---- headings timeline
     heading_pstyles = {c.pstyle for c in a.clusters if c.role in ("h1", "h2", "h3", "title-page")}
     for p in in_flow:
-        for ln in p.lines:
-            ps = line_pstyle(ln, doc, geo)
+        for i, ln in enumerate(p.lines):
+            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None)
             if ps in heading_pstyles:
                 t = ln.text().strip()
                 if t and not is_folio_line(t):
@@ -493,8 +513,10 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     indents: Counter[int] = Counter()
     body_left: Counter[float] = Counter()
     for p in in_flow:
-        body_lines = [ln for ln in p.lines
-                      if line_pstyle(ln, doc, geo) == body.pstyle]
+        body_lines = [ln for i, ln in enumerate(p.lines)
+                      if line_pstyle(ln, doc, geo,
+                                     p.lines[i - 1] if i else None)
+                      == body.pstyle]
         for prev, cur in zip(body_lines, body_lines[1:]):
             d = cur.y0 - prev.y0
             if 5 < d < 40:
@@ -503,8 +525,9 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
             body_left[round(ln.x0)] += 1
     base_left = body_left.most_common(1)[0][0] if body_left else 0
     for p in in_flow:
-        for ln in p.lines:
-            if line_pstyle(ln, doc, geo) == body.pstyle:
+        for i, ln in enumerate(p.lines):
+            if line_pstyle(ln, doc, geo,
+                           p.lines[i - 1] if i else None) == body.pstyle:
                 off = round(ln.x0) - base_left
                 if 2 < off < 60:
                     indents[off] += 1
