@@ -1,0 +1,12 @@
+# Build outputs: track only the finished EPUB per book
+books/*/build/*
+!books/*/build/*.epub
+# Regenerable analysis renders (analysis.json + structure_report.md ARE tracked)
+books/*/analysis/thumbs/
+books/*/analysis/pages/
+# Vendored tools fetched by bootstrap
+vendor/
+# Python
+__pycache__/
+*.egg-info/
+.pytest_cache/
