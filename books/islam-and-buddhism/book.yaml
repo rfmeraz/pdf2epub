@@ -1,0 +1,199 @@
+# Common Ground Between Islam and Buddhism — final judgments (2026-07-07).
+# The pure printed-TOC book: zero bookmarks, zero link annotations; unusable
+# InDesign /PageLabels ('Sec1:') overridden by printed folios.
+
+source:
+  folder: "package"
+  pdf: "Islam and Buddhism.pdf"
+  sha256: "e2a52793b24a3fc8a17c440de72135d0e4fc269bdb4b151535168fca94fafbbd"
+
+metadata:                      # from copyright page (p.6 text, read at planning)
+  title: "Common Ground Between Islam and Buddhism"
+  creators:
+    - {name: "Reza Shah-Kazemi", role: aut}
+    - {name: "Hamza Yusuf", role: ctb}          # essay
+    - {name: "The Fourteenth Dalai Lama", role: aui}   # foreword
+    - {name: "H. R. H. Prince Ghazi bin Muhammad", role: aui}
+    - {name: "Mohammad Hashim Kamali", role: aui}
+  publisher: "Fons Vitae"
+  language: en
+  additional_languages: []
+  isbn_epub:                   # none printed; urn:uuid ships — FLAGGED
+  isbn_print: "978-1-891785-62-7"
+  date: "2010"
+  cover: assets/cover.jpg
+  cover_render: {page: 1, box: trim, dpi: 300}   # p.1 = 1799x2706 cover JPEG
+
+pages:
+  cover: [1]
+  front: {first: 2, last: 24}   # roman folios i-xxiv
+  body:  {first: 25, last: 170}
+  exclude: [170]                # image-only closing page (back art)
+  label_source: printed-folios  # /PageLabels are broken 'SecN:' section labels
+  label_overrides: {}
+  role_overrides:
+    - {page: 2, role: half-title}
+    - {page: 4, role: title-page}
+    - {page: 5, role: title-page}
+    - {page: 6, role: p}        # copyright
+
+furniture:
+  top_band: 43.1
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+
+styles:
+  body_pstyle: "TimesNewRomanPSMT@11"
+  pstyle_map:
+    "TimesNewRomanPSMT@11":               {role: p}
+    "TimesNewRomanPSMT@9":                {role: footnote}
+    "TimesNewRomanPS-ItalicMT@11":        {role: p}
+    "TimesNewRomanPSMT@11/center":        {role: h3}
+    "TimesNewRomanPS-ItalicMT@9":         {role: footnote}
+    "TimesNewRomanPSMT-SC700@7/center":   {role: drop}   # verso running heads
+    "TimesNewRomanPSMT@7/center":         {role: drop}   # caps head variant
+    "TimesNewRomanPS-ItalicMT@10/center": {role: h3}
+    "TimesNewRomanPS-ItalicMT@11/center": {role: h3}
+    "TimesNewRomanPSMT@10/center":        {role: p}
+    "TimesNewRomanPSMT@18/center":        {role: h1}
+    "TimesNewRomanPS-ItalicMT@10":        {role: p}
+    "TimesNewRomanPSMT@14/center":        {role: h2}
+    "TimesNewRomanPSMT@12/center":        {role: h2}
+    "TimesNewRomanPSMT@30/center":        {role: title-page}
+    "TimesNewRomanPSMT@26/center":        {role: title-page}
+    "TimesNewRomanPSMT@16/center":        {role: h2}
+  charstyles:
+    TimesNewRomanPSMT-SC700: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 6.8
+  gap_factor: 1.6
+  dehyphenate: lower-only
+  restore_spaces: false
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides:
+    - {page: 20, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Preface by Professor Mohammad Hashim Kamali"}
+    - {page: 20, line: 1, action: "break", note: "body resumes after subsection head"}
+    - {page: 22, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Preface by Professor Mohammad Hashim Kamali"}
+    - {page: 22, line: 1, action: "break", note: "body resumes after subsection head"}
+    - {page: 23, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Acknowledgements"}
+    - {page: 23, line: 1, action: "break", note: "body resumes after subsection head"}
+    - {page: 26, line: 29, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Beyond the Letter to the Spirit"}
+    - {page: 26, line: 30, action: "break", note: "body resumes after subsection head"}
+    - {page: 32, line: 20, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: A Glance at History"}
+    - {page: 32, line: 21, action: "break", note: "body resumes after subsection head"}
+    - {page: 37, line: 3, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Qur’ānic Premises of Dialogue"}
+    - {page: 37, line: 4, action: "break", note: "body resumes after subsection head"}
+    - {page: 39, line: 4, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: The Buddha as Messenger"}
+    - {page: 39, line: 5, action: "break", note: "body resumes after subsection head"}
+    - {page: 44, line: 18, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Revelation from on High or Within?"}
+    - {page: 44, line: 19, action: "break", note: "body resumes after subsection head"}
+    - {page: 49, line: 1, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: The Dalai Lama and the Dynamics of Dialogue"}
+    - {page: 49, line: 2, action: "break", note: "body resumes after subsection head"}
+    - {page: 54, line: 3, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Conceiving of the One"}
+    - {page: 54, line: 4, action: "break", note: "body resumes after subsection head"}
+    - {page: 55, line: 26, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: The Unborn"}
+    - {page: 55, line: 27, action: "break", note: "body resumes after subsection head"}
+    - {page: 58, line: 17, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Buddhist Dialectics"}
+    - {page: 58, line: 18, action: "break", note: "body resumes after subsection head"}
+    - {page: 65, line: 36, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Shūnya and Shahāda"}
+    - {page: 65, line: 37, action: "break", note: "body resumes after subsection head"}
+    - {page: 67, line: 13, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Light of Transcendence"}
+    - {page: 67, line: 14, action: "break", note: "body resumes after subsection head"}
+    - {page: 68, line: 28, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Al-Samad and Dharma"}
+    - {page: 68, line: 29, action: "break", note: "body resumes after subsection head"}
+    - {page: 71, line: 24, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: God’s Face"}
+    - {page: 71, line: 25, action: "break", note: "body resumes after subsection head"}
+    - {page: 74, line: 19, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Fanā’ and Non-duality"}
+    - {page: 74, line: 20, action: "break", note: "body resumes after subsection head"}
+    - {page: 76, line: 22, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Baqā’ of the ‘Enlightened Ones’"}
+    - {page: 76, line: 23, action: "break", note: "body resumes after subsection head"}
+    - {page: 83, line: 12, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Worship of the One"}
+    - {page: 83, line: 13, action: "break", note: "body resumes after subsection head"}
+    - {page: 85, line: 1, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Buddha in the Light of Dharma"}
+    - {page: 85, line: 2, action: "break", note: "body resumes after subsection head"}
+    - {page: 89, line: 6, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Remembrance of God"}
+    - {page: 89, line: 7, action: "break", note: "body resumes after subsection head"}
+    - {page: 92, line: 15, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Tariki and Tawakkul"}
+    - {page: 92, line: 16, action: "break", note: "body resumes after subsection head"}
+    - {page: 94, line: 23, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Key to Salvation"}
+    - {page: 94, line: 24, action: "break", note: "body resumes after subsection head"}
+    - {page: 98, line: 7, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Images of the Buddha, Blessings upon the Prophet"}
+    - {page: 98, line: 8, action: "break", note: "body resumes after subsection head"}
+    - {page: 104, line: 31, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Detachment: Anicca and Zuhd"}
+    - {page: 104, line: 32, action: "break", note: "body resumes after subsection head"}
+    - {page: 105, line: 15, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Suffering"}
+    - {page: 105, line: 16, action: "break", note: "body resumes after subsection head"}
+    - {page: 107, line: 13, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Worldliness"}
+    - {page: 107, line: 14, action: "break", note: "body resumes after subsection head"}
+    - {page: 109, line: 17, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Subtle Polytheism"}
+    - {page: 109, line: 18, action: "break", note: "body resumes after subsection head"}
+    - {page: 112, line: 24, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: The ‘god’ of Desire"}
+    - {page: 112, line: 25, action: "break", note: "body resumes after subsection head"}
+    - {page: 117, line: 16, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Loving Compassion: Karunā and Rahma"}
+    - {page: 117, line: 17, action: "break", note: "body resumes after subsection head"}
+    - {page: 121, line: 6, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Source of Compassion"}
+    - {page: 121, line: 7, action: "break", note: "body resumes after subsection head"}
+    - {page: 123, line: 3, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Oneness and Compassion"}
+    - {page: 123, line: 4, action: "break", note: "body resumes after subsection head"}
+    - {page: 128, line: 4, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Rahma as Creator"}
+    - {page: 128, line: 5, action: "break", note: "body resumes after subsection head"}
+    - {page: 136, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Epilogue: The Common Ground of Sanctity"}
+    - {page: 136, line: 1, action: "break", note: "body resumes after subsection head"}
+    - {page: 162, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Biographies of Contributors"}
+    - {page: 162, line: 1, action: "break", note: "body resumes after subsection head"}
+    - {page: 164, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Bibliography"}
+    - {page: 164, line: 1, action: "break", note: "body resumes after subsection head"}
+
+footnotes:
+  policy: markers
+  marker: digits      # 'Tathāgata9' markers; '9. ...' page-bottom notes
+
+toc:
+  source: printed     # the ONLY witness: no bookmarks, no links
+  printed_pages: [6, 7]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:
+  pua_map: {}
+  fail_on_unmapped_pua: true
+  gt_strip_phrases: []
+  # The Hamza Yusuf essay section (pp.~138-168) embeds font subsets whose
+  # ToUnicode CMap is shifted by -0x1D ('WKH'='the', '\x03'=space,
+  # '\x14\x14\x1b'='118') — BOTH extraction engines agree on the wrong text
+  # because the source map itself lies. Deterministic repair verified against
+  # the essay's known title 'Buddha in the Qur'an?' and its running heads.
+  shifted_cmap_repair: true
+  shifted_cmap_highmap:
+    "\u0197": "\u0101"   # Ɨ -> ā
+    "\u01AF": "\u012B"   # Ư -> ī  (as embedded)
+    "\u01B0": "\u016B"   # ư -> ū
+    "\u014C": "\u016A"   # ǌ variant
+    "\u01CC": "\u016B"   # ǌ -> ū
+    "\u00B5": "\u02BF"   # µ -> ʿ (ayn)
+    "\u00B6": "\u02BE"   # ¶ -> ʾ (hamza)
+    "\u2026": "\u2026"
+    "\x0e": " (may the peace and blessings of God be upon him)"  # honorific dingbat after 'Prophet Muhammad'; context-verified
+
+fonts:
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: islam-and-buddhism, include_ncx: true}

@@ -82,6 +82,14 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                     continue
             kept.append(ln)
         text = "\n".join(kept)
+        if cfg.shifted_cmap_repair:
+            from ..textfix import is_shifted_run, repair_shifted_cmap
+            text = "\n".join(
+                (repair_shifted_cmap(l, cfg.shifted_cmap_highmap)[0]
+                 if is_shifted_run(l) else l)
+                for l in text.split("\n"))
+        from ..textfix import strip_control_chars
+        text, _ = strip_control_chars(text)
         text, _ = expand_ligatures(text)
         if cfg.restore_spaces:
             text, _ = restore_spaces(text)

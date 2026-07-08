@@ -163,6 +163,11 @@ class PdfBookConfig:
     # her') — stripped from QA ground truth because the EPUB legitimately
     # renders the glyph char instead; agent-verified, itemized in the QA report
     gt_strip_phrases: list[str] = field(default_factory=list)
+    # repair a -0x1D-shifted subset ToUnicode CMap (Islam and Buddhism 2010):
+    # runs carrying control-range marker chars get chr(c+0x1D) for c<0x60 and
+    # the agent-verified highmap for non-ASCII garbage
+    shifted_cmap_repair: bool = False
+    shifted_cmap_highmap: dict[str, str] = field(default_factory=dict)
 
     # fonts (JP-P7)
     fonts_embed: list[FontEmbed] = field(default_factory=list)
@@ -368,8 +373,11 @@ def load_config(path: Path) -> PdfBookConfig:
     cfg.nav_depth = int(tc.get("nav_depth", cfg.nav_depth))
 
     gl = data.get("glyphs", {})
-    _check_keys("glyphs", gl, {"pua_map", "fail_on_unmapped_pua", "gt_strip_phrases"})
+    _check_keys("glyphs", gl, {"pua_map", "fail_on_unmapped_pua", "gt_strip_phrases",
+                               "shifted_cmap_repair", "shifted_cmap_highmap"})
     cfg.gt_strip_phrases = list(gl.get("gt_strip_phrases", []) or [])
+    cfg.shifted_cmap_repair = bool(gl.get("shifted_cmap_repair", False))
+    cfg.shifted_cmap_highmap = dict(gl.get("shifted_cmap_highmap", {}) or {})
     for cp, rule in (gl.get("pua_map") or {}).items():
         _check_keys(f"glyphs.pua_map[{cp!r}]", rule, {"action", "char", "lang", "note"})
         action = rule["action"]

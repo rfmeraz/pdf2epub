@@ -28,6 +28,22 @@ from .groundtruth import build_ground_truth
 _X = "{http://www.w3.org/1999/xhtml}"
 COVERAGE_GATE = 0.99
 
+_BLOCKS = {f"{_X}{t}" for t in ("p", "h1", "h2", "h3", "h4", "li", "figcaption")}
+
+
+def _doc_text(d) -> str:
+    """Block-aware text: inline elements join WITHOUT spaces (itertext with
+    ' '.join splits 'no-<i>dharma</i>' into a fake hyphen artifact), blocks
+    join with one space."""
+    body = d.root.find(f"{_X}body")
+    if body is None:
+        return ""
+    parts = []
+    for el in body.iter():
+        if el.tag in _BLOCKS:
+            parts.append("".join(el.itertext()))
+    return " ".join(parts) if parts else " ".join(body.itertext())
+
 
 def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     cfg = load_config(config)
@@ -76,13 +92,13 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     notes_docs = [d for d in spine if "notes" in d.href]
     body_docs = [d for d in spine
                  if d not in notes_docs and "cover" not in d.href]
-    spine_text = " ".join(d.text() for d in body_docs)
+    spine_text = " ".join(_doc_text(d) for d in body_docs)
     spine_text_norm = normalize(spine_text)
     # coverage compares 'text minus honorific glyphs' on BOTH sides: the gt
     # strips PUA chars; the candidate must shed their inserted readings
     coverage_candidate = normalize(_unsub(spine_text))
     all_text_norm = normalize(spine_text + " " +
-                              " ".join(d.text() for d in notes_docs))
+                              " ".join(_doc_text(d) for d in notes_docs))
 
     # ---- gate 1: epubcheck
     ok, msgs = run_epubcheck(epub)
@@ -165,7 +181,7 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     # ---- gate 8: furniture leak (toc-entry <p>s legitimately mirror the
     # running-head text — they ARE the heading titles)
     _skip_cls = ("toc-entry", "titletext", "contents-head")
-    para_texts = [" ".join(p.itertext()) for d in body_docs
+    para_texts = ["".join(p.itertext()) for d in body_docs
                   for p in d.root.iter(f"{_X}p")
                   if not any(c in (p.get("class") or "") for c in _skip_cls)]
     leaks = pdfchecks.check_furniture_leak(para_texts, gt.furniture_templates, cfg.title)

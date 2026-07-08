@@ -1,0 +1,2129 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/personal/fons_vitae/pdf2epub/books/islam-and-buddhism/package/Islam and Buddhism.pdf",
+  "sha256": "e2a52793b24a3fc8a17c440de72135d0e4fc269bdb4b151535168fca94fafbbd",
+  "producer": "Adobe PDF Library 8.0",
+  "n_pages": 170,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "1": {
+    "id": 1,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 16.0,
+    "color": "#231f20"
+   },
+   "2": {
+    "id": 2,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 30.0,
+    "color": "#231f20"
+   },
+   "3": {
+    "id": 3,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 26.0,
+    "color": "#231f20"
+   },
+   "4": {
+    "id": 4,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 14.0,
+    "color": "#231f20"
+   },
+   "5": {
+    "id": 5,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "6": {
+    "id": 6,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "7": {
+    "id": 7,
+    "family": "TimesNewRomanPS-ItalicMT",
+    "raw_family": "TimesNewRomanPS-ItalicMT",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "8": {
+    "id": 8,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "9": {
+    "id": 9,
+    "family": "TimesNewRomanPS-ItalicMT",
+    "raw_family": "TimesNewRomanPS-ItalicMT",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "10": {
+    "id": 10,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 6.5,
+    "color": "#231f20"
+   },
+   "11": {
+    "id": 11,
+    "family": "TimesNewRomanPSMT-SC700",
+    "raw_family": "TimesNewRomanPSMT-SC700",
+    "size": 7.0,
+    "color": "#231f20"
+   },
+   "12": {
+    "id": 12,
+    "family": "TimesNewRomanPSMT-SC700",
+    "raw_family": "TimesNewRomanPSMT-SC700",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "13": {
+    "id": 13,
+    "family": "TimesNewRomanPSMT-SC700",
+    "raw_family": "TimesNewRomanPSMT-SC700",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "14": {
+    "id": 14,
+    "family": "TimesNewRomanPS-ItalicMT",
+    "raw_family": "TimesNewRomanPS-ItalicMT",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "15": {
+    "id": 15,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "16": {
+    "id": 16,
+    "family": "TimesNewRomanPS-ItalicMT",
+    "raw_family": "TimesNewRomanPS-ItalicMT",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "17": {
+    "id": 17,
+    "family": "ZakariyaSet",
+    "raw_family": "ZakariyaSet",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "18": {
+    "id": 18,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 7.0,
+    "color": "#231f20"
+   },
+   "19": {
+    "id": 19,
+    "family": "ZakariyaSet",
+    "raw_family": "ZakariyaSet",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "20": {
+    "id": 20,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "21": {
+    "id": 21,
+    "family": "TimesNewRomanPS-ItalicMT",
+    "raw_family": "TimesNewRomanPS-ItalicMT",
+    "size": 11.0,
+    "color": "#000000"
+   }
+  },
+  "outline": [],
+  "links": [],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   0,
+   0,
+   432,
+   648
+  ],
+  "warnings": [
+   "2 image-only page(s) (no usable text layer): [1, 170] — OCR is out of scope; ship as figure pages only if content is verifiable from renders"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "TimesNewRomanPSMT@11",
+  "body_size": 11.0,
+  "clusters": [
+   {
+    "pstyle": "TimesNewRomanPSMT@11",
+    "family": "TimesNewRomanPSMT",
+    "size": 11.0,
+    "n_lines": 4941,
+    "n_chars": 305775,
+    "n_pages": 160,
+    "first_page": 5,
+    "samples": [
+     "Majzub for his artistic rendition of this beautiful motif.",
+     "Foreword by H. H. the Fourteenth Dalai Lama\tvii",
+     "Introduction by H. R. H. Prince Ghazi bin Muhammad\tix"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@9",
+    "family": "TimesNewRomanPSMT",
+    "size": 9.0,
+    "n_lines": 537,
+    "n_chars": 34741,
+    "n_pages": 111,
+    "first_page": 28,
+    "samples": [
+     "1. Ihyā’ ‘ulūm al-dīn (Beirut: Dār al-Jīl, 1992), p. 34; see the English translation",
+     "of Nabih Amin Faris, The Book of Knowledge (Lahore: Sh. Muhammad Ashraf,",
+     "1970), (rpr), p. 55, which we have not followed. It is true that al-Ghazālī himself"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "TimesNewRomanPS-ItalicMT@11",
+    "family": "TimesNewRomanPS-ItalicMT",
+    "size": 11.0,
+    "n_lines": 343,
+    "n_chars": 19295,
+    "n_pages": 73,
+    "first_page": 6,
+    "samples": [
+     "Shūnya and Shahāda\t40",
+     "Al-Samad and Dharma\t43",
+     "Tariki and Tawakkul\t67"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 11.0,
+    "n_lines": 122,
+    "n_chars": 5298,
+    "n_pages": 60,
+    "first_page": 5,
+    "samples": [
+     "First published in 2010 by",
+     "49 Mockingbird Valley Drive",
+     "Louisville, KY 40207"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "TimesNewRomanPS-ItalicMT@9",
+    "family": "TimesNewRomanPS-ItalicMT",
+    "size": 9.0,
+    "n_lines": 50,
+    "n_chars": 3458,
+    "n_pages": 39,
+    "first_page": 33,
+    "samples": [
+     "6. Chachnamah Retold—An Account of the Arab Conquest of Sindh, Gobind",
+     "11. Yohanan Friedmann, Tolerance and Coercion in Islam—Interfaith Relations",
+     "13. ��������See our The Other in the Light of the One—The Holy Qur’ān and Interfaith"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT-SC700@7/center",
+    "family": "TimesNewRomanPSMT-SC700",
+    "size": 7.0,
+    "n_lines": 61,
+    "n_chars": 2440,
+    "n_pages": 61,
+    "first_page": 11,
+    "samples": [
+     "common ground between islam and buddhism",
+     "common ground between islam and buddhism",
+     "common ground between islam and buddhism"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (7.0pt), frequent"
+   },
+   {
+    "pstyle": "TimesNewRomanPS-ItalicMT@10/center",
+    "family": "TimesNewRomanPS-ItalicMT",
+    "size": 10.0,
+    "n_lines": 68,
+    "n_chars": 2062,
+    "n_pages": 68,
+    "first_page": 20,
+    "samples": [
+     "Preface by Professor Mohammad Hashim Kamali",
+     "Preface by Professor Mohammad Hashim Kamali",
+     "Setting the Scene"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "family": "TimesNewRomanPS-ItalicMT",
+    "size": 11.0,
+    "n_lines": 15,
+    "n_chars": 758,
+    "n_pages": 9,
+    "first_page": 5,
+    "samples": [
+     "lotus image found in Splendours of Qur’ān Calligraphy",
+     "In the Name of God, the Compassionate, the Merciful",
+     "May Peace and Blessings be upon the Prophet Muhammad"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@7/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 7.0,
+    "n_lines": 15,
+    "n_chars": 600,
+    "n_pages": 15,
+    "first_page": 139,
+    "samples": [
+     "COMMON GROUND BETWEEN ISLAM AND BUDDHISM",
+     "COMMON GROUND BETWEEN ISLAM AND BUDDHISM",
+     "COMMON GROUND BETWEEN ISLAM AND BUDDHISM"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (7.0pt), frequent"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@10/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 10.0,
+    "n_lines": 159,
+    "n_chars": 367,
+    "n_pages": 159,
+    "first_page": 5,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 18.0,
+    "n_lines": 20,
+    "n_chars": 331,
+    "n_pages": 13,
+    "first_page": 2,
+    "samples": [
+     "Islam and Buddhism",
+     "Introduction to Common Ground",
+     "Acknowledgements"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "TimesNewRomanPS-ItalicMT@10",
+    "family": "TimesNewRomanPS-ItalicMT",
+    "size": 10.0,
+    "n_lines": 3,
+    "n_chars": 201,
+    "n_pages": 3,
+    "first_page": 12,
+    "samples": [
+     "Introduction to Common Ground By H. R. H. Prince Ghazi bin Muhammad",
+     "Introduction to Common Ground By H. R. H. Prince Ghazi bin Muhammad",
+     "Introduction to Common Ground By H. R. H. Prince Ghazi bin Muhammad"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 14.0,
+    "n_lines": 6,
+    "n_chars": 164,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "By Reza Shah-Kazemi",
+     "With an essay by Shaykh Hamza Yusuf",
+     "H. H. the Fourteenth Dalai Lama"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@12/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 12.0,
+    "n_lines": 4,
+    "n_chars": 134,
+    "n_pages": 4,
+    "first_page": 8,
+    "samples": [
+     "by His Holiness The Fourteenth Dalai Lama",
+     "By H. R. H. Prince Ghazi bin Muhammad",
+     "by Professor Mohammad Hashim Kamali"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@30/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 30.0,
+    "n_lines": 4,
+    "n_chars": 62,
+    "n_pages": 2,
+    "first_page": 4,
+    "samples": [
+     "Islam and Buddhism",
+     "Islam and Buddhism"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 30.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@26/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 26.0,
+    "n_lines": 2,
+    "n_chars": 16,
+    "n_pages": 2,
+    "first_page": 4,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 26.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@16/center",
+    "family": "TimesNewRomanPSMT",
+    "size": 16.0,
+    "n_lines": 1,
+    "n_chars": 9,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "#ommon ground between islam and buddhis#",
+    "count": 61,
+    "pages": [
+     11,
+     13,
+     15,
+     17,
+     19,
+     21,
+     27,
+     29
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Oneness: The Highest Common Denominator",
+    "count": 24,
+    "pages": [
+     56,
+     58,
+     60,
+     62,
+     64,
+     66,
+     68,
+     70
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Ethics of Detachment and Compassion",
+    "count": 15,
+    "pages": [
+     106,
+     108,
+     110,
+     112,
+     114,
+     116,
+     118,
+     120
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#OMMON GROUND BETWEEN ISLAM AND BUDDHIS#",
+    "count": 15,
+    "pages": [
+     139,
+     141,
+     143,
+     145,
+     147,
+     149,
+     151,
+     153
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Setting the Scene",
+    "count": 14,
+    "pages": [
+     26,
+     28,
+     30,
+     32,
+     34,
+     36,
+     38,
+     40
+    ],
+    "band": "top"
+   },
+   {
+    "text": "%XGGKD\u0003LQ\u0003WKH\u0003#XU¶ƗQ\"",
+    "count": 12,
+    "pages": [
+     138,
+     140,
+     142,
+     144,
+     146,
+     148,
+     150,
+     152
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ommon Groun#",
+    "count": 3,
+    "pages": [
+     2,
+     4,
+     24
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Between",
+    "count": 3,
+    "pages": [
+     2,
+     4,
+     24
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 43.1,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 0.0,
+  "folio_mismatches": [
+   {
+    "page": 5,
+    "printed": "iv",
+    "label": "v"
+   },
+   {
+    "page": 8,
+    "printed": "vii",
+    "label": "viii"
+   },
+   {
+    "page": 10,
+    "printed": "ix",
+    "label": "x"
+   },
+   {
+    "page": 11,
+    "printed": "x",
+    "label": "xi"
+   },
+   {
+    "page": 12,
+    "printed": "xi",
+    "label": "xii"
+   },
+   {
+    "page": 13,
+    "printed": "xii",
+    "label": "xiii"
+   },
+   {
+    "page": 14,
+    "printed": "xiii",
+    "label": "xiv"
+   },
+   {
+    "page": 15,
+    "printed": "xiv",
+    "label": "xv"
+   },
+   {
+    "page": 16,
+    "printed": "xv",
+    "label": "xvi"
+   },
+   {
+    "page": 17,
+    "printed": "xvi",
+    "label": "xvii"
+   },
+   {
+    "page": 18,
+    "printed": "xvii",
+    "label": "xviii"
+   },
+   {
+    "page": 19,
+    "printed": "xviii",
+    "label": "xix"
+   },
+   {
+    "page": 20,
+    "printed": "xix",
+    "label": "xx"
+   },
+   {
+    "page": 21,
+    "printed": "xx",
+    "label": "xxi"
+   },
+   {
+    "page": 22,
+    "printed": "xxi",
+    "label": "xxii"
+   },
+   {
+    "page": 23,
+    "printed": "xxii",
+    "label": "xxiii"
+   },
+   {
+    "page": 26,
+    "printed": "1",
+    "label": "Sec1:2"
+   },
+   {
+    "page": 27,
+    "printed": "2",
+    "label": "Sec1:3"
+   },
+   {
+    "page": 28,
+    "printed": "3",
+    "label": "Sec1:4"
+   },
+   {
+    "page": 29,
+    "printed": "4",
+    "label": "Sec1:5"
+   }
+  ],
+  "label_source_proposal": "printed-folios",
+  "printed_folios": {
+   "5": "iv",
+   "8": "vii",
+   "10": "ix",
+   "11": "x",
+   "12": "xi",
+   "13": "xii",
+   "14": "xiii",
+   "15": "xiv",
+   "16": "xv",
+   "17": "xvi",
+   "18": "xvii",
+   "19": "xviii",
+   "20": "xix",
+   "21": "xx",
+   "22": "xxi",
+   "23": "xxii",
+   "26": "1",
+   "27": "2",
+   "28": "3",
+   "29": "4",
+   "30": "5",
+   "31": "6",
+   "32": "7",
+   "33": "8",
+   "34": "9",
+   "35": "10",
+   "36": "11",
+   "37": "12",
+   "38": "13",
+   "39": "14",
+   "40": "15",
+   "41": "16",
+   "42": "17",
+   "43": "18",
+   "44": "19",
+   "45": "20",
+   "46": "21",
+   "47": "22",
+   "48": "23",
+   "49": "24",
+   "50": "25",
+   "51": "26",
+   "52": "27",
+   "53": "28",
+   "54": "29",
+   "55": "30",
+   "56": "31",
+   "57": "32",
+   "58": "33",
+   "59": "34",
+   "60": "35",
+   "61": "36",
+   "62": "37",
+   "63": "38",
+   "64": "39",
+   "65": "40",
+   "66": "41",
+   "67": "42",
+   "68": "43",
+   "69": "44",
+   "70": "45",
+   "71": "46",
+   "72": "47",
+   "73": "48",
+   "74": "49",
+   "75": "50",
+   "76": "51",
+   "77": "52",
+   "78": "53",
+   "79": "54",
+   "80": "55",
+   "81": "56",
+   "82": "57",
+   "83": "58",
+   "84": "59",
+   "85": "60",
+   "86": "61",
+   "87": "62",
+   "88": "63",
+   "89": "64",
+   "90": "65",
+   "91": "66",
+   "92": "67",
+   "93": "68",
+   "94": "69",
+   "95": "70",
+   "96": "71",
+   "97": "72",
+   "98": "73",
+   "99": "74",
+   "100": "75",
+   "101": "76",
+   "102": "77",
+   "103": "78",
+   "104": "79",
+   "105": "80",
+   "106": "81",
+   "107": "82",
+   "108": "83",
+   "109": "84",
+   "110": "85",
+   "111": "86",
+   "112": "87",
+   "113": "88",
+   "114": "89",
+   "115": "90",
+   "116": "91",
+   "117": "92",
+   "118": "93",
+   "119": "94",
+   "120": "95",
+   "121": "96",
+   "122": "97",
+   "123": "98",
+   "124": "99",
+   "125": "100",
+   "126": "101",
+   "127": "102",
+   "128": "103",
+   "129": "104",
+   "130": "105",
+   "131": "106",
+   "132": "107",
+   "133": "108",
+   "134": "109",
+   "135": "110",
+   "136": "111",
+   "137": "112",
+   "138": "113",
+   "139": "114",
+   "140": "115",
+   "141": "116",
+   "142": "117",
+   "145": "120",
+   "146": "121",
+   "147": "122",
+   "148": "123",
+   "149": "124",
+   "150": "125",
+   "151": "126",
+   "152": "127",
+   "155": "130",
+   "156": "131",
+   "157": "132",
+   "158": "133",
+   "159": "134",
+   "160": "135",
+   "161": "136",
+   "162": "137",
+   "163": "138",
+   "164": "139",
+   "165": "140",
+   "166": "141",
+   "167": "142",
+   "168": "143"
+  },
+  "headings": [
+   {
+    "page": 2,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Common Ground"
+   },
+   {
+    "page": 2,
+    "pstyle": "TimesNewRomanPSMT@16/center",
+    "text": "Between"
+   },
+   {
+    "page": 2,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Islam and Buddhism"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@30/center",
+    "text": "Common Ground"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@26/center",
+    "text": "Between"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@30/center",
+    "text": "Islam and Buddhism"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "text": "By Reza Shah-Kazemi"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "text": "With an essay by Shaykh Hamza Yusuf"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "text": "Introduced by"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "text": "H. H. the Fourteenth Dalai Lama"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "text": "H. R. H. Prince Ghazi bin Muhammad"
+   },
+   {
+    "page": 4,
+    "pstyle": "TimesNewRomanPSMT@14/center",
+    "text": "Professor Mohammad Hashim Kamali"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "First published in 2010 by"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Fons Vitae"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "49 Mockingbird Valley Drive"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Louisville, KY 40207"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "http://www.fonsvitae.com"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Email: fonsvitaeky@aol.com"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "© Copyright The Royal Aal-Bayt Institute"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "for Islamic Thought, Jordan 2010"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Library of Congress Control Number: 2010925171"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "ISBN 978–1891785627"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "No part of this book may be reproduced"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "in any form without prior permission of"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "the publishers. All rights reserved."
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "With gratitude to the Thesaurus Islamicus Foundation"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "for the use of the fourteenth century Qur’ānic shamsiyya"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "lotus image found in Splendours of Qur’ān Calligraphy"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "and Illumination by Martin Lings. We also thank Justin"
+   },
+   {
+    "page": 5,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Printed in Canada"
+   },
+   {
+    "page": 6,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Contents"
+   },
+   {
+    "page": 6,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Common Ground Between Islam and Buddhism"
+   },
+   {
+    "page": 7,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Contents, continued"
+   },
+   {
+    "page": 8,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 8,
+    "pstyle": "TimesNewRomanPSMT@12/center",
+    "text": "by His Holiness The Fourteenth Dalai Lama"
+   },
+   {
+    "page": 10,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "In the Name of God, the Compassionate, the Merciful"
+   },
+   {
+    "page": 10,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "May Peace and Blessings be upon the Prophet Muhammad"
+   },
+   {
+    "page": 10,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Introduction to Common Ground"
+   },
+   {
+    "page": 10,
+    "pstyle": "TimesNewRomanPSMT@12/center",
+    "text": "By H. R. H. Prince Ghazi bin Muhammad"
+   },
+   {
+    "page": 10,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The Religions of the World and World Peace"
+   },
+   {
+    "page": 11,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Why Do We Need ‘Common Ground’?"
+   },
+   {
+    "page": 13,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "The Common Ground"
+   },
+   {
+    "page": 14,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "and that through Mercy we are saved and delivered)."
+   },
+   {
+    "page": 14,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "He hath ordained for you that religion which He commend-"
+   },
+   {
+    "page": 14,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "ed unto Noah, and that which We inspire in thee (Muham-"
+   },
+   {
+    "page": 15,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "People of the Scripture (Ahl Al-Kitab)"
+   },
+   {
+    "page": 16,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "truth which hath come unto thee. For each We have ap-"
+   },
+   {
+    "page": 17,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "Earlier Common Ground ?"
+   },
+   {
+    "page": 17,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "And all praise be to God, the Lord of the worlds."
+   },
+   {
+    "page": 18,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Preface"
+   },
+   {
+    "page": 18,
+    "pstyle": "TimesNewRomanPSMT@12/center",
+    "text": "by Professor Mohammad Hashim Kamali"
+   },
+   {
+    "page": 23,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Acknowledgements"
+   },
+   {
+    "page": 24,
+    "pstyle": "TimesNewRomanPSMT@30/center",
+    "text": "Common Ground"
+   },
+   {
+    "page": 24,
+    "pstyle": "TimesNewRomanPSMT@26/center",
+    "text": "Between"
+   },
+   {
+    "page": 24,
+    "pstyle": "TimesNewRomanPSMT@30/center",
+    "text": "Islam and Buddhism"
+   },
+   {
+    "page": 26,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Part One"
+   },
+   {
+    "page": 26,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Setting the Scene"
+   },
+   {
+    "page": 26,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Beyond the Letter to the Spirit"
+   },
+   {
+    "page": 32,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "A Glance at History"
+   },
+   {
+    "page": 37,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Qur’ānic Premises of Dialogue"
+   },
+   {
+    "page": 38,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "return, and He will inform you of that about which you dif-"
+   },
+   {
+    "page": 38,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "• Truly We inspire you, as We inspired Noah, and the proph-"
+   },
+   {
+    "page": 38,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "[saying]: There is no God save Me, so worship Me. (21:25)"
+   },
+   {
+    "page": 39,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The Buddha as Messenger"
+   },
+   {
+    "page": 40,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "death is suffering; sorrow, lamentation, pain, grief, and de-"
+   },
+   {
+    "page": 40,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "spair are suffering; not to obtain what one wants is suffer-"
+   },
+   {
+    "page": 40,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "and delights in this and that; that is, craving for sensual plea-"
+   },
+   {
+    "page": 40,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "derless fading away and ceasing, the giving up, relinquish-"
+   },
+   {
+    "page": 41,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "And what is the way leading to the cessation of suffer-"
+   },
+   {
+    "page": 42,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "the body, after death, have reappeared in a state of depriva-"
+   },
+   {
+    "page": 42,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "of the body, after death, have reappeared in a good destina-"
+   },
+   {
+    "page": 42,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "ugly, fortunate and unfortunate, and I understood how be-"
+   },
+   {
+    "page": 44,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Revelation from on High or Within?"
+   },
+   {
+    "page": 48,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "world of gods and men—means adapted to their tempera-"
+   },
+   {
+    "page": 48,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "leader regardless of his nationality and professed creed, Ma-"
+   },
+   {
+    "page": 48,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "hayanists recognized a Buddha in Socrates, Mohammad, Je-"
+   },
+   {
+    "page": 48,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "sus, Francis of Assisi, Confucius, Laotze, and many others.28"
+   },
+   {
+    "page": 49,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The Dalai Lama and the Dynamics of Dialogue"
+   },
+   {
+    "page": 50,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Buddha, Jesus Christ, Muhammad and Moses, were moti-"
+   },
+   {
+    "page": 52,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "better with people from other religious traditions and cul-"
+   },
+   {
+    "page": 52,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "have seen this value from within your own tradition.35"
+   },
+   {
+    "page": 52,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "People often experience feelings of exclusivity in their reli-"
+   },
+   {
+    "page": 52,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "path—which can create a sense of apprehension about con-"
+   },
+   {
+    "page": 52,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "greater our awareness is regarding the value and effective-"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Part Two"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Oneness: The Highest"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Common Denominator"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Conceiving of the One"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "There is, monks, an unborn, not become, not made, uncom-"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "pounded; and were it not, monks, for this unborn, not be-"
+   },
+   {
+    "page": 54,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "here for what is born, has become, is made, is compounded."
+   },
+   {
+    "page": 55,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "But those who know the Real is, and know the unreal"
+   },
+   {
+    "page": 60,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "‘Everything exists’—this, Kaccāyana, is one extreme. ‘Ev-"
+   },
+   {
+    "page": 60,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "erything does not exist’—this, Kaccāyana, is the second ex-"
+   },
+   {
+    "page": 62,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "All things have no provenance and no one can create them:"
+   },
+   {
+    "page": 64,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 74,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Hence one of them says, “I am the Real!” (anā’l-Haqq), an-"
+   },
+   {
+    "page": 76,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 76,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "This dharma which the Tathāgata has fully known or dem-"
+   },
+   {
+    "page": 78,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "will stand firmly in suchness, or that will know this full en-"
+   },
+   {
+    "page": 78,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Therefore, O Sariputra, it is because of his nonattainment-"
+   },
+   {
+    "page": 82,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "They ask you of the Hour: when will it come to pass? Why—"
+   },
+   {
+    "page": 82,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "what can you say about it? Unto your Lord belongs [know-"
+   },
+   {
+    "page": 83,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Worship of the One"
+   },
+   {
+    "page": 94,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "of the self; a holy freedom through the melting of our self-"
+   },
+   {
+    "page": 94,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "power (jiriki) in the Other Power (tariki), through the sur-"
+   },
+   {
+    "page": 102,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 104,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Part Three"
+   },
+   {
+    "page": 104,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Ethics of Detachment"
+   },
+   {
+    "page": 104,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "and Compassion"
+   },
+   {
+    "page": 104,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Detachment: Anicca and Zuhd"
+   },
+   {
+    "page": 107,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Be in this world as if you were a stranger or a wayfarer.3"
+   },
+   {
+    "page": 107,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The heart of an old man remains young in two respects:"
+   },
+   {
+    "page": 107,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "If the son of Adam [i.e., the human being] had two val-"
+   },
+   {
+    "page": 107,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The fire of hell is veiled by passionate desires, while"
+   },
+   {
+    "page": 107,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Remember much that which ends all pleasures (hādhim"
+   },
+   {
+    "page": 108,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Short indeed is this life. This side of a hundred years it per-"
+   },
+   {
+    "page": 108,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "mine own”. So seeing, let not one devote himself to selfish-"
+   },
+   {
+    "page": 110,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "iron, of wood or of rope; much stronger is the fetter of pas-"
+   },
+   {
+    "page": 110,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "own’. So seeing, let not one devote himself to selfishness."
+   },
+   {
+    "page": 117,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Loving Compassion: Karunā and Rahma"
+   },
+   {
+    "page": 118,
+    "pstyle": "TimesNewRomanPS-ItalicMT@11/center",
+    "text": "Unto each, the former and the latter, do We extend the gra-"
+   },
+   {
+    "page": 120,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "above, below, and all around without limit. So let him cul-"
+   },
+   {
+    "page": 120,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "tivate a boundless good will towards the entire world, un-"
+   },
+   {
+    "page": 126,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 126,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "going to the Uncompounded. Now what, brethren, is the Un-"
+   },
+   {
+    "page": 134,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 135,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Epilogue"
+   },
+   {
+    "page": 135,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "The Common Ground of Sanctity"
+   },
+   {
+    "page": 135,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The mingling of both [wisdom and compassion] is"
+   },
+   {
+    "page": 136,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "which may not be reckoned, so great is its diversity’.1"
+   },
+   {
+    "page": 137,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 138,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "%XGGKD\u0003LQ\u0003WKH\u00034XU¶ƗQ\""
+   },
+   {
+    "page": 138,
+    "pstyle": "TimesNewRomanPSMT@12/center",
+    "text": "by Shaykh Hamza Yusuf"
+   },
+   {
+    "page": 140,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "***"
+   },
+   {
+    "page": 142,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "(UXKƗQL\\\\ƯQ) and taking intercessors. When they were un-"
+   },
+   {
+    "page": 142,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "the Sabians of Asia Minor relied upon planets, and the Sabi-"
+   },
+   {
+    "page": 142,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "benefit anyone one iota. The first group consists of worship-"
+   },
+   {
+    "page": 142,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "the Kaaba, for example, is exalted [among Muslims].11"
+   },
+   {
+    "page": 143,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "***"
+   },
+   {
+    "page": 144,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Based upon their description of the Buddha, if they are ac-"
+   },
+   {
+    "page": 146,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "The Prophet \u000e is reported to have said concerning al-Khad-"
+   },
+   {
+    "page": 147,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "***"
+   },
+   {
+    "page": 148,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "[The Ummayyad governors] allowed followers of non-Mus-"
+   },
+   {
+    "page": 148,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "functioning. The Han Chinese pilgrim Yijing (I-Ching) vis-"
+   },
+   {
+    "page": 149,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "An Umayyad Arab author, al-Kermani, wrote a detailed"
+   },
+   {
+    "page": 152,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "***"
+   },
+   {
+    "page": 154,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "-L]\\DK is taken from the Arab idolaters and whoever prac-"
+   },
+   {
+    "page": 154,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "worshipers of idols or fire given that the Prophet \u000e him-"
+   },
+   {
+    "page": 154,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "\u000e took ML]\\DK from the Magians of Hajar and Oman. Fur-"
+   },
+   {
+    "page": 154,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "were Buddhists as well as the majority who were Zoroas-"
+   },
+   {
+    "page": 156,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "***"
+   },
+   {
+    "page": 159,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "***"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Abraham \u0005 replies, “Because he was an idolater.”"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "³*RG\u0003DVNV\u0003\\RX\u000f\u0003µ'LG\u0003\\RX\u0003FUHDWH\u0003KLP\u0003RU\u0003GLG\u0003,\"¶´\u0003"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Abraham \u0005 replies, “Of course, You created him.”"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "³*RG\u0003DVNV\u0003\\RX\u000f\u0003µ:DV\u0003KLV\u0003GLVEHOLHI\u0003LQ\u00030H\u0003RU\u0003LQ\u0003\\RX\"¶´\u0003"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Abraham \u0005 responds, “His disbelief was in You.”"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "0\\\u0003VHUYDQW\u0003DQG\u0003\\RXU\u0003EURWKHU\"\u0003)RU\u0003KH\u0003LV\u0003LQ\u0003RQH\u0003RI\u0003WZR\u0003SRV-"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "him. The man said, “Something happened, as you are act-"
+   },
+   {
+    "page": 160,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "now you are showing me kindness, as if you want some-"
+   },
+   {
+    "page": 161,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Abraham \u0005 said to him, “My Lord reproached me for"
+   },
+   {
+    "page": 161,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "To this the man said, “What a blessed Lord you have"
+   },
+   {
+    "page": 162,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Biographies of Contributors"
+   },
+   {
+    "page": 162,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 162,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 163,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "* * *"
+   },
+   {
+    "page": 164,
+    "pstyle": "TimesNewRomanPSMT@18/center",
+    "text": "Bibliography"
+   },
+   {
+    "page": 164,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Avatamsaka Sutra. Boulder & London: Shambhala, 1984."
+   },
+   {
+    "page": 164,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Texts Through the Ages. Oxford: Bruno Cassirer, 1954."
+   },
+   {
+    "page": 164,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "by ‘Abdassamad Clarke). London: Taha Publishers, 2008."
+   },
+   {
+    "page": 164,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Nabih Amin Faris. Lahore: Sh. Muhammad Ashraf, 1970."
+   },
+   {
+    "page": 166,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Way. New York: State University of New York Press, 1986."
+   },
+   {
+    "page": 168,
+    "pstyle": "TimesNewRomanPSMT@11/center",
+    "text": "Buddhism. London & New York: RoutledgeCurzon, 2003."
+   }
+  ],
+  "toc_pages": [
+   6,
+   7
+  ],
+  "toc_entries": [
+   {
+    "page": 6,
+    "text": "Foreword by H. H. the Fourteenth Dalai Lama",
+    "label": "vii",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Introduction by H. R. H. Prince Ghazi bin Muhammad",
+    "label": "ix",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Preface by Professor Mohammad Hashim Kamali",
+    "label": "xvii",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Acknowledgements",
+    "label": "xxii",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Part One — Setting the Scene",
+    "label": "1",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Beyond the Letter to the Spirit",
+    "label": "1",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "A Glance at History",
+    "label": "7",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Qur’ānic Premises of Dialogue",
+    "label": "12",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "The Buddha as Messenger",
+    "label": "14",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Revelation from on High or Within?",
+    "label": "19",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "The Dalai Lama and the Dynamics of Dialogue",
+    "label": "24",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Part Two — Oneness: The Highest Common Denominator",
+    "label": "29",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Conceiving of the One",
+    "label": "29",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "The Unborn",
+    "label": "30",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Buddhist Dialectics",
+    "label": "33",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Shūnya and Shahāda",
+    "label": "40",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Light of Transcendence",
+    "label": "42",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Al-Samad and Dharma",
+    "label": "43",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "God’s Face",
+    "label": "46",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Fanā’ and Non-duality",
+    "label": "49",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Baqā’ of the ‘Enlightened Ones’",
+    "label": "51",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Worship of the One",
+    "label": "58",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Buddha in the Light of Dharma",
+    "label": "60",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Remembrance of God",
+    "label": "64",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Tariki and Tawakkul",
+    "label": "67",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Key to Salvation",
+    "label": "69",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Images of the Buddha, Blessings upon the Prophet",
+    "label": "73",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Part Three — Ethics of Detachment and Compassion",
+    "label": "79",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Detachment: Anicca and Zuhd",
+    "label": "79",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Suffering",
+    "label": "80",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Worldliness",
+    "label": "82",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Subtle Polytheism",
+    "label": "84",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "The ‘god’ of Desire",
+    "label": "87",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Loving Compassion: Karunā and Rahma",
+    "label": "92",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Source of Compassion",
+    "label": "96",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Oneness and Compassion",
+    "label": "98",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Rahma as Creator",
+    "label": "103",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Epilogue: The Common Ground of Sanctity",
+    "label": "110",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Buddha in the Qur’ān? by Shaykh Hamza Yusuf",
+    "label": "113",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Biographies of Contributors",
+    "label": "137",
+    "target": null
+   },
+   {
+    "page": 7,
+    "text": "Bibliography",
+    "label": "139",
+    "target": null
+   }
+  ],
+  "toc_witness_table": [],
+  "toc_source_proposal": "printed",
+  "footnote_pages": [
+   28,
+   29,
+   31,
+   32,
+   33,
+   34,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   54,
+   55,
+   57,
+   59,
+   60,
+   61,
+   62,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99,
+   100,
+   101,
+   102,
+   103,
+   104,
+   107,
+   108,
+   109,
+   113,
+   116,
+   117,
+   118,
+   119,
+   120,
+   121,
+   123,
+   125,
+   126,
+   127,
+   128,
+   130,
+   131,
+   132,
+   136,
+   138,
+   139,
+   140,
+   141,
+   142,
+   145,
+   146,
+   147,
+   149,
+   150,
+   152,
+   155,
+   157,
+   158,
+   159,
+   161
+  ],
+  "footnote_marker_census": {
+   "digit": 221
+  },
+  "footnote_samples": [
+   {
+    "page": 28,
+    "text": "1. Ihyā’ ‘ulūm al-dīn (Beirut: Dār al-Jīl, 1992), p. 34; see the English translation  of Nabih Amin Faris, The Book of Knowledge (Lahore: Sh. Muhammad"
+   },
+   {
+    "page": 29,
+    "text": "it demolishes but it does not build.’ Eric Ormsby, Ghazali—The Revival of Islam  (Oxford: Oneworld, 2008), p. 64.  2. Translated by W. Montgomery Watt"
+   },
+   {
+    "page": 31,
+    "text": "3. See http://www.ammanmessage.com. 4. Scholars are divided over the question of the dates of the birth and death of this  immensely influential figur"
+   },
+   {
+    "page": 32,
+    "text": "as ‘the second Buddha’ (see David J. Kalupahana, Nāgārjūna—The Philosophy  of the Middle Way (State University of New York Press, 1986), p. 2). The mo"
+   },
+   {
+    "page": 33,
+    "text": "6. Chachnamah Retold—An Account of the Arab Conquest of Sindh, Gobind  Khushalani (New Delhi: Promilla, 2006), p. 156 7. Abū al-Hasan al-Balādhurī, Fu"
+   }
+  ],
+  "footnote_policy_proposal": "markers",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 12.5,
+  "indent_histogram": {
+   "9": 1953,
+   "18": 463,
+   "23": 1,
+   "27": 469,
+   "31": 1,
+   "45": 30
+  },
+  "indent_threshold_proposal": 6.8,
+  "eol_hyphen_count": 749,
+  "lost_space_count": 0,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [],
+  "pua_census": [],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 0,
+  "column_suspect_pages": [],
+  "low_agreement_pages": [],
+  "image_only_pages": [
+   1,
+   170
+  ],
+  "cover_proposal": {
+   "mode": "render",
+   "page": 1,
+   "reason": "page 1 is image-dominated (1 image(s), 0 chars)"
+  },
+  "flagged_pages": [
+   1,
+   6,
+   7,
+   26,
+   28,
+   29,
+   170
+  ],
+  "warnings": []
+ }
+}

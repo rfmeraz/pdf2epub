@@ -1,0 +1,107 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+source:
+  folder: "package"
+  pdf: "Islam and Buddhism.pdf"
+  sha256: "e2a52793b24a3fc8a17c440de72135d0e4fc269bdb4b151535168fca94fafbbd"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> urn:uuid (flagged)
+  isbn_print:
+  date:
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (1 image(s), 0 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 25}   # roman folios
+  body:  {first: 26, last: 170}   # printed folio '1' seen on p.26
+  exclude: []
+  label_source: printed-folios   # folio-vs-label agreement: 0.0%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 43.1
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 61p): '#ommon ground between islam and buddhis#'
+  # repeated (top, 24p): 'Oneness: The Highest Common Denominator'
+  # repeated (top, 15p): 'Ethics of Detachment and Compassion'
+  # repeated (top, 15p): '#OMMON GROUND BETWEEN ISLAM AND BUDDHIS#'
+  # repeated (top, 14p): 'Setting the Scene'
+  # repeated (top, 12p): '%XGGKD\x03LQ\x03WKH\x03#XU¶ƗQ"'
+  # repeated (top, 3p): '#ommon Groun#'
+  # repeated (top, 3p): 'Between'
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "TimesNewRomanPSMT@11"
+  pstyle_map:
+    "TimesNewRomanPSMT@11": {role: p}   # high: dominant text cluster
+    "TimesNewRomanPSMT@9": {role: footnote}   # low: small (9.0pt), frequent
+    "TimesNewRomanPS-ItalicMT@11": {role: p}   # low: body-like
+    "TimesNewRomanPSMT@11/center": {role: h3}   # low: centered, body-sized
+    "TimesNewRomanPS-ItalicMT@9": {role: footnote}   # low: small (9.0pt), frequent
+    "TimesNewRomanPSMT-SC700@7/center": {role: footnote}   # low: small (7.0pt), frequent
+    "TimesNewRomanPS-ItalicMT@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "TimesNewRomanPS-ItalicMT@11/center": {role: h3}   # low: centered, body-sized
+    "TimesNewRomanPSMT@7/center": {role: footnote}   # low: small (7.0pt), frequent
+    "TimesNewRomanPSMT@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "TimesNewRomanPSMT@18/center": {role: h1}   # medium: size 18.0pt >= 1.35x body
+    "TimesNewRomanPS-ItalicMT@10": {role: p}   # low: smaller than body (10.0pt)
+    "TimesNewRomanPSMT@14/center": {role: h2}   # medium: 14.0pt centered
+    "TimesNewRomanPSMT@12/center": {role: h2}   # medium: 12.0pt centered
+    "TimesNewRomanPSMT@30/center": {role: title-page}   # medium: size 30.0pt >= 1.8x body
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 6.8
+  gap_factor: 1.6             # median leading measured: 12.5pt
+  dehyphenate: lower-only
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: markers   # regions on 102 pages; census {'digit': 221}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: printed   # outline=0 printed=41 links=0
+  printed_pages: [6, 7]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: islam-and-buddhism, include_ncx: true}

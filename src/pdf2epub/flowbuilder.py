@@ -525,9 +525,18 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
 
 def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
                    counts: Counter) -> list[TextRun]:
+    from .textfix import is_shifted_run, repair_shifted_cmap, strip_control_chars
+
     out: list[TextRun] = []
     for run in runs:
-        t, n_lig = expand_ligatures(run.text)
+        t = run.text
+        if cfg.shifted_cmap_repair and is_shifted_run(t):
+            t, unk = repair_shifted_cmap(t, cfg.shifted_cmap_highmap)
+            counts["cmap-repaired-runs"] += 1
+            counts["cmap-unknown-chars"] += unk
+        t, n_ctrl = strip_control_chars(t)
+        counts["ctrl-stripped"] += n_ctrl
+        t, n_lig = expand_ligatures(t)
         counts["ligatures"] += n_lig
         if cfg.restore_spaces:
             t, n_sp = restore_spaces(t)
@@ -675,9 +684,13 @@ def _page_labels(doc: PdfDoc, cfg: PdfBookConfig,
         for p in doc.pages:
             labels[p.number] = p.label or str(p.number)
     elif cfg.label_source == "printed-folios":
-        # printed folio where present; arithmetic continuation elsewhere
+        # printed folio where present; arithmetic continuation elsewhere,
+        # and BACKFILL before the first printed folio (front-matter pages
+        # rarely print theirs — falling back to physical numbers created
+        # duplicate labels and roman-after-arabic breaks on I&B)
         last_num: int | None = None
         last_roman = False
+        pending: list[int] = []
         for p in doc.pages:
             pf = _printed_folio(p)
             if pf and pf.isdigit():
@@ -695,7 +708,20 @@ def _page_labels(doc: PdfDoc, cfg: PdfBookConfig,
                 labels[p.number] = (int_to_roman(last_num) if last_roman
                                     else str(last_num))
             else:
-                labels[p.number] = str(p.number)
+                pending.append(p.number)
+                continue
+            if pending:
+                # first folio just seen: walk backwards from it
+                base = last_num - 1
+                for pn in reversed(pending):
+                    if base >= 1:
+                        labels[pn] = int_to_roman(base) if last_roman else str(base)
+                        base -= 1
+                    else:
+                        labels[pn] = str(pn)
+                pending.clear()
+        for pn in pending:
+            labels[pn] = str(pn)
     else:  # synthetic
         for p in doc.pages:
             labels[p.number] = str(p.number)
