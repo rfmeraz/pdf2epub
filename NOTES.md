@@ -91,3 +91,32 @@ and put it in the nav). Fixes promoted to code + config doctrine:
 - nbsp+space does NOT collapse in HTML rendering: glyph substitutions after
   space-trailing runs need cross-run space collapsing (plain double spaces
   are harmless — readers collapse them).
+
+## Session lessons for future agents (2026-07-08)
+
+- **Unicode literals don't survive the toolchain**: PUA chars written literally
+  in heredocs/scripts/YAML get silently stripped (a `[-]` regex
+  written with literal chars became `[-]`, matching hyphens). Always write
+  `\uXXXX` escapes and VERIFY by parsing (yaml.safe_load + assert ordinals)
+  before building on the file.
+- **When a metric refuses to move across several fixes, stop hypothesizing and
+  dump the actual data at the seam.** The I&B hyphen count sat at exactly 83
+  through four plausible fixes; the answer (paragraph broken mid-word at a
+  roman/italic boundary) was visible in one raw-bytes dump of the flow items.
+  Same discipline solved BoK's 0-noterefs (tab-separated markers) and the
+  coverage cascade (bounded find window).
+- **QA text extraction shape matters**: EpubDoc.text()'s space-joined itertext
+  fabricates 'no- dharma' artifacts across inline tags — join inline content
+  with '', blocks with ' '. And nbsp+space does NOT collapse in renderers;
+  plain double spaces do.
+- **Trust structural invariants over similarity thresholds for repairs**:
+  the shifted-CMap repair (+0x1D) was provable from 'WKH'→'the', space→\x03,
+  digits→\x14-range simultaneously; a fuzzy approach would have guessed.
+- **The engine-agreement score pays for itself**: it located the two-column
+  index pages, the vertical-CJK section, AND the broken-CMap essay before any
+  human saw them. Text both engines agree on can still be wrong only when the
+  source's own ToUnicode lies identically — that's what print-render
+  verification is for.
+- **Standard post-build audit**: scan emitted h1–h3 for sentence-like text
+  (>55 chars ending in punctuation). It found every false-heading class the
+  user's screenshot pointed at, plus one more (MR aphorism quotes).
