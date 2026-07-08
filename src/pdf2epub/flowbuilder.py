@@ -62,6 +62,9 @@ class FlowResult:
     # (story_id, psr_index) of drop-cap paragraphs: the map stage re-applies
     # the first-dropcap class AFTER apply_roles rebuilds Paragraph.classes
     dropcap_srcs: set[tuple[str, int]] = field(default_factory=set)
+    # note_id -> printed marker ('7', '*') — QA strips these tokens from
+    # ground truth (the EPUB renumbers its noterefs)
+    note_markers: dict[str, str] = field(default_factory=dict)
 
 
 @dataclass(slots=True)
@@ -100,7 +103,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 
     # ---- furniture template set
     in_flow_nums = set(cfg.in_flow_pages(doc.n_pages))
-    in_flow = [p for p in doc.pages if p.number in in_flow_nums and p.lines]
+    in_flow = [p for p in doc.pages if p.number in in_flow_nums]
     fur = {r["text"] for r in detect_furniture(doc, in_flow, cfg.repeat_min_pages)}
     fur |= {furniture_template(t) for t in cfg.furniture_extra}
     fur -= {furniture_template(t) for t in cfg.furniture_keep}
@@ -119,6 +122,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     # ---- per-page: strip furniture, split footnotes, collect body lines
     pages_lines: dict[int, list[_L]] = {}
     page_notes: dict[int, list[list[_L]]] = {}  # page -> list of note line-groups
+    prev_had_notes = False
     for p in in_flow:
         kept: list[_L] = []
         for idx, ln in enumerate(p.lines):
@@ -167,19 +171,32 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     break
             region.reverse()
             if region and len(" ".join(x.ln.text() for x in region)) > 20:
-                kept = kept[:len(kept) - len(region)]
-                # split region into individual notes at marker starts
                 pat = _NOTE_START_DIGIT if cfg.footnote_marker == "digits" else _NOTE_START_STAR
-                cur: list[_L] = []
-                for L in region:
-                    if pat.match(L.ln.text()) and cur:
+                # small font is NOT sufficient — 9pt block quotes sit at page
+                # bottoms too (BoK p.186). The note region starts at the FIRST
+                # marker-pattern line; small-font lines above it stay body.
+                # A region with no marker at all is body — unless it
+                # continues the previous page's notes (merge pass below).
+                first_marked = next((i for i, L in enumerate(region)
+                                     if pat.match(L.ln.text())), None)
+                prev_page_had_notes = prev_had_notes
+                if first_marked is None and not prev_page_had_notes:
+                    region = []
+                elif first_marked and first_marked > 0 and not prev_page_had_notes:
+                    region = region[first_marked:]
+                if region:
+                    kept = kept[:len(kept) - len(region)]
+                    cur: list[_L] = []
+                    for L in region:
+                        if pat.match(L.ln.text()) and cur:
+                            notes_here.append(cur)
+                            cur = []
+                        cur.append(L)
+                    if cur:
                         notes_here.append(cur)
-                        cur = []
-                    cur.append(L)
-                if cur:
-                    notes_here.append(cur)
         pages_lines[p.number] = kept
         page_notes[p.number] = notes_here
+        prev_had_notes = bool(notes_here)
 
     # ---- footnotes wrapping across pages: a region whose first chunk has no
     # marker prefix continues the PREVIOUS page's last note (BoK p.56->57)
@@ -205,15 +222,19 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 ent = _trailing_folio_entry(L.ln)
                 if ent:
                     title, label = ent
+                    fixed = _apply_textfix([TextRun(f"{title}\t{label}", RunFormat())],
+                                           cfg, counts)
+                    text = "".join(r.text for r in fixed if isinstance(r, TextRun))
                     last_entry = Paragraph(
                         style="__toc__",
-                        items=[TextRun(f"{title}\t{label}", RunFormat())],
+                        items=[TextRun(text, RunFormat())],
                         src=SourceRef(f"p{L.page:04d}", L.idx))
                     paras.append(last_entry)
                 elif L.ps != body_ps and "center" in L.ps:
-                    paras.append(Paragraph(style=L.ps,
-                                           items=_mk_runs(L.ln, cfg, doc),
-                                           src=SourceRef(f"p{L.page:04d}", L.idx)))
+                    paras.append(Paragraph(
+                        style=L.ps,
+                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts),
+                        src=SourceRef(f"p{L.page:04d}", L.idx)))
                 elif last_entry is not None:
                     # continuation of a wrapped entry title
                     t = last_entry.items[0].text
@@ -225,8 +246,10 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     warns.append(_Warn(
                         f"p.{pno} line {L.idx}: unparsed TOC-page line kept as text: "
                         f"{L.ln.text()[:50]!r}", pno, L.idx))
-                    paras.append(Paragraph(style=L.ps, items=_mk_runs(L.ln, cfg, doc),
-                                           src=SourceRef(f"p{L.page:04d}", L.idx)))
+                    paras.append(Paragraph(
+                        style=L.ps,
+                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts),
+                        src=SourceRef(f"p{L.page:04d}", L.idx)))
             toc_paras[pno] = paras
     elif cfg.toc_handling == "drop":
         for pno in cfg.toc_printed_pages:
@@ -373,7 +396,9 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             note_paras = _note_paragraphs(group, cfg, doc, note_id)
             res.flow.notes[note_id] = Note(note_id=note_id, paragraphs=note_paras)
             m = _NOTE_START_DIGIT.match(group[0].ln.text())
-            note_queue.append((pno, m.group(1) if m else "*", note_id))
+            marker = m.group(1) if m else "*"
+            note_queue.append((pno, marker, note_id))
+            res.note_markers[note_id] = marker
 
     close_para()
     for a2 in pending_anchors:
@@ -430,15 +455,20 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
         return True
     if "/center" in L.ps:
         return not cfg.join_center_lines
+    # a first-line indent is indented relative to the PREVIOUS line too —
+    # drop-cap wrap lines all sit at the same inset (BoK p.35: 3 lines at
+    # x0=87.9 around a 52.5pt initial) and must not break line-by-line
+    indented = (L.ln.x0 - geo.col_left >= cfg.indent_threshold
+                and L.ln.x0 - prev.ln.x0 >= cfg.indent_threshold - 2)
     cross_page = L.page != prev.page
     if cross_page:
-        # continuation across the page turn only for running body text
-        if not (open_is_body and L.ps == body_ps):
+        # any same-pstyle uncentered text continues across the page turn —
+        # restricting this to the body pstyle force-broke 10pt front matter
+        # and block quotes mid-word ('com-' | 'munity', BoK acknowledgments)
+        if "/center" in L.ps:
             return True
-        if L.ln.x0 - geo.col_left >= cfg.indent_threshold:
-            return True
-        return False
-    if L.ln.x0 - geo.col_left >= cfg.indent_threshold and L.ps == body_ps:
+        return indented
+    if indented and L.ps == body_ps:
         return True
     if (L.ln.y0 - prev.ln.y0) > cfg.gap_factor * med_lead:
         return True

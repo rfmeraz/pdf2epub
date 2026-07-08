@@ -45,9 +45,11 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
     Returns (prev_out, separator, dehyphenated). lower-only: strip the
     line-end hyphen iff the continuation starts lowercase ('tradi-/tion' ->
     'tradition'); a capital keeps it ('Kaccāyanagotta-/Sutta') — both cases
-    join WITHOUT a space."""
-    if mode != "off" and re.search(r"[A-Za-zÀ-ſ]-$", prev):
-        if nxt[:1].islower():
-            return prev[:-1], "", True
-        return prev, "", False
+    join WITHOUT a space. Extraction spans carry trailing whitespace
+    ('com- '), so the hyphen test runs on the stripped tail."""
+    base = prev.rstrip()
+    if mode != "off" and re.search(r"[A-Za-zÀ-ſ]-$", base):
+        if nxt.lstrip()[:1].islower():
+            return base[:-1], "", True
+        return base, "", False
     return prev, " ", False

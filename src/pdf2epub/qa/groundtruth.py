@@ -1,0 +1,201 @@
+"""QA ground truth: an INDEPENDENT poppler extraction of what the book says.
+
+pdftotext (not PyMuPDF — different glyph decoder), cropped to the trim box,
+furniture-stripped and textfixed with the same deterministic chain the flow
+used, then note bodies removed per page (they move to endnotes in the EPUB;
+in-place they'd count as huge mid-page 'missing' segments — I&B's notes are
+~8.4% of its text). Gate 3 guards the circularity: every removed note body
+must ALSO appear in the page's RAW ground truth."""
+
+from __future__ import annotations
+
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+
+from ..analyze import detect_furniture, furniture_template
+from ..config import PdfBookConfig
+
+_PUA_RE = re.compile(r"[\ue000-\uf8ff]")
+from ..core.textnorm import is_folio_line, normalize
+from ..extract import poppler_page_texts
+from ..pdfmodel import PdfDoc
+from ..textfix import expand_ligatures, restore_spaces
+
+
+@dataclass(slots=True)
+class GroundTruth:
+    pages_raw: dict[int, str] = field(default_factory=dict)       # normalized, unstripped
+    pages: dict[int, str] = field(default_factory=dict)           # stripped + fixed
+    furniture_templates: set[str] = field(default_factory=set)
+    note_chars_removed: int = 0
+    figure_chars_excluded: int = 0
+    phrase_chars_removed: int = 0
+    note_strip_failures: list[str] = field(default_factory=list)
+
+    def joined(self) -> str:
+        return "\n".join(self.pages[p] for p in sorted(self.pages))
+
+
+def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
+                       note_texts_by_page: dict[int, list[str]]) -> GroundTruth:
+    gt = GroundTruth()
+    raw_pages = poppler_page_texts(pdf, crop=doc.trim_crop_box)
+    in_flow = set(cfg.in_flow_pages(doc.n_pages))
+    fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
+    gt.furniture_templates = {
+        r["text"] for r in detect_furniture(
+            doc, [p for p in doc.pages if p.number in in_flow and p.lines],
+            cfg.repeat_min_pages)}
+    gt.furniture_templates |= {furniture_template(t) for t in cfg.furniture_extra}
+    gt.furniture_templates -= {furniture_template(t) for t in cfg.furniture_keep}
+    # MuPDF merges folio+head into one line ('#book of knowledge | chapter #');
+    # poppler splits them, so its head templates lack the edge '#'. Match on
+    # the edge-#-insensitive canonical form.
+    canon = {t.strip("#").strip() for t in gt.furniture_templates}
+
+    for pno in sorted(in_flow):
+        if pno - 1 >= len(raw_pages):
+            break
+        raw = raw_pages[pno - 1]
+        lines = [ln for ln in raw.split("\n") if ln.strip()]
+        kept = []
+        for i, ln in enumerate(lines):
+            first_or_last = i <= 1 or i >= len(lines) - 2
+            if first_or_last:
+                if is_folio_line(normalize(ln)):
+                    continue
+                if furniture_template(ln).strip("#").strip() in canon:
+                    continue
+            kept.append(ln)
+        text = "\n".join(kept)
+        text, _ = expand_ligatures(text)
+        if cfg.restore_spaces:
+            text, _ = restore_spaces(text)
+        # private-use glyphs are unrepresentable extraction artifacts — they
+        # are policed on the CANDIDATE side by gate 10, and must not count as
+        # 'source text' the EPUB failed to carry
+        norm = normalize(_PUA_RE.sub("", text))
+        gt.pages_raw[pno] = norm
+
+        if pno in fig_pages:
+            gt.figure_chars_excluded += len(norm)
+            gt.pages[pno] = ""
+            continue
+
+        # strip this page's note bodies (verified against raw by the caller)
+        markers: list[str] = []
+        for marker, note_text in note_texts_by_page.get(pno, []):
+            if marker:
+                markers.append(marker)
+            frag = normalize(note_text)
+            if len(frag) < 15:
+                continue
+            idx = _find_fuzzyish(norm, frag)
+            if idx is not None:
+                norm = norm[:idx] + " " + norm[idx + len(frag):]
+                gt.note_chars_removed += len(frag)
+            else:
+                # tolerate marker-prefix differences: try without first token
+                short = frag.split(" ", 1)[-1]
+                idx = _find_fuzzyish(norm, short)
+                if idx is not None:
+                    norm = norm[:idx] + " " + norm[idx + len(short):]
+                    gt.note_chars_removed += len(short)
+                else:
+                    gt.note_strip_failures.append(f"p.{pno}: {frag[:60]}…")
+        # remove the printed marker digits: they appear superscript in the
+        # body AND again before the note body; the EPUB renumbers its
+        # noterefs (whose anchor text the runner strips from the candidate)
+        for marker in markers:
+            if marker == "*":
+                norm = re.sub(r"[*†‡]", " ", norm, count=2)
+            else:
+                norm = re.sub(rf"(?<!\d){re.escape(marker)}(?!\d)", " ", norm, count=2)
+        # agent-verified poppler glyph readings (JP-P6): poppler's ToUnicode
+        # expands symbol ligatures to whole phrases ('May God be pleased with
+        # her') that the EPUB legitimately renders as the glyph char
+        for phrase in cfg.gt_strip_phrases:
+            n = normalize(phrase)
+            while n and n in norm:
+                norm = norm.replace(n, " ", 1)
+                gt.phrase_chars_removed += len(n)
+        gt.pages[pno] = re.sub(r"\s{2,}", " ", norm)
+    return gt
+
+
+def paged_coverage(gt: GroundTruth, candidate: str):
+    """Coverage computed page-by-page with a sliding cursor over the candidate
+    text. One whole-book SequenceMatcher is quadratic and takes minutes on a
+    338-page book; page-sized comparisons with a bounded window are near-linear
+    and order-preserving (both sides are in reading order)."""
+    from difflib import SequenceMatcher
+
+    from ..core.qa_textdiff import CoverageResult
+
+    total = 0
+    matched = 0
+    missing: list[str] = []
+    cursor = 0
+    for pno in sorted(gt.pages):
+        page = gt.pages[pno]
+        if not page:
+            continue
+        total += len(page)
+        # anchor the window by FINDING the page's opening snippet — a cursor
+        # that drifts once otherwise cascades misalignment over every
+        # following page (observed: 56% on a build whose text was fine)
+        # candidate windows to try: the cursor, plus one anchored per probe
+        # (a single probe can false-match a similar passage elsewhere — keep
+        # whichever window matches BEST; order violations are gate 6's job)
+        starts = [cursor]
+        for probe_at in (0, len(page) // 4, len(page) // 2, (3 * len(page)) // 4):
+            snippet = page[probe_at:probe_at + 32]
+            if len(snippet) < 12:
+                continue
+            hit = candidate.find(snippet)
+            while hit >= 0 and len(starts) < 8:
+                starts.append(max(0, hit - probe_at - 200))
+                hit = candidate.find(snippet, hit + 1)
+        best = (0, cursor, [])
+        for ws_ in dict.fromkeys(starts):
+            window = candidate[ws_:min(len(candidate), ws_ + len(page) * 2 + 4000)]
+            sm = SequenceMatcher(None, page, window, autojunk=False)
+            blocks = sm.get_matching_blocks()
+            m = sum(b.size for b in blocks)
+            if m > best[0]:
+                best = (m, ws_, blocks)
+            if m >= len(page) * 0.98:
+                break
+        page_matched, window_start, blocks = best
+        matched += page_matched
+        # unmatched runs of the page >= 20 chars are reportable segments
+        pos = 0
+        last_b_end = 0
+        for b in blocks:
+            if b.a - pos >= 20:
+                missing.append(f"p.{pno}: {page[pos:b.a][:120]}")
+            pos = b.a + b.size
+            if b.size:
+                last_b_end = b.b + b.size
+        if len(page) - pos >= 20:
+            missing.append(f"p.{pno}: {page[pos:][:120]}")
+        if page_matched > len(page) * 0.3 and last_b_end:
+            cursor = window_start + last_b_end
+    return CoverageResult(pdf_chars=total, matched_chars=matched,
+                          missing_segments=missing)
+
+
+def _find_fuzzyish(hay: str, needle: str) -> int | None:
+    idx = hay.find(needle)
+    if idx >= 0:
+        return idx
+    # dehyphenation differences etc.: try a distinctive midsection
+    if len(needle) > 60:
+        mid = needle[10:50]
+        j = hay.find(mid)
+        if j >= 0:
+            k = hay.find(needle[-30:], j)
+            if k >= 0:
+                return max(0, j - 10)
+    return None
