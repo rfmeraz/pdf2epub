@@ -349,6 +349,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             else:
                 brk = _break_before(L, prev_L, act, body_ps, cfg, geo, med_lead,
                                     open_is_body, pno)
+            if act and act.startswith("role:"):
+                brk = True  # an explicitly re-roled line is its own paragraph
             if is_dropcap:
                 brk = True
             if brk:
@@ -448,6 +450,14 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 
 # ------------------------------------------------------------------ helpers
 
+def _ps_root(ps: str) -> str:
+    """Fold italic variants into their roman base for break decisions
+    ('TimesNewRomanPS-ItalicMT' == 'TimesNewRomanPSMT')."""
+    fam, _, rest = ps.partition("@")
+    fam = re.sub(r"[^A-Za-z0-9]", "", fam.replace("Italic", ""))
+    return f"{fam}@{rest}"
+
+
 def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
                   cfg: PdfBookConfig, geo: ColumnGeometry, med_lead: float,
                   open_is_body: bool, pno: int) -> bool:
@@ -457,8 +467,10 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
         return False
     if prev is None:
         return True
-    if L.ps != prev.ps:
-        # stacked centered lines of one pstyle continue (multi-line headings)
+    if L.ps != prev.ps and _ps_root(L.ps) != _ps_root(prev.ps):
+        # a pstyle change breaks — but roman and its Italic twin are ONE
+        # structural style (long italic quotes line-wrap between the two:
+        # 'particu-'/'lar' broke mid-word on I&B without this)
         return True
     if "/center" in L.ps:
         return not cfg.join_center_lines
@@ -501,6 +513,16 @@ def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc) -> list[TextRun]:
             prev.text += r.text
         else:
             out.append(TextRun(r.text, fmt))
+    # cross-run hyphen seams INSIDE one extracted line: an italic run ending
+    # 'particu-' with the roman continuation ' lar' following (I&B stores
+    # whole paragraphs as single content lines). Same lower-only doctrine.
+    for a, b in zip(out, out[1:]):
+        base = a.text.rstrip()
+        nxt = b.text.lstrip()
+        if base.endswith("-") and len(base) > 1 and base[-2].isalpha() \
+                and nxt[:1].islower():
+            a.text = base[:-1]
+            b.text = nxt
     return out
 
 
@@ -513,8 +535,10 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
         if glue:
             sep = ""  # dropcap letter glues straight onto its continuation
         else:
+            nxt = next((r.text for r in runs
+                        if isinstance(r, TextRun) and r.text.strip()), "")
             prevrun_text, sep, dehy = dehyphenate_join(
-                prevrun.text, runs[0].text if runs else "", cfg.dehyphenate)
+                prevrun.text, nxt, cfg.dehyphenate)
             if dehy:
                 counts["dehyphenated"] += 1
             prevrun.text = prevrun_text
@@ -536,8 +560,15 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
             counts["cmap-unknown-chars"] += unk
         t, n_ctrl = strip_control_chars(t)
         counts["ctrl-stripped"] += n_ctrl
+        # MuPDF span text can carry raw newlines (soft line breaks inside a
+        # content line, I&B) — fold them to spaces before seam repairs
+        if "\n" in t:
+            t = re.sub(r"\s*\n\s*", " ", t)
         t, n_lig = expand_ligatures(t)
         counts["ligatures"] += n_lig
+        from .textfix import inline_dehyphenate
+        t, n_inl = inline_dehyphenate(t)
+        counts["inline-dehyphenated"] += n_inl
         if cfg.restore_spaces:
             t, n_sp = restore_spaces(t)
             counts["spaces-restored"] += n_sp
@@ -616,7 +647,9 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
                 runs[0].text = pat.sub("", runs[0].text, count=1)
             first = False
         if para.items and isinstance(para.items[-1], TextRun) and runs:
-            new_text, sep, _ = dehyphenate_join(para.items[-1].text, runs[0].text,
+            nxt = next((r.text for r in runs
+                        if isinstance(r, TextRun) and r.text.strip()), "")
+            new_text, sep, _ = dehyphenate_join(para.items[-1].text, nxt,
                                                 cfg.dehyphenate)
             para.items[-1].text = new_text + sep
         para.items.extend(runs)

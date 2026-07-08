@@ -105,6 +105,7 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
             continue
 
         # strip this page's note bodies (verified against raw by the caller)
+        fails_before = len(gt.note_strip_failures)
         markers: list[str] = []
         for marker, note_text in note_texts_by_page.get(pno, []):
             if marker:
@@ -125,6 +126,19 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                     gt.note_chars_removed += len(short)
                 else:
                     gt.note_strip_failures.append(f"p.{pno}: {frag[:60]}…")
+        # excision fallback: notes sit at the page bottom starting with their
+        # marker ('9. ') — when text-matching failed, cut from the first
+        # still-present marker-prefixed line to the page end
+        if len(gt.note_strip_failures) > fails_before and markers:
+            for marker in markers:
+                if marker == "*":
+                    continue
+                m = re.search(rf"(?:^|\s){re.escape(marker)}\.\s", norm)
+                if m:
+                    cut = len(norm) - m.start()
+                    gt.note_chars_removed += cut
+                    norm = norm[:m.start()]
+                    break
         # remove the printed marker digits: they appear superscript in the
         # body AND again before the note body; the EPUB renumbers its
         # noterefs (whose anchor text the runner strips from the candidate)

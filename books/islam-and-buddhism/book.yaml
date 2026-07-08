@@ -76,6 +76,57 @@ flow:
   join_center_lines: true
   reattach_dropcaps: true
   overrides:
+    - {page: 14, line: 4, action: "join", note: "mid-word break seam '... is also Ab-|solutely O...'"}
+    - {page: 14, line: 7, action: "join", note: "mid-word break seam '...iple of jus-|tice in th...'"}
+    - {page: 14, line: 10, action: "join", note: "mid-word break seam '... of exercis-|ing compas...'"}
+    - {page: 14, line: 37, action: "join", note: "mid-word break seam '...thee (Muham-|mad), and ...'"}
+    - {page: 16, line: 34, action: "join", note: "mid-word break seam '... We have ap-|pointed a ...'"}
+    - {page: 38, line: 10, action: "join", note: "mid-word break seam '...ich you dif-|fered. (5:...'"}
+    - {page: 38, line: 15, action: "join", note: "mid-word break seam '...d the proph-|ets after ...'"}
+    - {page: 40, line: 25, action: "join", note: "mid-word break seam '...s is suffer-|ing; in sh...'"}
+    - {page: 40, line: 30, action: "join", note: "mid-word break seam '...ensual plea-|sures, cra...'"}
+    - {page: 40, line: 33, action: "join", note: "mid-word break seam '... the remain-|derless fa...'"}
+    - {page: 41, line: 1, action: "join", note: "mid-word break seam '... relinquish-|ing, letti...'"}
+    - {page: 41, line: 4, action: "join", note: "mid-word break seam '...n of suffer-|ing? It is...'"}
+    - {page: 42, line: 4, action: "join", note: "mid-word break seam '... of depriva-|tion, in a...'"}
+    - {page: 42, line: 9, action: "join", note: "mid-word break seam '...ood destina-|tion, even...'"}
+    - {page: 42, line: 13, action: "join", note: "mid-word break seam '...tood how be-|ings pass ...'"}
+    - {page: 48, line: 7, action: "join", note: "mid-word break seam '...eir tempera-|ments and ...'"}
+    - {page: 50, line: 28, action: "join", note: "mid-word break seam '..., were moti-|vated by a...'"}
+    - {page: 52, line: 1, action: "join", note: "mid-word break seam '...ind of natu-|ral humili...'"}
+    - {page: 52, line: 3, action: "join", note: "mid-word break seam '...ons and cul-|tural back...'"}
+    - {page: 52, line: 13, action: "join", note: "mid-word break seam '... their reli-|gious beli...'"}
+    - {page: 52, line: 15, action: "join", note: "mid-word break seam '...n about con-|necting wi...'"}
+    - {page: 52, line: 32, action: "join", note: "mid-word break seam '...d effective-|ness of ot...'"}
+    - {page: 54, line: 10, action: "join", note: "mid-word break seam '...orn, not be-|come, not ...'"}
+    - {page: 60, line: 14, action: "join", note: "mid-word break seam '...e second ex-|treme. Kac...'"}
+    - {page: 74, line: 28, action: "join", note: "mid-word break seam '...l-Haqq), an-|other, “Gl...'"}
+    - {page: 76, line: 30, action: "join", note: "mid-word break seam '...nown or dem-|onstrated—...'"}
+    - {page: 78, line: 4, action: "join", note: "mid-word break seam '...his full en-|lightenmen...'"}
+    - {page: 78, line: 29, action: "join", note: "mid-word break seam '...nattainment-|ness [sic]...'"}
+    - {page: 82, line: 29, action: "join", note: "mid-word break seam '...longs [know-|ledge of] ...'"}
+    - {page: 94, line: 20, action: "join", note: "mid-word break seam '...ugh the sur-|render of ...'"}
+    - {page: 107, line: 22, action: "join", note: "mid-word break seam '...had two val-|leys full ...'"}
+    - {page: 108, line: 15, action: "join", note: "mid-word break seam '...ears it per-|ishes. And...'"}
+    - {page: 108, line: 21, action: "join", note: "mid-word break seam '... to selfish-|ness. As, ...'"}
+    - {page: 110, line: 6, action: "join", note: "mid-word break seam '...tter of pas-|sion for g...'"}
+    - {page: 118, line: 2, action: "join", note: "mid-word break seam '...end the gra-|cious gift...'"}
+    - {page: 120, line: 12, action: "join", note: "mid-word break seam '...e world, un-|cramped, f...'"}
+    - {page: 126, line: 13, action: "join", note: "mid-word break seam '..., is the Un-|compounded...'"}
+    - {page: 142, line: 2, action: "join", note: "mid-word break seam '...hey were un-|able to dr...'"}
+    - {page: 142, line: 5, action: "join", note: "mid-word break seam '...nd the Sabi-|ans of Ind...'"}
+    - {page: 142, line: 8, action: "join", note: "mid-word break seam '... of worship-|pers of pl...'"}
+    - {page: 144, line: 9, action: "join", note: "mid-word break seam '...they are ac-|curate, it...'"}
+    - {page: 146, line: 17, action: "join", note: "mid-word break seam '...ing al-Khad-|ir, “He wa...'"}
+    - {page: 148, line: 31, action: "join", note: "mid-word break seam '... of non-Mus-|lim religi...'"}
+    - {page: 148, line: 38, action: "join", note: "mid-word break seam '...-Ching) vis-|ited Nava ...'"}
+    - {page: 154, line: 12, action: "join", note: "mid-word break seam '...hoever prac-|tices a re...'"}
+    - {page: 154, line: 15, action: "join", note: "mid-word break seam '...on him) him-|self comma...'"}
+    - {page: 154, line: 22, action: "join", note: "mid-word break seam '...d Oman. Fur-|thermore, ...'"}
+    - {page: 154, line: 26, action: "join", note: "mid-word break seam '...were Zoroas-|trians], a...'"}
+    - {page: 160, line: 37, action: "join", note: "mid-word break seam '...you are act-|ing so dif...'"}
+    - {page: 160, line: 39, action: "join", note: "mid-word break seam '...u want some-|thing from...'"}
+    - {page: 167, line: 27, action: "join", note: "mid-word break seam '...milal wa al-|nihal. Bei...'"}
     - {page: 20, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Preface by Professor Mohammad Hashim Kamali"}
     - {page: 20, line: 1, action: "break", note: "body resumes after subsection head"}
     - {page: 22, line: 0, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Preface by Professor Mohammad Hashim Kamali"}

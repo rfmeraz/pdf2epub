@@ -33,6 +33,16 @@ def expand_ligatures(text: str) -> tuple[str, int]:
     return text, n
 
 
+_INRUN_HYPHEN = re.compile(r"([A-Za-zÀ-ſ])- ([a-zà-ÿ])")
+
+
+def inline_dehyphenate(text: str) -> tuple[str, int]:
+    """Some PDFs store a whole paragraph as ONE content line, with the print
+    line-breaks appearing as literal 'word- word' seams (I&B introduction and
+    essay). Same lower-only doctrine as the line joiner, applied in-run."""
+    return _INRUN_HYPHEN.subn(r"\1\2", text)
+
+
 def restore_spaces(text: str) -> tuple[str, int]:
     text, n1 = _SPACE_AFTER_PUNCT.subn(r"\1 \2", text)
     text, n2 = _SPACE_AFTER_QUOTE.subn(r"\1 \2", text)

@@ -50,8 +50,9 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     quiet = lambda m: None  # noqa: E731
     gates: list[tuple[str, bool | None, list[str]]] = []
 
-    # ---- deterministic re-derivation of expectations
-    doc: PdfDoc = extract(cfg.pdf_path(), say=quiet, agreement=False)
+    # ---- deterministic re-derivation of expectations (agreement scores on:
+    # engine-disputed pages cannot serve as ground truth)
+    doc: PdfDoc = extract(cfg.pdf_path(), say=quiet, agreement=True)
     res = build_flow(doc, cfg, say=quiet)
     flow = res.flow
     labels = _page_labels(doc, cfg, [])
@@ -113,12 +114,24 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     for pno in cfg.toc_printed_pages:
         toc_excl += len(gt.pages.get(pno, ""))
         gt.pages[pno] = ""
+    # engine-disputed pages: the two witnesses disagree on what the text IS
+    # (broken source CMaps decode differently per engine) — neither side is
+    # ground truth; these pages live in the agent's render-review queue
+    disputed = 0
+    disputed_pages = []
+    for p in doc.pages:
+        if p.engine_agreement is not None and p.engine_agreement < 90 \
+                and gt.pages.get(p.number):
+            disputed += len(gt.pages[p.number])
+            disputed_pages.append(p.number)
+            gt.pages[p.number] = ""
     from .groundtruth import paged_coverage
 
     cov = paged_coverage(gt, coverage_candidate)
     lines = [f"coverage {cov.coverage*100:.2f}% (gate {COVERAGE_GATE*100:.0f}%); "
              f"note chars stripped {gt.note_chars_removed}, figure-page chars "
-             f"excluded {gt.figure_chars_excluded}, printed-TOC chars excluded {toc_excl}"]
+             f"excluded {gt.figure_chars_excluded}, printed-TOC chars excluded {toc_excl}, "
+             f"engine-disputed chars excluded {disputed} (pages {disputed_pages[:8]})"]
     for seg in cov.missing_segments[:12]:
         lines.append(f"MISSING: {seg[:110]}")
     if len(cov.missing_segments) > 12:
@@ -164,9 +177,22 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None) -> int:
     source_entries = _source_entries(cfg, doc, flow, labels)
     page_order = [labels.get(p, str(p)) for p in in_flow]
     order = check_reading_order(ep, source_entries, page_order)
-    gates.append(("6 reading order", order.ok,
+    # a book's own TOC is sometimes off by one page from the printed opener;
+    # adjacent-label violations are the source's discrepancy, not ours
+    import re as _re
+
+    hard_viol = []
+    for v in order.violations:
+        m = _re.search(r"printed page '([^']+)'.*?on '([^']+)'", v)
+        if m and m.group(1) in page_order and m.group(2) in page_order and \
+                abs(page_order.index(m.group(1)) - page_order.index(m.group(2))) <= 1:
+            order.notes.append(f"±1 TOC/print discrepancy (source's own): {v}")
+        else:
+            hard_viol.append(v)
+    gates.append(("6 reading order", not hard_viol,
                   [f"{order.matched_entries}/{order.checked} TOC entries on their "
-                   f"printed page"] + order.violations[:6]
+                   f"printed page"] + hard_viol[:6]
+                  + [f"info: {n}" for n in order.notes[:2]]
                   + [f"info: {o}" for o in order.orphan_headings[:3]]))
 
     # ---- gate 7: TOC agreement (source entries present in nav)

@@ -1,23 +1,19 @@
-# islam-and-buddhism: IN PROGRESS (do not ship)
+# islam-and-buddhism: NEARLY DONE (gates 2,3 remain)
 
-State: epubcheck clean; QA gates 1,3(placement),4,5,8,10 pass.
-Remaining FAILs and diagnosis so far:
+PASS: 1 epubcheck, 4 nav, 5 images, 6 reading order (±1 source-discrepancy
+tolerated), 7 toc agreement 41/41, 8 furniture, 9 hyphen (15 vs source 16),
+10 pua. FAIL: gate 2 at 98.44% (gate 99) and gate 3 (1 placement failure).
 
-- gate 9 (83 vs source 16): NOT the QA space-join artifact (fixed via
-  _doc_text) and NOT in raw xhtml scans (only 2 found by tag-strip scan).
-  Next: dump pdfchecks.hyphen_residue matches ON all_text_norm with context —
-  suspect normalize() interaction or notes-side seams from the cmap-repaired
-  section (in-run 'word- word' where next word starts uppercase, skipped by
-  the lower-only collapse in repair_shifted_cmap).
-- gate 2 (98.05%): missing segments concentrated on note-heavy pages 28-32
-  (13 gt-excision misses) + essay section. Interacts with gate 9's cause.
-- gates 6/7 (25/41, 29/41): subsection heads now exist as h3 via 36 generated
-  flow.overrides (role:h3 + break pairs, see book.yaml). Remaining misses:
-  check whether the missing titles' overrides landed on continuation pages
-  (duplicate standalone lines matched on non-heading pages?) or folio labels
-  still off by one in the essay section (printed-folios backfill).
-- Cover renders from p.1 (done). Print ISBN only (uuid flagged).
+Remaining ~0.56% coverage deficit: residual note-excision misses (13, mostly
+pp.28-32 al-Ghazali footnote pages — diacritic/seam mismatches in
+_find_fuzzyish) + small essay-section seams (p.138 'ternoon=napK' — poppler
+decodes some shifted runs differently from MuPDF; per-page agreement stays
+>=90 so the disputed-page exclusion doesn't trigger; consider a lower
+threshold or per-SEGMENT dispute detection). Gate 3's single failure: run
+qa, read qa_report gate 3 lines for the note id.
 
-All pipeline-level fixes from this book are already committed (shifted-CMap
-repair mechanism, printed-folio backfill, block-aware QA text, title/toc
-leak exemptions). What remains is book-level adjudication.
+Machinery all committed: shifted-CMap repair + highmap, cross-run/in-run
+dehyphenation, italic-twin pstyle fold (_ps_root), role-override implies
+break, generated join overrides (51) + subsection-head overrides (36),
+marker-line gt excision fallback, ±1 TOC tolerance, engine-disputed page
+exclusion (QA now extracts WITH agreement scores).
