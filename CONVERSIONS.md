@@ -66,3 +66,25 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
   fold for break decisions; role-override implies break; in-run/cross-run
   lower-only dehyphenation; marker-line gt excision fallback; engine-disputed
   page exclusion.
+
+## me-and-rumi — 2026-07-08
+
+- Source: `Me and Rumi with TOC links and cover.pdf` (Creo prepress 2004, PDF 1.6,
+  441 pp, no ToUnicode). Result: `epubcheck: clean`; QA `Overall: PASS` (coverage
+  99.72%, 374-entry page-list, byte-reproducible).
+- Judgments: printed TOC (pp.8-9) as source with indent-derived levels and
+  nav_depth 1 — the TOC's chapter groupings have NO physical headings in the book
+  (only part openers at 21pt); nav mirrors the physical structure: parts (h1) +
+  passage numbers (h3, ~560 entries = per-passage navigation, arguably better than
+  print). restore_spaces healed 3,024 lost spaces + 843 ligature expansions.
+  Cover from the p.1 spread's CropBox-isolated front panel. printed-folio labels
+  (the /PageLabels are cover-offset). 28 generated join overrides for hyphen-seam
+  paragraph breaks.
+- Excluded + FLAGGED apparatus (print-page refs remain navigable via page-list):
+  Index of Koranic Verses (375-380), Index of Hadiths and Sayings (381-391),
+  Index and Glossary (392-432), Table of Sources (433-436, a true table).
+- FLAGS: no ebook ISBN (urn:uuid); the introduction's six digit-note pages and
+  occasional body asterisk notes remain INLINE as small-type paragraphs rather
+  than linked endnotes (marker census too sparse/mixed for reliable pairing —
+  content fully preserved); human spot-read of quote-heavy pages recommended
+  (62 residual fused patterns, informational).

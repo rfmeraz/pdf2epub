@@ -280,6 +280,27 @@ def _source_entries(cfg, doc: PdfDoc, flow, labels) -> list[tuple[str, str]]:
             title, _, label = text.rpartition("\t")
             if title:
                 entries.append((title, label))
+    # entries whose target pages the config excludes (index/table apparatus,
+    # flagged in book.yaml) have no content to navigate to
+    if entries and cfg.pages_exclude:
+        excluded_labels = {labels.get(p) for p in cfg.pages_exclude}
+        entries = [(t, l) for t, l in entries if l not in excluded_labels]
+    if cfg.toc_source == "printed" and cfg.nav_depth == 1 and entries:
+        # printed-TOC levels derive from entry indentation; depth-1 books
+        # (MR: chapters are TOC-only groupings with no physical headings)
+        # gate on the outdented entries only
+        from ..analyze import _trailing_folio_entry
+
+        x0_by_title: dict[str, float] = {}
+        for pno in cfg.toc_printed_pages:
+            for ln in doc.page(pno).lines:
+                ent = _trailing_folio_entry(ln)
+                if ent:
+                    x0_by_title.setdefault(ent[0], ln.x0)
+        if x0_by_title:
+            base = min(x0_by_title.values())
+            entries = [(t, l) for t, l in entries
+                       if x0_by_title.get(t, base) <= base + 8]
     if cfg.toc_source == "links" and doc.links and not entries:
         return [(f"p.{l.target_page}", labels.get(l.target_page, ""))
                 for l in doc.links]

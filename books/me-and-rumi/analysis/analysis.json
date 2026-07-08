@@ -1,0 +1,6038 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/personal/fons_vitae/pdf2epub/books/me-and-rumi/package/Me and Rumi with TOC links and cover.pdf",
+  "sha256": "445fe4e1ea8fa64264730004992ba733eac566ffa506837d86b1b0c2373d1309",
+  "producer": "Creo Normalizer JTP",
+  "n_pages": 441,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 24.0,
+    "color": "#000000"
+   },
+   "1": {
+    "id": 1,
+    "family": "Palatino-Italic",
+    "raw_family": "Palatino-Italic",
+    "size": 17.0,
+    "color": "#000000"
+   },
+   "2": {
+    "id": 2,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 52.0,
+    "color": "#000000"
+   },
+   "3": {
+    "id": 3,
+    "family": "Palatino-Italic",
+    "raw_family": "Palatino-Italic",
+    "size": 38.0,
+    "color": "#000000"
+   },
+   "4": {
+    "id": 4,
+    "family": "Bembo-Italic",
+    "raw_family": "Bembo-Italic",
+    "size": 14.0,
+    "color": "#000000"
+   },
+   "5": {
+    "id": 5,
+    "family": "Bembo-Italic",
+    "raw_family": "Bembo-Italic",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "6": {
+    "id": 6,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 14.0,
+    "color": "#000000"
+   },
+   "7": {
+    "id": 7,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "8": {
+    "id": 8,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "9": {
+    "id": 9,
+    "family": "Bembo-Italic",
+    "raw_family": "Bembo-Italic",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "10": {
+    "id": 10,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 21.0,
+    "color": "#000000"
+   },
+   "11": {
+    "id": 11,
+    "family": "Bembo-SC",
+    "raw_family": "Bembo-SC",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "12": {
+    "id": 12,
+    "family": "Bembo-SC",
+    "raw_family": "Bembo-SC",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "13": {
+    "id": 13,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 5.5,
+    "color": "#000000"
+   },
+   "14": {
+    "id": 14,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 4.5,
+    "color": "#000000"
+   },
+   "15": {
+    "id": 15,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 13.0,
+    "color": "#000000"
+   },
+   "16": {
+    "id": 16,
+    "family": "AGaramond-Regular",
+    "raw_family": "AGaramond-Regular",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "17": {
+    "id": 17,
+    "family": "Bembo",
+    "raw_family": "Bembo",
+    "size": 10.5,
+    "color": "#000000"
+   },
+   "18": {
+    "id": 18,
+    "family": "Bembo-Italic",
+    "raw_family": "Bembo-Italic",
+    "size": 10.5,
+    "color": "#000000"
+   },
+   "19": {
+    "id": 19,
+    "family": "Bembo-SC",
+    "raw_family": "Bembo-SC",
+    "size": 6.0,
+    "color": "#000000"
+   },
+   "20": {
+    "id": 20,
+    "family": "Bembo-Bold",
+    "raw_family": "Bembo-Bold",
+    "size": 9.0,
+    "color": "#000000"
+   }
+  },
+  "outline": [],
+  "links": [
+   {
+    "page": 8,
+    "rect": [
+     69.38,
+     117.82,
+     356.6,
+     135.62
+    ],
+    "target_page": 10
+   },
+   {
+    "page": 8,
+    "rect": [
+     71.48,
+     136.41,
+     357.38,
+     148.45
+    ],
+    "target_page": 12
+   },
+   {
+    "page": 8,
+    "rect": [
+     66.5,
+     159.71,
+     356.33,
+     177.25
+    ],
+    "target_page": 28
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.59,
+     177.25,
+     355.81,
+     191.39
+    ],
+    "target_page": 30
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.64,
+     192.44,
+     354.5,
+     203.17
+    ],
+    "target_page": 34
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.64,
+     205.53,
+     352.67,
+     217.57
+    ],
+    "target_page": 40
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.86,
+     219.67,
+     352.93,
+     231.71
+    ],
+    "target_page": 44
+   },
+   {
+    "page": 8,
+    "rect": [
+     68.33,
+     244.28,
+     353.72,
+     258.94
+    ],
+    "target_page": 64
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.86,
+     262.6,
+     354.24,
+     273.86
+    ],
+    "target_page": 66
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.12,
+     276.22,
+     354.5,
+     288.0
+    ],
+    "target_page": 89
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.33,
+     289.83,
+     354.76,
+     301.61
+    ],
+    "target_page": 95
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.59,
+     304.49,
+     355.03,
+     314.71
+    ],
+    "target_page": 115
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.59,
+     317.85,
+     355.29,
+     329.37
+    ],
+    "target_page": 130
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.86,
+     333.3,
+     353.72,
+     343.77
+    ],
+    "target_page": 143
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.07,
+     346.91,
+     353.98,
+     356.86
+    ],
+    "target_page": 153
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.38,
+     360.26,
+     355.03,
+     371.0
+    ],
+    "target_page": 166
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.38,
+     374.4,
+     355.29,
+     385.4
+    ],
+    "target_page": 179
+   },
+   {
+    "page": 8,
+    "rect": [
+     70.43,
+     400.06,
+     355.29,
+     413.93
+    ],
+    "target_page": 204
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.38,
+     416.82,
+     353.98,
+     427.29
+    ],
+    "target_page": 206
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.86,
+     431.74,
+     353.19,
+     440.64
+    ],
+    "target_page": 216
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.64,
+     445.61,
+     355.03,
+     454.52
+    ],
+    "target_page": 232
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.38,
+     458.71,
+     354.76,
+     470.49
+    ],
+    "target_page": 238
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.64,
+     472.32,
+     353.98,
+     482.27
+    ],
+    "target_page": 257
+   },
+   {
+    "page": 8,
+    "rect": [
+     79.59,
+     486.98,
+     354.24,
+     496.93
+    ],
+    "target_page": 292
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.64,
+     501.12,
+     352.67,
+     511.59
+    ],
+    "target_page": 304
+   },
+   {
+    "page": 8,
+    "rect": [
+     80.64,
+     513.16,
+     353.72,
+     525.21
+    ],
+    "target_page": 329
+   },
+   {
+    "page": 9,
+    "rect": [
+     71.21,
+     86.92,
+     357.64,
+     103.16
+    ],
+    "target_page": 334
+   },
+   {
+    "page": 9,
+    "rect": [
+     72.0,
+     105.78,
+     360.0,
+     114.41
+    ],
+    "target_page": 336
+   },
+   {
+    "page": 9,
+    "rect": [
+     71.48,
+     119.91,
+     357.12,
+     128.29
+    ],
+    "target_page": 375
+   },
+   {
+    "page": 9,
+    "rect": [
+     71.48,
+     132.48,
+     354.76,
+     143.48
+    ],
+    "target_page": 381
+   },
+   {
+    "page": 9,
+    "rect": [
+     72.26,
+     145.83,
+     356.86,
+     155.52
+    ],
+    "target_page": 392
+   },
+   {
+    "page": 9,
+    "rect": [
+     74.36,
+     159.45,
+     356.33,
+     171.23
+    ],
+    "target_page": 433
+   }
+  ],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   36,
+   36,
+   432,
+   648
+  ],
+  "warnings": [
+   "3 image-only page(s) (no usable text layer): [1, 64, 204] — OCR is out of scope; ship as figure pages only if content is verifiable from renders",
+   "engine agreement below 90 on 8 page(s): [1, 8, 378, 380, 433, 434, 435, 436] — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "Bembo@11",
+  "body_size": 11.0,
+  "clusters": [
+   {
+    "pstyle": "Bembo@11",
+    "family": "Bembo",
+    "size": 11.0,
+    "n_lines": 12989,
+    "n_chars": 725392,
+    "n_pages": 414,
+    "first_page": 8,
+    "samples": [
+     "My Teaching Career7",
+     "Teachers and Shaykhs I Have Met17",
+     "The Proﬁt and Loss of Study39"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "Bembo-Italic@11",
+    "family": "Bembo-Italic",
+    "size": 11.0,
+    "n_lines": 601,
+    "n_chars": 35385,
+    "n_pages": 194,
+    "first_page": 13,
+    "samples": [
+     "chapter of his excellent study, Rumi: Past and Present, East and West.",
+     "are godfearing [16:128]. He also says, Surely God is with us [9:40]. So,",
+     "Yes,how well I taught children! When a child came to me,I would say to his"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Bembo@11/center",
+    "family": "Bembo",
+    "size": 11.0,
+    "n_lines": 196,
+    "n_chars": 10027,
+    "n_pages": 111,
+    "first_page": 6,
+    "samples": [
+     "In Memory of Annemarie Schimmel",
+     "The fruit of my life is no more than three words—",
+     "from grapes they make halva with time.*(625-26)"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Bembo-SC@9",
+    "family": "Bembo-SC",
+    "size": 9.0,
+    "n_lines": 259,
+    "n_chars": 6795,
+    "n_pages": 259,
+    "first_page": 14,
+    "samples": [
+     "introduction xiii",
+     "introductionxvii",
+     "introduction xxiii"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Bembo@10.5",
+    "family": "Bembo",
+    "size": 10.5,
+    "n_lines": 85,
+    "n_chars": 5541,
+    "n_pages": 37,
+    "first_page": 37,
+    "samples": [
+     "He said,“I wished to see you, so I came.” He was talking along, and",
+     "the child was choking in secret.I gestured to him,meaning “Intercede!”",
+     "He bit his lip, meaning “As soon as I ﬁnd the opportunity.”"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.5pt)"
+   },
+   {
+    "pstyle": "Bembo@9",
+    "family": "Bembo",
+    "size": 9.0,
+    "n_lines": 189,
+    "n_chars": 5348,
+    "n_pages": 6,
+    "first_page": 18,
+    "samples": [
+     "1 The thirteenth century philosopher Shahrazuri writes about Razi,“His ses-",
+     "sion had majesty and grandeur. He used to act grandly even toward kings.When",
+     "he sat, Kashi, Misri, Shihab Nishaburi, and other great students sat near him.The"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Bembo-Italic@9",
+    "family": "Bembo-Italic",
+    "size": 9.0,
+    "n_lines": 153,
+    "n_chars": 3884,
+    "n_pages": 153,
+    "first_page": 13,
+    "samples": [
+     "xiiWilliam C. Chittick",
+     "xivWilliam C. Chittick",
+     "xviWilliam C. Chittick"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Bembo-SC@11/center",
+    "family": "Bembo-SC",
+    "size": 11.0,
+    "n_lines": 563,
+    "n_chars": 2467,
+    "n_pages": 282,
+    "first_page": 20,
+    "samples": [
+     "The Text and Translation",
+     "My Teaching Career",
+     "Teachers and Shaykhs I Have Met"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Bembo@9/center",
+    "family": "Bembo",
+    "size": 9.0,
+    "n_lines": 25,
+    "n_chars": 1028,
+    "n_pages": 2,
+    "first_page": 7,
+    "samples": [
+     "© 2004 William C. Chittick",
+     "This edition printed and distributed by",
+     "Fons Vitae, Louisville, Kentucky"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Bembo@13/center",
+    "family": "Bembo",
+    "size": 13.0,
+    "n_lines": 20,
+    "n_chars": 584,
+    "n_pages": 3,
+    "first_page": 27,
+    "samples": [
+     "What is the utmost end of need?",
+     "Finding what has no needs.",
+     "What is the utmost end of seeking?"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "Bembo-Italic@10.5",
+    "family": "Bembo-Italic",
+    "size": 10.5,
+    "n_lines": 5,
+    "n_chars": 357,
+    "n_pages": 5,
+    "first_page": 100,
+    "samples": [
+     "Thus, the Messenger said, The surah Hud has whitened my hair.* If you",
+     "Moses said,“I am more knowledgeable than anyone on the face of the earth.”",
+     "God has not placed two hearts in any man’s breast [33:4]. It belongs"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.5pt)"
+   },
+   {
+    "pstyle": "Bembo-Italic@11/center",
+    "family": "Bembo-Italic",
+    "size": 11.0,
+    "n_lines": 5,
+    "n_chars": 267,
+    "n_pages": 5,
+    "first_page": 4,
+    "samples": [
+     "Translated, Introduced, and Annotated by",
+     "I said,“No, I want you to give me two hundred dirhems.”(343)",
+     "from this world we’ve obtained torment and bane.* (678)"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Bembo-SC@11",
+    "family": "Bembo-SC",
+    "size": 11.0,
+    "n_lines": 8,
+    "n_chars": 209,
+    "n_pages": 2,
+    "first_page": 8,
+    "samples": [
+     "Translator’s Introductionxi",
+     "Abbreviations and Works Cited307",
+     "Notes to the Passages309"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Bembo@10.5/center",
+    "family": "Bembo",
+    "size": 10.5,
+    "n_lines": 3,
+    "n_chars": 185,
+    "n_pages": 3,
+    "first_page": 366,
+    "samples": [
+     "words, the lover has no patience for discussion and debate.",
+     "his qualities as a warrior and a master of the divine mysteries.",
+     "3.21, 49.That which intoxicates; love for God. See SPL 311-17."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.5pt)"
+   },
+   {
+    "pstyle": "Bembo@21/center",
+    "family": "Bembo",
+    "size": 21.0,
+    "n_lines": 8,
+    "n_chars": 97,
+    "n_pages": 6,
+    "first_page": 8,
+    "samples": [
+     "Translator’s Introduction"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 21.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Bembo-Italic@14",
+    "family": "Bembo-Italic",
+    "size": 14.0,
+    "n_lines": 3,
+    "n_chars": 58,
+    "n_pages": 1,
+    "first_page": 8,
+    "samples": [
+     "My Years without Mawlana",
+     "My Time with Mawlana"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Bembo-Italic@14/center",
+    "family": "Bembo-Italic",
+    "size": 14.0,
+    "n_lines": 1,
+    "n_chars": 36,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "The Autobiography of Shams-i Tabrizi"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "Bembo@14/center",
+    "family": "Bembo",
+    "size": 14.0,
+    "n_lines": 1,
+    "n_chars": 19,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "William C. Chittick"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "Bembo-Italic@9/center",
+    "family": "Bembo-Italic",
+    "size": 9.0,
+    "n_lines": 1,
+    "n_chars": 10,
+    "n_pages": 1,
+    "first_page": 7,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Bembo@24/center",
+    "family": "Bembo",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 8,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Bembo@52/center",
+    "family": "Bembo",
+    "size": 52.0,
+    "n_lines": 1,
+    "n_chars": 7,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 52.0pt >= 1.8x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "#My Path to Go#",
+    "count": 68,
+    "pages": [
+     67,
+     69,
+     71,
+     73,
+     75,
+     77,
+     79,
+     81
+    ],
+    "band": "top"
+   },
+   {
+    "text": "# My Time With Mawlana",
+    "count": 64,
+    "pages": [
+     207,
+     209,
+     211,
+     213,
+     215,
+     217,
+     219,
+     221
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#.",
+    "count": 57,
+    "pages": [
+     30,
+     31,
+     32,
+     42,
+     47,
+     50,
+     53,
+     58
+    ],
+    "band": "top"
+   },
+   {
+    "text": "# Index and Glossary of Names and Terms",
+    "count": 20,
+    "pages": [
+     393,
+     395,
+     397,
+     399,
+     401,
+     403,
+     405,
+     407
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ndex and Glossary of Names and Terms #",
+    "count": 20,
+    "pages": [
+     394,
+     396,
+     398,
+     400,
+     402,
+     404,
+     406,
+     408
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#• Notes to the Passages #.#-#",
+    "count": 18,
+    "pages": [
+     337,
+     339,
+     343,
+     345,
+     347,
+     349,
+     351,
+     353
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#y Instructions to the Circle #",
+    "count": 17,
+    "pages": [
+     258,
+     260,
+     262,
+     264,
+     266,
+     268,
+     270,
+     272
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#My Years Without Mawlana",
+    "count": 16,
+    "pages": [
+     31,
+     33,
+     35,
+     37,
+     39,
+     41,
+     43,
+     45
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Notes to the Passages #.#-#• #",
+    "count": 15,
+    "pages": [
+     338,
+     340,
+     342,
+     344,
+     346,
+     348,
+     350,
+     354
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#y Harshness with Friends #",
+    "count": 13,
+    "pages": [
+     304,
+     306,
+     308,
+     310,
+     312,
+     314,
+     316,
+     318
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Proﬁt and Loss of Study#",
+    "count": 11,
+    "pages": [
+     68,
+     70,
+     72,
+     74,
+     76,
+     78,
+     80,
+     82
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#y Interpretations of Scripture#",
+    "count": 11,
+    "pages": [
+     180,
+     182,
+     184,
+     186,
+     188,
+     190,
+     192,
+     194
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Following Muhammad#",
+    "count": 10,
+    "pages": [
+     96,
+     98,
+     100,
+     102,
+     104,
+     106,
+     108,
+     110
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Our Companionship #",
+    "count": 10,
+    "pages": [
+     238,
+     240,
+     242,
+     244,
+     246,
+     248,
+     250,
+     252
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Teachers and Shaykhs I Have Met#",
+    "count": 9,
+    "pages": [
+     44,
+     46,
+     48,
+     50,
+     52,
+     54,
+     56,
+     58
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#y Spiritual Mastery #",
+    "count": 8,
+    "pages": [
+     216,
+     218,
+     220,
+     222,
+     224,
+     226,
+     228,
+     230
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Religion of Old Women#",
+    "count": 7,
+    "pages": [
+     116,
+     118,
+     120,
+     122,
+     124,
+     126,
+     128
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Guidance of the Shaykh#",
+    "count": 7,
+    "pages": [
+     130,
+     132,
+     134,
+     136,
+     138,
+     140,
+     142
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#William C. Chittick",
+    "count": 6,
+    "pages": [
+     13,
+     15,
+     17,
+     19,
+     23,
+     25
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#y Critics #",
+    "count": 6,
+    "pages": [
+     292,
+     294,
+     296,
+     298,
+     300,
+     302
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#Index of Hadiths and Sayings",
+    "count": 6,
+    "pages": [
+     381,
+     383,
+     385,
+     387,
+     389,
+     391
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ntroduction#",
+    "count": 5,
+    "pages": [
+     16,
+     18,
+     20,
+     22,
+     26
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Avoiding Caprice#",
+    "count": 5,
+    "pages": [
+     144,
+     146,
+     148,
+     150,
+     152
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Companion of the Heart#",
+    "count": 5,
+    "pages": [
+     154,
+     158,
+     160,
+     162,
+     164
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Saints#",
+    "count": 5,
+    "pages": [
+     166,
+     168,
+     170,
+     174,
+     178
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ndex of Hadiths and Sayings#",
+    "count": 5,
+    "pages": [
+     382,
+     384,
+     386,
+     388,
+     390
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Our Encounter #",
+    "count": 4,
+    "pages": [
+     208,
+     210,
+     212,
+     214
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Philosophy#",
+    "count": 3,
+    "pages": [
+     90,
+     92,
+     94
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#awlana's Exalted Station #",
+    "count": 3,
+    "pages": [
+     232,
+     234,
+     236
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Notes to the Passages #.#-# • #",
+    "count": 3,
+    "pages": [
+     336,
+     352,
+     370
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#Index of Koranic Verses",
+    "count": 3,
+    "pages": [
+     375,
+     377,
+     379
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ndex of Koranic Verses#",
+    "count": 3,
+    "pages": [
+     376,
+     378,
+     380
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 40.4,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 96.6,
+  "folio_mismatches": [
+   {
+    "page": 13,
+    "printed": "xii",
+    "label": "xiii"
+   },
+   {
+    "page": 14,
+    "printed": "xiii",
+    "label": "xiv"
+   },
+   {
+    "page": 15,
+    "printed": "xiv",
+    "label": "xv"
+   },
+   {
+    "page": 16,
+    "printed": "xv",
+    "label": "xvi"
+   },
+   {
+    "page": 17,
+    "printed": "xvi",
+    "label": "xvii"
+   },
+   {
+    "page": 18,
+    "printed": "xvii",
+    "label": "xviii"
+   },
+   {
+    "page": 19,
+    "printed": "xviii",
+    "label": "xix"
+   },
+   {
+    "page": 20,
+    "printed": "xix",
+    "label": "xx"
+   },
+   {
+    "page": 21,
+    "printed": "xx",
+    "label": "xxi"
+   },
+   {
+    "page": 22,
+    "printed": "xxi",
+    "label": "xxii"
+   },
+   {
+    "page": 23,
+    "printed": "xxii",
+    "label": "xxiii"
+   },
+   {
+    "page": 24,
+    "printed": "xxiii",
+    "label": "xxiv"
+   },
+   {
+    "page": 25,
+    "printed": "xxiv",
+    "label": "xxv"
+   },
+   {
+    "page": 26,
+    "printed": "xxv",
+    "label": "xxvi"
+   }
+  ],
+  "label_source_proposal": "printed-folios",
+  "printed_folios": {
+   "13": "xii",
+   "14": "xiii",
+   "15": "xiv",
+   "16": "xv",
+   "17": "xvi",
+   "18": "xvii",
+   "19": "xviii",
+   "20": "xix",
+   "21": "xx",
+   "22": "xxi",
+   "23": "xxii",
+   "24": "xxiii",
+   "25": "xxiv",
+   "26": "xxv",
+   "31": "4",
+   "32": "5",
+   "33": "6",
+   "34": "7",
+   "35": "8",
+   "36": "9",
+   "37": "10",
+   "38": "11",
+   "39": "12",
+   "40": "13",
+   "41": "14",
+   "42": "15",
+   "43": "16",
+   "44": "17",
+   "45": "18",
+   "46": "19",
+   "47": "20",
+   "48": "21",
+   "49": "22",
+   "50": "23",
+   "51": "24",
+   "52": "25",
+   "53": "26",
+   "54": "27",
+   "55": "28",
+   "56": "29",
+   "57": "30",
+   "58": "31",
+   "59": "32",
+   "60": "33",
+   "61": "34",
+   "62": "35",
+   "67": "40",
+   "68": "41",
+   "69": "42",
+   "70": "43",
+   "71": "44",
+   "72": "45",
+   "73": "46",
+   "74": "47",
+   "75": "48",
+   "76": "49",
+   "77": "50",
+   "78": "51",
+   "79": "52",
+   "80": "53",
+   "81": "54",
+   "82": "55",
+   "83": "56",
+   "84": "57",
+   "85": "58",
+   "86": "59",
+   "87": "60",
+   "88": "61",
+   "89": "62",
+   "90": "63",
+   "91": "64",
+   "92": "65",
+   "93": "66",
+   "94": "67",
+   "95": "68",
+   "96": "69",
+   "97": "70",
+   "98": "71",
+   "99": "72",
+   "100": "73",
+   "101": "74",
+   "102": "75",
+   "103": "76",
+   "104": "77",
+   "105": "78",
+   "106": "79",
+   "107": "80",
+   "108": "81",
+   "109": "82",
+   "110": "83",
+   "111": "84",
+   "112": "85",
+   "113": "86",
+   "114": "87",
+   "115": "88",
+   "116": "89",
+   "117": "90",
+   "118": "91",
+   "119": "92",
+   "120": "93",
+   "121": "94",
+   "122": "95",
+   "123": "96",
+   "124": "97",
+   "125": "98",
+   "126": "99",
+   "127": "100",
+   "128": "101",
+   "129": "102",
+   "130": "103",
+   "131": "104",
+   "132": "105",
+   "133": "106",
+   "134": "107",
+   "135": "108",
+   "136": "109",
+   "137": "110",
+   "138": "111",
+   "139": "112",
+   "140": "113",
+   "141": "114",
+   "142": "115",
+   "143": "116",
+   "144": "117",
+   "145": "118",
+   "146": "119",
+   "147": "120",
+   "148": "121",
+   "149": "122",
+   "150": "123",
+   "151": "124",
+   "152": "125",
+   "153": "126",
+   "154": "127",
+   "155": "128",
+   "156": "129",
+   "157": "130",
+   "158": "131",
+   "159": "132",
+   "160": "133",
+   "161": "134",
+   "162": "135",
+   "163": "136",
+   "164": "137",
+   "165": "138",
+   "166": "139",
+   "167": "140",
+   "168": "141",
+   "169": "142",
+   "170": "143",
+   "171": "144",
+   "172": "145",
+   "173": "146",
+   "174": "147",
+   "175": "148",
+   "176": "149",
+   "177": "150",
+   "178": "151",
+   "179": "152",
+   "180": "153",
+   "181": "154",
+   "182": "155",
+   "183": "156",
+   "184": "157",
+   "185": "158",
+   "186": "159",
+   "187": "160",
+   "188": "161",
+   "189": "162",
+   "190": "163",
+   "191": "164",
+   "192": "165",
+   "193": "166",
+   "194": "167",
+   "195": "168",
+   "196": "169",
+   "197": "170",
+   "198": "171",
+   "199": "172",
+   "200": "173",
+   "201": "174",
+   "207": "180",
+   "208": "181",
+   "209": "182",
+   "210": "183",
+   "211": "184",
+   "212": "185",
+   "213": "186",
+   "214": "187",
+   "215": "188",
+   "216": "189",
+   "217": "190",
+   "218": "191",
+   "219": "192",
+   "220": "193",
+   "221": "194",
+   "222": "195",
+   "223": "196",
+   "224": "197",
+   "225": "198",
+   "226": "199",
+   "227": "200",
+   "228": "201",
+   "229": "202",
+   "230": "203",
+   "231": "204",
+   "232": "205",
+   "233": "206",
+   "234": "207",
+   "235": "208",
+   "236": "209",
+   "237": "210",
+   "238": "211",
+   "239": "212",
+   "240": "213",
+   "241": "214",
+   "242": "215",
+   "243": "216",
+   "244": "217",
+   "245": "218",
+   "246": "219",
+   "247": "220",
+   "248": "221",
+   "249": "222",
+   "250": "223",
+   "251": "224",
+   "252": "225",
+   "253": "226",
+   "254": "227",
+   "255": "228",
+   "256": "229",
+   "257": "230",
+   "258": "231",
+   "259": "232",
+   "260": "233",
+   "261": "234",
+   "262": "235",
+   "263": "236",
+   "264": "237",
+   "265": "238",
+   "266": "239",
+   "267": "240",
+   "268": "241",
+   "269": "242",
+   "270": "243",
+   "271": "244",
+   "272": "245",
+   "273": "246",
+   "274": "247",
+   "275": "248",
+   "276": "249",
+   "277": "250",
+   "278": "251",
+   "279": "252",
+   "280": "253",
+   "281": "254",
+   "282": "255",
+   "283": "256",
+   "284": "257",
+   "285": "258",
+   "286": "259",
+   "287": "260",
+   "288": "261",
+   "289": "262",
+   "290": "263",
+   "291": "264",
+   "292": "265",
+   "293": "266",
+   "294": "267",
+   "295": "268",
+   "296": "269",
+   "297": "270",
+   "298": "271",
+   "299": "272",
+   "300": "273",
+   "301": "274",
+   "302": "275",
+   "303": "276",
+   "304": "277",
+   "305": "278",
+   "306": "279",
+   "307": "280",
+   "308": "281",
+   "309": "282",
+   "310": "283",
+   "311": "284",
+   "312": "285",
+   "313": "286",
+   "314": "287",
+   "315": "288",
+   "316": "289",
+   "317": "290",
+   "318": "291",
+   "319": "292",
+   "320": "293",
+   "321": "294",
+   "322": "295",
+   "323": "296",
+   "324": "297",
+   "325": "298",
+   "326": "299",
+   "327": "300",
+   "328": "301",
+   "329": "302",
+   "330": "303",
+   "331": "304",
+   "332": "305",
+   "333": "306",
+   "335": "308",
+   "336": "309",
+   "337": "310",
+   "338": "311",
+   "339": "312",
+   "340": "313",
+   "341": "314",
+   "342": "315",
+   "343": "316",
+   "344": "317",
+   "345": "318",
+   "346": "319",
+   "347": "320",
+   "348": "321",
+   "349": "322",
+   "350": "323",
+   "351": "324",
+   "352": "325",
+   "353": "326",
+   "354": "327",
+   "355": "328",
+   "356": "329",
+   "357": "330",
+   "358": "331",
+   "359": "332",
+   "360": "333",
+   "361": "334",
+   "362": "335",
+   "363": "336",
+   "364": "337",
+   "365": "338",
+   "366": "339",
+   "367": "340",
+   "368": "341",
+   "369": "342",
+   "370": "343",
+   "371": "344",
+   "372": "345",
+   "373": "346",
+   "374": "347",
+   "375": "348",
+   "376": "349",
+   "377": "350",
+   "378": "351",
+   "379": "352",
+   "380": "353",
+   "381": "354",
+   "382": "355",
+   "383": "356",
+   "384": "357",
+   "385": "358",
+   "386": "359",
+   "387": "360",
+   "388": "361",
+   "389": "362",
+   "390": "363",
+   "391": "364",
+   "393": "366",
+   "394": "367",
+   "395": "368",
+   "396": "369",
+   "397": "370",
+   "398": "371",
+   "399": "372",
+   "400": "373",
+   "401": "374",
+   "402": "375",
+   "403": "376",
+   "404": "377",
+   "405": "378",
+   "406": "379",
+   "407": "380",
+   "408": "381",
+   "409": "382",
+   "410": "383",
+   "411": "384",
+   "412": "385",
+   "413": "386",
+   "414": "387",
+   "415": "388",
+   "416": "389",
+   "417": "390",
+   "418": "391",
+   "419": "392",
+   "420": "393",
+   "421": "394",
+   "422": "395",
+   "423": "396",
+   "424": "397",
+   "425": "398",
+   "426": "399",
+   "427": "400",
+   "428": "401",
+   "429": "402",
+   "430": "403",
+   "431": "404",
+   "432": "405",
+   "434": "407",
+   "435": "408",
+   "436": "409"
+  },
+  "headings": [
+   {
+    "page": 2,
+    "pstyle": "Bembo@24/center",
+    "text": "Me &Rumi"
+   },
+   {
+    "page": 4,
+    "pstyle": "Bembo@52/center",
+    "text": "Me&Rumi"
+   },
+   {
+    "page": 4,
+    "pstyle": "Bembo-Italic@14/center",
+    "text": "The Autobiography of Shams-i Tabrizi"
+   },
+   {
+    "page": 4,
+    "pstyle": "Bembo-Italic@11/center",
+    "text": "Translated, Introduced, and Annotated by"
+   },
+   {
+    "page": 4,
+    "pstyle": "Bembo@14/center",
+    "text": "William C. Chittick"
+   },
+   {
+    "page": 6,
+    "pstyle": "Bembo@11/center",
+    "text": "In Memory of Annemarie Schimmel"
+   },
+   {
+    "page": 8,
+    "pstyle": "Bembo@21/center",
+    "text": "Contents"
+   },
+   {
+    "page": 10,
+    "pstyle": "Bembo@21/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 12,
+    "pstyle": "Bembo@21/center",
+    "text": "Translator’s Introduction"
+   },
+   {
+    "page": 15,
+    "pstyle": "Bembo@11/center",
+    "text": "The fruit of my life is no more than three words—"
+   },
+   {
+    "page": 20,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "The Text and Translation"
+   },
+   {
+    "page": 27,
+    "pstyle": "Bembo@13/center",
+    "text": "What is the utmost end of need?"
+   },
+   {
+    "page": 27,
+    "pstyle": "Bembo@13/center",
+    "text": "Finding what has no needs."
+   },
+   {
+    "page": 27,
+    "pstyle": "Bembo@13/center",
+    "text": "What is the utmost end of seeking?"
+   },
+   {
+    "page": 27,
+    "pstyle": "Bembo@13/center",
+    "text": "Finding what is sought."
+   },
+   {
+    "page": 27,
+    "pstyle": "Bembo@13/center",
+    "text": "What is the utmost end of the sought?"
+   },
+   {
+    "page": 27,
+    "pstyle": "Bembo@13/center",
+    "text": "Finding the seeker."
+   },
+   {
+    "page": 28,
+    "pstyle": "Bembo@21/center",
+    "text": "My Years"
+   },
+   {
+    "page": 28,
+    "pstyle": "Bembo@21/center",
+    "text": "Without Mawlana"
+   },
+   {
+    "page": 30,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Childhood"
+   },
+   {
+    "page": 30,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "1."
+   },
+   {
+    "page": 30,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "2."
+   },
+   {
+    "page": 31,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "3."
+   },
+   {
+    "page": 31,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "4."
+   },
+   {
+    "page": 31,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "5."
+   },
+   {
+    "page": 32,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "6."
+   },
+   {
+    "page": 32,
+    "pstyle": "Bembo@11/center",
+    "text": "from grapes they make halva with time.*(625-26)"
+   },
+   {
+    "page": 32,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "7."
+   },
+   {
+    "page": 32,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "8."
+   },
+   {
+    "page": 33,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "9."
+   },
+   {
+    "page": 33,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "10."
+   },
+   {
+    "page": 34,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "11."
+   },
+   {
+    "page": 34,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Teaching Career"
+   },
+   {
+    "page": 34,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "12."
+   },
+   {
+    "page": 34,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "13."
+   },
+   {
+    "page": 35,
+    "pstyle": "Bembo@11/center",
+    "text": "liver’s blood flows from their eyes and they go."
+   },
+   {
+    "page": 35,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "14."
+   },
+   {
+    "page": 35,
+    "pstyle": "Bembo-Italic@11/center",
+    "text": "I said,“No, I want you to give me two hundred dirhems.”(343)"
+   },
+   {
+    "page": 36,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "15."
+   },
+   {
+    "page": 36,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "16."
+   },
+   {
+    "page": 39,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "17."
+   },
+   {
+    "page": 40,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Travels"
+   },
+   {
+    "page": 40,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "18."
+   },
+   {
+    "page": 41,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "19.*"
+   },
+   {
+    "page": 42,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "20."
+   },
+   {
+    "page": 42,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "21."
+   },
+   {
+    "page": 43,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "22."
+   },
+   {
+    "page": 43,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "23."
+   },
+   {
+    "page": 43,
+    "pstyle": "Bembo@11/center",
+    "text": "He was complaining,“They’ve plundered my property!”"
+   },
+   {
+    "page": 44,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "24."
+   },
+   {
+    "page": 44,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Teachers and Shaykhs I Have Met"
+   },
+   {
+    "page": 44,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "25."
+   },
+   {
+    "page": 44,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "26."
+   },
+   {
+    "page": 45,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "27."
+   },
+   {
+    "page": 46,
+    "pstyle": "Bembo@11/center",
+    "text": "outside the Kaaba, there’s no escape from the kiblah."
+   },
+   {
+    "page": 47,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "28."
+   },
+   {
+    "page": 47,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "29."
+   },
+   {
+    "page": 47,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "30."
+   },
+   {
+    "page": 48,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "31."
+   },
+   {
+    "page": 49,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "32."
+   },
+   {
+    "page": 49,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "33."
+   },
+   {
+    "page": 50,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "34."
+   },
+   {
+    "page": 50,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "35."
+   },
+   {
+    "page": 50,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "36."
+   },
+   {
+    "page": 51,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "37."
+   },
+   {
+    "page": 51,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "38."
+   },
+   {
+    "page": 52,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "39."
+   },
+   {
+    "page": 53,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "40."
+   },
+   {
+    "page": 53,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "41."
+   },
+   {
+    "page": 54,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "42."
+   },
+   {
+    "page": 55,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "43."
+   },
+   {
+    "page": 55,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "44."
+   },
+   {
+    "page": 55,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "45."
+   },
+   {
+    "page": 56,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "46."
+   },
+   {
+    "page": 57,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "47."
+   },
+   {
+    "page": 58,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "48."
+   },
+   {
+    "page": 58,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "49."
+   },
+   {
+    "page": 59,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "50."
+   },
+   {
+    "page": 60,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "51."
+   },
+   {
+    "page": 60,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "52."
+   },
+   {
+    "page": 60,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "53."
+   },
+   {
+    "page": 61,
+    "pstyle": "Bembo@11/center",
+    "text": "53 bis."
+   },
+   {
+    "page": 61,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "54."
+   },
+   {
+    "page": 62,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "55."
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "I wonder what these people think"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "friendship with God is."
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "That God who created the heavens,"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "who created the earth,"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "who made the universe appear—"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "is His friendship gained so easily"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "that you come in and sit before Him,"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "you talk and you listen?"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "Do you fancy this is a soup kitchen?"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "You come in and you drink it down?"
+   },
+   {
+    "page": 63,
+    "pstyle": "Bembo@13/center",
+    "text": "Then you just leave?"
+   },
+   {
+    "page": 64,
+    "pstyle": "Bembo@21/center",
+    "text": "My Path to God"
+   },
+   {
+    "page": 66,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "The Proﬁt and Loss of Study"
+   },
+   {
+    "page": 66,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "1."
+   },
+   {
+    "page": 66,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "2."
+   },
+   {
+    "page": 66,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "3."
+   },
+   {
+    "page": 67,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "4."
+   },
+   {
+    "page": 68,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "5."
+   },
+   {
+    "page": 68,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "6."
+   },
+   {
+    "page": 68,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "7."
+   },
+   {
+    "page": 69,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "8."
+   },
+   {
+    "page": 69,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "9."
+   },
+   {
+    "page": 69,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "10."
+   },
+   {
+    "page": 69,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "11."
+   },
+   {
+    "page": 70,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "12."
+   },
+   {
+    "page": 70,
+    "pstyle": "Bembo@11/center",
+    "text": "You died in poverty on top of the treasure!* (241)"
+   },
+   {
+    "page": 70,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "13."
+   },
+   {
+    "page": 70,
+    "pstyle": "Bembo@11/center",
+    "text": "O you who died trying to undo knots!"
+   },
+   {
+    "page": 70,
+    "pstyle": "Bembo-Italic@11/center",
+    "text": "from this world we’ve obtained torment and bane.* (678)"
+   },
+   {
+    "page": 70,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "14."
+   },
+   {
+    "page": 71,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "15."
+   },
+   {
+    "page": 72,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "16."
+   },
+   {
+    "page": 73,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "17."
+   },
+   {
+    "page": 73,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "18."
+   },
+   {
+    "page": 73,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "19."
+   },
+   {
+    "page": 74,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "20."
+   },
+   {
+    "page": 74,
+    "pstyle": "Bembo@11/center",
+    "text": "My goal in Kaaba and idol-temple is You."
+   },
+   {
+    "page": 74,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "21."
+   },
+   {
+    "page": 74,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "22."
+   },
+   {
+    "page": 75,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "23."
+   },
+   {
+    "page": 75,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“With this much humility, what will reach him?”"
+   },
+   {
+    "page": 76,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "24."
+   },
+   {
+    "page": 77,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "25."
+   },
+   {
+    "page": 77,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "26."
+   },
+   {
+    "page": 78,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "27."
+   },
+   {
+    "page": 78,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "28."
+   },
+   {
+    "page": 79,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "29."
+   },
+   {
+    "page": 80,
+    "pstyle": "Bembo@11/center",
+    "text": "what use to me are the Dhakhira and the Lubab?*"
+   },
+   {
+    "page": 80,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "30."
+   },
+   {
+    "page": 80,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "31."
+   },
+   {
+    "page": 81,
+    "pstyle": "Bembo@11/center",
+    "text": "What use to me are the Dhakhira and the Lubab?* (744-45)"
+   },
+   {
+    "page": 81,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "32."
+   },
+   {
+    "page": 81,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "33."
+   },
+   {
+    "page": 82,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "34."
+   },
+   {
+    "page": 83,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "35."
+   },
+   {
+    "page": 83,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "36."
+   },
+   {
+    "page": 84,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "37."
+   },
+   {
+    "page": 85,
+    "pstyle": "Bembo@11/center",
+    "text": "My life has reached its end, but I’m sleeping."
+   },
+   {
+    "page": 85,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "38."
+   },
+   {
+    "page": 85,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "39."
+   },
+   {
+    "page": 86,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "40."
+   },
+   {
+    "page": 86,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "41."
+   },
+   {
+    "page": 87,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "42."
+   },
+   {
+    "page": 89,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Philosophy"
+   },
+   {
+    "page": 89,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "43."
+   },
+   {
+    "page": 90,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "44."
+   },
+   {
+    "page": 90,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "45."
+   },
+   {
+    "page": 90,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "46."
+   },
+   {
+    "page": 90,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "47."
+   },
+   {
+    "page": 91,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "48."
+   },
+   {
+    "page": 91,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "49."
+   },
+   {
+    "page": 91,
+    "pstyle": "Bembo@11/center",
+    "text": "enough that he hung himself on this rope. (649)"
+   },
+   {
+    "page": 91,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "50."
+   },
+   {
+    "page": 92,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "51."
+   },
+   {
+    "page": 93,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "52."
+   },
+   {
+    "page": 93,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "53."
+   },
+   {
+    "page": 93,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "54."
+   },
+   {
+    "page": 95,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "55."
+   },
+   {
+    "page": 95,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Following Muhammad"
+   },
+   {
+    "page": 95,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "56."
+   },
+   {
+    "page": 96,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "57."
+   },
+   {
+    "page": 96,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "58."
+   },
+   {
+    "page": 96,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "59."
+   },
+   {
+    "page": 97,
+    "pstyle": "Bembo@11/center",
+    "text": "Now, from childhood I have turned my face to the roots."
+   },
+   {
+    "page": 97,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "60."
+   },
+   {
+    "page": 97,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "61."
+   },
+   {
+    "page": 97,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "62."
+   },
+   {
+    "page": 98,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "63."
+   },
+   {
+    "page": 98,
+    "pstyle": "Bembo@11/center",
+    "text": "They don’t give one gulp to the self-worshipers.* (209)"
+   },
+   {
+    "page": 98,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "64."
+   },
+   {
+    "page": 98,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "65."
+   },
+   {
+    "page": 99,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "66."
+   },
+   {
+    "page": 99,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "67."
+   },
+   {
+    "page": 99,
+    "pstyle": "Bembo@11/center",
+    "text": "A nomad said,“O Messenger of God! What is obligatory?”"
+   },
+   {
+    "page": 100,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "68."
+   },
+   {
+    "page": 102,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "69."
+   },
+   {
+    "page": 103,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "70."
+   },
+   {
+    "page": 103,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "71."
+   },
+   {
+    "page": 104,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "72."
+   },
+   {
+    "page": 104,
+    "pstyle": "Bembo@11/center",
+    "text": "had gone through plundering and annihilation.*"
+   },
+   {
+    "page": 105,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "73."
+   },
+   {
+    "page": 106,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "74."
+   },
+   {
+    "page": 106,
+    "pstyle": "Bembo@11/center",
+    "text": "then your position and rank will increase. (645)"
+   },
+   {
+    "page": 106,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "75."
+   },
+   {
+    "page": 107,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "76."
+   },
+   {
+    "page": 107,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "77."
+   },
+   {
+    "page": 107,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "78."
+   },
+   {
+    "page": 108,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "79."
+   },
+   {
+    "page": 109,
+    "pstyle": "Bembo-Italic@11/center",
+    "text": "He said,“Do not approach the salat when you are drunk [4:43].”"
+   },
+   {
+    "page": 109,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "80."
+   },
+   {
+    "page": 109,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "81."
+   },
+   {
+    "page": 109,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "82."
+   },
+   {
+    "page": 110,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "83."
+   },
+   {
+    "page": 110,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "84."
+   },
+   {
+    "page": 110,
+    "pstyle": "Bembo@11/center",
+    "text": "O you who died trying to undo knots!*"
+   },
+   {
+    "page": 111,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "85."
+   },
+   {
+    "page": 111,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "86."
+   },
+   {
+    "page": 112,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "87."
+   },
+   {
+    "page": 113,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "88."
+   },
+   {
+    "page": 113,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "89."
+   },
+   {
+    "page": 114,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "90."
+   },
+   {
+    "page": 114,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "91."
+   },
+   {
+    "page": 114,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "92."
+   },
+   {
+    "page": 114,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "93."
+   },
+   {
+    "page": 115,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "The Religion of Old Women"
+   },
+   {
+    "page": 115,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "94."
+   },
+   {
+    "page": 115,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "95."
+   },
+   {
+    "page": 116,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "96."
+   },
+   {
+    "page": 116,
+    "pstyle": "Bembo-Italic@11/center",
+    "text": "and he indicated to me that I should abandon sins,"
+   },
+   {
+    "page": 117,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "97."
+   },
+   {
+    "page": 117,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "98."
+   },
+   {
+    "page": 117,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "99."
+   },
+   {
+    "page": 117,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "100."
+   },
+   {
+    "page": 118,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "101."
+   },
+   {
+    "page": 119,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "102."
+   },
+   {
+    "page": 119,
+    "pstyle": "Bembo@11/center",
+    "text": "He asked,“How long is the road from the servant to God?”"
+   },
+   {
+    "page": 119,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "103."
+   },
+   {
+    "page": 119,
+    "pstyle": "Bembo@11/center",
+    "text": "sash, unbelief, and tavern are the basis of love."
+   },
+   {
+    "page": 119,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "104."
+   },
+   {
+    "page": 120,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "105."
+   },
+   {
+    "page": 120,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "106."
+   },
+   {
+    "page": 120,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "107."
+   },
+   {
+    "page": 120,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "108."
+   },
+   {
+    "page": 121,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "109."
+   },
+   {
+    "page": 121,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "110."
+   },
+   {
+    "page": 122,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "111."
+   },
+   {
+    "page": 122,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "112."
+   },
+   {
+    "page": 122,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "113."
+   },
+   {
+    "page": 123,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "114."
+   },
+   {
+    "page": 123,
+    "pstyle": "Bembo@11/center",
+    "text": "the Men will never fall in love with it. (160-61)"
+   },
+   {
+    "page": 123,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "115."
+   },
+   {
+    "page": 124,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "116."
+   },
+   {
+    "page": 124,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "117."
+   },
+   {
+    "page": 124,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "118."
+   },
+   {
+    "page": 125,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "119."
+   },
+   {
+    "page": 126,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "120."
+   },
+   {
+    "page": 127,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "121."
+   },
+   {
+    "page": 128,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "122."
+   },
+   {
+    "page": 129,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "123."
+   },
+   {
+    "page": 129,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "124."
+   },
+   {
+    "page": 129,
+    "pstyle": "Bembo@11/center",
+    "text": "does the storehouse of secrets open and close. (97)"
+   },
+   {
+    "page": 129,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "125."
+   },
+   {
+    "page": 130,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "The Guidance of the Shaykh"
+   },
+   {
+    "page": 130,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "126."
+   },
+   {
+    "page": 130,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "127."
+   },
+   {
+    "page": 131,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "128."
+   },
+   {
+    "page": 131,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "129."
+   },
+   {
+    "page": 132,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "130."
+   },
+   {
+    "page": 132,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "131."
+   },
+   {
+    "page": 132,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "132."
+   },
+   {
+    "page": 132,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "133."
+   },
+   {
+    "page": 134,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "134."
+   },
+   {
+    "page": 135,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "135."
+   },
+   {
+    "page": 136,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "136."
+   },
+   {
+    "page": 136,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "137."
+   },
+   {
+    "page": 136,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "138."
+   },
+   {
+    "page": 137,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "139."
+   },
+   {
+    "page": 137,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "140."
+   },
+   {
+    "page": 138,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "141."
+   },
+   {
+    "page": 139,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "142."
+   },
+   {
+    "page": 139,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "143."
+   },
+   {
+    "page": 140,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "144."
+   },
+   {
+    "page": 140,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "145."
+   },
+   {
+    "page": 141,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "146."
+   },
+   {
+    "page": 141,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "147."
+   },
+   {
+    "page": 141,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "148."
+   },
+   {
+    "page": 141,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "149."
+   },
+   {
+    "page": 142,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "150."
+   },
+   {
+    "page": 142,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "151."
+   },
+   {
+    "page": 143,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Avoiding Caprice"
+   },
+   {
+    "page": 143,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "152."
+   },
+   {
+    "page": 143,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "153."
+   },
+   {
+    "page": 143,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "154."
+   },
+   {
+    "page": 144,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "155."
+   },
+   {
+    "page": 144,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "156."
+   },
+   {
+    "page": 145,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "157."
+   },
+   {
+    "page": 146,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "158."
+   },
+   {
+    "page": 146,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "159."
+   },
+   {
+    "page": 147,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "160."
+   },
+   {
+    "page": 148,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "161."
+   },
+   {
+    "page": 148,
+    "pstyle": "Bembo@11/center",
+    "text": "he’ll tell you in the tongue of your state what to do.*"
+   },
+   {
+    "page": 148,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "162."
+   },
+   {
+    "page": 149,
+    "pstyle": "Bembo@11/center",
+    "text": "They said,“We have faith and we attest. But this is strange.”"
+   },
+   {
+    "page": 149,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“I’m not a Suﬁ who’d come back to what he’s left.”"
+   },
+   {
+    "page": 149,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "163."
+   },
+   {
+    "page": 149,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "164."
+   },
+   {
+    "page": 149,
+    "pstyle": "Bembo@11/center",
+    "text": "The same thing happened to the moth with the candle—"
+   },
+   {
+    "page": 150,
+    "pstyle": "Bembo@11/center",
+    "text": "he was looking from the circle of his own existence.*"
+   },
+   {
+    "page": 150,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "165."
+   },
+   {
+    "page": 150,
+    "pstyle": "Bembo@11/center",
+    "text": "O you whose gods torment God!* (701)"
+   },
+   {
+    "page": 150,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "166."
+   },
+   {
+    "page": 150,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "167."
+   },
+   {
+    "page": 151,
+    "pstyle": "Bembo@11/center",
+    "text": "He was given the answer,“The prayer of both is defective.”"
+   },
+   {
+    "page": 151,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "168."
+   },
+   {
+    "page": 152,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "169."
+   },
+   {
+    "page": 152,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "170."
+   },
+   {
+    "page": 152,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "171."
+   },
+   {
+    "page": 153,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "The Companion of the Heart"
+   },
+   {
+    "page": 153,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "172."
+   },
+   {
+    "page": 153,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "173."
+   },
+   {
+    "page": 153,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "174."
+   },
+   {
+    "page": 154,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "175."
+   },
+   {
+    "page": 154,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "176."
+   },
+   {
+    "page": 154,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "177."
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "178."
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "179."
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "180."
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "181."
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "182."
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo@11/center",
+    "text": "A duck seeking a ship would be surprising!* (269)"
+   },
+   {
+    "page": 155,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "183."
+   },
+   {
+    "page": 156,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "184."
+   },
+   {
+    "page": 157,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "185."
+   },
+   {
+    "page": 157,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "186."
+   },
+   {
+    "page": 158,
+    "pstyle": "Bembo@11/center",
+    "text": "that “I” and “we”* are the blight of love’s path."
+   },
+   {
+    "page": 158,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "187."
+   },
+   {
+    "page": 159,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "188."
+   },
+   {
+    "page": 160,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "189."
+   },
+   {
+    "page": 161,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "190."
+   },
+   {
+    "page": 161,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "191."
+   },
+   {
+    "page": 161,
+    "pstyle": "Bembo@11/center",
+    "text": "They said,“Are your brothers the prophets of the past?”"
+   },
+   {
+    "page": 161,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "192."
+   },
+   {
+    "page": 163,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "193."
+   },
+   {
+    "page": 163,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "194."
+   },
+   {
+    "page": 163,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "195."
+   },
+   {
+    "page": 164,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "196."
+   },
+   {
+    "page": 164,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "197."
+   },
+   {
+    "page": 164,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "198."
+   },
+   {
+    "page": 165,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "199."
+   },
+   {
+    "page": 165,
+    "pstyle": "Bembo@11/center",
+    "text": "worry about my work now, there’s still twilight left."
+   },
+   {
+    "page": 165,
+    "pstyle": "Bembo@11/center",
+    "text": "The color of your lovely face, the shape of your rosy cheek,"
+   },
+   {
+    "page": 165,
+    "pstyle": "Bembo@11/center",
+    "text": "My love for you has left a golden orb on the door."
+   },
+   {
+    "page": 165,
+    "pstyle": "Bembo@11/center",
+    "text": "in the book of my life there’s only one page left.*"
+   },
+   {
+    "page": 166,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "The Saints"
+   },
+   {
+    "page": 166,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "200."
+   },
+   {
+    "page": 166,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "201."
+   },
+   {
+    "page": 167,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "202."
+   },
+   {
+    "page": 167,
+    "pstyle": "Bembo@11/center",
+    "text": "you’ll ﬁnd your whole life’s share at that moment."
+   },
+   {
+    "page": 168,
+    "pstyle": "Bembo@11/center",
+    "text": "Look at these tears like sparks of ﬁre and don’t ask."
+   },
+   {
+    "page": 168,
+    "pstyle": "Bembo@11/center",
+    "text": "look at the blood on the threshold and don’t ask.*"
+   },
+   {
+    "page": 168,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "203."
+   },
+   {
+    "page": 169,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "204."
+   },
+   {
+    "page": 169,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "205."
+   },
+   {
+    "page": 170,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "206."
+   },
+   {
+    "page": 170,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "207."
+   },
+   {
+    "page": 171,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "208."
+   },
+   {
+    "page": 171,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "209."
+   },
+   {
+    "page": 172,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "210."
+   },
+   {
+    "page": 173,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "211."
+   },
+   {
+    "page": 174,
+    "pstyle": "Bembo@11/center",
+    "text": "The balm of the Beloved’s lips is my wine.”*"
+   },
+   {
+    "page": 174,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "212."
+   },
+   {
+    "page": 176,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "213."
+   },
+   {
+    "page": 177,
+    "pstyle": "Bembo@11/center",
+    "text": "in the mountain you’ll also ﬁnd the antidote.*"
+   },
+   {
+    "page": 177,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "214."
+   },
+   {
+    "page": 178,
+    "pstyle": "Bembo@11/center",
+    "text": "without his stature, I’m overcome by calamity.*"
+   },
+   {
+    "page": 179,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Interpretations of Scripture"
+   },
+   {
+    "page": 179,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "215."
+   },
+   {
+    "page": 179,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "216."
+   },
+   {
+    "page": 179,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "217."
+   },
+   {
+    "page": 180,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "218."
+   },
+   {
+    "page": 181,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "219."
+   },
+   {
+    "page": 181,
+    "pstyle": "Bembo@11/center",
+    "text": "Humam is indeed a great man. He reads Koran exegesis."
+   },
+   {
+    "page": 181,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "220."
+   },
+   {
+    "page": 182,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "221."
+   },
+   {
+    "page": 182,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "222."
+   },
+   {
+    "page": 183,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "223."
+   },
+   {
+    "page": 183,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "224."
+   },
+   {
+    "page": 184,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "225."
+   },
+   {
+    "page": 185,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "226."
+   },
+   {
+    "page": 186,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "227."
+   },
+   {
+    "page": 186,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "228."
+   },
+   {
+    "page": 186,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "229."
+   },
+   {
+    "page": 187,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "230."
+   },
+   {
+    "page": 187,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "231."
+   },
+   {
+    "page": 188,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "232."
+   },
+   {
+    "page": 188,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "233."
+   },
+   {
+    "page": 189,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "234."
+   },
+   {
+    "page": 189,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "235."
+   },
+   {
+    "page": 189,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "236."
+   },
+   {
+    "page": 189,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "237."
+   },
+   {
+    "page": 190,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "238."
+   },
+   {
+    "page": 190,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "239."
+   },
+   {
+    "page": 191,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "240."
+   },
+   {
+    "page": 191,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "241."
+   },
+   {
+    "page": 191,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "242."
+   },
+   {
+    "page": 192,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "243."
+   },
+   {
+    "page": 192,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "244."
+   },
+   {
+    "page": 193,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "245."
+   },
+   {
+    "page": 193,
+    "pstyle": "Bembo@11/center",
+    "text": "you’ll get no gain, whoever the companion."
+   },
+   {
+    "page": 194,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "246."
+   },
+   {
+    "page": 195,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "247."
+   },
+   {
+    "page": 196,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "248."
+   },
+   {
+    "page": 196,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "249."
+   },
+   {
+    "page": 198,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "250."
+   },
+   {
+    "page": 199,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "251."
+   },
+   {
+    "page": 199,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "252."
+   },
+   {
+    "page": 199,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "253."
+   },
+   {
+    "page": 200,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "254."
+   },
+   {
+    "page": 203,
+    "pstyle": "Bembo@13/center",
+    "text": "Even if it be after a thousand"
+   },
+   {
+    "page": 203,
+    "pstyle": "Bembo@13/center",
+    "text": "years, these words will reach"
+   },
+   {
+    "page": 203,
+    "pstyle": "Bembo@13/center",
+    "text": "those for whom they’re intended."
+   },
+   {
+    "page": 204,
+    "pstyle": "Bembo@21/center",
+    "text": "My Time"
+   },
+   {
+    "page": 204,
+    "pstyle": "Bembo@21/center",
+    "text": "with Mawlana"
+   },
+   {
+    "page": 206,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Our Encounter"
+   },
+   {
+    "page": 206,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "1."
+   },
+   {
+    "page": 206,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "2."
+   },
+   {
+    "page": 206,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "3."
+   },
+   {
+    "page": 207,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "4."
+   },
+   {
+    "page": 207,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "5."
+   },
+   {
+    "page": 208,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "6."
+   },
+   {
+    "page": 208,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "7."
+   },
+   {
+    "page": 210,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "8."
+   },
+   {
+    "page": 210,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "9."
+   },
+   {
+    "page": 211,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "10."
+   },
+   {
+    "page": 211,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "11."
+   },
+   {
+    "page": 212,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "12."
+   },
+   {
+    "page": 212,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "13."
+   },
+   {
+    "page": 213,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "14."
+   },
+   {
+    "page": 213,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "15."
+   },
+   {
+    "page": 214,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "16."
+   },
+   {
+    "page": 214,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "17."
+   },
+   {
+    "page": 214,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "18."
+   },
+   {
+    "page": 214,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "19."
+   },
+   {
+    "page": 215,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "20."
+   },
+   {
+    "page": 215,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "21."
+   },
+   {
+    "page": 216,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Spiritual Mastery"
+   },
+   {
+    "page": 216,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "22."
+   },
+   {
+    "page": 216,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "23."
+   },
+   {
+    "page": 217,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "24."
+   },
+   {
+    "page": 217,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "25."
+   },
+   {
+    "page": 218,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "26."
+   },
+   {
+    "page": 218,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "27."
+   },
+   {
+    "page": 219,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "28."
+   },
+   {
+    "page": 219,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "29."
+   },
+   {
+    "page": 219,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "30."
+   },
+   {
+    "page": 219,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "31."
+   },
+   {
+    "page": 220,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "32."
+   },
+   {
+    "page": 220,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "33."
+   },
+   {
+    "page": 221,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "34."
+   },
+   {
+    "page": 221,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "35."
+   },
+   {
+    "page": 221,
+    "pstyle": "Bembo@11/center",
+    "text": "Right now, it’s the inclination of my heart.What can I do?"
+   },
+   {
+    "page": 221,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "36."
+   },
+   {
+    "page": 222,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "37."
+   },
+   {
+    "page": 222,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "38."
+   },
+   {
+    "page": 223,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "39."
+   },
+   {
+    "page": 223,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "40."
+   },
+   {
+    "page": 223,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "41."
+   },
+   {
+    "page": 224,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "42."
+   },
+   {
+    "page": 224,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "43."
+   },
+   {
+    "page": 224,
+    "pstyle": "Bembo@11/center",
+    "text": "Aren’t you contemptuous of these unbridled asses?"
+   },
+   {
+    "page": 224,
+    "pstyle": "Bembo@11/center",
+    "text": "he’s putting shame and disgrace on the empire!"
+   },
+   {
+    "page": 224,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "44."
+   },
+   {
+    "page": 225,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "45."
+   },
+   {
+    "page": 225,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“I’ll go visit him. I wonder where I’ll ﬁnd him.”"
+   },
+   {
+    "page": 225,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "46."
+   },
+   {
+    "page": 226,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "47."
+   },
+   {
+    "page": 226,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "48."
+   },
+   {
+    "page": 226,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "49."
+   },
+   {
+    "page": 227,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "50."
+   },
+   {
+    "page": 227,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "51."
+   },
+   {
+    "page": 228,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "52."
+   },
+   {
+    "page": 229,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "53."
+   },
+   {
+    "page": 230,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "54."
+   },
+   {
+    "page": 232,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Mawlana’s Exalted Station"
+   },
+   {
+    "page": 232,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "55."
+   },
+   {
+    "page": 232,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "56."
+   },
+   {
+    "page": 233,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "57."
+   },
+   {
+    "page": 234,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "58."
+   },
+   {
+    "page": 234,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "59."
+   },
+   {
+    "page": 235,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "60."
+   },
+   {
+    "page": 236,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "61."
+   },
+   {
+    "page": 236,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "62."
+   },
+   {
+    "page": 237,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "63."
+   },
+   {
+    "page": 238,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "64."
+   },
+   {
+    "page": 238,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Our Companionship"
+   },
+   {
+    "page": 238,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "65."
+   },
+   {
+    "page": 238,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "66."
+   },
+   {
+    "page": 239,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“Fear prevented you from mentioning that dislike.”"
+   },
+   {
+    "page": 239,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "67."
+   },
+   {
+    "page": 239,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "68."
+   },
+   {
+    "page": 240,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "69."
+   },
+   {
+    "page": 241,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "70."
+   },
+   {
+    "page": 241,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "71."
+   },
+   {
+    "page": 241,
+    "pstyle": "Bembo@11/center",
+    "text": "I said to someone,“You’re a great man, unique in the era.”"
+   },
+   {
+    "page": 241,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "72."
+   },
+   {
+    "page": 241,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“Do you mean that it’s not an elevated station?”"
+   },
+   {
+    "page": 242,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "73."
+   },
+   {
+    "page": 243,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "74."
+   },
+   {
+    "page": 243,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "75."
+   },
+   {
+    "page": 244,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "76."
+   },
+   {
+    "page": 244,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "77."
+   },
+   {
+    "page": 245,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "78."
+   },
+   {
+    "page": 245,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "79."
+   },
+   {
+    "page": 246,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "80."
+   },
+   {
+    "page": 246,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "81."
+   },
+   {
+    "page": 247,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "82."
+   },
+   {
+    "page": 247,
+    "pstyle": "Bembo@11/center",
+    "text": "pull out the bastard’s beard—that’s what he deserves."
+   },
+   {
+    "page": 248,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "83."
+   },
+   {
+    "page": 248,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "84."
+   },
+   {
+    "page": 249,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "85."
+   },
+   {
+    "page": 250,
+    "pstyle": "Bembo@11/center",
+    "text": "The drunk won’t get wine from the Shariah’s cup."
+   },
+   {
+    "page": 250,
+    "pstyle": "Bembo@11/center",
+    "text": "they don’t give one gulp to the self-worshipers.*"
+   },
+   {
+    "page": 250,
+    "pstyle": "Bembo@11/center",
+    "text": "what good is the garden, what use are the herbs?"
+   },
+   {
+    "page": 250,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "86."
+   },
+   {
+    "page": 250,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "87."
+   },
+   {
+    "page": 251,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "88."
+   },
+   {
+    "page": 252,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "89."
+   },
+   {
+    "page": 252,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "90."
+   },
+   {
+    "page": 252,
+    "pstyle": "Bembo@11/center",
+    "text": "from night to morning I wait for the heavens."
+   },
+   {
+    "page": 253,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "91."
+   },
+   {
+    "page": 255,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "92."
+   },
+   {
+    "page": 256,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "93."
+   },
+   {
+    "page": 256,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "94."
+   },
+   {
+    "page": 257,
+    "pstyle": "Bembo@11/center",
+    "text": "Let me give you headaches for another two or three days—"
+   },
+   {
+    "page": 257,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Instructions to the Circle"
+   },
+   {
+    "page": 257,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "95."
+   },
+   {
+    "page": 257,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "96."
+   },
+   {
+    "page": 257,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "97."
+   },
+   {
+    "page": 257,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "98."
+   },
+   {
+    "page": 258,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "99."
+   },
+   {
+    "page": 258,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "100."
+   },
+   {
+    "page": 258,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "101."
+   },
+   {
+    "page": 260,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "102."
+   },
+   {
+    "page": 260,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "103."
+   },
+   {
+    "page": 261,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "104."
+   },
+   {
+    "page": 262,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "105."
+   },
+   {
+    "page": 263,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“Yes, Sayyid also said that I wouldn’t be deprived.”"
+   },
+   {
+    "page": 263,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "106."
+   },
+   {
+    "page": 264,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "107."
+   },
+   {
+    "page": 264,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "108."
+   },
+   {
+    "page": 265,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "109."
+   },
+   {
+    "page": 265,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "110."
+   },
+   {
+    "page": 266,
+    "pstyle": "Bembo@11/center",
+    "text": "Since you ask, I’ll tell you what happened in truth:"
+   },
+   {
+    "page": 266,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "111."
+   },
+   {
+    "page": 266,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "112."
+   },
+   {
+    "page": 266,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "113."
+   },
+   {
+    "page": 267,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "114."
+   },
+   {
+    "page": 267,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "115."
+   },
+   {
+    "page": 268,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "116."
+   },
+   {
+    "page": 268,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "117."
+   },
+   {
+    "page": 268,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "118."
+   },
+   {
+    "page": 269,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "119."
+   },
+   {
+    "page": 269,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "120."
+   },
+   {
+    "page": 270,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "121."
+   },
+   {
+    "page": 271,
+    "pstyle": "Bembo@11/center",
+    "text": "He said,“Perhaps a remedy will come from the Unseen.”"
+   },
+   {
+    "page": 271,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "122."
+   },
+   {
+    "page": 271,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "123."
+   },
+   {
+    "page": 272,
+    "pstyle": "Bembo@11/center",
+    "text": "but the idol released from fancy is still there.*"
+   },
+   {
+    "page": 272,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "124."
+   },
+   {
+    "page": 273,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "125."
+   },
+   {
+    "page": 273,
+    "pstyle": "Bembo@11/center",
+    "text": "I don’t need your praise. I know.You just stop the praise."
+   },
+   {
+    "page": 273,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "126."
+   },
+   {
+    "page": 273,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "127."
+   },
+   {
+    "page": 273,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "128."
+   },
+   {
+    "page": 274,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "129."
+   },
+   {
+    "page": 274,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "130."
+   },
+   {
+    "page": 275,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "131."
+   },
+   {
+    "page": 275,
+    "pstyle": "Bembo@11/center",
+    "text": "think what you’ll be in the time of peace.* (233-34)"
+   },
+   {
+    "page": 275,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "132."
+   },
+   {
+    "page": 276,
+    "pstyle": "Bembo@11/center",
+    "text": "about the one whom you do not see? (191-92)"
+   },
+   {
+    "page": 276,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "133."
+   },
+   {
+    "page": 276,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "134."
+   },
+   {
+    "page": 277,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "135."
+   },
+   {
+    "page": 277,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "136."
+   },
+   {
+    "page": 278,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "137."
+   },
+   {
+    "page": 278,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "138."
+   },
+   {
+    "page": 279,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "139."
+   },
+   {
+    "page": 279,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "140."
+   },
+   {
+    "page": 282,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "141."
+   },
+   {
+    "page": 282,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "142."
+   },
+   {
+    "page": 284,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "143."
+   },
+   {
+    "page": 285,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "144."
+   },
+   {
+    "page": 285,
+    "pstyle": "Bembo@11/center",
+    "text": "Oh, all the world’s sated are hungry for union with you!"
+   },
+   {
+    "page": 285,
+    "pstyle": "Bembo@11/center",
+    "text": "The world’s heroes tremble in separation from you!"
+   },
+   {
+    "page": 286,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "145."
+   },
+   {
+    "page": 287,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "146."
+   },
+   {
+    "page": 287,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "147."
+   },
+   {
+    "page": 288,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "148."
+   },
+   {
+    "page": 289,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "149."
+   },
+   {
+    "page": 290,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "150."
+   },
+   {
+    "page": 290,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "151."
+   },
+   {
+    "page": 291,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "152."
+   },
+   {
+    "page": 291,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "153."
+   },
+   {
+    "page": 292,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Critics"
+   },
+   {
+    "page": 292,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "154."
+   },
+   {
+    "page": 292,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "155."
+   },
+   {
+    "page": 292,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "156."
+   },
+   {
+    "page": 293,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "157."
+   },
+   {
+    "page": 294,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "158."
+   },
+   {
+    "page": 294,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "159."
+   },
+   {
+    "page": 294,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "160."
+   },
+   {
+    "page": 295,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "161."
+   },
+   {
+    "page": 295,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "162."
+   },
+   {
+    "page": 296,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "163."
+   },
+   {
+    "page": 296,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "164."
+   },
+   {
+    "page": 297,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "165."
+   },
+   {
+    "page": 297,
+    "pstyle": "Bembo@11/center",
+    "text": "I’ll say,“What do You want? My want is included in Yours.”"
+   },
+   {
+    "page": 297,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "166."
+   },
+   {
+    "page": 298,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "167."
+   },
+   {
+    "page": 298,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "168."
+   },
+   {
+    "page": 299,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "169."
+   },
+   {
+    "page": 300,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "170."
+   },
+   {
+    "page": 300,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "171."
+   },
+   {
+    "page": 300,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "172."
+   },
+   {
+    "page": 300,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "173."
+   },
+   {
+    "page": 301,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "174."
+   },
+   {
+    "page": 301,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "175."
+   },
+   {
+    "page": 302,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "176."
+   },
+   {
+    "page": 303,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "177."
+   },
+   {
+    "page": 303,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "178."
+   },
+   {
+    "page": 304,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Harshness with Friends"
+   },
+   {
+    "page": 304,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "179."
+   },
+   {
+    "page": 304,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "180."
+   },
+   {
+    "page": 305,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "181."
+   },
+   {
+    "page": 307,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "182."
+   },
+   {
+    "page": 307,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "183."
+   },
+   {
+    "page": 307,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "184."
+   },
+   {
+    "page": 307,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "185."
+   },
+   {
+    "page": 308,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "186."
+   },
+   {
+    "page": 308,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "187."
+   },
+   {
+    "page": 309,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "188."
+   },
+   {
+    "page": 309,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "189."
+   },
+   {
+    "page": 310,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "190."
+   },
+   {
+    "page": 310,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "191."
+   },
+   {
+    "page": 311,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "192."
+   },
+   {
+    "page": 311,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "193."
+   },
+   {
+    "page": 311,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "194."
+   },
+   {
+    "page": 312,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "195."
+   },
+   {
+    "page": 312,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "196."
+   },
+   {
+    "page": 313,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "197."
+   },
+   {
+    "page": 313,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "198."
+   },
+   {
+    "page": 313,
+    "pstyle": "Bembo@11/center",
+    "text": "the drunk won’t get milk from the Shariah’s cup."
+   },
+   {
+    "page": 313,
+    "pstyle": "Bembo@11/center",
+    "text": "they don’t give one gulp to the self-worshipers.*"
+   },
+   {
+    "page": 314,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "199."
+   },
+   {
+    "page": 314,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "200."
+   },
+   {
+    "page": 315,
+    "pstyle": "Bembo@11/center",
+    "text": "“How long will you talk of the one you don’t see, lover?”"
+   },
+   {
+    "page": 315,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "201."
+   },
+   {
+    "page": 315,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "202."
+   },
+   {
+    "page": 316,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "203."
+   },
+   {
+    "page": 317,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "204."
+   },
+   {
+    "page": 317,
+    "pstyle": "Bembo@11/center",
+    "text": "I’ll not keep you in the eye or you’ll be lowly."
+   },
+   {
+    "page": 317,
+    "pstyle": "Bembo@11/center",
+    "text": "I’ll give you a place in the spirit, not the eyes or the heart,"
+   },
+   {
+    "page": 317,
+    "pstyle": "Bembo@11/center",
+    "text": "so you’ll be my companion at the last breath.*"
+   },
+   {
+    "page": 317,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "205."
+   },
+   {
+    "page": 319,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "206."
+   },
+   {
+    "page": 319,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "207."
+   },
+   {
+    "page": 320,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "208."
+   },
+   {
+    "page": 320,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "209."
+   },
+   {
+    "page": 320,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "210."
+   },
+   {
+    "page": 321,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "211."
+   },
+   {
+    "page": 322,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "212."
+   },
+   {
+    "page": 324,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "213."
+   },
+   {
+    "page": 325,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "214."
+   },
+   {
+    "page": 326,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "215."
+   },
+   {
+    "page": 329,
+    "pstyle": "Bembo@11/center",
+    "text": "They said,“Come.Answer over there.”They brought him."
+   },
+   {
+    "page": 329,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "My Return from Aleppo"
+   },
+   {
+    "page": 329,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "216."
+   },
+   {
+    "page": 329,
+    "pstyle": "Bembo@11/center",
+    "text": "From the time I left my city, I have never seen a shaykh."
+   },
+   {
+    "page": 330,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "217."
+   },
+   {
+    "page": 330,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "218."
+   },
+   {
+    "page": 331,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "219."
+   },
+   {
+    "page": 331,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "220."
+   },
+   {
+    "page": 332,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "221."
+   },
+   {
+    "page": 332,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "222."
+   },
+   {
+    "page": 333,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "223."
+   },
+   {
+    "page": 334,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Abbreviations and Works Cited"
+   },
+   {
+    "page": 335,
+    "pstyle": "Bembo@11/center",
+    "text": "(Tehran: Bungâh-i Tarjama wa Nashr-i Kitâb, 1352/1973)."
+   },
+   {
+    "page": 336,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Notes to the Passages"
+   },
+   {
+    "page": 336,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "part 1"
+   },
+   {
+    "page": 337,
+    "pstyle": "Bembo@11/center",
+    "text": "made the Prophet love them (see Murata, Tao, p. 186)."
+   },
+   {
+    "page": 338,
+    "pstyle": "Bembo@11/center",
+    "text": "two different names or the same name badly written."
+   },
+   {
+    "page": 338,
+    "pstyle": "Bembo@11/center",
+    "text": "deception in terms of the “veil.” See Suﬁsm, Chapter 10."
+   },
+   {
+    "page": 339,
+    "pstyle": "Bembo@11/center",
+    "text": "without suggesting that it goes back to an early saying."
+   },
+   {
+    "page": 339,
+    "pstyle": "Bembo@11/center",
+    "text": "diverted the attention of the prophets to the world."
+   },
+   {
+    "page": 340,
+    "pstyle": "Bembo@11/center",
+    "text": "After this case, the chain rose up and never returned."
+   },
+   {
+    "page": 341,
+    "pstyle": "Bembo@11/center",
+    "text": "On the burden of guidance, see his remarks in 3.169."
+   },
+   {
+    "page": 341,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Part 2."
+   },
+   {
+    "page": 341,
+    "pstyle": "Bembo@11/center",
+    "text": "Intellect a bond, the heart a trap, the spirit a veil—"
+   },
+   {
+    "page": 341,
+    "pstyle": "Bembo@11/center",
+    "text": "the ﬁve most important books in Shaﬁ’i jurisprudence."
+   },
+   {
+    "page": 342,
+    "pstyle": "Bembo@11/center",
+    "text": "some of Rumi’s relevant teachings, see SPL 113-18."
+   },
+   {
+    "page": 343,
+    "pstyle": "Bembo@11/center",
+    "text": "Shams uses it to symbolize the goal of the Suﬁ path."
+   },
+   {
+    "page": 343,
+    "pstyle": "Bembo@11/center",
+    "text": "“camel land” and could refer to the trackless desert."
+   },
+   {
+    "page": 344,
+    "pstyle": "Bembo@11/center",
+    "text": "What use to me are. . . . See the note on 2.211."
+   },
+   {
+    "page": 344,
+    "pstyle": "Bembo@11/center",
+    "text": "are not worthy of being Rumi’s disciples, much less his."
+   },
+   {
+    "page": 345,
+    "pstyle": "Bembo@11/center",
+    "text": "alive, he would ﬁnd it impossible not to follow me.”"
+   },
+   {
+    "page": 345,
+    "pstyle": "Bembo@11/center",
+    "text": "tanbihat) is one of Avicenna’s best known books."
+   },
+   {
+    "page": 345,
+    "pstyle": "Bembo@11/center",
+    "text": "Everyone’s death, O youth, takes his own color—"
+   },
+   {
+    "page": 345,
+    "pstyle": "Bembo@11/center",
+    "text": "A mirror held before a Turk has a ﬁne color;"
+   },
+   {
+    "page": 346,
+    "pstyle": "Bembo@11/center",
+    "text": "the foremost.” Compare M II 3056, III 1128, IV 3764."
+   },
+   {
+    "page": 346,
+    "pstyle": "Bembo@11/center",
+    "text": "ad-Din Kirmani, whom we met in passages 1.54 and 55."
+   },
+   {
+    "page": 346,
+    "pstyle": "Bembo@11/center",
+    "text": "untary acts of worship. See, for example, SPK 329-31."
+   },
+   {
+    "page": 349,
+    "pstyle": "Bembo@11/center",
+    "text": "greatest of the prophets on the basis of Koran 46:35."
+   },
+   {
+    "page": 350,
+    "pstyle": "Bembo@11/center",
+    "text": "ple to take him and his mother as gods apart from God."
+   },
+   {
+    "page": 351,
+    "pstyle": "Bembo@11/center",
+    "text": "is busy with my all, why did you turn toward another?’”"
+   },
+   {
+    "page": 352,
+    "pstyle": "Bembo@11/center",
+    "text": "anecdote of the mouse and the camel told in 3.212."
+   },
+   {
+    "page": 353,
+    "pstyle": "Bembo@11/center",
+    "text": "others used to die for them to come” (Maq 687)."
+   },
+   {
+    "page": 353,
+    "pstyle": "Bembo@11/center",
+    "text": "The Koran-bride.The line is by Sana’i (Diwan 52)."
+   },
+   {
+    "page": 353,
+    "pstyle": "Bembo@11/center",
+    "text": "from above and below” (M III 3212; see SPL 206 ff.)."
+   },
+   {
+    "page": 353,
+    "pstyle": "Bembo@11/center",
+    "text": "are utterly different from rote learning (see 2.31-41)."
+   },
+   {
+    "page": 354,
+    "pstyle": "Bembo@11/center",
+    "text": "everyone looks from the circle of his own existence.”"
+   },
+   {
+    "page": 354,
+    "pstyle": "Bembo@11/center",
+    "text": "self to the mountain (Koran 7:143; see note on 2.16)."
+   },
+   {
+    "page": 354,
+    "pstyle": "Bembo@11/center",
+    "text": "That you may see the heart. Sana’i, Diwan, 545."
+   },
+   {
+    "page": 355,
+    "pstyle": "Bembo@11/center",
+    "text": "now entering Islam and cutting the sash for good."
+   },
+   {
+    "page": 355,
+    "pstyle": "Bembo@11/center",
+    "text": "surveying all the stations of the travelers (SPK 375 ff.)."
+   },
+   {
+    "page": 355,
+    "pstyle": "Bembo@11/center",
+    "text": "Possessors of the kernels. See the note on 2.45."
+   },
+   {
+    "page": 355,
+    "pstyle": "Bembo@11/center",
+    "text": "On the sash and Abu Yazid, see the note on 2.187."
+   },
+   {
+    "page": 355,
+    "pstyle": "Bembo@11/center",
+    "text": "two mines (daw kân), being (kân), location (makân)."
+   },
+   {
+    "page": 356,
+    "pstyle": "Bembo@11/center",
+    "text": "In the book of my life, there’s only one page left,"
+   },
+   {
+    "page": 356,
+    "pstyle": "Bembo@11/center",
+    "text": "Everlasting life is shining on the page of the garden:"
+   },
+   {
+    "page": 356,
+    "pstyle": "Bembo@11/center",
+    "text": "no fear of change or place of disquiet is left."
+   },
+   {
+    "page": 356,
+    "pstyle": "Bembo@11/center",
+    "text": "words (compare Ibn Arabi’s remarks in SPK 243-44)."
+   },
+   {
+    "page": 357,
+    "pstyle": "Bembo@11/center",
+    "text": "M II 2218-51;Attar gives a brief version in MSM 114."
+   },
+   {
+    "page": 357,
+    "pstyle": "Bembo@11/center",
+    "text": "the sultan of sovereignty and Yours is the command.”"
+   },
+   {
+    "page": 358,
+    "pstyle": "Bembo@11/center",
+    "text": "need for such books; he wrote them only for his students."
+   },
+   {
+    "page": 358,
+    "pstyle": "Bembo@11/center",
+    "text": "practice, but he has nothing but praise for Ahmad."
+   },
+   {
+    "page": 358,
+    "pstyle": "Bembo@11/center",
+    "text": "Atabeg.The title of the Turkish rulers of Tabriz."
+   },
+   {
+    "page": 358,
+    "pstyle": "Bembo@11/center",
+    "text": "of the antidote, so no harm was done” (M VI 1345)."
+   },
+   {
+    "page": 358,
+    "pstyle": "Bembo@11/center",
+    "text": "Prophet used to fast for the ﬁrst ten days of the month."
+   },
+   {
+    "page": 359,
+    "pstyle": "Bembo@11/center",
+    "text": "explanations” and others, see Maybudi 6:96-97, 109-10."
+   },
+   {
+    "page": 359,
+    "pstyle": "Bembo@11/center",
+    "text": "“If not for thee, I would not have created the spheres.”"
+   },
+   {
+    "page": 359,
+    "pstyle": "Bembo@11/center",
+    "text": "(SPK 107), and a hadith is sometimes cited in support."
+   },
+   {
+    "page": 360,
+    "pstyle": "Bembo@11/center",
+    "text": "ability to do so (SPK 265, 267, 268, 313; SDG 382-83)."
+   },
+   {
+    "page": 360,
+    "pstyle": "Bembo@11/center",
+    "text": "The word suggests easy flowing or easy to drink."
+   },
+   {
+    "page": 361,
+    "pstyle": "Bembo@11/center",
+    "text": "Koran as a veiled bride (Fih 229/Arb 236-37; SPL 273)."
+   },
+   {
+    "page": 361,
+    "pstyle": "Bembo@11/center",
+    "text": "nation of the types of prophet, see Murata, Vision 133-34."
+   },
+   {
+    "page": 361,
+    "pstyle": "Bembo@11/center",
+    "text": "Rumi’s views on Alast, see SPL 68-72 and passim."
+   },
+   {
+    "page": 362,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Part 3"
+   },
+   {
+    "page": 363,
+    "pstyle": "Bembo@11/center",
+    "text": "overcome by need for God. On need, see the Glossary."
+   },
+   {
+    "page": 363,
+    "pstyle": "Bembo@11/center",
+    "text": "the feminine pronoun in Koran 93:7. See 2.235."
+   },
+   {
+    "page": 364,
+    "pstyle": "Bembo@11/center",
+    "text": "out religious learning is like a donkey in a mill”)."
+   },
+   {
+    "page": 364,
+    "pstyle": "Bembo@11/center",
+    "text": "âftâb, the equivalent of Arabic shams. Compare 3.18, 78."
+   },
+   {
+    "page": 364,
+    "pstyle": "Bembo@11/center",
+    "text": "Don’t look at me from your own weakness—"
+   },
+   {
+    "page": 365,
+    "pstyle": "Bembo@11/center",
+    "text": "I.e., the story of Mahmud and Ayaz told in 2.119."
+   },
+   {
+    "page": 365,
+    "pstyle": "Bembo@11/center",
+    "text": "on “the law of divorce”—the text mentioning zihar."
+   },
+   {
+    "page": 365,
+    "pstyle": "Bembo@11/center",
+    "text": "Interpretation of narratives. See the note on 2.30."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "All are guests at the table of your gentleness,"
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "but this servant’s child is more of a guest."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "but I am even more trackless and disordered."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "Love for you is the mine of endless good fortune,"
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "but union with your beauty is more of a mine."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "but the Indian blade of love is even sharper."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "Every heart flies after you with four wings—"
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "Seeing you would be cheap for a hundred souls—"
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "in exchange for my half-soul, it’s even cheaper."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "the wheel of love’s spheres turns even quicker."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "The deception of obstinate Pharaoh was a dragon"
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "But someone more Pharaoh than he appeared"
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "abandoning his kingdom, see M IV 726 ff., 829 ff."
+   },
+   {
+    "page": 367,
+    "pstyle": "Bembo@11/center",
+    "text": "“What happened? Did I call your shoes ‘booties’?”"
+   },
+   {
+    "page": 368,
+    "pstyle": "Bembo@11/center",
+    "text": "Nonetheless, this is not typical of Abu Yazid anecdotes."
+   },
+   {
+    "page": 369,
+    "pstyle": "Bembo@11/center",
+    "text": "hunting, and perhaps they were rewarded with cheese."
+   },
+   {
+    "page": 370,
+    "pstyle": "Bembo@11/center",
+    "text": "refers to not taking it back in M V 1008 and VI 4415 ff."
+   },
+   {
+    "page": 370,
+    "pstyle": "Bembo@11/center",
+    "text": "intellect’—only ‘companion of the heart’” (Maq 856)."
+   },
+   {
+    "page": 370,
+    "pstyle": "Bembo@11/center",
+    "text": "Water seeks a thirsty man. Compare M III 4398-99:"
+   },
+   {
+    "page": 371,
+    "pstyle": "Bembo@11/center",
+    "text": "He sits in front of me like a son. Compare 3.61."
+   },
+   {
+    "page": 373,
+    "pstyle": "Bembo@11/center",
+    "text": "instead (Maq 510). Rumi cites the hadith in M I 913."
+   },
+   {
+    "page": 375,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Index of Koranic Verses"
+   },
+   {
+    "page": 381,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Index of Hadiths and Sayings"
+   },
+   {
+    "page": 382,
+    "pstyle": "Bembo@11/center",
+    "text": "command to evil (M I 2954-57; II 2271-75; SPL 163-69)."
+   },
+   {
+    "page": 383,
+    "pstyle": "Bembo@11/center",
+    "text": "known You” earlier than Sana’i (see the note on 2.81)."
+   },
+   {
+    "page": 384,
+    "pstyle": "Bembo@11/center",
+    "text": "similar saying has been attributed to Shaﬁ’i (Maq 545)."
+   },
+   {
+    "page": 384,
+    "pstyle": "Bembo@11/center",
+    "text": "n., 220, 221. Bukhari (Sawm 20), Muslim (Siyam 57)."
+   },
+   {
+    "page": 385,
+    "pstyle": "Bembo@11/center",
+    "text": "Muslim (Fada’il 143) and Ibn Maja (Ruhun 15)."
+   },
+   {
+    "page": 385,
+    "pstyle": "Bembo@11/center",
+    "text": "to Abu Bakr, Shibli,Abu Yazid, and the Prophet."
+   },
+   {
+    "page": 385,
+    "pstyle": "Bembo@11/center",
+    "text": "heading of M IV 406. See The believers are like."
+   },
+   {
+    "page": 386,
+    "pstyle": "Bembo@11/center",
+    "text": "the outward and inward (Ghazali 1:432; SPK 363)."
+   },
+   {
+    "page": 387,
+    "pstyle": "Bembo@11/center",
+    "text": "(Anbiya 19). Rumi explains it in M II 2077 and VI 2827."
+   },
+   {
+    "page": 387,
+    "pstyle": "Bembo@11/center",
+    "text": "Tirmidhi (Manaqib 17), Ibn Maja (Muqadimma 11)."
+   },
+   {
+    "page": 387,
+    "pstyle": "Bembo@11/center",
+    "text": "2.249-51, 3.90.A sound hadith (Conc 3:129.32)."
+   },
+   {
+    "page": 387,
+    "pstyle": "Bembo@11/center",
+    "text": "1:147. For Rumi’s commentary, see M IV 2577 ff."
+   },
+   {
+    "page": 389,
+    "pstyle": "Bembo@11/center",
+    "text": "(4:73) cites a parallel saying from the Suﬁ Bishr al-Haﬁ."
+   },
+   {
+    "page": 389,
+    "pstyle": "Bembo@11/center",
+    "text": "walking, I come to him running” (Conc 3:58.26)."
+   },
+   {
+    "page": 390,
+    "pstyle": "Bembo@11/center",
+    "text": "nent, I oppose him on the Day of Resurrection.”"
+   },
+   {
+    "page": 390,
+    "pstyle": "Bembo@11/center",
+    "text": "Cf. Bukhari (Tawhid 44),Abu Dawud (Witr 20)."
+   },
+   {
+    "page": 390,
+    "pstyle": "Bembo@11/center",
+    "text": "sider their food, how We pour down water abundantly.”"
+   },
+   {
+    "page": 391,
+    "pstyle": "Bembo@11/center",
+    "text": "n., 3.157.Abu Dawud (Adab 116),Ahmad 5:194."
+   },
+   {
+    "page": 392,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Index and Glossary of Names and Terms"
+   },
+   {
+    "page": 395,
+    "pstyle": "Bembo@11/center",
+    "text": "from God is equivalent to all the good deeds of jinn and men.”"
+   },
+   {
+    "page": 395,
+    "pstyle": "Bembo@11/center",
+    "text": "in the sky? You should find a physician who can cure you.’”"
+   },
+   {
+    "page": 395,
+    "pstyle": "Bembo@11/center",
+    "text": "Rumi devotes a number of anecdotes to him in the Mathnawi."
+   },
+   {
+    "page": 403,
+    "pstyle": "Bembo@11/center",
+    "text": "acts, since it embraces states and stations as well (e.g., 2.74)."
+   },
+   {
+    "page": 405,
+    "pstyle": "Bembo@11/center",
+    "text": "the same sense (e.g. D vs. 30796; SPL 197; cf. passage 3.154)."
+   },
+   {
+    "page": 407,
+    "pstyle": "Bembo@11/center",
+    "text": "Rumi’s father who later became close to Shams (Aflaki 632)."
+   },
+   {
+    "page": 413,
+    "pstyle": "Bembo@11/center",
+    "text": "dence and theology. Sometimes contrasted with khanaqah."
+   },
+   {
+    "page": 415,
+    "pstyle": "Bembo@11/center",
+    "text": "haughtiness and “disdain” (nâz); 3.101, 148. See SPL 206-12."
+   },
+   {
+    "page": 419,
+    "pstyle": "Bembo@11/center",
+    "text": "name of God also means truth, rightness, and worthiness."
+   },
+   {
+    "page": 419,
+    "pstyle": "Bembo@11/center",
+    "text": "choosing the beautiful over the ugly (ihsan). See Murata, Vision."
+   },
+   {
+    "page": 419,
+    "pstyle": "Bembo@11/center",
+    "text": "equivalent to Arabic dhikr, translated here as “invocation.”"
+   },
+   {
+    "page": 425,
+    "pstyle": "Bembo@11/center",
+    "text": "declaration of incomparability (tanzîh). See the note on 2.42."
+   },
+   {
+    "page": 425,
+    "pstyle": "Bembo@11/center",
+    "text": "to the same person; the second may be the same as Siraj."
+   },
+   {
+    "page": 427,
+    "pstyle": "Bembo@11/center",
+    "text": "185, 216. Literally,“residing place” or “standing place.” See state."
+   },
+   {
+    "page": 433,
+    "pstyle": "Bembo-SC@11/center",
+    "text": "Table of Sources"
+   }
+  ],
+  "toc_pages": [
+   8,
+   9
+  ],
+  "toc_entries": [
+   {
+    "page": 8,
+    "text": "Foreword",
+    "label": "ix",
+    "target": 10
+   },
+   {
+    "page": 8,
+    "text": "Translator’s Introduction",
+    "label": "xi",
+    "target": 12
+   },
+   {
+    "page": 8,
+    "text": "Childhood",
+    "label": "3",
+    "target": 30
+   },
+   {
+    "page": 8,
+    "text": "My Teaching Career",
+    "label": "7",
+    "target": 34
+   },
+   {
+    "page": 8,
+    "text": "My Travels",
+    "label": "13",
+    "target": 40
+   },
+   {
+    "page": 8,
+    "text": "Teachers and Shaykhs I Have Met",
+    "label": "17",
+    "target": 44
+   },
+   {
+    "page": 8,
+    "text": "The Proﬁt and Loss of Study",
+    "label": "39",
+    "target": 66
+   },
+   {
+    "page": 8,
+    "text": "Philosophy",
+    "label": "62",
+    "target": 89
+   },
+   {
+    "page": 8,
+    "text": "Following Muhammad",
+    "label": "68",
+    "target": 95
+   },
+   {
+    "page": 8,
+    "text": "The Religion of Old Women",
+    "label": "88",
+    "target": 115
+   },
+   {
+    "page": 8,
+    "text": "The Guidance of the Shaykh",
+    "label": "103",
+    "target": 130
+   },
+   {
+    "page": 8,
+    "text": "Avoiding Caprice",
+    "label": "116",
+    "target": 143
+   },
+   {
+    "page": 8,
+    "text": "The Companion of the Heart",
+    "label": "126",
+    "target": 153
+   },
+   {
+    "page": 8,
+    "text": "The Saints",
+    "label": "139",
+    "target": 166
+   },
+   {
+    "page": 8,
+    "text": "My Interpretations of Scripture",
+    "label": "152",
+    "target": 179
+   },
+   {
+    "page": 8,
+    "text": "Our Encounter",
+    "label": "179",
+    "target": 206
+   },
+   {
+    "page": 8,
+    "text": "My Spiritual Mastery",
+    "label": "189",
+    "target": 216
+   },
+   {
+    "page": 8,
+    "text": "Mawlana’s Exalted Station",
+    "label": "205",
+    "target": 232
+   },
+   {
+    "page": 8,
+    "text": "Our Companionship",
+    "label": "211",
+    "target": 238
+   },
+   {
+    "page": 8,
+    "text": "My Instructions to the Circle",
+    "label": "230",
+    "target": 257
+   },
+   {
+    "page": 8,
+    "text": "My Critics",
+    "label": "265",
+    "target": 292
+   },
+   {
+    "page": 8,
+    "text": "My Harshness with Friends",
+    "label": "277",
+    "target": 304
+   },
+   {
+    "page": 8,
+    "text": "My Return from Aleppo",
+    "label": "302",
+    "target": 329
+   },
+   {
+    "page": 9,
+    "text": "Abbreviations and Works Cited",
+    "label": "307",
+    "target": 334
+   },
+   {
+    "page": 9,
+    "text": "Notes to the Passages",
+    "label": "309",
+    "target": 336
+   },
+   {
+    "page": 9,
+    "text": "Index of Koranic Verses",
+    "label": "348",
+    "target": 375
+   },
+   {
+    "page": 9,
+    "text": "Index of Hadiths and Sayings",
+    "label": "354",
+    "target": 381
+   },
+   {
+    "page": 9,
+    "text": "Index and Glossary of Names and Terms",
+    "label": "365",
+    "target": 392
+   },
+   {
+    "page": 9,
+    "text": "Table of Sources",
+    "label": "406",
+    "target": 433
+   }
+  ],
+  "toc_witness_table": [],
+  "toc_source_proposal": "printed",
+  "footnote_pages": [
+   7,
+   18,
+   433,
+   434,
+   435,
+   436,
+   437
+  ],
+  "footnote_marker_census": {
+   "digit": 1,
+   "*-inline": 370
+  },
+  "footnote_samples": [
+   {
+    "page": 7,
+    "text": "© 2004 William C. Chittick This edition printed and distributed by Fons Vitae, Louisville, Kentucky All rights reserved. No part of this book may be r"
+   },
+   {
+    "page": 18,
+    "text": "1 The thirteenth century philosopher Shahrazuri writes about Razi,“His ses- sion had majesty and grandeur. He used to act grandly even toward kings.Wh"
+   },
+   {
+    "page": 433,
+    "text": "MaqalatMe & 99-1003.921383.198 Rumi100-13.157138-393.34 692.110101-33.1431393.71 69-713.205103-53.91139-403.86 722.35105-63.1081402.73 73-743.1801063."
+   },
+   {
+    "page": 434,
+    "text": "Table of Sources 407 1782.26209-101.132403.68 1793.452102.1322411.25 1802.148210-112.912412.12 1802.2211-123.184241-423.120 180-813.96212-132.195242-4"
+   },
+   {
+    "page": 435,
+    "text": "408 Table of Sources 2812.663173.177625-261.6 281-822.232317-183.38626-271.21 282-832.72318-192.248627-283.46 2831.233193.1676283.15 283-842.176319-20"
+   }
+  ],
+  "footnote_policy_proposal": "markers",
+  "footnote_marker_proposal": "asterisk",
+  "median_leading": 13.0,
+  "indent_histogram": {
+   "9": 1881,
+   "11": 1665,
+   "20": 1,
+   "27": 564,
+   "29": 479,
+   "36": 99,
+   "38": 119,
+   "47": 2,
+   "49": 4,
+   "52": 4,
+   "54": 2,
+   "56": 1
+  },
+  "indent_threshold_proposal": 6.8,
+  "eol_hyphen_count": 900,
+  "lost_space_count": 3054,
+  "restore_spaces_proposal": true,
+  "dropcap_pages": [],
+  "pua_census": [],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 0,
+  "column_suspect_pages": [],
+  "low_agreement_pages": [
+   {
+    "page": 1,
+    "score": 0.0
+   },
+   {
+    "page": 8,
+    "score": 88.4
+   },
+   {
+    "page": 378,
+    "score": 89.0
+   },
+   {
+    "page": 380,
+    "score": 89.7
+   },
+   {
+    "page": 433,
+    "score": 44.1
+   },
+   {
+    "page": 434,
+    "score": 45.6
+   },
+   {
+    "page": 435,
+    "score": 44.2
+   },
+   {
+    "page": 436,
+    "score": 43.1
+   }
+  ],
+  "image_only_pages": [
+   1,
+   64,
+   204
+  ],
+  "cover_proposal": {
+   "mode": "render",
+   "page": 1,
+   "reason": "page 1 is image-dominated (2 image(s), 0 chars)"
+  },
+  "flagged_pages": [
+   1,
+   7,
+   8,
+   9,
+   18,
+   31,
+   64,
+   204,
+   378,
+   380,
+   433,
+   434,
+   435,
+   436
+  ],
+  "warnings": []
+ }
+}

@@ -1,0 +1,152 @@
+# Me & Rumi — final judgments (2026-07-08). Creo prepress 2004, no bookmarks,
+# no ToUnicode: printed TOC + 32 link annotations are the witnesses.
+
+source:
+  folder: "package"
+  pdf: "Me and Rumi with TOC links and cover.pdf"
+  sha256: "445fe4e1ea8fa64264730004992ba733eac566ffa506837d86b1b0c2373d1309"
+
+metadata:
+  title: "Me & Rumi"
+  subtitle: "The Autobiography of Shams-i Tabrizi"
+  creators:
+    - {name: "Shams-i Tabrizi", role: aut}
+    - {name: "William C. Chittick", role: trl}   # translated, introduced, annotated
+  publisher: "Fons Vitae"
+  language: en
+  additional_languages: []
+  isbn_epub:                     # none printed; urn:uuid — FLAGGED
+  isbn_print: "1-887752-52-8"
+  date: "2004"
+  cover: assets/cover.jpg
+  cover_render: {page: 1, box: trim, dpi: 300}   # p.1 CropBox isolates the
+                                                 # front panel of the spread
+
+pages:
+  cover: [1]
+  front: {first: 2, last: 27}    # roman; printed folio '1' on p.28 (part opener)
+  body:  {first: 28, last: 441}
+  # Multi-column index apparatus + tabular source table: excluded, FLAGGED
+  # (print-page references stay navigable via the EPUB page-list):
+  #   375-380 Index of Koranic Verses; 381-391 Index of Hadiths and Sayings;
+  #   392-432 Index and Glossary of Names and Terms; 433-436 Table of Sources
+  #   (a true table — out of v1 scope); 438-441 blank/back pages.
+  exclude: [375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387,
+            388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400,
+            401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413,
+            414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,
+            427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 438, 439, 440, 441]
+  label_source: printed-folios   # 96.6% agreement; /PageLabels off by one (cover='i')
+  label_overrides: {}
+  role_overrides:
+    - {page: 2, role: half-title}
+    - {page: 4, role: half-title}
+    - {page: 5, role: title-page}
+    - {page: 6, role: p}          # copyright
+    - {page: 7, role: half-title} # dedication
+
+furniture:
+  top_band: 40
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+
+styles:
+  body_pstyle: "Bembo@11"
+  pstyle_map:
+    "Bembo@11":              {role: p}
+    "Bembo-Italic@11":       {role: p}
+    "Bembo@11/center":       {role: h3}
+    "Bembo-SC@9":            {role: drop}    # running heads (small caps, fused folios)
+    "Bembo@10.5":            {role: p}       # block quotes
+    "Bembo@9":               {role: footnote}
+    "Bembo-Italic@9":        {role: drop}    # italic running heads
+    "Bembo-SC@11/center":    {role: h3}      # passage numbers + SC section heads
+    "Bembo@9/center":        {role: p}       # copyright block
+    "Bembo@13/center":       {role: h3}
+    "Bembo-Italic@10.5":     {role: p}
+    "Bembo-Italic@11/center": {role: h3}
+    "Bembo-SC@11":           {role: drop}    # stray head variant with fused folio
+    "Bembo@10.5/center":     {role: p}
+    "Bembo@21/center":       {role: h1}      # part titles + major sections
+    "Bembo-Italic@14":       {role: h2}
+    "Bembo-Italic@14/center": {role: h2}
+    "Bembo@14/center":       {role: h3}
+    "Bembo@24/center":       {role: title-page}
+    "Bembo@52/center":       {role: title-page}
+  charstyles:
+    Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 10
+  gap_factor: 1.6
+  dehyphenate: lower-only
+  restore_spaces: true            # 3054 lost-space hits (no ToUnicode maps)
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides:
+    - {page: 343, line: 31, action: "join", note: "mid-word break seam '...rse is typi-|cally take...'"}
+    - {page: 344, line: 23, action: "join", note: "mid-word break seam '...g his incom-|parability...'"}
+    - {page: 345, line: 2, action: "join", note: "mid-word break seam '... more expla-|nation of ...'"}
+    - {page: 345, line: 17, action: "join", note: "mid-word break seam '...sharat wa’t-|tanbihat) ...'"}
+    - {page: 346, line: 4, action: "join", note: "mid-word break seam '...) is a clas-|sic handbo...'"}
+    - {page: 346, line: 34, action: "join", note: "mid-word break seam '...ul than vol-|untary act...'"}
+    - {page: 349, line: 16, action: "join", note: "mid-word break seam '...re they hap-|pen. It is...'"}
+    - {page: 350, line: 8, action: "join", note: "mid-word break seam '...old the peo-|ple to tak...'"}
+    - {page: 351, line: 16, action: "join", note: "mid-word break seam '...ity of rela-|tionship b...'"}
+    - {page: 353, line: 21, action: "join", note: "mid-word break seam '...this conver-|sation was...'"}
+    - {page: 353, line: 36, action: "join", note: "mid-word break seam '..., this well-|known vers...'"}
+    - {page: 354, line: 14, action: "join", note: "mid-word break seam '...ans the sec-|tion of th...'"}
+    - {page: 354, line: 17, action: "join", note: "mid-word break seam '...closing him-|self to th...'"}
+    - {page: 356, line: 34, action: "join", note: "mid-word break seam '...e of a well-|known qasi...'"}
+    - {page: 361, line: 8, action: "join", note: "mid-word break seam '...rom the tra-|ditional b...'"}
+    - {page: 361, line: 12, action: "join", note: "mid-word break seam '...pical expla-|nation of ...'"}
+    - {page: 362, line: 13, action: "join", note: "mid-word break seam '...to be refer-|ring to hi...'"}
+    - {page: 364, line: 4, action: "join", note: "mid-word break seam '...shiper with-|out religi...'"}
+    - {page: 365, line: 15, action: "join", note: "mid-word break seam '...nd the vari-|ous accoun...'"}
+    - {page: 367, line: 32, action: "join", note: "mid-word break seam '....The expres-|sion is no...'"}
+    - {page: 368, line: 2, action: "join", note: "mid-word break seam '...ay be a mis-|reading fo...'"}
+    - {page: 368, line: 17, action: "join", note: "mid-word break seam '...n this anec-|dote in M ...'"}
+    - {page: 370, line: 17, action: "join", note: "mid-word break seam '...t the upper-|most limit...'"}
+    - {page: 370, line: 29, action: "join", note: "mid-word break seam '...this expres-|sion, mean...'"}
+    - {page: 371, line: 25, action: "join", note: "mid-word break seam '...e root mean-|ing of the...'"}
+    - {page: 371, line: 31, action: "join", note: "mid-word break seam '...rt of a sup-|plication ...'"}
+    - {page: 371, line: 35, action: "join", note: "mid-word break seam '... Rumi’s dis-|cussion of...'"}
+    - {page: 373, line: 11, action: "join", note: "mid-word break seam '...g and drink-|ing do, so...'"}
+
+footnotes:
+  policy: markers
+  marker: asterisk     # body notes are asterisks; the introduction's six
+                       # digit-note pages stay inline (small type) — FLAGGED
+
+toc:
+  source: printed
+  printed_pages: [8, 9]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 1         # chapters are TOC-only groupings with no physical
+                       # headings; nav mirrors parts + passage structure
+
+glyphs:
+  pua_map: {}
+  fail_on_unmapped_pua: true
+  gt_strip_phrases: []
+
+fonts:
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: me-and-rumi, include_ncx: true}

@@ -1,0 +1,108 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+source:
+  folder: "package"
+  pdf: "Me and Rumi with TOC links and cover.pdf"
+  sha256: "445fe4e1ea8fa64264730004992ba733eac566ffa506837d86b1b0c2373d1309"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> urn:uuid (flagged)
+  isbn_print:
+  date:
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (2 image(s), 0 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 2}   # FILL-ME-IN: no arabic folio '1' found
+  body:  {first: 3, last: 441}   # FILL-ME-IN
+  exclude: []
+  label_source: printed-folios   # folio-vs-label agreement: 96.6%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 40.4
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 68p): '#My Path to Go#'
+  # repeated (top, 64p): '# My Time With Mawlana'
+  # repeated (top, 57p): '#.'
+  # repeated (top, 20p): '# Index and Glossary of Names and Terms'
+  # repeated (top, 20p): '#ndex and Glossary of Names and Terms #'
+  # repeated (top, 18p): '#• Notes to the Passages #.#-#'
+  # repeated (top, 17p): '#y Instructions to the Circle #'
+  # repeated (top, 16p): '#My Years Without Mawlana'
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "Bembo@11"
+  pstyle_map:
+    "Bembo@11": {role: p}   # high: dominant text cluster
+    "Bembo-Italic@11": {role: p}   # low: body-like
+    "Bembo@11/center": {role: h3}   # low: centered, body-sized
+    "Bembo-SC@9": {role: footnote}   # low: small (9.0pt), frequent
+    "Bembo@10.5": {role: p}   # low: smaller than body (10.5pt)
+    "Bembo@9": {role: footnote}   # low: small (9.0pt), frequent
+    "Bembo-Italic@9": {role: footnote}   # low: small (9.0pt), frequent
+    "Bembo-SC@11/center": {role: h3}   # low: centered, body-sized
+    "Bembo@9/center": {role: footnote}   # low: small (9.0pt), frequent
+    "Bembo@13/center": {role: h2}   # medium: 13.0pt centered
+    "Bembo-Italic@10.5": {role: p}   # low: smaller than body (10.5pt)
+    "Bembo-Italic@11/center": {role: h3}   # low: centered, body-sized
+    "Bembo-SC@11": {role: p}   # low: body-like
+    "Bembo@10.5/center": {role: p}   # low: smaller than body (10.5pt)
+    "Bembo@21/center": {role: title-page}   # medium: size 21.0pt >= 1.8x body
+    "Bembo-Italic@14": {role: p}   # low: body-like
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 6.8
+  gap_factor: 1.6             # median leading measured: 13.0pt
+  dehyphenate: lower-only
+  restore_spaces: true       # lost-space hits: 3054
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: markers   # regions on 7 pages; census {'digit': 1, '*-inline': 370}
+  marker: asterisk
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: printed   # outline=0 printed=29 links=32
+  printed_pages: [8, 9]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: me-and-rumi, include_ncx: true}
