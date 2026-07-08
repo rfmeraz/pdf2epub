@@ -287,6 +287,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     def close_para():
         nonlocal open_para, open_is_body
         if open_para is not None and open_para.text().strip():
+            _collapse_cross_run_spaces(open_para)
             res.flow.blocks.append(open_para)
         open_para = None
         open_is_body = False
@@ -494,6 +495,24 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
     return False
 
 
+def _collapse_cross_run_spaces(para: Paragraph) -> None:
+    """'he ' + ' (may…' (glyph substitutions after space-trailing extraction
+    runs) must not render as a double space."""
+    prev_run = None
+    for it in para.items:
+        if isinstance(it, TextRun):
+            if prev_run is not None and \
+                    prev_run.text.endswith((" ", "\xa0")) and \
+                    it.text.startswith(" "):
+                prev_run.text = prev_run.text.rstrip(" \xa0")
+            # in-run double spaces from the same collision
+            if "  " in it.text or "\xa0 " in it.text:
+                it.text = re.sub(r"[ \xa0]{2,}", " ", it.text)
+            prev_run = it
+        else:
+            prev_run = None
+
+
 def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc) -> list[TextRun]:
     out: list[TextRun] = []
     for r in ln.runs:
@@ -587,12 +606,16 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
                 elif rule.action == "drop":
                     counts["pua-dropped"] += 1
                 elif rule.lang:
+                    if rule.char and rule.char.startswith(" "):
+                        buf = buf.rstrip(" \xa0")  # 'he\xa0' + ' (may…' = one space
                     if buf:
                         segs.append((buf, None))
                         buf = ""
                     segs.append((rule.char or "", rule.lang))
                     counts["pua-substituted"] += 1
                 else:
+                    if rule.char and rule.char.startswith(" "):
+                        buf = buf.rstrip(" \xa0")
                     buf += rule.char or ""
                     counts["pua-substituted"] += 1
             if buf:
@@ -653,6 +676,7 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
                                                 cfg.dehyphenate)
             para.items[-1].text = new_text + sep
         para.items.extend(runs)
+    _collapse_cross_run_spaces(para)
     return [para]
 
 

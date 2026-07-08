@@ -37,6 +37,7 @@ class ColumnGeometry:
     calls every full body line 'centered'; verified on Book of Knowledge)."""
     col_left: float
     col_right: float
+    body_size: float = 0.0  # dominant font size (chars-weighted)
 
     @property
     def center(self) -> float:
@@ -59,22 +60,39 @@ def column_geometry(doc: PdfDoc) -> ColumnGeometry:
                 rights[round(ln.x1)] += 1
     col_left = float(lefts.most_common(1)[0][0]) if lefts else 0.0
     col_right = float(rights.most_common(1)[0][0]) if rights else wmax
-    return ColumnGeometry(col_left, col_right)
+    size_chars: Counter[float] = Counter()
+    for p in doc.pages:
+        for ln in p.lines:
+            f = doc.fonts.get(ln.dominant_font())
+            if f:
+                size_chars[f.size] += len(ln.text())
+    body_size = size_chars.most_common(1)[0][0] if size_chars else 0.0
+    return ColumnGeometry(col_left, col_right, body_size)
 
 
 def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry) -> str:
     """Cluster key for a line: DominantFamily@size[/center]. Centered means
-    visually centered WITHIN the text column: indented from both edges with
-    the midpoint on the column center."""
+    visually centered WITHIN the text column: inset from BOTH edges by at
+    least 12% of the column width. A line starting at the body first-line
+    indent whose length lands its midpoint near center is a PARAGRAPH, not a
+    centered line ('This should suffice…', BoK p.206: x0 = indent, |center
+    offset| = 1.6pt — print shows an ordinary indented paragraph)."""
     fid = ln.dominant_font()
     f = doc.fonts.get(fid)
     if f is None:
         return "?@0"
     base = f"{f.family}@{f.size:g}"
     line_c = (ln.x0 + ln.x1) / 2
+    col_w = geo.col_right - geo.col_left
+    # the deep-inset requirement targets BODY-SIZE false positives only;
+    # display-size heads legitimately span most of the column
+    if geo.body_size and f.size <= geo.body_size + 1.0:
+        inset = max(CENTER_INSET, 0.12 * col_w)
+    else:
+        inset = CENTER_INSET
     if (abs(line_c - geo.center) <= CENTER_TOL
-            and ln.x0 >= geo.col_left + CENTER_INSET
-            and ln.x1 <= geo.col_right - CENTER_INSET):
+            and ln.x0 >= geo.col_left + inset
+            and ln.x1 <= geo.col_right - inset):
         return base + "/center"
     return base
 

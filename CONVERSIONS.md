@@ -88,3 +88,13 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
   than linked endnotes (marker census too sparse/mixed for reliable pairing —
   content fully preserved); human spot-read of quote-heavy pages recommended
   (62 residual fused patterns, informational).
+
+### 2026-07-08 addendum — typography fix pass (user-reported)
+
+All four books rebuilt after fixing the false-centered-line class (body-size
+paragraph lines whose midpoint lands near column center were rendered as
+centered h3 headings and entered the nav — e.g. BoK 'This should suffice…',
+verified against the print render). Body-size centered clusters are now
+centered PARAGRAPHS; MR's 13pt aphorism quotes likewise; nbsp+space visible
+gaps before honorific readings collapsed (0 remaining in all books). All
+four: epubcheck clean, QA Overall: PASS, tests green.

@@ -56,16 +56,16 @@ styles:
   pstyle_map:
     "Bembo@11":              {role: p}
     "Bembo-Italic@11":       {role: p}
-    "Bembo@11/center":       {role: h3}
+    "Bembo@11/center":       {role: p}
     "Bembo-SC@9":            {role: drop}    # running heads (small caps, fused folios)
     "Bembo@10.5":            {role: p}       # block quotes
     "Bembo@9":               {role: footnote}
     "Bembo-Italic@9":        {role: drop}    # italic running heads
     "Bembo-SC@11/center":    {role: h3}      # passage numbers + SC section heads
     "Bembo@9/center":        {role: p}       # copyright block
-    "Bembo@13/center":       {role: h3}
+    "Bembo@13/center":       {role: p}   # centered aphorism quotes, not headings
     "Bembo-Italic@10.5":     {role: p}
-    "Bembo-Italic@11/center": {role: h3}
+    "Bembo-Italic@11/center": {role: p}
     "Bembo-SC@11":           {role: drop}    # stray head variant with fused folio
     "Bembo@10.5/center":     {role: p}
     "Bembo@21/center":       {role: h1}      # part titles + major sections

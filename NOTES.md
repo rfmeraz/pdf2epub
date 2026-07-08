@@ -73,3 +73,21 @@ Field notes, verified facts, and lessons. Read before nontrivial changes; keep c
 - OCR for image-only pages: out of scope; such pages ship as figures when the agent can
   verify content from the render, else escalate.
 - Multi-column body text: detected + escalated, not converted.
+
+## 2026-07-08 — false-centered body lines (user-reported, all four books)
+
+A body-size line starting at the paragraph indent whose LENGTH happens to
+land its midpoint near column center is a PARAGRAPH, not a centered line
+(BoK p.206 'This should suffice…': x0 = indent, center offset 1.6pt; print
+shows an ordinary indented paragraph; the EPUB rendered it as a centered h3
+and put it in the nav). Fixes promoted to code + config doctrine:
+- line_pstyle: body-size lines need BOTH insets >= 12% of column width to
+  be '/center'; display-size lines keep the loose rule (wide heads are real).
+- Body-size '/center' clusters map to role p (the synthetic catalog still
+  emits text-align:center) — heading roles are for structure, not for
+  every visually centered line; this also stops nav pollution.
+- Audit tool: scan emitted h1-h3 for sentence-like text (>55 chars ending
+  in punctuation) — caught MR's centered aphorism quotes mis-roled as h3.
+- nbsp+space does NOT collapse in HTML rendering: glyph substitutions after
+  space-trailing runs need cross-run space collapsing (plain double spaces
+  are harmless — readers collapse them).

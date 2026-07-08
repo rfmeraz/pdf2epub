@@ -56,17 +56,18 @@ styles:
     "Minion@9":                   {role: footnote}
     "Minion-Italic@11":           {role: p}
     "Minion-Italic@10":           {role: p}
-    "Minion@11/center":           {role: h3}     # attributions/dividers (below nav_depth)
+    "Minion@11/center":           {role: p}     # attributions/dividers (below nav_depth)
     "Minion-Italic@8.5":          {role: footnote}
     "Minion@9/center":            {role: footnote}
     "Minion@12/center":           {role: h2}
     "Minion@8.5/center":          {role: footnote}
     "BriosoPro-Regular@12/center": {role: h2}    # chapter subtitle lines
+    "BriosoPro-Regular@12":       {role: h2}    # long subtitle lines (wide-centered)
     "Minion-SemiBold@13/center":  {role: h2}
     "Minion@10/center":           {role: p}
     "Minion@10.5":                {role: p}
     "Minion-Italic@9":            {role: footnote}
-    "Minion-Italic@11/center":    {role: h3}
+    "Minion-Italic@11/center":    {role: p}
     "Minion-Italic@8.5/center":   {role: p}
     "Minion@12":                  {role: p}
     "Minion-SemiBold@15/center":  {role: h1}     # section heads (Foreword etc.)
@@ -88,7 +89,7 @@ styles:
     "Minion@52.5":                {role: p}
     "Minion@32":                  {role: p}
     "BriosoPro-Regular@11":       {role: p}
-    "BriosoPro-Regular@11/center": {role: h3}
+    "BriosoPro-Regular@11/center": {role: p}
     "Honorifics@11":              {role: p}
     "Honorifics@11/center":       {role: p}
     "Honorifics@14":              {role: p}
