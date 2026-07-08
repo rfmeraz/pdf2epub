@@ -36,9 +36,14 @@ def _nest(entries: list[tuple[int, str, str]]) -> str:
             stack.pop()
             open_li = True
         if level > stack[-1]:
-            html.append("<ol>")
-            stack.append(level)
-            open_li = False
+            if not open_li:
+                # nothing to nest under (e.g. the document's FIRST heading is
+                # an h2): flatten instead of emitting <ol> directly in <ol>
+                level = stack[-1]
+            else:
+                html.append("<ol>")
+                stack.append(level)
+                open_li = False
         if open_li:
             html.append("</li>")
         html.append(f'<li><a href="{escape(href)}">{escape(title)}</a>')

@@ -25,6 +25,7 @@ from .analyze import (
 )
 from .config import PdfBookConfig
 from .core.model import (
+    Figure,
     FlowDoc,
     Note,
     NoteRef,
@@ -260,10 +261,35 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         open_para = None
         open_is_body = False
 
+    fig_page_map = {}
+    for fp in cfg.figure_pages:
+        for pg in fp.pages:
+            fig_page_map[pg] = fp
+
     for pno in sorted(pages_lines):
         anchor = PageAnchor(ordinal=pno, label=labels.get(pno, str(pno)),
                             approximate=False)
         lines = pages_lines[pno]
+
+        if pno in fig_page_map:
+            # whole page ships as a figure (JP-P4b); its text does NOT flow
+            close_para()
+            for a2 in pending_anchors:
+                res.flow.blocks.append(a2)
+            pending_anchors.clear()
+            res.flow.blocks.append(anchor)
+            fp = fig_page_map[pno]
+            trim = doc.page(pno).trim
+            alt = fp.alt_template.replace("{label}", labels.get(pno, str(pno)))
+            res.flow.blocks.append(Figure(
+                image_key=f"page-{pno:04d}.png",
+                source_basename=f"page-{pno:04d}.png", pdf_page=pno,
+                page_ordinal=pno, y_pt=trim[1], x_pt=trim[0],
+                width_pt=trim[2] - trim[0], height_pt=trim[3] - trim[1],
+                role="chinese-page", alt=alt))
+            counts["figure-pages"] += 1
+            prev_L = None
+            continue
 
         if pno in toc_paras:
             close_para()
