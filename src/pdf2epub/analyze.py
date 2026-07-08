@@ -166,10 +166,24 @@ def _band_stats(doc: PdfDoc) -> tuple[float, float]:
     return round(top, 1), 0.0
 
 
-def _detect_furniture(doc: PdfDoc, in_flow: list[PdfPage], min_pages: int = 3):
+def furniture_template(text: str) -> str:
+    """Normalize a candidate furniture line into its repeat-template.
+
+    Folio digits vary page-to-page and are often FUSED to the head text
+    ('14book of knowledge', 'Others13' — BoK), so template every digit run;
+    roman folios only at the line edges ('civil' is all roman letters)."""
+    t = normalize(text)
+    t = re.sub(r"\d+", "#", t)
+    # edge roman folios fuse to the head text too ('viiibook of knowledge',
+    # 'Contentsix' — BoK front matter), so no \b on the outer side
+    return re.sub(r"^[ivxlcdm]+|[ivxlcdm]+$", "#", t, flags=re.I).strip()
+
+
+def detect_furniture(doc: PdfDoc, in_flow: list[PdfPage], min_pages: int = 3):
     """Repeated running-head candidates. TOP band only, plus folio-only last
     lines — scanning generic bottom lines drags footnote citations in
-    (verified on Book of Knowledge: 'Abū Ṭālib al-Makkī' x18 templated)."""
+    (verified on Book of Knowledge: 'Abū Ṭālib al-Makkī' x18 templated).
+    Shared with flowbuilder so the strip set is derived identically."""
     counter: Counter[str] = Counter()
     where: dict[str, list[int]] = defaultdict(list)
     band: dict[str, str] = {}
@@ -178,13 +192,7 @@ def _detect_furniture(doc: PdfDoc, in_flow: list[PdfPage], min_pages: int = 3):
         if p.lines and is_folio_line(normalize(p.lines[-1].text())):
             cands.append(("bottom", p.lines[-1]))
         for pos, ln in cands:
-            t = normalize(ln.text())
-            # folio digits vary page-to-page; template them so heads with folios
-            # repeat. Digits are often FUSED to the head text ('14book of
-            # knowledge', 'Others13' — BoK), so template every digit run; roman
-            # folios only at the line edges ('civil' is all roman letters).
-            t_tpl = re.sub(r"\d+", "#", t)
-            t_tpl = re.sub(r"^[ivxlcdm]+\b|\b[ivxlcdm]+$", "#", t_tpl, flags=re.I).strip()
+            t_tpl = furniture_template(ln.text())
             if not t_tpl or len(t_tpl) > 60:
                 continue
             counter[t_tpl] += 1
@@ -316,7 +324,7 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
 
     # ---- furniture
     a.top_band, a.bottom_band = _band_stats(doc)
-    a.repeated_lines = _detect_furniture(doc, in_flow, min_repeat_pages)
+    a.repeated_lines = detect_furniture(doc, in_flow, min_repeat_pages)
 
     # ---- printed folios vs /PageLabels
     agree = 0
