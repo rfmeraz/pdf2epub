@@ -4,9 +4,13 @@ books/*/build/*
 # Regenerable analysis renders (analysis.json + structure_report.md ARE tracked)
 books/*/analysis/thumbs/
 books/*/analysis/pages/
+# Optional layout-witness evidence: advisory, regenerable, non-deterministic ML
+books/*/analysis/layout/
 # Vendored tools fetched by bootstrap
 vendor/
 # Python
 __pycache__/
 *.egg-info/
 .pytest_cache/
+# roborev snapshots
+/.roborev/

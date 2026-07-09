@@ -576,3 +576,47 @@ only reviewer that sees paragraph integrity and reader-level fusion/splitting.**
 - **Line-end dashes are continuations.** A soft/em/en-dash at a line end signals a
   hyphenation/clause continuation, not a ragged short line (`_CONT_DASHES`); a closed
   em/en-dash across a break joins WITHOUT a space (this book's dash style is closed).
+
+## Layout witness — optional ML third witness (2026-07-09)
+
+`src/pdf2epub/layoutwitness.py` adds a vision layout model as a THIRD analyze-time
+witness (marker/surya-inspired). It runs ONLY at `init` under `--layout`, writes advisory
+evidence to `books/<slug>/analysis/layout/` (git-ignored, regenerable), and NEVER touches
+`build` — the deterministic build still reads only book.yaml + the pinned PDF, so
+byte-reproducibility and never-invent-words hold. It flags structure (figure/table region
+rects, columns, footnotes, furniture, headings); the agent verifies each candidate against
+the overlay render before pasting into book.yaml. Same "engines witness, never co-author"
+boundary as poppler, one rung up (text→structure).
+
+- **Backend is transformers, NOT surya/marker.** Both surya-ocr and marker-pdf pin
+  `Pillow<11`; the repo runs Pillow 12 and Pillow 10 has no cp314 wheel (and this box has no
+  compiler headers / no alt Python / no uv). So they cannot install here. We load a
+  DocLayNet detector (`Aryn/deformable-detr-DocLayNet`, overridable via
+  `PDF2EPUB_LAYOUT_MODEL`) in-process through `transformers` — SAME 11-class taxonomy surya
+  emits (Table/Figure/Picture/Page-header/Page-footer/Footnote/Section-header/Caption/
+  List-item/Text/Title). Install: `pip install torch --index-url .../whl/cpu` THEN
+  `transformers`; also `torchvision` from the SAME cpu index (a PyPI torchvision mismatches
+  torch → `operator torchvision::nms does not exist`). `timm` is pulled transitively.
+- **Heavy imports are lazy** — importing the module costs nothing; torch/transformers load
+  only inside `--layout`. `layout_available()` gates; absent backend prints an install hint
+  and skips. Tests (`tests/test_layoutwitness.py`) are pure/faked and pass with the backend
+  absent.
+- **Coordinate map is a pure scale.** Full-page `get_pixmap(dpi=150)` shares the span-bbox
+  top-origin CropBox space, so box px → extract-space pt is `px*72/dpi`, no matrix/offset.
+  Validated: on BoK p.26 the witness Table `(71.1, 323.4, 361.6, 560.9)` ≈ the hand-authored
+  `figure_regions` `[70,319,367,567]` — independent rediscovery.
+- **Label bucketing gotcha:** DocLayNet has `Page-header` AND `Section-header`. Bucket
+  furniture on `page-header`/`page-footer` ONLY — a bare `header`/`footer` keyword mis-files
+  `Section-header` as furniture and drops the heading cross-check.
+- **flagged_pages is a capped render queue** — it misses clean text tables (high engine
+  agreement, no PUA). The witness default is `flagged ∪ structure-suspect` (column-suspect,
+  embedded-image, tabular-smell pages); the report always states scanned-vs-not so a miss is
+  never silent. Column detection is the weak signal (the model boxes a multi-col region
+  partially); rely on `column_suspect_pages` feeding structure-suspect, not on the witness.
+- **Benchmark baseline** (`scripts/bench_layout.py`, BoK, torch 2.13.0+cpu, transformers
+  5.13, Python 3.14, CPU-only): median **2.12 s/page** (p95 2.43, render ~0.03 + predict
+  ~2.08), model load ~1.4 s cached (~5 s first ever), peak RSS ~2.0 GB. Projections: 100p
+  ~3.5 min, 300p ~10.6 min, 500p ~17.6 min. **Decision:** default stays `flagged ∪
+  structure-suspect` (fast build-loop iteration), but `all` is cheap enough to be the routine
+  first pass on table/figure-bearing books — re-run this bench after a torch/transformers
+  upgrade.

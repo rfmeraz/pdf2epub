@@ -17,11 +17,24 @@ blocking. Python via `~/pyenv/bin/` only.
 - `~/pyenv/bin/pdf2epub init books/<slug>/package --workspace books/<slug>`
 - Read `analysis/structure_report.md` COMPLETELY. `cp book.yaml book.draft.yaml`
   (the draft-vs-final diff feeds the refinement loop).
+- Optional, for a structurally hard book (tables/figures set in prose, columned
+  back matter): add `--layout` (or `--layout --layout-pages all` for a thorough
+  first pass) to run the ML layout witness — advisory `analysis/layout/report.md`
+  + overlay renders. Off by default; needs `transformers` installed. See Step 2.
 
 ## Step 2 — Infer the structure (the judgment pass)
 
 LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
 `analysis/thumbs/`). Never decide a visual question from text evidence alone.
+
+- **Layout witness (advisory — only if you ran `--layout`)**: read
+  `analysis/layout/report.md`. It proposes paste-ready `images.figure_regions`
+  and `flow.columns` candidates and cross-checks footnotes / running heads /
+  section headers. It is a THIRD witness (like poppler for text): verify EVERY
+  candidate against its overlay render (`analysis/layout/p####.png`) before
+  pasting — it flags, it never decides, and its `alt:` fields are blank for you
+  to write from the render. Mind the coverage line at the top; a table on an
+  unscanned page is unseen — rerun with `--layout-pages all` if you suspect one.
 
 - **Metadata (JP-P5)**: read the title/copyright page renders; fill title,
   creators (marc roles: aut/trl/edt), publisher (from the copyright page — no

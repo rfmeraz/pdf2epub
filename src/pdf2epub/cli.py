@@ -21,6 +21,14 @@ def main(argv: list[str] | None = None) -> int:
                         help="The source PDF, or a package folder containing exactly one PDF")
     p_init.add_argument("--workspace", type=Path, required=True,
                         help="Per-book workspace directory")
+    p_init.add_argument("--layout", action="store_true",
+                        help="Run the optional ML layout witness (advisory "
+                             "structure evidence into analysis/layout/; needs "
+                             "transformers + torch)")
+    p_init.add_argument("--layout-pages", metavar="SPEC", default=None,
+                        help="Pages the layout witness scans: default "
+                             "flagged+structure-suspect; 'all'; '+sample:N'; or "
+                             "'26' / '322-336' (comma/space list)")
 
     p_build = sub.add_parser("build", help="Deterministic build: book.yaml -> EPUB")
     p_build.add_argument("config", type=Path, help="Path to book.yaml")
@@ -68,7 +76,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "init":
         from .initcmd import run_init
 
-        return run_init(args.pdf_or_folder, args.workspace)
+        return run_init(args.pdf_or_folder, args.workspace,
+                        layout=args.layout, layout_pages=args.layout_pages)
     if args.command == "build":
         from .build import run_build
 

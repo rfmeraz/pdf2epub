@@ -29,7 +29,8 @@ def _locate_pdf(pdf_or_folder: Path) -> Path:
     raise SystemExit(f"{pdf_or_folder}: not found")
 
 
-def run_init(pdf_or_folder: Path, workspace: Path) -> int:
+def run_init(pdf_or_folder: Path, workspace: Path, *,
+             layout: bool = False, layout_pages: str | None = None) -> int:
     pdf = _locate_pdf(pdf_or_folder)
     workspace = workspace.expanduser().resolve()
     workspace.mkdir(parents=True, exist_ok=True)
@@ -43,6 +44,21 @@ def run_init(pdf_or_folder: Path, workspace: Path) -> int:
                     "analysis": analysis_to_dict(a)}, ensure_ascii=False, indent=1))
     write_structure_report(doc, a, analysis_dir / "structure_report.md")
     render_thumbs(pdf, a.flagged_pages, analysis_dir)
+
+    if layout:
+        from . import layoutwitness as lw
+        if not lw.layout_available():
+            print("layout witness requested but the ML backend is not installed "
+                  "— skipping.")
+            print("  install: ~/pyenv/bin/pip install transformers "
+                  "(a CPU torch wheel must be present)")
+        else:
+            pages, sel = lw.resolve_pages(layout_pages, doc, a)
+            layout_dir = analysis_dir / "layout"
+            boxes = lw.run_layout_witness(pdf, pages, overlay_dir=layout_dir)
+            lw.write_layout_evidence(doc, a, boxes, pages, sel, layout_dir)
+            print(f"layout witness: scanned {len(pages)}/{doc.n_pages} pages "
+                  f"({sel}) -> {layout_dir / 'report.md'}")
 
     draft = _draft_yaml(pdf, doc, a, workspace)
     target = workspace / "book.yaml"
