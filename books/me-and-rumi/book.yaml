@@ -115,6 +115,9 @@ flow:
     - {page: 371, line: 31, action: "join", note: "mid-word break seam '...rt of a sup-|plication ...'"}
     - {page: 371, line: 35, action: "join", note: "mid-word break seam '... Rumi’s dis-|cussion of...'"}
     - {page: 373, line: 11, action: "join", note: "mid-word break seam '...g and drink-|ing do, so...'"}
+    - {page: 21, line: 1, action: "drop", note: "running head 'William C. Chittick' the furniture template missed; shipped as a stray 9pt-italic paragraph — render p.21 shows it in the top band"}
+    - {page: 62, line: 1, action: "drop", note: "running head 'Teachers and Shaykhs I Have Met' the furniture template missed; shipped as a stray smallcaps paragraph"}
+    - {page: 156, line: 1, action: "drop", note: "running head 'The Companion of the Heart' the furniture template missed; shipped as a stray smallcaps paragraph"}
 
 footnotes:
   policy: markers
@@ -147,6 +150,15 @@ images:
   max_pixels: 1600
   alt: {}
   decorative: []
-  figure_pages: []
+  figure_pages:
+    - pages: [437]
+      alt_template: "Photograph of a sculpture on the portal of the Yakutiye Medrese in Erzurum (1308): two confronted lions on either side of a palm tree representing the Tree of Life and the Fountain of Immortality, the lions symbolizing the cherubim guarding the way; with the publisher's caption on its symbolism"
+      # p.437 render 2026-07-09: a content photograph whose caption shipped
+      # while the image itself did not (caught by the warnings gate) — the
+      # whole page ships as a raster, caption included
+
+adjudications:
+  - {warning: image-only-page, pages: [64, 204], note: "part-opener pages ('My Path to God', 'My Time with Mawlana'): the heading text is live in the flow; only a decorative medallion is unshipped - renders reviewed 2026-07-09"}
+  - {warning: embedded-image-uncovered, pages: [4, 13, 15, 18, 25, 28, 64, 204], note: "renders reviewed 2026-07-09: title-page medallion + Fons Vitae logo (p.4), ornamental text dividers (pp.13/15/18/25), part-opener medallions (pp.28/64/204) - decorative, all live text flows"}
 
 output: {slug: me-and-rumi, include_ncx: true}

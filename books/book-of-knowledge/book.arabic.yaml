@@ -200,4 +200,8 @@ images:
       alt: "Table of the Arabic honorific glyphs used in this book, giving each glyph's English meaning and usage: Mighty and majestic is He (on mention of God); Peace be upon him or them (on mention of one or more prophets); Exalted and Most High (on mention of God); May the peace and blessings of God be upon him (on mention of the Prophet); May God be pleased with him or them (on mention of one or more Companions of the Prophet); May God be pleased with her (on mention of a female companion of the Prophet)."
       note: "glyph legend table; verified on p.26 render"
 
+adjudications:
+  - {warning: top-band-kept, pages: [4], note: "'Al-Ghazali' is the title page's display line inside the top band, correctly kept - p.4 render 2026-07-09"}
+  - {warning: rtl-live-text, note: "user-requested Arabic-glyph variant (NOTES 2026-07-09): short inline strong-RTL phrases inside LTR paragraphs, bidi-rendered correctly with no dir attrs; verified in Chrome renders. RTL PARAGRAPHS remain a hard stop"}
+
 output: {slug: book-of-knowledge-arabic, include_ncx: true}

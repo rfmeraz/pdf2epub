@@ -135,6 +135,12 @@ images:
   alt: {}
   decorative: []
   figure_pages:
+    - pages: [8]
+      keep_text: true
+      alt_template: "Facsimile plate: the Yin-Yang Diagram from the Arabic translation of Liu Zhi's Tianfang Xingli, two diagram roundels set in dense Arabic commentary text (Sharh al-Lata'if by Ma Lian-yuan)"
+      # p.8 render 2026-07-09: a content facsimile whose typeset caption
+      # shipped while the plate did not (caught by the warnings gate);
+      # keep_text keeps the caption live (I&B Dalai Lama letter precedent)
     - pages: [33]
       alt_template: "Calligraphy plate: the five Chinese characters of the Five Pillars — 念 (remembrance), 禮 (ritual prayer), 齋 (fasting), 課 (dues), 朝 (pilgrimage) — arranged in a circle"
     # The classical Chinese source text (vertical typesetting, mirror-bound:
@@ -143,5 +149,8 @@ images:
     - pages: ["79-145"]
       alt_template: "Original vertical Chinese text of The Exposition of the Five Pillars of Islam, printed page {label}"
       lang: zh
+
+adjudications:
+  - {warning: embedded-image-uncovered, pages: [5, 6, 43, 46, 50, 53, 56], note: "renders reviewed 2026-07-09: calligraphic section-glyph ornaments heading each Five-Pillars chapter group (and their small TOC counterparts pp.5-6); the chapter headings carry the titles in English - accepted as text-only"}
 
 output: {slug: harmonious-unity, include_ncx: true}

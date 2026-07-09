@@ -193,6 +193,8 @@ flow:
     - {page: 112, line: 25, action: "break", note: "body resumes after subsection head"}
     - {page: 117, line: 16, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Loving Compassion: Karunā and Rahma"}
     - {page: 117, line: 17, action: "break", note: "body resumes after subsection head"}
+    - {page: 166, line: 0, action: "drop", note: "garbled running head '%LEOLRJUDSK\\' (shifted-CMap 'Bibliography'); repaired it would ship as a stray h3 duplicating the real heading — render-verified furniture"}
+    - {page: 168, line: 0, action: "drop", note: "same garbled 'Bibliography' running head as p.166"}
     - {page: 121, line: 6, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Source of Compassion"}
     - {page: 121, line: 7, action: "break", note: "body resumes after subsection head"}
     - {page: 123, line: 3, action: "role:h3", note: "TOC-listed subsection head set flush-left in body type: Oneness and Compassion"}
@@ -233,10 +235,27 @@ glyphs:
     "\u01B0": "\u016B"   # ư -> ū
     "\u014C": "\u016A"   # ǌ variant
     "\u01CC": "\u016B"   # ǌ -> ū
-    "\u00B5": "\u02BF"   # µ -> ʿ (ayn)
-    "\u00B6": "\u02BE"   # ¶ -> ʾ (hamza)
+    # µ/¶ are the LEFT/RIGHT SINGLE QUOTE glyphs of the broken subset —
+    # used both as quotation marks ("God asks you, 'Did you create...'",
+    # p.160 render) AND as ayn/hamza in transliterations ('Abd al-Karim,
+    # p.140 render), exactly as the book's healthy pages extract them
+    # (U+2018/U+2019); the earlier ʿ/ʾ reading shipped modifier letters as
+    # quote punctuation. All entries render-verified 2026-07-09.
+    "\u00B5": "\u2018"   # µ -> ' (left single quote / ayn glyph)
+    "\u00B6": "\u2019"   # ¶ -> ' (right single quote / hamza glyph)
+    "\u00B3": "\u201C"   # ³ -> " (p.138 'I have left for you two things')
+    "\u00B4": "\u201D"   # ´ -> " (p.138 'you will not go astray')
+    "\u00B2": "\u2014"   # ² -> em dash (p.143 'submission to God—has been')
+    "\u00AB": "\u2026"   # « -> ellipsis (p.151 'among the Muslims ... named')
+    "\u0196": "\u0100"   # Ɩ -> Ā (p.159 'Ibn ʿĀbidīn')
     "\u2026": "\u2026"
     "\x0e": " (may the peace and blessings of God be upon him)"  # honorific dingbat after 'Prophet Muhammad'; context-verified
+  fffd_repairs:
+    # long runs of U+FFFD (extractor's unmapped-glyph placeholder) between
+    # a note number and its text / at a sentence seam; renders show NO
+    # visible content at those spots (invisible zero-width prepress glyphs)
+    - {pages: [36, 37, 38, 41, 42, 44, 47], replace: "", note: "notes 10/12/13/18/20/22/25: FFFD runs after the note number; renders pp.36-47 show only the space before the note text"}
+    - {pages: [98], replace: "", note: "FFFD run after 'utterly \u2018empty\u2019.' mid-paragraph; p.98 render shows the sentence flowing straight on"}
 
 fonts:
   embed: []
@@ -255,5 +274,14 @@ images:
     - pages: [8]
       keep_text: true
       alt_template: "Facsimile of the Dalai Lama's typewritten foreword letter on his letterhead: he calls this an important and pioneering book seeking common ground between Islam and Buddhism, describes the Buddhist practice of compassion and the Muslim ideal of universal compassion as a shared heart, thanks Prince Ghazi bin Muhammad, and signs it; dated January 21, 2010. (Proofread finding: the letter is an image both text engines are blind to.)"
+
+qa:
+  # broken-subset residue: every non-ASCII char the shifted essay fonts can
+  # emit (highmap keys + repaired forms' sources); legitimate nowhere in
+  # this book's healthy text
+  garble_chars: "\u00B2\u00B3\u00B4\u00AB\u00B5\u00B6\u0196\u0197\u01AF\u01B0\u014C\u01CC"
+
+adjudications:
+  - {warning: embedded-image-uncovered, pages: [4, 22, 53, 163], note: "renders reviewed 2026-07-09: p.4 Fons Vitae title-page logo, p.22 preface ornament stamp, p.53 lotus section medallion, p.163 bio-page ornament - decorative, all live text flows"}
 
 output: {slug: islam-and-buddhism, include_ncx: true}
