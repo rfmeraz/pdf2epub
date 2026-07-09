@@ -37,10 +37,11 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
     9pt note text), so the `digit + [.)]/tab/2-space` text pattern never matched →
     `0 notes`; every multi-line footnote shattered per line AND its un-extracted
     lines broke the body paragraphs around them. New `_note_start`/`_note_marker`
-    detect a superscript OR smaller-font leading digit; note-continuation merge and
-    marker capture were still on the old regex (merged 1+2+3 into one note; marker
-    fell back to '*' so noterefs didn't attach) → both re-pointed at `_note_start`.
-    Result: 0 → 170 linked endnotes.
+    detect a superscript OR smaller-font leading digit; THREE more spots were still
+    on the old regex — note-continuation merge (merged 1+2+3 into one note), marker
+    capture (fell back to '*' so noterefs didn't attach), and marker STRIP (left the
+    printed '1' before the auto-numbered <li> — user-reported) → all re-pointed at
+    `_note_start`/`_note_marker`. Result: 0 → 170 clean, linked endnotes.
   - SOFT HYPHENS: MuPDF emits U+00AD at print line breaks; `normalize` strips them
     for the gates but the FLOW shipped 1159, several as a visible "eso­ terism"
     space at line joins. `_apply_textfix` strips embedded/space-seam soft hyphens;

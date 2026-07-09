@@ -1080,10 +1080,24 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
         runs = _mk_runs(L.ln, cfg, doc)
         runs = _apply_textfix(runs, cfg, counts, L.page)
         if first:
-            # strip the printed marker; the emitter numbers the endnote list
-            if runs and isinstance(runs[0], TextRun):
-                pat = _NOTE_START_DIGIT if cfg.footnote_marker == "digits" else _NOTE_START_STAR
-                runs[0].text = pat.sub("", runs[0].text, count=1)
+            # strip the printed marker (the emitter numbers the endnote list).
+            # Match it by VALUE, not the _NOTE_START_DIGIT text pattern: the
+            # marker is a smaller-font/superscript run set 'N ' with a single
+            # space (often its OWN run), which that pattern misses — leaving a
+            # stray '1' before the auto-numbered <li>.
+            marker = _note_marker(group[0], cfg.footnote_marker)
+            if marker and runs and isinstance(runs[0], TextRun):
+                runs[0].text = re.sub(
+                    r"^\s*" + re.escape(marker) + r"[.)]?\s*", "",
+                    runs[0].text, count=1)
+            # the marker may have been its own run; drop any now-empty leading
+            # runs and trim the space it left on the note's first word
+            for r in runs:
+                if isinstance(r, TextRun) and r.text.strip():
+                    r.text = r.text.lstrip()
+                    break
+                if isinstance(r, TextRun):
+                    r.text = ""
             first = False
         if para.items and isinstance(para.items[-1], TextRun) and runs:
             nxt = next((r.text for r in runs

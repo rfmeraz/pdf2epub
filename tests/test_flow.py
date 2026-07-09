@@ -774,7 +774,10 @@ def test_footnote_extracted_and_joined(tmp_path):
     assert len(res.flow.notes) == 1
     note = next(iter(res.flow.notes.values()))
     assert len(note.paragraphs) == 1
-    assert "wraps across two typeset lines" in note.paragraphs[0].text()
+    txt = note.paragraphs[0].text()
+    assert "wraps across two typeset lines" in txt
+    # the printed marker '1' is stripped (the <ol> numbers the endnote itself)
+    assert txt.startswith("This footnote body") and not txt.lstrip()[:1].isdigit()
 
 
 def test_footnotes_not_merged_across_marked_pages(tmp_path):
