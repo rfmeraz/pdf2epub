@@ -1,7 +1,8 @@
-"""QA gate suite: 19 gates. Gates 1-10 and 11b (noteref seams) must pass;
-11-12 informational; 13-17 (typographic fidelity) report
-would-PASS/would-FAIL and gate once promoted via typography.GATING;
-18 (--visual) emits agent-graded contact sheets and is always informational.
+"""QA gate suite: 20 gates. Gates 1-10, 11b (noteref seams) and 19
+(Qurʾānic citations) must pass; 11-12 informational; 13-17 (typographic
+fidelity) report would-PASS/would-FAIL and gate once promoted via
+typography.GATING; 18 (--visual) emits agent-graded contact sheets and is
+always informational.
 
 Ground truth and expectations are re-derived deterministically from
 (source PDF, book.yaml) — the same inputs the build used — via an
@@ -273,6 +274,16 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
             css_text=_read_css(ep), source_entries=source_entries):
         gates.append((g.name, (g.ok if g.name in typography.GATING else None),
                       g.lines))
+
+    # ---- gate 19: Qurʾānic citation index — validates a 'Qurʾānic verses
+    # cited' apparatus against the Qurʾān's fixed structure (sura:verse
+    # ranges, entry order, page labels). The columned index pages are
+    # engine-disputed, so gate 2's coverage witness is blind there — this
+    # is the deterministic check that catches column interleaving.
+    from .quran import check_quran_index
+
+    qres = check_quran_index(body_docs, set(nav.pagelist_labels))
+    gates.append(("19 quran citations", qres.ok, qres.lines))
 
     # ---- gate 18 (info, --visual): sampled contact sheets for agent grading
     if visual:

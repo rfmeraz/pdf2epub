@@ -85,7 +85,11 @@ def check_heading_pages(
             heading_page.append((value, current))
 
     used: set[int] = set()
-    for title, label in toc_entries:
+
+    def _norm(s: str) -> str:
+        return " ".join(s.lower().split())
+
+    def process(title: str, label: str) -> None:
         res.checked += 1
         best_score = 0.0
         candidates: list[int] = []
@@ -99,7 +103,7 @@ def check_heading_pages(
                 candidates.append(i)
         if not candidates or best_score < MATCH_THRESHOLD:
             res.notes.append(f"TOC entry has no matching heading (info): {title!r}")
-            continue
+            return
         # a book may repeat a heading (part-title pages); among equally good
         # title matches, prefer the one on the page the contents assigns
         allowed = {label, prev_of.get(label)}
@@ -114,6 +118,18 @@ def check_heading_pages(
                 f"heading {heading!r} sits at printed page {at_page!r}, "
                 f"but the book's contents places it on {label!r}"
             )
+
+    # exact-title entries claim their headings FIRST: a grouping bookmark
+    # with no printed heading of its own ('Indexes', BoK back matter) must
+    # not fuzzy-steal another entry's heading ('Index') and report it as
+    # sitting on the wrong page
+    heading_norms = {_norm(h) for h, _ in heading_page}
+    deferred = [e for e in toc_entries if _norm(e[0]) not in heading_norms]
+    for title, label in toc_entries:
+        if _norm(title) in heading_norms:
+            process(title, label)
+    for title, label in deferred:
+        process(title, label)
     return res
 
 

@@ -9,15 +9,20 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
 ## book-of-knowledge — 2026-07-07
 
 - Source: `adult-The_Book_of_Knowledge_cover and TOC links.pdf` (sha256 48ea4f71…, InDesign CS6/2015, 338 pp).
-- Result: build `epubcheck: clean`; QA `Overall: PASS` (coverage 99.21%, 670/670 notes placed, 323-entry page-list, byte-reproducible).
+- Result: build `epubcheck: clean`; QA `Overall: PASS` (coverage 99.06%, 670/670 notes placed, 336-entry page-list, byte-reproducible).
 - Judgments worth remembering:
   - 23 Honorifics-font PUA glyphs identified from 350dpi crops against the book's own
     legend (Publisher's Note p.26) and rendered as parenthesized English readings —
     incl. raḥimahu llāh forms the legend omits, dual forms (Ibn ʿAbbās, Ibn Ḥanbal+Sufyān),
     and a full basmala calligraphy line. FLAG: publisher may prefer Arabic glyphs + font.
   - eBook ISBN 978-1-941610-21-3 printed on the copyright page — no uuid fallback needed.
-  - Two-column Index (pp.324–336) EXCLUDED (column-interleaved extraction; page-list keeps
-    print-page navigation working) + image-only closing page 338. FLAG for publisher.
+  - Columned back matter flows via `flow.columns` (2026-07-08 rework — the original
+    conversion shipped the Qurʾānic Verses Cited pages COLUMN-INTERLEAVED because
+    pp.322-323 sat outside the excluded index range, and gate 2 was blind there:
+    engine-disputed pages leave the coverage ground truth; user-reported): 3-col
+    Qurʾānic index pp.322-323 + 2-col general index pp.324-336, both verified against
+    print renders; gate 19 now validates the Qurʾānic citations structurally. Only the
+    image-only closing page 338 stays excluded.
   - 4 flow.overrides: hanging-indent turnovers (numbered list + Qurʾān quotes) the indent
     rule misread as paragraph starts.
 - Lessons promoted: coverage/gt reconciliation for glyph substitutions and renumbered

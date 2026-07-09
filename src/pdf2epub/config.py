@@ -51,6 +51,18 @@ class FlowOverride:
 
 
 @dataclass(slots=True)
+class ColumnSpec:
+    """Pages set in N print columns (tabular back matter: indexes, verse
+    tables). The flow re-splits baseline-fused lines at the column gutters
+    and reads column-by-column; every column-left line starts its own entry
+    paragraph, indented lines are hanging-indent turnovers that join.
+    Columned PROSE is still out of scope (escalate per the skill)."""
+    pages: list[int]
+    count: int
+    note: str = ""
+
+
+@dataclass(slots=True)
 class CharStyleFlags:
     smallcaps: bool = False
     symbol: bool = False
@@ -147,6 +159,7 @@ class PdfBookConfig:
     join_center_lines: bool = True
     reattach_dropcaps: bool = True
     flow_overrides: list[FlowOverride] = field(default_factory=list)
+    flow_columns: list[ColumnSpec] = field(default_factory=list)
 
     # footnotes (JP-P4)
     footnote_policy: str = "none"   # none | markers
@@ -338,7 +351,7 @@ def load_config(path: Path) -> PdfBookConfig:
     fl = data.get("flow", {})
     _check_keys("flow", fl, {"indent_threshold", "gap_factor", "dehyphenate",
                              "restore_spaces", "join_center_lines",
-                             "reattach_dropcaps", "overrides"})
+                             "reattach_dropcaps", "overrides", "columns"})
     cfg.indent_threshold = float(fl.get("indent_threshold", cfg.indent_threshold))
     cfg.gap_factor = float(fl.get("gap_factor", cfg.gap_factor))
     cfg.dehyphenate = fl.get("dehyphenate", cfg.dehyphenate)
@@ -354,6 +367,22 @@ def load_config(path: Path) -> PdfBookConfig:
             raise ConfigError(f"flow.overrides action invalid: {action}")
         cfg.flow_overrides.append(FlowOverride(page=int(ov["page"]), line=int(ov["line"]),
                                                action=action, note=ov.get("note", "")))
+    for cs in fl.get("columns", []) or []:
+        _check_keys("flow.columns[]", cs, {"pages", "count", "note"})
+        pages = []
+        for item in cs["pages"]:
+            if isinstance(item, str) and "-" in item:
+                a, b = item.split("-", 1)
+                pages.extend(range(int(a), int(b) + 1))
+            else:
+                pages.append(int(item))
+        count = int(cs["count"])
+        if count < 2:
+            raise ConfigError("flow.columns count must be >= 2")
+        if not pages:
+            raise ConfigError("flow.columns needs at least one page")
+        cfg.flow_columns.append(ColumnSpec(pages=pages, count=count,
+                                           note=cs.get("note", "")))
 
     fn = data.get("footnotes", {})
     _check_keys("footnotes", fn, {"policy", "marker", "region_max_size"})

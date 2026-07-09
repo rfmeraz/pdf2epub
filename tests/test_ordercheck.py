@@ -76,3 +76,16 @@ def test_duplicate_headings_prefer_page_agreement():
     toc = [("Chinese Text", "1")]
     res = check_heading_pages(seq, toc, PAGE_ORDER)
     assert res.ok and res.matched_entries == 1
+
+
+def test_grouping_entry_must_not_steal_exact_heading():
+    # BoK back matter: the outline's 'Indexes' grouping bookmark (p.'i' here,
+    # no printed heading of its own) must not fuzzy-claim the 'Index' heading
+    # that belongs to the exact entry two pages later
+    seq = [("page", "i"), ("heading", "Verses Cited"),
+           ("page", "iii"), ("heading", "Index")]
+    toc = [("Indexes", "i"), ("Index", "iii")]
+    res = check_heading_pages(seq, toc, ["i", "ii", "iii", "iv"])
+    assert res.ok, res.violations
+    assert res.matched_entries == 1  # 'Index' exact; 'Indexes' is an info note
+    assert any("Indexes" in n for n in res.notes)

@@ -334,3 +334,60 @@ def test_textfix_functions():
     assert dehyphenate_join("At twenty-", "two, he")[2] is False
     assert dehyphenate_join("a low-", "lying parcel")[2] is False
     assert dehyphenate_join("must follow-", "ing")[2] is True  # not 'low-'
+
+
+def _runline(specs, y):
+    """PdfLine from [(text, x0, x1), ...] run specs (baseline-fused columns)."""
+    runs = [PdfRun(text=t, font_id=SMALL, x0=a, y0=y, x1=b, y1=y + 10)
+            for t, a, b in specs]
+    return PdfLine(runs=runs, x0=min(r.x0 for r in runs), y0=y,
+                   x1=max(r.x1 for r in runs), y1=y + 10)
+
+
+def test_flow_columns_resplit(tmp_path):
+    from pdf2epub.config import ColumnSpec
+
+    # two-column index page: a centered heading spans the gutter (~192-221);
+    # some lines arrive baseline-FUSED across both columns, one col-1 entry
+    # carries a hanging-indent turnover, and column 2 holds its own lines
+    pages = [_page(1, [
+        _runline([("Qur'anic Verses Cited", 180.0, 260.0)], 100),
+        _runline([("2:44, 169, 183", 72.0, 160.0),
+                  ("18:67, 145", 222.0, 320.0)], 130),
+        _runline([("2:89, 174", 72.0, 150.0),
+                  ("18:70, 145", 222.0, 330.0)], 142),
+        _runline([("ablutions, 33, 66,", 72.0, 190.0)], 154),
+        _runline([("71, 108", 103.5, 150.0),
+                  ("20:24, 102", 222.0, 310.0)], 166),
+    ])]
+    cfg = _cfg(tmp_path, flow_columns=[ColumnSpec(pages=[1], count=2)])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    texts = [p.text() for p in _paras(res.flow)]
+    assert texts == [
+        "Qur'anic Verses Cited",       # spanner emits before the columns
+        "2:44, 169, 183",              # column 1, top to bottom
+        "2:89, 174",
+        "ablutions, 33, 66, 71, 108",  # turnover joined to its entry
+        "18:67, 145",                  # then column 2
+        "18:70, 145",
+        "20:24, 102",
+    ]
+    assert res.counts.get("column-pages") == 1
+    assert res.counts.get("column-spanners") == 1
+
+
+def test_flow_columns_no_gutter_warns(tmp_path):
+    from pdf2epub.config import ColumnSpec
+
+    # full-width prose lines: no gutter exists — page must stay in y-order
+    # with a loud warning, never silently mangle
+    pages = [_page(1, [
+        _line("An ordinary full width body line of text here", 100),
+        _line("and another one continuing the paragraph.", 113),
+    ])]
+    cfg = _cfg(tmp_path, flow_columns=[ColumnSpec(pages=[1], count=2)])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    assert any("gutters were not found" in w.msg for w in res.warns)
+    assert [p.text() for p in _paras(res.flow)] == [
+        "An ordinary full width body line of text here "
+        "and another one continuing the paragraph."]

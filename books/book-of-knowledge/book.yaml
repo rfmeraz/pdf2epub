@@ -28,11 +28,12 @@ pages:
   cover: [1]
   front: {first: 2, last: 47}    # roman folios; body folio '1' prints on p.48
   body:  {first: 48, last: 338}
-  # Index (pp.324-336) is set in two print columns; single-column line order
-  # interleaves the columns (engine-agreement flagged exactly these pages).
-  # Its page references remain reachable via the EPUB page-list. FLAGGED in
-  # handoff. p.338 is an image-only closing page (no text layer).
-  exclude: [324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 338]
+  # p.338 is an image-only closing page (no text layer). The columned back
+  # matter (Qurʾānic index pp.322-323, general index pp.324-336) flows via
+  # flow.columns below — engine-agreement flags those pages (poppler reads
+  # columns, MuPDF y-sorts), so gate 2 excludes them; gate 19 validates the
+  # Qurʾānic citations instead.
+  exclude: [338]
   label_source: pdf-page-labels   # folio-vs-label agreement 100% on 325 pages
   label_overrides: {}
   role_overrides:
@@ -119,6 +120,12 @@ flow:
     - {page: 236, line: 16, action: join, note: "Quran-quote turnover 'destruc-/tion'"}
     - {page: 239, line: 16, action: join, note: "quote turnover 'atten-/tion'"}
     - {page: 276, line: 14, action: join, note: "quote turnover 'sub-/missive'"}
+  # columned back matter (verified on p.322/324/330 renders + run geometry:
+  # gutters at ~170/270 for the 3-col verse index, ~215 for the 2-col index;
+  # entries one per line with hanging-indent turnovers)
+  columns:
+    - {pages: [322, 323], count: 3, note: "Qurʾānic Verses Cited"}
+    - {pages: ["324-336"], count: 2, note: "general index"}
 
 footnotes:
   policy: markers

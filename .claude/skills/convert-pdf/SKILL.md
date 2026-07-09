@@ -65,10 +65,16 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
   each entry, then fix via config or a `flow.overrides` entry ({page, line
   (RAW extract index), action, note}) — config fixes preferred; a code fix
   requires a unit test. Gate 2's missing-segment list is the real audit:
-  every segment must be explainable (two-column index pages, glyph readings,
+  every segment must be explainable (engine-disputed columned pages, glyph readings,
   dropped ornaments) or it's stop-the-line.
-- Known judgment patterns: two-column index/back matter → exclude those pages
-  (`pages.exclude`) with a note, or accept interleaved order explicitly;
+- Known judgment patterns: columned index/back matter (the engine-agreement
+  score flags exactly those pages) → `flow.columns: [{pages: [...], count: N,
+  note: ...}]` after confirming the column count on a render; the flow
+  re-splits fused lines at the section's gutters and reads column-by-column,
+  one entry per column-left line with hanging-indent turnovers joined. Verify
+  the result against the print render; a "gutters were not found" warning
+  means the spec is wrong — fix it or fall back to `pages.exclude` with a
+  note. A Qurʾānic verses index gets validated by gate 19 automatically.
   9-10pt block quotes near footnote regions → check gate 3 counts; folio
   offsets → `label_overrides`.
 
@@ -116,6 +122,7 @@ in the handoff report).
 
 Rewriting or inventing the book's words (beyond the deterministic textfix
 rules); embedding non-OFL fonts; live RTL text runs; true tables; multi-column
-BODY text (index/back-matter columns may be excluded with a note instead);
+BODY PROSE (tabular index/back-matter columns flow via `flow.columns`;
+`pages.exclude` with a note is the fallback, not the default);
 image-only pages whose content you cannot verify from renders; any glyph
 unidentifiable from its render.

@@ -24,12 +24,15 @@ Adobe products.
    produces makes the build reproducible and auditable.
 4. **`pdf2epub build`** is fully deterministic from (PDF, book.yaml): strip
    furniture, split footnotes, join lines into paragraphs (dehyphenation,
-   drop-cap reattachment), apply roles, insert exact printed-page markers,
+   drop-cap reattachment), re-split columned back matter into print reading
+   order (`flow.columns`: indexes and other tabular apparatus whose baseline-
+   fused lines would otherwise interleave), apply roles, insert exact
+   printed-page markers,
    rebuild the Contents with live hyperlinks, emit XHTML+CSS, subset OFL fonts,
    and package a byte-reproducible EPUB. Ambiguities WARN into
    `build/warnings.md` with ready-to-paste override snippets; nothing is ever
    silently dropped.
-5. **`pdf2epub qa`** runs 19 gates: epubcheck, text coverage against an
+5. **`pdf2epub qa`** runs 20 gates: epubcheck, text coverage against an
    independent poppler extraction, footnote placement, navigation, images/alt,
    reading order (every TOC entry's heading on its printed page), TOC agreement,
    furniture leaks, hyphenation and private-use residue, an optional
@@ -39,7 +42,12 @@ Adobe products.
    centered source lines, emphasis is conserved, headings are typographically
    real, and each page's block-level signature (size buckets + centering)
    matches print — and a noteref-seam lint (11b: a letter directly after a
-   note marker is always a lost join). `qa --visual` adds gate 18: sampled
+   note marker is always a lost join). Gate 19 validates a shipped "Qurʾānic
+   verses cited" index against the Qurʾān's fixed structure (114 suras with
+   Ḥafṣ/Kufan verse counts, monotone entry order, page refs in the page-list):
+   the columned index pages are engine-disputed so gate 2's coverage witness
+   is blind there, and column interleaving produces impossible citations this
+   gate catches deterministically. `qa --visual` adds gate 18: sampled
    side-by-side contact sheets (print page vs anchor-sliced EPUB render in
    headless Chrome), PUA glyph crop pairs, and figure perceptual-hash checks
    into `build/qa_visual/` for the converting agent to grade against a

@@ -93,3 +93,25 @@ def test_rejections(tmp_path, snippet, err):
     p.write_text(snippet)
     with pytest.raises(ConfigError, match=err):
         load_config(p)
+
+
+def test_flow_columns_parsing(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text(
+        "source: {folder: p, pdf: b.pdf}\n"
+        "flow:\n"
+        "  columns:\n"
+        "    - {pages: [322, 323], count: 3, note: quran index}\n"
+        "    - {pages: [\"324-326\"], count: 2}\n")
+    cfg = load_config(p)
+    assert cfg.flow_columns[0].pages == [322, 323]
+    assert cfg.flow_columns[0].count == 3
+    assert cfg.flow_columns[1].pages == [324, 325, 326]
+    with pytest.raises(ConfigError, match="count must be >= 2"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "flow: {columns: [{pages: [1], count: 1}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="unknown key"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "flow: {columns: [{pages: [1], count: 2, gutter: 10}]}")
+        load_config(p)

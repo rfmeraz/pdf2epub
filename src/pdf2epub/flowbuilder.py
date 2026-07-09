@@ -82,6 +82,12 @@ class _L:
     idx: int  # RAW extract line index within the page
     ln: PdfLine
     ps: str
+    # flow.columns pages only: 0-based column this (re-split) line belongs
+    # to, -1 for full-width spanner lines and every non-columned page
+    colno: int = -1
+    # columned lines join by INDENT, not by _break_before: a column-left
+    # line starts its own entry, a hanging-indent turnover continues one
+    entry_break: bool = True
 
 
 def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
@@ -128,6 +134,22 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 head_y0s[round(ln.y0)] += 1
     head_base = head_y0s.most_common(1)[0][0] if sum(head_y0s.values()) >= 5 else None
 
+    # ---- flow.columns: gutters are computed per SPEC (the whole columned
+    # section), then applied per page
+    col_splits_by_page: dict[int, list[float]] = {}
+    for cs in cfg.flow_columns:
+        spec_pages = [doc.page(cp) for cp in cs.pages if cp in in_flow_nums]
+        splits = _column_splits(spec_pages, cs.count)
+        if splits is None:
+            warns.append(_Warn(
+                f"flow.columns pages {cs.pages[0]}-{cs.pages[-1]}: expected "
+                f"{cs.count} columns but the gutters were not found — pages "
+                "left in y-sorted order (interleaving risk; fix the spec or "
+                "exclude the pages)", cs.pages[0]))
+            continue
+        for cp in cs.pages:
+            col_splits_by_page[cp] = splits
+
     # ---- per-page: strip furniture, split footnotes, collect body lines
     pages_lines: dict[int, list[_L]] = {}
     page_notes: dict[int, list[list[_L]]] = {}  # page -> list of note line-groups
@@ -171,9 +193,16 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                         f"{{page: {p.number}, line: {idx}, action: drop, note: FILL}}"))
             kept.append(L)
 
-        # footnote region split (bottom small-font block)
+        if p.number in col_splits_by_page and kept:
+            kept = _column_resplit(kept, col_splits_by_page[p.number], doc,
+                                   cfg, geo, counts)
+
+        # footnote region split (bottom small-font block); flow.columns pages
+        # are tabular back matter and carry no footnote apparatus — their
+        # all-small-font body would otherwise read as one huge note region
         notes_here: list[list[_L]] = []
-        if cfg.footnote_policy == "markers" and kept:
+        if cfg.footnote_policy == "markers" and kept \
+                and p.number not in col_splits_by_page:
             max_sz = cfg.footnote_region_max_size or (body_size - 1.5)
             region: list[_L] = []
             for L in reversed(kept):
@@ -357,6 +386,9 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 
             if prev_dropcap and act != "break":
                 brk = False  # the letter's own paragraph continues here
+            elif L.colno >= 0:
+                # columned entry lines: indent decides (see _column_resplit)
+                brk = (act == "break") or (act != "join" and L.entry_break)
             else:
                 brk = _break_before(L, prev_L, act, body_ps, cfg, geo, med_lead,
                                     open_is_body, pno)
@@ -530,6 +562,118 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
     if (L.ln.y0 - prev.ln.y0) > cfg.gap_factor * med_lead:
         return True
     return False
+
+
+_GUTTER_MIN_W = 6.0        # pt: narrower x-coverage gaps are word spaces
+_GUTTER_COVER_FRAC = 0.06  # a gutter is crossed by (almost) no lines
+_GUTTER_START_FRAC = 0.2   # …and hugged on its right by column-start runs
+
+
+def _column_splits(pages: list, count: int) -> list[float] | None:
+    """Gutter split points for one flow.columns spec, from the RAW lines of
+    ALL its pages: the column grid is a property of the columned SECTION —
+    a single sparse page (BoK p.323, 15 index lines) leaves the whitespace
+    channel between an entry and its right-aligned page numbers as the
+    widest low-coverage strip, but aggregated over the section that channel
+    fills in while the true gutters stay empty. Gutters are interior
+    low-coverage strips hugged on their right by column-start runs (the
+    start-density test rejects a column's ragged right edge; the interior
+    test rejects the folio margin). None = not enough gutters found."""
+    runs_all = [r for p in pages for ln in p.lines for r in ln.runs]
+    n_lines = sum(len(p.lines) for p in pages)
+    if not runs_all or count < 2:
+        return None
+    lo = int(min(r.x0 for r in runs_all))
+    hi = int(max(r.x1 for r in runs_all)) + 1
+    cover = [0] * (hi - lo + 1)
+    for r in runs_all:
+        for x in range(int(r.x0) - lo, int(r.x1) + 1 - lo):
+            cover[x] += 1
+    thresh = max(1, int(_GUTTER_COVER_FRAC * n_lines))
+    min_starts = max(3, int(_GUTTER_START_FRAC * n_lines))
+    gaps: list[tuple[float, int, int]] = []  # (width, a, b) in page coords
+    a = None
+    for x in range(len(cover) + 1):
+        low = x < len(cover) and cover[x] <= thresh
+        if low and a is None:
+            a = x
+        elif not low and a is not None:
+            ga, gb = a + lo, x - 1 + lo
+            n_starts = sum(1 for r in runs_all if gb - 1 <= r.x0 <= gb + 4)
+            if gb - ga >= _GUTTER_MIN_W and ga > lo and n_starts >= min_starts:
+                gaps.append((float(gb - ga), ga, gb))
+            a = None
+    if len(gaps) < count - 1:
+        return None
+    # split just left of the gutter's RIGHT edge: column starts hug it,
+    # while the left boundary is fuzzy (ragged right ends of the previous
+    # column reach variably far into the low-coverage strip)
+    gaps.sort(reverse=True)
+    return sorted(gb - 2.0 for _, ga, gb in gaps[:count - 1])
+
+
+def _column_resplit(kept: list[_L], splits: list[float], doc: PdfDoc,
+                    cfg: PdfBookConfig, geo: ColumnGeometry,
+                    counts: Counter) -> list[_L]:
+    """Re-order a flow.columns page into print reading order (NOTES: the
+    extract-stage baseline merge fuses same-baseline runs ACROSS columns;
+    runs keep their bboxes, so the flow re-splits at the column gutters).
+
+    Fused lines split into per-column lines; whole lines land in the column
+    holding their runs; a line with a run CROSSING a gutter (a centered
+    heading) is a full-width spanner that flushes the columns read so far
+    and starts a new band. Entry paragraphing is by indent: column-left =
+    new entry, deeper = a hanging-indent turnover that joins (tabular back
+    matter; columned prose stays out of scope). RAW line indexes are
+    preserved on the split lines, so overrides/provenance address the
+    fused source line."""
+    count = len(splits) + 1
+
+    def bucket(x: float) -> int:
+        return sum(1 for s in splits if x > s)
+
+    out: list[_L] = []
+    band: list[list[_L]] = [[] for _ in range(count)]
+    col_lines: list[list[_L]] = [[] for _ in range(count)]  # page-wide, for geometry
+
+    def flush() -> None:
+        for c in range(count):
+            out.extend(band[c])
+            band[c] = []
+
+    for L in kept:
+        if any(r.x0 <= s - 3 and r.x1 >= s + 3 for r in L.ln.runs for s in splits):
+            flush()
+            out.append(L)  # spanner: page-wide ps already computed
+            counts["column-spanners"] += 1
+            continue
+        by_col: dict[int, list[PdfRun]] = {}
+        for r in L.ln.runs:
+            by_col.setdefault(bucket((r.x0 + r.x1) / 2), []).append(r)
+        for c, rr in sorted(by_col.items()):
+            ln2 = PdfLine(runs=rr, vertical=L.ln.vertical)
+            ln2.x0 = min(r.x0 for r in rr)
+            ln2.y0 = min(r.y0 for r in rr)
+            ln2.x1 = max(r.x1 for r in rr)
+            ln2.y1 = max(r.y1 for r in rr)
+            L2 = _L(L.page, L.idx, ln2, L.ps, colno=c)
+            band[c].append(L2)
+            col_lines[c].append(L2)
+    flush()
+
+    # per-column geometry: pstyles and entry indents are column-relative
+    for c in range(count):
+        if not col_lines[c]:
+            continue
+        cgeo = ColumnGeometry(col_left=min(L.ln.x0 for L in col_lines[c]),
+                              col_right=max(L.ln.x1 for L in col_lines[c]),
+                              body_size=geo.body_size)
+        for L in col_lines[c]:
+            L.ps = line_pstyle(L.ln, doc, cgeo, None)
+            L.entry_break = L.ln.x0 < cgeo.col_left + cfg.indent_threshold
+    counts["column-pages"] += 1
+    counts["column-lines"] += sum(len(cl) for cl in col_lines)
+    return out
 
 
 def _collapse_cross_run_spaces(para: Paragraph) -> None:

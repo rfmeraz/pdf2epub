@@ -39,12 +39,12 @@ Field notes, verified facts, and lessons. Read before nontrivial changes; keep c
 - **Internal TOC links are LINK_NAMED (kind 4), not LINK_GOTO** in all four test books
   (InDesign named destinations); PyMuPDF reports the target as a 1-BASED page-number
   STRING (verified vs pypdf). Handle both kinds.
-- **Two-column back matter (BoK index pp. ~322–337) interleaves under y-sorted line
+- **Columned back matter (BoK indexes pp.322–336) interleaves under y-sorted line
   order** — the agreement score flags exactly those pages. The extract-stage baseline
   merge (needed to reunite heading+folio fragments) also fuses same-baseline runs across
-  columns; runs keep their bboxes, so a column-aware flow pass can re-split at the column
-  gap for pages the agent marks as columned. Until that exists, multi-column pages
-  escalate per the skill.
+  columns; runs keep their bboxes, so `flow.columns` re-splits at the section's gutters
+  and reads column-by-column (see the 2026-07-08 design entry below). Columned body
+  PROSE still escalates per the skill.
 - PyMuPDF's page space is CropBox-anchored: slug text outside the CropBox never appears
   in get_text at all (poppler differs). The TrimBox clip only fires when trim ⊂ crop.
 
@@ -72,7 +72,8 @@ Field notes, verified facts, and lessons. Read before nontrivial changes; keep c
 - RTL live text: detect + warn + escalate (unimplemented, same as idml2epub).
 - OCR for image-only pages: out of scope; such pages ship as figures when the agent can
   verify content from the render, else escalate.
-- Multi-column body text: detected + escalated, not converted.
+- Multi-column body PROSE: detected + escalated, not converted (tabular
+  back matter converts via flow.columns since 2026-07-08).
 
 ## 2026-07-08 — false-centered body lines (user-reported, all four books)
 
@@ -255,3 +256,54 @@ collapsed them into a handful of systemic classes. Lessons:
   footnote-region failures (inline '12. See…' notes + folio leaks mid-prose);
   fused/possibly-missing endnotes (printed 12-15); dash/slash seam-space
   class needs per-instance print checks.
+
+## flow.columns + gate 19 (Qurʾānic citations) — 2026-07-08
+
+User-reported: BoK shipped its 'Qurʾānic Verses Cited' pages (322-323)
+column-INTERLEAVED. Root cause chain worth remembering: the original
+conversion excluded the general index (324-336) for exactly this hazard but
+missed that the verse index sat on two more columned pages OUTSIDE that
+range; and no gate could see it — engine-disputed pages (agreement < 90)
+leave gate 2's ground truth, which is precisely what columned pages are.
+A whole failure class (columned back matter) lived in the coverage witness's
+blind spot.
+
+- **flow.columns design** (the NOTES seed above, now built): gutters are
+  computed per SPEC over the raw lines of ALL its pages, not per page — a
+  single sparse page (p.323, 15 lines) leaves the whitespace channel between
+  an entry and its right-aligned page numbers as the widest low-coverage
+  strip; aggregated over the section that channel fills in while true
+  gutters stay empty. A gutter must be interior (rejects the folio margin),
+  ≥6pt, low-coverage (≤6% of lines may cross: a centered heading does), and
+  hugged on its right by column-START runs (≥20% of lines; rejects the
+  ragged right edge of index columns). Split points sit 2pt left of the
+  gutter's RIGHT edge (column starts hug it; the left boundary is fuzzy).
+  A run crossing a split = full-width spanner (the 'Index' heading): flush
+  columns read so far, emit in place, new band. Entry paragraphing on
+  columned pages is by indent alone (column-left = new entry, deeper =
+  hanging-indent turnover joins — BoK turnovers sit +21..31pt, threshold
+  is flow.indent_threshold); the ordinary joiner rules don't apply (tab-
+  leader entries END at the column right edge, so prev_short never fires).
+  Footnote-region detection is skipped on columned pages (an all-9pt page
+  would read as one giant note region continuing the previous page's notes).
+  RAW line indexes are preserved on split lines: overrides/para_lines
+  provenance address the fused source line (coarse but documented).
+- **Gate 19**: a Qurʾānic verses index is the one apparatus with a fully
+  checkable external structure — 114 suras, fixed Ḥafṣ/Kufan verse counts
+  (sum 6236, pinned by test), monotone (sura, verse) entry order, page refs
+  ⊆ page-list labels. Interleaving produces impossible refs ('9318:67')
+  and order breaks. Regression cell: the OLD shipped BoK EPUB fires 131
+  defects; the fixed build is silent (132 entries, 0 defects). Heading scan
+  requires the Qurʾān to be NAMED (a bare 'Verses Cited' could index a
+  scripture this table can't judge).
+- **Gate 6 lesson**: re-including the indexes surfaced a matcher bug — the
+  outline's 'Indexes' GROUPING bookmark (no printed heading of its own)
+  fuzzy-stole the 'Index' heading from the exact-titled entry two pages
+  later. Fix: exact-title entries claim their headings first; grouping
+  bookmarks fall through to an info note. (qa_ordercheck, unit-tested.)
+- Verified against print renders of pp.322 and 330 entry-by-entry (3-col
+  verse index incl. the p.322→323 seam 35:8→35:28; 2-col index incl. the
+  'knowledge' sub-entry run where italic 'kalām' sorts WITHIN the
+  sub-entries, and the joined '189' turnover of 'of [practical] conduct').
+  BoK rebuilt: epubcheck clean, qa Overall: PASS, coverage 99.06%,
+  page-list 321→336 labels.

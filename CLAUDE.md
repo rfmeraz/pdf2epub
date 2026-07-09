@@ -24,7 +24,8 @@ A human drops a PDF at `books/<slug>/package/` (cover art, if separate, in
 inspects the finished EPUB in a reader; **every other decision is the agent's**. The
 `/convert-pdf` skill (`.claude/skills/convert-pdf/SKILL.md`) is the process definition:
 deterministic extract+analyze produce evidence, the agent infers the book's structure
-(the AI-agent step: pstyle roles, page ranges, TOC source, footnotes, PUA glyphs, cover)
+(the AI-agent step: pstyle roles, page ranges, TOC source, footnotes, PUA glyphs, cover,
+columned back matter)
 and records every judgment in `book.yaml`, then `build` is fully deterministic. After QA,
 the mandatory reading-QA step (`/proofread-epub`: blind reader subagents over `pdf2epub
 proofread` packets, findings verified against print renders, fixes only via config/code)
@@ -57,10 +58,12 @@ co-author). `analyze.py` gathers deterministic evidence (font clusters → pstyl
 folio-vs-label agreement, TOC witnesses, footnote regions, PUA census, join stats) into
 `analysis/` for the agent. `flowbuilder.py` applies the recorded judgments to produce the
 typed FlowDoc IR (furniture strip, footnote split, paragraph join with dehyphenation and
-drop-cap reattachment, textfix, printed-TOC rebuild, exact PageAnchors). `core/` is the
+drop-cap reattachment, flow.columns re-split of columned back matter into print reading
+order, textfix, printed-TOC rebuild, exact PageAnchors). `core/` is the
 back-end forked from idml2epub: role application, CJK lang tagging, XHTML emitter, synthetic
 CSS, nav, OFL font subsetting, deterministic packager, and the EPUB-generic QA gates.
-`qa/` runs 19 gates (incl. 11b noteref-seam); text ground truth is poppler-extracted,
+`qa/` runs 20 gates (incl. 11b noteref-seam and 19 Qurʾānic-citation validation against
+the fixed 114-sura structure); text ground truth is poppler-extracted,
 trim-cropped, footnote-stripped page text through the same textfix/normalize chain the flow
 used; gates 13-17 grade
 typographic fidelity (shipped CSS+markup vs raw extract geometry, sliced per source page via
