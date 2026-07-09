@@ -110,6 +110,32 @@ def lost_space_count(text: str) -> int:
     return len(_LOST_SPACE.findall(text))
 
 
+_SEAM_BAD = re.compile(r"[A-Za-z0-9]")
+_XHTML_NS = "{http://www.w3.org/1999/xhtml}"
+
+
+def noteref_seam_defects(docs) -> list[str]:
+    """A letter/digit DIRECTLY after a noteref anchor is always a conversion
+    artifact (a lost join separator or a fused paragraph): 'word.⁵Next'.
+    Punctuation, quotes, and dashes legitimately follow markers ('…word⁵—',
+    '…word⁵”.'). Must run BEFORE the runner strips noteref anchors."""
+    out: list[str] = []
+    for doc in docs:
+        for a in doc.root.iter(f"{_XHTML_NS}a"):
+            if "noteref" not in (a.get("class") or ""):
+                continue
+            tail = a.tail or ""
+            if not tail or not _SEAM_BAD.match(tail[0]):
+                continue
+            prev = a.getprevious()
+            parent = a.getparent()
+            before = ((prev.tail if prev is not None else
+                       (parent.text if parent is not None else "")) or "")
+            marker = "".join(a.itertext()).strip()
+            out.append(f"{doc.href}: …{before[-30:]}[{marker}]{tail[:40]}")
+    return out
+
+
 def parse_nav_toc(nav_root) -> list[tuple[int, str]]:
     """(depth, title) pairs from nav.xhtml's doc-toc, depth = ol nesting."""
     X = "{http://www.w3.org/1999/xhtml}"

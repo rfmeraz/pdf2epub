@@ -89,6 +89,18 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
 - Manual probes the tool cannot do: tap-test three deep TOC entries in a
   reader; page-list spot-check against two known printed pages.
 
+## Step 4.5 — Reading QA (mandatory)
+
+Invoke the `proofread-epub` skill on the built EPUB. The gates prove the
+words arrived and still look right; this step proves the book READS right:
+deterministic packets from the shipped EPUB (`pdf2epub proofread`), one
+blind reader subagent per packet under `build/proofread/PROTOCOL.md`,
+adversarial verification of every finding against print renders
+(`pdf2epub lines <config> <page> --render`), and fixes only via
+flow.overrides/config/code. Do not proceed to Step 5 until the proofread
+loop ends with zero new confirmed findings (or the remainder is escalated
+in the handoff report).
+
 ## Step 5 — Ledger, commit, handoff
 
 - Append a CONVERSIONS.md entry: date, source sha256, decisions worth

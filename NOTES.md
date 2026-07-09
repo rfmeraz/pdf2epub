@@ -210,3 +210,48 @@ p.227 — same shape, unreported); zero in the other three books.
   would have de-centered 21 BoK + 35 MR lines including GENUINE title-page
   centering and MR verse lines — the predecessor-line signal is what makes
   the rule surgical (4 hits, all true positives).
+
+## Proofread harness: first acceptance run (2026-07-08, I&B)
+
+21 blind readers over 24 packets returned 328 findings; root-cause work
+collapsed them into a handful of systemic classes. Lessons:
+
+- **The joiner lacked the classic 'ragged line ends its paragraph' rule.**
+  A justified line only ends visibly short when its paragraph ends there —
+  quote→commentary fusions (83 findings), flattened verse/bullets/signatures
+  (35), all one missing rule: prev line ends short (x1 < col_right −
+  max(24pt, 8% col)) and the next starts at/left of the same x0 → break.
+  Cross-page mirror: continuation is the default; break only on prev-short
+  or full-line + genuine indent (comparing the indent against the previous
+  page's last-line x0 alone split quote blocks whose insets differ by 9pt).
+- **Page-scoped role_overrides are a blunt instrument**: a mislabeled page
+  number ({page: 6, role: p} annotated 'copyright' sitting on the CONTENTS
+  page) silently wiped 36 toc-entry roles. Invisible to every gate because
+  gate 7 checks nav.xhtml (built from source entries), never the in-body
+  Contents. Adjudicate override page numbers against `pdf2epub lines`.
+- **The emit contents-gather stopped at the first non-entry paragraph** —
+  a mid-TOC subtitle ('Common Ground…', 'Contents, continued') ended the
+  gather and every later entry emitted as plain text. Now gathers the whole
+  run in flow order with interludes kept in place.
+- **Facsimile plates**: I&B's Dalai Lama foreword is a full-page IMAGE both
+  engines are blind to — no gate can see 'missing' text that never extracts.
+  figure_pages gained keep_text (plate + typeset heading both ship); packets
+  now carry `{figure} <alt>` lines so blind readers don't report plates as
+  truncated text.
+- **Compound hyphens**: lower-only dehyphenation destroyed self-/all-
+  compounds ('selfevident', 'allembracing'). Fix: a SHORT whole-word prefix
+  list (self, all, half, well, ill, cross) keeps the hyphen; 'love-'/'thought-'
+  can't join the list (love-/ly, thought-/ful are ordinary splits) — lexicon
+  work if ever needed.
+- **Round-2 spot reads confirm the classes cleared** (packet-level findings
+  dropped ~6-17 → 0-4, remainder mostly as-printed suspects). Old-EPUB
+  regression detection PRESERVED after all join changes (old BoK: 11b=18,
+  g14=46, g16=56+9, g17=48).
+- **HANDOFF (essay chapter + notes apparatus, one focused work item)**:
+  shifted-CMap coverage on isolated italic runs ('=' shifted spaces,
+  J-decoded hyphens, VǌUDK/6DKƯK transliterations, ³´« quote glyphs, FFFD
+  note prefixes) — design: font-scoped repair (config lists broken font
+  families; repair ALL their runs, not text-shape detection); essay-page
+  footnote-region failures (inline '12. See…' notes + folio leaks mid-prose);
+  fused/possibly-missing endnotes (printed 12-15); dash/slash seam-space
+  class needs per-instance print checks.

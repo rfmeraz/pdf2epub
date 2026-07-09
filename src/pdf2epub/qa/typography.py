@@ -458,6 +458,26 @@ def check_emphasis(slices, paras, rules, pages_scope):
 
 # ------------------------------------------------------ gate 16
 
+# print part labels that legitimately precede a title on the same PRINTED
+# page but must never be fused INTO the title's heading element
+_NUMWORD = (r"\d+|[ivxlcdm]+|one|two|three|four|five|six|seven|eight|nine|"
+            r"ten|eleven|twelve")
+_PART_LABEL = re.compile(
+    rf"(?:part|book|chapter|section|volume)\s+(?:{_NUMWORD})"
+    r"|[ivxlcdm]+|\d+")
+# raw-text form: keyword label + what follows it (group 2 starting with an
+# alnum char = NO separator punctuation between label and title)
+_PART_RAW = re.compile(
+    rf"^((?:part|book|chapter|section|volume)\s+(?:{_NUMWORD}))\s+(\S.*)$",
+    re.I)
+
+
+def _foldn(s: str) -> str:
+    """_fold + whitespace collapse: removing a separator dash leaves a double
+    space behind, which must not defeat equality checks."""
+    return " ".join(_fold(s).split())
+
+
 def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
                          source_titles, skip_pages, cache, paras, body_size,
                          furniture):
@@ -465,7 +485,9 @@ def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
     audit: list[str] = []
     info: list[str] = []
     n_heads = n_unmatched = 0
-    folded_titles = [_fold(t) for t in source_titles]
+    folded_titles = [_foldn(t) for t in source_titles]
+    folded_pairs = [(f, t) for f, t in zip(folded_titles, source_titles)
+                    if len(f) >= 8]
     for page in sorted(slices):
         for blk in slices[page]:
             if blk.tag not in _H_TAGS:
@@ -476,6 +498,33 @@ def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
             if len(text) > HEAD_SENT_LEN and body_txt and body_txt[-1] in _SENT_END:
                 line = f'p.{page} <{blk.tag}> sentence-like heading: "{text[:70]}"'
                 (audit if blk.tag == "h3" else info).append(line)
+            # fused-heading: heading text = <leading words> + a full TOC
+            # title ('Part Two Oneness: …') — part-label leads gate, short
+            # generic leads are informational (text-shape check, geometry-free)
+            fh = _foldn(text)
+            for ft, orig in folded_pairs:
+                if fh != ft and fh.endswith(" " + ft):
+                    lead = fh[: -len(ft)].strip()
+                    if _PART_LABEL.fullmatch(lead):
+                        audit.append(
+                            f'p.{page} <{blk.tag}> heading fused with part '
+                            f'label: "{text[:60]}" (TOC title: "{orig[:40]}")')
+                    elif len(lead.split()) <= 4:
+                        info.append(f'p.{page} <{blk.tag}> heading extends a '
+                                    f'TOC title: "{text[:60]}"')
+                    break
+            else:
+                # equal-but-unseparated: the TOC writes 'Part Two — Title'
+                # (fold strips the dash, so folds are EQUAL) while the
+                # heading glues label to title with nothing between — the
+                # print stacks them as two display lines
+                m = _PART_RAW.match(text)
+                if m and m.group(2)[0].isalnum():
+                    rest_f = _foldn(m.group(2))
+                    if any(ft in (fh, rest_f) for ft, _ in folded_pairs):
+                        audit.append(
+                            f'p.{page} <{blk.tag}> part label fused into '
+                            f'title without separator: "{text[:60]}"')
             if page in skip_pages:
                 continue
             n_heads += 1
@@ -509,8 +558,9 @@ def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
                    and g.start_page not in skip_pages)
     ok = not findings and not audit
     summary = (f"{n_heads} headings checked, {len(findings)} promotion "
-               f"suspects, {len(audit)} h3 sentence-audit hits, "
-               f"{n_unmatched} unmatched; info: {len(info)} long h1/h2, "
+               f"suspects, {len(audit)} audit hits (h3 sentences / fused "
+               f"part labels), {n_unmatched} unmatched; info: {len(info)} "
+               f"long-h1/h2 or title-extending, "
                f"{n_demote} display-size non-heading paragraphs")
     return ok, summary, findings + audit + [f"info: {ln}" for ln in info[:3]]
 

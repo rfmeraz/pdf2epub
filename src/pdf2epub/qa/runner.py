@@ -87,6 +87,9 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
 
     ep = load_epub(epub)
     spine = ep.spine_docs()
+    # gate 11b evidence must be gathered BEFORE the noteref strip below
+    # destroys it (the anchors are removed in place)
+    seam_defects = pdfchecks.noteref_seam_defects(spine)
     # the EPUB's noteref/backlink anchor text is navigation chrome with
     # renumbered digits — not source text; drop before comparing
     for d in spine:
@@ -246,6 +249,12 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     # ---- gate 11 (info): lost spaces
     n_lost = pdfchecks.lost_space_count(all_text_norm)
     gates.append(("11 lost-space scan (info)", None, [f"residual fused patterns: {n_lost}"]))
+
+    # ---- gate 11b: noteref seams (a letter/digit directly after a noteref
+    # is always an artifact — lost join separator or fused paragraph)
+    gates.append(("11b noteref seam", not seam_defects,
+                  [f"{len(seam_defects)} letter/digit-after-noteref seams"]
+                  + seam_defects[:8]))
 
     # ---- gate 12 (info): reference scorecard
     if reference:

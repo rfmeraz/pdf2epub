@@ -33,3 +33,35 @@ def test_residue_counters():
     assert pua_residue("plain  text") == ["U+F048"]
     assert pua_residue("clean") == []
     assert lost_space_count('said.Then and say,"If and fine. Text') == 2
+
+
+def test_noteref_seam_defects():
+    from types import SimpleNamespace
+
+    from lxml import etree
+
+    from pdf2epub.qa.pdfchecks import noteref_seam_defects
+
+    ns = ('xmlns="http://www.w3.org/1999/xhtml" '
+          'xmlns:epub="http://www.idpf.org/2007/ops"')
+
+    def _doc(inner):
+        root = etree.fromstring(
+            f'<html {ns}><body><p>{inner}</p></body></html>'.encode())
+        return SimpleNamespace(href="a.xhtml", root=root)
+
+    ref = '<a class="noteref" href="notes.xhtml#fn3"><sup>3</sup></a>'
+    # letter directly after the ref: always an artifact
+    hits = noteref_seam_defects([_doc(f"word.{ref}The next part")])
+    assert len(hits) == 1 and "[3]The next" in hits[0]
+    # digit after the ref: artifact
+    assert noteref_seam_defects([_doc(f"word.{ref}42 more")])
+    # punctuation/quotes/dashes: legitimate
+    for tail in (") more", ", and", "” said", "— dash", ". End"):
+        assert not noteref_seam_defects([_doc(f"word.{ref}{tail}")])
+    # space then letter: fine; no tail at all: fine
+    assert not noteref_seam_defects([_doc(f"word.{ref} next")])
+    assert not noteref_seam_defects([_doc(f"word.{ref}")])
+    # backlink anchors are not noterefs
+    back = '<a class="backlink" href="b.xhtml#fnref3">x</a>'
+    assert not noteref_seam_defects([_doc(f"word.{back}Then")])

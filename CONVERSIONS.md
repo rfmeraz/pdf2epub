@@ -131,3 +131,45 @@ doctrine in line_pstyle + gate 14's witness: a body-size line continuing a
 justified block (previous raw line at the same x0 reaching the right margin)
 is never /center. BoK rebuilt: all four lines rejoin their paragraphs;
 epubcheck clean, QA PASS.
+
+### 2026-07-08 addendum 3 — proofread harness acceptance run (I&B) + join-rule overhaul
+
+First full run of the new reading-QA flow (`pdf2epub proofread` + blind
+reader subagents per packet + print verification): 21 readers over 24 I&B
+packets returned 328 findings, which root-caused into a few systemic
+classes. All three seeded acceptance defects found, plus discoveries:
+
+- JOINER (code, all books): added the 'ragged line ends its paragraph' rule
+  and its cross-page mirror; indent breaks now require the previous line to
+  have plausibly ended (hanging-indent list continuations no longer split).
+  Fixed at once: quote→commentary fusions (~80), flattened verse/bullet/
+  signature blocks (~35), page-turn wrong-splits, hanging-list splits.
+- NOTEREF SEAMS (code): the join separator parked on a marker run was
+  discarded when the run became a NoteRef — 43 'word.[38]The' seams in I&B,
+  31 in BoK. Gate 11b now guards this permanently.
+- CONTENTS TRUNCATED (config + code): a role_overrides entry annotated
+  'copyright' actually sat on the CONTENTS page and wiped 36 toc-entry
+  roles; separately the emit contents-gather stopped at a mid-TOC subtitle.
+  The rebuilt Contents now carries all 41 entries with its interludes.
+- FOREWORD MISSING (config + code): the Dalai Lama's foreword is a
+  facsimile-letter IMAGE both engines are blind to; figure_pages gained
+  keep_text and the plate now ships with a descriptive alt under its
+  typeset h1.
+- PART HEADINGS (overrides): 'Part One/Two/Three'/'Epilogue' labels split
+  from their titles (4 break overrides).
+- DEHYPHENATION (code): compound-forming prefixes keep their hyphen
+  (self-, all-, half-, well-, ill-, cross-, low-, twenty-…ninety-).
+
+All four books rebuilt: epubcheck clean, QA Overall: PASS, gate 11b clean,
+old-EPUB regression detection preserved. Round-2 spot reads: packet finding
+counts dropped ~6-17 → 0-4; the seeded defects and both discoveries are
+gone from the packets.
+
+HANDOFF (confirmed, unfixed — one focused follow-up): shifted-CMap coverage
+on the essay/back-matter italic runs ('=' spaces, J-hyphens, shifted
+transliterations, FFFD note prefixes, ³´ quotes) — design: font-scoped
+repair; footnote-capture failures on pages 30/38-41 + essay (bare digits,
+inline note bodies that also cause page-turn splits, folio leaks);
+fused/possibly-missing essay endnotes (printed 12-15); dash/slash seam
+spacing and BoK sample items (flush-style page-turn paragraphs in the
+biographical essay, two undetected section heads) pending print checks.

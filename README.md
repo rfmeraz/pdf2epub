@@ -52,6 +52,8 @@ A conversion is done when the build ends `epubcheck: clean` and QA ends
 ~/pyenv/bin/pdf2epub init  books/<slug>/package --workspace books/<slug>
 ~/pyenv/bin/pdf2epub build books/<slug>/book.yaml [--upto extract|flow|map|images|xhtml] [--dump-ir]
 ~/pyenv/bin/pdf2epub qa    books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml [--reference <epub>] [--visual]
+~/pyenv/bin/pdf2epub proofread books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml  # reading-QA packets
+~/pyenv/bin/pdf2epub lines books/<slug>/book.yaml <page> [--render]  # raw line indexes for overrides
 bash scripts/bootstrap.sh   # one-time: pip deps, epubcheck jar, fonts
 ```
 

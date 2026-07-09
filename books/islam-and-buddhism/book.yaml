@@ -34,8 +34,10 @@ pages:
   role_overrides:
     - {page: 2, role: half-title}
     - {page: 4, role: title-page}
-    - {page: 5, role: title-page}
-    - {page: 6, role: p}        # copyright
+    - {page: 5, role: p}        # copyright (printed iv; was mislabeled
+                                # title-page, and the old page-6 'copyright'
+                                # override sat on the CONTENTS page, wiping
+                                # 36 toc-entry roles — proofread finding)
 
 furniture:
   top_band: 43.1
@@ -76,6 +78,10 @@ flow:
   join_center_lines: true
   reattach_dropcaps: true
   overrides:
+    - {page: 26, line: 1, action: "break", note: "part label 'Part One' is its own display line; title starts here (proofread finding)"}
+    - {page: 54, line: 1, action: "break", note: "part label 'Part Two' is its own display line; title starts here (proofread finding)"}
+    - {page: 104, line: 1, action: "break", note: "part label 'Part Three' is its own display line; title starts here (proofread finding)"}
+    - {page: 135, line: 1, action: "break", note: "part label 'Epilogue' is its own display line; title starts here (proofread finding)"}
     - {page: 14, line: 4, action: "join", note: "mid-word break seam '... is also Ab-|solutely O...'"}
     - {page: 14, line: 7, action: "join", note: "mid-word break seam '...iple of jus-|tice in th...'"}
     - {page: 14, line: 10, action: "join", note: "mid-word break seam '... of exercis-|ing compas...'"}
@@ -245,6 +251,9 @@ images:
   max_pixels: 1600
   alt: {}
   decorative: []
-  figure_pages: []
+  figure_pages:
+    - pages: [8]
+      keep_text: true
+      alt_template: "Facsimile of the Dalai Lama's typewritten foreword letter on his letterhead: he calls this an important and pioneering book seeking common ground between Islam and Buddhism, describes the Buddhist practice of compassion and the Muslim ideal of universal compassion as a shared heart, thanks Prince Ghazi bin Muhammad, and signs it; dated January 21, 2010. (Proofread finding: the letter is an image both text engines are blind to.)"
 
 output: {slug: islam-and-buddhism, include_ncx: true}

@@ -46,6 +46,23 @@ def main(argv: list[str] | None = None) -> int:
     p_qa.add_argument("--visual-pages", type=int, default=14, metavar="N",
                       help="Visual sample size target (clamped 6..24)")
 
+    p_proof = sub.add_parser(
+        "proofread", help="Emit reading-QA packets from the shipped EPUB "
+                          "(the proofread-epub skill's desk)")
+    p_proof.add_argument("epub", type=Path)
+    p_proof.add_argument("--config", type=Path, required=True,
+                         help="Path to book.yaml")
+
+    p_lines = sub.add_parser(
+        "lines", help="Dump RAW extraction line indexes + geometry per page "
+                      "(the key for flow.overrides)")
+    p_lines.add_argument("config", type=Path, help="Path to book.yaml")
+    p_lines.add_argument("pages", nargs="+",
+                         help="Page number(s): 47, 47-49, or comma lists")
+    p_lines.add_argument("--render", action="store_true",
+                         help="Also write trim-cropped page renders")
+    p_lines.add_argument("--dpi", type=int, default=150)
+
     args = parser.parse_args(argv)
 
     if args.command == "init":
@@ -66,6 +83,15 @@ def main(argv: list[str] | None = None) -> int:
 
         return run_qa(args.epub, args.config, reference=args.reference,
                       visual=args.visual, visual_pages=args.visual_pages)
+    if args.command == "proofread":
+        from .proofread import run_proofread
+
+        return run_proofread(args.epub, args.config)
+    if args.command == "lines":
+        from .proofread import run_lines
+
+        return run_lines(args.config, args.pages, render=args.render,
+                         dpi=args.dpi)
     return 2
 
 

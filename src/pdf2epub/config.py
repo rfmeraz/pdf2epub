@@ -78,6 +78,10 @@ class FigurePages:
     pages: list[int]
     alt_template: str = "Image of page {label}"
     lang: str | None = None
+    # keep_text: the page's extracted text ALSO flows after the figure —
+    # for plates whose typeset heading/caption must stay live (I&B p.8:
+    # the Dalai Lama's facsimile foreword letter under a typeset h1)
+    keep_text: bool = False
 
 
 @dataclass(slots=True)
@@ -417,7 +421,8 @@ def load_config(path: Path) -> PdfBookConfig:
     cfg.image_alt = im.get("alt", {}) or {}
     cfg.decorative = list(im.get("decorative", []) or [])
     for fp in im.get("figure_pages", []) or []:
-        _check_keys("images.figure_pages[]", fp, {"pages", "alt_template", "lang"})
+        _check_keys("images.figure_pages[]", fp,
+                    {"pages", "alt_template", "lang", "keep_text"})
         pages: list[int] = []
         for item in fp["pages"]:
             if isinstance(item, str) and "-" in item:
@@ -428,7 +433,9 @@ def load_config(path: Path) -> PdfBookConfig:
         cfg.figure_pages.append(FigurePages(pages=pages,
                                             alt_template=fp.get("alt_template",
                                                                 "Image of page {label}"),
-                                            lang=fp.get("lang")))
+                                            lang=fp.get("lang"),
+                                            keep_text=bool(fp.get("keep_text",
+                                                                  False))))
 
     out = data.get("output", {})
     _check_keys("output", out, {"slug", "include_ncx"})

@@ -293,6 +293,51 @@ def test_census_body_face_h3_fires_sc_and_toc_silent():
     assert len(findings) == 1 and "subsection head" in findings[0]
 
 
+def test_census_fused_heading():
+    doc = _pdoc([_ppage(1, [])])
+    titles = ["Oneness: The Highest Common Denominator", "Foreword"]
+    mk = lambda text: {1: [_blk(tag="h1", classes=("Serif-14-center",),
+                                text=text)]}
+    # part label fused into the title: gates (lands in audit)
+    ok, summary, lines = check_heading_census(
+        mk("Part Two Oneness: The Highest Common Denominator"), doc, GEO,
+        "Serif", set(), titles, {1}, {}, [], 11.0, {})
+    assert not ok and any("fused with part label" in l for l in lines)
+    # heading exactly equal to the title: silent
+    ok, _, _ = check_heading_census(
+        mk("Oneness: The Highest Common Denominator"), doc, GEO,
+        "Serif", set(), titles, {1}, {}, [], 11.0, {})
+    assert ok
+    # trailing extension ('Foreword by X') never matches endswith: silent
+    ok, _, _ = check_heading_census(
+        mk("Foreword by Professor Kamali"), doc, GEO,
+        "Serif", set(), titles, {1}, {}, [], 11.0, {})
+    assert ok
+    # short folded title (<8 chars, 'Index') is never a fusion base: silent
+    ok, _, _ = check_heading_census(
+        mk("Part Two Index"), doc, GEO, "Serif", set(),
+        ["Oneness: The Highest Common Denominator", "Index"], {1}, {},
+        [], 11.0, {})
+    assert ok
+    # non-part-label lead: informational only, does not gate
+    ok, _, lines = check_heading_census(
+        mk("Amazing Oneness: The Highest Common Denominator"), doc, GEO,
+        "Serif", set(), titles, {1}, {}, [], 11.0, {})
+    assert ok and any("extends a TOC title" in l for l in lines)
+    # I&B shape: the TOC itself writes 'Part Two — Title' (folds EQUAL), the
+    # heading glues label to title with no separator: fires
+    dash_titles = ["Part Two — Oneness: The Highest Common Denominator"]
+    ok, _, lines = check_heading_census(
+        mk("Part Two Oneness: The Highest Common Denominator"), doc, GEO,
+        "Serif", set(), dash_titles, {1}, {}, [], 11.0, {})
+    assert not ok and any("without separator" in l for l in lines)
+    # separator present in the heading too: silent
+    ok, _, _ = check_heading_census(
+        mk("Part Two — Oneness: The Highest Common Denominator"), doc, GEO,
+        "Serif", set(), dash_titles, {1}, {}, [], 11.0, {})
+    assert ok
+
+
 def test_census_h3_sentence_audit():
     doc = _pdoc([_ppage(1, [])])
     long_sent = "This should suffice for whoever has understanding and truth."

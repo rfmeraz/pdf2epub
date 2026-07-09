@@ -326,7 +326,10 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 role="chinese-page", alt=alt))
             counts["figure-pages"] += 1
             prev_L = None
-            continue
+            if not fp.keep_text or not lines:
+                continue
+            # keep_text plates fall through: the page's typeset lines (a
+            # heading over a facsimile letter) flow normally after the figure
 
         if pno in toc_paras:
             close_para()
@@ -340,7 +343,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             pending_anchors.append(anchor)
             continue
 
-        anchor_placed = False
+        # keep_text figure pages already emitted their anchor above
+        anchor_placed = (pno in fig_page_map and fig_page_map[pno].keep_text)
         prev_dropcap = False
         for L in lines:
             act = override(L.page, L.idx)
@@ -488,15 +492,40 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
     # x0=87.9 around a 52.5pt initial) and must not break line-by-line
     indented = (L.ln.x0 - geo.col_left >= cfg.indent_threshold
                 and L.ln.x0 - prev.ln.x0 >= cfg.indent_threshold - 2)
+    # a justified line only ends visibly SHORT of the right margin when its
+    # paragraph ends there (I&B p.29: the epigraph's '(Udāna, 80–81)' line
+    # ends 200pt short, yet the commentary was joined on; same shape flattens
+    # verse quotations line-by-line)
+    col_w = geo.col_right - geo.col_left
+    # a line-end hyphen is an explicit continuation signal that trumps
+    # geometry: ragged citations ('Maktaba al-' / 'Hilāl, 1988') end short
+    # mid-entry, and breaking there strands 'al- Hilāl' seams (gate 9)
+    prev_short = (prev.ln.x1 < geo.col_right - max(18.0, 0.06 * col_w)
+                  and not prev.ln.text().rstrip().endswith("-"))
     cross_page = L.page != prev.page
     if cross_page:
-        # any same-pstyle uncentered text continues across the page turn —
-        # restricting this to the body pstyle force-broke 10pt front matter
-        # and block quotes mid-word ('com-' | 'munity', BoK acknowledgments)
+        # continuation across the page turn is the default; break only when
+        # the previous page's last line visibly ENDED its paragraph, or a
+        # genuine first-line indent follows a full-measure line. Comparing
+        # the indent against the previous line's x0 alone wrongly split
+        # quote blocks whose insets differ by a few points (I&B pp.16-17).
         if "/center" in L.ps:
             return True
-        return indented
-    if indented and L.ps == body_ps:
+        if prev_short:
+            return True
+        return indented and prev.ln.x1 >= geo.col_right - 6.0
+    if indented and L.ps == body_ps and \
+            (prev_short or prev.ps != body_ps
+             or prev.ln.x0 <= geo.col_left + 2.0):
+        # a first-line indent STARTS a paragraph when the previous line
+        # ended visibly short, was a different block, or sat at the column
+        # edge (a normal wrap line). A deeper x0 after a full line that was
+        # ITSELF indented is a hanging-indent CONTINUATION (I&B's numbered
+        # list items split at every '(4) …/knowledge,' turn without this)
+        return True
+    if prev_short and L.ln.x0 <= prev.ln.x0 + 2.0:
+        # paragraph ended on a ragged line and the next starts at (or left
+        # of) the same left edge: quote -> commentary seams, verse lines
         return True
     if (L.ln.y0 - prev.ln.y0) > cfg.gap_factor * med_lead:
         return True
@@ -725,7 +754,18 @@ def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                 sup = it.fmt.position == "superscript"
                 if (sup or small) and t and (
                         t == target or (target == "*" and t in ("*", "†", "‡"))):
+                    # the line-join separator is parked on the PREVIOUS run's
+                    # text (_append_line), i.e. often on this marker run —
+                    # replacing it with a NoteRef must not swallow the space
+                    # ('word.⁵ Next' shipped as 'word.⁵Next' book-wide)
+                    lead = it.text[:len(it.text) - len(it.text.lstrip())]
+                    trail = it.text[len(it.text.rstrip()):]
                     b.items[i] = NoteRef(note_id)
+                    if trail:
+                        b.items.insert(i + 1, TextRun(" "))
+                    if lead:
+                        b.items.insert(i, TextRun(" "))
+                        i += 1
                     remaining.pop(0)
                     counts["noterefs"] += 1
             i += 1

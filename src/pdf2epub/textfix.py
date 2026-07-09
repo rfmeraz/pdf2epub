@@ -105,17 +105,29 @@ def strip_control_chars(text: str) -> tuple[str, int]:
     return (_CTRL_RE.sub("", text), n) if n else (text, 0)
 
 
+# standalone words that form permanently hyphenated compounds: a line-end
+# 'self-' + lowercase continuation is 'self-evident', never 'selfevident'
+# (proofread-confirmed casualties: selfevident, allembracing, selfdiscipline,
+# twentytwo, 'low lying'). The word-boundary guard keeps 'follow-'/'himself-'
+# out. Deliberately short — 'thought-', 'pre-', 'non-', 'love-' also END or
+# START ordinary words (thought-ful, love-ly) and need a lexicon to decide.
+_KEEP_HYPHEN_PREFIX = re.compile(
+    r"(?:^|[^A-Za-zÀ-ſ])(?:self|all|half|well|ill|cross|low|twenty|thirty|"
+    r"forty|fifty|sixty|seventy|eighty|ninety)-$", re.I)
+
+
 def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str, str, bool]:
     """Decide the junction when ``nxt`` continues ``prev`` across a line break.
 
     Returns (prev_out, separator, dehyphenated). lower-only: strip the
     line-end hyphen iff the continuation starts lowercase ('tradi-/tion' ->
-    'tradition'); a capital keeps it ('Kaccāyanagotta-/Sutta') — both cases
+    'tradition'); a capital keeps it ('Kaccāyanagotta-/Sutta'), as does a
+    compound-forming prefix ('self-/evident' -> 'self-evident') — all cases
     join WITHOUT a space. Extraction spans carry trailing whitespace
     ('com- '), so the hyphen test runs on the stripped tail."""
     base = prev.rstrip()
     if mode != "off" and re.search(r"[A-Za-zÀ-ſ]-$", base):
-        if nxt.lstrip()[:1].islower():
+        if nxt.lstrip()[:1].islower() and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True
         return base, "", False
     return prev, " ", False

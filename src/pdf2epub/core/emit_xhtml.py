@@ -181,20 +181,35 @@ class Emitter:
                     i += 1
                     continue
                 if role == "toc-entry" and not toc_done:
-                    # gather the whole printed-contents run into one file
+                    # gather the whole printed-contents run IN FLOW ORDER:
+                    # entries, page anchors, and interleaved centered heads
+                    # ('Contents, continued', part subtitles). Stopping at
+                    # the first non-entry paragraph dropped every entry after
+                    # a mid-TOC subtitle to plain text (I&B: 36 of 44 entries)
                     j = i
-                    entries: list[Paragraph] = []
-                    tail: list = []
+                    run: list = []
                     while j < len(blocks):
                         nb = blocks[j]
-                        if isinstance(nb, Paragraph) and (nb.role or "p") == "toc-entry":
-                            entries.append(nb)
+                        if isinstance(nb, Paragraph) and \
+                                (nb.role or "p") == "toc-entry":
+                            run.append(nb)
                         elif isinstance(nb, (PageAnchor, Figure)):
-                            tail.append(nb)
+                            run.append(nb)
+                        elif isinstance(nb, Paragraph) and any(
+                                isinstance(b2, Paragraph)
+                                and (b2.role or "p") == "toc-entry"
+                                for b2 in blocks[j + 1:j + 4]):
+                            run.append(nb)  # interlude inside the Contents
                         else:
                             break
                         j += 1
-                    self._emit_contents(entries, tail)
+                    # trailing anchors/figures belong to what FOLLOWS the
+                    # contents (same doctrine as the main loop)
+                    while run and not (isinstance(run[-1], Paragraph)
+                                       and (run[-1].role or "p") == "toc-entry"):
+                        run.pop()
+                        j -= 1
+                    self._emit_contents(run)
                     toc_done = True
                     i = j
                     continue
@@ -285,7 +300,9 @@ class Emitter:
 
     # ---------------- contents page ----------------
 
-    def _emit_contents(self, entries: list[Paragraph], tail: list) -> None:
+    def _emit_contents(self, run: list) -> None:
+        """Emit the gathered contents run (toc-entry paragraphs, anchors,
+        figures, and interlude paragraphs) in flow order inside the section."""
         if self.cfg.toc_handling == "drop":
             return
         if getattr(self, "_contents_started", False) and self.cur is not None:
@@ -296,21 +313,27 @@ class Emitter:
             self._contents_started = True
         f.body_parts.append('<section epub:type="toc" role="doc-toc">')
         f.body_parts.append('<h1 class="contents-head">Contents</h1>')
-        self._contents_entries = []  # (display_html, plain_text)
-        for p in entries:
-            text = p.text()
+        self._contents_entries = []  # plain entry texts, TOCLINK order
+        for b in run:
+            if isinstance(b, PageAnchor):
+                self._emit_pagebreak(b)
+                continue
+            if isinstance(b, Figure):
+                self._emit_figure(b)
+                continue
+            if (b.role or "p") != "toc-entry":
+                # interlude ('Contents, continued', a part subtitle): keep it
+                # where the print put it, styled by its own pstyle class
+                self._emit_paragraph(b)
+                continue
+            text = b.text()
             if self.cfg.strip_toc_page_numbers:
                 text = re.sub(r"\t+[ivxlcdm0-9]+\s*$", "", text, flags=re.I)
-            text = text.replace("\t", " ").replace(" ", " ").strip()
+            text = text.replace("\t", " ").replace(" ", " ").strip()
             if not text or text.lower() == "contents":
                 continue
             self._contents_entries.append(text)
             f.body_parts.append(f'<p class="toc-entry">{{TOCLINK:{len(self._contents_entries)-1}}}</p>')
-        for b in tail:
-            if isinstance(b, PageAnchor):
-                self._emit_pagebreak(b)
-            elif isinstance(b, Figure):
-                self._emit_figure(b)
         f.body_parts.append("</section>")
         self._contents_file = f
 
