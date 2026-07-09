@@ -181,7 +181,8 @@ old-EPUB regression detection preserved. Round-2 spot reads: packet finding
 counts dropped ~6-17 → 0-4; the seeded defects and both discoveries are
 gone from the packets.
 
-HANDOFF (confirmed, unfixed — one focused follow-up): shifted-CMap coverage
+HANDOFF (CLOSED 2026-07-09, see the addendum below — the font-scoped
+design proved impossible on this PDF): shifted-CMap coverage
 on the essay/back-matter italic runs ('=' spaces, J-hyphens, shifted
 transliterations, FFFD note prefixes, ³´ quotes) — design: font-scoped
 repair; footnote-capture failures on pages 30/38-41 + essay (bare digits,
@@ -189,3 +190,42 @@ inline note bodies that also cause page-turn splits, folio leaks);
 fused/possibly-missing essay endnotes (printed 12-15); dash/slash seam
 spacing and BoK sample items (flush-style page-turn paragraphs in the
 biographical essay, two undetected section heads) pending print checks.
+
+### 2026-07-09 addendum — precision pass: gates 20-22, gate 11 promoted, inline anchors
+
+External-feedback evaluation pass; every claim verified against shipped
+artifacts before acceptance (evidence matrices in NOTES.md). All five
+artifacts rebuilt: epubcheck clean, QA Overall: PASS on the now-23-gate
+suite, byte-reproducible (double-build hash check).
+
+- ME AND RUMI: 62 shipped cross-run fused seams (`believer.This`) repaired
+  by the new paragraph-level seam pass + the bracket/digit-quote pattern
+  (spaces-restored-crossrun=85, +3 bracket) — gate 11 now gates at zero.
+  Three "unrecognized top-band" lines were shipped running-head LEAKS
+  (9pt-italic 'William C. Chittick', two smallcaps chapter heads) — drop
+  overrides. p.437's content photograph (Yakutiye Medrese portal) shipped
+  caption-only — now a figure page with descriptive alt. Decorative
+  medallions/dividers adjudicated (renders reviewed).
+- ISLAM AND BUDDHISM: closed the 2026-07-08 shifted-CMap handoff — but NOT
+  via the prescribed font-scoping (dead: identical font names on broken and
+  healthy pages; see NOTES). Highmap gained render-verified ³→" ´→" ²→—
+  «→… Ɩ→Ā; µ/¶ remapped to the book's own quote convention (they are the
+  subset's single-quote glyphs, not bare ayn/hamza); 'VDED¶' caught by the
+  highmap-aware word-shape detector; 474 U+FFFD chars removed via
+  glyphs.fffd_repairs (renders show no visible content at all 8 spots);
+  garbled 'Bibliography' running heads pp.166/168 dropped (single h3
+  ships). qa.garble_chars pins the whole residue set; gate 20 fires 15 runs
+  on the old EPUB, 0 after.
+- HARMONIOUS UNITY: p.8's Yin-Yang facsimile plate shipped caption-only —
+  now a keep_text figure page. Calligraphic section glyphs adjudicated as
+  ornamental (chapter heads carry the titles). The "2 RTL chars" warning
+  was two U+FEFF BOM artifacts, not RTL — census range fixed.
+- BOOK OF KNOWLEDGE (both variants): title-page top-band line adjudicated;
+  the arabic variant's RTL adjudication moved from NOTES prose into config.
+  Per-variant warnings files (warnings.book.arabic.md) end the last-run-wins
+  collision.
+- ALL BOOKS: exact inline page anchors (BoK 179 / BoK-arabic 179 / HU 31 /
+  I&B 98 / MR 181 pages start mid-paragraph and now anchor at the true run
+  seam; remaining approximate anchors are verified blank pages). Gates
+  13-17 verdicts unchanged; proofread packets differ only in blank-page
+  marker placement (now on the correct side of section boundaries).

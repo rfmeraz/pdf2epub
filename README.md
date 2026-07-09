@@ -24,21 +24,26 @@ Adobe products.
    produces makes the build reproducible and auditable.
 4. **`pdf2epub build`** is fully deterministic from (PDF, book.yaml): strip
    furniture, split footnotes, join lines into paragraphs (dehyphenation,
-   drop-cap reattachment), re-split columned back matter into print reading
+   drop-cap reattachment, cross-run lost-space seams), re-split columned back
+   matter into print reading
    order (`flow.columns`: indexes and other tabular apparatus whose baseline-
    fused lines would otherwise interleave), ship true tables/diagrams as
    cropped rasters with agent-written alt (`images.figure_regions`), apply
-   roles, insert exact printed-page markers,
+   roles, insert exact printed-page markers (a page that begins mid-paragraph
+   gets an inline anchor at the true run seam),
    rebuild the Contents with live hyperlinks, emit XHTML+CSS, subset OFL fonts,
    and package a byte-reproducible EPUB. Ambiguities WARN into
-   `build/warnings.md` with ready-to-paste override snippets; nothing is ever
-   silently dropped.
-5. **`pdf2epub qa`** runs 20 gates: epubcheck, text coverage against an
+   `build/warnings.md` (`warnings.<stem>.md` for variant configs) as a coded,
+   severity-classed queue with ready-to-paste override/adjudication snippets;
+   nothing is ever silently dropped, and judgments already recorded in
+   book.yaml auto-resolve their warnings.
+5. **`pdf2epub qa`** runs 23 gates: epubcheck, text coverage against an
    independent poppler extraction, footnote placement, navigation, images/alt,
    reading order (every TOC entry's heading on its printed page), TOC agreement,
-   furniture leaks, hyphenation and private-use residue, an optional
-   EPUB-vs-EPUB reference scorecard — plus five typographic-fidelity gates
-   (13-17) that grade the SHIPPED markup+CSS against raw source geometry:
+   furniture leaks, hyphenation / private-use / lost-space residue (gate 11
+   gates at zero with a render-verified `qa.lost_space_allow` escape), an
+   optional EPUB-vs-EPUB reference scorecard — plus five typographic-fidelity
+   gates (13-17) that grade the SHIPPED markup+CSS against raw source geometry:
    cluster sizes survive into the CSS, every centered paragraph has genuinely
    centered source lines, emphasis is conserved, headings are typographically
    real, and each page's block-level signature (size buckets + centering)
@@ -48,7 +53,16 @@ Adobe products.
    Ḥafṣ/Kufan verse counts, monotone entry order, page refs in the page-list):
    the columned index pages are engine-disputed so gate 2's coverage witness
    is blind there, and column interleaving produces impossible citations this
-   gate catches deterministically. `qa --visual` adds gate 18: sampled
+   gate catches deterministically. Gate 20 scans the SHIPPED text for garble
+   (U+FFFD and C0 controls unconditionally, plus the book's configured
+   `qa.garble_chars` residue set) — candidate-only by design, since the
+   coverage gate normalizes both sides identically and cannot see corruption
+   both witnesses share. Gate 21 dHash-compares every shipped figure image
+   against a re-render of its source PDF region (a blank or corrupt figure is
+   content loss no text gate can see). Gate 22 re-derives the build's warning
+   queue and fails on any open content-risk warning or stale `adjudications:`
+   entry — `Overall: PASS` now certifies the risky-page queue was actually
+   adjudicated. `qa --visual` adds gate 18: sampled
    side-by-side contact sheets (print page vs anchor-sliced EPUB render in
    headless Chrome), PUA glyph crop pairs, and figure perceptual-hash checks
    into `build/qa_visual/` for the converting agent to grade against a

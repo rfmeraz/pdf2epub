@@ -74,6 +74,13 @@ Field notes, verified facts, and lessons. Read before nontrivial changes; keep c
   verify content from the render, else escalate.
 - Multi-column body PROSE: detected + escalated, not converted (tabular
   back matter converts via flow.columns since 2026-07-08).
+- MR comma+LOWERCASE fusions (`Now,however`, `another,higher state`) still
+  ship: outside restore_spaces' before-capital doctrine and gate 11's
+  pattern family. A `[a-z],[a-z]` repair needs its own print-verification
+  pass before extending a text-changing rule (2026-07-09 pass deliberately
+  deferred it).
+- HU title pages carry two invisible U+FEFF-only paragraphs (BOM prepress
+  artifacts; cosmetically harmless, stripped from QA text by normalize).
 
 ## 2026-07-08 — false-centered body lines (user-reported, all four books)
 
@@ -248,7 +255,8 @@ collapsed them into a handful of systemic classes. Lessons:
   dropped ~6-17 → 0-4, remainder mostly as-printed suspects). Old-EPUB
   regression detection PRESERVED after all join changes (old BoK: 11b=18,
   g14=46, g16=56+9, g17=48).
-- **HANDOFF (essay chapter + notes apparatus, one focused work item)**:
+- **HANDOFF (CLOSED 2026-07-09 — see the shifted-CMap closure entry below;
+  the font-scoped design proved IMPOSSIBLE on this PDF)**:
   shifted-CMap coverage on isolated italic runs ('=' shifted spaces,
   J-decoded hyphens, VǌUDK/6DKƯK transliterations, ³´« quote glyphs, FFFD
   note prefixes) — design: font-scoped repair (config lists broken font
@@ -347,3 +355,141 @@ ordering witnesses are the proofread pass and human eyes.
   (last-run-wins in the shared build dir) — record per-variant outcomes in
   CONVERSIONS.md. Generate variant configs programmatically and VERIFY by
   parse + codepoint assertions (the unicode-literal toolchain hazard).
+
+## Cross-run lost spaces + gate 11 promoted — 2026-07-09
+
+MR shipped 62 fused seams (`believer.This`, `aiming.When`) invisible to a
+raw-XHTML grep: they sit at roman/italic TextRun boundaries and only appear
+when inline content is joined with '' (the QA text shape). Root cause:
+restore_spaces runs PER RUN inside _apply_textfix; a fusion at a run seam is
+never seen by it.
+
+- Fix: `restore_space_seam` (textfix) applies the same patterns to a 3+3-char
+  window across every adjacent-TextRun seam; the space lands in the earlier
+  run so formatting survives. Called at close_para and note-close
+  (`_restore_cross_run_spaces`), gated on flow.restore_spaces, counted as
+  spaces-restored-crossrun (MR: 85). InlinePageBreak items are transparent
+  to both seam walkers.
+- The rebuilt MR still failed the promoted gate at 6: all `,"X` residuals
+  whose PRECEDING char is `]`/`)`/digit (`[about me],"This`, `(216),"We`,
+  `86:9,"On`) — the lowercase-before guard excluded them from repair while
+  the gate's own pattern counted them. Safe relaxation promoted to code:
+  bracket/paren/digit + `,`/`.` + DOUBLE QUOTE + capital is never legitimate
+  prose (the mandatory quote keeps initials and numerics out) —
+  _SPACE_AFTER_BRACKET, +3 repairs, MR → 0. **A detector wider than its
+  repair leaves exactly the differences shipping**; keep the pair in sync.
+- Gate 11 promotion evidence (2026-07-09): old shipped EPUBs fire
+  MR=62 / BoK=0 / BoK-arabic=0 / HU=0 / I&B=0; rebuilt MR fires 0.
+  Zero-tolerance with a render-verified `qa.lost_space_allow` escape
+  (exact snippet + note; stale entries fail the gate).
+
+## I&B shifted-CMap closure + gate 20 (garble residue) — 2026-07-09
+
+The NOTES 2026-07-08 handoff prescribed font-scoped repair (config lists
+broken families). **That design is dead — negative result recorded**:
+PyMuPDF reports IDENTICAL font names (TimesNewRomanPSMT/-ItalicMT, no
+subset prefixes) on broken and healthy pages, and the essay pp.138-168
+interleave 1489 healthy runs with 404 shifted runs — any blanket scope
+repair corrupts healthy text. What actually shipped garble, and the fixes:
+
+- ³´²«Ɩ residue (19+ lines): chars ≥0x60 pass repair_shifted_cmap untouched
+  — they were MISSING HIGHMAP ENTRIES, config-only. Render-verified:
+  ³→" ´→" (p.138), ²→— (p.143), «→… (p.151), Ɩ→Ā (p.159 Ibn ʿĀbidīn).
+- µ/¶ were mapped ʿ/ʾ but the p.160 render proves they are the broken
+  subset's LEFT/RIGHT SINGLE QUOTE glyphs, used for quotes AND ayn/hamza —
+  exactly as the healthy pages extract them (U+2018/2019). Remapped to the
+  book's own convention; the old mapping shipped modifier letters as
+  quotation punctuation.
+- One run book-wide ('VDED¶' p.140 = sabaʾ) evaded is_shifted_run (¶ outside
+  the shifted range): the word-shape detector is now highmap-aware (≥4
+  in-range chars whose un-shift alone is a real word + ≥1 highmap char +
+  full coverage). Same precision bar; all old negatives pinned.
+- U+FFFD is a SEPARATE phenomenon (pp.36-47 notes + p.98 body, 474 chars,
+  NOT the essay): MuPDF's unmapped-glyph placeholder carries zero
+  information, so only page-scoped render-adjudicated replacement is
+  deterministic — `glyphs.fffd_repairs` {pages, replace, note REQUIRED},
+  stale entries are build errors, unconfigured survivors warn
+  (fffd-unrepaired). Renders show NO visible content at all 8 spots
+  (invisible zero-width prepress glyphs) → replace "". Poppler emits the
+  same FFFDs, so the gt mirror applies symmetrically.
+- **Gate 20** polices the SHIPPED text (candidate-only — gate 2 normalizes
+  both sides identically and cannot see corruption both witnesses share):
+  U+FFFD + C0 controls unconditionally (C0 ⊇ the shift markers), plus
+  per-book `qa.garble_chars` (I&B: every char the broken subset can emit;
+  per-book because superscript-³ is legitimate elsewhere). Evidence: old
+  shipped I&B fires 15 runs; rebuilt fires 0; other books 0/0.
+- The garbled '%LEOLRJUDSK\' running heads pp.166/168 (word-shape-repaired
+  to 'Bibliography' and shipped as duplicate h3s) are furniture: dropped by
+  override, single Bibliography heading ships.
+
+## Gates 21 (figure integrity) + 22 (warnings adjudicated) — 2026-07-09
+
+- **Gate 21** promotes figure_phashes (dHash vs a re-render of each
+  Figure's source region, hamming ≤16) from --visual-only to always-on: a
+  blank/corrupt shipped figure is content loss no text gate can see.
+  Promotion evidence: clean on all five artifacts (incl. HU's 68
+  CJK page-figures — the false-positive surface); a scratch BoK EPUB with
+  region-0026-0.png blanked white FAILS with a review pair written to
+  build/qa_figures/. Cover images (no pdf_page) are skipped.
+- **Gate 22** ends `Overall: PASS` coexisting with open content-risk
+  warnings. `warnqueue.py` is the single derivation used by BOTH
+  build/_write_warnings and QA (zero divergence): stable codes with a
+  severity table (content-risk vs advisory), page lists derived from
+  doc/flow/cfg FIELDS (display strings truncate at 15), auto-resolve for
+  warnings a config judgment demonstrably covers (image-only ∈
+  cover/exclude/figure_pages; agreement-low ∈ those ∪ columns ∪
+  printed-TOC; embedded-image ∈ exclude ∪ figure_regions; top-band with an
+  exact-line override), and a book.yaml `adjudications:` section
+  ({warning, pages?, note REQUIRED}) for the rest. Stale entries are build
+  errors (flow.overrides doctrine) and gate-22 failures. warnings.md is
+  per-config (`warnings.<stem>.md` for variants — ends the BoK
+  last-run-wins collision) and renders grouped by code with
+  OPEN/auto-resolved/adjudicated status + paste-ready snippets.
+- The first enforcement pass caught real losses the old queue had let
+  coast: MR p.437 (a content PHOTOGRAPH — Yakutiye Medrese portal — whose
+  caption shipped while the image didn't; now a figure page), HU p.8 (the
+  Yin-Yang diagram facsimile plate, same class; figure page keep_text),
+  and MR's three "unrecognized top-band" lines which were NOT content but
+  shipped running-head leaks (a 9pt-italic 'William C. Chittick' + two
+  smallcaps chapter heads) — gate 8 was blind to them because its
+  templates come from the flow's own strip set. Dropped by override.
+- HU's "2 RTL chars" were U+FEFF (BOM/ZWNBSP prepress artifacts on the
+  title pages), not RTL text: the census range wrongly included U+FEFF
+  (Arabic Presentation Forms-B ends at FEFC — _RTL_RE fixed). BoK-arabic's
+  genuine RTL warning is now a config adjudication, not NOTES prose.
+
+## Exact inline page anchors — 2026-07-09
+
+A print page beginning mid-paragraph now gets an InlinePageBreak at the
+exact run seam (`<span epub:type="pagebreak" role="doc-pagebreak">` inside
+the paragraph) instead of a block anchor deferred to the next new block.
+Far bigger than the `approximate` flag suggested: BoK 179 / BoK-arabic 179 /
+HU 31 / I&B 98 / MR 181 pages get exact anchors (the flag only marked pages
+with NO new block at all; pages whose anchor landed at their first new
+paragraph — lines into the page — were silently imprecise).
+
+- The seam is ALWAYS a run boundary: the insertion index is captured BEFORE
+  _append_line (join separator/dehyphenation land on the previous TextRun
+  first — inserting before the join would fabricate the exact fused seams
+  gate 11 polices) and the anchor inserted after; pending blank-page
+  anchors flush at the same seam, keeping the page-list monotone.
+  Dehyphenated page turns put the anchor mid-word (empty span; sep "");
+  accepted.
+- ZERO slicing changes: qa_pageslice and proofread.walk_doc both use
+  pre-order body.iter() with tag-agnostic epub:type matching, so an inline
+  span attributes the straddling paragraph to the page it STARTS on and
+  advances the cursor after it — byte-identical partition to the old
+  deferred div (pinned by test_slicer_inline_equals_block_partition).
+  Gates 13-17 verdicts unchanged on all five artifacts.
+- What DID need changes: qa/visual.py's anchor collector (flow.blocks scan
+  missed inline anchors → count_ok false → every EPUB slice silently
+  skipped) and its two 'div.pagebreak' JS selectors; emit-side rescue for
+  role=drop/absorbed paragraphs (an anchor inside a skipped paragraph
+  re-emits as a block div — nothing may swallow an anchor); model
+  round-trip via the "ordinal" key sniff.
+- `approximate` now means exactly "page contributed no flowable text":
+  remaining block anchors with the flag are genuinely blank pages (BoK 2,
+  HU 9, I&B 4, MR 6 — verified 0-char pages), where a block-boundary anchor
+  IS positionally exact. Proofread packets moved only blank-page {p.N}
+  markers to the correct side of section boundaries (the old deferral
+  pushed them past the break into the next file).

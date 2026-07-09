@@ -46,8 +46,10 @@ bash scripts/bootstrap.sh             # one-time machine setup (pip, epubcheck j
 
 A build must end `epubcheck: clean` and `qa` must end `Overall: PASS` before results are
 presented as done. Stage snapshots land in `books/<slug>/build/ir/` (stages: extract, flow,
-map, images, xhtml); build warnings land in `build/warnings.md` with ready-to-paste
-book.yaml override snippets — the agent adjudication queue.
+map, images, xhtml); build warnings land in `build/warnings.md` (`warnings.<stem>.md` for
+variant configs) as a coded queue with ready-to-paste override/adjudication snippets — the
+agent adjudication queue. Judgments recorded in book.yaml auto-resolve their warnings;
+the rest need `adjudications:` entries (render-verified notes) or QA gate 22 fails.
 
 ## Architecture in one paragraph
 
@@ -57,13 +59,18 @@ clipping, outline, internal links, page labels) and cross-scores every page agai
 co-author). `analyze.py` gathers deterministic evidence (font clusters → pstyles, furniture,
 folio-vs-label agreement, TOC witnesses, footnote regions, PUA census, join stats) into
 `analysis/` for the agent. `flowbuilder.py` applies the recorded judgments to produce the
-typed FlowDoc IR (furniture strip, footnote split, paragraph join with dehyphenation and
-drop-cap reattachment, flow.columns re-split of columned back matter into print reading
-order, textfix, printed-TOC rebuild, exact PageAnchors). `core/` is the
+typed FlowDoc IR (furniture strip, footnote split, paragraph join with dehyphenation,
+drop-cap reattachment and cross-run lost-space seams, flow.columns re-split of columned back
+matter into print reading
+order, textfix, printed-TOC rebuild, exact page anchors — inline at the run seam when a
+page begins mid-paragraph). `core/` is the
 back-end forked from idml2epub: role application, CJK lang tagging, XHTML emitter, synthetic
 CSS, nav, OFL font subsetting, deterministic packager, and the EPUB-generic QA gates.
-`qa/` runs 20 gates (incl. 11b noteref-seam and 19 Qurʾānic-citation validation against
-the fixed 114-sura structure); text ground truth is poppler-extracted,
+`qa/` runs 23 gates (incl. 11 lost-space, 11b noteref-seam, 19 Qurʾānic-citation validation
+against the fixed 114-sura structure, 20 garble residue in shipped text, 21 figure-image
+integrity vs re-rendered source regions, and 22 warnings-adjudicated — the build's coded
+warning queue re-derived via `warnqueue.py`, failing on open content-risk items); text
+ground truth is poppler-extracted,
 trim-cropped, footnote-stripped page text through the same textfix/normalize chain the flow
 used; gates 13-17 grade
 typographic fidelity (shipped CSS+markup vs raw extract geometry, sliced per source page via
