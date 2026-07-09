@@ -14,20 +14,22 @@ blocking. Python via `~/pyenv/bin/` only.
 
 - Copy the source PDF into `books/<slug>/package/` (the repo is the archive of
   record; treat the original as read-only). Provided cover art → `books/<slug>/assets/`.
-- `~/pyenv/bin/pdf2epub init books/<slug>/package --workspace books/<slug>`
+- `~/pyenv/bin/pdf2epub init books/<slug>/package --workspace books/<slug> --layout`
 - Read `analysis/structure_report.md` COMPLETELY. `cp book.yaml book.draft.yaml`
   (the draft-vs-final diff feeds the refinement loop).
-- Optional, for a structurally hard book (tables/figures set in prose, columned
-  back matter): add `--layout` (or `--layout --layout-pages all` for a thorough
-  first pass) to run the ML layout witness — advisory `analysis/layout/report.md`
-  + overlay renders. Off by default; needs `transformers` installed. See Step 2.
+- `--layout` runs the ML layout witness (advisory structure evidence — Step 2).
+  Run it by default. It auto-picks pages: `all` when the book is small (≤300pp),
+  its TOC lists tables/figures, or it has vector-ruled pages; else
+  flagged+structure-suspect. Override with `--layout-pages all|flagged|<spec>`.
+  If `transformers` isn't installed it prints a hint and skips (non-fatal) —
+  just proceed without it.
 
 ## Step 2 — Infer the structure (the judgment pass)
 
 LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
 `analysis/thumbs/`). Never decide a visual question from text evidence alone.
 
-- **Layout witness (advisory — only if you ran `--layout`)**: read
+- **Layout witness (advisory — present unless the backend was absent)**: read
   `analysis/layout/report.md`. It proposes paste-ready `images.figure_regions`
   and `flow.columns` candidates and cross-checks footnotes / running heads /
   section headers. It is a THIRD witness (like poppler for text): verify EVERY

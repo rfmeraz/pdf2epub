@@ -164,13 +164,23 @@ def _detect(image, pno: int, dpi: int) -> list[LayoutBox]:
 
 # ---------------------------------------------------------- page selection
 
-def structure_suspect_pages(doc, a) -> set[int]:
+# Auto-escalation thresholds (tunable via env). The witness runs once at init,
+# so `all` is a one-time ~2.1s/page cost; scan it whenever the book plausibly
+# hides a table/figure outside the flagged set.
+AUTO_ALL_MAX_PAGES = int(os.environ.get("PDF2EPUB_LAYOUT_AUTO_ALL_MAX", "300"))
+_RULED_MIN_RULES = int(os.environ.get("PDF2EPUB_LAYOUT_RULED_MIN", "3"))
+_FIGURE_LIST_RE = re.compile(
+    r"(?i)\b(?:list|table) of "
+    r"(?:tables|figures|illustrations|plates|maps|charts)\b")
+
+
+def structure_suspect_pages(doc, a, drawings_dense=frozenset()) -> set[int]:
     """Cheap deterministic 'likely holds a table/figure' set. flagged_pages is a
     capped render queue that misses clean text tables (high engine agreement, no
     PUA) — exactly where a hand-authored figure_regions matters most. Reuses
-    existing signals plus a conservative tabular smell."""
+    existing signals + a tabular smell + vector-ruled pages (drawings_dense)."""
     s: set[int] = (set(a.column_suspect_pages) | set(a.image_only_pages)
-                   | set(a.figure_pages_proposal))
+                   | set(a.figure_pages_proposal) | set(drawings_dense))
     for p in doc.pages:
         if p.n_images > 0:
             s.add(p.number)
@@ -180,8 +190,69 @@ def structure_suspect_pages(doc, a) -> set[int]:
     return {p for p in s if 1 <= p <= doc.n_pages}
 
 
-def default_pages(doc, a) -> set[int]:
-    return set(a.flagged_pages) | structure_suspect_pages(doc, a)
+def default_pages(doc, a, drawings_dense=frozenset()) -> set[int]:
+    return set(a.flagged_pages) | structure_suspect_pages(doc, a, drawings_dense)
+
+
+def toc_has_figure_list(doc, a) -> bool:
+    """High-precision 'this book is figure/table-heavy' flag: the printed TOC /
+    outline advertises a List of Tables/Figures/Illustrations/Plates."""
+    texts = [e.get("text", "") for e in a.toc_entries]
+    texts += [e.get("text", "") for e in a.headings]
+    texts += [o.title for o in doc.outline]
+    return any(_FIGURE_LIST_RE.search(t) for t in texts if t)
+
+
+def drawings_dense_pages(pdf_path, doc, *, min_rules=_RULED_MIN_RULES,
+                         min_len=30.0) -> set[int]:
+    """Pages carrying a ruled grid: >= min_rules distinct horizontal OR vertical
+    rule positions from long LINE strokes. Rects are ignored — books frame pages
+    with decorative rectangles (BoK: ~10/page) that would swamp a segment count;
+    real ruled tables draw their rows/cols as many distinct parallel lines
+    (BoK p.26: 7 row rules vs 0-1 on prose pages). Catches ruled tables/diagrams
+    that carry no raster image, so the other structure-suspect signals miss them.
+    Opens the PDF; cheap (ms/page)."""
+    import fitz
+    dense: set[int] = set()
+    pdf = fitz.open(str(pdf_path))
+    try:
+        for i in range(doc.n_pages):
+            try:
+                drawings = pdf[i].get_drawings()
+            except Exception:
+                continue
+            hs: set[int] = set()
+            vs: set[int] = set()
+            for d in drawings:
+                for it in d.get("items", ()):
+                    if it[0] != "l":
+                        continue
+                    p1, p2 = it[1], it[2]
+                    if abs(p1.y - p2.y) < 1.0 and abs(p1.x - p2.x) >= min_len:
+                        hs.add(round(p1.y))            # horizontal rule (row)
+                    elif abs(p1.x - p2.x) < 1.0 and abs(p1.y - p2.y) >= min_len:
+                        vs.add(round(p1.x))            # vertical rule (column)
+            if len(hs) >= min_rules or len(vs) >= min_rules:
+                dense.add(i + 1)
+    finally:
+        pdf.close()
+    return dense
+
+
+def auto_pages(doc, a, drawings_dense=frozenset()) -> tuple[set[int], str]:
+    """Evidence-gated default: scan ALL when the book plausibly hides a
+    table/figure outside the flagged set — small enough that all is cheap, a TOC
+    list-of-tables/figures, or vector-ruled pages. Else flagged+suspect."""
+    reasons = []
+    if doc.n_pages <= AUTO_ALL_MAX_PAGES:
+        reasons.append(f"<={AUTO_ALL_MAX_PAGES}pp")
+    if toc_has_figure_list(doc, a):
+        reasons.append("TOC lists tables/figures")
+    if drawings_dense:
+        reasons.append(f"{len(drawings_dense)} vector-ruled page(s)")
+    if reasons:
+        return set(range(1, doc.n_pages + 1)), "auto=all (" + "; ".join(reasons) + ")"
+    return default_pages(doc, a, drawings_dense), "auto=flagged+structure-suspect"
 
 
 def _parse_spec(spec: str) -> list[int]:
@@ -197,18 +268,20 @@ def _parse_spec(spec: str) -> list[int]:
     return out
 
 
-def resolve_pages(spec, doc, a) -> tuple[list[int], str]:
-    """Return (sorted pages, human description). spec: None/'flagged' = default
-    (flagged ∪ structure-suspect); 'all'; '+sample:N' (seeded top-up); or an
-    explicit '26', '322-336', comma/space list."""
+def resolve_pages(spec, doc, a, drawings_dense=frozenset()) -> tuple[list[int], str]:
+    """None/'auto' -> evidence-gated (auto_pages); 'flagged'/'default' -> the
+    subset; 'all'; '+sample:N' seeded top-up; or an explicit '26'/'322-336'."""
     n = doc.n_pages
-    if spec in (None, "", "default", "flagged"):
-        pages, desc = default_pages(doc, a), "flagged + structure-suspect"
+    if spec in (None, "", "auto"):
+        pages, desc = auto_pages(doc, a, drawings_dense)
+    elif spec in ("flagged", "default"):
+        pages = default_pages(doc, a, drawings_dense)
+        desc = "flagged + structure-suspect"
     elif spec == "all":
         pages, desc = set(range(1, n + 1)), "all pages"
     elif isinstance(spec, str) and spec.startswith("+sample:"):
         k = int(spec.split(":", 1)[1])
-        base = default_pages(doc, a)
+        base = default_pages(doc, a, drawings_dense)
         rest = [p for p in range(1, n + 1) if p not in base]
         rng = random.Random(int(doc.sha256[:16], 16) if doc.sha256 else 0)
         rng.shuffle(rest)

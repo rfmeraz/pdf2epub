@@ -609,14 +609,21 @@ boundary as poppler, one rung up (text→structure).
   furniture on `page-header`/`page-footer` ONLY — a bare `header`/`footer` keyword mis-files
   `Section-header` as furniture and drops the heading cross-check.
 - **flagged_pages is a capped render queue** — it misses clean text tables (high engine
-  agreement, no PUA). The witness default is `flagged ∪ structure-suspect` (column-suspect,
-  embedded-image, tabular-smell pages); the report always states scanned-vs-not so a miss is
-  never silent. Column detection is the weak signal (the model boxes a multi-col region
-  partially); rely on `column_suspect_pages` feeding structure-suspect, not on the witness.
+  agreement, no PUA). structure-suspect widens it (column-suspect, embedded-image,
+  tabular-smell, and vector-ruled pages via `get_drawings()`); the report always states
+  scanned-vs-not so a miss is never silent. The witness runs by DEFAULT (skill Step 1) with
+  evidence-gated `auto` page selection: scan `all` when the book is ≤`AUTO_ALL_MAX_PAGES` (300),
+  its TOC lists tables/figures (`toc_has_figure_list`), or it has vector-ruled pages; else the
+  subset. `--layout-pages flagged|all|<spec>` overrides. Column detection is the weak signal
+  (the model boxes a multi-col region partially); rely on `column_suspect_pages`, not the
+  witness, for columns.
 - **Benchmark baseline** (`scripts/bench_layout.py`, BoK, torch 2.13.0+cpu, transformers
   5.13, Python 3.14, CPU-only): median **2.12 s/page** (p95 2.43, render ~0.03 + predict
   ~2.08), model load ~1.4 s cached (~5 s first ever), peak RSS ~2.0 GB. Projections: 100p
-  ~3.5 min, 300p ~10.6 min, 500p ~17.6 min. **Decision:** default stays `flagged ∪
-  structure-suspect` (fast build-loop iteration), but `all` is cheap enough to be the routine
-  first pass on table/figure-bearing books — re-run this bench after a torch/transformers
+  ~3.5 min, 300p ~10.6 min, 500p ~17.6 min. **Decision:** the witness runs once at init (not
+  per build), so `all` is a bounded one-time cost — hence the evidence-gated `auto` default
+  scans `all` for most books (≤300pp / TOC figure-list / vector-ruled) and the subset only for
+  large books with no table/figure signal. Page-level parallelism does NOT help on CPU (a
+  single page already saturates cores via torch intra-op threads; batching/more-workers give
+  ≤1.15×) — the lever is fewer pages or a GPU. Re-run this bench after a torch/transformers
   upgrade.

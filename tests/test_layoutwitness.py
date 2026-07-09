@@ -25,10 +25,11 @@ def _page(number, n_images=0, trim=(50, 50, 400, 600), lines=(), n_chars=100):
                                  lines=list(lines), n_chars=n_chars)
 
 
-def _doc(n_pages, sha="abcdef0123456789", pages=None):
+def _doc(n_pages, sha="abcdef0123456789", pages=None, outline=()):
     if pages is None:
         pages = [_page(i) for i in range(1, n_pages + 1)]
-    return types.SimpleNamespace(n_pages=n_pages, sha256=sha, pages=pages)
+    return types.SimpleNamespace(n_pages=n_pages, sha256=sha, pages=pages,
+                                 outline=list(outline))
 
 
 # --------------------------------------------------- coordinate mapping
@@ -143,19 +144,44 @@ def test_write_layout_evidence_files(tmp_path):
 def test_structure_suspect_uses_cheap_signals():
     pages = [_page(1),
              _page(2, n_images=3),                       # embedded image
-             _page(3, lines=[_line(50, 90)] * 10)]       # short lines -> tabular
-    doc = _doc(3, pages=pages)
-    s = lw.structure_suspect_pages(doc, Analysis(column_suspect_pages=[1]))
-    assert s == {1, 2, 3}
+             _page(3, lines=[_line(50, 90)] * 10),       # short lines -> tabular
+             _page(4)]
+    doc = _doc(4, pages=pages)
+    s = lw.structure_suspect_pages(doc, Analysis(column_suspect_pages=[1]),
+                                   drawings_dense={4})    # vector-ruled page
+    assert s == {1, 2, 3, 4}
 
 
-def test_resolve_pages_default_all_explicit():
-    doc = _doc(10)
+def test_toc_has_figure_list():
+    assert lw.toc_has_figure_list(_doc(5), Analysis(toc_entries=[{"text": "List of Tables"}]))
+    assert lw.toc_has_figure_list(_doc(5), Analysis(headings=[{"text": "List of Illustrations"}]))
+    assert lw.toc_has_figure_list(
+        _doc(5, outline=[types.SimpleNamespace(title="Table of Figures")]), Analysis())
+    assert not lw.toc_has_figure_list(_doc(5), Analysis(toc_entries=[{"text": "Introduction"}]))
+
+
+def test_auto_pages_rule():
+    p, desc = lw.auto_pages(_doc(10), Analysis(flagged_pages=[2]))
+    assert p == set(range(1, 11)) and "auto=all" in desc            # <=300pp
+
+    big = _doc(400)
+    p, desc = lw.auto_pages(big, Analysis(flagged_pages=[2]))
+    assert p == {2} and desc == "auto=flagged+structure-suspect"    # no signal
+    assert lw.auto_pages(big, Analysis(flagged_pages=[2]),
+                         drawings_dense={150})[0] == set(range(1, 401))   # vector-ruled
+    assert lw.auto_pages(big, Analysis(toc_entries=[{"text": "List of Figures"}]))[0] \
+        == set(range(1, 401))                                        # TOC list
+
+
+def test_resolve_pages_modes():
+    big = _doc(400)
     a = Analysis(flagged_pages=[2], column_suspect_pages=[4])
-    d, desc = lw.resolve_pages(None, doc, a)
-    assert {2, 4} <= set(d) and "structure-suspect" in desc
-    assert lw.resolve_pages("all", doc, a)[0] == list(range(1, 11))
-    assert lw.resolve_pages("3,5-7", doc, a)[0] == [3, 5, 6, 7]
+    d, desc = lw.resolve_pages(None, big, a)               # default = auto
+    assert set(d) == {2, 4} and "auto=" in desc
+    f, fdesc = lw.resolve_pages("flagged", big, a)         # force subset
+    assert set(f) == {2, 4} and "structure-suspect" in fdesc
+    assert lw.resolve_pages("all", big, a)[0] == list(range(1, 401))
+    assert lw.resolve_pages("3,5-7", big, a)[0] == [3, 5, 6, 7]
 
 
 def test_sample_is_seeded_and_non_duplicating():

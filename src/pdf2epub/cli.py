@@ -26,9 +26,10 @@ def main(argv: list[str] | None = None) -> int:
                              "structure evidence into analysis/layout/; needs "
                              "transformers + torch)")
     p_init.add_argument("--layout-pages", metavar="SPEC", default=None,
-                        help="Pages the layout witness scans: default "
-                             "flagged+structure-suspect; 'all'; '+sample:N'; or "
-                             "'26' / '322-336' (comma/space list)")
+                        help="Pages the layout witness scans: default 'auto' "
+                             "(evidence-gated all-vs-subset); 'flagged' forces "
+                             "the subset; 'all'; '+sample:N'; or '26' / "
+                             "'322-336' (comma/space list)")
 
     p_build = sub.add_parser("build", help="Deterministic build: book.yaml -> EPUB")
     p_build.add_argument("config", type=Path, help="Path to book.yaml")

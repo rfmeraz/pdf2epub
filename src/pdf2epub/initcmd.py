@@ -53,7 +53,11 @@ def run_init(pdf_or_folder: Path, workspace: Path, *,
             print("  install: ~/pyenv/bin/pip install transformers "
                   "(a CPU torch wheel must be present)")
         else:
-            pages, sel = lw.resolve_pages(layout_pages, doc, a)
+            need_draw = (layout_pages in (None, "", "auto", "flagged", "default")
+                         or (isinstance(layout_pages, str)
+                             and layout_pages.startswith("+sample:")))
+            draw = lw.drawings_dense_pages(pdf, doc) if need_draw else frozenset()
+            pages, sel = lw.resolve_pages(layout_pages, doc, a, drawings_dense=draw)
             layout_dir = analysis_dir / "layout"
             boxes = lw.run_layout_witness(pdf, pages, overlay_dir=layout_dir)
             lw.write_layout_evidence(doc, a, boxes, pages, sel, layout_dir)
