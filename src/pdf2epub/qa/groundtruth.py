@@ -144,26 +144,21 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
         for marker, note_text in note_texts_by_page.get(pno, []):
             if marker:
                 markers.append(marker)
-            frag = normalize(note_text)
-            # excise the note BODY only, dropping the fragment's own leading
-            # marker — the marker removal below then strips BOTH copies (the
-            # note-side one + the in-body ref) exactly, instead of over-running
-            # count=2 into an unrelated standalone digit
+            # search on the note BODY (drop the fragment's own leading marker):
+            # the caller's marker pass then strips BOTH copies (note-side + the
+            # in-body ref) exactly, not over-running count=2 into a stray digit
+            body = normalize(note_text)
             if marker:
-                frag = re.sub(r"^\s*" + re.escape(marker) + r"[.)]?\s*", "",
-                              frag, count=1)
-            if len(frag) < 15:
+                body = re.sub(r"^\s*" + re.escape(marker) + r"[.)]?\s*", "",
+                              body, count=1)
+            if len(body) < 15:
                 continue
-            span = _find_fuzzyish(norm, frag)
-            if span is None:
-                # tolerate marker-prefix differences: try without first token
-                span = _find_fuzzyish(norm, frag.split(" ", 1)[-1])
-            if span is not None:
-                s, e = span
-                norm = norm[:s] + " " + norm[e:]
-                gt.note_chars_removed += e - s
+            out = _excise_note(norm, body, marker)
+            if out is not None:
+                norm, removed = out
+                gt.note_chars_removed += removed
             else:
-                gt.note_strip_failures.append(f"p.{pno}: {frag[:60]}…")
+                gt.note_strip_failures.append(f"p.{pno}: {body[:60]}…")
         # excision fallback: notes sit at the page bottom starting with their
         # marker ('9. ') — when text-matching failed, cut from the first
         # still-present marker-prefixed line to the page end
@@ -296,3 +291,21 @@ def _find_fuzzyish(hay: str, needle: str) -> tuple[int, int] | None:
         if p >= 0:
             return pos[p], pos[p + len(sn) - 1] + 1
     return None
+
+
+def _excise_note(norm: str, body: str, marker: str) -> tuple[str, int] | None:
+    """Locate a note ``body`` (its leading marker already dropped) in ``norm``
+    and remove it, PLUS the printed delimiter/space the marker left immediately
+    in front of it — otherwise a '1. body' note orphans a stray '.' once the
+    marker digit alone is stripped. The marker glyphs themselves are removed by
+    the caller's global pass. Returns (new_norm, chars_removed) or None."""
+    span = _find_fuzzyish(norm, body)
+    if span is None:
+        # tolerate marker-prefix differences: try without the first token
+        span = _find_fuzzyish(norm, body.split(" ", 1)[-1])
+    if span is None:
+        return None
+    s, e = span
+    if marker:
+        s = re.search(r"[.)]?\s*$", norm[:s]).start()
+    return norm[:s] + " " + norm[e:], e - s
