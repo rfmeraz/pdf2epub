@@ -232,6 +232,27 @@ collapsed them into a handful of systemic classes. Lessons:
   Cross-page mirror: continuation is the default; break only on prev-short
   or full-line + genuine indent (comparing the indent against the previous
   page's last-line x0 alone split quote blocks whose insets differ by 9pt).
+- **'Short line' must measure against the BLOCK's margin, not the column's**
+  (user-reported 2026-07-09: I&B Qurʾān quotes 'broken across lines in
+  unpredictable ways'). A block quote is inset on BOTH sides, so its justified
+  lines end ~18pt short of the body col_right — but the prev_short test only
+  corrected eff_right for LEFT shift (recto/verso), never a right inset, so
+  every full quote line read as ragged and the quote shattered line by line
+  (I&B p.151's al-Jūzjānī quote: 23 fragments; the roman Dalai Lama blocks on
+  p.51 too — block quotes are NOT always italic). The 18pt threshold sat a
+  hair inside the quote's edge (344.76 vs a 345 cutoff), so lines flipped
+  break/join on sub-point jitter — hence 'unpredictable'. Fix (`_assign_block_right`):
+  a run of ≥2 consecutive same-inset lines whose right edges cluster to
+  sub-point precision is JUSTIFIED; that shared edge is the block's OWN right
+  margin, used in prev_short via `_L.block_right`. Ragged verse (line widths
+  scatter by whole points) yields no cluster → None → falls back to col_right,
+  so its meaningful line breaks survive (the discriminator that keeps
+  test_short_line_ends_paragraph's verse block broken). The change only ever
+  lowers the short-cutoff (block_right ≤ col_right) → it can only join MORE,
+  never split a currently-joined line. Baseline: I&B flow 1218 → 896 blocks
+  (roman quote paras 893→650, italic 129→53), all inset block quotes; build
+  epubcheck-clean, qa Overall PASS (verified past the separate pre-existing
+  p.154 folio-'129' @10 leak).
 - **Page-scoped role_overrides are a blunt instrument**: a mislabeled page
   number ({page: 6, role: p} annotated 'copyright' sitting on the CONTENTS
   page) silently wiped 36 toc-entry roles. Invisible to every gate because
@@ -421,6 +442,18 @@ repair corrupts healthy text. What actually shipped garble, and the fixes:
 - The garbled '%LEOLRJUDSK\' running heads pp.166/168 (word-shape-repaired
   to 'Bibliography' and shipped as duplicate h3s) are furniture: dropped by
   override, single Bibliography heading ships.
+- **Shifted-CMap FOLIOS leaked past the furniture strip** (found 2026-07-09
+  chasing an unmapped `TimesNewRomanPSMT@10` that blocked the build): the
+  furniture/folio shape test runs BEFORE the flow's per-run repair, so a
+  shifted folio arrives as control bytes ('129' -> '\x14\x15\x1c'), never
+  looks like digits, and ships as a stray body paragraph (pp.143/144/153/154:
+  118/119/128/129). Fix: `textfix.probe_text` repairs a shifted run before the
+  `is_folio_line` shape test, applied symmetrically at BOTH folio checks — the
+  flow strip (`flowbuilder`) AND the poppler ground truth (`groundtruth`,
+  whose own pre-repair folio check kept the same garble, so gate 2 matched and
+  hid it). Gated on `shifted_cmap_repair` → a no-op for every other book.
+  furniture-folio 155 -> 159; build epubcheck-clean and qa Overall PASS from
+  the committed book.yaml (previously unbuildable).
 
 ## Gates 21 (figure integrity) + 22 (warnings adjudicated) — 2026-07-09
 

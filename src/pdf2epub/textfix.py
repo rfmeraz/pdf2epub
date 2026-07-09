@@ -140,6 +140,19 @@ def repair_shifted_cmap(text: str, highmap: dict[str, str]) -> tuple[str, int]:
     return t, unknown
 
 
+def probe_text(text: str, shifted_cmap_repair: bool,
+               highmap: dict[str, str]) -> str:
+    """The text a furniture/folio SHAPE test should see. Furniture stripping
+    runs ahead of the flow's per-run repair, so a shifted-CMap folio arrives
+    as raw control bytes (I&B p.154 '129' -> '\\x14\\x15\\x1c') and never looks
+    like digits — it leaks past the folio strip into the body as an unmapped
+    pstyle. Repair a shifted run first so the shape test sees '129'; leave
+    already-decoded text untouched."""
+    if shifted_cmap_repair and is_shifted_run(text, highmap):
+        return repair_shifted_cmap(text, highmap)[0]
+    return text
+
+
 def strip_control_chars(text: str) -> tuple[str, int]:
     """XML validity is non-negotiable: C0 controls (minus tab/newline) out."""
     n = len(_CTRL_RE.findall(text))

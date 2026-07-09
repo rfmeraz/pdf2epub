@@ -81,6 +81,7 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
         # the region token set is region text.
         page_regions = set((region_texts or {}).get(pno, []))
         region_tokens = {t for s in page_regions for t in s.split()}
+        from ..textfix import probe_text
         for i, ln in enumerate(lines):
             n = normalize(ln)
             if page_regions:
@@ -91,7 +92,11 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                     continue
             first_or_last = i <= 1 or i >= len(lines) - 2
             if first_or_last:
-                if is_folio_line(n):
+                # symmetric with the flow's furniture strip: a shifted-CMap
+                # folio ('129' -> control bytes) is repaired before the shape
+                # test, so poppler's garbled folio is excised here too
+                if is_folio_line(normalize(probe_text(
+                        ln, cfg.shifted_cmap_repair, cfg.shifted_cmap_highmap))):
                     continue
                 if furniture_template(ln).strip("#").strip() in canon:
                     continue

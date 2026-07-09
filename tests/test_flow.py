@@ -227,6 +227,35 @@ def test_short_line_ends_paragraph(tmp_path):
     assert len(_paras(res.flow)) == 1
 
 
+def test_inset_block_quote_joins_by_own_margin(tmp_path):
+    # I&B Qurʾān-quote shape: an inset block quote (x0=90) is indented on BOTH
+    # sides, so its justified lines end ~18pt short of the BODY column edge and
+    # each read as a ragged paragraph end under a body-column short test. The
+    # block's OWN right margin (the tight x1 cluster its full lines reach) makes
+    # them full again, so the quote flows as ONE paragraph instead of shattering
+    # line by line. Contrast test_short_line_ends_paragraph's verse block, whose
+    # scattered widths yield no cluster and stay broken.
+    pages = [_page(1, [
+        _line("body context establishing the column geometry width", 74),
+        _line("more body context running to the right margin here", 87),
+        _line("Whoso migrates for the sake of God will find refuge", 113.5,
+              x0=90.0, width=253.0),   # x1=343, ~19pt short of the 362 body edge
+        _line("and abundance in the earth and whoso forsakes home", 127,
+              x0=90.0, width=253.0),   # x1=343
+        _line("being a fugitive to God and death overtakes that man", 140.5,
+              x0=90.0, width=252.0),   # x1=342 — still full to the block margin
+        _line("ever Forgiving Merciful (4:100)", 154, x0=90.0, width=100.0),
+        _line("The juxtaposition of these citations shows a deep truth", 172),
+    ])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    texts = [p.text() for p in _paras(res.flow)]
+    quote = [t for t in texts if t.startswith("Whoso migrates")]
+    assert len(quote) == 1  # the four quote lines are ONE paragraph, not four
+    assert "abundance in the earth" in quote[0]
+    assert quote[0].rstrip().endswith("(4:100)")
+    assert any(t.startswith("The juxtaposition") for t in texts)
+
+
 def test_hanging_indent_list_items(tmp_path):
     # I&B printed xiv: items start at x0=90, continuations hang DEEPER at
     # x0=108. A deeper x0 after a FULL line is a continuation, not a new
@@ -455,6 +484,36 @@ def test_is_shifted_run_highmap_wordshape():
     for real in ("BIBLIOGRAPHY", "COPYRIGHT", "2004", "Fig.7", "plain text",
                  "NNW-by-W"):
         assert not is_shifted_run(real, hm), real
+
+
+def test_probe_text_repairs_folio_shape():
+    from pdf2epub.textfix import probe_text
+    from pdf2epub.core.textnorm import is_folio_line
+    # I&B p.154 folio '129' arrives as control bytes; the furniture SHAPE test
+    # runs before the flow's per-run repair, so probe_text must repair first
+    assert probe_text("\x14\x15\x1c", True, {}) == "129"
+    assert is_folio_line(probe_text("\x14\x15\x1c", True, {}))
+    # no-op when repair is off (every other book) or the text already decoded
+    assert probe_text("\x14\x15\x1c", False, {}) == "\x14\x15\x1c"
+    assert probe_text("129", True, {}) == "129"
+    assert probe_text("body words", True, {}) == "body words"
+
+
+def test_shifted_cmap_folio_stripped(tmp_path):
+    # I&B p.154: a shifted-CMap folio at the page foot must strip as furniture,
+    # not leak into the body as an unmapped pstyle (furniture stripping runs
+    # ahead of the flow's text repair, so the shape test repairs the folio)
+    cfg = _cfg(tmp_path, shifted_cmap_repair=True)
+    pages = [_page(1, [
+        _line("A body paragraph running to the right margin here now", 100),
+        _line("that continues onto a second full line of the column", 113.5),
+        _line("\x14\x15\x1c", 610, x0=205.0, width=15.0),   # garbled folio '129'
+    ])]
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    texts = " ".join(p.text() for p in _paras(res.flow))
+    assert "129" not in texts and "\x14\x15\x1c" not in texts
+    # the body itself is untouched
+    assert any("second full line" in p.text() for p in _paras(res.flow))
 
 
 def test_fffd_repair_pagescoped(tmp_path):

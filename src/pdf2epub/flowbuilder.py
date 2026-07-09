@@ -41,6 +41,7 @@ from .pdfmodel import PdfDoc, PdfLine, PdfRun
 from .textfix import (
     dehyphenate_join,
     expand_ligatures,
+    probe_text,
     restore_space_seam,
     restore_spaces,
 )
@@ -165,6 +166,13 @@ class _L:
     # index into cfg.figure_regions when the line sits inside a region rect
     # (its text ships as a cropped raster, not as flowed text); -1 otherwise
     region: int = -1
+    # justified right margin of this line's inset block (a block quote is inset
+    # on BOTH sides, so its measure is narrower than the body column), or None
+    # when the line is not in a tight-clustered justified run — see
+    # _assign_block_right. The paragraph-join 'short line' test measures against
+    # this instead of the body column, so a full line of an indented quote is
+    # not misread as a ragged paragraph end.
+    block_right: float | None = None
 
 
 def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
@@ -274,9 +282,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             t_norm = normalize(ln.text())
             if first_or_last and (near_top or near_bot):
                 tpl = furniture_template(ln.text())
-                if is_folio_line(t_norm):
+                # a shifted-CMap folio arrives as control bytes; probe the
+                # REPAIRED text so it is recognized (and stripped) as a folio
+                folio_norm = normalize(probe_text(
+                    ln.text(), cfg.shifted_cmap_repair, cfg.shifted_cmap_highmap))
+                if is_folio_line(folio_norm):
                     counts["furniture-folio"] += 1
-                    res.furniture_texts.setdefault(p.number, []).append(t_norm)
+                    res.furniture_texts.setdefault(p.number, []).append(folio_norm)
                     continue
                 if tpl in fur:
                     counts["furniture-head"] += 1
@@ -414,6 +426,11 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 leadings.append(d)
     leadings.sort()
     med_lead = leadings[len(leadings) // 2] if leadings else body_size * 1.3
+
+    # ---- per-page inset-block right margins (block quotes measure narrower
+    # than the body column; see _assign_block_right and _break_before)
+    for lines in pages_lines.values():
+        _assign_block_right(lines)
 
     # ---- join pass, page by page, with cross-page continuation
     open_para: Paragraph | None = None
@@ -680,6 +697,43 @@ def _ps_root(ps: str) -> str:
     return f"{fam}@{rest}"
 
 
+# an inset block quote is indented on BOTH sides: its justified lines end
+# short of the BODY column's right edge, so each would read as a ragged
+# paragraph-ending line and the quote shatters line by line (the I&B Qurʾān
+# quotes did exactly this). A run of >=2 consecutive same-inset lines whose
+# right edges cluster to sub-point precision is JUSTIFIED — that shared edge is
+# the block's OWN right margin, against which interior lines are full, not
+# short. Ragged verse (line widths scatter by whole points) yields no cluster
+# and keeps its meaningful line-by-line breaks. Left tolerance groups a block;
+# right tolerance is set by how tightly justification lands the right edge.
+_BLOCK_LEFT_TOL = 3.0
+_BLOCK_RIGHT_TOL = 2.0
+
+
+def _assign_block_right(lines: list[_L]) -> None:
+    """Set L.block_right for lines in a justified inset block to that block's
+    own right margin (the largest x1 that >=2 lines in the run reach). Runs
+    with no such cluster — a lone inset line, or ragged verse — stay None and
+    fall back to the body-column edge, preserving today's behavior."""
+    i, n = 0, len(lines)
+    while i < n:
+        j = i + 1
+        x0 = lines[i].ln.x0
+        while j < n and abs(lines[j].ln.x0 - x0) <= _BLOCK_LEFT_TOL:
+            j += 1
+        run = lines[i:j]
+        if len(run) >= 2:
+            xs = [L.ln.x1 for L in run]
+            margin = next(
+                (c for c in sorted(xs, reverse=True)
+                 if sum(1 for x in xs if abs(x - c) <= _BLOCK_RIGHT_TOL) >= 2),
+                None)
+            if margin is not None:
+                for L in run:
+                    L.block_right = margin
+        i = j
+
+
 def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
                   cfg: PdfBookConfig, geo: ColumnGeometry, med_lead: float,
                   open_is_body: bool, pno: int) -> bool:
@@ -712,10 +766,14 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
     # right edge by this block's own left inset before the 'short' test, or
     # every justified line on a shifted page reads as a paragraph end.
     eff_right = geo.col_right - max(0.0, geo.col_left - min(prev.ln.x0, L.ln.x0))
+    # a line inside a justified inset block (a block quote) is measured against
+    # the block's OWN narrower right margin — its full lines end well short of
+    # the body column but are NOT ragged paragraph ends (see _assign_block_right)
+    ref_right = prev.block_right if prev.block_right is not None else eff_right
     # a line-end hyphen is an explicit continuation signal that trumps
     # geometry: ragged citations ('Maktaba al-' / 'Hilāl, 1988') end short
     # mid-entry, and breaking there strands 'al- Hilāl' seams (gate 9)
-    prev_short = (prev.ln.x1 < eff_right - max(18.0, 0.06 * col_w)
+    prev_short = (prev.ln.x1 < ref_right - max(18.0, 0.06 * col_w)
                   and not prev.ln.text().rstrip().endswith(_CONT_DASHES))
     cross_page = L.page != prev.page
     if cross_page:
