@@ -97,6 +97,19 @@ class FigurePages:
 
 
 @dataclass(slots=True)
+class FigureRegion:
+    """A rect on a page that ships as a cropped raster figure: the safe path
+    for TRUE TABLES and diagrams embedded in prose (row/column relationships
+    are content the line-based flow cannot represent). The region's text
+    lines leave the flow and the coverage ground truth; alt text is
+    REQUIRED — the agent writes it from the render."""
+    page: int
+    rect: tuple[float, float, float, float]  # extract-space pt (top-origin)
+    alt: str
+    note: str = ""
+
+
+@dataclass(slots=True)
 class CoverRender:
     page: int
     box: str = "trim"  # trim | media
@@ -204,6 +217,7 @@ class PdfBookConfig:
     image_alt: dict[str, str] = field(default_factory=dict)
     decorative: list[str] = field(default_factory=list)
     figure_pages: list[FigurePages] = field(default_factory=list)
+    figure_regions: list[FigureRegion] = field(default_factory=list)
 
     # output
     slug: str = "book"
@@ -444,7 +458,7 @@ def load_config(path: Path) -> PdfBookConfig:
 
     im = data.get("images", {})
     _check_keys("images", im, {"raster_dpi", "max_pixels", "alt", "decorative",
-                               "figure_pages"})
+                               "figure_pages", "figure_regions"})
     cfg.raster_dpi = int(im.get("raster_dpi", cfg.raster_dpi))
     cfg.max_pixels = int(im.get("max_pixels", cfg.max_pixels))
     cfg.image_alt = im.get("alt", {}) or {}
@@ -465,6 +479,17 @@ def load_config(path: Path) -> PdfBookConfig:
                                             lang=fp.get("lang"),
                                             keep_text=bool(fp.get("keep_text",
                                                                   False))))
+    for fr in im.get("figure_regions", []) or []:
+        _check_keys("images.figure_regions[]", fr, {"page", "rect", "alt", "note"})
+        rect = tuple(float(v) for v in fr["rect"])
+        if len(rect) != 4 or rect[0] >= rect[2] or rect[1] >= rect[3]:
+            raise ConfigError("images.figure_regions rect must be [x0, y0, x1, y1]")
+        if not fr.get("alt"):
+            raise ConfigError("images.figure_regions requires alt text "
+                              "(write it from the page render)")
+        cfg.figure_regions.append(FigureRegion(page=int(fr["page"]), rect=rect,
+                                               alt=fr["alt"],
+                                               note=fr.get("note", "")))
 
     out = data.get("output", {})
     _check_keys("output", out, {"slug", "include_ncx"})

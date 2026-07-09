@@ -391,3 +391,31 @@ def test_flow_columns_no_gutter_warns(tmp_path):
     assert [p.text() for p in _paras(res.flow)] == [
         "An ordinary full width body line of text here "
         "and another one continuing the paragraph."]
+
+
+def test_figure_region_ships_table_as_raster(tmp_path):
+    from pdf2epub.config import FigureRegion
+    from pdf2epub.core.model import Figure
+
+    # prose, then a 3-column table (mangled by line order), then prose:
+    # the region rect swallows the table lines and a Figure lands in place
+    pages = [_page(1, [
+        _line("Intro paragraph before the legend table sits here.", 100),
+        _line("Arabic glyphEnglish meaningUsage", 150),
+        _line("GlyphMighty and majestic isOn mention of God", 165),
+        _line("He", 180),
+        _line("Closing paragraph after the table resumes the prose.", 230),
+    ])]
+    cfg = _cfg(tmp_path, figure_regions=[
+        FigureRegion(page=1, rect=(60.0, 140.0, 380.0, 200.0),
+                     alt="Legend table of honorific glyphs")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    blocks = [b for b in res.flow.blocks if isinstance(b, (Paragraph, Figure))]
+    assert [type(b).__name__ for b in blocks] == ["Paragraph", "Figure", "Paragraph"]
+    fig = blocks[1]
+    assert fig.image_key == "region-0001-0.png"
+    assert fig.alt == "Legend table of honorific glyphs"
+    assert "Mighty" not in blocks[2].text() and "Mighty" not in blocks[0].text()
+    # gt excision evidence: whole lines AND their runs, normalized
+    assert any("Mighty and majestic" in t for t in res.region_texts[1])
+    assert res.counts.get("figure-regions") == 1

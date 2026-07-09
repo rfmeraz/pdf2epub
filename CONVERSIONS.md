@@ -25,6 +25,17 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
     image-only closing page 338 stays excluded.
   - 4 flow.overrides: hanging-indent turnovers (numbered list + Qurʾān quotes) the indent
     rule misread as paragraph starts.
+  - Publisher's Note glyph legend (p.26) is a TRUE 3-column table — shipped scrambled by
+    the line flow until 2026-07-09 (user-reported; presence-based coverage cannot see
+    ordering damage). Now `images.figure_regions`: cropped raster + full alt, region text
+    excised from gt. Applies to both variants.
+  - ARABIC-GLYPH VARIANT (2026-07-09, user-requested): `book.arabic.yaml` →
+    `build/book-of-knowledge-arabic.epub`, same judgments with pua_map rendered as Arabic
+    (U+FDFA/U+FDFD ligatures + spelled honorific phrases, lang: ar) and an embedded OFL
+    Amiri subset (48KB). epubcheck clean, qa Overall: PASS (coverage 99.08%). The map
+    stage's RTL escalation warning is ADJUDICATED for this variant: inline-only
+    strong-RTL runs, bidi-verified on Chrome renders (ﷺ placement, multi-word phrase
+    order, basmala line). The English-readings EPUB remains the default deliverable.
 - Lessons promoted: coverage/gt reconciliation for glyph substitutions and renumbered
   noterefs; note regions must start at a marker line (9pt block quotes); first-line indent
   is relative to the previous line (drop-cap wraps); visual verification of PUA glyphs via

@@ -1,4 +1,7 @@
-# The Book of Knowledge — final judgments (agent conversion, 2026-07-07).
+# The Book of Knowledge — ARABIC-GLYPH VARIANT (2026-07-08). Same judgments
+# as book.yaml except: honorific PUA glyphs render as Arabic (Unicode
+# ligatures/phrases, lang: ar) with an embedded OFL Amiri subset, and the
+# output slug differs. Keep the two files in sync for everything else.
 # Every decision traces to analysis/structure_report.md or a page render;
 # glyph identifications verified on analysis/glyph-grid*.png (350 dpi crops)
 # against the book's own legend (Publisher's Note, p.26 render).
@@ -139,41 +142,42 @@ toc:
   nav_depth: 2
 
 glyphs:
-  # Honorifics font, PUA codepoints. Rendered as their English readings per
-  # the book's OWN legend (Publisher's Note, p.26) — the print glyphs are
-  # calligraphic phrases; parenthesized readings are the standard scholarly
-  # convention and avoid RTL layout risk. Each verified on a 350dpi crop
-  # (analysis/glyph-grid.png, glyph-grid2.png). FLAGGED in handoff: publisher
-  # may prefer Arabic glyph chars + an embedded Arabic font later.
+  # Honorifics font, PUA codepoints. VARIANT: rendered as Arabic — the
+  # Unicode honorific ligatures where one exists (U+FDFA salla..., U+FDFD
+  # basmala) and the spelled honorific phrase otherwise, tagged lang: ar and
+  # set in embedded Amiri. Glyph identifications carry over verbatim from
+  # book.yaml (each verified on a 350dpi crop against the book's own legend).
   pua_map:
-    "": {action: char, char: " (may the peace and blessings of God be upon him)", note: "salla llahu alayhi wa-sallam, compact; verified p.52 crop; x292"}
-    "": {action: char, char: " (exalted is He)", note: "ta'ala; verified p.40 crop; x253"}
-    "": {action: char, char: " (may God be pleased with him)", note: "radiya llahu anhu; verified p.7 crop; x125"}
-    "": {action: char, char: " (may God have mercy on him)", note: "rahimahu llah; verified p.6 crop; x87"}
-    "": {action: char, char: " (mighty and majestic is He)", note: "azza wa-jalla; verified p.50 crop; x71"}
-    "": {action: char, char: " (glorified is He)", note: "subhanahu; verified p.45 crop; x32"}
-    "": {action: char, char: " (may God be pleased with them both)", note: "anhuma dual (Ibn Abbas); verified p.50 crop; x29"}
-    "": {action: char, char: " (peace be upon him)", note: "alayhi s-salam; verified p.54 crop; x27"}
+    "": {action: char, char: " ﷺ", lang: ar, note: "salla llahu alayhi wa-sallam, compact; verified p.52 crop; x292"}
+    "": {action: char, char: " تعالى", lang: ar, note: "ta'ala; verified p.40 crop; x253"}
+    "": {action: char, char: " رضي الله عنه", lang: ar, note: "radiya llahu anhu; verified p.7 crop; x125"}
+    "": {action: char, char: " رحمه الله", lang: ar, note: "rahimahu llah; verified p.6 crop; x87"}
+    "": {action: char, char: " عز وجل", lang: ar, note: "azza wa-jalla; verified p.50 crop; x71"}
+    "": {action: char, char: " سبحانه", lang: ar, note: "subhanahu; verified p.45 crop; x32"}
+    "": {action: char, char: " رضي الله عنهما", lang: ar, note: "anhuma dual (Ibn Abbas); verified p.50 crop; x29"}
+    "": {action: char, char: " عليه السلام", lang: ar, note: "alayhi s-salam; verified p.54 crop; x27"}
     "": {action: drop, note: "geometric star section ornament; verified p.8 crop; x27"}
-    "": {action: char, char: " (may God be pleased with them)", note: "anhum plural; verified p.86 crop; x26"}
-    "": {action: char, char: " (peace be upon them)", note: "alayhim; verified p.74 crop; x7"}
-    "": {action: char, char: " (may God have mercy on them)", note: "rahimahum; verified p.165 crop; x7"}
-    "": {action: char, char: " (may the peace and blessings of God be upon him)", note: "salla llahu... spelled large; verified p.19 crop; x5"}
-    "": {action: char, char: " (peace be upon him)", note: "alayhi s-salam variant; verified p.57 crop (David); x4"}
-    "": {action: char, char: " (may God have mercy on them both)", note: "rahimahuma dual (Ibn Hanbal and Sufyan); verified p.7 crop; x4"}
-    "": {action: char, char: " (exalted and most high is He)", note: "subhanahu wa-ta'ala; legend row 3 + p.50 crop; x3"}
-    "": {action: char, char: " (may God be pleased with her)", note: "anha (A'isha); verified p.144 crop; x2"}
-    "": {action: char, char: " (may the peace and blessings of God be upon him)", note: "salla... variant; verified p.129 crop; x2"}
-    "": {action: char, char: " (mighty and majestic is He)", note: "azza wa-jalla large; verified p.40 crop; x1"}
-    "": {action: char, char: " (may the peace and blessings of God be upon him and his family)", note: "wa-ala alihi form; verified p.39 crop; x1"}
-    "": {action: char, char: " (may God be pleased with them)", note: "anhum large; verified p.43 crop; x1"}
-    "": {action: char, char: " (peace be upon them)", note: "alayhim large; verified p.44 crop; x1"}
-    "": {action: char, char: "In the name of God, the Merciful, the Compassionate", note: "full basmala calligraphy line; verified p.38 crop; x2"}
+    "": {action: char, char: " رضي الله عنهم", lang: ar, note: "anhum plural; verified p.86 crop; x26"}
+    "": {action: char, char: " عليهم السلام", lang: ar, note: "alayhim; verified p.74 crop; x7"}
+    "": {action: char, char: " رحمهم الله", lang: ar, note: "rahimahum; verified p.165 crop; x7"}
+    "": {action: char, char: " ﷺ", lang: ar, note: "salla llahu... spelled large; verified p.19 crop; x5"}
+    "": {action: char, char: " عليه السلام", lang: ar, note: "alayhi s-salam variant; verified p.57 crop (David); x4"}
+    "": {action: char, char: " رحمهما الله", lang: ar, note: "rahimahuma dual (Ibn Hanbal and Sufyan); verified p.7 crop; x4"}
+    "": {action: char, char: " سبحانه وتعالى", lang: ar, note: "subhanahu wa-ta'ala; legend row 3 + p.50 crop; x3"}
+    "": {action: char, char: " رضي الله عنها", lang: ar, note: "anha (A'isha); verified p.144 crop; x2"}
+    "": {action: char, char: " ﷺ", lang: ar, note: "salla... variant; verified p.129 crop; x2"}
+    "": {action: char, char: " عز وجل", lang: ar, note: "azza wa-jalla large; verified p.40 crop; x1"}
+    "": {action: char, char: " صلى الله عليه وآله وسلم", lang: ar, note: "wa-ala alihi form; verified p.39 crop; x1"}
+    "": {action: char, char: " رضي الله عنهم", lang: ar, note: "anhum large; verified p.43 crop; x1"}
+    "": {action: char, char: " عليهم السلام", lang: ar, note: "alayhim large; verified p.44 crop; x1"}
+    "": {action: char, char: "﷽", lang: ar, note: "full basmala calligraphy line; verified p.38 crop; x2"}
   fail_on_unmapped_pua: true
   gt_strip_phrases: []
 
 fonts:
-  embed: []      # readings are English text; no special glyphs remain
+  embed:         # honorific runs are lang: ar -> Amiri (OFL, system file)
+    - {family: "Amiri", file: "/usr/share/fonts/amiri-fonts/Amiri-Regular.ttf",
+       style: normal, script: cjk, lang: ar}
   subset: true
 
 languages: {cjk_han_only: zh, overrides: []}
@@ -196,4 +200,4 @@ images:
       alt: "Table of the Arabic honorific glyphs used in this book, giving each glyph's English meaning and usage: Mighty and majestic is He (on mention of God); Peace be upon him or them (on mention of one or more prophets); Exalted and Most High (on mention of God); May the peace and blessings of God be upon him (on mention of the Prophet); May God be pleased with him or them (on mention of one or more Companions of the Prophet); May God be pleased with her (on mention of a female companion of the Prophet)."
       note: "glyph legend table; verified on p.26 render"
 
-output: {slug: book-of-knowledge, include_ncx: true}
+output: {slug: book-of-knowledge-arabic, include_ncx: true}

@@ -30,6 +30,7 @@ class GroundTruth:
     furniture_templates: set[str] = field(default_factory=set)
     note_chars_removed: int = 0
     figure_chars_excluded: int = 0
+    region_chars_excluded: int = 0
     phrase_chars_removed: int = 0
     disputed_chars: int = 0
     disputed_pages: list[int] = field(default_factory=list)
@@ -41,7 +42,8 @@ class GroundTruth:
 
 def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                        note_texts_by_page: dict[int, list[tuple[str, str]]],
-                       stripped_lines: dict[int, list[str]] | None = None) -> GroundTruth:
+                       stripped_lines: dict[int, list[str]] | None = None,
+                       region_texts: dict[int, list[str]] | None = None) -> GroundTruth:
     gt = GroundTruth()
     raw_pages = poppler_page_texts(pdf, crop=doc.trim_crop_box)
     in_flow = set(cfg.in_flow_pages(doc.n_pages))
@@ -71,10 +73,24 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
             page_stripped.add(s)
             page_stripped.add(re.sub(r"^[\divxlcdm]+\s*|\s*[\divxlcdm]+$", "", s,
                                      flags=re.I).strip())
+        # figure_regions text ships as a raster: excise poppler lines that
+        # match a region line or one of its runs, ANYWHERE on the page
+        # (regions are mid-page, unlike furniture). Poppler may fuse two
+        # cells MuPDF kept apart, so also match run-CONCATENATIONS loosely:
+        # a poppler line every one of whose space-split tokens appears in
+        # the region token set is region text.
+        page_regions = set((region_texts or {}).get(pno, []))
+        region_tokens = {t for s in page_regions for t in s.split()}
         for i, ln in enumerate(lines):
+            n = normalize(ln)
+            if page_regions:
+                if n in page_regions or (
+                        len(n) >= 3 and region_tokens
+                        and all(t in region_tokens for t in n.split())):
+                    gt.region_chars_excluded += len(n)
+                    continue
             first_or_last = i <= 1 or i >= len(lines) - 2
             if first_or_last:
-                n = normalize(ln)
                 if is_folio_line(n):
                     continue
                 if furniture_template(ln).strip("#").strip() in canon:

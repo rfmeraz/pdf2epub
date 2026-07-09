@@ -26,8 +26,9 @@ Adobe products.
    furniture, split footnotes, join lines into paragraphs (dehyphenation,
    drop-cap reattachment), re-split columned back matter into print reading
    order (`flow.columns`: indexes and other tabular apparatus whose baseline-
-   fused lines would otherwise interleave), apply roles, insert exact
-   printed-page markers,
+   fused lines would otherwise interleave), ship true tables/diagrams as
+   cropped rasters with agent-written alt (`images.figure_regions`), apply
+   roles, insert exact printed-page markers,
    rebuild the Contents with live hyperlinks, emit XHTML+CSS, subset OFL fonts,
    and package a byte-reproducible EPUB. Ambiguities WARN into
    `build/warnings.md` with ready-to-paste override snippets; nothing is ever

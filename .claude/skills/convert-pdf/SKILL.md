@@ -121,7 +121,12 @@ in the handoff report).
 ## Hard stops (never decide alone)
 
 Rewriting or inventing the book's words (beyond the deterministic textfix
-rules); embedding non-OFL fonts; live RTL text runs; true tables; multi-column
+rules); embedding non-OFL fonts; live RTL text runs (EXCEPTION: short inline
+honorific/phrase runs the user asked for, tagged lang: ar with an embedded
+OFL Arabic face and verified on renders — RTL paragraphs still stop); true
+tables whose content a raster cannot convey (a table SHIPS as
+`images.figure_regions` — cropped raster + agent-written alt from the
+render; escalate only if raster+alt loses content); multi-column
 BODY PROSE (tabular index/back-matter columns flow via `flow.columns`;
 `pages.exclude` with a note is the fallback, not the default);
 image-only pages whose content you cannot verify from renders; any glyph

@@ -29,7 +29,7 @@ def stage_images(ctx) -> None:
     assets: list[ImageAsset] = []
 
     fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
-    if fig_pages:
+    if fig_pages or cfg.figure_regions:
         pdf = fitz.open(cfg.pdf_path())
         for pno in sorted(fig_pages):
             page = pdf[pno - 1]
@@ -41,8 +41,20 @@ def stage_images(ctx) -> None:
             out = cache / f"page-{pno:04d}.png"
             img.save(out, optimize=True)
             assets.append(ImageAsset(out.name, out, "image/png"))
+        # region figures (true tables/diagrams): the config rect is recorded
+        # in extract-space (top-origin page coords) — the same space
+        # get_pixmap's clip reads, so no transform is needed
+        for k, fr in enumerate(cfg.figure_regions):
+            page = pdf[fr.page - 1]
+            pix = page.get_pixmap(dpi=cfg.raster_dpi, clip=fitz.Rect(fr.rect))
+            img = Image.open(io.BytesIO(pix.tobytes("png")))
+            img = _postprocess(img, cfg.max_pixels)
+            out = cache / f"region-{fr.page:04d}-{k}.png"
+            img.save(out, optimize=True)
+            assets.append(ImageAsset(out.name, out, "image/png"))
         pdf.close()
-        ctx.say(f"figure pages: rendered {len(fig_pages)} at {cfg.raster_dpi} dpi")
+        ctx.say(f"figures: rendered {len(fig_pages)} page(s) + "
+                f"{len(cfg.figure_regions)} region(s) at {cfg.raster_dpi} dpi")
 
     # cover
     if cfg.cover:

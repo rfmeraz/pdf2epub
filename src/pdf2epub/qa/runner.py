@@ -122,7 +122,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
 
     # ---- gate 2: text coverage vs independent ground truth
     gt = build_ground_truth(cfg.pdf_path(), cfg, doc, note_texts_by_page,
-                            stripped_lines=res.furniture_texts)
+                            stripped_lines=res.furniture_texts,
+                            region_texts=res.region_texts)
     # the rebuilt hyperlinked Contents replaces the printed TOC pages; exclude
     # them like figure pages (itemized), the TOC gates cover that content
     toc_excl = 0
@@ -145,7 +146,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     cov = paged_coverage(gt, coverage_candidate)
     lines = [f"coverage {cov.coverage*100:.2f}% (gate {COVERAGE_GATE*100:.0f}%); "
              f"note chars stripped {gt.note_chars_removed}, figure-page chars "
-             f"excluded {gt.figure_chars_excluded}, printed-TOC chars excluded {toc_excl}, "
+             f"excluded {gt.figure_chars_excluded}, figure-region chars excluded "
+             f"{gt.region_chars_excluded}, printed-TOC chars excluded {toc_excl}, "
              f"engine-disputed chars excluded {disputed} (pages {disputed_pages[:8]})"]
     for seg in cov.missing_segments[:12]:
         lines.append(f"MISSING: {seg[:110]}")

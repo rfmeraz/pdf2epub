@@ -74,6 +74,10 @@ class FlowResult:
     # per-paragraph geometry (sizes, insets, emphasis) from the extract IR
     para_lines: dict[tuple[str, int], list[tuple[int, int]]] = \
         field(default_factory=dict)
+    # page -> normalized texts (whole lines AND their runs) of lines that
+    # left the flow inside a figure_regions rect; the QA ground truth
+    # excises exactly these (runs too: poppler splits what MuPDF fuses)
+    region_texts: dict[int, list[str]] = field(default_factory=dict)
 
 
 @dataclass(slots=True)
@@ -88,6 +92,9 @@ class _L:
     # columned lines join by INDENT, not by _break_before: a column-left
     # line starts its own entry, a hanging-indent turnover continues one
     entry_break: bool = True
+    # index into cfg.figure_regions when the line sits inside a region rect
+    # (its text ships as a cropped raster, not as flowed text); -1 otherwise
+    region: int = -1
 
 
 def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
@@ -155,6 +162,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     page_notes: dict[int, list[list[_L]]] = {}  # page -> list of note line-groups
     prev_had_notes = False
     for p in in_flow:
+        regions_here = [(k, fr) for k, fr in enumerate(cfg.figure_regions)
+                        if fr.page == p.number]
         kept: list[_L] = []
         for idx, ln in enumerate(p.lines):
             act = override(p.number, idx)
@@ -163,6 +172,23 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 continue
             L = _L(p.number, idx, ln,
                    line_pstyle(ln, doc, geo, p.lines[idx - 1] if idx else None))
+            cx, cy = (ln.x0 + ln.x1) / 2, (ln.y0 + ln.y1) / 2
+            for k, fr in regions_here:
+                if fr.rect[0] <= cx <= fr.rect[2] and \
+                        fr.rect[1] <= cy <= fr.rect[3]:
+                    # the line ships inside the region's raster; record its
+                    # text (and per-run fragments — poppler splits what
+                    # MuPDF fuses) for the QA ground-truth excision
+                    L.region = k
+                    texts = res.region_texts.setdefault(p.number, [])
+                    texts.append(normalize(ln.text()))
+                    texts.extend(t for r in ln.runs
+                                 if len(t := normalize(r.text)) >= 3)
+                    counts["region-lines"] += 1
+                    break
+            if L.region >= 0:
+                kept.append(L)
+                continue
             if act == "keep":
                 counts["override-keep"] += 1
                 kept.append(L)
@@ -207,7 +233,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             region: list[_L] = []
             for L in reversed(kept):
                 f = doc.fonts.get(L.ln.dominant_font())
-                if f and f.size <= max_sz and not L.ln.vertical:
+                if L.region < 0 and f and f.size <= max_sz and not L.ln.vertical:
                     region.append(L)
                 else:
                     break
@@ -318,6 +344,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     pending_anchors: list[PageAnchor] = []
     para_last_page: dict[tuple[str, int], int] = {}
     note_queue: list[tuple[int, str, str]] = []  # (page, marker target, note_id)
+    emitted_regions: set[int] = set()
 
     def close_para():
         nonlocal open_para, open_is_body
@@ -376,6 +403,33 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         anchor_placed = (pno in fig_page_map and fig_page_map[pno].keep_text)
         prev_dropcap = False
         for L in lines:
+            if L.region >= 0:
+                # the region's text ships as a cropped raster; emit its
+                # Figure at the first region line, in flow position
+                if L.region not in emitted_regions:
+                    emitted_regions.add(L.region)
+                    close_para()
+                    if not anchor_placed:
+                        ins = len(res.flow.blocks)
+                        for a2 in pending_anchors:
+                            res.flow.blocks.insert(ins, a2)
+                            ins += 1
+                        res.flow.blocks.insert(ins, anchor)
+                        pending_anchors.clear()
+                        anchor_placed = True
+                    fr = cfg.figure_regions[L.region]
+                    res.flow.blocks.append(Figure(
+                        image_key=f"region-{fr.page:04d}-{L.region}.png",
+                        source_basename=f"region-{fr.page:04d}-{L.region}.png",
+                        pdf_page=fr.page, page_ordinal=fr.page,
+                        y_pt=fr.rect[1], x_pt=fr.rect[0],
+                        width_pt=fr.rect[2] - fr.rect[0],
+                        height_pt=fr.rect[3] - fr.rect[1],
+                        role="figure", alt=fr.alt))
+                    counts["figure-regions"] += 1
+                prev_L = None
+                prev_dropcap = False
+                continue
             act = override(L.page, L.idx)
             # drop-cap: oversized 1-2 letter line glues onto the next line
             f = doc.fonts.get(L.ln.dominant_font())

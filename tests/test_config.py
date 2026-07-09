@@ -115,3 +115,23 @@ def test_flow_columns_parsing(tmp_path):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"
                      "flow: {columns: [{pages: [1], count: 2, gutter: 10}]}")
         load_config(p)
+
+
+def test_figure_regions_parsing(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text(
+        "source: {folder: p, pdf: b.pdf}\n"
+        "images:\n"
+        "  figure_regions:\n"
+        "    - {page: 26, rect: [70, 319, 367, 567], alt: legend table}\n")
+    cfg = load_config(p)
+    assert cfg.figure_regions[0].page == 26
+    assert cfg.figure_regions[0].rect == (70.0, 319.0, 367.0, 567.0)
+    with pytest.raises(ConfigError, match="requires alt"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "images: {figure_regions: [{page: 1, rect: [0, 0, 9, 9]}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="rect must be"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "images: {figure_regions: [{page: 1, rect: [9, 0, 0, 9], alt: x}]}")
+        load_config(p)

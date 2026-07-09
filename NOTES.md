@@ -307,3 +307,43 @@ blind spot.
   sub-entries, and the joined '189' turnover of 'of [practical] conduct').
   BoK rebuilt: epubcheck clean, qa Overall: PASS, coverage 99.06%,
   page-list 321→336 labels.
+
+## figure_regions + the Arabic-glyph variant — 2026-07-09
+
+User-reported: the Publisher's Note legend (p.26) shipped scrambled. It is a
+TRUE 3-column table (Arabic glyph | English meaning | Usage) — row
+correspondence is the content, so neither the line joiner nor flow.columns
+(column-major by design) can represent it. **Lesson: presence-based coverage
+is blind to ordering damage** — p.26 scores agreement 91.1, all the cell text
+was 'covered', and every gate passed while the page read as nonsense. The
+ordering witnesses are the proofread pass and human eyes.
+
+- **images.figure_regions**: a rect on a page ships as a cropped raster
+  figure — the safe path for true tables/diagrams embedded in prose. Rect is
+  recorded in extract-space (top-origin page coords — the same space
+  get_pixmap's clip reads; take it from `pdf2epub lines` / extract IR
+  geometry, then check the crop for slivers of neighboring lines: descenders
+  reach ~4pt below a line's nominal bottom). alt is REQUIRED (config error
+  without it) and written from the render. Region lines leave the flow and
+  the gt: excision matches poppler lines against the region lines' whole
+  texts AND per-run texts (poppler splits what MuPDF fuses), plus a
+  token-subset fallback (poppler also fuses what MuPDF splits). Region lines
+  are exempt from the footnote-region scan (a bottom-of-page table would
+  read as a note block). Itemized in gate 2 as 'figure-region chars'.
+- **Arabic-glyph variant (book.arabic.yaml)**: same judgments as book.yaml,
+  three deltas — pua_map chars become Arabic (U+FDFA ṣallā…, U+FDFD basmala
+  ligatures where Unicode has them; spelled phrases otherwise), every char
+  rule gains lang: ar, fonts.embed gains OFL Amiri (system file, subset
+  48KB). The lang plumbing (span.ar + :lang(ar) stack) was already inherited
+  from idml2epub. The map stage's RTL warning fires (by design, doctrine
+  says escalate): ADJUDICATED — the user requested this variant; runs are
+  short inline strong-RTL phrases inside LTR paragraphs, which the bidi
+  algorithm renders correctly with no dir attrs; verified in Chrome renders
+  (inline ﷺ placement, multi-word سبحانه وتعالى order, basmala line). RTL
+  PARAGRAPHS remain a hard stop.
+- **Variant-config pattern**: a second book.yaml beside the first (same
+  workspace, same package/, distinct output.slug) → both EPUBs live in
+  build/ and only they are tracked. qa_report.md/qa.json are per-run
+  (last-run-wins in the shared build dir) — record per-variant outcomes in
+  CONVERSIONS.md. Generate variant configs programmatically and VERIFY by
+  parse + codepoint assertions (the unicode-literal toolchain hazard).
