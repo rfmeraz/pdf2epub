@@ -493,3 +493,48 @@ paragraph — lines into the page — were silently imprecise).
   IS positionally exact. Proofread packets moved only blank-page {p.N}
   markers to the correct side of section boundaries (the old deferral
   pushed them past the break into the next file).
+
+## Footnotes, soft hyphens, recto/verso shift — 2026-07-09 (Sufism)
+
+First non-validation book, and the one that proved the deterministic gates +
+sampled visual QA can BOTH pass a build that reads as damaged. The 23 gates and
+gate-18 contact sheets were green while ~412 body/footnote paragraphs (a third of
+the book) were wrongly split. Only the blind-reader proofread caught it. Lesson:
+**never present a build as done on gates alone — the mandatory proofread is the
+only reviewer that sees paragraph integrity and reader-level fusion/splitting.**
+
+- **Footnote markers can be a SIZE DOWN, not superscript-flagged.** WorldWisdom sets
+  the digit marker at 7pt over 9pt note text with a single space ("8 Let us…"), so the
+  `_NOTE_START_DIGIT` text pattern (`digit + [.)]/tab/2-space`) never fired → `0 notes`.
+  A note whose footnotes never extract does NOT fail a gate: the note text flows as
+  small-font body paragraphs, shatters per line, and breaks the body paragraphs it sits
+  between. `_note_start`/`_note_marker` now also accept a superscript OR smaller-font
+  leading digit/asterisk. **Watch the build's `N notes` line — `0 notes` on a book with
+  a visible footnote apparatus is a red flag the gates won't raise.**
+  - The note-continuation merge (cross-page wrap) and the marker capture were on the
+    same old regex — they must track `_note_start`, or every page's first note merges
+    into the previous (1+2+3 → one note) and noterefs fall back to '*' and never attach.
+- **U+00AD soft hyphens: `normalize` strips them, the FLOW does not.** So gate 2/9/11
+  are blind to 1000+ shipped soft hyphens; a few land at a line join as a visible
+  "eso­ terism" space. Strip embedded/seam soft hyphens in `_apply_textfix`; close a
+  trailing one in `dehyphenate_join`.
+- **Recto/verso binding margins shift the whole text block ~18pt.** Two independent
+  detectors keyed off the GLOBAL modal geometry broke on shifted pages: (1)
+  `_break_before`'s short-line test flagged full lines (right ~360) as paragraph ends
+  vs the modal right edge (381) → scale by the block's own left inset; (2) column-gutter
+  detection smeared because verso/recto index gutters differ (x≈227 vs 209) → two specs,
+  and skip furniture from the gutter census (running heads span both columns + the
+  gutter). Centering detection has the SAME blind spot (front-matter block centers left
+  of the body geo center → its centered lines miss `/center` and the "Books by…" list
+  fuses); a page-level-geometry fix is deferred (documented FLAG).
+- **QA `"notes" in href` heuristic is too broad.** Back-matter *sections* titled
+  "Editor's Notes"/"Biographical Notes" were classed as the generated endnotes file and
+  dropped from the coverage + typography scope. Key on the `epub:type="endnotes"`
+  marker (`EpubDoc.is_endnotes()`), not the filename.
+- **Coverage after footnote extraction:** the candidate must include the notes file, and
+  note excision must run PER SOURCE PAGE (a footnote wrapping p.N→p.N+1 leaves half its
+  text on each — the whole-note string matches neither) with a hyphen/space squeeze
+  match (flow dehyphenates; poppler keeps 'mer- cantile').
+- **Line-end dashes are continuations.** A soft/em/en-dash at a line end signals a
+  hyphenation/clause continuation, not a ragged short line (`_CONT_DASHES`); a closed
+  em/en-dash across a break joins WITHOUT a space (this book's dash style is closed).

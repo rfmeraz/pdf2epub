@@ -1,0 +1,173 @@
+# pdf2epub book.yaml — Sufism: Veil and Quintessence (Frithjof Schuon).
+# Judgments recorded by the structure-inference agent from analysis evidence +
+# page renders. See CONVERSIONS.md for the decision log.
+
+source:
+  folder: "package"
+  pdf: "Sufism-Veil-and-Quintessence-by-Frithjof-Schuon.pdf"
+  sha256: "5a4c08c2d379aac5f73641fdc4da1f863c6f4e6148ff4effe81d43d3a11cc71c"
+
+metadata:                     # JP-P5 — verified on p4 (title) + p5 (copyright) renders
+  title: "Sufism: Veil and Quintessence"
+  subtitle: "A New Translation with Selected Letters"
+  creators:
+    - {name: "Frithjof Schuon", role: aut}
+    - {name: "Mark Perry", role: trl}
+    - {name: "Jean-Pierre Lafouge", role: trl}
+    - {name: "James S. Cutsinger", role: edt}
+    - {name: "Seyyed Hossein Nasr", role: aui}   # author of the foreword
+  publisher: "World Wisdom, Inc."
+  language: en
+  additional_languages: []    # transliterated Arabic/Sanskrit/etc. are romanized (Latin)
+  isbn_epub:                  # none printed -> urn:uuid ships (flagged in handoff)
+  isbn_print: "978-1-933316-28-4"
+  date: "2006"
+  cover: assets/cover.jpg     # rendered from PDF page 1 (full designed cover)
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover art credit (p5): "Detail of a Timurid Koran cover, Istanbul, 15th century"
+
+pages:                        # JP-P2 — folio-vs-label agreement 100.0%
+  cover: [1]
+  front: {first: 2, last: 19}   # roman folios: series, title, copyright, contents,
+                                # foreword, editor's preface, preface, frontispiece
+  body:  {first: 20, last: 218}   # printed folio '1' begins on p20
+  exclude: [218]                # p218 = physical BACK COVER (endorsements, barcode,
+                                # price, category, author photo) — marketing paratext
+  label_source: pdf-page-labels   # agreement 100.0%
+  label_overrides: {}
+  role_overrides:
+    - {page: 4, role: title-page}
+    - {page: 5, role: p}        # copyright page (flush-left LCCN block reads as prose)
+
+furniture:
+  top_band: 44.7              # running heads (book title verso / chapter title recto)
+  repeat_min_pages: 3
+  extra:                      # heads the auto-detector missed (short/long section)
+    - "Preface"
+    - "Appendix: Selections from Letters and Previously Unpublished Writings"
+  keep:                       # NOT furniture: '*' is a section-break marker
+    - "*"                     #   ('*' / '* *' pyramid); some fall at a page top
+
+styles:                       # JP-P1 — every one of the 39 clusters mapped; see notes
+  body_pstyle: "WorldWisdomFont@11"
+  pstyle_map:
+    # --- shipped body / front / back matter ---
+    "WorldWisdomFont@11":                 {role: p}          # dominant body text
+    "WorldWisdomFont@10":                 {role: p}          # back-matter prose (notes/glossary/index)
+    "WorldWisdomFont@9":                  {role: footnote}   # footnotes (bottom region)
+    "WorldWisdomFont-Italic@10":          {role: p}          # italic in notes/quotes
+    "WorldWisdomFont-Italic@11":          {role: p}          # inline italic emphasis
+    "WorldWisdomFont-Italic@11/center":   {role: p}          # running heads (furniture-stripped)
+    "WorldWisdomFont-Italic@9":           {role: footnote}   # small italic notes / French line
+    "WorldWisdomFont@11/center":          {role: p}          # centered "* * *" section breaks
+    "WorldWisdomFont@10/center":          {role: p}          # centered captions
+    # --- headings ---
+    "WorldWisdomFont-Bold@14/center":     {role: h1}         # chapter/section titles + CONTENTS
+    "WorldWisdomFont-Bold@18/center":     {role: h1}         # "APPENDIX" part divider (p150)
+    "WorldWisdomFont-Bold@12/center":     {role: h2}         # "Selections from Letters…" (appendix title, p152)
+    "WorldWisdomFont-Bold@14":            {role: h2}         # "Books by Frithjof Schuon" (p3)
+    "WorldWisdomFont-Bold@11":            {role: h3}         # flush-left subheads
+    "WorldWisdomFont-Bold@11/center":     {role: h3}         # editor's-notes chapter subheads
+    "WorldWisdomFont-Bold@10":            {role: h3}         # "Edited Writings…" subhead (p3)
+    "WorldWisdomFont-Bold-SC8@11/center": {role: h3}         # small-caps name heads (biographical notes)
+    "Present-Black@15/center":            {role: h2}         # series-page display (p2)
+    # --- title page (p4) display ---
+    "WorldWisdomFont@32/center":          {role: title-page} # main title
+    "WorldWisdomFont@18/center":          {role: title-page} # title-page element
+    "WorldWisdomFont@14/center":          {role: title-page} # subtitle line
+    "WorldWisdomFont@12/center":          {role: title-page} # "Includes Other Previously…"
+    # --- ornament ---
+    "WoodtypeOrnaments-Two@24/center":    {role: drop}       # decorative rosette divider (p2)
+    # --- front cover (p1); text baked into the cover image, never flowed ---
+    "Goudy@15":                           {role: drop}
+    "Goudy@14":                           {role: drop}
+    "Goudy-Bold@36":                      {role: drop}
+    "Goudy-Bold@30":                      {role: drop}
+    "Goudy-Bold@60":                      {role: drop}
+    # --- back cover (p218, excluded); marketing paratext, never shipped ---
+    "ACaslonPro-Regular@11.5":            {role: drop}
+    "ACaslonPro-Regular@11":              {role: drop}
+    "ACaslonPro-Regular@10":              {role: drop}
+    "ACaslonPro-Regular@10/center":       {role: drop}
+    "ACaslonPro-Regular@9":               {role: drop}
+    "ACaslonPro-Regular@8":               {role: drop}
+    "ACaslonPro-Italic@11.5":             {role: drop}
+    "ACaslonPro-Italic@11":               {role: drop}
+    "ACaslonPro-SemiboldItali@11.5":      {role: drop}
+    "Goudy-Italic@10":                    {role: drop}
+    "Present-Bold@14":                    {role: drop}
+  charstyles:
+    WorldWisdomFont-Bold-SC8: {smallcaps: true}   # small-capital name heads
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 13.5
+  gap_factor: 1.6             # median leading 13.1pt
+  dehyphenate: lower-only
+  restore_spaces: false      # lost-space hits: 0
+  join_center_lines: false   # centered lines are DISTINCT items here (the
+                             # 'Books by Frithjof Schuon' list, title-page
+                             # credits); joining fused them. Multi-line centered
+                             # headings are rejoined via overrides below.
+  reattach_dropcaps: true
+  overrides:                 # {page, line(RAW extract idx), action, note}
+    - {page: 152, line: 1, action: join,
+       note: "appendix content title wraps to a 2nd centered line ('Other Previously Unpublished Writings'); rejoin into one h2 (join_center_lines off). Verified p152 render."}
+  columns:
+    # two-column INDEX (printed 187-194). Verso and recto have different binding
+    # margins (gutter at x~227 vs x~209), so aggregating all 8 pages smears the
+    # channel — split into two margin-consistent specs.
+    - {pages: [206, 208, 210, 212], count: 2, note: "index, verso pages (gutter ~227)"}
+    - {pages: [207, 209, 211, 213], count: 2, note: "index, recto pages (gutter ~209)"}
+
+footnotes:                    # JP-P4 — verified on p21 render
+  policy: markers   # census {'*-inline': 54 (these are '* * *' section breaks), 'digit': 170}
+  marker: digits
+
+toc:                          # JP-P3 — printed TOC (p6) chosen: it lists the Appendix
+  source: printed   # outline(15) omits "Selections from Letters…"(p152); printed(15) includes it
+  printed_pages: [6]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 1                # printed TOC is flat (one level)
+
+glyphs:                       # JP-P6 — verified on renders
+  pua_map:
+    "": {action: drop, note: "WoodtypeOrnaments rosette divider, p2 render — pure ornament"}
+    "": {action: drop, note: "WoodtypeOrnaments rosette divider, p2 render — pure ornament"}
+    "": {action: drop, note: "WoodtypeOrnaments rosette divider, p2 render — pure ornament"}
+    "": {action: drop, note: "WoodtypeOrnaments rosette divider, p2 render — pure ornament"}
+    "": {action: drop, note: "WoodtypeOrnaments rosette divider, p2 render — pure ornament"}
+    "": {action: char, char: "•", note: "Wingdings list bullet on back cover (p218, excluded); ❖-style bullet"}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL system fonts only; no CJK/RTL live text
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8 — 0 CJK, 0 RTL
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages:
+    - {pages: [18], alt_template: "Frithjof Schuon in 1989 — a portrait photograph of the author, white-haired and bearded, wearing a light jacket over a paisley-patterned shawl, before foliage.", lang: en}
+  figure_regions: []
+
+adjudications:
+  - {warning: "embedded-image-uncovered", pages: [4],
+     note: "World Wisdom publisher colophon (starburst logo) at the foot of the title page — decorative mark, no textual content; title/subtitle/author ship as flowed text. Verified on p4 render."}
+
+qa:
+  lost_space_allow:          # render-verified as-printed (not fused-word defects)
+    - {snippet: "www.DictionaryofSpiritualTerms.org",
+       note: "web address in the glossary note — domains carry no spaces (p194 render)"}
+    - {snippet: "(Ph.D., Harvard)",
+       note: "abbreviation Ph.D. in Cutsinger's biographical note — as printed (p215 render)"}
+
+output: {slug: sufism-veil-and-quintessence, include_ncx: true}

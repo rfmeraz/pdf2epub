@@ -261,7 +261,7 @@ def run_visual(epub: Path, cfg, doc, flow, res, labels,
 
     ep = load_epub(epub)
     body_docs = [d for d in ep.spine_docs()
-                 if "notes" not in d.href and "cover" not in d.href]
+                 if not d.is_endnotes() and "cover" not in d.href]
     anchors = _flow_anchors(flow)
     pagebreaks = _spine_pagebreaks(body_docs)
     plans = plan_slices(anchors, pagebreaks, in_flow, pages)

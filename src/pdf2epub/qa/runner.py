@@ -80,12 +80,11 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
             text = text.replace(s, "")
         return text
 
-    note_texts_by_page: dict[int, list[tuple[str, str]]] = {}
-    for nid, note in flow.notes.items():
-        pno = int(nid[1:5])
-        note_texts_by_page.setdefault(pno, []).append(
-            (res.note_markers.get(nid, ""),
-             _unsub(" ".join(p.text() for p in note.paragraphs))))
+    # excise each note per SOURCE page (a footnote wrapping p.N->p.N+1 keeps
+    # half its text on each): the flow records raw note text split by page.
+    note_texts_by_page: dict[int, list[tuple[str, str]]] = {
+        pno: [(mk, _unsub(txt)) for mk, txt in entries]
+        for pno, entries in res.note_raw_by_page.items()}
 
     ep = load_epub(epub)
     spine = ep.spine_docs()
@@ -106,16 +105,19 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
                 else:
                     parent.text = (parent.text or "") + tail
                 parent.remove(a)
-    notes_docs = [d for d in spine if "notes" in d.href]
+    notes_docs = [d for d in spine if d.is_endnotes()]
     body_docs = [d for d in spine
                  if d not in notes_docs and "cover" not in d.href]
     spine_text = " ".join(_doc_text(d) for d in body_docs)
+    notes_text = " ".join(_doc_text(d) for d in notes_docs)
     spine_text_norm = normalize(spine_text)
     # coverage compares 'text minus honorific glyphs' on BOTH sides: the gt
-    # strips PUA chars; the candidate must shed their inserted readings
-    coverage_candidate = normalize(_unsub(spine_text))
-    all_text_norm = normalize(spine_text + " " +
-                              " ".join(_doc_text(d) for d in notes_docs))
+    # strips PUA chars; the candidate must shed their inserted readings. The
+    # candidate is ALL shipped text (body + extracted endnotes): the gt excises
+    # note bodies, but any note whose dehyphenated text resists excision must
+    # still find its match in the shipped notes rather than read as missing.
+    coverage_candidate = normalize(_unsub(spine_text + " " + notes_text))
+    all_text_norm = normalize(spine_text + " " + notes_text)
 
     # ---- gate 1: epubcheck
     ok, msgs = run_epubcheck(epub)

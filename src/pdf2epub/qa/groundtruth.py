@@ -147,19 +147,16 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
             frag = normalize(note_text)
             if len(frag) < 15:
                 continue
-            idx = _find_fuzzyish(norm, frag)
-            if idx is not None:
-                norm = norm[:idx] + " " + norm[idx + len(frag):]
-                gt.note_chars_removed += len(frag)
-            else:
+            span = _find_fuzzyish(norm, frag)
+            if span is None:
                 # tolerate marker-prefix differences: try without first token
-                short = frag.split(" ", 1)[-1]
-                idx = _find_fuzzyish(norm, short)
-                if idx is not None:
-                    norm = norm[:idx] + " " + norm[idx + len(short):]
-                    gt.note_chars_removed += len(short)
-                else:
-                    gt.note_strip_failures.append(f"p.{pno}: {frag[:60]}…")
+                span = _find_fuzzyish(norm, frag.split(" ", 1)[-1])
+            if span is not None:
+                s, e = span
+                norm = norm[:s] + " " + norm[e:]
+                gt.note_chars_removed += e - s
+            else:
+                gt.note_strip_failures.append(f"p.{pno}: {frag[:60]}…")
         # excision fallback: notes sit at the page bottom starting with their
         # marker ('9. ') — when text-matching failed, cut from the first
         # still-present marker-prefixed line to the page end
@@ -255,16 +252,40 @@ def paged_coverage(gt: GroundTruth, candidate: str):
                           missing_segments=missing)
 
 
-def _find_fuzzyish(hay: str, needle: str) -> int | None:
+_SQUEEZE_CHARS = "-­‐‑–— \t\n"
+
+
+def _squeeze(s: str) -> tuple[str, list[int]]:
+    out: list[str] = []
+    pos: list[int] = []
+    for i, ch in enumerate(s):
+        if ch in _SQUEEZE_CHARS:
+            continue
+        out.append(ch)
+        pos.append(i)
+    return "".join(out), pos
+
+
+def _find_fuzzyish(hay: str, needle: str) -> tuple[int, int] | None:
+    """Locate ``needle`` in ``hay``; return (start, end) in hay coordinates.
+    Falls back through a distinctive-midsection probe and, last, a hyphen- and
+    space-insensitive squeeze match: the flow dehyphenates a note's line breaks
+    ('mercantile') while poppler keeps them ('mer- cantile'), so an exact find
+    misses even though the words are identical."""
     idx = hay.find(needle)
     if idx >= 0:
-        return idx
-    # dehyphenation differences etc.: try a distinctive midsection
+        return idx, idx + len(needle)
     if len(needle) > 60:
         mid = needle[10:50]
         j = hay.find(mid)
         if j >= 0:
             k = hay.find(needle[-30:], j)
             if k >= 0:
-                return max(0, j - 10)
+                return max(0, j - 10), k + 30
+    sn, _ = _squeeze(needle)
+    if len(sn) >= 12:
+        sh, pos = _squeeze(hay)
+        p = sh.find(sn)
+        if p >= 0:
+            return pos[p], pos[p + len(sn) - 1] + 1
     return None

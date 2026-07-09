@@ -12,6 +12,7 @@ from lxml import etree
 _OPF_NS = "{http://www.idpf.org/2007/opf}"
 _CNT_NS = "{urn:oasis:names:tc:opendocument:xmlns:container}"
 _XHTML = "{http://www.w3.org/1999/xhtml}"
+_OPS_NS = "{http://www.idpf.org/2007/ops}"
 
 
 @dataclass
@@ -21,6 +22,17 @@ class EpubDoc:
 
     def ids(self) -> set[str]:
         return {el.get("id") for el in self.root.iter() if el.get("id")}
+
+    def is_endnotes(self) -> bool:
+        """True only for the generated endnotes file, which carries
+        ``<section epub:type="endnotes">``. Keyed on that structural marker,
+        NOT a filename substring: back-matter *sections* whose title merely
+        contains 'Notes' (e.g. 'Editor's Notes', 'Biographical Notes') are
+        body content and must stay in the coverage/typography scope."""
+        for el in self.root.iter():
+            if isinstance(el.tag, str) and el.get(f"{_OPS_NS}type") == "endnotes":
+                return True
+        return False
 
     def text(self) -> str:
         body = self.root.find(f"{_XHTML}body")

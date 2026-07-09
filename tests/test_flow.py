@@ -505,6 +505,17 @@ def test_textfix_functions():
     assert dehyphenate_join("At twenty-", "two, he")[2] is False
     assert dehyphenate_join("a low-", "lying parcel")[2] is False
     assert dehyphenate_join("must follow-", "ing")[2] is True  # not 'low-'
+    # closed em/en-dash at line end joins WITHOUT a space (Schuon's dash style:
+    # 'object—or', not 'object— or' — a false 'word- word' after normalize)
+    assert dehyphenate_join("cast by an object—", "or that") == ("cast by an object—", "", False)
+    assert dehyphenate_join("al-Khidr—", "and outside") == ("al-Khidr—", "", False)
+    assert dehyphenate_join("a range 26–", "28 pages") == ("a range 26–", "", False)
+    # a SPACED dash keeps the space (base ends ' —', not a letter)
+    assert dehyphenate_join("word —", "word") == ("word —", " ", False)
+    # a soft hyphen (U+00AD) at the line end is an explicit hyphenation point:
+    # drop it and join closed regardless of the continuation's case
+    assert dehyphenate_join("eso­", "terism") == ("eso", "", True)
+    assert dehyphenate_join("Apara­", "Brahma") == ("Apara", "", True)
 
 
 def _seamline(a_text, b_text, y=100.0):
@@ -672,3 +683,150 @@ def test_figure_region_ships_table_as_raster(tmp_path):
     # gt excision evidence: whole lines AND their runs, normalized
     assert any("Mighty and majestic" in t for t in res.region_texts[1])
     assert res.counts.get("figure-regions") == 1
+
+
+def _mrun(x0, x1, text, y):
+    return PdfRun(text=text, font_id=BODY, superscript=False,
+                  x0=x0, y0=y, x1=x1, y1=y + 12)
+
+
+def _mline(runs):
+    xs0 = [r.x0 for r in runs]
+    xs1 = [r.x1 for r in runs]
+    y = runs[0].y0
+    return PdfLine(runs=list(runs), x0=min(xs0), y0=y, x1=max(xs1), y1=y + 12)
+
+
+def test_column_splits_ignores_gutter_crossing_running_head():
+    """A full-width running head spans BOTH columns and their gutter; on a
+    sparse section it fills the very channel detection needs. The skip
+    predicate (furniture) must exclude it so the gutter is found again.
+    Regression: Sufism index recto pages (recto/verso margin split)."""
+    from pdf2epub.flowbuilder import _column_splits
+
+    lines = []
+    # two full-width running-head lines crossing the gutter (x 100..350)
+    for k in range(2):
+        lines.append(_mline([_mrun(100.0, 350.0, "Running Head", 40.0 + k)]))
+    # 15 two-column body lines: left [72,200], right [240,380]
+    for k in range(15):
+        y = 70.0 + k * 13
+        lines.append(_mline([_mrun(72.0, 200.0, f"left entry {k}", y),
+                             _mrun(240.0, 380.0, f"right entry {k}", y)]))
+    page = _page(1, lines)
+
+    # without skip the running heads mask the gutter -> not found
+    assert _column_splits([page], 2) is None
+    # skipping the running-head lines recovers the gutter (~just left of 240)
+    skip = lambda ln: ln.text().startswith("Running Head")
+    splits = _column_splits([page], 2, skip=skip)
+    assert splits is not None and len(splits) == 1
+    assert 200.0 < splits[0] < 240.0
+
+
+# ---- footnote marker detection (smaller-font / superscript digit markers) ----
+
+def _frun(text, font, x0, x1, y, sup=False):
+    return PdfRun(text=text, font_id=font, superscript=sup,
+                  x0=x0, y0=y, x1=x1, y1=y + 9)
+
+
+def _fline(runs):
+    return PdfLine(runs=list(runs), x0=min(r.x0 for r in runs), y0=runs[0].y0,
+                   x1=max(r.x1 for r in runs), y1=runs[0].y0 + 9)
+
+
+class _Lw:
+    def __init__(self, ln):
+        self.ln = ln
+
+
+def test_note_start_and_marker_smaller_font():
+    """A digit marker set one size down ('8' at 6.5pt over 9pt note text) is a
+    note start even though 'digit + single space' misses the text pattern."""
+    from pdf2epub.flowbuilder import _note_start, _note_marker
+    doc = _doc([])
+    ln = _fline([_frun("8", SUP, 72, 78, 560),
+                 _frun(" Let us note the relative frequency in Arab texts", SMALL,
+                       78, 320, 560)])
+    assert _note_start(_Lw(ln), "digits", doc) is True
+    assert _note_marker(_Lw(ln), "digits") == "8"
+    # a superscript same-size marker also counts
+    sup = _fline([_frun("2", SMALL, 72, 78, 560, sup=True),
+                  _frun(" This is one of the meanings of this verse", SMALL,
+                        78, 320, 560)])
+    assert _note_start(_Lw(sup), "digits", doc) is True
+    # a note continuation line (note-size, no raised head) is NOT a start
+    cont = _fline([_frun("at once patriarchal and mercantile", SMALL,
+                         72, 300, 573)])
+    assert _note_start(_Lw(cont), "digits", doc) is False
+
+
+def test_footnote_extracted_and_joined(tmp_path):
+    """A small-marker footnote is pulled out of the body and its two typeset
+    lines JOIN into one note paragraph (not shattered per line)."""
+    body = _line("A body sentence that carries a note marker.", 100)
+    fn1 = _fline([_frun("1", SUP, 72, 78, 560),
+                  _frun(" This footnote body wraps", SMALL, 78, 320, 560)])
+    fn2 = _fline([_frun("across two typeset lines.", SMALL, 72, 300, 573)])
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(_doc([_page(1, [body, fn1, fn2])]), cfg, say=lambda m: None)
+    assert len(res.flow.notes) == 1
+    note = next(iter(res.flow.notes.values()))
+    assert len(note.paragraphs) == 1
+    assert "wraps across two typeset lines" in note.paragraphs[0].text()
+
+
+def test_footnotes_not_merged_across_marked_pages(tmp_path):
+    """The note-continuation merge must NOT fold a marker-started note into the
+    previous page's note (the '2 …' single-space marker regression)."""
+    b1 = _line("Body on page one referencing a note.", 100)
+    p1n = _fline([_frun("1", SUP, 72, 78, 560),
+                  _frun(" First footnote text on page one.", SMALL, 78, 320, 560)])
+    b2 = _line("Body on page two referencing another note.", 100)
+    p2n = _fline([_frun("2", SUP, 72, 78, 560),
+                  _frun(" Second footnote text on page two.", SMALL, 78, 320, 560)])
+    pages = [_page(1, [b1, p1n]), _page(2, [b2, p2n])]
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    assert len(res.flow.notes) == 2
+    # each note keeps only its own page's text
+    texts = [" ".join(p.text() for p in n.paragraphs)
+             for n in res.flow.notes.values()]
+    assert any("First footnote" in t and "Second footnote" not in t for t in texts)
+    assert any("Second footnote" in t and "First footnote" not in t for t in texts)
+    # per-page raw excision text is recorded for BOTH pages
+    assert set(res.note_raw_by_page) == {1, 2}
+
+
+def _wline(text, y, x0, x1):
+    return PdfLine(runs=[PdfRun(text=text, font_id=BODY, superscript=False,
+                                x0=x0, y0=y, x1=x1, y1=y + 12)],
+                   x0=x0, y0=y, x1=x1, y1=y + 12)
+
+
+def test_break_before_scales_short_test_by_left_shift(tmp_path):
+    """A recto/verso left-shifted page: full lines end short of the GLOBAL
+    modal right edge but must still JOIN, not read as paragraph ends."""
+    p1 = [_wline(f"Modal page full measure prose line number {k} runs here now.",
+                 100 + 13 * k, 72.0, 381.0) for k in range(6)]
+    p2 = [_wline("Shifted page line one runs the full narrower measure now here.",
+                 100, 54.0, 360.0),
+          _wline("and continues on line two of the same shifted paragraph now.",
+                 113, 54.0, 360.0)]
+    res = build_flow(_doc([_page(1, p1), _page(2, p2)]), _cfg(tmp_path),
+                     say=lambda m: None)
+    shifted = [b for b in res.flow.blocks
+               if isinstance(b, Paragraph) and "Shifted page" in b.text()]
+    assert len(shifted) == 1
+    assert "line one" in shifted[0].text() and "line two" in shifted[0].text()
+
+
+def test_soft_hyphen_repair(tmp_path):
+    """Embedded soft hyphens are stripped; a trailing soft hyphen joins closed."""
+    pages = [_page(1, [_line("The dif­ficult inde­", 100),
+                       _line("pendent word.", 113)])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    txt = _paras(res.flow)[0].text()
+    assert "­" not in txt
+    assert "difficult" in txt and "independent" in txt

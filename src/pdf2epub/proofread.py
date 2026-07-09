@@ -329,8 +329,11 @@ def run_proofread(epub: Path, config: Path, say=print) -> int:
     nav_href = ep.nav_doc().href if ep.nav_doc() else ""
     spine = [d for d in ep.spine_docs()
              if d.href != nav_href and "cover" not in d.href]
-    body_docs = [d for d in spine if "notes" not in d.href]
-    notes_docs = [d for d in spine if "notes" in d.href]
+    # the generated endnotes file carries <section epub:type="endnotes">;
+    # keyed on that, NOT a 'notes' filename substring, so body *sections*
+    # named '…Notes' (Editor's Notes, Biographical Notes) stay in reading order
+    notes_docs = [d for d in spine if d.is_endnotes()]
+    body_docs = [d for d in spine if not d.is_endnotes()]
 
     with fitz.open(cfg.pdf_path()) as fz:
         n_pages = fz.page_count

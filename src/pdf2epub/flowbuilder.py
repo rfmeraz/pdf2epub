@@ -50,6 +50,63 @@ _PUA_RE = re.compile(r"[\ue000-\uf8ff]")
 _NOTE_START_DIGIT = re.compile(r"^\s*(\d{1,3})(?:[.)]\s+|\t+| {2,})")
 _NOTE_START_STAR = re.compile(r"^\s*([*†‡])\s*")
 
+# dashes that, at a line end, signal a hyphenation/clause continuation rather
+# than a paragraph-ending ragged-short line: ASCII/soft/unicode hyphens and
+# en/em dashes (the closed-dash style breaks lines after '—' mid-sentence).
+_CONT_DASHES = ("-", "­", "‐", "‑", "–", "—")
+
+
+def _note_start(L: "_L", marker: str, doc: PdfDoc) -> bool:
+    """True when a footnote-region line opens a new note. A marker set at note
+    size and separated by punctuation/tab/2-spaces is caught by the text
+    pattern; a marker RAISED or set one size down (this book prints '8' at 7pt
+    over 9pt note text, so 'digit + single space' never matches the pattern)
+    is caught by the head-run test: a superscript, or a smaller-font, leading
+    digit/asterisk."""
+    txt = L.ln.text()
+    if marker == "digits":
+        if _NOTE_START_DIGIT.match(txt):
+            return True
+    elif _NOTE_START_STAR.match(txt):
+        return True
+    runs = [r for r in L.ln.runs if r.text.strip()]
+    if not runs:
+        return False
+    r0 = runs[0]
+    line_f = doc.fonts.get(L.ln.dominant_font())
+    r0_f = doc.fonts.get(r0.font_id)
+    raised = bool(r0.superscript) or (
+        line_f is not None and r0_f is not None
+        and r0_f.size <= line_f.size - 0.5)
+    if not raised:
+        return False
+    head = r0.text.strip()
+    if marker == "digits":
+        return head.rstrip(".)").isdigit()
+    return bool(head) and head[0] in "*†‡"
+
+
+def _note_marker(L: "_L", marker: str) -> str:
+    """The marker STRING of a note-region line (for in-body ref matching):
+    the leading digit(s) or asterisk. Mirrors _note_start so a marker set one
+    size down ('8 Let…', where the digit+delimiter text pattern misses) is
+    still captured instead of falling back to '*'."""
+    txt = L.ln.text()
+    if marker == "digits":
+        m = _NOTE_START_DIGIT.match(txt)
+        if m:
+            return m.group(1)
+    else:
+        m = _NOTE_START_STAR.match(txt)
+        if m:
+            return m.group(1)
+    runs = [r for r in L.ln.runs if r.text.strip()]
+    head = runs[0].text.strip() if runs else ""
+    if marker == "digits":
+        d = re.match(r"\d{1,3}", head)
+        return d.group(0) if d else "*"
+    return head[0] if head and head[0] in "*†‡" else "*"
+
 
 @dataclass(slots=True)
 class _Warn:
@@ -72,6 +129,12 @@ class FlowResult:
     # note_id -> printed marker ('7', '*') — QA strips these tokens from
     # ground truth (the EPUB renumbers its noterefs)
     note_markers: dict[str, str] = field(default_factory=dict)
+    # page -> [(marker, RAW note text on that page)] that physically SITS on
+    # the page; the QA ground truth excises per source page (a footnote
+    # wrapping p.N->p.N+1 keeps half its text on each, so the whole-note string
+    # matches neither). marker is set only on the note's first page.
+    note_raw_by_page: dict[int, list[tuple[str, str]]] = \
+        field(default_factory=dict)
     # page -> normalized texts of furniture lines the flow stripped; the QA
     # ground truth excises exactly these (template sets diverge between the
     # engines for short-lived heads)
@@ -151,9 +214,12 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     # ---- flow.columns: gutters are computed per SPEC (the whole columned
     # section), then applied per page
     col_splits_by_page: dict[int, list[float]] = {}
+    _skip_head = lambda ln: (furniture_template(ln.text()) in fur
+                             or (head_base is not None
+                                 and round(ln.y0) == head_base))
     for cs in cfg.flow_columns:
         spec_pages = [doc.page(cp) for cp in cs.pages if cp in in_flow_nums]
-        splits = _column_splits(spec_pages, cs.count)
+        splits = _column_splits(spec_pages, cs.count, skip=_skip_head)
         if splits is None:
             warns.append(_Warn(
                 f"flow.columns pages {cs.pages[0]}-{cs.pages[-1]}: expected "
@@ -248,14 +314,14 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     break
             region.reverse()
             if region and len(" ".join(x.ln.text() for x in region)) > 20:
-                pat = _NOTE_START_DIGIT if cfg.footnote_marker == "digits" else _NOTE_START_STAR
                 # small font is NOT sufficient — 9pt block quotes sit at page
                 # bottoms too (BoK p.186). The note region starts at the FIRST
-                # marker-pattern line; small-font lines above it stay body.
+                # marker line; small-font lines above it stay body.
                 # A region with no marker at all is body — unless it
                 # continues the previous page's notes (merge pass below).
                 first_marked = next((i for i, L in enumerate(region)
-                                     if pat.match(L.ln.text())), None)
+                                     if _note_start(L, cfg.footnote_marker, doc)),
+                                    None)
                 prev_page_had_notes = prev_had_notes
                 if first_marked is None and not prev_page_had_notes:
                     region = []
@@ -265,7 +331,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     kept = kept[:len(kept) - len(region)]
                     cur: list[_L] = []
                     for L in region:
-                        if pat.match(L.ln.text()) and cur:
+                        if _note_start(L, cfg.footnote_marker, doc) and cur:
                             notes_here.append(cur)
                             cur = []
                         cur.append(L)
@@ -278,12 +344,11 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     # ---- footnotes wrapping across pages: a region whose first chunk has no
     # marker prefix continues the PREVIOUS page's last note (BoK p.56->57)
     if cfg.footnote_policy == "markers":
-        pat = _NOTE_START_DIGIT if cfg.footnote_marker == "digits" else _NOTE_START_STAR
         prev_last_group: list[_L] | None = None
         for pno in sorted(page_notes):
             groups = page_notes[pno]
             if groups and prev_last_group is not None and \
-                    not pat.match(groups[0][0].ln.text()):
+                    not _note_start(groups[0][0], cfg.footnote_marker, doc):
                 prev_last_group.extend(groups.pop(0))
                 counts["note-continuation"] += 1
             if groups:
@@ -535,10 +600,18 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             note_id = f"p{pno:04d}-{k}"
             note_paras = _note_paragraphs(group, cfg, doc, note_id, counts)
             res.flow.notes[note_id] = Note(note_id=note_id, paragraphs=note_paras)
-            m = _NOTE_START_DIGIT.match(group[0].ln.text())
-            marker = m.group(1) if m else "*"
+            marker = _note_marker(group[0], cfg.footnote_marker)
             note_queue.append((pno, marker, note_id))
             res.note_markers[note_id] = marker
+            # record the note's raw text split by the page each line sits on,
+            # so the QA ground truth can excise a page-wrapping note from BOTH
+            page_texts: dict[int, list[str]] = {}
+            for L in group:
+                page_texts.setdefault(L.page, []).append(L.ln.text())
+            start_page = min(page_texts)
+            for gp, txts in page_texts.items():
+                res.note_raw_by_page.setdefault(gp, []).append(
+                    (marker if gp == start_page else "", " ".join(txts)))
 
     close_para()
     for a2 in pending_anchors:
@@ -632,11 +705,17 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
     # ends 200pt short, yet the commentary was joined on; same shape flattens
     # verse quotations line-by-line)
     col_w = geo.col_right - geo.col_left
+    # recto/verso binding margins shift the whole text block sideways, so a
+    # FULL line on a left-shifted page ends short of the GLOBAL modal right
+    # edge (Sufism verso pp. at x0=54 vs modal 72 end ~18pt early). Scale the
+    # right edge by this block's own left inset before the 'short' test, or
+    # every justified line on a shifted page reads as a paragraph end.
+    eff_right = geo.col_right - max(0.0, geo.col_left - min(prev.ln.x0, L.ln.x0))
     # a line-end hyphen is an explicit continuation signal that trumps
     # geometry: ragged citations ('Maktaba al-' / 'Hilāl, 1988') end short
     # mid-entry, and breaking there strands 'al- Hilāl' seams (gate 9)
-    prev_short = (prev.ln.x1 < geo.col_right - max(18.0, 0.06 * col_w)
-                  and not prev.ln.text().rstrip().endswith("-"))
+    prev_short = (prev.ln.x1 < eff_right - max(18.0, 0.06 * col_w)
+                  and not prev.ln.text().rstrip().endswith(_CONT_DASHES))
     cross_page = L.page != prev.page
     if cross_page:
         # continuation across the page turn is the default; break only when
@@ -648,7 +727,7 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
             return True
         if prev_short:
             return True
-        return indented and prev.ln.x1 >= geo.col_right - 6.0
+        return indented and prev.ln.x1 >= eff_right - 6.0
     if indented and L.ps == body_ps and \
             (prev_short or prev.ps != body_ps
              or prev.ln.x0 <= geo.col_left + 2.0):
@@ -672,7 +751,7 @@ _GUTTER_COVER_FRAC = 0.06  # a gutter is crossed by (almost) no lines
 _GUTTER_START_FRAC = 0.2   # …and hugged on its right by column-start runs
 
 
-def _column_splits(pages: list, count: int) -> list[float] | None:
+def _column_splits(pages: list, count: int, skip=None) -> list[float] | None:
     """Gutter split points for one flow.columns spec, from the RAW lines of
     ALL its pages: the column grid is a property of the columned SECTION —
     a single sparse page (BoK p.323, 15 index lines) leaves the whitespace
@@ -681,9 +760,16 @@ def _column_splits(pages: list, count: int) -> list[float] | None:
     fills in while the true gutters stay empty. Gutters are interior
     low-coverage strips hugged on their right by column-start runs (the
     start-density test rejects a column's ragged right edge; the interior
-    test rejects the folio margin). None = not enough gutters found."""
-    runs_all = [r for p in pages for ln in p.lines for r in ln.runs]
-    n_lines = sum(len(p.lines) for p in pages)
+    test rejects the folio margin). None = not enough gutters found.
+
+    ``skip(line) -> bool`` excludes lines from the coverage census — pass it
+    the furniture predicate so a full-width running head (which spans BOTH
+    columns and their gutter) does not fill the channel it is meant to
+    reveal; column detection runs before the per-page furniture strip."""
+    kept_lines = [ln for p in pages for ln in p.lines
+                  if not (skip and skip(ln))]
+    runs_all = [r for ln in kept_lines for r in ln.runs]
+    n_lines = len(kept_lines)
     if not runs_all or count < 2:
         return None
     lo = int(min(r.x0 for r in runs_all))
@@ -903,6 +989,16 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
         # content line, I&B) — fold them to spaces before seam repairs
         if "\n" in t:
             t = re.sub(r"\s*\n\s*", " ", t)
+        # discretionary soft hyphens (U+00AD): invisible on screen but stray in
+        # the shipped text and, at a line end, misread as a paragraph-ending
+        # short line. Strip a MID-run one ('distin­guish'), collapse a
+        # soft-hyphen+space seam ('con­ tains' -> 'contains'); a TRAILING one is
+        # left for dehyphenate_join to close the cross-line join.
+        if "­" in t:
+            before = t.count("­")
+            t = re.sub(r"­(?=\S)", "", t)
+            t = re.sub(r"­ +", "", t)
+            counts["softhyphen-stripped"] += before - t.count("­")
         t, n_lig = expand_ligatures(t)
         counts["ligatures"] += n_lig
         from .textfix import inline_dehyphenate

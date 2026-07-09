@@ -167,8 +167,19 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
     join WITHOUT a space. Extraction spans carry trailing whitespace
     ('com- '), so the hyphen test runs on the stripped tail."""
     base = prev.rstrip()
+    # a soft hyphen (U+00AD) is an EXPLICIT discretionary-break mark the
+    # typesetter left at a line break ('eso­'/'terism'); drop it and join
+    # closed whatever the continuation's case — never leave 'eso­ terism'.
+    if mode != "off" and base.endswith("­"):
+        return base[:-1], "", True
     if mode != "off" and re.search(r"[A-Za-zÀ-ſ]-$", base):
         if nxt.lstrip()[:1].islower() and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True
+        return base, "", False
+    # a CLOSED em/en-dash at the line end abuts its neighbours ('object—or',
+    # '26–28'); the break must NOT inject a space ('object— or', a false
+    # 'word- word' after normalize). The non-space-immediately-before guard
+    # leaves spaced dashes ('word —\nword') alone — their base ends ' —'.
+    if mode != "off" and re.search(r"[A-Za-zÀ-ſ0-9][—–]$", base):
         return base, "", False
     return prev, " ", False

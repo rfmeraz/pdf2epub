@@ -1,0 +1,121 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+source:
+  folder: "package"
+  pdf: "Sufism-Veil-and-Quintessence-by-Frithjof-Schuon.pdf"
+  sha256: "5a4c08c2d379aac5f73641fdc4da1f863c6f4e6148ff4effe81d43d3a11cc71c"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> urn:uuid (flagged)
+  isbn_print:
+  date:
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (7 image(s), 112 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 19}   # roman folios
+  body:  {first: 20, last: 218}   # printed folio '1' seen on p.20
+  exclude: []
+  label_source: pdf-page-labels   # folio-vs-label agreement: 100.0%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 44.7
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 100p): 'Sufism: Veil and Quintessence'
+  # repeated (top, 17p): 'Paradoxes of an Esoteris#'
+  # repeated (top, 13p): 'The Exo-Esoteric Symbiosis'
+  # repeated (top, 12p): 'The Quintessential Esoterism of Isla#'
+  # repeated (top, 11p): "Editor's Notes"
+  # repeated (top, 8p): 'Ellipsis and Hyperbolism in Arab Rhetor#'
+  # repeated (top, 8p): 'Human Premises of a Religious Dilemma'
+  # repeated (top, 6p): 'Tracing the Notion of Philosophy'
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "WorldWisdomFont@11"
+  pstyle_map:
+    "WorldWisdomFont@11": {role: p}   # high: dominant text cluster
+    "WorldWisdomFont@10": {role: p}   # low: smaller than body (10.0pt)
+    "WorldWisdomFont@9": {role: footnote}   # low: small (9.0pt), frequent
+    "WorldWisdomFont-Italic@10": {role: p}   # low: smaller than body (10.0pt)
+    "WorldWisdomFont-Italic@11": {role: p}   # low: body-like
+    "WorldWisdomFont-Italic@11/center": {role: h3}   # low: centered, body-sized
+    "ACaslonPro-Regular@11.5": {role: p}   # low: body-like
+    "ACaslonPro-Regular@10": {role: p}   # low: smaller than body (10.0pt)
+    "WorldWisdomFont-Bold@14/center": {role: h2}   # medium: 14.0pt centered
+    "WorldWisdomFont-Italic@9": {role: p}   # low: smaller than body (9.0pt)
+    "WorldWisdomFont-Bold@11": {role: p}   # low: body-like
+    "WorldWisdomFont@11/center": {role: h3}   # low: centered, body-sized
+    "WorldWisdomFont-Bold@11/center": {role: h3}   # low: centered, body-sized
+    "WorldWisdomFont@14/center": {role: h2}   # medium: 14.0pt centered
+    "Present-Black@15/center": {role: h1}   # medium: size 15.0pt >= 1.35x body
+    "ACaslonPro-Italic@11.5": {role: p}   # low: body-like
+    "WorldWisdomFont-Bold@12/center": {role: h2}   # medium: 12.0pt centered
+    "WorldWisdomFont-Bold@14": {role: p}   # low: body-like
+    "ACaslonPro-Regular@8": {role: p}   # low: smaller than body (8.0pt)
+    "ACaslonPro-Italic@11": {role: p}   # low: body-like
+    "ACaslonPro-Regular@11": {role: p}   # low: body-like
+    "WorldWisdomFont@12/center": {role: h2}   # medium: 12.0pt centered
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 13.5
+  gap_factor: 1.6             # median leading measured: 13.1pt
+  dehyphenate: lower-only
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: markers   # regions on 109 pages; census {'*-inline': 54, 'digit': 170}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: outline   # outline=15 printed=15 links=0
+  printed_pages: [6]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map:
+    "\uE04D": {action: FILL-ME-IN, note: "U+E04D x1 from WoodtypeOrnaments-Two — LOOK at analysis/pages/p0002.png"}
+    "\uE04B": {action: FILL-ME-IN, note: "U+E04B x1 from WoodtypeOrnaments-Two — LOOK at analysis/pages/p0002.png"}
+    "\uE059": {action: FILL-ME-IN, note: "U+E059 x1 from WoodtypeOrnaments-Two — LOOK at analysis/pages/p0002.png"}
+    "\uE06B": {action: FILL-ME-IN, note: "U+E06B x1 from WoodtypeOrnaments-Two — LOOK at analysis/pages/p0002.png"}
+    "\uE06D": {action: FILL-ME-IN, note: "U+E06D x1 from WoodtypeOrnaments-Two — LOOK at analysis/pages/p0002.png"}
+    "\uF076": {action: FILL-ME-IN, note: "U+F076 x8 from Wingdings-Regular — LOOK at analysis/pages/p0218.png"}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  # honorific/symbol glyphs likely need: {family: Amiri, file: /usr/share/fonts/amiri-fonts/Amiri-Regular.ttf, script: cjk, lang: ar}
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  alt: {}
+  decorative: []
+  figure_pages: []
+
+output: {slug: sufism-veil-and-quintessence, include_ncx: true}
