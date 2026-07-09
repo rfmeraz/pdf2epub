@@ -29,7 +29,7 @@ Adobe products.
    and package a byte-reproducible EPUB. Ambiguities WARN into
    `build/warnings.md` with ready-to-paste override snippets; nothing is ever
    silently dropped.
-5. **`pdf2epub qa`** runs 18 gates: epubcheck, text coverage against an
+5. **`pdf2epub qa`** runs 19 gates: epubcheck, text coverage against an
    independent poppler extraction, footnote placement, navigation, images/alt,
    reading order (every TOC entry's heading on its printed page), TOC agreement,
    furniture leaks, hyphenation and private-use residue, an optional
@@ -38,13 +38,25 @@ Adobe products.
    cluster sizes survive into the CSS, every centered paragraph has genuinely
    centered source lines, emphasis is conserved, headings are typographically
    real, and each page's block-level signature (size buckets + centering)
-   matches print. `qa --visual` adds gate 18: sampled side-by-side contact
-   sheets (print page vs anchor-sliced EPUB render in headless Chrome), PUA
-   glyph crop pairs, and figure perceptual-hash checks into `build/qa_visual/`
-   for the converting agent to grade against a generated checklist.
+   matches print — and a noteref-seam lint (11b: a letter directly after a
+   note marker is always a lost join). `qa --visual` adds gate 18: sampled
+   side-by-side contact sheets (print page vs anchor-sliced EPUB render in
+   headless Chrome), PUA glyph crop pairs, and figure perceptual-hash checks
+   into `build/qa_visual/` for the converting agent to grade against a
+   generated checklist.
+6. **`pdf2epub proofread` — reading QA (mandatory).** The shipped EPUB is
+   re-rendered as per-section review packets (page markers, `[n]` noterefs,
+   figure alts, a generated protocol with a closed defect taxonomy and the
+   book's do-not-flag conventions). The agent fans out one blind reader per
+   packet hunting conversion damage — fused/split paragraphs, seam spaces,
+   garble, flattened verse — verifies every finding against the print render
+   (`pdf2epub lines <config> <page> --render`), and fixes accepted findings
+   only via book.yaml or code, never by editing text. Rebuild, re-run,
+   re-read changed packets until a round comes back clean.
 
-A conversion is done when the build ends `epubcheck: clean` and QA ends
-`Overall: PASS`.
+A conversion is done when the build ends `epubcheck: clean`, QA ends
+`Overall: PASS`, and the proofread loop ends with zero new confirmed
+findings (or the remainder is escalated in the handoff report).
 
 ## Commands
 

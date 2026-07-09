@@ -1,7 +1,7 @@
-"""QA gate suite: 18 gates. Gates 1-10 must pass; 11-12 informational;
-13-17 (typographic fidelity) report would-PASS/would-FAIL and gate once
-promoted via typography.GATING; 18 (--visual) emits agent-graded contact
-sheets and is always informational.
+"""QA gate suite: 19 gates. Gates 1-10 and 11b (noteref seams) must pass;
+11-12 informational; 13-17 (typographic fidelity) report
+would-PASS/would-FAIL and gate once promoted via typography.GATING;
+18 (--visual) emits agent-graded contact sheets and is always informational.
 
 Ground truth and expectations are re-derived deterministically from
 (source PDF, book.yaml) — the same inputs the build used — via an

@@ -25,8 +25,11 @@ inspects the finished EPUB in a reader; **every other decision is the agent's**.
 `/convert-pdf` skill (`.claude/skills/convert-pdf/SKILL.md`) is the process definition:
 deterministic extract+analyze produce evidence, the agent infers the book's structure
 (the AI-agent step: pstyle roles, page ranges, TOC source, footnotes, PUA glyphs, cover)
-and records every judgment in `book.yaml`, then `build` is fully deterministic. Escalate
-only the skill's hard-stop list; everything else proceeds with safe defaults + handoff flags.
+and records every judgment in `book.yaml`, then `build` is fully deterministic. After QA,
+the mandatory reading-QA step (`/proofread-epub`: blind reader subagents over `pdf2epub
+proofread` packets, findings verified against print renders, fixes only via config/code)
+must end clean or escalate. Escalate only the skill's hard-stop list; everything else
+proceeds with safe defaults + handoff flags.
 
 ## Commands
 
@@ -62,7 +65,10 @@ trim-cropped, footnote-stripped page text through the same textfix/normalize cha
 used; gates 13-17 grade
 typographic fidelity (shipped CSS+markup vs raw extract geometry, sliced per source page via
 the pagebreak anchors), and `--visual` (gate 18) emits sampled print-vs-EPUB contact sheets
-plus PUA glyph pairs into `build/qa_visual/` for agent grading.
+plus PUA glyph pairs into `build/qa_visual/` for agent grading. `proofread.py` renders the
+shipped EPUB as reading-QA packets (+ the `lines` raw-geometry dump) for the mandatory
+`/proofread-epub` blind-reader pass — the one reviewer that consults linguistic plausibility,
+which no deterministic gate has.
 
 ## Conventions and constraints
 
