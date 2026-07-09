@@ -872,3 +872,32 @@ def test_page_shift_skips_centered_page(tmp_path):
     doc = _doc([_page(1, body), _page(2, title)])
     geo = column_geometry(doc)
     assert geo.shift(2) == 0.0           # centered page -> no bogus shift
+
+
+def test_footnote_split_delimiter_marker(tmp_path):
+    """Marker '1' in its OWN run with the delimiter '. ' in the next run: the
+    note body must not start with the stray '.' (review #423 finding 1)."""
+    body = _line("A body sentence that carries a note marker.", 100)
+    fn = _fline([_frun("1", SUP, 72, 78, 560),
+                 _frun(". Footnote body long enough to register as a note.",
+                       SMALL, 78, 340, 560)])
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(_doc([_page(1, [body, fn])]), cfg, say=lambda m: None)
+    assert len(res.flow.notes) == 1
+    txt = next(iter(res.flow.notes.values())).paragraphs[0].text()
+    assert txt.startswith("Footnote body") and txt[0] not in ".)"
+
+
+def test_page_shift_skips_centered_display_sharing_x0(tmp_path):
+    """Three equally-wide CENTERED display lines sharing an x0: 'wide' but inset
+    (never full-measure), so no line at that edge confirms a real left margin
+    and they anchor NO page shift (review #423 finding 2)."""
+    from pdf2epub.analyze import column_geometry
+    body = [_wline(f"Body full measure prose line {k} of text here now again.",
+                   100 + 13 * k, 72.0, 381.0) for k in range(6)]
+    # x0=120..x1=320: width 200 (>= 0.55*wmax so 'wide') but inset both sides
+    disp = [_wline("A wide centered display heading inset from both edges now",
+                   100 + 18 * k, 120.0, 320.0) for k in range(3)]
+    doc = _doc([_page(1, body), _page(2, disp)])
+    geo = column_geometry(doc)
+    assert geo.shift(2) == 0.0

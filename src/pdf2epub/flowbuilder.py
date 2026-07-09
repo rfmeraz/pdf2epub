@@ -1090,11 +1090,12 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
                 runs[0].text = re.sub(
                     r"^\s*" + re.escape(marker) + r"[.)]?\s*", "",
                     runs[0].text, count=1)
-            # the marker may have been its own run; drop any now-empty leading
-            # runs and trim the space it left on the note's first word
+            # the marker may have been its own run ('1' | '. body'): drop any
+            # now-empty leading runs and trim the space AND a split delimiter
+            # ('.'/')') the marker's own-run left on the note's first word
             for r in runs:
                 if isinstance(r, TextRun) and r.text.strip():
-                    r.text = r.text.lstrip()
+                    r.text = re.sub(r"^\s*[.)]?\s*", "", r.text, count=1)
                     break
                 if isinstance(r, TextRun):
                     r.text = ""

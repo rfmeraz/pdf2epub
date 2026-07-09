@@ -189,9 +189,13 @@ def left_stops(doc, geo: ColumnGeometry, in_flow: list[int]) -> tuple[float, ...
     cap = geo.col_left + max(DEEP_INSET_MIN, DEEP_INSET_FRAC * col_w) - STOP_TOL
     cnt: Counter[int] = Counter()
     for pno in in_flow:
+        # normalize each recto/verso page into the modal frame (x0 + its shift)
+        # so a verso margin and the recto margin count as the same stop, and
+        # the full-right test uses the page's OWN (shifted) right edge
+        s = geo.shift(pno)
         for ln in doc.page(pno).lines:
-            if ln.x1 >= geo.col_right - 6.0 and ln.x0 < cap:
-                cnt[round(ln.x0)] += 1
+            if ln.x1 >= (geo.col_right - s) - 6.0 and (ln.x0 + s) < cap:
+                cnt[round(ln.x0 + s)] += 1
     return tuple(sorted(float(x) for x, n in cnt.items() if n >= 3))
 
 
@@ -248,10 +252,12 @@ def genuinely_centered(pairs, doc, geo: ColumnGeometry, stops: tuple[float, ...]
         # stop veto first: "sits at the paragraph indent" is the diagnostic
         # reason (BoK p.206 shape); the inset floor makes it redundant at
         # current thresholds but keeps guarding if the floor is ever tuned down
-        stop = next((s for s in stops if abs(ln.x0 - s) <= STOP_TOL), None)
+        # stops live in the modal frame; normalize this line's x0 by the shift
+        norm_x0 = ln.x0 + page_shift
+        stop = next((s for s in stops if abs(norm_x0 - s) <= STOP_TOL), None)
         if stop is not None:
             return False, (f"x0 at attested left stop {stop:g} "
-                           f"(+{stop - eff_left:.1f}pt), mid offset "
+                           f"(+{stop - geo.col_left:.1f}pt), mid offset "
                            f"{abs(mid - eff_center):.1f}pt")
         if ln.x0 < eff_left + inset or ln.x1 > eff_right - inset:
             return False, (f"body line inset {ln.x0 - eff_left:.1f}/"

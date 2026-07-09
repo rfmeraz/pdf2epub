@@ -145,6 +145,13 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
             if marker:
                 markers.append(marker)
             frag = normalize(note_text)
+            # excise the note BODY only, dropping the fragment's own leading
+            # marker — the marker removal below then strips BOTH copies (the
+            # note-side one + the in-body ref) exactly, instead of over-running
+            # count=2 into an unrelated standalone digit
+            if marker:
+                frag = re.sub(r"^\s*" + re.escape(marker) + r"[.)]?\s*", "",
+                              frag, count=1)
             if len(frag) < 15:
                 continue
             span = _find_fuzzyish(norm, frag)

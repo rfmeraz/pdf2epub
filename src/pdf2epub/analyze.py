@@ -26,6 +26,8 @@ _PUA = re.compile(r"[\ue000-\uf8ff]")
 
 CENTER_TOL = 10.0   # pt: |line center - column center| below this = centered
 CENTER_INSET = 10.0  # pt: centered lines start/end clear of both column edges
+FULL_MEASURE_TOL = 10.0  # pt: a line within this of the column WIDTH is full-
+                         # measure (left-aligned prose) — anchors a page shift
 
 
 # ------------------------------------------------------------------ pstyles
@@ -75,20 +77,28 @@ def column_geometry(doc: PdfDoc) -> ColumnGeometry:
             if f:
                 size_chars[f.size] += len(ln.text())
     body_size = size_chars.most_common(1)[0][0] if size_chars else 0.0
-    # per-page binding-margin shift: the page's own modal long-line left edge
-    # vs the global modal col_left (recto/verso pages slide sideways). Only
-    # LEFT-ALIGNED prose establishes a margin — require >=3 long lines to share
-    # the modal edge, or a centered page (title page: wide display lines at a
-    # centered x0) yields a bogus shift and un-centers its own headings.
+    # per-page binding-margin shift: the page's own modal left edge vs the
+    # global modal col_left (recto/verso pages slide sideways). Only a
+    # LEFT-ALIGNED column establishes a margin: take the modal x0 of the wide
+    # lines (>=3 sharing it), then CONFIRM it is a real left edge by requiring
+    # at least one line there to be full-measure (width ~ col_w — shift-
+    # invariant, and something a centered inset line never is). A stack of
+    # same-width centered display lines (a title page, a book list) is inset,
+    # never full-measure, so it yields no bogus shift and stays centered.
+    col_w = col_right - col_left
     page_shifts: dict[int, float] = {}
     for p in doc.pages:
-        plefts = Counter(round(ln.x0) for ln in p.lines
-                         if (ln.x1 - ln.x0) >= 0.55 * wmax)
-        if plefts:
-            edge, support = plefts.most_common(1)[0]
-            shift = col_left - edge
-            if support >= 3 and abs(shift) >= 6.0:
-                page_shifts[p.number] = float(shift)
+        wide = [ln for ln in p.lines if (ln.x1 - ln.x0) >= 0.55 * wmax]
+        plefts = Counter(round(ln.x0) for ln in wide)
+        if not plefts:
+            continue
+        edge, support = plefts.most_common(1)[0]
+        full_here = any(round(ln.x0) == edge
+                        and (ln.x1 - ln.x0) >= col_w - FULL_MEASURE_TOL
+                        for ln in wide)
+        shift = col_left - edge
+        if support >= 3 and full_here and abs(shift) >= 6.0:
+            page_shifts[p.number] = float(shift)
     return ColumnGeometry(col_left, col_right, body_size, page_shifts)
 
 
