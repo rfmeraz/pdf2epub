@@ -53,16 +53,26 @@ def run_init(pdf_or_folder: Path, workspace: Path, *,
             print("  install: ~/pyenv/bin/pip install transformers "
                   "(a CPU torch wheel must be present)")
         else:
-            need_draw = (layout_pages in (None, "", "auto", "flagged", "default")
-                         or (isinstance(layout_pages, str)
-                             and layout_pages.startswith("+sample:")))
-            draw = lw.drawings_dense_pages(pdf, doc) if need_draw else frozenset()
-            pages, sel = lw.resolve_pages(layout_pages, doc, a, drawings_dense=draw)
-            layout_dir = analysis_dir / "layout"
-            boxes = lw.run_layout_witness(pdf, pages, overlay_dir=layout_dir)
-            lw.write_layout_evidence(doc, a, boxes, pages, sel, layout_dir)
-            print(f"layout witness: scanned {len(pages)}/{doc.n_pages} pages "
-                  f"({sel}) -> {layout_dir / 'report.md'}")
+            # The witness is advisory and now runs by default, so a runtime
+            # failure — uncached weights with no network, a model/processor or
+            # backend-API error, OOM — must NEVER abort init before the draft
+            # book.yaml is written. layout_available() only proves the imports
+            # resolve, not that from_pretrained() succeeds. Warn loudly, skip.
+            try:
+                need_draw = (layout_pages in (None, "", "auto", "flagged", "default")
+                             or (isinstance(layout_pages, str)
+                                 and layout_pages.startswith("+sample:")))
+                draw = lw.drawings_dense_pages(pdf, doc) if need_draw else frozenset()
+                pages, sel = lw.resolve_pages(layout_pages, doc, a, drawings_dense=draw)
+                layout_dir = analysis_dir / "layout"
+                boxes = lw.run_layout_witness(pdf, pages, overlay_dir=layout_dir)
+                lw.write_layout_evidence(doc, a, boxes, pages, sel, layout_dir)
+                print(f"layout witness: scanned {len(pages)}/{doc.n_pages} pages "
+                      f"({sel}) -> {layout_dir / 'report.md'}")
+            except Exception as e:  # noqa: BLE001 - advisory: never break init
+                print(f"layout witness failed ({type(e).__name__}: {e}) — "
+                      "skipping (draft book.yaml is still written; rerun "
+                      "`init --layout` once the backend/model is available).")
 
     draft = _draft_yaml(pdf, doc, a, workspace)
     target = workspace / "book.yaml"

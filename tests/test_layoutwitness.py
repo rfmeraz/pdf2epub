@@ -214,3 +214,30 @@ def test_initcmd_import_does_not_pull_ml_backend():
             "assert 'torch' not in sys.modules\n")
     r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
     assert r.returncode == 0, r.stderr
+
+
+def test_layout_failure_does_not_abort_init(tmp_path, monkeypatch):
+    # a runtime witness failure (e.g. uncached weights, no network) must NOT
+    # abort init — the draft book.yaml must still be written.
+    import fitz
+    from pdf2epub.initcmd import run_init
+
+    pdf = tmp_path / "src.pdf"
+    d = fitz.open()
+    d.new_page().insert_text((72, 72), "hello world")
+    d.save(str(pdf))
+    d.close()
+
+    def boom(*a, **k):
+        raise RuntimeError("model load failed (no network / uncached weights)")
+
+    # force the run-path failure whether or not the backend is importable
+    monkeypatch.setattr(lw, "layout_available", lambda: True)
+    monkeypatch.setattr(lw, "drawings_dense_pages", lambda *a, **k: frozenset())
+    monkeypatch.setattr(lw, "run_layout_witness", boom)
+
+    ws = tmp_path / "ws"
+    rc = run_init(pdf, ws, layout=True)
+    assert rc == 0
+    assert (ws / "book.yaml").exists()                    # draft written anyway
+    assert not (ws / "analysis" / "layout" / "report.md").exists()
