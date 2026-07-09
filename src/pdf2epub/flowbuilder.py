@@ -245,7 +245,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 counts["override-drop"] += 1
                 continue
             L = _L(p.number, idx, ln,
-                   line_pstyle(ln, doc, geo, p.lines[idx - 1] if idx else None))
+                   line_pstyle(ln, doc, geo, p.lines[idx - 1] if idx else None,
+                               page_shift=geo.shift(p.number)))
             cx, cy = (ln.x0 + ln.x1) / 2, (ln.y0 + ln.y1) / 2
             for k, fr in regions_here:
                 if fr.rect[0] <= cx <= fr.rect[2] and \

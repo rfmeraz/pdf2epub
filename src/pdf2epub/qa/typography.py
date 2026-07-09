@@ -196,7 +196,8 @@ def left_stops(doc, geo: ColumnGeometry, in_flow: list[int]) -> tuple[float, ...
 
 
 def genuinely_centered(pairs, doc, geo: ColumnGeometry, stops: tuple[float, ...],
-                       body_famroot: str) -> tuple[bool, str]:
+                       body_famroot: str, page_shift: float = 0.0
+                       ) -> tuple[bool, str]:
     """Verify a centering CLAIM against raw source geometry (gate 14 only —
     one-directional; column-filling lines are neutral, never positive
     evidence). ``pairs`` are (line, raw predecessor on its page). Neutral
@@ -204,11 +205,15 @@ def genuinely_centered(pairs, doc, geo: ColumnGeometry, stops: tuple[float, ...]
     indent is exactly the BoK p.206 bug shape and must stay informative, so
     width alone never exonerates. A line CONTINUING a justified block (prev
     same x0, full-right — quote-indent/drop-cap-wrap last lines, BoK p.193 &
-    p.185) is a paragraph line regardless of its midpoint."""
+    p.185) is a paragraph line regardless of its midpoint. ``page_shift``
+    slides the modal edges/center to a recto/verso-shifted page's own block."""
     col_w = geo.col_right - geo.col_left
+    eff_left = geo.col_left - page_shift
+    eff_right = geo.col_right - page_shift
+    eff_center = geo.center - page_shift
     informative = [(ln, prev) for ln, prev in pairs
-                   if ln.x0 - geo.col_left > FULL_EDGE_TOL
-                   or geo.col_right - ln.x1 > FULL_EDGE_TOL]
+                   if ln.x0 - eff_left > FULL_EDGE_TOL
+                   or eff_right - ln.x1 > FULL_EDGE_TOL]
     if not informative:
         return True, "all lines column-filling (center-indistinguishable)"
     body = geo.body_size
@@ -220,11 +225,11 @@ def genuinely_centered(pairs, doc, geo: ColumnGeometry, stops: tuple[float, ...]
         mid = (ln.x0 + ln.x1) / 2
         if size >= body + 1.0 or _fam_root(fam) != body_famroot:
             # display type: wide heads are real; midpoint alone decides
-            if abs(mid - geo.center) > MID_TOL:
+            if abs(mid - eff_center) > MID_TOL:
                 return False, (f"display line mid offset "
-                               f"{abs(mid - geo.center):.1f}pt > {MID_TOL:g}pt")
+                               f"{abs(mid - eff_center):.1f}pt > {MID_TOL:g}pt")
         else:
-            if continues_justified_block(ln, prev, size, geo):
+            if continues_justified_block(ln, prev, size, geo, page_shift):
                 return False, ("continues a justified block (prev line same "
                                "x0, full-right) — a paragraph's last line")
             strict.append(ln)
@@ -233,24 +238,24 @@ def genuinely_centered(pairs, doc, geo: ColumnGeometry, stops: tuple[float, ...]
         widths = [ln.x1 - ln.x0 for ln in strict]
         if max(widths) - min(widths) >= WIDTH_SPREAD and \
                 max(mids) - min(mids) <= MID_AGREE and \
-                abs(sum(mids) / len(mids) - geo.center) <= MID_TOL:
+                abs(sum(mids) / len(mids) - eff_center) <= MID_TOL:
             return True, "midpoints of varying-width lines agree"
     inset = max(DEEP_INSET_MIN, DEEP_INSET_FRAC * col_w)
     for ln in strict:
         mid = (ln.x0 + ln.x1) / 2
-        if abs(mid - geo.center) > MID_TOL:
-            return False, f"body line mid offset {abs(mid - geo.center):.1f}pt"
+        if abs(mid - eff_center) > MID_TOL:
+            return False, f"body line mid offset {abs(mid - eff_center):.1f}pt"
         # stop veto first: "sits at the paragraph indent" is the diagnostic
         # reason (BoK p.206 shape); the inset floor makes it redundant at
         # current thresholds but keeps guarding if the floor is ever tuned down
         stop = next((s for s in stops if abs(ln.x0 - s) <= STOP_TOL), None)
         if stop is not None:
             return False, (f"x0 at attested left stop {stop:g} "
-                           f"(+{stop - geo.col_left:.1f}pt), mid offset "
-                           f"{abs(mid - geo.center):.1f}pt")
-        if ln.x0 < geo.col_left + inset or ln.x1 > geo.col_right - inset:
-            return False, (f"body line inset {ln.x0 - geo.col_left:.1f}/"
-                           f"{geo.col_right - ln.x1:.1f}pt < {inset:.1f}pt floor")
+                           f"(+{stop - eff_left:.1f}pt), mid offset "
+                           f"{abs(mid - eff_center):.1f}pt")
+        if ln.x0 < eff_left + inset or ln.x1 > eff_right - inset:
+            return False, (f"body line inset {ln.x0 - eff_left:.1f}/"
+                           f"{eff_right - ln.x1:.1f}pt < {inset:.1f}pt floor")
     return True, "insets and midpoints check out"
 
 
@@ -372,7 +377,8 @@ def check_centered_witness(slices, rules, doc, geo, stops, body_famroot,
             if not pairs:
                 n_unmatched += 1
                 continue
-            ok, why = genuinely_centered(pairs, doc, geo, stops, body_famroot)
+            ok, why = genuinely_centered(pairs, doc, geo, stops, body_famroot,
+                                         geo.shift(page))
             if not ok and len(pairs) > 1:
                 # the same text can print TWICE at different geometry (MR
                 # p.70: a verse line AND a centered aphorism head) — the
@@ -383,7 +389,7 @@ def check_centered_witness(slices, rules, doc, geo, stops, body_famroot,
                     t = normalize(_PUA_RE.sub("", ln.text()))
                     if len(t) >= 0.6 * blk_len and \
                             genuinely_centered([(ln, prev)], doc, geo, stops,
-                                               body_famroot)[0]:
+                                               body_famroot, geo.shift(page))[0]:
                         ok = True
                         break
             if not ok:

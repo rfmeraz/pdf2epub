@@ -29,9 +29,10 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
     adjudicated (embedded-image-uncovered, decorative). Section-break `*` kept
     (furniture.keep — some fall at a page top). Two furniture.extra heads the
     auto-detector missed ("Preface", the long Appendix running head).
-- Reading QA drove SEVEN code fixes (the deterministic gates + sampled visual QA
-  all PASSed a build that was in fact riddled with reader-level damage — a third of
-  the book's paragraphs were wrongly split; ~412 lowercase-starting <p>):
+- Reading QA + a user-reported section-break inconsistency drove EIGHT code fixes
+  (the deterministic gates + sampled visual QA all PASSed a build that was in fact
+  riddled with reader-level damage — a third of the book's paragraphs were wrongly
+  split; ~412 lowercase-starting <p>):
   - FOOTNOTES (root cause): the digit marker is a SMALLER-font run ('8' at 7pt over
     9pt note text), so the `digit + [.)]/tab/2-space` text pattern never matched →
     `0 notes`; every multi-line footnote shattered per line AND its un-extracted
@@ -51,16 +52,24 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
     census now skips furniture (running heads span both columns).
   - LINE-END DASHES: a soft/em/en-dash at a line end is a continuation, not a ragged
     short line (`_CONT_DASHES`); a closed em/en-dash joins without a space.
+  - CENTERING vs the same recto/verso shift (user-reported: the `* / * *` section
+    breaks were centered on recto pages, flush-left on verso): `line_pstyle` measured
+    each line against ONE global body-page center, so a page-centered line on a
+    left-shifted verso page missed `/center`. ColumnGeometry now carries a per-page
+    shift (computed ONLY from left-aligned prose — >=3 long lines sharing an edge — so
+    a fully-centered title page yields none and keeps its own headings centered), and
+    line_pstyle + gate 14's witness offset their center/edges by it. Fixed all 34
+    left-aligned section breaks AND the copyright page's merged centered lines.
   - QA: `is_endnotes()` replaces the `"notes" in href` heuristic (Editor's/
     Biographical NOTES are body sections, not the endnotes file — they were dropped
     from coverage/typography scope); coverage candidate now includes the notes;
     note excision is per SOURCE page (page-wrapping footnotes) with a hyphen/space
     squeeze match. All fixes carry unit tests.
 - FLAGS / escalated to handoff (front-matter paratext + hyphenation cosmetics, all
-  low-impact; body + reader nav clean): the "Books by Frithjof Schuon" list (p3) and
-  a few copyright-page lines fuse — @9 centered titles that centering-detection
-  misses because the front-matter block centers left of the body geo center (needs
-  page-level geometry, deferred); in-body Contents merges the page-number-less
+  low-impact; body + reader nav clean): the "Books by Frithjof Schuon" list (p3) still
+  fuses — the per-page centering shift needs left-aligned prose to anchor it and p3 is
+  ALL centered display type, so its titles keep the plain (non-center) class and don't
+  break; in-body Contents merges the page-number-less
   "Appendix" label onto the previous entry (reader nav is correct); ~6 residual
   hyphenation artifacts (compound hyphens religion-quintessence / vis-à-vis /
   logician-like dropped by lower-only dehyphenation; al-Bātin / Apara-Brahma /

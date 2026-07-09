@@ -830,3 +830,42 @@ def test_soft_hyphen_repair(tmp_path):
     txt = _paras(res.flow)[0].text()
     assert "­" not in txt
     assert "difficult" in txt and "independent" in txt
+
+
+def test_page_shift_centering_recto_verso(tmp_path):
+    """A centered line on a left-shifted verso page is still /center; the shift
+    is computed only from LEFT-ALIGNED prose, so a centered page gets none.
+    Regression: Sufism section-break asterisks + copyright page."""
+    from pdf2epub.analyze import column_geometry, line_pstyle
+    # modal geometry: 6 full recto lines x0=72..x1=381 (center 226.5)
+    recto = [_wline(f"Recto full measure line {k} of ordinary prose text here.",
+                    100 + 13 * k, 72.0, 381.0) for k in range(6)]
+    # verso body block shifted left 18pt (x0=54..x1=363), plus a short line
+    # centered on THAT block (center ~208)
+    verso = [_wline(f"Verso full measure line {k} of ordinary prose text now.",
+                    100 + 13 * k, 54.0, 363.0) for k in range(4)]
+    star = _wline("*", 160.0, 205.0, 211.0)
+    doc = _doc([_page(1, recto), _page(2, verso + [star])])
+    geo = column_geometry(doc)
+    assert geo.shift(2) == 18.0          # verso shift detected
+    assert geo.shift(1) == 0.0           # recto = modal, no shift
+    # the centered star reads as /center ONLY when the page shift is applied
+    assert line_pstyle(star, doc, geo, None,
+                       page_shift=geo.shift(2)).endswith("/center")
+    assert not line_pstyle(star, doc, geo, None, page_shift=0.0).endswith("/center")
+
+
+def test_page_shift_skips_centered_page(tmp_path):
+    """A page whose only long lines are CENTERED display text (a title page)
+    yields NO shift — else its own headings would be un-centered."""
+    from pdf2epub.analyze import column_geometry
+    body = [_wline(f"Body full measure line {k} of ordinary prose text here.",
+                   100 + 13 * k, 72.0, 381.0) for k in range(6)]
+    # a 'title page': two wide centered lines at a centered x0, no shared left
+    title = [_wline("Sufism: Veil and Quintessence a long centered display title",
+                    100, 120.0, 333.0),
+             _wline("A New Translation with Selected Letters centered subtitle x",
+                    140, 118.0, 335.0)]
+    doc = _doc([_page(1, body), _page(2, title)])
+    geo = column_geometry(doc)
+    assert geo.shift(2) == 0.0           # centered page -> no bogus shift

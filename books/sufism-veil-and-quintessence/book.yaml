@@ -61,6 +61,8 @@ styles:                       # JP-P1 — every one of the 39 clusters mapped; s
     "WorldWisdomFont-Italic@9":           {role: footnote}   # small italic notes / French line
     "WorldWisdomFont@11/center":          {role: p}          # centered "* * *" section breaks
     "WorldWisdomFont@10/center":          {role: p}          # centered captions
+    "WorldWisdomFont@9/center":           {role: p}          # centered copyright-page + book-list lines
+    "WorldWisdomFont-Italic@9/center":    {role: p}          # French title, centered italic (copyright)
     # --- headings ---
     "WorldWisdomFont-Bold@14/center":     {role: h1}         # chapter/section titles + CONTENTS
     "WorldWisdomFont-Bold@18/center":     {role: h1}         # "APPENDIX" part divider (p150)

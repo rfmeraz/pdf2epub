@@ -524,9 +524,14 @@ only reviewer that sees paragraph integrity and reader-level fusion/splitting.**
   vs the modal right edge (381) → scale by the block's own left inset; (2) column-gutter
   detection smeared because verso/recto index gutters differ (x≈227 vs 209) → two specs,
   and skip furniture from the gutter census (running heads span both columns + the
-  gutter). Centering detection has the SAME blind spot (front-matter block centers left
-  of the body geo center → its centered lines miss `/center` and the "Books by…" list
-  fuses); a page-level-geometry fix is deferred (documented FLAG).
+  gutter). Centering detection had the SAME blind spot (user-reported: the `* / * *`
+  section breaks centered on recto pages but flush-left on verso). Fixed the same way —
+  `ColumnGeometry` carries a per-page shift and `line_pstyle` + gate 14's centering
+  witness offset their center/edges by it. The shift is computed ONLY from left-aligned
+  prose (>=3 long lines sharing an edge), so a FULLY-CENTERED page (title page, the
+  "Books by Frithjof Schuon" list) has no anchor and gets no shift — its centered lines
+  still miss `/center`. That residual (the book list) is the one documented FLAG; the
+  section breaks, body pages, and the copyright page are fixed.
 - **QA `"notes" in href` heuristic is too broad.** Back-matter *sections* titled
   "Editor's Notes"/"Biographical Notes" were classed as the generated endnotes file and
   dropped from the coverage + typography scope. Key on the `epub:type="endnotes"`

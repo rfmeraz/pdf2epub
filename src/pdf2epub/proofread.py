@@ -455,7 +455,7 @@ def format_page_lines(doc, geo, pno: int) -> list[str]:
            f" idx    x0     x1      y0  pstyle{' ' * 26}text"]
     for i, ln in enumerate(page.lines):
         prev = page.lines[i - 1] if i else None
-        ps = line_pstyle(ln, doc, geo, prev)
+        ps = line_pstyle(ln, doc, geo, prev, page_shift=geo.shift(pno))
         text = re.sub(r"[\x00-\x1f]", "·", ln.text())[:60]
         sup = " [sup]" if all(r.superscript for r in ln.runs) and ln.runs \
             else ""

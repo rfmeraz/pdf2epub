@@ -38,10 +38,18 @@ class ColumnGeometry:
     col_left: float
     col_right: float
     body_size: float = 0.0  # dominant font size (chars-weighted)
+    # page -> how far the page's body block sits LEFT of the modal column
+    # (recto/verso binding margins slide the whole block sideways ~18pt); the
+    # centering test offsets its edges/center by this so a page-centered line
+    # on a shifted page is still /center. Only meaningful shifts are recorded.
+    page_shifts: dict[int, float] = field(default_factory=dict)
 
     @property
     def center(self) -> float:
         return (self.col_left + self.col_right) / 2
+
+    def shift(self, page_no: int) -> float:
+        return self.page_shifts.get(page_no, 0.0)
 
 
 def column_geometry(doc: PdfDoc) -> ColumnGeometry:
@@ -67,11 +75,26 @@ def column_geometry(doc: PdfDoc) -> ColumnGeometry:
             if f:
                 size_chars[f.size] += len(ln.text())
     body_size = size_chars.most_common(1)[0][0] if size_chars else 0.0
-    return ColumnGeometry(col_left, col_right, body_size)
+    # per-page binding-margin shift: the page's own modal long-line left edge
+    # vs the global modal col_left (recto/verso pages slide sideways). Only
+    # LEFT-ALIGNED prose establishes a margin — require >=3 long lines to share
+    # the modal edge, or a centered page (title page: wide display lines at a
+    # centered x0) yields a bogus shift and un-centers its own headings.
+    page_shifts: dict[int, float] = {}
+    for p in doc.pages:
+        plefts = Counter(round(ln.x0) for ln in p.lines
+                         if (ln.x1 - ln.x0) >= 0.55 * wmax)
+        if plefts:
+            edge, support = plefts.most_common(1)[0]
+            shift = col_left - edge
+            if support >= 3 and abs(shift) >= 6.0:
+                page_shifts[p.number] = float(shift)
+    return ColumnGeometry(col_left, col_right, body_size, page_shifts)
 
 
 def continues_justified_block(ln: PdfLine, prev: PdfLine | None,
-                              size: float, geo: ColumnGeometry) -> bool:
+                              size: float, geo: ColumnGeometry,
+                              page_shift: float = 0.0) -> bool:
     """True when ``ln`` visually continues a justified block: the previous
     raw line shares its left edge, reaches the right margin, and sits one
     normal leading above. Such a line is a paragraph's LAST line whatever
@@ -79,12 +102,12 @@ def continues_justified_block(ln: PdfLine, prev: PdfLine | None,
     (quote-block last lines, drop-cap wrap last lines)."""
     return (prev is not None
             and abs(prev.x0 - ln.x0) <= 2.0
-            and prev.x1 >= geo.col_right - 6.0
+            and prev.x1 >= (geo.col_right - page_shift) - 6.0
             and 0 < ln.y0 - prev.y0 <= 2.0 * max(size, 8.0))
 
 
 def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry,
-                prev: PdfLine | None = None) -> str:
+                prev: PdfLine | None = None, page_shift: float = 0.0) -> str:
     """Cluster key for a line: DominantFamily@size[/center]. Centered means
     visually centered WITHIN the text column: inset from BOTH edges by at
     least 12% of the column width. A line starting at the body first-line
@@ -102,17 +125,22 @@ def line_pstyle(ln: PdfLine, doc: PdfDoc, geo: ColumnGeometry,
     base = f"{f.family}@{f.size:g}"
     line_c = (ln.x0 + ln.x1) / 2
     col_w = geo.col_right - geo.col_left
+    # recto/verso binding shift: slide the modal edges/center to THIS page's
+    # block so a page-centered line on a shifted page still reads as centered
+    eff_left = geo.col_left - page_shift
+    eff_right = geo.col_right - page_shift
+    eff_center = geo.center - page_shift
     # the deep-inset requirement targets BODY-SIZE false positives only;
     # display-size heads legitimately span most of the column
     if geo.body_size and f.size <= geo.body_size + 1.0:
         inset = max(CENTER_INSET, 0.12 * col_w)
-        if continues_justified_block(ln, prev, f.size, geo):
+        if continues_justified_block(ln, prev, f.size, geo, page_shift):
             return base
     else:
         inset = CENTER_INSET
-    if (abs(line_c - geo.center) <= CENTER_TOL
-            and ln.x0 >= geo.col_left + inset
-            and ln.x1 <= geo.col_right - inset):
+    if (abs(line_c - eff_center) <= CENTER_TOL
+            and ln.x0 >= eff_left + inset
+            and ln.x1 <= eff_right - inset):
         return base + "/center"
     return base
 
@@ -317,7 +345,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     page_seen: dict[str, set[int]] = defaultdict(set)
     for p in in_flow:
         for i, ln in enumerate(p.lines):
-            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None)
+            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None,
+                             page_shift=geo.shift(p.number))
             fid = ln.dominant_font()
             f = doc.fonts.get(fid)
             c = clusters.get(ps)
@@ -395,7 +424,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     heading_pstyles = {c.pstyle for c in a.clusters if c.role in ("h1", "h2", "h3", "title-page")}
     for p in in_flow:
         for i, ln in enumerate(p.lines):
-            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None)
+            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None,
+                             page_shift=geo.shift(p.number))
             if ps in heading_pstyles:
                 t = ln.text().strip()
                 if t and not is_folio_line(t):
@@ -515,7 +545,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     for p in in_flow:
         body_lines = [ln for i, ln in enumerate(p.lines)
                       if line_pstyle(ln, doc, geo,
-                                     p.lines[i - 1] if i else None)
+                                     p.lines[i - 1] if i else None,
+                                     page_shift=geo.shift(p.number))
                       == body.pstyle]
         for prev, cur in zip(body_lines, body_lines[1:]):
             d = cur.y0 - prev.y0
@@ -527,7 +558,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     for p in in_flow:
         for i, ln in enumerate(p.lines):
             if line_pstyle(ln, doc, geo,
-                           p.lines[i - 1] if i else None) == body.pstyle:
+                           p.lines[i - 1] if i else None,
+                           page_shift=geo.shift(p.number)) == body.pstyle:
                 off = round(ln.x0) - base_left
                 if 2 < off < 60:
                     indents[off] += 1
