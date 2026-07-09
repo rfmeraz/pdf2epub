@@ -27,6 +27,7 @@ from .config import PdfBookConfig
 from .core.model import (
     Figure,
     FlowDoc,
+    InlinePageBreak,
     Note,
     NoteRef,
     PageAnchor,
@@ -37,7 +38,12 @@ from .core.model import (
 )
 from .core.textnorm import int_to_roman, is_folio_line, normalize
 from .pdfmodel import PdfDoc, PdfLine, PdfRun
-from .textfix import dehyphenate_join, expand_ligatures, restore_spaces
+from .textfix import (
+    dehyphenate_join,
+    expand_ligatures,
+    restore_space_seam,
+    restore_spaces,
+)
 
 _PUA_RE = re.compile(r"[\ue000-\uf8ff]")
 # note bodies start '9. text' (I&B), '9) text', or '1<TAB>text' (BoK)
@@ -51,6 +57,7 @@ class _Warn:
     page: int = 0
     line: int = -1
     snippet: str = ""  # ready-to-paste book.yaml override
+    code: str = ""     # warnqueue.CODES key ("" -> flow-uncoded, fail-safe)
 
 
 @dataclass(slots=True)
@@ -152,7 +159,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 f"flow.columns pages {cs.pages[0]}-{cs.pages[-1]}: expected "
                 f"{cs.count} columns but the gutters were not found — pages "
                 "left in y-sorted order (interleaving risk; fix the spec or "
-                "exclude the pages)", cs.pages[0]))
+                "exclude the pages)", cs.pages[0],
+                code="columns-gutter-missing"))
             continue
         for cp in cs.pages:
             col_splits_by_page[cp] = splits
@@ -216,7 +224,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     warns.append(_Warn(
                         f"p.{p.number} line {idx}: unrecognized top-band line kept: "
                         f"{ln.text()[:60]!r}", p.number, idx,
-                        f"{{page: {p.number}, line: {idx}, action: drop, note: FILL}}"))
+                        f"{{page: {p.number}, line: {idx}, action: drop, note: FILL}}",
+                        code="top-band-kept"))
             kept.append(L)
 
         if p.number in col_splits_by_page and kept:
@@ -291,7 +300,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if ent:
                     title, label = ent
                     fixed = _apply_textfix([TextRun(f"{title}\t{label}", RunFormat())],
-                                           cfg, counts)
+                                           cfg, counts, L.page)
                     text = "".join(r.text for r in fixed if isinstance(r, TextRun))
                     last_entry = Paragraph(
                         style="__toc__",
@@ -301,7 +310,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 elif L.ps != body_ps and "center" in L.ps:
                     paras.append(Paragraph(
                         style=L.ps,
-                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts),
+                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts,
+                                             L.page),
                         src=SourceRef(f"p{L.page:04d}", L.idx)))
                 elif last_entry is not None:
                     # continuation of a wrapped entry title
@@ -313,10 +323,12 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 else:
                     warns.append(_Warn(
                         f"p.{pno} line {L.idx}: unparsed TOC-page line kept as text: "
-                        f"{L.ln.text()[:50]!r}", pno, L.idx))
+                        f"{L.ln.text()[:50]!r}", pno, L.idx,
+                        code="toc-line-unparsed"))
                     paras.append(Paragraph(
                         style=L.ps,
-                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts),
+                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts,
+                                             L.page),
                         src=SourceRef(f"p{L.page:04d}", L.idx)))
             toc_paras[pno] = paras
     elif cfg.toc_handling == "drop":
@@ -349,6 +361,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     def close_para():
         nonlocal open_para, open_is_body
         if open_para is not None and open_para.text().strip():
+            if cfg.restore_spaces:
+                _restore_cross_run_spaces(open_para, counts)
             _collapse_cross_run_spaces(open_para)
             res.flow.blocks.append(open_para)
         open_para = None
@@ -462,12 +476,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     res.dropcap_srcs.add((open_para.src.story_id,
                                           open_para.src.psr_index))
                     counts["dropcaps"] += 1
+            inline_seam: int | None = None
             if not anchor_placed:
                 # anchor sits before the first block that STARTS on this page;
-                # a paragraph continuing from the previous page keeps the
-                # anchor just before its continuation point is not possible in
-                # a linear flow, so it lands before the NEXT new block (the
-                # idml2epub paragraph-granularity convention)
+                # a page whose first line CONTINUES the open paragraph gets an
+                # exact InlinePageBreak at the run seam instead (the old
+                # paragraph-granular deferral survives only as the whitespace
+                # fallback below)
                 if brk:
                     ins = len(res.flow.blocks)
                     if open_para is not None and res.flow.blocks and \
@@ -479,11 +494,28 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     res.flow.blocks.insert(ins, anchor)
                     pending_anchors.clear()
                     anchor_placed = True
+                elif open_para is not None and open_para.text().strip():
+                    # insertion index captured BEFORE _append_line so the
+                    # join separator/dehyphenation lands on the previous
+                    # TextRun first — never on the anchor seam
+                    inline_seam = len(open_para.items)
+                    anchor_placed = True
             if open_para is None:
                 open_para = Paragraph(style=L.ps, items=[],
                                       src=SourceRef(f"p{L.page:04d}", L.idx))
                 open_is_body = (L.ps == body_ps)
             _append_line(open_para, L, cfg, doc, counts, glue=prev_dropcap)
+            if inline_seam is not None:
+                # deferred anchors of interleaving blank pages flush here
+                # first, keeping the page-list monotone
+                for a2 in pending_anchors:
+                    open_para.items.insert(
+                        inline_seam, InlinePageBreak(a2.ordinal, a2.label))
+                    inline_seam += 1
+                pending_anchors.clear()
+                open_para.items.insert(
+                    inline_seam, InlinePageBreak(anchor.ordinal, anchor.label))
+                counts["anchor-inline"] += 1
             key = (open_para.src.story_id, open_para.src.psr_index)
             para_last_page[key] = L.page
             res.para_lines.setdefault(key, []).append((L.page, L.idx))
@@ -501,7 +533,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         # register this page's notes; markers attach in the global post-pass
         for k, group in enumerate(page_notes.get(pno, []), 1):
             note_id = f"p{pno:04d}-{k}"
-            note_paras = _note_paragraphs(group, cfg, doc, note_id)
+            note_paras = _note_paragraphs(group, cfg, doc, note_id, counts)
             res.flow.notes[note_id] = Note(note_id=note_id, paragraphs=note_paras)
             m = _NOTE_START_DIGIT.match(group[0].ln.text())
             marker = m.group(1) if m else "*"
@@ -521,13 +553,29 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             warns.append(_Warn(
                 f"p.{pno}: no in-body marker found for note {note_id} "
                 f"(expected {target!r}); ref attached at the end of the page's "
-                "last paragraph", pno, -1))
+                "last paragraph", pno, -1, code="note-marker-missing"))
 
     # ---- stale overrides are config bugs
     stale = set(ov) - consumed
     if stale:
         raise SystemExit("stale flow.overrides (matched nothing): " +
                          ", ".join(f"page {p} line {i}" for p, i in sorted(stale)))
+    used_fffd = {int(k.rsplit("-", 1)[1])
+                 for k in list(counts) if k.startswith("_fffd-used-")}
+    for k in list(counts):
+        if k.startswith("_fffd-used-"):
+            del counts[k]
+    stale_fffd = [i for i in range(len(cfg.fffd_repairs)) if i not in used_fffd]
+    if stale_fffd:
+        raise SystemExit(
+            "stale glyphs.fffd_repairs (matched no U+FFFD): entries " +
+            ", ".join(f"#{i} pages {cfg.fffd_repairs[i].pages}"
+                      for i in stale_fffd))
+    if counts.get("fffd-unrepaired"):
+        warns.append(_Warn(
+            f"{counts['fffd-unrepaired']} unmapped-glyph U+FFFD chars survive "
+            "outside glyphs.fffd_repairs pages — render-verify and add entries",
+            code="fffd-unrepaired"))
 
     # ---- style usage + PUA gate
     for b in res.flow.blocks:
@@ -539,7 +587,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         if cfg.fail_on_unmapped_pua:
             raise SystemExit(f"unmapped private-use glyphs in flow: {listing} — "
                              "add glyphs.pua_map entries (verify on renders)")
-        warns.append(_Warn(f"unmapped private-use glyphs: {listing}"))
+        warns.append(_Warn(f"unmapped private-use glyphs: {listing}",
+                           code="pua-unmapped"))
 
     res.counts = dict(counts)
     for w in warns:
@@ -730,6 +779,26 @@ def _column_resplit(kept: list[_L], splits: list[float], doc: PdfDoc,
     return out
 
 
+def _restore_cross_run_spaces(para: Paragraph, counts: Counter) -> None:
+    """restore_spaces runs per run and cannot see a fusion at a run seam
+    (roman/italic boundaries: 'believer.'+'This', MR prepress). Repair each
+    adjacent-TextRun seam with the same patterns via restore_space_seam;
+    the space lands in the earlier run so run formatting is preserved."""
+    prev_run = None
+    for it in para.items:
+        if isinstance(it, TextRun):
+            if prev_run is not None:
+                a, b, n = restore_space_seam(prev_run.text, it.text)
+                if n:
+                    prev_run.text, it.text = a, b
+                    counts["spaces-restored-crossrun"] += n
+            prev_run = it
+        elif isinstance(it, InlinePageBreak):
+            continue  # transparent: an anchor is not a text boundary
+        else:
+            prev_run = None
+
+
 def _collapse_cross_run_spaces(para: Paragraph) -> None:
     """'he ' + ' (may…' (glyph substitutions after space-trailing extraction
     runs) must not render as a double space."""
@@ -744,6 +813,8 @@ def _collapse_cross_run_spaces(para: Paragraph) -> None:
             if "  " in it.text or "\xa0 " in it.text:
                 it.text = re.sub(r"[ \xa0]{2,}", " ", it.text)
             prev_run = it
+        elif isinstance(it, InlinePageBreak):
+            continue  # transparent: an anchor is not a text boundary
         else:
             prev_run = None
 
@@ -783,7 +854,7 @@ def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc) -> list[TextRun]:
 def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
                  counts: Counter, glue: bool = False) -> None:
     runs = _mk_runs(L.ln, cfg, doc)
-    runs = _apply_textfix(runs, cfg, counts)
+    runs = _apply_textfix(runs, cfg, counts, L.page)
     if para.items and isinstance(para.items[-1], TextRun):
         prevrun = para.items[-1]
         if glue:
@@ -802,18 +873,32 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
 
 
 def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
-                   counts: Counter) -> list[TextRun]:
+                   counts: Counter, page: int = 0) -> list[TextRun]:
     from .textfix import is_shifted_run, repair_shifted_cmap, strip_control_chars
 
     out: list[TextRun] = []
     for run in runs:
         t = run.text
-        if cfg.shifted_cmap_repair and is_shifted_run(t):
+        if cfg.shifted_cmap_repair and is_shifted_run(t, cfg.shifted_cmap_highmap):
             t, unk = repair_shifted_cmap(t, cfg.shifted_cmap_highmap)
             counts["cmap-repaired-runs"] += 1
             counts["cmap-unknown-chars"] += unk
         t, n_ctrl = strip_control_chars(t)
         counts["ctrl-stripped"] += n_ctrl
+        if "�" in t:
+            # U+FFFD = extractor's unmapped-glyph placeholder; replaceable
+            # only page-scoped with render evidence (glyphs.fffd_repairs).
+            # Unconfigured occurrences are kept and warned — never silently
+            # dropped; gate 20 polices the shipped artifact.
+            n_f = t.count("�")
+            for i, fd in enumerate(cfg.fffd_repairs):
+                if page in fd.pages:
+                    t = t.replace("�", fd.replace)
+                    counts["fffd-replaced"] += n_f
+                    counts[f"_fffd-used-{i}"] += 1
+                    break
+            else:
+                counts["fffd-unrepaired"] += n_f
         # MuPDF span text can carry raw newlines (soft line breaks inside a
         # content line, I&B) — fold them to spaces before seam repairs
         if "\n" in t:
@@ -889,15 +974,14 @@ def counts_pua_unmapped(flow: FlowDoc, cfg: PdfBookConfig) -> dict[str, int]:
 
 
 def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
-                     note_id: str) -> list[Paragraph]:
+                     note_id: str, counts: Counter) -> list[Paragraph]:
     para = Paragraph(style="__note__", items=[],
                      src=SourceRef(f"p{group[0].page:04d}", group[0].idx),
                      role="footnote")
-    counts: Counter = Counter()
     first = True
     for L in group:
         runs = _mk_runs(L.ln, cfg, doc)
-        runs = _apply_textfix(runs, cfg, counts)
+        runs = _apply_textfix(runs, cfg, counts, L.page)
         if first:
             # strip the printed marker; the emitter numbers the endnote list
             if runs and isinstance(runs[0], TextRun):
@@ -911,6 +995,8 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
                                                 cfg.dehyphenate)
             para.items[-1].text = new_text + sep
         para.items.extend(runs)
+    if cfg.restore_spaces:
+        _restore_cross_run_spaces(para, counts)
     _collapse_cross_run_spaces(para)
     return [para]
 

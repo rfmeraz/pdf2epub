@@ -16,7 +16,15 @@ from xml.sax.saxutils import escape, quoteattr
 
 from rapidfuzz import fuzz
 
-from .model import Figure, FlowDoc, NoteRef, PageAnchor, Paragraph, TextRun
+from .model import (
+    Figure,
+    FlowDoc,
+    InlinePageBreak,
+    NoteRef,
+    PageAnchor,
+    Paragraph,
+    TextRun,
+)
 
 _HEAD_ROLES = ("h1", "h2", "h3")
 
@@ -158,6 +166,7 @@ class Emitter:
         while i < len(blocks):
             b = blocks[i]
             if isinstance(b, Paragraph) and id(b) in self._absorbed:
+                self._rescue_inline_anchors(b)
                 i += 1
                 continue
             if isinstance(b, (PageAnchor, Figure)):
@@ -178,6 +187,7 @@ class Emitter:
             if isinstance(b, Paragraph):
                 role = b.role or "p"
                 if role == "drop":
+                    self._rescue_inline_anchors(b)
                     i += 1
                     continue
                 if role == "toc-entry" and not toc_done:
@@ -268,7 +278,25 @@ class Emitter:
                     f'<a id="fnref{n}" class="noteref" epub:type="noteref" '
                     f'role="doc-noteref" href="notes.xhtml#fn{n}"><sup>{n}</sup></a>'
                 )
+            elif isinstance(it, InlinePageBreak):
+                # exact mid-paragraph page seam (EPUB-a11y inline pattern);
+                # recorded in document order so the nav page-list and the
+                # QA ordinal pairing keep working unchanged
+                pid = f"pg-{it.label}"
+                if self.cur is not None:
+                    self.cur.pagebreaks.append((it.label, pid))
+                parts.append(
+                    f'<span id="{pid}" class="pagebreak" epub:type="pagebreak" '
+                    f'role="doc-pagebreak" aria-label={quoteattr(it.label)}></span>'
+                )
         return "".join(parts)
+
+    def _rescue_inline_anchors(self, p: Paragraph) -> None:
+        """A skipped paragraph (role=drop, absorbed heading) must not swallow
+        its page anchors: re-emit them as block divs in place."""
+        for it in p.items:
+            if isinstance(it, InlinePageBreak):
+                self._emit_pagebreak(PageAnchor(it.ordinal, it.label))
 
     def _emit_pagebreak(self, a: PageAnchor) -> None:
         f = self._ensure_file()

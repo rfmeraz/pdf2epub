@@ -16,7 +16,7 @@ import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 
-from ..core.model import PageAnchor
+from ..core.model import InlinePageBreak, PageAnchor, Paragraph
 from ..thumbs import render_page
 from . import visual_pixels, visual_sample
 from .cdp import Chrome, ChromeUnavailable, file_url
@@ -70,6 +70,20 @@ def plan_slices(anchors: list, pagebreaks: list[tuple[str, str]],
     return plans
 
 
+def _flow_anchors(flow) -> list[PageAnchor]:
+    """All page anchors in document order: block PageAnchors plus the exact
+    InlinePageBreaks sitting inside continuation paragraphs (as PageAnchor
+    values, approximate=False — they are exact by construction)."""
+    out: list[PageAnchor] = []
+    for b in flow.blocks:
+        if isinstance(b, PageAnchor):
+            out.append(b)
+        elif isinstance(b, Paragraph):
+            out.extend(PageAnchor(it.ordinal, it.label, False)
+                       for it in b.items if isinstance(it, InlinePageBreak))
+    return out
+
+
 def _spine_pagebreaks(body_docs) -> list[tuple[str, str]]:
     out = []
     for doc in body_docs:
@@ -102,7 +116,7 @@ def _capture_slices(chrome: Chrome, unzip_root: Path, opf_dir: str,
         got = chrome.eval(
             "JSON.stringify({h: document.documentElement.scrollHeight,"
             " pb: Object.fromEntries([...document.querySelectorAll("
-            "'div.pagebreak')].map(d => [d.id,"
+            "'div.pagebreak, span.pagebreak')].map(d => [d.id,"
             " d.getBoundingClientRect().top + window.scrollY]))})")
         geo[href] = json.loads(got)
 
@@ -137,7 +151,7 @@ def _capture_slices(chrome: Chrome, unzip_root: Path, opf_dir: str,
             got = chrome.eval(
                 "JSON.stringify({h: document.documentElement.scrollHeight,"
                 " pb: Object.fromEntries([...document.querySelectorAll("
-                "'div.pagebreak')].map(d => [d.id,"
+                "'div.pagebreak, span.pagebreak')].map(d => [d.id,"
                 " d.getBoundingClientRect().top + window.scrollY]))})")
             geo[nhref] = json.loads(got)
         else:
@@ -248,7 +262,7 @@ def run_visual(epub: Path, cfg, doc, flow, res, labels,
     ep = load_epub(epub)
     body_docs = [d for d in ep.spine_docs()
                  if "notes" not in d.href and "cover" not in d.href]
-    anchors = [b for b in flow.blocks if isinstance(b, PageAnchor)]
+    anchors = _flow_anchors(flow)
     pagebreaks = _spine_pagebreaks(body_docs)
     plans = plan_slices(anchors, pagebreaks, in_flow, pages)
     count_ok = len(pagebreaks) == len(anchors) == len(in_flow)
@@ -282,8 +296,8 @@ def run_visual(epub: Path, cfg, doc, flow, res, labels,
                          "anchor pairing failed — EPUB slice unavailable")
         else:
             if plan.approximate:
-                notes.append("anchor approximate (continuation-only page) — "
-                             "compare loosely")
+                notes.append("anchor deferred (page contributed no flowable "
+                             "text) — compare loosely")
             if not plan.same_file and plan.next_href:
                 notes.append(f"page continues into {plan.next_href}")
         visual_pixels.compose_sheet(out_dir / "pdf" / f"p{s.page:04d}.png",

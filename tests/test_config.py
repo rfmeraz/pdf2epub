@@ -117,6 +117,31 @@ def test_flow_columns_parsing(tmp_path):
         load_config(p)
 
 
+def test_fffd_repairs_parsing(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text(
+        "source: {folder: p, pdf: b.pdf}\n"
+        "glyphs:\n"
+        "  fffd_repairs:\n"
+        "    - {pages: [\"36-38\", 41], replace: \"\", note: render-verified blank}\n")
+    cfg = load_config(p)
+    assert cfg.fffd_repairs[0].pages == [36, 37, 38, 41]
+    assert cfg.fffd_repairs[0].replace == ""
+    with pytest.raises(ConfigError, match="requires a note"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "glyphs: {fffd_repairs: [{pages: [1], replace: \"\"}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match='requires "replace"'):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "glyphs: {fffd_repairs: [{pages: [1], note: n}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="unknown key"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "glyphs: {fffd_repairs: [{pages: [1], replace: x, note: n, "
+                     "font: y}]}")
+        load_config(p)
+
+
 def test_figure_regions_parsing(tmp_path):
     p = tmp_path / "book.yaml"
     p.write_text(

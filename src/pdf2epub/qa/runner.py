@@ -1,8 +1,9 @@
-"""QA gate suite: 20 gates. Gates 1-10, 11b (noteref seams) and 19
-(Qurʾānic citations) must pass; 11-12 informational; 13-17 (typographic
-fidelity) report would-PASS/would-FAIL and gate once promoted via
-typography.GATING; 18 (--visual) emits agent-graded contact sheets and is
-always informational.
+"""QA gate suite: 23 gates. Gates 1-11 (11 lost spaces promoted 2026-07-09),
+11b (noteref seams), 19 (Qurʾānic citations), 20 (garble residue), 21
+(figure integrity) and 22 (warnings adjudicated) must pass; 12
+informational; 13-17 (typographic fidelity) report would-PASS/would-FAIL
+and gate once promoted via typography.GATING; 18 (--visual) emits
+agent-graded contact sheets and is always informational.
 
 Ground truth and expectations are re-derived deterministically from
 (source PDF, book.yaml) — the same inputs the build used — via an
@@ -249,15 +250,33 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     pua = pdfchecks.pua_residue(all_text_norm)
     gates.append(("10 pua residue", not pua, [", ".join(pua) or "none"]))
 
-    # ---- gate 11 (info): lost spaces
-    n_lost = pdfchecks.lost_space_count(all_text_norm)
-    gates.append(("11 lost-space scan (info)", None, [f"residual fused patterns: {n_lost}"]))
+    # ---- gate 11: lost spaces (promoted 2026-07-09 — evidence: old MR EPUB
+    # fires 50 cross-run fused seams, other books 0; the cross-run seam
+    # repair drives the rebuilt count to 0). qa.lost_space_allow records
+    # render-verified as-printed exceptions; stale entries fail.
+    ls_defects, ls_stale = pdfchecks.lost_space_defects(
+        all_text_norm, [a.snippet for a in cfg.qa_lost_space_allow])
+    gates.append(("11 lost-space scan", not ls_defects and not ls_stale,
+                  [f"residual fused patterns: {len(ls_defects)}; "
+                   f"allow entries: {len(cfg.qa_lost_space_allow)} "
+                   f"({len(ls_stale)} stale)"]
+                  + [f"…{d}…" for d in ls_defects[:8]] + ls_stale[:4]))
 
     # ---- gate 11b: noteref seams (a letter/digit directly after a noteref
     # is always an artifact — lost join separator or fused paragraph)
     gates.append(("11b noteref seam", not seam_defects,
                   [f"{len(seam_defects)} letter/digit-after-noteref seams"]
                   + seam_defects[:8]))
+
+    # ---- gate 20: garble residue in shipped text — candidate-only (gate 2
+    # normalizes both sides identically and cannot see corruption both
+    # witnesses share). U+FFFD/C0 unconditional; qa.garble_chars per book.
+    all_text_raw = spine_text + " " + " ".join(_doc_text(d) for d in notes_docs)
+    garble = pdfchecks.garble_residue(all_text_raw, cfg.qa_garble_chars)
+    gates.append(("20 garble residue", not garble,
+                  [f"{len(garble)} garble run(s) (U+FFFD/C0 unconditional; "
+                   f"book residue chars {cfg.qa_garble_chars!r})"]
+                  + garble[:8]))
 
     # ---- gate 12 (info): reference scorecard
     if reference:
@@ -286,6 +305,49 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
 
     qres = check_quran_index(body_docs, set(nav.pagelist_labels))
     gates.append(("19 quran citations", qres.ok, qres.lines))
+
+    # ---- gate 21: figure integrity — every shipped Figure image dHash-
+    # compared against a re-render of its source PDF region (the --visual
+    # check, promoted to always-on: a blank/corrupt figure is content loss
+    # no text gate can see). Failures write side-by-side review pairs.
+    from .visual_pixels import figure_phashes
+
+    figs = figure_phashes(flow, cfg, ep, cfg.pdf_path(),
+                          epub.parent / "qa_figures")
+    bad = [f for f in figs if f["verdict"] != "ok"]
+    gates.append(("21 figure integrity", not bad,
+                  [f"{len(figs)} figure(s) checked vs source regions "
+                   f"(dhash hamming <= 16); {len(bad)} failure(s)"]
+                  + [f"{f['image_key']} p.{f['pdf_page']}: distance "
+                     f"{f['distance']} ({f['verdict']})"
+                     + (f" — review pair qa_figures/{f['pair']}"
+                        if f.get("pair") else "")
+                     for f in bad[:6]]))
+
+    # ---- gate 22: warnings adjudicated — re-derives the build's warning
+    # queue from (doc, flow, cfg) via warnqueue (the build writes the same
+    # queue to warnings.md), applies auto-resolve + adjudications:, and
+    # fails on open content-risk warnings or stale adjudication entries.
+    # Advisory warnings never gate.
+    from ..warnqueue import (CONTENT_RISK, adjudication_snippet,
+                             apply_adjudications, auto_resolve,
+                             derive_warnings)
+
+    aw = derive_warnings(doc, res, flow, cfg)
+    n_auto = auto_resolve(aw, cfg)
+    open_, adjudicated, stale_adj = apply_adjudications(aw, cfg)
+    open_cr = [w for w in open_ if w.severity == CONTENT_RISK]
+    gates.append(("22 warnings adjudicated", not open_cr and not stale_adj,
+                  [f"{len(aw)} derived; {n_auto} auto-resolved; "
+                   f"{len(adjudicated)} adjudicated; {len(open_cr)} open "
+                   f"content-risk; {len(stale_adj)} stale adjudications; "
+                   "advisory excluded"]
+                  + [f"OPEN {w.code}"
+                     + (f" p.{','.join(map(str, w.pages))}" if w.pages else "")
+                     + f": {w.msg[:70]} — paste: "
+                     + adjudication_snippet(w.code, w.pages)
+                     for w in open_cr[:8]]
+                  + [f"STALE: {s}" for s in stale_adj[:4]]))
 
     # ---- gate 18 (info, --visual): sampled contact sheets for agent grading
     if visual:

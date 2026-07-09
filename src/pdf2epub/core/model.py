@@ -51,7 +51,17 @@ class NoteRef:
     note_id: str
 
 
-InlineItem = Union[TextRun, NoteRef]
+@dataclass(slots=True)
+class InlinePageBreak:
+    """A print page that begins mid-paragraph: the anchor sits at the exact
+    run seam inside Paragraph.items (block-level PageAnchor covers pages
+    that begin at a block boundary). Exact by construction — no
+    ``approximate`` flag."""
+    ordinal: int  # 1-based physical page index
+    label: str    # printed folio
+
+
+InlineItem = Union[TextRun, NoteRef, InlinePageBreak]
 
 
 @dataclass(slots=True)
@@ -142,6 +152,8 @@ def _paragraph_from_dict(d: dict) -> Paragraph:
     for it in d["items"]:
         if "note_id" in it:
             items.append(NoteRef(note_id=it["note_id"]))
+        elif "ordinal" in it:
+            items.append(InlinePageBreak(ordinal=it["ordinal"], label=it["label"]))
         else:
             items.append(TextRun(text=it["text"], fmt=RunFormat(**it["fmt"])))
     return Paragraph(

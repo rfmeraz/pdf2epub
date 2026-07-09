@@ -70,7 +70,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     ctx.pdf_doc = extract(pdf, say=ctx.say)
     ctx.ir_dump("extract", pdfdoc_to_dict(ctx.pdf_doc))
     if upto == "extract":
-        _write_warnings(ctx, [])
+        _write_warnings(ctx)
         return 0
 
     # ---- flow
@@ -83,7 +83,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
             + ", ".join(f"{k}={v}" for k, v in sorted(res.counts.items())))
     ctx.ir_dump("flow", flowdoc_to_dict(ctx.flow))
     if upto == "flow":
-        _write_warnings(ctx, res.warns)
+        _write_warnings(ctx)
         return 0
 
     # ---- map
@@ -92,7 +92,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     stage_map(ctx, res)
     ctx.ir_dump("map", flowdoc_to_dict(ctx.flow))
     if upto == "map":
-        _write_warnings(ctx, res.warns)
+        _write_warnings(ctx)
         return 0
 
     # ---- images (figures + cover)
@@ -100,7 +100,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
 
     stage_images(ctx)
     if upto == "images":
-        _write_warnings(ctx, res.warns)
+        _write_warnings(ctx)
         return 0
 
     # ---- xhtml
@@ -110,6 +110,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     emitter = Emitter(cfg, ctx.flow, ctx.say, text_width_pt=geo_width)
     result = emitter.emit()
     emitter.resolve_contents_links()
+    ctx.emit_warnings = emitter.warnings
     out_dir = cfg.build_dir / "oebps"
     out_dir.mkdir(parents=True, exist_ok=True)
     from .core.emit_xhtml import render_file
@@ -119,7 +120,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
         (out_dir / f.file_name).write_text(render_file(f, cfg.language))
     ctx.say(f"emitted {len(all_files)} content files")
     if upto == "xhtml":
-        _write_warnings(ctx, res.warns)
+        _write_warnings(ctx)
         return 0
 
     # ---- fonts + catalog + package
@@ -131,7 +132,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     from .core.packager import stage_package
 
     epub_path = stage_package(ctx, result)
-    _write_warnings(ctx, res.warns)
+    _write_warnings(ctx)
 
     if epubcheck:
         from .core.qa_epubcheck import run_epubcheck
@@ -154,27 +155,39 @@ def _text_width_pt(ctx) -> float:
     return w if w > 50 else 360.0
 
 
-def _write_warnings(ctx, warns) -> None:
-    out = ctx.cfg.build_dir / "warnings.md"
+def _write_warnings(ctx) -> None:
+    """Derive the structured queue (warnqueue: codes, auto-resolve,
+    adjudications) and write it per-config — ``warnings.md`` for book.yaml,
+    ``warnings.<stem>.md`` for variant configs (no last-run-wins collision).
+    Stale adjudications are config bugs and fail the build AFTER the file
+    is written (the file shows what went stale)."""
+    from .warnqueue import (CONTENT_RISK, AdjWarning, apply_adjudications,
+                            auto_resolve, derive_warnings, render_queue)
+
+    cfg = ctx.cfg
+    name = ("warnings.md" if cfg.path.name == "book.yaml"
+            else f"warnings.{cfg.path.stem}.md")
+    out = cfg.build_dir / name
+    aw = derive_warnings(ctx.pdf_doc, ctx.flow_res, ctx.flow, cfg)
+    for w in getattr(ctx, "emit_warnings", []) or []:
+        aw.append(AdjWarning("contents-unlinked", "advisory", w))
+    auto_resolve(aw, cfg)
+    open_, adjudicated, stale = apply_adjudications(aw, cfg)
+    open_cr = [w for w in open_ if w.severity == CONTENT_RISK]
     L = ["# Build warnings — the adjudication queue",
          "",
-         "Resolve every entry: LOOK at the page render, decide, record the fix",
-         "as a config change or a flow.overrides entry (with an evidence note).",
+         "Resolve every OPEN content-risk entry: LOOK at the page render,",
+         "decide, and either fix it via config (the warning disappears on",
+         "rebuild) or record the decision as an `adjudications:` entry with",
+         "render evidence. QA gate 22 fails while any remain open.",
          ""]
-    n = 0
-    for w in getattr(ctx.pdf_doc, "warnings", []):
-        L.append(f"- [extract] {w}")
-        n += 1
-    for w in warns:
-        L.append(f"- [flow] {w.msg}")
-        if w.snippet:
-            L.append(f"  - override: `{w.snippet}`")
-        n += 1
-    for w in (ctx.flow.warnings if ctx.flow else []):
-        if not any(w in x for x in L):
-            L.append(f"- [map] {w}")
-            n += 1
-    if n == 0:
+    if not aw and not stale:
         L.append("(none — clean build)")
+    else:
+        L += render_queue(aw, stale)
     out.write_text("\n".join(L) + "\n")
-    ctx.say(f"warnings: {n} -> {out}")
+    ctx.say(f"warnings: {len(aw)} derived, {len(open_cr)} open content-risk, "
+            f"{len(adjudicated)} adjudicated, {len(stale)} stale -> {out}")
+    if stale:
+        raise SystemExit("stale adjudications (matched no open warning): "
+                         + "; ".join(stale))

@@ -77,6 +77,18 @@ class PuaRule:
 
 
 @dataclass(slots=True)
+class FffdRepair:
+    """U+FFFD is the extractor's unmapped-glyph placeholder: every broken
+    glyph collapses to the SAME codepoint, so only a page-scoped,
+    render-verified replacement is deterministic. ``replace`` may be ""
+    (render shows no content at the run) but must be explicit; ``note``
+    records the render evidence and is REQUIRED."""
+    pages: list[int]
+    replace: str
+    note: str
+
+
+@dataclass(slots=True)
 class FontEmbed:
     family: str
     file: str
@@ -114,6 +126,26 @@ class CoverRender:
     page: int
     box: str = "trim"  # trim | media
     dpi: int = 300
+
+
+@dataclass(slots=True)
+class LostSpaceAllow:
+    """A render-verified as-printed match of gate 11's fused-word patterns
+    ('etc.Cambridge' genuinely printed that way). Exact snippet; note is the
+    render evidence and is REQUIRED."""
+    snippet: str
+    note: str
+
+
+@dataclass(slots=True)
+class Adjudication:
+    """Records the decision on a content-risk build warning that config
+    cannot resolve structurally (warnqueue codes). Without pages the entry
+    covers every open warning of the code. A stale entry — matching nothing
+    open — is a config bug (flow.overrides doctrine)."""
+    warning: str
+    pages: list[int]
+    note: str
 
 
 @dataclass(slots=True)
@@ -198,6 +230,7 @@ class PdfBookConfig:
     # the agent-verified highmap for non-ASCII garbage
     shifted_cmap_repair: bool = False
     shifted_cmap_highmap: dict[str, str] = field(default_factory=dict)
+    fffd_repairs: list[FffdRepair] = field(default_factory=list)
 
     # fonts (JP-P7)
     fonts_embed: list[FontEmbed] = field(default_factory=list)
@@ -218,6 +251,13 @@ class PdfBookConfig:
     decorative: list[str] = field(default_factory=list)
     figure_pages: list[FigurePages] = field(default_factory=list)
     figure_regions: list[FigureRegion] = field(default_factory=list)
+
+    # qa
+    qa_lost_space_allow: list[LostSpaceAllow] = field(default_factory=list)
+    qa_garble_chars: str = ""  # per-book gate-20 residue chars (e.g. "³´«")
+
+    # adjudications (gate 22)
+    adjudications: list[Adjudication] = field(default_factory=list)
 
     # output
     slug: str = "book"
@@ -268,13 +308,25 @@ def _page_range(section: str, data) -> PageRange | None:
     return PageRange(first=int(data["first"]), last=int(data["last"]))
 
 
+def _page_list(items) -> list[int]:
+    """Expand a YAML page list that may mix ints and 'a-b' range strings."""
+    pages: list[int] = []
+    for item in items:
+        if isinstance(item, str) and "-" in item:
+            a, b = item.split("-", 1)
+            pages.extend(range(int(a), int(b) + 1))
+        else:
+            pages.append(int(item))
+    return pages
+
+
 def load_config(path: Path) -> PdfBookConfig:
     path = path.expanduser().resolve()
     data = yaml.safe_load(path.read_text()) or {}
     _check_keys("book.yaml", data, {
         "source", "metadata", "pages", "furniture", "styles", "flow",
         "footnotes", "toc", "glyphs", "fonts", "languages", "split",
-        "images", "output",
+        "images", "output", "qa", "adjudications",
     })
     cfg = PdfBookConfig(path=path)
 
@@ -383,13 +435,7 @@ def load_config(path: Path) -> PdfBookConfig:
                                                action=action, note=ov.get("note", "")))
     for cs in fl.get("columns", []) or []:
         _check_keys("flow.columns[]", cs, {"pages", "count", "note"})
-        pages = []
-        for item in cs["pages"]:
-            if isinstance(item, str) and "-" in item:
-                a, b = item.split("-", 1)
-                pages.extend(range(int(a), int(b) + 1))
-            else:
-                pages.append(int(item))
+        pages = _page_list(cs["pages"])
         count = int(cs["count"])
         if count < 2:
             raise ConfigError("flow.columns count must be >= 2")
@@ -421,10 +467,24 @@ def load_config(path: Path) -> PdfBookConfig:
 
     gl = data.get("glyphs", {})
     _check_keys("glyphs", gl, {"pua_map", "fail_on_unmapped_pua", "gt_strip_phrases",
-                               "shifted_cmap_repair", "shifted_cmap_highmap"})
+                               "shifted_cmap_repair", "shifted_cmap_highmap",
+                               "fffd_repairs"})
     cfg.gt_strip_phrases = list(gl.get("gt_strip_phrases", []) or [])
     cfg.shifted_cmap_repair = bool(gl.get("shifted_cmap_repair", False))
     cfg.shifted_cmap_highmap = dict(gl.get("shifted_cmap_highmap", {}) or {})
+    for fd in gl.get("fffd_repairs", []) or []:
+        _check_keys("glyphs.fffd_repairs[]", fd, {"pages", "replace", "note"})
+        if "replace" not in fd:
+            raise ConfigError('glyphs.fffd_repairs requires "replace" '
+                              '(may be "" when the render shows no content)')
+        if not fd.get("note"):
+            raise ConfigError("glyphs.fffd_repairs requires a note "
+                              "(render-verified evidence)")
+        pages = _page_list(fd["pages"])
+        if not pages:
+            raise ConfigError("glyphs.fffd_repairs needs at least one page")
+        cfg.fffd_repairs.append(FffdRepair(pages=pages, replace=str(fd["replace"]),
+                                           note=fd["note"]))
     for cp, rule in (gl.get("pua_map") or {}).items():
         _check_keys(f"glyphs.pua_map[{cp!r}]", rule, {"action", "char", "lang", "note"})
         action = rule["action"]
@@ -466,13 +526,7 @@ def load_config(path: Path) -> PdfBookConfig:
     for fp in im.get("figure_pages", []) or []:
         _check_keys("images.figure_pages[]", fp,
                     {"pages", "alt_template", "lang", "keep_text"})
-        pages: list[int] = []
-        for item in fp["pages"]:
-            if isinstance(item, str) and "-" in item:
-                a, b = item.split("-", 1)
-                pages.extend(range(int(a), int(b) + 1))
-            else:
-                pages.append(int(item))
+        pages = _page_list(fp["pages"])
         cfg.figure_pages.append(FigurePages(pages=pages,
                                             alt_template=fp.get("alt_template",
                                                                 "Image of page {label}"),
@@ -490,6 +544,33 @@ def load_config(path: Path) -> PdfBookConfig:
         cfg.figure_regions.append(FigureRegion(page=int(fr["page"]), rect=rect,
                                                alt=fr["alt"],
                                                note=fr.get("note", "")))
+
+    qa = data.get("qa", {})
+    _check_keys("qa", qa, {"lost_space_allow", "garble_chars"})
+    for al in qa.get("lost_space_allow", []) or []:
+        _check_keys("qa.lost_space_allow[]", al, {"snippet", "note"})
+        if not al.get("snippet"):
+            raise ConfigError("qa.lost_space_allow requires the exact snippet")
+        if not al.get("note"):
+            raise ConfigError("qa.lost_space_allow requires a note "
+                              "(render-verified as-printed evidence)")
+        cfg.qa_lost_space_allow.append(
+            LostSpaceAllow(snippet=al["snippet"], note=al["note"]))
+    cfg.qa_garble_chars = str(qa.get("garble_chars", "") or "")
+
+    for ad in data.get("adjudications", []) or []:
+        _check_keys("adjudications[]", ad, {"warning", "pages", "note"})
+        from .warnqueue import CODES
+        code = ad.get("warning") or ""
+        if code not in CODES:
+            raise ConfigError(f"adjudications warning code unknown: {code!r} "
+                              f"(known: {', '.join(sorted(CODES))})")
+        if not ad.get("note"):
+            raise ConfigError("adjudications requires a note "
+                              "(the render-verified reason)")
+        cfg.adjudications.append(Adjudication(
+            warning=code, pages=_page_list(ad.get("pages", []) or []),
+            note=ad["note"]))
 
     out = data.get("output", {})
     _check_keys("output", out, {"slug", "include_ncx"})

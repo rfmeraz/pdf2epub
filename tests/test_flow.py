@@ -150,11 +150,25 @@ def test_figure_page_keep_text(tmp_path):
 
 
 def test_anchor_per_page_monotone(tmp_path):
+    from pdf2epub.qa.visual import _flow_anchors
+
+    # page 2's line continues page 1's paragraph across the turn, so its
+    # anchor is inline; block+inline anchors together stay one-per-page
+    # and monotone
     pages = [_page(1, [_line("Page one text content here", 100)]),
              _page(2, [_line("Page two text content here", 100)])]
     res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
-    anchors = [b for b in res.flow.blocks if isinstance(b, PageAnchor)]
-    assert [a.ordinal for a in anchors] == [1, 2]
+    assert [a.ordinal for a in _flow_anchors(res.flow)] == [1, 2]
+    block_anchors = [b for b in res.flow.blocks if isinstance(b, PageAnchor)]
+    assert [a.ordinal for a in block_anchors] == [1]
+    # a page that genuinely starts a new paragraph keeps a block anchor
+    pages = [_page(1, [_line("the paragraph ends short here.", 520, x0=72.0,
+                             width=140.0)]),
+             _page(2, [_line("A new paragraph opens the next page at margin",
+                             72, x0=72.0, width=290.0)])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    block_anchors = [b for b in res.flow.blocks if isinstance(b, PageAnchor)]
+    assert [a.ordinal for a in block_anchors] == [1, 2]
 
 
 def test_para_lines_provenance(tmp_path):
@@ -304,6 +318,113 @@ def test_noteref_keeps_join_separator(tmp_path):
     assert isinstance(para2.items[-1], NoteRef)
 
 
+def test_inline_anchor_at_continuation_seam(tmp_path):
+    from pdf2epub.core.model import InlinePageBreak
+
+    pages = [_page(1, [
+        _line("First paragraph line one", 100),
+        _line("continues here and then", 113.5),
+        _line("spills toward the page end", 127),
+    ]), _page(2, [
+        _line("finishing on the next page.", 100),
+        _line("Second paragraph starts indented", 113.5, x0=90.0),
+    ])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    paras = _paras(res.flow)
+    assert len(paras) == 2
+    # page 2 starts mid-paragraph: its anchor sits INSIDE the spanning
+    # paragraph at the exact run seam, not deferred to the next block
+    kinds = [type(it).__name__ for it in paras[0].items]
+    assert kinds.count("InlinePageBreak") == 1
+    at = kinds.index("InlinePageBreak")
+    assert paras[0].items[at].ordinal == 2
+    before = "".join(it.text for it in paras[0].items[:at]
+                     if isinstance(it, TextRun))
+    after = "".join(it.text for it in paras[0].items[at:]
+                    if isinstance(it, TextRun))
+    assert before.endswith("page end ")   # join separator BEFORE the anchor
+    assert after.startswith("finishing")
+    block_anchors = [b for b in res.flow.blocks if isinstance(b, PageAnchor)]
+    assert [a.ordinal for a in block_anchors] == [1]
+    assert not any(a.approximate for a in block_anchors)
+    assert res.counts["anchor-inline"] == 1
+
+
+def test_inline_anchor_dehyphenated_seam(tmp_path):
+    from pdf2epub.core.model import InlinePageBreak
+
+    pages = [
+        _page(1, [_line("the discussion of the rational tradi-", 520)]),
+        _page(2, [_line("tion resumes on the next page here now", 72)]),
+    ]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    para = _paras(res.flow)[0]
+    assert "tradition resumes" in para.text()
+    kinds = [type(it).__name__ for it in para.items]
+    at = kinds.index("InlinePageBreak")
+    # mid-word anchor: no space fabricated around the dehyphenated seam
+    assert para.items[at - 1].text.endswith("tradi")
+    assert para.items[at + 1].text.startswith("tion")
+
+
+def test_inline_anchor_blank_page_flush(tmp_path):
+    from pdf2epub.core.model import InlinePageBreak
+    from pdf2epub.qa.visual import _flow_anchors
+
+    pages = [
+        _page(1, [_line("a paragraph running to the right margin and it", 520)]),
+        _page(2, []),   # blank page: anchor deferred
+        _page(3, [_line("continuing the same sentence on page three now", 72)]),
+    ]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    para = _paras(res.flow)[0]
+    inline = [it for it in para.items if isinstance(it, InlinePageBreak)]
+    # the blank page's deferred anchor flushes at the same seam, in order
+    assert [a.ordinal for a in inline] == [2, 3]
+    assert [a.ordinal for a in _flow_anchors(res.flow)] == [1, 2, 3]
+
+
+def test_inline_pagebreak_roundtrip():
+    import json
+
+    from pdf2epub.core.model import (InlinePageBreak, Paragraph, SourceRef,
+                                     block_from_dict, block_to_dict)
+
+    p = Paragraph(style="s",
+                  items=[TextRun("a"), InlinePageBreak(5, "v"), TextRun("b")],
+                  src=SourceRef("p0001", 0))
+    p2 = block_from_dict(json.loads(json.dumps(block_to_dict(p))))
+    assert [type(it).__name__ for it in p2.items] == \
+        ["TextRun", "InlinePageBreak", "TextRun"]
+    assert p2.items[1].ordinal == 5 and p2.items[1].label == "v"
+
+
+def test_emit_inline_pagebreak_span(tmp_path):
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    pages = [_page(1, [
+        _line("First paragraph line one", 100),
+        _line("spills toward the page end", 113.5),
+    ]), _page(2, [
+        _line("finishing on the next page.", 100),
+    ])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    out = Emitter(_cfg(tmp_path), res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert ('<span id="pg-2" class="pagebreak" epub:type="pagebreak" '
+            'role="doc-pagebreak" aria-label="2"></span>') in body
+    pbs = [pb for f in out.files for pb in f.pagebreaks]
+    assert [label for label, _ in pbs] == ["1", "2"]   # document order
+    # rescue: a dropped paragraph must not swallow its inline anchor
+    para = _paras(res.flow)[0]
+    para.role = "drop"
+    out2 = Emitter(_cfg(tmp_path), res.flow, say=lambda m: None).emit()
+    body2 = "".join(part for f in out2.files for part in f.body_parts)
+    assert '<div id="pg-2"' in body2
+    pbs2 = [pb for f in out2.files for pb in f.pagebreaks]
+    assert [label for label, _ in pbs2] == ["1", "2"]
+
+
 def test_is_shifted_run_wordshape():
     from pdf2epub.textfix import is_shifted_run, repair_shifted_cmap
 
@@ -317,12 +438,62 @@ def test_is_shifted_run_wordshape():
         assert not is_shifted_run(real), real
 
 
+def test_is_shifted_run_highmap_wordshape():
+    from pdf2epub.textfix import is_shifted_run, repair_shifted_cmap
+
+    hm = {"¶": "ʾ"}  # ¶ -> ʾ (hamza), the I&B-verified entry
+    # 'VDED¶' (I&B p.140 italic run) = 'sabaʾ': shifted letters + one
+    # highmap diacritic — invisible to the pure word-shape branch
+    assert is_shifted_run("VDED¶", hm)
+    assert repair_shifted_cmap("VDED¶", hm)[0] == "sabaʾ"
+    assert not is_shifted_run("VDED¶")          # no highmap: undetected
+    assert not is_shifted_run("VDED¶", {})
+    # precision: >=4 in-range chars, >=1 highmap char, full coverage
+    assert not is_shifted_run("AB¶", hm)        # too few in-range
+    assert not is_shifted_run("$40,50%", hm)         # no highmap char
+    assert not is_shifted_run("see ¶4", hm)     # lowercase outside range
+    for real in ("BIBLIOGRAPHY", "COPYRIGHT", "2004", "Fig.7", "plain text",
+                 "NNW-by-W"):
+        assert not is_shifted_run(real, hm), real
+
+
+def test_fffd_repair_pagescoped(tmp_path):
+    from pdf2epub.config import FffdRepair
+
+    pages = [_page(1, [_line("Note prefix ��� then text", 100)])]
+    cfg = _cfg(tmp_path, fffd_repairs=[
+        FffdRepair(pages=[1], replace="", note="render: leader rule, no text")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    text = _paras(res.flow)[0].text()
+    assert "�" not in text
+    assert text == "Note prefix then text"       # collapse eats the double space
+    assert res.counts["fffd-replaced"] == 3
+    # uncovered page: kept (never silently dropped) + counted + warned
+    res2 = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    assert "�" in _paras(res2.flow)[0].text()
+    assert res2.counts["fffd-unrepaired"] == 3
+    assert any("U+FFFD" in w.msg for w in res2.warns)
+    # a stale entry (its pages carry no FFFD) is a config bug
+    cfg3 = _cfg(tmp_path, fffd_repairs=[
+        FffdRepair(pages=[9], replace="", note="n")])
+    with pytest.raises(SystemExit, match="stale glyphs.fffd_repairs"):
+        build_flow(_doc(pages), cfg3, say=lambda m: None)
+
+
 def test_textfix_functions():
     assert expand_ligatures("ﬁnal ﬂow")[0] == "final flow"
     t, n = restore_spaces('say,"If I went.Then')
     assert t == 'say, "If I went. Then' and n == 2
     t, n = restore_spaces("W.M. Watt and op.cit. stay")
     assert n == 0
+    # bracket/paren/digit + comma + double quote + capital (MR gate-11
+    # residuals): the mandatory quote keeps initials and numerics out
+    t, n = restore_spaces('say [about me],"This man and (216),"We have '
+                          'and Koran 86:9,"On the day')
+    assert t == ('say [about me], "This man and (216), "We have '
+                 'and Koran 86:9, "On the day') and n == 3
+    assert restore_spaces("pp. 12,14 and 1,000 stay")[1] == 0
+    assert restore_spaces('lower,"case stays quoteless,next')[1] == 1  # a-z rule only
     assert dehyphenate_join("tradi-", "tion") == ("tradi", "", True)
     assert dehyphenate_join("Kaccayanagotta-", "Sutta") == ("Kaccayanagotta-", "", False)
     assert dehyphenate_join("plain", "next") == ("plain", " ", False)
@@ -334,6 +505,88 @@ def test_textfix_functions():
     assert dehyphenate_join("At twenty-", "two, he")[2] is False
     assert dehyphenate_join("a low-", "lying parcel")[2] is False
     assert dehyphenate_join("must follow-", "ing")[2] is True  # not 'low-'
+
+
+def _seamline(a_text, b_text, y=100.0):
+    """One PdfLine of two runs with different formatting (roman + italic) so
+    _mk_runs keeps the run seam."""
+    return PdfLine(runs=[
+        PdfRun(text=a_text, font_id=BODY, x0=72, y0=y, x1=250, y1=y + 12),
+        PdfRun(text=b_text, font_id=BODY, italic=True,
+               x0=251, y0=y, x1=362, y1=y + 12)],
+        x0=72, y0=y, x1=362, y1=y + 12)
+
+
+def test_restore_space_seam():
+    from pdf2epub.textfix import restore_space_seam
+
+    assert restore_space_seam("believer.", "This") == ("believer. ", "This", 1)
+    assert restore_space_seam('say,"', "If") == ('say, "', "If", 1)
+    assert restore_space_seam("word”", "We") == ("word” ", "We", 1)
+    # punctuation opening the second run: the space lands there instead
+    assert restore_space_seam("believer", ".This") == ("believer", ". This", 1)
+    # initials / abbreviations / already-spaced seams stay untouched
+    assert restore_space_seam("W.", "M. Watt") == ("W.", "M. Watt", 0)
+    assert restore_space_seam("op.", "cit.") == ("op.", "cit.", 0)
+    assert restore_space_seam("ends. ", "Then") == ("ends. ", "Then", 0)
+    assert restore_space_seam("plain", "text") == ("plain", "text", 0)
+    assert restore_space_seam("", "Text") == ("", "Text", 0)
+
+
+def test_cross_run_space_restore(tmp_path):
+    # MR prepress: a space lost exactly at a roman/italic run seam is
+    # invisible to per-run restore_spaces ('believer.'+'This') — the
+    # paragraph-level seam pass repairs it, preserving run formatting
+    pages = [_page(1, [_seamline("the mirror of the believer.",
+                                 "This means either that God")])]
+    res = build_flow(_doc(pages), _cfg(tmp_path, restore_spaces=True),
+                     say=lambda m: None)
+    para = _paras(res.flow)[0]
+    assert para.text() == "the mirror of the believer. This means either that God"
+    runs = [it for it in para.items if isinstance(it, TextRun)]
+    assert runs[0].text.endswith(". ") and not runs[0].fmt.italic
+    assert runs[1].text.startswith("This") and runs[1].fmt.italic
+    assert res.counts["spaces-restored-crossrun"] == 1
+    # quote seam
+    pages = [_page(1, [_seamline('and they say,"', "If I went away")])]
+    res = build_flow(_doc(pages), _cfg(tmp_path, restore_spaces=True),
+                     say=lambda m: None)
+    assert _paras(res.flow)[0].text() == 'and they say, "If I went away'
+    # initials at a seam stay protected
+    pages = [_page(1, [_seamline("as quoted by W.", "M. Watt in his study")])]
+    res = build_flow(_doc(pages), _cfg(tmp_path, restore_spaces=True),
+                     say=lambda m: None)
+    assert "W.M. Watt" in _paras(res.flow)[0].text()
+    assert res.counts.get("spaces-restored-crossrun", 0) == 0
+    # gated on flow.restore_spaces (default off): seam untouched
+    pages = [_page(1, [_seamline("the mirror of the believer.",
+                                 "This means either that God")])]
+    res = build_flow(_doc(pages), _cfg(tmp_path), say=lambda m: None)
+    assert "believer.This" in _paras(res.flow)[0].text()
+
+
+def test_cross_run_space_restore_in_notes(tmp_path):
+    # the seam pass also runs on footnote paragraphs, and its counts roll up
+    body = [
+        PdfLine(runs=[PdfRun(text="Body text with a marker", font_id=BODY,
+                             x0=72, y0=100, x1=290, y1=112),
+                      PdfRun(text="7", font_id=SUP, superscript=True,
+                             x0=291, y0=98, x1=296, y1=106)],
+                x0=72, y0=100, x1=296, y1=112),
+        PdfLine(runs=[PdfRun(text="7. The note ends here.", font_id=SMALL,
+                             x0=72, y0=600, x1=200, y1=610),
+                      PdfRun(text="Then it continues in italic",
+                             font_id=SMALL, italic=True,
+                             x0=201, y0=600, x1=340, y1=610)],
+                x0=72, y0=600, x1=340, y1=610),
+    ]
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits",
+               restore_spaces=True)
+    res = build_flow(_doc([_page(1, body)]), cfg, say=lambda m: None)
+    note = list(res.flow.notes.values())[0]
+    assert note.paragraphs[0].text() == \
+        "The note ends here. Then it continues in italic"
+    assert res.counts["spaces-restored-crossrun"] == 1
 
 
 def _runline(specs, y):

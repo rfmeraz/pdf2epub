@@ -53,6 +53,27 @@ def test_walk_rendering():
     assert "{toc} Chapter One" in lines
 
 
+def test_inline_pagebreak_marker_position():
+    # an inline pagebreak span inside <p>: the paragraph block comes out
+    # FIRST (attributed to the page it starts on), the pagebreak marker
+    # after it — identical to the old deferred-div layout, pinning packet
+    # byte-stability across the inline-anchor change
+    span = ('<span id="pg-30" class="pagebreak" epub:type="pagebreak" '
+            'role="doc-pagebreak" aria-label="30"></span>')
+    doc = _doc("ch.xhtml", (
+        _pb("29")
+        + f"<p>started on page one{span} and finished on page two.</p>"
+        + "<p>a page-two paragraph.</p>"))
+    blocks, k = walk_doc(doc, is_notes=False, k_start=0)
+    kinds = [(b.kind, b.label) for b in blocks]
+    assert kinds[0] == ("pagebreak", "29")
+    assert blocks[1].kind == "block"
+    assert "started on page one and finished on page two." in " ".join(blocks[1].lines)
+    assert kinds[2] == ("pagebreak", "30")
+    assert blocks[3].kind == "block"
+    assert k == 2
+
+
 def test_escaping_and_wrap():
     doc = _doc("a.xhtml",
                "<p># not a heading, just book text that starts with a hash</p>"

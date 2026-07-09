@@ -73,10 +73,11 @@ def stage_images(ctx) -> None:
             ctx.say(f"  WARNING: cover file missing: {cover_path} and no "
                     "render/synthesize fallback configured")
 
-    # visual content not otherwise handled: surface for the agent
-    covered = fig_pages | set(cfg.pages_cover)
-    leftover = [p.number for p in ctx.pdf_doc.pages
-                if p.n_images > 0 and p.number not in covered]
+    # visual content not otherwise handled: surface for the agent (scan
+    # shared with the QA warnings gate via warnqueue)
+    from .warnqueue import uncovered_image_pages
+
+    leftover = uncovered_image_pages(ctx.pdf_doc, cfg)
     if leftover:
         msg = (f"pages with embedded images not covered by cover/figure_pages: "
                f"{leftover[:15]}{'…' if len(leftover) > 15 else ''} — review renders; "

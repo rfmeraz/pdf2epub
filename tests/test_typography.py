@@ -64,6 +64,43 @@ def test_slicer_census():
                               if c.isalpha())
 
 
+def _pb_inline(label):
+    return (f'<span id="pg-{label}" class="pagebreak" epub:type="pagebreak" '
+            f'role="doc-pagebreak" aria-label="{label}"></span>')
+
+
+def test_slicer_inline_pagebreak_attribution():
+    # a mid-paragraph pagebreak span: the enclosing paragraph belongs to the
+    # page it STARTS on; everything after it belongs to the new page — the
+    # same partition the old deferred block div produced
+    docs = [_doc("a.xhtml",
+                 _pb("1")
+                 + f'<p>started on one{_pb_inline("2")} finished on two.</p>'
+                 + '<p>page two proper.</p>')]
+    res = slice_pages(docs, [1, 2], {1: "1", 2: "2"})
+    assert res.ok
+    assert [b.text for b in res.slices[1]] == ["started on one finished on two."]
+    assert [b.text for b in res.slices[2]] == ["page two proper."]
+
+
+def test_slicer_inline_equals_block_partition():
+    # regression-matrix equivalence in miniature: old-style (div after the
+    # straddling paragraph) and new-style (span inside it) slice identically
+    old = [_doc("a.xhtml",
+                _pb("1") + '<p>started on one finished on two.</p>'
+                + _pb("2") + '<p>page two proper.</p>')]
+    new = [_doc("a.xhtml",
+                _pb("1")
+                + f'<p>started on one{_pb_inline("2")} finished on two.</p>'
+                + '<p>page two proper.</p>')]
+    r_old = slice_pages(old, [1, 2], {1: "1", 2: "2"})
+    r_new = slice_pages(new, [1, 2], {1: "1", 2: "2"})
+    assert r_old.ok and r_new.ok
+    for page in (1, 2):
+        assert [b.text for b in r_old.slices[page]] == \
+            [b.text for b in r_new.slices[page]]
+
+
 def test_slicer_anchor_mismatch_failsafe():
     docs = [_doc("a.xhtml", _pb("1") + "<p>x</p>")]
     res = slice_pages(docs, [1, 2], {1: "1", 2: "2"})

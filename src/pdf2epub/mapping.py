@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-import re
 from .config import PdfBookConfig
 from .core.lang import tag_languages
-from .core.model import Paragraph, TextRun
+from .core.model import Paragraph
 from .core.roles import StyleRule, apply_roles
 from .flowbuilder import FlowResult
+from .warnqueue import rtl_census
 
-_RTL_RE = re.compile(r"[֐-ࣿיִ-﷿ﹰ-﻿]")
 
 
 def stage_map(ctx, res: FlowResult) -> None:
@@ -55,23 +54,11 @@ def stage_map(ctx, res: FlowResult) -> None:
     census = tag_languages(flow, cfg.cjk_han_only, cfg.lang_overrides)
     ctx.lang_census = census
 
-    # RTL census: runs the PUA substitution deliberately tagged (fmt.lang set,
-    # e.g. the honorific ligature as lang=ar) are expected; RTL text in
-    # UNTAGGED runs is live foreign text the pipeline cannot lay out yet
-    expected = 0
-    unexpected = 0
-    for b in flow.blocks:
-        if not isinstance(b, Paragraph):
-            continue
-        for it in b.items:
-            if isinstance(it, TextRun):
-                n = len(_RTL_RE.findall(it.text))
-                if not n:
-                    continue
-                if it.fmt.lang and it.fmt.lang not in ("zh", "ja", "ko"):
-                    expected += n
-                else:
-                    unexpected += n
+    # RTL census (shared with the QA warnings gate via warnqueue): runs the
+    # PUA substitution deliberately tagged (fmt.lang set, e.g. the honorific
+    # ligature as lang=ar) are expected; RTL text in UNTAGGED runs is live
+    # foreign text the pipeline cannot lay out yet
+    expected, unexpected = rtl_census(flow)
     if expected:
         ctx.say(f"  {expected} RTL char(s) from verified glyph substitutions (expected)")
     if unexpected:

@@ -35,6 +35,40 @@ def test_residue_counters():
     assert lost_space_count('said.Then and say,"If and fine. Text') == 2
 
 
+def test_lost_space_defects():
+    from pdf2epub.qa.pdfchecks import lost_space_defects
+
+    text = "the mirror of the believer.This means and fine. Text follows"
+    defects, stale = lost_space_defects(text)
+    assert len(defects) == 1 and not stale
+    assert "believer.This means" in defects[0]     # context snippet
+    # allowlisted exact snippet is removed before matching
+    defects, stale = lost_space_defects(text, ["believer.This"])
+    assert not defects and not stale
+    # an allow entry matching nothing is stale (config rot is an error)
+    defects, stale = lost_space_defects(text, ["etc.Cambridge"])
+    assert len(defects) == 1 and len(stale) == 1
+    assert "etc.Cambridge" in stale[0]
+    # quote-comma pattern still covered
+    assert lost_space_defects('they say,"If I went')[0]
+
+
+def test_garble_residue():
+    from pdf2epub.qa.pdfchecks import garble_residue
+
+    assert garble_residue("clean text with ³ but unconfigured") == []
+    hits = garble_residue("note prefix ��� then text")
+    assert len(hits) == 1 and "U+FFFD" in hits[0] and "note prefix" in hits[0]
+    hits = garble_residue("shifted\x0emarker")          # C0 = shift markers
+    assert len(hits) == 1 and "U+000E" in hits[0]
+    # configured per-book residue chars (I&B ³´«)
+    hits = garble_residue("said, ³God knows best´ then", "³´«")
+    assert len(hits) == 2 and "U+00B3" in hits[0] and "U+00B4" in hits[1]
+    # a run of garble chars is ONE hit, all codepoints named
+    hits = garble_residue("x³´y", "³´")
+    assert len(hits) == 1 and "U+00B3" in hits[0] and "U+00B4" in hits[0]
+
+
 def test_noteref_seam_defects():
     from types import SimpleNamespace
 

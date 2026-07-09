@@ -106,8 +106,45 @@ def pua_residue(text: str) -> list[str]:
 
 
 def lost_space_count(text: str) -> int:
-    """Informational: residual fused-word patterns after restore_spaces."""
-    return len(_LOST_SPACE.findall(text))
+    """Residual fused-word patterns after restore_spaces (gate 11 count)."""
+    return len(lost_space_defects(text)[0])
+
+
+def lost_space_defects(text: str, allow: list[str] = ()) \
+        -> tuple[list[str], list[str]]:
+    """Gate 11 (gating): fused-word patterns in shipped text with ±30-char
+    context snippets. ``allow`` holds render-verified as-printed exceptions
+    (qa.lost_space_allow, exact snippets); an entry matching nothing is
+    STALE and reported — config rot is an error (flow.overrides doctrine)."""
+    stale: list[str] = []
+    for a in allow:
+        if a in text:
+            text = text.replace(a, " ")
+        else:
+            stale.append(f"stale qa.lost_space_allow entry (matched nothing): {a!r}")
+    defects = [text[max(0, m.start() - 30):m.end() + 30]
+               for m in _LOST_SPACE.finditer(text)]
+    return defects, stale
+
+
+_C0_AND_FFFD = "�\x00-\x08\x0b\x0c\x0e-\x1f"
+
+
+def garble_residue(text: str, extra_chars: str = "") -> list[str]:
+    """Gate 20 (gating): garble in SHIPPED text. U+FFFD and C0 controls are
+    unconditional (the C0 set contains the shifted-CMap marker chars); the
+    per-book ``extra_chars`` set (qa.garble_chars) covers configured
+    shifted-CMap residue like ³´« — per-book because superscript-³ is
+    legitimate elsewhere. Candidate-only by design: gate 2 normalizes both
+    sides identically and cannot see corruption both witnesses share. One
+    hit per garble RUN, labeled with codepoints and ±30-char context."""
+    pat = re.compile("[" + _C0_AND_FFFD + re.escape(extra_chars) + "]+")
+    hits = []
+    for m in pat.finditer(text):
+        chars = ",".join(sorted({f"U+{ord(c):04X}" for c in m.group()}))
+        ctx = text[max(0, m.start() - 30):m.end() + 30].replace("\n", " ")
+        hits.append(f"[{chars}] …{ctx}…")
+    return hits
 
 
 _SEAM_BAD = re.compile(r"[A-Za-z0-9]")

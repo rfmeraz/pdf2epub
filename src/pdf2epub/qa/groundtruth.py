@@ -104,10 +104,16 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
             from ..textfix import is_shifted_run, repair_shifted_cmap
             text = "\n".join(
                 (repair_shifted_cmap(l, cfg.shifted_cmap_highmap)[0]
-                 if is_shifted_run(l) else l)
+                 if is_shifted_run(l, cfg.shifted_cmap_highmap) else l)
                 for l in text.split("\n"))
         from ..textfix import strip_control_chars
         text, _ = strip_control_chars(text)
+        if cfg.fffd_repairs and "�" in text:
+            # same chain both sides — a no-op when poppler decoded the
+            # glyphs the candidate's extractor could not
+            fd = next((f for f in cfg.fffd_repairs if pno in f.pages), None)
+            if fd is not None:
+                text = text.replace("�", fd.replace)
         text, _ = expand_ligatures(text)
         if cfg.restore_spaces:
             text, _ = restore_spaces(text)

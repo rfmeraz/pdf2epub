@@ -1,5 +1,7 @@
 """Visual QA pure parts: sampler, slice planning, dHash, page checks."""
 
+from types import SimpleNamespace
+
 from PIL import Image
 
 from pdf2epub.core.model import (Figure, NoteRef, PageAnchor, Paragraph,
@@ -76,6 +78,24 @@ def test_plan_slices_shapes():
     # count mismatch -> every plan degrades to None (fail-safe)
     bad = plan_slices(anchors, pbs[:2], [1, 2, 3], [1, 2])
     assert bad[1] is None and bad[2] is None
+
+
+def test_flow_anchors_document_order():
+    from pdf2epub.core.model import InlinePageBreak
+    from pdf2epub.qa.visual import _flow_anchors
+
+    para = Paragraph(style="s", items=[TextRun("spans the turn"),
+                                       InlinePageBreak(2, "2"),
+                                       TextRun("and continues")],
+                     src=SourceRef("p0001", 0))
+    flow = SimpleNamespace(blocks=[_anchor(1), para, _anchor(3, approx=True)])
+    anchors = _flow_anchors(flow)
+    assert [(a.ordinal, a.approximate) for a in anchors] == \
+        [(1, False), (2, False), (3, True)]
+    # feeds plan_slices with no loose-compare note for the inline anchor
+    pbs = [("a.xhtml", "pg-1"), ("a.xhtml", "pg-2"), ("a.xhtml", "pg-3")]
+    plans = plan_slices(anchors, pbs, [1, 2, 3], [2])
+    assert plans[2].approximate is False
 
 
 def test_dhash_properties():

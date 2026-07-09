@@ -24,6 +24,11 @@ _LIG_RE = re.compile("[" + "".join(_LIGATURES) + "]")
 # lowercase-before guard keeps initials ("W.M.") and "op.cit." untouched
 _SPACE_AFTER_PUNCT = re.compile(r'([a-z][.!?,;:])(["“”’]?[A-Z“"])')
 _SPACE_AFTER_QUOTE = re.compile(r'([a-z][”"])([A-Z])')
+# the lowercase-before guard has one safe relaxation: bracket/paren/digit +
+# comma/period + DOUBLE QUOTE + capital ('[about me],"This' / '(216),"We' /
+# '86:9,"On' — gate-11 residuals) is never legitimate prose; the mandatory
+# quote is what keeps initials and numerics out
+_SPACE_AFTER_BRACKET = re.compile(r'([\])0-9][.,])(["“”][A-Z“"])')
 
 
 def expand_ligatures(text: str) -> tuple[str, int]:
@@ -46,7 +51,31 @@ def inline_dehyphenate(text: str) -> tuple[str, int]:
 def restore_spaces(text: str) -> tuple[str, int]:
     text, n1 = _SPACE_AFTER_PUNCT.subn(r"\1 \2", text)
     text, n2 = _SPACE_AFTER_QUOTE.subn(r"\1 \2", text)
-    return text, n1 + n2
+    text, n3 = _SPACE_AFTER_BRACKET.subn(r"\1 \2", text)
+    return text, n1 + n2 + n3
+
+
+def restore_space_seam(prev: str, nxt: str) -> tuple[str, str, int]:
+    """Repair a lost space that straddles a run boundary. restore_spaces runs
+    per run, so a fusion at a roman/italic seam ('believer.' + 'This', MR
+    prepress) is invisible to it. Same patterns, applied to a 3+3-char window
+    across the seam; only a match that straddles the boundary acts (fusions
+    wholly inside one run are the per-run pass's job). The space lands at the
+    pattern's split point — usually the tail of ``prev``, preserving run
+    formatting. Returns (prev, nxt, insertions)."""
+    tail = prev[-3:]
+    window = tail + nxt[:3]
+    seam = len(tail)
+    for pat in (_SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET):
+        for m in pat.finditer(window):
+            if m.start() < seam < m.end():
+                cut = m.end(1)
+                if cut <= seam:
+                    k = len(prev) - (seam - cut)
+                    return prev[:k] + " " + prev[k:], nxt, 1
+                k = cut - seam
+                return prev, nxt[:k] + " " + nxt[k:], 1
+    return prev, nxt, 0
 
 
 # a broken subset ToUnicode CMap shifted by -0x1D (Islam and Buddhism 2010,
@@ -60,7 +89,7 @@ _CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 _SHIFTED_WORD_RE = re.compile(r"[\x24-\x5f]{4,}")
 
 
-def is_shifted_run(text: str) -> bool:
+def is_shifted_run(text: str, highmap: dict[str, str] | None = None) -> bool:
     if any(c in _SHIFT_MARKERS for c in text):
         return True
     # single-WORD shifted lines carry no \x03 space marker ('%LEOLRJUDSK\' =
@@ -72,6 +101,18 @@ def is_shifted_run(text: str) -> bool:
     if _SHIFTED_WORD_RE.fullmatch(t):
         shifted = "".join(chr(ord(c) + 0x1D) for c in t)
         return bool(re.fullmatch(r"[A-Za-z][a-z]+", shifted))
+    # highmap-aware word shape: 'VDED¶' (= 'sabaʾ', I&B p.140) mixes shifted
+    # letters with verified-highmap diacritics, so the fullmatch above misses
+    # it. Same precision bar: >=4 in-range chars whose un-shift alone is a
+    # real word, every remaining char a highmap key, >=1 of them (otherwise
+    # the branch above already decides).
+    if highmap and t:
+        in_range = [c for c in t if "\x24" <= c <= "\x5f"]
+        hm_chars = [c for c in t if c in highmap and not "\x24" <= c <= "\x5f"]
+        if len(in_range) >= 4 and hm_chars and \
+                len(in_range) + len(hm_chars) == len(t):
+            shifted = "".join(chr(ord(c) + 0x1D) for c in in_range)
+            return bool(re.fullmatch(r"[A-Za-z][a-z]+", shifted))
     return False
 
 
