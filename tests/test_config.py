@@ -160,3 +160,54 @@ def test_figure_regions_parsing(tmp_path):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"
                      "images: {figure_regions: [{page: 1, rect: [9, 0, 0, 9], alt: x}]}")
         load_config(p)
+
+
+def test_blocks_verse_parsing(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text(
+        "source: {folder: p, pdf: b.pdf}\n"
+        "blocks:\n"
+        "  verse:\n"
+        "    - {pages: [\"28-30\", 35], base: [9], turns: [36], note: couplets}\n")
+    cfg = load_config(p)
+    assert cfg.blocks_verse[0].pages == [28, 29, 30, 35]
+    assert cfg.blocks_verse[0].base == [9.0]
+    assert cfg.blocks_verse[0].turns == [36.0]
+    assert cfg.blocks_verse[0].tol == 2.0
+    assert cfg.blocks_verse[0].stanza_gap == 1.4
+    with pytest.raises(ConfigError, match="requires a note"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {verse: [{pages: [1], base: [9], turns: [36]}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="base and turns"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {verse: [{pages: [1], base: [9], note: n}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="unknown key"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {verse: [{pages: [1], base: [9], turns: [36], "
+                     "indent: 3, note: n}]}")
+        load_config(p)
+    # verse pages must not overlap flow.columns / figure_pages
+    with pytest.raises(ConfigError, match="overlap"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "flow: {columns: [{pages: [35], count: 2, note: n}]}\n"
+                     "blocks: {verse: [{pages: [35], base: [9], turns: [36], "
+                     "note: n}]}")
+        load_config(p)
+
+
+def test_class_override_verbs(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "flow: {overrides: ["
+                 "{page: 1, line: 2, action: \"class:verse\", note: n},"
+                 " {page: 1, line: 3, action: \"class:prose\", note: n}]}")
+    cfg = load_config(p)
+    assert cfg.flow_overrides[0].action == "class:verse"
+    assert cfg.flow_overrides[1].action == "class:prose"
+    with pytest.raises(ConfigError, match="action invalid"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "flow: {overrides: [{page: 1, line: 2, "
+                     "action: \"class:poem\"}]}")
+        load_config(p)

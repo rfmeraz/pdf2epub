@@ -37,6 +37,8 @@ CODES: dict[str, str] = {
     "columns-gutter-missing": CONTENT_RISK,
     "unmapped-pstyles": CONTENT_RISK,
     "fffd-unrepaired": CONTENT_RISK,
+    "verse-suspect": CONTENT_RISK,  # verse-shaped block outside/unmatched by
+    #                                 blocks.verse — structure-loss risk
     "cover-missing": CONTENT_RISK,
     "flow-uncoded": CONTENT_RISK,  # fail-safe for future uncoded _Warns
     "uri-links": ADVISORY,

@@ -960,3 +960,24 @@ def test_page_shift_skips_centered_display_sharing_x0(tmp_path):
     doc = _doc([_page(1, body), _page(2, disp)])
     geo = column_geometry(doc)
     assert geo.shift(2) == 0.0
+
+
+def test_verse_fields_roundtrip():
+    import json
+
+    from pdf2epub.core.model import (Paragraph, SourceRef, block_from_dict,
+                                     block_to_dict)
+
+    p = Paragraph(style="s", items=[TextRun("line one\u2028line two")],
+                  src=SourceRef("p0001", 0), block_class="verse",
+                  verse_turns=[1])
+    p2 = block_from_dict(json.loads(json.dumps(block_to_dict(p))))
+    assert p2.block_class == "verse"
+    assert p2.verse_turns == [1]
+    assert "\u2028" in p2.items[0].text
+    # old IR dumps without the new keys stay loadable (defaults apply)
+    d = block_to_dict(Paragraph(style="s", items=[TextRun("a")],
+                                src=SourceRef("p0001", 0)))
+    del d["block_class"], d["verse_turns"]
+    p3 = block_from_dict(d)
+    assert p3.block_class is None and p3.verse_turns == []

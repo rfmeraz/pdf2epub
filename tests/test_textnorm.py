@@ -33,3 +33,10 @@ def test_int_to_roman():
     assert int_to_roman(4) == "iv"
     assert int_to_roman(34) == "xxxiv"
     assert int_to_roman(118, lower=False) == "CXVIII"
+
+
+def test_normalize_collapses_line_separator():
+    # verse stanzas join lines with U+2028 LINE SEPARATOR; the normalize
+    # chain must see it as whitespace or every verse seam becomes a
+    # coverage/lost-space false positive (pinned: Python \s covers U+2028)
+    assert normalize("like dirt\u2028others come") == "like dirt others come"

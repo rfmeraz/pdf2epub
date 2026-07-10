@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from .qa_epubload import block_text
+
 _X = "{http://www.w3.org/1999/xhtml}"
 _E = "{http://www.idpf.org/2007/ops}"
 _XML_LANG = "{http://www.w3.org/XML/1998/namespace}lang"
@@ -92,7 +94,7 @@ def _make_block(el, href: str) -> EpubBlock:
             break
         p = p.getparent()
     blk = EpubBlock(tag=el.tag[len(_X):], classes=classes, in_blockquote=in_bq,
-                    text="".join(el.itertext()), href=href)
+                    text=block_text(el), href=href)
     _census(el, blk)
     return blk
 

@@ -17,7 +17,7 @@ from pathlib import Path
 
 from ..config import load_config
 from ..core.qa_epubcheck import run_epubcheck
-from ..core.qa_epubload import load_epub
+from ..core.qa_epubload import block_text, load_epub
 from ..core.qa_imagecheck import check_images
 from ..core.qa_navcheck import check_nav
 from ..core.qa_ordercheck import check_reading_order
@@ -39,14 +39,15 @@ _BLOCKS = {f"{_X}{t}" for t in ("p", "h1", "h2", "h3", "h4", "li", "figcaption")
 def _doc_text(d) -> str:
     """Block-aware text: inline elements join WITHOUT spaces (itertext with
     ' '.join splits 'no-<i>dharma</i>' into a fake hyphen artifact), blocks
-    join with one space."""
+    join with one space, and <br/> counts as a space (verse line seams —
+    see qa_epubload.block_text, the single derivation)."""
     body = d.root.find(f"{_X}body")
     if body is None:
         return ""
     parts = []
     for el in body.iter():
         if el.tag in _BLOCKS:
-            parts.append("".join(el.itertext()))
+            parts.append(block_text(el))
     return " ".join(parts) if parts else " ".join(body.itertext())
 
 

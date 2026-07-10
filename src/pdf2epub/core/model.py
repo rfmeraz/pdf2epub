@@ -78,6 +78,13 @@ class Paragraph:
     # filled by mapping.styles:
     role: str | None = None
     classes: list[str] = field(default_factory=list)
+    # semantic block grammar (set by the flow classifier, NEVER touched by
+    # apply_roles — emission keys on block_class before role): "verse" for a
+    # stanza paragraph whose lines are joined with U+2028; later phases add
+    # "blockquote" / "ol" / "ul". verse_turns holds the 0-based stanza-line
+    # indexes set at the deeper (turn) indent level in print.
+    block_class: str | None = None
+    verse_turns: list[int] = field(default_factory=list)
 
     def text(self) -> str:
         return "".join(it.text for it in self.items if isinstance(it, TextRun))
@@ -162,6 +169,8 @@ def _paragraph_from_dict(d: dict) -> Paragraph:
         src=SourceRef(**d["src"]),
         role=d.get("role"),
         classes=d.get("classes", []),
+        block_class=d.get("block_class"),
+        verse_turns=d.get("verse_turns", []),
     )
 
 

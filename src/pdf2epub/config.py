@@ -63,6 +63,26 @@ class ColumnSpec:
 
 
 @dataclass(slots=True)
+class VerseSpec:
+    """Semantic block judgment: pages carrying verse set at known indent
+    levels. ``base``/``turns`` are pt offsets of verse-line starts from the
+    page's SHIFT-CORRECTED column left (recto/verso binding shift removed);
+    turns are the deeper level(s) a couplet's second line drops to — the
+    base/turn alternation is the geometric signal prose never produces.
+    The deterministic classifier does the per-block work inside these pages;
+    ``note`` records the render evidence and is REQUIRED. A spec that
+    classifies ZERO groups is stale and fails the build (flow.overrides
+    doctrine). Per-line corrections: flow.overrides ``class:verse`` /
+    ``class:prose``."""
+    pages: list[int]
+    base: list[float]
+    turns: list[float]
+    tol: float = 2.0
+    stanza_gap: float = 1.4  # × median leading opens a new stanza
+    note: str = ""
+
+
+@dataclass(slots=True)
 class CharStyleFlags:
     smallcaps: bool = False
     symbol: bool = False
@@ -206,6 +226,9 @@ class PdfBookConfig:
     flow_overrides: list[FlowOverride] = field(default_factory=list)
     flow_columns: list[ColumnSpec] = field(default_factory=list)
 
+    # semantic block grammar (JP-P9): per-class judgment specs
+    blocks_verse: list[VerseSpec] = field(default_factory=list)
+
     # footnotes (JP-P4)
     footnote_policy: str = "none"   # none | markers
     footnote_marker: str = "digits"  # digits | asterisk
@@ -326,7 +349,7 @@ def load_config(path: Path) -> PdfBookConfig:
     _check_keys("book.yaml", data, {
         "source", "metadata", "pages", "furniture", "styles", "flow",
         "footnotes", "toc", "glyphs", "fonts", "languages", "split",
-        "images", "output", "qa", "adjudications",
+        "images", "output", "qa", "adjudications", "blocks",
     })
     cfg = PdfBookConfig(path=path)
 
@@ -429,7 +452,9 @@ def load_config(path: Path) -> PdfBookConfig:
     for ov in fl.get("overrides", []) or []:
         _check_keys("flow.overrides[]", ov, {"page", "line", "action", "note"})
         action = ov["action"]
-        if action not in ("join", "break", "drop", "keep") and not action.startswith("role:"):
+        if action not in ("join", "break", "drop", "keep",
+                          "class:verse", "class:prose") \
+                and not action.startswith("role:"):
             raise ConfigError(f"flow.overrides action invalid: {action}")
         cfg.flow_overrides.append(FlowOverride(page=int(ov["page"]), line=int(ov["line"]),
                                                action=action, note=ov.get("note", "")))
@@ -544,6 +569,35 @@ def load_config(path: Path) -> PdfBookConfig:
         cfg.figure_regions.append(FigureRegion(page=int(fr["page"]), rect=rect,
                                                alt=fr["alt"],
                                                note=fr.get("note", "")))
+
+    bl = data.get("blocks", {})
+    _check_keys("blocks", bl, {"verse"})
+    for vs in bl.get("verse", []) or []:
+        _check_keys("blocks.verse[]", vs,
+                    {"pages", "base", "turns", "tol", "stanza_gap", "note"})
+        if not vs.get("note"):
+            raise ConfigError("blocks.verse requires a note "
+                              "(render-verified evidence)")
+        pages = _page_list(vs.get("pages", []) or [])
+        if not pages:
+            raise ConfigError("blocks.verse needs at least one page")
+        base = [float(v) for v in (vs.get("base", []) or [])]
+        turns = [float(v) for v in (vs.get("turns", []) or [])]
+        if not base or not turns:
+            raise ConfigError("blocks.verse requires base and turns indent "
+                              "levels (pt offsets from the shift-corrected "
+                              "column left)")
+        col_pages = {p for cs in cfg.flow_columns for p in cs.pages}
+        fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
+        clash = set(pages) & (col_pages | fig_pages)
+        if clash:
+            raise ConfigError("blocks.verse pages overlap flow.columns/"
+                              f"figure_pages: {sorted(clash)[:8]}")
+        cfg.blocks_verse.append(VerseSpec(
+            pages=pages, base=base, turns=turns,
+            tol=float(vs.get("tol", 2.0)),
+            stanza_gap=float(vs.get("stanza_gap", 1.4)),
+            note=vs["note"]))
 
     qa = data.get("qa", {})
     _check_keys("qa", qa, {"lost_space_allow", "garble_chars"})

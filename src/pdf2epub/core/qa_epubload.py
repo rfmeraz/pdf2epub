@@ -43,6 +43,30 @@ class EpubDoc:
         return " ".join(body.itertext())
 
 
+def block_text(el) -> str:
+    """Block text with inline content joined WITHOUT spaces (a space-join
+    fabricates 'no- dharma' artifacts across inline tags) but with ONE space
+    contributed at each <br/> — verse lines are joined by <br/> in the shipped
+    markup while the poppler ground truth sees real newlines (normalized to
+    spaces), so a br must count as whitespace or every verse line-end fuses
+    into the next line's first word. Single derivation for the coverage gate
+    and the page slicer (divergent QA text shapes were the gate-11 lesson)."""
+    parts: list[str] = []
+
+    def walk(e) -> None:
+        if e.tag == f"{_XHTML}br":
+            parts.append(" ")
+        if e.text:
+            parts.append(e.text)
+        for child in e:
+            walk(child)
+            if child.tail:
+                parts.append(child.tail)
+
+    walk(el)
+    return "".join(parts)
+
+
 @dataclass
 class LoadedEpub:
     path: Path

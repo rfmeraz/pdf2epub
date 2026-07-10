@@ -49,3 +49,21 @@ def test_biographical_notes_section_is_not_endnotes():
 def test_plain_body_chapter_is_not_endnotes():
     d = _doc("007-chapter.xhtml", "<h1>A Chapter</h1><p>Body text.</p>")
     assert not d.is_endnotes()
+
+
+def test_block_text_br_counts_as_space():
+    from pdf2epub.core.qa_epubload import block_text
+
+    d = _doc("c1.xhtml",
+             "<p><span>like dirt—</span><br/><span>others come</span></p>")
+    p = d.root.find(f"{{{_XHTML}}}body/{{{_XHTML}}}p")
+    assert block_text(p) == "like dirt— others come"
+
+
+def test_block_text_inline_joins_without_space():
+    # the 'no- dharma' lesson: inline tags must NOT contribute whitespace
+    from pdf2epub.core.qa_epubload import block_text
+
+    d = _doc("c1.xhtml", "<p>no-<i>dharma</i> stays</p>")
+    p = d.root.find(f"{{{_XHTML}}}body/{{{_XHTML}}}p")
+    assert block_text(p) == "no-dharma stays"
