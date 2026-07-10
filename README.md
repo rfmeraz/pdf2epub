@@ -25,8 +25,8 @@ separated from the mechanism, written down, and checked:
    every time.
 4. **QA** (deterministic) — grade the EPUB against an independent extraction of the
    same PDF.
-5. **Proofread** (the agent) — read the finished book for damage a machine can't
-   judge.
+5. **Proofread** (the agent) — read the finished book for damage the deterministic
+   gates can't catch: the kind that only shows up on reading for meaning.
 
 The human drops in the PDF, starts the conversion, and inspects the finished EPUB;
 every judgment in between is the agent's, recorded in `book.yaml` where a person can
