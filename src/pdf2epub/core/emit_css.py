@@ -66,6 +66,7 @@ blockquote { margin: 0.7em 2em; }
 blockquote p { text-indent: 0; }
 blockquote.verse { margin: 1em 2.5em; }
 blockquote.quote { margin: 0.7em 1.6em; }
+blockquote.epigraph { margin: 1.2em 2.2em; }
 p.bq { text-indent: 0; margin: 0.4em 0; }
 ol.plist, ul.plist { list-style: none; margin: 0.7em 0; padding: 0 0 0 1.4em; }
 li.li1 { margin: 0.25em 0; }

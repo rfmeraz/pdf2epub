@@ -94,6 +94,10 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
   single-level ragged verse at the same inset (calibrate verse FIRST —
   verse wins on shared pages). A 2-line quote paragraph alone on a page
   has no cluster witness: use `class:quote`.
+  An EPIGRAPH is a role judgment, not a blocks: spec (no detector — rare):
+  map its pstyle (or `role:` override the lines) to `epigraph` and it
+  ships as `<blockquote class="epigraph" epub:type="epigraph"
+  role="doc-epigraph">`.
   Marker-list shapes (decimal "1."/"43.Necessary"/"1.·…"; bullet "• …")
   get `blocks.lists` specs `{pages, marker, hang}` — hang is the turnover
   column's offset from the entry stop (0 = flat), measured on a wrapped

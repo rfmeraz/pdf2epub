@@ -2427,3 +2427,33 @@ def test_list_false_center_lemma_stays_in_item(tmp_path):
     lemma = [p for p in items if "He sits in front" in p.text()]
     assert len(lemma) == 1 and not lemma[0].list_entry
     assert "/center" not in lemma[0].style
+
+
+def test_emit_epigraph_role(tmp_path):
+    # Phase E: emission-only epigraph semantics — a role: judgment ships a
+    # real <blockquote class="epigraph"> with EPUB SSV + DPUB-ARIA types.
+    # No detector exists (zero corpus instances).
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    lines = [
+        _line("Whoever knows himself knows his Lord, as it is", 90,
+              x0=72, width=280),
+        _line("related from the Prophet in the famous saying.", 103,
+              x0=72, width=250),
+        _line("Body prose follows the epigraph at the full measure", 123,
+              x0=72, width=290),
+        _line("and anchors the modal column with a second line ok.", 136,
+              x0=72, width=290),
+    ]
+    cfg = _cfg(tmp_path)
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda m: None)
+    paras = _paras(res.flow)
+    paras[0].role = "epigraph"
+    paras[0].classes = ["Serif-11"]
+    out = Emitter(cfg, res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert ('<blockquote class="epigraph Serif-11" epub:type="epigraph" '
+            'role="doc-epigraph"><p>') in body
+    assert "knows his Lord" in body
+    from pdf2epub.core import emit_css
+    assert "blockquote.epigraph" in emit_css._BASE

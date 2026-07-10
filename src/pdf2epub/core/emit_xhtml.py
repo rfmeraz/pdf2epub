@@ -329,6 +329,14 @@ class Emitter:
             self.heading_index.append((text, f.file_name, hid))
         elif role == "blockquote":
             f.body_parts.append(f'<blockquote class="{classes}"><p>{inner}</p></blockquote>')
+        elif role == "epigraph":
+            # emission-only semantics (no detector — zero corpus instances):
+            # a pstyle_map/role: judgment ships a real epigraph. 'epigraph'
+            # is in the default EPUB SSV; doc-epigraph is DPUB-ARIA.
+            ecls = " ".join(dict.fromkeys(["epigraph", *p.classes]))
+            f.body_parts.append(
+                f'<blockquote class="{ecls}" epub:type="epigraph" '
+                f'role="doc-epigraph"><p>{inner}</p></blockquote>')
         elif role == "li":
             f.body_parts.append(f'<p class="listpara {classes}">{inner}</p>')
         elif role == "footnote":
