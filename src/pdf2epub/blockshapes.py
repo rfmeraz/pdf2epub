@@ -1,9 +1,9 @@
 """Shared geometric detectors for the semantic block grammar.
 
 This module is the ONE derivation used by BOTH the flow classifier
-(calibrated by ``blocks.verse`` specs) and the analyzer / suspect witness
-(uncalibrated discovery) — the warnqueue lesson: a single code path so the
-build's behavior and the evidence/QA view can never diverge.
+(calibrated by ``blocks.verse``/``blocks.quotes`` specs) and the analyzer /
+suspect witness (uncalibrated discovery) — the warnqueue lesson: a single
+code path so the build's behavior and the evidence/QA view can never diverge.
 
 Verse carries NO font/size signal on this corpus (Me & Rumi sets verse in
 the body face at body size); the signals are purely geometric:
@@ -298,3 +298,223 @@ def verse_shape_suspects(lines, eff_left: float, ref_right: float,
             base_offsets=[round(base_off, 1)],
             turn_offsets=[round(t, 1) for t in turn_offs]))
     return groups
+
+
+# ---------------------------------------------------------------------------
+# Block quotes. The discriminating signal is the OPPOSITE of verse: a print
+# block quote is a JUSTIFIED inset block — its lines share one left inset and
+# cluster their right edge to sub-point precision (I&B: 18pt off both body
+# edges; BoK: 36pt off the left only). The same cluster that vetoes verse IS
+# the quote witness. A body paragraph's lone first-line indent sits at the
+# same x0 as a quote line (I&B indents 18pt too) but is a run of ONE — it
+# never earns a justified right, so the witness rejects it.
+
+_JUST_LEFT_TOL = 3.0   # x0 spread that still reads as one left edge
+_JUST_RIGHT_TOL = 2.0  # x1 spread that still reads as one justified margin
+_ANCHOR_TOL = 2.0      # x0/x1 spread that still reads as one body edge
+
+
+def justified_rights(lines) -> list[float | None]:
+    """Per line: the justified right margin of the line's own inset block
+    (the largest x1 that >=2 lines in its same-x0 run reach), or None when
+    the line is not in a tight-clustered justified run — a lone inset line,
+    or ragged verse. The ONE derivation behind flowbuilder's block_right and
+    the quote detectors here."""
+    out: list[float | None] = [None] * len(lines)
+    i, n = 0, len(lines)
+    while i < n:
+        j = i + 1
+        x0 = lines[i].x0
+        while j < n and abs(lines[j].x0 - x0) <= _JUST_LEFT_TOL:
+            j += 1
+        if j - i >= 2:
+            xs = [lines[x].x1 for x in range(i, j)]
+            margin = next(
+                (c for c in sorted(xs, reverse=True)
+                 if sum(1 for x in xs if abs(x - c) <= _JUST_RIGHT_TOL) >= 2),
+                None)
+            if margin is not None:
+                for x in range(i, j):
+                    out[x] = margin
+        i = j
+    return out
+
+
+def body_anchors(lines, body_size: float, size_of=None,
+                 skip=None) -> tuple[float, float] | None:
+    """The page's OWN body-block edges: the smallest x0 and the largest x1
+    that >=2 body-size lines each share within a couple of points. Quote
+    insets are measured from these, NOT from the modal column + shift frame —
+    on quote-heavy pages the shift detector keys off the quote inset itself
+    (I&B rectos: 22 quote lines at x0=81 outvote 10 body lines at 63).
+    Returns None when the page has no such clusters (sparse/display pages)."""
+    n = len(lines)
+    skip = skip or [False] * n
+    xs0, xs1 = [], []
+    for i, ln in enumerate(lines):
+        if skip[i] or getattr(ln, "vertical", False):
+            continue
+        sz = size_of(ln) if size_of else None
+        if sz is not None and abs(sz - body_size) > 2.0:
+            continue
+        xs0.append(ln.x0)
+        xs1.append(ln.x1)
+    left = next((c for c in sorted(xs0)
+                 if sum(1 for x in xs0 if abs(x - c) <= _ANCHOR_TOL) >= 2),
+                None)
+    right = next((c for c in sorted(xs1, reverse=True)
+                  if sum(1 for x in xs1 if abs(x - c) <= _ANCHOR_TOL) >= 2),
+                 None)
+    if left is not None and right is None:
+        # quote-heavy pages often carry a SINGLE full-measure body line; the
+        # widest line starting at the left anchor witnesses the right edge
+        # alone. Safe direction only: an underestimating anchor shifts the
+        # quote target so real quotes MISS tol — never a misclassification.
+        at_left = [x1 for x0, x1 in zip(xs0, xs1)
+                   if abs(x0 - left) <= _JUST_LEFT_TOL]
+        right = max(at_left, default=None)
+    if left is None or right is None or right - left < 100.0:
+        return None
+    return left, right
+
+
+@dataclass(slots=True)
+class QuoteRun:
+    start: int   # index into the page's line sequence
+    end: int     # exclusive
+    left_offset: float = 0.0   # discovered inset off the body-left anchor
+    right_offset: float = 0.0  # discovered inset off the body-right anchor
+
+
+def _dropcap_wrap_veto(lines, body_size: float, size_of=None) -> list[bool]:
+    """Lines sitting beside a drop-cap initial: a wide 32pt letter pushes its
+    2-4 wrap lines to a deep inset, justified to the body right — exactly a
+    left-only quote shape (BoK 'A'/'K'/'G' initials wrap at 36pt, the SAME
+    inset as the book's real quotes). Veto any line whose vertical extent
+    overlaps an oversized 1-2 letter line's."""
+    n = len(lines)
+    veto = [False] * n
+    if size_of is None:
+        return veto
+    for i, ln in enumerate(lines):
+        sz = size_of(ln)
+        if sz is None or sz < 2 * body_size:
+            continue
+        t = ln.text().strip() if hasattr(ln, "text") else ""
+        if not (1 <= len(t) <= 2 and t.isalpha()):
+            continue
+        for j, other in enumerate(lines):
+            # a wrap line starts AT the initial's right edge; a quote line
+            # under the letter's descender box does not (BoK p.259: the
+            # hadith opens 8.5pt right of the 'ʿA' while still overlapping
+            # its box vertically — it must stay classifiable)
+            if j != i and other.y0 < ln.y1 and other.y1 > ln.y0 \
+                    and abs(other.x0 - ln.x1) <= 6.0:
+                veto[j] = True
+    return veto
+
+
+def quote_shape_runs(lines, left_anchor: float, right_anchor: float,
+                     left_inset: float, right_inset: float,
+                     body_size: float, tol: float = 3.0, size_of=None,
+                     rights=None, blocked=None, forced=None,
+                     ) -> list[QuoteRun]:
+    """Calibrated classification of one page's kept lines against a
+    blocks.quotes spec: maximal runs of consecutive lines whose x0 sits at
+    ``left_anchor + left_inset`` (+-tol) AND whose justified right margin
+    (``rights``, from :func:`justified_rights`) sits at ``right_anchor -
+    right_inset`` (+-tol). ``blocked`` marks lines that can never be quote
+    (figure-region lines, class:prose overrides, lines already classified
+    verse); ``forced`` marks class:quote overrides, which skip the geometric
+    tests. A run needs >=2 candidate lines (a single inset line has no
+    justified witness) unless it contains a forced line."""
+    n = len(lines)
+    rights = rights if rights is not None else justified_rights(lines)
+    blocked = blocked or [False] * n
+    forced = forced or [False] * n
+    dropcap = _dropcap_wrap_veto(lines, body_size, size_of)
+    lt = left_anchor + left_inset
+    rt = right_anchor - right_inset
+    cand: list[bool] = []
+    for i, ln in enumerate(lines):
+        if blocked[i]:
+            cand.append(False)
+            continue
+        if forced[i]:
+            cand.append(True)
+            continue
+        if dropcap[i]:
+            cand.append(False)
+            continue
+        sz = size_of(ln) if size_of else None
+        if sz is not None and sz > body_size + 1.0:
+            cand.append(False)
+            continue
+        cand.append(abs(ln.x0 - lt) <= tol and rights[i] is not None
+                    and abs(rights[i] - rt) <= tol)
+    runs: list[QuoteRun] = []
+    i = 0
+    while i < n:
+        if not cand[i]:
+            i += 1
+            continue
+        j = i
+        while j < n and cand[j]:
+            j += 1
+        if j - i >= 2 or any(forced[x] for x in range(i, j)):
+            runs.append(QuoteRun(start=i, end=j,
+                                 left_offset=left_inset,
+                                 right_offset=right_inset))
+        i = j
+    return runs
+
+
+def quote_shape_suspects(lines, body_size: float, size_of=None,
+                         skip=None) -> list[QuoteRun]:
+    """Uncalibrated discovery for the analyzer: runs of >=3 consecutive
+    lines sharing one justified right margin at a REAL left inset (>=6pt off
+    the page's own body-left anchor) — evidence for drafting blocks.quotes
+    specs, never an auto-classification. Left-only insets (right edge at the
+    body margin, BoK-style) need >=4 lines: drop-cap wrap lines share that
+    exact shape at 2-3 lines."""
+    anchors = body_anchors(lines, body_size, size_of=size_of, skip=skip)
+    if anchors is None:
+        return []
+    left, right = anchors
+    rights = justified_rights(lines)
+    n = len(lines)
+    skip = skip or [False] * n
+    dropcap = _dropcap_wrap_veto(lines, body_size, size_of)
+    cand: list[bool] = []
+    for i, ln in enumerate(lines):
+        if skip[i] or dropcap[i] or rights[i] is None:
+            cand.append(False)
+            continue
+        sz = size_of(ln) if size_of else None
+        # quotes are set at (or a shade under) body size; well-below-body
+        # runs at an inset are footnote hanging-indent turnovers (BoK's
+        # 8.5pt notes fired 45 bogus 14/1pt runs) — the flow never sees
+        # them (footnotes split first), but the DRAFT specs must not
+        if sz is not None and not (body_size - 2.0 < sz <= body_size + 1.0):
+            cand.append(False)
+            continue
+        cand.append(ln.x0 - left >= _LEVEL_SEP
+                    and rights[i] <= right + _ANCHOR_TOL)
+    out: list[QuoteRun] = []
+    i = 0
+    while i < n:
+        if not cand[i]:
+            i += 1
+            continue
+        j = i
+        while j < n and cand[j] and abs(lines[j].x0 - lines[i].x0) <= \
+                _JUST_LEFT_TOL:
+            j += 1
+        run = list(range(i, j))
+        i = j
+        l_off = round(min(lines[x].x0 for x in run) - left, 1)
+        r_off = round(right - max(rights[x] for x in run), 1)
+        if len(run) >= (3 if r_off >= _LEVEL_SEP else 4):
+            out.append(QuoteRun(start=run[0], end=run[-1] + 1,
+                                left_offset=l_off, right_offset=r_off))
+    return out

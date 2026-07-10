@@ -62,7 +62,9 @@ folio-vs-label agreement, TOC witnesses, footnote regions, PUA census, join stat
 typed FlowDoc IR (furniture strip, footnote split, semantic block classification —
 `blocks.verse` calibrated indent specs make verse line breaks content: stanza Paragraphs
 with U+2028 line separators that bypass the prose joiner, plus an uncalibrated
-verse-suspect witness on every build — paragraph join with dehyphenation,
+verse-suspect witness on every build; `blocks.quotes` classifies justified inset blocks
+into real coalesced blockquotes, class entry/exit breaking the paragraph —
+paragraph join with dehyphenation,
 drop-cap reattachment and cross-run lost-space seams, flow.columns re-split of columned back
 matter into print reading
 order, textfix, printed-TOC rebuild, exact page anchors — inline at the run seam when a

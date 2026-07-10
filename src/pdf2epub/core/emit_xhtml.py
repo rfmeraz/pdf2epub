@@ -247,6 +247,30 @@ class Emitter:
                     self._emit_verse_group(vrun)
                     i = j
                     continue
+                if b.block_class == "quote":
+                    # gather the consecutive quote run (paragraphs +
+                    # interleaved page anchors) into ONE blockquote; trailing
+                    # anchors belong to what FOLLOWS the quotation
+                    j = i
+                    qrun: list = []
+                    while j < len(blocks):
+                        nb = blocks[j]
+                        if isinstance(nb, Paragraph) and \
+                                nb.block_class == "quote" and \
+                                (nb.role or "p") != "drop":
+                            qrun.append(nb)
+                        elif isinstance(nb, PageAnchor):
+                            qrun.append(nb)
+                        else:
+                            break
+                        j += 1
+                    while qrun and isinstance(qrun[-1], PageAnchor):
+                        qrun.pop()
+                        j -= 1
+                    self._maybe_split_for(b, toc_done)
+                    self._emit_quote_group(qrun)
+                    i = j
+                    continue
                 self._maybe_split_for(b, toc_done)
                 self._emit_paragraph(b)
             i += 1
@@ -359,6 +383,29 @@ class Emitter:
                 continue
             inner = self._verse_lines_html(b)
             classes = " ".join(dict.fromkeys(["vs", *b.classes]))
+            parts.append(f'<p class="{classes}">{inner}</p>')
+        parts.append("</blockquote>")
+        f.body_parts.append("".join(parts))
+
+    def _emit_quote_group(self, run: list) -> None:
+        """Consecutive quote-classified Paragraphs emit as ONE
+        <blockquote class="quote"> holding a <p class="bq"> per paragraph
+        (the 1 flow-Paragraph = 1 emitted block invariant gate 17 depends on
+        is kept, paragraph by paragraph). Interleaved page anchors emit as
+        the standard pagebreak div between paragraphs."""
+        f = self._ensure_file()
+        parts = ['<blockquote class="quote">']
+        for b in run:
+            if isinstance(b, PageAnchor):
+                pid = f"pg-{b.label}"
+                parts.append(
+                    f'<div id="{pid}" class="pagebreak" epub:type="pagebreak" '
+                    f'role="doc-pagebreak" aria-label={quoteattr(b.label)}>'
+                    "</div>")
+                f.pagebreaks.append((b.label, pid))
+                continue
+            inner = self._items_html(b.items)
+            classes = " ".join(dict.fromkeys(["bq", *b.classes]))
             parts.append(f'<p class="{classes}">{inner}</p>')
         parts.append("</blockquote>")
         f.body_parts.append("".join(parts))

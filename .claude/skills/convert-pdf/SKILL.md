@@ -80,6 +80,20 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
   render-verify queue item — cover it with a spec, a `class:` override, or
   an adjudication, never ignore it. Verse lines then ship line-for-line
   (gate 23 counts them; packets show them as `| ` lines).
+  The report also lists justified-inset (quote-shaped) runs with measured
+  left/right insets and a `blocks.quotes` draft. VERIFY on renders, then
+  record specs — insets are pt offsets from the page's OWN body edges (NOT
+  the modal column). The witness is the justified right-edge cluster, the
+  OPPOSITE of ragged verse; the body's first-line indent often shares the
+  quote's left offset but never earns the cluster. Classified quotes ship
+  as real coalesced `<blockquote>`s (packets show them as `> ` paragraphs);
+  class entry/exit breaks the paragraph there (print block boundaries the
+  geometric joiner may not see — I&B's italic scripture quotes were fused
+  onto their intros for exactly this reason). Look-alikes that are NOT
+  quotes: drop-cap wrap lines beside a wide initial (auto-vetoed) and
+  single-level ragged verse at the same inset (calibrate verse FIRST —
+  verse wins on shared pages). A 2-line quote paragraph alone on a page
+  has no cluster witness: use `class:quote`.
 
 ## Step 3 — Build → QA → adjudicate → iterate (≤8)
 

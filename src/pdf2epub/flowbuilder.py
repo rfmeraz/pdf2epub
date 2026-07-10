@@ -23,7 +23,13 @@ from .analyze import (
     furniture_template,
     line_pstyle,
 )
-from .blockshapes import verse_shape_groups, verse_shape_suspects
+from .blockshapes import (
+    body_anchors,
+    justified_rights,
+    quote_shape_runs,
+    verse_shape_groups,
+    verse_shape_suspects,
+)
 from .config import PdfBookConfig
 from .core.model import (
     Figure,
@@ -547,6 +553,80 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                           for i in stale_specs) +
                 " — recalibrate base/turns or remove the spec")
 
+    # ---- semantic block classification: quotes, per blocks.quotes specs.
+    # The witness is the OPPOSITE of verse: a justified inset block (shared
+    # x0 run whose right edges cluster — the same block_right that vetoes
+    # verse). Stamps block_class ONLY; join decisions are untouched, so the
+    # flow's paragraphs are identical with or without the spec. Insets are
+    # measured from the page's OWN body anchors, not the modal column: on
+    # quote-heavy pages the shift detector keys off the quote inset itself
+    # (I&B rectos: 22 quote lines at x0=81 outvote 10 body lines at 63).
+    if cfg.blocks_quotes:
+        quote_spec_by_page: dict[int, int] = {}
+        for si, qs in enumerate(cfg.blocks_quotes):
+            for pg in qs.pages:
+                quote_spec_by_page.setdefault(pg, si)
+        qspec_runs = Counter()
+        carried: tuple[float, float] | None = None
+        for pno in sorted(pages_lines):
+            si = quote_spec_by_page.get(pno)
+            lines = pages_lines[pno]
+            if si is None or not lines:
+                continue
+            qs = cfg.blocks_quotes[si]
+            blocked, forced = [], []
+            for L in lines:
+                act = ov.get((L.page, L.idx))
+                if act in ("class:quote", "class:prose"):
+                    consumed.add((L.page, L.idx))
+                    class_applied.add((L.page, L.idx))
+                blocked.append(L.region >= 0 or L.block_class == "verse"
+                               or act == "class:prose")
+                forced.append(act == "class:quote")
+
+            def _size(ln):
+                f = doc.fonts.get(ln.dominant_font())
+                return f.size if f else None
+
+            anchors = body_anchors(
+                [L.ln for L in lines], body_size, size_of=_size,
+                skip=[L.region >= 0 for L in lines])
+            if anchors is not None and carried is not None and \
+                    abs(anchors[0] - (carried[0] + qs.left_inset)) <= qs.tol:
+                # a page mid-quotation can be almost ALL quote lines (BoK
+                # p.260: one body line among thirty) — its apparent 'body
+                # left' IS the previous page's quote target, and its right
+                # anchor is the quote's own margin. Trust the carried body
+                # edges instead.
+                anchors = carried
+            elif anchors is not None:
+                carried = anchors
+            if anchors is None:
+                anchors = carried
+            if anchors is None:
+                continue  # sparse/display page: nothing to anchor against
+            runs = quote_shape_runs(
+                [L.ln for L in lines], anchors[0], anchors[1],
+                qs.left_inset, qs.right_inset, body_size, tol=qs.tol,
+                size_of=_size, rights=[L.block_right for L in lines],
+                blocked=blocked, forced=forced)
+            for r in runs:
+                qspec_runs[si] += 1
+                counts["quote-runs"] += 1
+                for x in range(r.start, r.end):
+                    lines[x].block_class = "quote"
+                    counts["quote-lines"] += 1
+        stale_q = [i for i in range(len(cfg.blocks_quotes))
+                   if not qspec_runs.get(i)]
+        if stale_q:
+            raise SystemExit(
+                "stale blocks.quotes (classified no runs): entries " +
+                ", ".join(f"#{i} pages {cfg.blocks_quotes[i].pages[:6]}…"
+                          if len(cfg.blocks_quotes[i].pages) > 6 else
+                          f"#{i} pages {cfg.blocks_quotes[i].pages}"
+                          for i in stale_q) +
+                " — recalibrate insets or remove the spec")
+
     # verse-suspect witness (uncalibrated, all books): verse-shaped runs the
     # config does not cover are structure-loss risks — the joiner would shred
     # or fuse them as prose. Precision is kept high by the stricter suspect
@@ -702,6 +782,17 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             elif L.colno >= 0:
                 # columned entry lines: indent decides (see _column_resplit)
                 brk = (act == "break") or (act != "join" and L.entry_break)
+            elif prev_L is not None and \
+                    (prev_L.block_class == "quote") != \
+                    (L.block_class == "quote"):
+                # entering/leaving a classified quote IS a block boundary in
+                # print (the verse precedent). The geometric joiner cannot
+                # see some of these seams: I&B's italic scripture quotes
+                # fused onto their intro prose on 38 boundaries — the ps-twin
+                # rule eats the style change, the indent-break rule requires
+                # the ROMAN body ps, and the leading gap sits under the
+                # threshold. Interior quote joins stay fully geometric.
+                brk = act != "join"
             else:
                 brk = _break_before(L, prev_L, act, body_ps, cfg, geo, med_lead,
                                     open_is_body, pno)
@@ -717,6 +808,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if L.block_class == "verse":
                     open_para.block_class = "verse"
                     counts["verse-stanzas"] += 1
+                elif L.block_class == "quote":
+                    open_para.block_class = "quote"
                 if is_dropcap:
                     open_para.classes = ["first-dropcap"]
                     open_para.style = body_ps  # dropcap letter belongs to body text
@@ -755,6 +848,15 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if L.block_class == "verse":
                     open_para.block_class = "verse"
                     counts["verse-stanzas"] += 1
+                elif L.block_class == "quote":
+                    open_para.block_class = "quote"
+            if not brk and prev_L is not None and \
+                    open_para.block_class == "quote" and \
+                    L.block_class != "quote":
+                # a paragraph mixing quote and prose lines can only arise
+                # from an explicit join override (a recorded judgment) or a
+                # dropcap glue; it ships OUTSIDE the blockquote
+                open_para.block_class = None
             _append_line(open_para, L, cfg, doc, counts, glue=prev_dropcap,
                          verse=(L.block_class == "verse"
                                 and open_para.block_class == "verse"))
@@ -809,6 +911,10 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     close_para()
     for a2 in pending_anchors:
         res.flow.blocks.append(a2)
+    if cfg.blocks_quotes:
+        counts["quote-paras"] = sum(
+            1 for b in res.flow.blocks
+            if isinstance(b, Paragraph) and b.block_class == "quote")
 
     # ---- attach note markers (global pass: a marker can sit in a paragraph
     # that STARTED on the previous page)
@@ -884,34 +990,19 @@ def _ps_root(ps: str) -> str:
 # right edges cluster to sub-point precision is JUSTIFIED — that shared edge is
 # the block's OWN right margin, against which interior lines are full, not
 # short. Ragged verse (line widths scatter by whole points) yields no cluster
-# and keeps its meaningful line-by-line breaks. Left tolerance groups a block;
-# right tolerance is set by how tightly justification lands the right edge.
-_BLOCK_LEFT_TOL = 3.0
-_BLOCK_RIGHT_TOL = 2.0
+# and keeps its meaningful line-by-line breaks. The tolerances live with the
+# derivation in blockshapes (_JUST_LEFT_TOL / _JUST_RIGHT_TOL).
 
 
 def _assign_block_right(lines: list[_L]) -> None:
     """Set L.block_right for lines in a justified inset block to that block's
     own right margin (the largest x1 that >=2 lines in the run reach). Runs
     with no such cluster — a lone inset line, or ragged verse — stay None and
-    fall back to the body-column edge, preserving today's behavior."""
-    i, n = 0, len(lines)
-    while i < n:
-        j = i + 1
-        x0 = lines[i].ln.x0
-        while j < n and abs(lines[j].ln.x0 - x0) <= _BLOCK_LEFT_TOL:
-            j += 1
-        run = lines[i:j]
-        if len(run) >= 2:
-            xs = [L.ln.x1 for L in run]
-            margin = next(
-                (c for c in sorted(xs, reverse=True)
-                 if sum(1 for x in xs if abs(x - c) <= _BLOCK_RIGHT_TOL) >= 2),
-                None)
-            if margin is not None:
-                for L in run:
-                    L.block_right = margin
-        i = j
+    fall back to the body-column edge, preserving today's behavior. The
+    derivation lives in blockshapes.justified_rights: the same cluster that
+    vetoes verse is the blocks.quotes witness (one code path, never two)."""
+    for L, m in zip(lines, justified_rights([L.ln for L in lines])):
+        L.block_right = m
 
 
 def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,

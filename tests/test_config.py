@@ -201,15 +201,57 @@ def test_blocks_verse_parsing(tmp_path):
         load_config(p)
 
 
+def test_blocks_quotes_parsing(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text(
+        "source: {folder: p, pdf: b.pdf}\n"
+        "blocks:\n"
+        "  quotes:\n"
+        "    - {pages: [\"16-18\", 51], left_inset: 18, right_inset: 18,\n"
+        "       note: I&B inset quotes}\n")
+    cfg = load_config(p)
+    assert cfg.blocks_quotes[0].pages == [16, 17, 18, 51]
+    assert cfg.blocks_quotes[0].left_inset == 18.0
+    assert cfg.blocks_quotes[0].right_inset == 18.0
+    assert cfg.blocks_quotes[0].tol == 3.0
+    # right_inset is OPTIONAL (BoK-style left-only inset, right = body edge)
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "blocks: {quotes: [{pages: [40], left_inset: 36, note: n}]}")
+    assert load_config(p).blocks_quotes[0].right_inset == 0.0
+    with pytest.raises(ConfigError, match="requires a note"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {quotes: [{pages: [1], left_inset: 18}]}")
+        load_config(p)
+    # a quote at the body left edge has no detectable shape
+    with pytest.raises(ConfigError, match="left_inset must be"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {quotes: [{pages: [1], right_inset: 18, "
+                     "note: n}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="unknown key"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {quotes: [{pages: [1], left_inset: 18, "
+                     "indent: 3, note: n}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="overlap"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "flow: {columns: [{pages: [35], count: 2, note: n}]}\n"
+                     "blocks: {quotes: [{pages: [35], left_inset: 18, "
+                     "note: n}]}")
+        load_config(p)
+
+
 def test_class_override_verbs(tmp_path):
     p = tmp_path / "book.yaml"
     p.write_text("source: {folder: p, pdf: b.pdf}\n"
                  "flow: {overrides: ["
                  "{page: 1, line: 2, action: \"class:verse\", note: n},"
-                 " {page: 1, line: 3, action: \"class:prose\", note: n}]}")
+                 " {page: 1, line: 3, action: \"class:prose\", note: n},"
+                 " {page: 1, line: 4, action: \"class:quote\", note: n}]}")
     cfg = load_config(p)
     assert cfg.flow_overrides[0].action == "class:verse"
     assert cfg.flow_overrides[1].action == "class:prose"
+    assert cfg.flow_overrides[2].action == "class:quote"
     with pytest.raises(ConfigError, match="action invalid"):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"
                      "flow: {overrides: [{page: 1, line: 2, "

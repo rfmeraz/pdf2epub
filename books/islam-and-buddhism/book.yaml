@@ -257,6 +257,18 @@ glyphs:
     - {pages: [36, 37, 38, 41, 42, 44, 47], replace: "", note: "notes 10/12/13/18/20/22/25: FFFD runs after the note number; renders pp.36-47 show only the space before the note text"}
     - {pages: [98], replace: "", note: "FFFD run after 'utterly \u2018empty\u2019.' mid-paragraph; p.98 render shows the sentence flowing straight on"}
 
+blocks:
+  # JP-P9: the book quotes at a justified 18pt inset off BOTH body edges
+  # (verified on renders pp.51/151: Dalai Lama passages, al-Juzjani account;
+  # detector evidence: 86 justified 18/18 runs on 61 pages across 11-160).
+  # The body's own 18pt first-line indent shares the left offset but never
+  # earns the justified-right witness. Ragged single-level VERSE candidates
+  # (right offsets 86-158pt) sit far outside tol and stay for the Phase F
+  # verse re-judge.
+  quotes:
+    - {pages: ["11-160"], left_inset: 18, right_inset: 18,
+       note: "18/18pt justified inset block quotes throughout the body; render-verified pp.51/151"}
+
 fonts:
   embed: []
   subset: true

@@ -301,6 +301,10 @@ fits the taxonomy below.
   printed — the line structure is correct by construction. Report
   `structure-loss` only where verse appears as flowed prose WITHOUT the
   `| ` prefixes, or a `| ` line visibly fuses two verse lines in one.
+- Paragraphs prefixed `> ` are print BLOCK QUOTATIONS shipped as real
+  blockquotes. Report `quote-boundary` only where quoted matter continues
+  into an unmarked paragraph, body prose appears inside the `> ` block, or
+  two separate quotations visibly fuse into one.
 - Dash and curly-quote conventions as they appear; {{toc}} entries are a
   rebuilt hyperlinked Contents (page numbers removed by design) — but a
   visibly incomplete or garbled Contents IS reportable.

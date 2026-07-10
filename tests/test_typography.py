@@ -476,3 +476,25 @@ def test_verse_integrity_counts():
     flattened = _doc("c1.xhtml", "<p>like dirt others come</p>")
     n, exp, got = verse_integrity_counts([stanza, prose], [flattened])
     assert (n, exp, got) == (1, 2, 0)  # the old-EPUB promotion evidence
+
+
+def test_slicer_quote_paragraph_one_block():
+    # gate 17's 1 flow-Paragraph = 1 emitted block invariant, quote cell:
+    # each <p class="bq"> slices as ONE block (in_blockquote)
+    from pdf2epub.core.qa_pageslice import slice_pages
+
+    xhtml = (
+        '<div class="pagebreak" epub:type="pagebreak" role="doc-pagebreak" '
+        'aria-label="51" id="pg-51"></div>'
+        '<blockquote class="quote">'
+        '<p class="bq">Through your kindness towards others, your mind '
+        "will open to peace.</p>"
+        '<p class="bq">All this is possible.</p>'
+        "</blockquote>")
+    docs = [_doc("c1.xhtml", xhtml)]
+    res = slice_pages(docs, [51], {51: "51"})
+    assert res.ok
+    blks = [b for b in res.slices[51] if b.tag == "p"]
+    assert len(blks) == 2
+    assert all(b.in_blockquote for b in blks)
+    assert "bq" in blks[0].classes

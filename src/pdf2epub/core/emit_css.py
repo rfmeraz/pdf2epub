@@ -65,6 +65,8 @@ h1, h2, h3 { font-weight: normal; text-align: center; page-break-after: avoid; }
 blockquote { margin: 0.7em 2em; }
 blockquote p { text-indent: 0; }
 blockquote.verse { margin: 1em 2.5em; }
+blockquote.quote { margin: 0.7em 1.6em; }
+p.bq { text-indent: 0; margin: 0.4em 0; }
 p.vs { text-indent: 0; text-align: left; margin: 0.8em 0; }
 p.vs span.vl { display: block; padding-left: 1.5em; text-indent: -1.5em; }
 p.vs span.vt { padding-left: 3em; }

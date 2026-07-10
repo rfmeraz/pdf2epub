@@ -172,6 +172,17 @@ glyphs:
   fail_on_unmapped_pua: true
   gt_strip_phrases: []
 
+blocks:
+  # JP-P9: long hadith/athar quotations set at a justified 36pt LEFT inset,
+  # right edge at the body margin (render-verified pp.193/220/259-261: the
+  # ʿAlī narrations, 'The scholar will be brought forward…'). Drop-cap wrap
+  # lines share the same 36pt inset beside wide initials (pp.9/50/163/294)
+  # and are vetoed by the detector; the p.220 poet quatrain above the quote
+  # is ragged VERSE and stays for the Phase F verse re-judge.
+  quotes:
+    - {pages: [56, 193, 220, 227, "259-261"], left_inset: 36,
+       note: "36pt left-inset justified quotations; render-verified pp.193/220/259-261"}
+
 fonts:
   embed: []      # readings are English text; no special glyphs remain
   subset: true

@@ -86,6 +86,27 @@ class VerseSpec:
 
 
 @dataclass(slots=True)
+class QuoteSpec:
+    """Semantic block judgment: pages carrying print block quotes — JUSTIFIED
+    inset blocks (the opposite signal of ragged verse). ``left_inset`` /
+    ``right_inset`` are pt offsets of the quote block's edges from the page's
+    OWN body-block edges (blockshapes.body_anchors — NOT the modal column:
+    on quote-heavy pages the shift detector keys off the quote inset itself).
+    I&B: 18/18 both sides; BoK: 36 left only (right_inset 0 = the body
+    margin). Classification stamps block_class only; JOIN DECISIONS ARE
+    UNTOUCHED — the flow's paragraphs are identical with or without the spec,
+    they just emit inside a real <blockquote>. ``note`` records the render
+    evidence and is REQUIRED; a spec that classifies ZERO runs is stale and
+    fails the build. Per-line corrections: flow.overrides ``class:quote`` /
+    ``class:prose``."""
+    pages: list[int]
+    left_inset: float = 0.0
+    right_inset: float = 0.0
+    tol: float = 3.0
+    note: str = ""
+
+
+@dataclass(slots=True)
 class CharStyleFlags:
     smallcaps: bool = False
     symbol: bool = False
@@ -231,6 +252,7 @@ class PdfBookConfig:
 
     # semantic block grammar (JP-P9): per-class judgment specs
     blocks_verse: list[VerseSpec] = field(default_factory=list)
+    blocks_quotes: list[QuoteSpec] = field(default_factory=list)
 
     # footnotes (JP-P4)
     footnote_policy: str = "none"   # none | markers
@@ -456,7 +478,7 @@ def load_config(path: Path) -> PdfBookConfig:
         _check_keys("flow.overrides[]", ov, {"page", "line", "action", "note"})
         action = ov["action"]
         if action not in ("join", "break", "drop", "keep",
-                          "class:verse", "class:prose") \
+                          "class:verse", "class:quote", "class:prose") \
                 and not action.startswith("role:"):
             raise ConfigError(f"flow.overrides action invalid: {action}")
         cfg.flow_overrides.append(FlowOverride(page=int(ov["page"]), line=int(ov["line"]),
@@ -574,7 +596,7 @@ def load_config(path: Path) -> PdfBookConfig:
                                                note=fr.get("note", "")))
 
     bl = data.get("blocks", {})
-    _check_keys("blocks", bl, {"verse"})
+    _check_keys("blocks", bl, {"verse", "quotes"})
     for vs in bl.get("verse", []) or []:
         _check_keys("blocks.verse[]", vs,
                     {"pages", "base", "turns", "tol", "stanza_gap", "note"})
@@ -602,6 +624,31 @@ def load_config(path: Path) -> PdfBookConfig:
             tol=float(vs.get("tol", 2.0)),
             stanza_gap=float(vs.get("stanza_gap", 1.4)),
             note=vs["note"]))
+    for qs in bl.get("quotes", []) or []:
+        _check_keys("blocks.quotes[]", qs,
+                    {"pages", "left_inset", "right_inset", "tol", "note"})
+        if not qs.get("note"):
+            raise ConfigError("blocks.quotes requires a note "
+                              "(render-verified evidence)")
+        pages = _page_list(qs.get("pages", []) or [])
+        if not pages:
+            raise ConfigError("blocks.quotes needs at least one page")
+        left_inset = float(qs.get("left_inset", 0.0))
+        if left_inset < 6.0:
+            raise ConfigError("blocks.quotes left_inset must be >= 6pt (a "
+                              "quote at the body left edge has no detectable "
+                              "shape; right_inset alone cannot carry it)")
+        col_pages = {p for cs in cfg.flow_columns for p in cs.pages}
+        fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
+        clash = set(pages) & (col_pages | fig_pages)
+        if clash:
+            raise ConfigError("blocks.quotes pages overlap flow.columns/"
+                              f"figure_pages: {sorted(clash)[:8]}")
+        cfg.blocks_quotes.append(QuoteSpec(
+            pages=pages, left_inset=left_inset,
+            right_inset=float(qs.get("right_inset", 0.0)),
+            tol=float(qs.get("tol", 3.0)),
+            note=qs["note"]))
 
     qa = data.get("qa", {})
     _check_keys("qa", qa, {"lost_space_allow", "garble_chars"})

@@ -1555,19 +1555,26 @@ def test_dehyphenate_keeps_compound_chains():
 
 
 def test_center_lines_respect_gap_rule(tmp_path):
-    # M&R copyright page: every line /center under join_center_lines, but
-    # the 22pt block gaps are paragraph breaks (leading is 13pt)
+    # M&R copyright page: every line 9pt /center under join_center_lines,
+    # but the 22pt block gaps are paragraph breaks (leading 13pt; threshold
+    # gap_factor x max(med_lead, 1.35 x the line's OWN size) = 20.8 at 9pt)
     lines = [
-        _line("Anchor prose at full measure for the modal column", 40,
+        _line("Anchor prose at full measure for the modal column", 27,
               x0=72, width=290),
-        _line("and a second full-measure line to hold the edges.", 53,
+        _line("and a second full-measure line to hold the edges,", 40,
               x0=72, width=290),
-        _line("(c) 2004 William C. Chittick", 200, x0=166, width=100),
+        _line("plus a third and a fourth anchor line so that the", 53,
+              x0=72, width=290),
+        _line("median leading of the page stays at thirteen too.", 66,
+              x0=72, width=290),
+        _line("(c) 2004 William C. Chittick", 200, x0=166, width=100,
+              font=SMALL),
         _line("This edition printed and distributed by", 222,
-              x0=146, width=140),
-        _line("Fons Vitae, Louisville, Kentucky", 235, x0=160, width=112),
+              x0=146, width=140, font=SMALL),
+        _line("Fons Vitae, Louisville, Kentucky", 235, x0=160, width=112,
+              font=SMALL),
         _line("All rights reserved. No part of this book", 257,
-              x0=110, width=212),
+              x0=110, width=212, font=SMALL),
     ]
     res = build_flow(_doc([_page(1, lines)]),
                      _cfg(tmp_path, join_center_lines=True),
@@ -1652,3 +1659,321 @@ def test_center_gap_scales_with_display_size(tmp_path):
                      say=lambda *a: None)
     titles = [p.text() for p in _paras(res.flow) if "My Years" in p.text()]
     assert titles == ["My Years without Mawlana"]
+
+
+# --------------------------------------------------------------- blocks.quotes
+
+def _quote_cfg(tmp_path, pages, left=18.0, right=18.0, **kw):
+    from pdf2epub.config import QuoteSpec
+    return _cfg(tmp_path, blocks_quotes=[QuoteSpec(
+        pages=pages, left_inset=left, right_inset=right,
+        note="test quotes")], **kw)
+
+
+def _ib_p51_lines():
+    # I&B p.51-shaped page (synthetic column 72..362): body full measure at
+    # x0=72/width 290; the body's own first-line indent is ALSO 18pt (x0=90),
+    # exactly the quote inset -- the justified right cluster is the only
+    # discriminator between them
+    return [
+        _line("Anchor prose at full measure holds the column edge", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line anchors the right.", 61,
+              x0=72, width=290),
+        _line("An indented body paragraph opens here and runs to", 74,
+              x0=90, width=272),
+        _line("the full body measure on its continuation line and", 87,
+              x0=72, width=290),
+        _line("closes short.", 100, x0=72, width=80),
+        _line("Through your kindness towards others, your mind xx", 113,
+              x0=90, width=254),
+        _line("will open to peace and expanding this inner state", 126,
+              x0=90, width=254.4),
+        _line("brings unity and harmony.", 139, x0=90, width=140),
+        _line("One is reminded here of the verse at full measure", 152,
+              x0=72, width=290),
+        _line("closing the page.", 165, x0=72, width=100),
+    ]
+
+
+def test_quote_run_classified_joins_untouched(tmp_path):
+    # the doctrine cell: blocks.quotes stamps block_class ONLY -- the flow's
+    # paragraphs are IDENTICAL with and without the spec; the body's own
+    # first-line indent at the quote offset (run of one, no justified right)
+    # never matches
+    pages = [_page(1, _ib_p51_lines())]
+    plain = build_flow(_doc(pages), _cfg(tmp_path), say=lambda *a: None)
+    res = build_flow(_doc([_page(1, _ib_p51_lines())]),
+                     _quote_cfg(tmp_path, [1]), say=lambda *a: None)
+    assert [p.text() for p in _paras(plain.flow)] == \
+        [p.text() for p in _paras(res.flow)]
+    paras = _paras(res.flow)
+    assert len(paras) == 4
+    quoted = [p for p in paras if p.block_class == "quote"]
+    assert len(quoted) == 1
+    assert quoted[0].text().startswith("Through your kindness")
+    assert "brings unity" in quoted[0].text()
+    # the indented body paragraph shares the quote's x0 but stays prose
+    assert paras[1].block_class is None
+    assert res.counts.get("quote-runs") == 1
+    assert res.counts.get("quote-lines") == 3
+    assert res.counts.get("quote-paras") == 1
+
+
+def test_quote_boundary_breaks_and_explicit_join_demotes(tmp_path):
+    # class entry/exit is a block boundary in print: a quote whose last
+    # justified line runs FULL still separates from the resuming prose (the
+    # I&B italic-scripture seam the geometric joiner cannot see). An
+    # explicit join override is a recorded judgment: the mixed paragraph
+    # ships OUTSIDE the blockquote, silently.
+    def _lines():
+        return [
+            _line("Anchor prose at full measure holds the column edge", 48,
+                  x0=72, width=290),
+            _line("and ends short here.", 61, x0=72, width=120),
+            _line("A justified quotation line reaching its margin xxx", 81,
+                  x0=90, width=254),
+            _line("and a second one reaching exactly the same margin.", 94,
+                  x0=90, width=254.4),
+            _line("Prose resumes flush left after the full-width exit", 107,
+                  x0=72, width=290),
+            _line("before ending.", 120, x0=72, width=90),
+        ]
+    res = build_flow(_doc([_page(1, _lines())]), _quote_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    paras = _paras(res.flow)
+    quoted = [p for p in paras if p.block_class == "quote"]
+    assert len(quoted) == 1 and quoted[0].text().startswith("A justified")
+    assert "Prose resumes" not in quoted[0].text()  # boundary broke
+    assert res.counts.get("quote-paras") == 1
+
+    cfg2 = _quote_cfg(tmp_path, [1])
+    cfg2.flow_overrides = [
+        FlowOverride(page=1, line=4, action="join", note="recorded judgment")]
+    res2 = build_flow(_doc([_page(1, _lines())]), cfg2, say=lambda *a: None)
+    paras2 = _paras(res2.flow)
+    fused = [p for p in paras2 if "Prose resumes" in p.text()]
+    assert len(fused) == 1 and fused[0].text().startswith("A justified")
+    assert fused[0].block_class is None  # mixed: ships outside blockquote
+    assert res2.counts.get("quote-paras", 0) == 0
+
+
+def test_quote_stale_spec_fails_build(tmp_path):
+    lines = [_line("Ordinary full-measure prose only on this page so", 87,
+                   x0=72, width=290),
+             _line("the quote spec matches nothing at all anywhere.", 100,
+                   x0=72, width=290)]
+    with pytest.raises(SystemExit, match="stale blocks.quotes"):
+        build_flow(_doc([_page(1, lines)]), _quote_cfg(tmp_path, [1]),
+                   say=lambda *a: None)
+
+
+def test_quote_class_overrides(tmp_path):
+    # class:quote forces a lone inset line (no justified witness possible);
+    # class:prose ejects a detected line from the run
+    lines = _ib_p51_lines()
+    cfg = _quote_cfg(tmp_path, [1])
+    cfg.flow_overrides = [
+        FlowOverride(page=1, line=7, action="class:prose", note="not quote")]
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    quoted = [p for p in _paras(res.flow) if p.block_class == "quote"]
+    assert len(quoted) == 1
+    assert "brings unity" not in quoted[0].text()
+
+    lines2 = [
+        _line("Anchor prose at full measure holds the column edge", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line anchors the right.", 61,
+              x0=72, width=290),
+        _line("A single inset quotation line, ragged.", 81,
+              x0=90, width=160),
+        _line("Prose resumes at the full measure after the single", 101,
+              x0=72, width=290),
+        _line("inset line and closes.", 114, x0=72, width=130),
+    ]
+    cfg2 = _quote_cfg(tmp_path, [1])
+    cfg2.flow_overrides = [
+        FlowOverride(page=1, line=2, action="class:quote", note="single")]
+    res2 = build_flow(_doc([_page(1, lines2)]), cfg2, say=lambda *a: None)
+    quoted2 = [p for p in _paras(res2.flow) if p.block_class == "quote"]
+    assert len(quoted2) == 1
+    assert quoted2[0].text() == "A single inset quotation line, ragged."
+
+
+def test_quote_verse_precedence_same_page(tmp_path):
+    # a page carrying BOTH: verse (ragged two-level) keeps its class; the
+    # justified run becomes the quote; neither poaches the other
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges", 61,
+              x0=72, width=290),
+        _line("and a third full-measure anchor ends a bit short.", 74,
+              x0=72, width=250),
+        _line("True couplet first line at the base,", 94, x0=81, width=190),
+        _line("and its turn line completes it.", 107, x0=108, width=155),
+        _line("A justified quote line set at the quote offset xx", 127,
+              x0=90, width=254),
+        _line("second justified line reaching the same margin yy", 140,
+              x0=90, width=254.4),
+        _line("and its closing line ends short.", 153, x0=90, width=140),
+        _line("Full-measure prose closes the page after the quote", 173,
+              x0=72, width=290),
+        _line("so nothing dangles at the bottom of this test page.", 186,
+              x0=72, width=290),
+    ]
+    from pdf2epub.config import QuoteSpec
+    cfg = _verse_cfg(tmp_path, [1], blocks_quotes=[QuoteSpec(
+        pages=[1], left_inset=18.0, right_inset=18.0, note="test quotes")])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    quoted = [p for p in paras if p.block_class == "quote"]
+    assert len(verse) == 1 and verse[0].text().startswith("True couplet")
+    assert len(quoted) == 1 and quoted[0].text().startswith("A justified")
+
+
+def test_emit_quote_group_with_anchor(tmp_path):
+    # two quote paragraphs spanning a page turn emit as ONE
+    # <blockquote class="quote"> with <p class="bq"> each and the page-2
+    # anchor div between them; surrounding prose stays ordinary <p>
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    p1 = _page(1, [
+        _line("Anchor prose at full measure holds the column edge", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line anchors the right,", 61,
+              x0=72, width=290),
+        _line("while a third one introduces the quotation and", 74,
+              x0=72, width=290),
+        _line("ends short here.", 87, x0=72, width=100),
+        _line("First quoted paragraph line one reaching margin xx", 107,
+              x0=90, width=254),
+        _line("line two also reaches the same justified margin yy", 120,
+              x0=90, width=254.4),
+        _line("and line three ends the paragraph early.", 133,
+              x0=90, width=180),
+    ])
+    p2 = _page(2, [
+        _line("Second quoted paragraph on the next page, again a", 87,
+              x0=90, width=254),
+        _line("justified pair of lines sharing the same margin xx", 100,
+              x0=90, width=254.4),
+        _line("ending shorter.", 113, x0=90, width=90),
+        _line("Prose resumes at the full measure after the block", 133,
+              x0=72, width=290),
+        _line("quotation ends and closes the little page nicely.", 146,
+              x0=72, width=290),
+        _line("A final full-measure anchor line holds the modal", 159,
+              x0=72, width=290),
+        _line("column against the six quote-inset lines above it.", 172,
+              x0=72, width=290),
+    ])
+    cfg = _quote_cfg(tmp_path, [1, 2])
+    res = build_flow(_doc([p1, p2]), cfg, say=lambda m: None)
+    out = Emitter(cfg, res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert body.count('<blockquote class="quote">') == 1
+    assert body.count('<p class="bq') == 2
+    bq = body[body.index('<blockquote class="quote">'):]
+    bq = bq[:bq.index("</blockquote>")]
+    assert 'aria-label="2"' in bq  # the page anchor sits INSIDE the group
+    assert "First quoted paragraph" in bq and "Second quoted" in bq
+    assert "Prose resumes" not in bq
+
+
+def test_blockshapes_quote_helpers():
+    # body_anchors and quote_shape_suspects on the real I&B p.51 numbers:
+    # body 63..362.8, quotes x0=81 justified at 344.8 -> insets 18/18
+    from pdf2epub.blockshapes import (body_anchors, justified_rights,
+                                      quote_shape_suspects)
+
+    class _Ln:
+        def __init__(self, x0, x1):
+            self.x0, self.x1 = x0, x1
+            self.vertical = False
+
+    lines = [
+        _Ln(63.0, 362.8), _Ln(63.0, 362.8), _Ln(63.0, 141.8),
+        _Ln(81.0, 344.8), _Ln(81.0, 344.7), _Ln(81.0, 344.8),
+        _Ln(81.0, 131.4),
+        _Ln(63.0, 362.8), _Ln(63.0, 167.7),
+    ]
+    assert body_anchors(lines, 11.0) == (63.0, 362.8)
+    rights = justified_rights(lines)
+    assert rights[3] == 344.8 and rights[6] == 344.8  # short last line too
+    assert rights[2] == 362.8  # body run's own justified margin
+    runs = quote_shape_suspects(lines, 11.0)
+    assert len(runs) == 1
+    r = runs[0]
+    assert (r.start, r.end) == (3, 7)
+    assert r.left_offset == 18.0 and r.right_offset == 18.0
+
+
+def test_quote_dropcap_wrap_vetoed(tmp_path):
+    # BoK shape: a wide 32pt initial pushes its wrap lines to a 36pt inset
+    # justified to the body right -- the SAME shape as the book's left-only
+    # quotes. The wrap lines (starting AT the letter's right edge) must not
+    # classify; the real quote further down the page must.
+    lines = [
+        _line("K", 95, x0=72, width=36, font=BIG),
+        _line("now that the wrap line beside the initial runs", 100,
+              x0=108, width=254),
+        _line("to the full body measure just like a real quote", 113,
+              x0=108, width=254.4),
+        _line("and continues at the column edge like ordinary prose", 126,
+              x0=72, width=290),
+        _line("before the paragraph closes somewhat short.", 139,
+              x0=72, width=200),
+        _line("A real left-inset quotation starts well below the", 165,
+              x0=108, width=254),
+        _line("initial and reaches the very same justified margin", 178,
+              x0=108, width=254.4),
+        _line("before ending early.", 191, x0=108, width=120),
+        _line("Prose resumes at the full measure and anchors the", 211,
+              x0=72, width=290),
+        _line("modal column with another full-measure line here.", 224,
+              x0=72, width=290),
+    ]
+    cfg = _quote_cfg(tmp_path, [1], left=36.0, right=0.0)
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    quoted = [p for p in _paras(res.flow) if p.block_class == "quote"]
+    assert len(quoted) == 1
+    assert quoted[0].text().startswith("A real left-inset")
+    # the dropcap paragraph (letter + wraps + continuation) stays prose
+    drop = [p for p in _paras(res.flow) if "wrap line beside" in p.text()]
+    assert all(p.block_class is None for p in drop)
+
+
+def test_quote_full_page_carried_anchors(tmp_path):
+    # BoK p.260 shape: a mid-quotation page that is almost ALL quote lines
+    # has no body-left cluster of its own -- its apparent body left IS the
+    # quote target. The carried anchors from the previous spec page classify
+    # it; the quote paragraph spans the page seam as ONE p.bq.
+    p1 = _page(1, [
+        _line("Anchor prose at full measure holds the column edge", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line anchors the right,", 61,
+              x0=72, width=290),
+        _line("introducing the quotation and ending a bit short.", 74,
+              x0=72, width=200),
+        _line("Hearts are vessels and the best of them contain a", 94,
+              x0=108, width=254),
+        _line("great deal, so people are of three distinct kinds", 107,
+              x0=108, width=254.4),
+    ])
+    p2 = _page(2, [
+        _line("those learned in the affairs of their Lord, those", 87,
+              x0=108, width=254),
+        _line("who seek knowledge along the path of salvation and", 100,
+              x0=108, width=254.4),
+        _line("the common folk that follow after every brayer.", 113,
+              x0=108, width=200),
+    ])
+    cfg = _quote_cfg(tmp_path, [1, 2], left=36.0, right=0.0)
+    res = build_flow(_doc([p1, p2]), cfg, say=lambda *a: None)
+    quoted = [p for p in _paras(res.flow) if p.block_class == "quote"]
+    assert len(quoted) == 1
+    assert quoted[0].text().startswith("Hearts are vessels")
+    assert quoted[0].text().endswith("every brayer.")
+    assert res.counts.get("quote-lines") == 5

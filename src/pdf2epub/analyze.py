@@ -224,6 +224,7 @@ class Analysis:
     rtl_chars: int = 0
     # semantic block shapes (evidence for the blocks: judgment)
     verse_suspect_pages: list[dict] = field(default_factory=list)
+    quote_suspect_pages: list[dict] = field(default_factory=list)
     # layout anomalies
     column_suspect_pages: list[int] = field(default_factory=list)
     low_agreement_pages: list[dict] = field(default_factory=list)
@@ -667,7 +668,7 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     # init (no furniture strip yet), so the BUILD warning stays the
     # authoritative witness; this section exists to seed the blocks.verse
     # judgment with measured base/turn offsets per page range.
-    from .blockshapes import verse_shape_suspects
+    from .blockshapes import quote_shape_suspects, verse_shape_suspects
 
     med = a.median_leading or geo.body_size * 1.3 or 13.0
     for p in in_flow:
@@ -693,6 +694,13 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
                 "n_lines": g.end - g.start,
                 "base": g.base_offsets, "turns": g.turn_offsets,
                 "first": p.lines[g.start].text()[:60]})
+        for q in quote_shape_suspects(p.lines, geo.body_size, size_of=_sz,
+                                      skip=centered):
+            a.quote_suspect_pages.append({
+                "page": p.number, "lines": [q.start, q.end - 1],
+                "n_lines": q.end - q.start,
+                "left_inset": q.left_offset, "right_inset": q.right_offset,
+                "first": p.lines[q.start].text()[:60]})
 
     # ---- cover proposal
     p1 = doc.pages[0]

@@ -27,7 +27,12 @@ Adobe products.
    calibrated base/turn indent specs turn print verse into stanza paragraphs
    whose line breaks are content — verse lines bypass the prose joiner and
    ship as `z3998:verse` blockquotes with one span per line; an uncalibrated
-   verse-suspect witness flags verse-shaped runs on every book),
+   verse-suspect witness flags verse-shaped runs on every book;
+   `blocks.quotes`: calibrated left/right insets classify JUSTIFIED inset
+   blocks — the right-edge cluster that vetoes ragged verse is the quote
+   witness — which ship as real coalesced `<blockquote>`s; class entry/exit
+   is a paragraph boundary, healing quote-boundary fusions the geometric
+   joiner cannot see, while interior joins stay purely geometric),
    join lines into paragraphs (dehyphenation,
    drop-cap reattachment, cross-run lost-space seams), re-split columned back
    matter into print reading

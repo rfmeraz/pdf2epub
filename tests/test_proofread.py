@@ -203,3 +203,24 @@ def test_chunk_suffix_past_sixteen():
     assert _chunk_suffix(16) == "q"
     assert _chunk_suffix(25) == "z"
     assert _chunk_suffix(26) == "x26"
+
+
+def test_walk_rendering_quote_block():
+    # blocks.quotes paragraphs render with the > prefix (readers see the
+    # quote boundary), each paragraph its own block inside the blockquote
+    doc = _doc("ch.xhtml", (
+        '<p>Prose introduces the quotation:</p>'
+        '<blockquote class="quote">'
+        '<p class="bq">Through your kindness towards others, your mind '
+        "will open to peace.</p>"
+        '<p class="bq">All this is possible. But first we must change '
+        "ourselves.</p>"
+        "</blockquote>"
+        "<p>Prose resumes after the quotation.</p>"))
+    blocks, _ = walk_doc(doc, is_notes=False, k_start=0)
+    lines = [l for b in blocks for l in b.lines]
+    assert any(l.startswith("> Through your kindness") for l in lines)
+    assert any(l.startswith("> All this is possible") for l in lines)
+    assert any(l == "Prose resumes after the quotation." for l in lines)
+    q = [b for b in blocks if b.lines and b.lines[0].startswith(">")]
+    assert len(q) == 2  # one block per quoted paragraph

@@ -627,6 +627,77 @@ with analyze.
   Corpus diff: M&R loses all 49 (all bogus), BoK/HU/sufism unchanged, I&B
   loses 7 with byte-identical output. Width alone is NOT full measure.
 
+## Semantic block grammar: quotes (2026-07-10, Phase B)
+
+`blocks.quotes` classifies JUSTIFIED inset blocks — the right-edge cluster
+that vetoes ragged verse IS the quote witness (one derivation:
+blockshapes.justified_rights now backs both flowbuilder.block_right and the
+quote detectors). Spec: `{pages, left_inset, right_inset (0 = body edge),
+tol, note}`. Lessons that shaped it:
+
+- **Insets anchor to the page's OWN body edges, never the modal column.**
+  I&B's modal column [72,363] is a recto-left/verso-right CHIMERA (rectos
+  set body at 63..362.8, versos 72..371.8), and on quote-heavy rectos the
+  shift detector keys off the quote inset itself (22 quote lines at x0=81
+  outvote 10 body lines: shift(51) = -9, exactly wrong).
+  blockshapes.body_anchors: smallest shared x0 / largest shared x1 of
+  body-size lines; right edge falls back to the widest line STARTING at the
+  left anchor (quote-heavy pages often keep only one full body line).
+- **Class entry/exit is a paragraph boundary; interior joins stay
+  geometric.** The plan said "join decisions untouched", and the spec alone
+  does hold that for interior lines — but the acceptance evidence showed 38
+  I&B boundaries where the geometric joiner FUSED quote and prose: italic
+  scripture quotes after an intro colon (the ps-twin rule eats the style
+  change, the indent-break rule wants the ROMAN body ps, the gap sits under
+  threshold). Those are real print-structure defects in the SHIPPED
+  artifact; blind readers never flagged them because an inline italic quote
+  after a colon reads linguistically fine. Boundary breaks healed all 38
+  (+2 anchor shifts): I&B flow 881 -> 921 blocks, interior joins identical.
+- **The body's first-line indent shares the quote's left offset** (I&B
+  indents 18pt = the quote inset) — a lone indented line is a run of ONE
+  and never earns block_right; that asymmetry is the whole discriminator.
+  Corollary: a 2-line quote paragraph standing alone (one full + one short
+  line) has NO cluster witness and is intrinsically confusable with a
+  single-level verse couplet at the same inset. Precision wins: it stays
+  prose; `class:quote` is the recorded-judgment path.
+- **Drop-cap wrap lines are the left-only look-alike** (BoK: a wide 32pt
+  'A'/'K'/'G' pushes 2-4 wrap lines to exactly the 36pt quote inset,
+  justified to the body right — pp.9/50/163/294 all fired). Veto: a line
+  whose vertical extent overlaps an oversized 1-2 letter line AND whose x0
+  sits at that letter's right edge (±6pt). The x0 condition matters: BoK
+  p.259's real quote OPENS under the initial's descender box 8.5pt right
+  of the letter edge and must stay classifiable.
+- **Full-quote pages have no anchors of their own** (BoK p.260: one body
+  line among thirty quote lines — the apparent "body left" IS the quote
+  target). The flow pass detects that shape (own left ≈ carried left +
+  left_inset) and substitutes the previous spec page's carried anchors;
+  the p259->261 hadith then ships as ONE blockquote per print paragraph
+  with the page anchor inline inside p.bq.
+- **Footnote turnovers poison the uncalibrated evidence** (BoK's 8.5pt
+  notes fired 45 bogus 14/1pt "quote" runs): the suspects now require
+  body_size-2 < size <= body_size+1. The flow never saw them (footnotes
+  split first) — this was report-draft quality only.
+- Mixed paragraphs (quote + prose lines) are now only reachable via an
+  explicit `join` override or dropcap glue; they demote to prose silently
+  (a recorded judgment needs no warning). The quote-seam warnqueue code
+  from the first iteration was removed with the boundary-break design.
+- Emission mirrors verse: consecutive quote paragraphs (+ interleaved page
+  anchors) coalesce into `<blockquote class="quote">` with `<p class="bq">`
+  per paragraph (gate 17's 1-to-1 held); proofread packets render them as
+  `> ` paragraphs via the existing in-blockquote path; PROTOCOL teaches
+  the do-not-flag rule.
+- Phase F queue additions found during acceptance: I&B p151 bottom's
+  footnote "30. Glasse, 302." LEAKS into the body flow as a 9pt paragraph
+  (pre-existing in the shipped artifact — it splits the al-Jūzjānī quote's
+  blockquote in half); I&B "Trustworthy =persons =have" interpunct garble
+  on p151 (pre-existing shifted-CMap highmap residue).
+- Judged specs: I&B `{pages: ["11-160"], left_inset: 18, right_inset: 18}`
+  (86 detector runs / 61 pages; render-verified pp.51/151); BoK
+  `{pages: [56, 193, 220, 227, "259-261"], left_inset: 36}` (render-verified
+  pp.193/220/259-261). Artifacts NOT re-shipped here — both books carry
+  open verse-suspects that gate 22 rightly blocks until the Phase F
+  verse re-judge; the tracked EPUBs stay at their shipped state.
+
 ## M&R proofread pass (2026-07-10) — prepress space classes closed
 
 38 blind readers over 40 packets, ~700 findings → systematic classes, each

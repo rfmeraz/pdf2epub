@@ -132,6 +132,33 @@ def write_structure_report(doc: PdfDoc, a: Analysis, out: Path) -> None:
     else:
         w("- no verse-shaped blocks detected (the build's verse-suspect "
           "witness re-checks on kept lines)")
+    if a.quote_suspect_pages:
+        w(f"- justified-inset (quote-shaped) blocks on "
+          f"{len({q['page'] for q in a.quote_suspect_pages})} page(s) "
+          f"({len(a.quote_suspect_pages)} run(s)) — verify against renders, "
+          "then record blocks.quotes specs (insets are pt offsets from the "
+          "page's own body edges):")
+        by_inset: dict[tuple, list[int]] = {}
+        for q in a.quote_suspect_pages:
+            key = (round(q["left_inset"]), round(q["right_inset"]))
+            by_inset.setdefault(key, []).append(q["page"])
+        for (li, ri), pages in sorted(by_inset.items(),
+                                      key=lambda kv: -len(kv[1]))[:8]:
+            ps = sorted(set(pages))
+            w(f"  - inset {li}/{ri}pt on {len(ps)} page(s) "
+              f"{_ranges(ps[:40])}")
+        w("  paste-ready draft (VERIFY each range on renders first):")
+        w("  # blocks:")
+        w("  #   quotes:")
+        for (li, ri), pages in sorted(by_inset.items(),
+                                      key=lambda kv: -len(kv[1]))[:4]:
+            rng = _ranges(sorted(set(pages)))[1:-1]
+            quoted = ", ".join(f'"{r}"' for r in rng.split(", "))
+            w(f"  #     - {{pages: [{quoted}], "
+              f"left_inset: {li}, right_inset: {ri}, "
+              f"note: FILL render-verified}}")
+    else:
+        w("- no justified-inset (quote-shaped) blocks detected")
 
     w("")
     w("## Layout anomalies")
