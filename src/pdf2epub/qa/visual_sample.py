@@ -28,6 +28,7 @@ class SampleEvidence:
     page_styles: dict[int, list[str]] = field(default_factory=dict)
     style_usage: dict[str, int] = field(default_factory=dict)
     dropcap_pages: list[int] = field(default_factory=list)
+    verse_pages: list[int] = field(default_factory=list)
     pua_first_page: dict[str, int] = field(default_factory=dict)
     figure_pages: list[int] = field(default_factory=list)
     note_pages: list[int] = field(default_factory=list)
@@ -62,6 +63,8 @@ def build_evidence(doc, flow, res, cfg, disputed_pages,
                 ev.first_h1_page = pg
             if b.role == "h2" and ev.first_h2_page is None:
                 ev.first_h2_page = pg
+            if b.block_class == "verse":
+                ev.verse_pages.append(pg)
         elif isinstance(b, Figure) and b.pdf_page:
             ev.figure_pages.append(b.pdf_page)
     for pg in ev.page_styles.values():
@@ -106,6 +109,7 @@ def sample_pages(ev: SampleEvidence, cap: int = 14) -> list[SampledPage]:
     take(ev.first_h1_page, "first h1")
     take(ev.first_h2_page, "first h2")
     take(min(ev.dropcap_pages, default=None), "first drop cap")
+    take(min(ev.verse_pages, default=None), "first verse group")
     for ch in sorted(ev.pua_first_page):
         take(ev.pua_first_page[ch], f"pua U+{ord(ch):04X} first page")
     take(min(ev.figure_pages, default=None), "first figure page")

@@ -428,3 +428,51 @@ def test_signature_centered_claim_matches():
     paras[0].style = "Serif@11"
     ok, _, findings = check_signature_diff(slices, paras, RULES, 11.0, [1])
     assert not ok and "·ctr" in findings[0]
+
+
+def test_slicer_verse_stanza_one_block():
+    # gate 17's 1 flow-Paragraph = 1 emitted block invariant, verse cell:
+    # each stanza <p class="vs"> slices as ONE block (in_blockquote), its
+    # text br->space joined so line ends never fuse
+    from pdf2epub.core.qa_pageslice import slice_pages
+
+    xhtml = (
+        '<div class="pagebreak" epub:type="pagebreak" role="doc-pagebreak" '
+        'aria-label="8" id="pg-8"></div>'
+        '<blockquote class="verse" epub:type="z3998:verse">'
+        '<p class="vs">'
+        '<span class="vl">I dwell at your door always, like dirt—</span><br/>'
+        '<span class="vl vt">others come and go like the wind.</span>'
+        "</p></blockquote>")
+    docs = [_doc("c1.xhtml", xhtml)]
+    res = slice_pages(docs, [8], {8: "8"})
+    assert res.ok
+    blks = [b for b in res.slices[8] if b.tag == "p"]
+    assert len(blks) == 1
+    assert blks[0].in_blockquote
+    assert "vs" in blks[0].classes
+    assert blks[0].text == ("I dwell at your door always, like dirt— "
+                            "others come and go like the wind.")
+
+
+def test_verse_integrity_counts():
+    # gate 23's evidence function: expected lines from the flow's U+2028
+    # separators vs shipped span.vl count — a flattened poem (0 spans) or a
+    # dropped line mismatches; matching markup is silent
+    from pdf2epub.core.model import Paragraph, SourceRef, TextRun
+    from pdf2epub.qa.runner import verse_integrity_counts
+
+    stanza = Paragraph(style="s", src=SourceRef("p0035", 0),
+                       block_class="verse", verse_turns=[1],
+                       items=[TextRun("like dirt\u2028others come")])
+    prose = Paragraph(style="s", src=SourceRef("p0035", 5),
+                      items=[TextRun("ordinary prose")])
+    good = _doc("c1.xhtml",
+                '<blockquote class="verse"><p class="vs">'
+                '<span class="vl">like dirt</span><br/>'
+                '<span class="vl vt">others come</span></p></blockquote>')
+    n, exp, got = verse_integrity_counts([stanza, prose], [good])
+    assert (n, exp, got) == (1, 2, 2)
+    flattened = _doc("c1.xhtml", "<p>like dirt others come</p>")
+    n, exp, got = verse_integrity_counts([stanza, prose], [flattened])
+    assert (n, exp, got) == (1, 2, 0)  # the old-EPUB promotion evidence

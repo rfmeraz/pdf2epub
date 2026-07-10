@@ -167,3 +167,29 @@ def test_format_page_lines():
     assert out[2].startswith("   0   72.0  362.0")
     assert "control·char" in out[2]
     assert out[3].endswith("[sup]")
+
+
+def test_walk_rendering_verse():
+    # a verse stanza renders line-for-line with | prefixes (turn lines
+    # indented), never as flowed prose; noterefs keep their [n] form
+    doc = _doc("ch.xhtml", (
+        '<blockquote class="verse" epub:type="z3998:verse">'
+        '<p class="vs">'
+        '<span class="vl">I dwell at your door always, like dirt—</span><br/>'
+        f'<span class="vl vt">others come and go like the wind.{REF}</span>'
+        "</p></blockquote>"
+        "<p>Prose resumes after the poem.</p>"))
+    blocks, _ = walk_doc(doc, is_notes=False, k_start=0)
+    lines = [l for b in blocks for l in b.lines]
+    assert "| I dwell at your door always, like dirt—" in lines
+    assert any(l.startswith("|    others come and go") for l in lines)
+    assert any("[3]" in l for l in lines if l.startswith("|"))
+    # the stanza is one block; prose follows separately, unprefixed
+    assert any(l == "Prose resumes after the poem." for l in lines)
+
+
+def test_verse_line_starting_book_text_is_escaped():
+    # ordinary book text beginning with '|' must not read as a verse line
+    doc = _doc("ch.xhtml", "<p>| shaped characters open this paragraph.</p>")
+    blocks, _ = walk_doc(doc, is_notes=False, k_start=0)
+    assert blocks[0].lines[0].startswith("\\|")

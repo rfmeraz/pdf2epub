@@ -58,6 +58,24 @@ def _read_css(ep) -> str:
     return ""
 
 
+def verse_integrity_counts(flow_blocks, body_docs) -> tuple[int, int, int]:
+    """Gate 23's evidence: (verse stanzas in the flow, expected line count =
+    1 + U+2028 separators per stanza, shipped span.vl count)."""
+    from ..core.model import Paragraph, TextRun
+
+    verse_paras = [b for b in flow_blocks
+                   if isinstance(b, Paragraph) and b.block_class == "verse"]
+    exp = sum(1 + sum(it.text.count("\u2028") for it in b.items
+                      if isinstance(it, TextRun))
+              for b in verse_paras)
+    got = 0
+    for d in body_docs:
+        for el in d.root.iter(f"{_X}span"):
+            if "vl" in (el.get("class") or "").split():
+                got += 1
+    return len(verse_paras), exp, got
+
+
 def run_qa(epub: Path, config: Path, reference: Path | None = None,
            visual: bool = False, visual_pages: int = 14) -> int:
     cfg = load_config(config)
@@ -326,6 +344,21 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
                      + (f" — review pair qa_figures/{f['pair']}"
                         if f.get("pair") else "")
                      for f in bad[:6]]))
+
+    # ---- gate 23: verse integrity — every verse line the flow classified
+    # must ship as exactly one line span. Structure loss is invisible to the
+    # presence-based coverage witness (the p.26 lesson): a verse blockquote
+    # flattened back to prose loses no character, only the line breaks —
+    # this is the one deterministic witness for them. Silent (single info
+    # line) on books with no verse configured.
+    n_stanzas, exp_vlines, got_vlines = verse_integrity_counts(
+        flow.blocks, body_docs)
+    if not n_stanzas and not cfg.blocks_verse:
+        gates.append(("23 verse integrity", True, ["no verse configured"]))
+    else:
+        gates.append(("23 verse integrity", exp_vlines == got_vlines,
+                      [f"flow: {n_stanzas} stanza(s) / {exp_vlines} "
+                       f"line(s); shipped span.vl count: {got_vlines}"]))
 
     # ---- gate 22: warnings adjudicated — re-derives the build's warning
     # queue from (doc, flow, cfg) via warnqueue (the build writes the same

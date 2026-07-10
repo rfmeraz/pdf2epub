@@ -24,7 +24,7 @@ _X = "{http://www.w3.org/1999/xhtml}"
 _E = "{http://www.idpf.org/2007/ops}"
 _BLOCK_TAGS = {"p", "h1", "h2", "h3", "h4", "li", "figcaption"}
 _H_LEVEL = {"h1": "#", "h2": "##", "h3": "###", "h4": "####"}
-_ESCAPE_LEADS = set("#>-{\\")
+_ESCAPE_LEADS = set("#>-{\\|")
 
 SPLIT_OVER = 4500     # words: a spine file beyond this splits into chunks
 CHUNK_TARGET = 3500   # words per chunk after splitting
@@ -138,6 +138,31 @@ def walk_doc(doc, is_notes: bool, k_start: int) -> tuple[list[Block], int]:
             continue
         if local not in _BLOCK_TAGS:
             continue
+        classes = set((el.get("class") or "").split())
+        if local == "p" and "vs" in classes:
+            # verse stanza: each line span renders as its OWN packet line —
+            # '| ' base, '|    ' turn — so blind readers see the print's
+            # line structure (whitespace-collapsed rendering was itself the
+            # structure-loss the taxonomy names)
+            vlines: list[str] = []
+            words = 0
+            for sp in el:
+                if not (isinstance(sp.tag, str) and sp.tag == f"{_X}span"):
+                    continue
+                scls = set((sp.get("class") or "").split())
+                if "vl" not in scls:
+                    continue
+                t = re.sub(r"\s+", " ", _inline_text(sp)).strip()
+                if not t:
+                    continue
+                words += len(t.split())
+                pre = "|    " if "vt" in scls else "| "
+                wrapped = _wrap(t)
+                vlines.append(pre + wrapped[0])
+                vlines.extend("|      " + w for w in wrapped[1:])
+            if vlines:
+                blocks.append(Block(kind="block", lines=vlines, words=words))
+            continue
         in_bq = False
         parent = el.getparent()
         while parent is not None:
@@ -146,8 +171,7 @@ def walk_doc(doc, is_notes: bool, k_start: int) -> tuple[list[Block], int]:
                 break
             parent = parent.getparent()
         text = _inline_text(el)
-        lines = _render_block(local, set((el.get("class") or "").split()),
-                              in_bq, text)
+        lines = _render_block(local, classes, in_bq, text)
         if lines:
             blocks.append(Block(kind="block", lines=lines,
                                 words=len(text.split())))
@@ -263,6 +287,10 @@ fits the taxonomy below.
 - Section ornaments/flourishes were deliberately dropped{ornaments}.
 - {{p.N}} page markers are paragraph-granular; pagination, line breaks, and
   hyphenation naturally differ from print (the text reflows).
+- Lines prefixed `| ` (turn lines `|    `) are VERSE set line-for-line as
+  printed — the line structure is correct by construction. Report
+  `structure-loss` only where verse appears as flowed prose WITHOUT the
+  `| ` prefixes, or a `| ` line visibly fuses two verse lines in one.
 - Dash and curly-quote conventions as they appear; {{toc}} entries are a
   rebuilt hyperlinked Contents (page numbers removed by design) — but a
   visibly incomplete or garbled Contents IS reportable.
