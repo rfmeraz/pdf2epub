@@ -179,9 +179,13 @@ def test_blocks_verse_parsing(tmp_path):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"
                      "blocks: {verse: [{pages: [1], base: [9], turns: [36]}]}")
         load_config(p)
-    with pytest.raises(ConfigError, match="base and turns"):
+    # turns is OPTIONAL (single-level I&B-style verse); base is required
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "blocks: {verse: [{pages: [1], base: [18], note: n}]}")
+    assert load_config(p).blocks_verse[0].turns == []
+    with pytest.raises(ConfigError, match="requires base"):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"
-                     "blocks: {verse: [{pages: [1], base: [9], note: n}]}")
+                     "blocks: {verse: [{pages: [1], turns: [9], note: n}]}")
         load_config(p)
     with pytest.raises(ConfigError, match="unknown key"):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"

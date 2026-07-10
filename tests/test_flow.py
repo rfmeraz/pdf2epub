@@ -981,3 +981,335 @@ def test_verse_fields_roundtrip():
     del d["block_class"], d["verse_turns"]
     p3 = block_from_dict(d)
     assert p3.block_class is None and p3.verse_turns == []
+
+
+# ---------------------------------------------------------------- verse (V1)
+# Geometry mirrors the measured Me & Rumi damage cells: synthetic column
+# left 72 / right 362, body 11pt at 13pt leading; verse base offset 9
+# (x0=81), turn offset 36 (x0=108); prose->verse gap 20.0pt sits just under
+# the gap rule (1.6 x 13 = 20.8) and the 9pt indent just under M&R's
+# indent_threshold 10 -- the exact knife-edges that fused the p.46 couplet.
+# Every page carries full-measure prose anchors at x0=72 so the modal
+# column derives as in a real book. Em dash / U+2028 only as escapes.
+
+def _verse_cfg(tmp_path, pages, **kw):
+    from pdf2epub.config import VerseSpec
+    return _cfg(tmp_path, indent_threshold=10.0,
+                blocks_verse=[VerseSpec(pages=pages, base=[9.0], turns=[36.0],
+                                        note="test verse")], **kw)
+
+
+def _p46_lines():
+    return [
+        _line("Prose line one about the pilgrim heart at full", 87,
+              x0=72, width=290),
+        _line("measure, and I am happy-hearted and joyful.", 100,
+              x0=72, width=290),
+        _line("Within the Kaaba, it's fitting that there be no kiblah\u2014",
+              120, x0=81, width=237),
+        _line("outside the Kaaba, there's no escape from the kiblah.", 133,
+              x0=108, width=180),
+        _line("(753-55)", 153, x0=90, width=40),
+    ]
+
+
+def test_verse_p46_couplet_extracted_from_prose(tmp_path):
+    res = build_flow(_doc([_page(1, _p46_lines())]),
+                     _verse_cfg(tmp_path, [1]), say=lambda *a: None)
+    paras = _paras(res.flow)
+    assert len(paras) == 3
+    assert paras[0].block_class is None
+    assert paras[0].text().endswith("happy-hearted and joyful.")
+    assert paras[1].block_class == "verse"
+    assert paras[1].text() == (
+        "Within the Kaaba, it's fitting that there be no kiblah\u2014\u2028"
+        "outside the Kaaba, there's no escape from the kiblah.")
+    assert paras[1].verse_turns == [1]
+    assert paras[2].block_class is None
+    assert paras[2].text() == "(753-55)"
+    assert res.counts["verse-groups"] == 1
+    assert res.counts["verse-lines"] == 2
+
+
+def test_verse_p46_regression_without_config(tmp_path):
+    # the shipped-damage cell: WITHOUT blocks.verse the knife-edge geometry
+    # fuses the couplet's first line into the prose paragraph (the closed
+    # em-dash join, exactly as the old artifact shipped it)
+    res = build_flow(_doc([_page(1, _p46_lines())]), _cfg(
+        tmp_path, indent_threshold=10.0), say=lambda *a: None)
+    paras = _paras(res.flow)
+    assert "no kiblah\u2014outside" in paras[0].text()
+
+
+def test_verse_p35_quatrain(tmp_path):
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 61,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges.", 74,
+              x0=72, width=290),
+        _line("He said in maqam concerning this, I heard:", 87,
+              x0=72, width=228),  # prose ends short (x1=300)
+        _line("I dwell at your door always, like dirt\u2014", 107,
+              x0=81, width=170),
+        _line("others come and go like the wind.", 120, x0=108, width=160),
+        _line("Whoever brings his heart to your door", 133,
+              x0=81, width=232),
+        _line("finds health beyond every sickness.", 146, x0=108, width=175),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _verse_cfg(tmp_path, [1]), say=lambda *a: None)
+    paras = _paras(res.flow)
+    assert len(paras) == 2  # [anchors+intro prose] [quatrain stanza]
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 1
+    assert verse[0].text().count("\u2028") == 3
+    assert verse[0].verse_turns == [1, 3]
+
+
+def test_verse_p165_stanza_gaps_and_full_line_exit(tmp_path):
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges", 61,
+              x0=72, width=290),
+        _line("and a third, ending the paragraph a bit short.", 74,
+              x0=72, width=250),
+        _line("Seek refuge in the shape of your rosy cheek,", 94,
+              x0=81, width=220),
+        _line("have put rose into rosewater.", 107, x0=108, width=150),
+        # 20pt stanza gap (> 1.4 x 13 = 18.2) opens stanza two
+        _line("Though my gold and silver are spent,", 127, x0=81, width=200),
+        _line("I am rich in the coin of your love.", 140, x0=108, width=170),
+        # a FULL-measure line at the BASE offset must NOT be swallowed
+        # (M&R p.165 line 35 -- the all-short criterion excludes it)
+        _line("The commentary resumes at full measure across the", 160,
+              x0=81, width=281),
+        _line("column and continues like ordinary prose text here.", 173,
+              x0=72, width=290),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _verse_cfg(tmp_path, [1]), say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 2  # two stanzas, one paragraph each
+    assert verse[0].text().count("\u2028") == 1
+    assert verse[1].text().count("\u2028") == 1
+    exits = [p for p in paras if p.text().startswith("The commentary")]
+    assert len(exits) == 1 and exits[0].block_class is None
+
+
+def test_verse_requires_turn_line(tmp_path):
+    # base-only ragged short lines (no turn alternation) stay prose even on
+    # a spec page; the isolated couplet keeps the spec non-stale
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges", 61,
+              x0=72, width=290),
+        _line("and a third full-measure anchor for good measure.", 74,
+              x0=72, width=290),
+        _line("True couplet first line at the base,", 94, x0=81, width=190),
+        _line("and its turn line completes it.", 107, x0=108, width=155),
+        _line("Full-measure prose separates the couplet from the", 127,
+              x0=72, width=290),
+        _line("ragged run below, ending its paragraph rather short.", 140,
+              x0=72, width=270),
+        _line("A ragged base-level short line", 160, x0=81, width=150),
+        _line("another ragged line of scattered width", 173, x0=81,
+              width=163),
+        _line("and a third one, still base", 186, x0=81, width=141),
+        _line("Full-measure prose closes the page after the run so", 206,
+              x0=72, width=290),
+        _line("no pending tail is carried to a nonexistent page.", 219,
+              x0=72, width=290),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _verse_cfg(tmp_path, [1]), say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 1
+    assert verse[0].text().startswith("True couplet")
+    # the base-only run must not be verse, whatever prose shape it joins as
+    assert all("ragged" not in p.text() for p in verse)
+    assert all(p.block_class is None for p in paras
+               if "ragged" in p.text())
+
+
+def test_verse_vetoed_by_justified_cluster(tmp_path):
+    # a justified inset block (tight right-edge cluster) at a configured
+    # level is a BLOCK QUOTE, not verse -- _assign_block_right's cluster
+    # vetoes; the quote joins into one paragraph by its own margin
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges", 61,
+              x0=72, width=290),
+        _line("and a third full-measure anchor for good measure.", 74,
+              x0=72, width=290),
+        _line("True couplet first line at the base,", 94, x0=81, width=190),
+        _line("and its turn line completes it.", 107, x0=108, width=155),
+        _line("A justified quote line set at the base offset xx", 127,
+              x0=81, width=263.0),
+        _line("second justified line reaching the same margin yy", 140,
+              x0=81, width=263.4),
+        _line("third line ends ragged short like quote ends do.", 153,
+              x0=81, width=150),
+        _line("Full-measure prose closes the page after the quote", 173,
+              x0=72, width=290),
+        _line("so nothing dangles at the bottom of this test page.", 186,
+              x0=72, width=290),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _verse_cfg(tmp_path, [1]), say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 1 and verse[0].text().startswith("True couplet")
+    quote = [p for p in paras if p.text().startswith("A justified quote")]
+    assert len(quote) == 1 and quote[0].block_class is None
+    assert "third line ends ragged" in quote[0].text()  # joined, not split
+
+
+def test_verse_stale_spec_fails_build(tmp_path):
+    lines = [_line("Ordinary full-measure prose only here on this", 87,
+                   x0=72, width=290),
+             _line("page, so the verse spec matches nothing at all.", 100,
+                   x0=72, width=290)]
+    with pytest.raises(SystemExit, match="stale blocks.verse"):
+        build_flow(_doc([_page(1, lines)]),
+                   _verse_cfg(tmp_path, [1]), say=lambda *a: None)
+
+
+def test_verse_class_overrides(tmp_path):
+    # class:verse pulls in a citation line whose offset matches no level;
+    # class:prose ejecting the couplet's base line leaves no acceptable
+    # group -> the spec is stale (config bug)
+    lines = _p46_lines()
+    cfg = _verse_cfg(tmp_path, [1])
+    cfg.flow_overrides = [
+        FlowOverride(page=1, line=4, action="class:verse", note="citation")]
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert any("(753-55)" in p.text() for p in verse)
+
+    cfg2 = _verse_cfg(tmp_path, [1])
+    cfg2.flow_overrides = [
+        FlowOverride(page=1, line=2, action="class:prose", note="not verse")]
+    with pytest.raises(SystemExit, match="stale blocks.verse"):
+        build_flow(_doc([_page(1, lines)]), cfg2, say=lambda *a: None)
+
+
+def test_verse_cross_page_stanza_inline_anchor(tmp_path):
+    from pdf2epub.core.model import InlinePageBreak
+
+    p1 = _page(1, [
+        _line("Prose introduces the poem at full measure width", 87,
+              x0=72, width=290),
+        _line("continuing to the couplet with a colon here:", 100,
+              x0=72, width=290),
+        # the couplet's base line ends page 1: a pending tail no page can
+        # accept alone -- stitched when page 2's turn line accepts the union
+        _line("I dwell at your door always, like dirt\u2014", 120,
+              x0=81, width=170),
+    ])
+    p2 = _page(2, [
+        _line("others come and go like the wind.", 87, x0=108, width=160),
+        _line("Prose resumes after the poem at full measure and", 110,
+              x0=72, width=290),
+        _line("runs on to the end of the paragraph as usual.", 123,
+              x0=72, width=290),
+    ])
+    res = build_flow(_doc([p1, p2]), _verse_cfg(tmp_path, [1, 2]),
+                     say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 1
+    assert verse[0].text() == ("I dwell at your door always, like "
+                               "dirt\u2014\u2028others come and go like "
+                               "the wind.")
+    assert verse[0].verse_turns == [1]
+    # the page-2 anchor lands INSIDE the stanza at the exact line seam
+    inline = [it for it in verse[0].items if isinstance(it, InlinePageBreak)]
+    assert [a.ordinal for a in inline] == [2]
+
+
+def test_verse_suspect_warning_fires_uncovered(tmp_path):
+    # the uncalibrated witness: a verse-shaped run (>=3 lines, two levels,
+    # ragged) with NO blocks.verse config warns verse-suspect
+    lines = [
+        _line("Ordinary prose paragraph at full measure width to", 74,
+              x0=72, width=290),
+        _line("anchor the leading and the column edges properly.", 87,
+              x0=72, width=290),
+        _line("I dwell at your door always, like dirt,", 107,
+              x0=81, width=170),
+        _line("others come and go like the wind.", 120, x0=108, width=160),
+        _line("Whoever brings his heart to your door", 133,
+              x0=81, width=232),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _cfg(tmp_path),
+                     say=lambda *a: None)
+    assert res.counts.get("verse-suspect") == 1
+    assert any("verse-shaped block" in w for w in res.flow.warnings)
+
+
+def test_verse_single_level_calibrated(tmp_path):
+    # I&B p.113 real geometry: Milarepa song, EVERY line at one 18pt inset
+    # (x0=81 on a col-left-63 verso), ragged right — no turn level exists.
+    # A spec with empty turns classifies it; the ragged requirement carries
+    # the discrimination a turn line provides in two-level verse.
+    from pdf2epub.config import VerseSpec
+
+    lines = [
+        _line("ling verses of Milarepa, showing how impossible", 61,
+              x0=63, width=300),
+        _line("from oneself if the sense of self be predominant:", 74,
+              x0=63, width=213),
+        _line("He who strives for Liberation with", 87, x0=81, width=155),
+        _line("The thought of 'I' will ne'er attain it.", 100,
+              x0=81, width=165),
+        _line("He who tries to loosen his mind-knots", 113,
+              x0=81, width=170),
+        _line("When his spirit is neither great nor free,", 126,
+              x0=81, width=178),
+        _line("Will but become more tense.", 139, x0=81, width=133),
+        _line("Milarepa also expresses a theme which resonates", 159,
+              x0=63, width=300),
+        _line("with Muslim ethics in the following verses too.", 172,
+              x0=63, width=300),
+    ]
+    cfg = _cfg(tmp_path, indent_threshold=10.0,
+               blocks_verse=[VerseSpec(pages=[1], base=[18.0],
+                                       note="single-level Milarepa songs")])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 1
+    assert verse[0].text().count("\u2028") == 4
+    assert verse[0].verse_turns == []
+    assert verse[0].text().startswith("He who strives")
+    assert verse[0].text().endswith("more tense.")
+
+
+def test_verse_suspect_single_level_fires(tmp_path):
+    # the uncalibrated witness's single-level rule: >=4 lines at ONE real
+    # inset, ragged — the exact shape of I&B p.113's songs
+    lines = [
+        _line("Ordinary prose paragraph at full measure width to", 61,
+              x0=72, width=290),
+        _line("anchor the leading and the column edges properly.", 74,
+              x0=72, width=290),
+        _line("He who strives for Liberation with", 94, x0=90, width=155),
+        _line("The thought of 'I' will ne'er attain it.", 107,
+              x0=90, width=165),
+        _line("He who tries to loosen his mind-knots", 120,
+              x0=90, width=170),
+        _line("Will but become more tense.", 133, x0=90, width=133),
+        _line("Prose resumes after the song at full measure and", 153,
+              x0=72, width=290),
+        _line("continues to the end of the paragraph as usual.", 166,
+              x0=72, width=290),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _cfg(tmp_path),
+                     say=lambda *a: None)
+    assert res.counts.get("verse-suspect") == 1

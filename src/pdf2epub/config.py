@@ -66,9 +66,12 @@ class ColumnSpec:
 class VerseSpec:
     """Semantic block judgment: pages carrying verse set at known indent
     levels. ``base``/``turns`` are pt offsets of verse-line starts from the
-    page's SHIFT-CORRECTED column left (recto/verso binding shift removed);
-    turns are the deeper level(s) a couplet's second line drops to — the
-    base/turn alternation is the geometric signal prose never produces.
+    page's SHIFT-CORRECTED column left (recto/verso binding shift removed).
+    Two print conventions exist on this corpus: M&R-style TWO-LEVEL verse
+    (turns = the deeper level(s) a couplet's second line drops to — an
+    alternation prose never produces) and I&B-style SINGLE-LEVEL verse
+    (every line at one inset, ragged right; turns empty/omitted — the
+    ragged-right requirement then carries the discrimination).
     The deterministic classifier does the per-block work inside these pages;
     ``note`` records the render evidence and is REQUIRED. A spec that
     classifies ZERO groups is stale and fails the build (flow.overrides
@@ -76,7 +79,7 @@ class VerseSpec:
     ``class:prose``."""
     pages: list[int]
     base: list[float]
-    turns: list[float]
+    turns: list[float] = field(default_factory=list)
     tol: float = 2.0
     stanza_gap: float = 1.4  # × median leading opens a new stanza
     note: str = ""
@@ -583,10 +586,11 @@ def load_config(path: Path) -> PdfBookConfig:
             raise ConfigError("blocks.verse needs at least one page")
         base = [float(v) for v in (vs.get("base", []) or [])]
         turns = [float(v) for v in (vs.get("turns", []) or [])]
-        if not base or not turns:
-            raise ConfigError("blocks.verse requires base and turns indent "
-                              "levels (pt offsets from the shift-corrected "
-                              "column left)")
+        if not base:
+            raise ConfigError("blocks.verse requires base indent level(s) "
+                              "(pt offsets from the shift-corrected column "
+                              "left); turns may be omitted for single-level "
+                              "verse")
         col_pages = {p for cs in cfg.flow_columns for p in cs.pages}
         fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
         clash = set(pages) & (col_pages | fig_pages)

@@ -23,6 +23,7 @@ from .analyze import (
     furniture_template,
     line_pstyle,
 )
+from .blockshapes import verse_shape_groups, verse_shape_suspects
 from .config import PdfBookConfig
 from .core.model import (
     Figure,
@@ -173,6 +174,13 @@ class _L:
     # this instead of the body column, so a full line of an indented quote is
     # not misread as a ragged paragraph end.
     block_right: float | None = None
+    # semantic block class stamped by the pre-join classifier (blocks.verse
+    # specs): verse lines bypass _break_before entirely — their line breaks
+    # are content, and the prose rules (ragged-short-line, _CONT_DASHES)
+    # demonstrably fused printed couplets (M&R pp.35/46/165)
+    block_class: str | None = None
+    verse_turn: bool = False          # line sits at a deeper (turn) level
+    verse_stanza_start: bool = False  # stanza gap opens a new stanza here
 
 
 def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
@@ -432,6 +440,128 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     for lines in pages_lines.values():
         _assign_block_right(lines)
 
+    # ---- semantic block classification: verse, per blocks.verse specs.
+    # Runs BEFORE the join loop; classified lines bypass _break_before (the
+    # flow.columns entry_break precedent). class:verse/class:prose overrides
+    # correct the geometry; a spec that classifies nothing is stale (config
+    # bug). The uncalibrated suspect witness runs on EVERY book afterwards —
+    # that is how a future book's verse is discovered.
+    class_applied: set[tuple[int, int]] = set()
+    verse_spec_by_page: dict[int, int] = {}
+    for si, vs in enumerate(cfg.blocks_verse):
+        for pg in vs.pages:
+            verse_spec_by_page.setdefault(pg, si)
+    spec_groups = Counter()
+    if cfg.blocks_verse:
+
+        def _stamp(lines, g, si):
+            spec_groups[si] += 1
+            counts["verse-groups"] += 1
+            for pos, x in enumerate(range(g.start, g.end)):
+                L = lines[x]
+                L.block_class = "verse"
+                L.verse_turn = g.levels[pos] == "turn"
+                L.verse_stanza_start = g.stanza_starts[pos]
+                # verse lines whose midpoint chanced near column center
+                # were mislabeled /center (the false-center trap); the
+                # class supersedes the guess
+                L.ps = L.ps.replace("/center", "")
+                counts["verse-lines"] += 1
+
+        prev_page_ends_verse = False
+        # a candidate run touching a page bottom that could not be accepted
+        # alone (a couplet's base line before the page turn) is held PENDING
+        # and stamped only if the next spec page's top run accepts the union
+        pending: tuple[list, "object", int] | None = None  # (lines, tail, si)
+        for pno in sorted(pages_lines):
+            si = verse_spec_by_page.get(pno)
+            lines = pages_lines[pno]
+            if si is None or not lines:
+                prev_page_ends_verse = False
+                pending = None
+                continue
+            vs = cfg.blocks_verse[si]
+            shift = geo.shift(pno)
+            eff_left = geo.col_left - shift
+            ref_right = geo.col_right - shift
+            blocked, forced = [], []
+            for L in lines:
+                act = ov.get((L.page, L.idx))
+                if act in ("class:verse", "class:prose"):
+                    consumed.add((L.page, L.idx))
+                    class_applied.add((L.page, L.idx))
+                blocked.append(L.region >= 0 or L.block_right is not None
+                               or act == "class:prose")
+                forced.append(act == "class:verse")
+
+            def _size(ln):
+                f = doc.fonts.get(ln.dominant_font())
+                return f.size if f else None
+
+            groups, tail = verse_shape_groups(
+                [L.ln for L in lines], eff_left, ref_right, body_size,
+                med_lead, vs.base, vs.turns, tol=vs.tol,
+                stanza_gap=vs.stanza_gap, size_of=_size,
+                blocked=blocked, forced=forced,
+                allow_turn_start=prev_page_ends_verse,
+                carry_levels=(pending[1].levels if pending else None))
+            if pending and groups and groups[0].start == 0 and \
+                    not groups[0].stanza_starts[0]:
+                # the union was accepted: stamp the carried tail on ITS page
+                # (the join loop runs after the whole classification pass)
+                _stamp(pending[0], pending[1], pending[2])
+            pending = (lines, tail, si) if tail is not None else None
+            for g in groups:
+                _stamp(lines, g, si)
+            prev_page_ends_verse = bool(lines) and \
+                lines[-1].block_class == "verse"
+        stale_specs = [i for i in range(len(cfg.blocks_verse))
+                       if not spec_groups.get(i)]
+        if stale_specs:
+            raise SystemExit(
+                "stale blocks.verse (classified no groups): entries " +
+                ", ".join(f"#{i} pages {cfg.blocks_verse[i].pages[:6]}…"
+                          if len(cfg.blocks_verse[i].pages) > 6 else
+                          f"#{i} pages {cfg.blocks_verse[i].pages}"
+                          for i in stale_specs) +
+                " — recalibrate base/turns or remove the spec")
+
+    # verse-suspect witness (uncalibrated, all books): verse-shaped runs the
+    # config does not cover are structure-loss risks — the joiner would shred
+    # or fuse them as prose. Precision is kept high by the stricter suspect
+    # detector; every firing is a render-verify queue item.
+    for pno in sorted(pages_lines):
+        if pno in col_splits_by_page or pno in toc_paras or pno in {
+                pg for fp in cfg.figure_pages for pg in fp.pages}:
+            continue
+        lines = pages_lines[pno]
+        if len(lines) < 3:
+            continue
+        shift = geo.shift(pno)
+        suspects = verse_shape_suspects(
+            [L.ln for L in lines], geo.col_left - shift,
+            geo.col_right - shift, body_size, med_lead,
+            size_of=lambda ln: (f.size if (f := doc.fonts.get(
+                ln.dominant_font())) else None),
+            blocked=[L.region >= 0 or L.block_right is not None
+                     for L in lines],
+            centered=["/center" in L.ps for L in lines])
+        for g in suspects:
+            if any(lines[x].block_class == "verse"
+                   for x in range(g.start, g.end)):
+                continue  # covered by a blocks.verse spec
+            first = lines[g.start]
+            warns.append(_Warn(
+                f"p.{pno} lines {first.idx}..{lines[g.end - 1].idx}: "
+                f"verse-shaped block (base {g.base_offsets}, turns "
+                f"{g.turn_offsets} pt off column left) not covered by "
+                f"blocks.verse: {first.ln.text()[:50]!r}",
+                pno, first.idx,
+                f"{{pages: [{pno}], base: {g.base_offsets}, "
+                f"turns: {g.turn_offsets}, note: FILL render-verified}}",
+                code="verse-suspect"))
+            counts["verse-suspect"] += 1
+
     # ---- join pass, page by page, with cross-page continuation
     open_para: Paragraph | None = None
     open_is_body = False
@@ -537,6 +667,17 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 
             if prev_dropcap and act != "break":
                 brk = False  # the letter's own paragraph continues here
+            elif L.block_class == "verse":
+                # verse lines bypass the geometric joiner: a stanza is ONE
+                # paragraph, its lines joined by U+2028 in _append_line. The
+                # prose rules (_CONT_DASHES, ragged-short-line) never apply
+                # inside a group — they fused printed couplets (M&R p.46)
+                brk = (act == "break") or (act != "join" and (
+                    prev_L is None or prev_L.block_class != "verse"
+                    or L.verse_stanza_start))
+            elif prev_L is not None and prev_L.block_class == "verse":
+                # prose resuming after verse always starts its own paragraph
+                brk = act != "join"
             elif L.colno >= 0:
                 # columned entry lines: indent decides (see _column_resplit)
                 brk = (act == "break") or (act != "join" and L.entry_break)
@@ -552,6 +693,9 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 open_para = Paragraph(style=L.ps, items=[],
                                       src=SourceRef(f"p{L.page:04d}", L.idx))
                 open_is_body = (L.ps == body_ps)
+                if L.block_class == "verse":
+                    open_para.block_class = "verse"
+                    counts["verse-stanzas"] += 1
                 if is_dropcap:
                     open_para.classes = ["first-dropcap"]
                     open_para.style = body_ps  # dropcap letter belongs to body text
@@ -587,7 +731,17 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 open_para = Paragraph(style=L.ps, items=[],
                                       src=SourceRef(f"p{L.page:04d}", L.idx))
                 open_is_body = (L.ps == body_ps)
-            _append_line(open_para, L, cfg, doc, counts, glue=prev_dropcap)
+                if L.block_class == "verse":
+                    open_para.block_class = "verse"
+                    counts["verse-stanzas"] += 1
+            _append_line(open_para, L, cfg, doc, counts, glue=prev_dropcap,
+                         verse=(L.block_class == "verse"
+                                and open_para.block_class == "verse"))
+            if L.block_class == "verse" and \
+                    open_para.block_class == "verse" and L.verse_turn:
+                open_para.verse_turns.append(sum(
+                    it.text.count("\u2028") for it in open_para.items
+                    if isinstance(it, TextRun)))
             if inline_seam is not None:
                 # deferred anchors of interleaving blank pages flush here
                 # first, keeping the page-list monotone
@@ -648,6 +802,11 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 
     # ---- stale overrides are config bugs
     stale = set(ov) - consumed
+    # class: verbs count as applied only where the classifier saw them — a
+    # class:verse on a page no blocks.verse spec covers must error, not
+    # silently no-op through the join loop's generic override() read
+    stale |= {k for k, a in ov.items()
+              if a.startswith("class:") and k not in class_applied}
     if stale:
         raise SystemExit("stale flow.overrides (matched nothing): " +
                          ", ".join(f"page {p} line {i}" for p, i in sorted(stale)))
@@ -997,13 +1156,19 @@ def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc) -> list[TextRun]:
 
 
 def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
-                 counts: Counter, glue: bool = False) -> None:
+                 counts: Counter, glue: bool = False,
+                 verse: bool = False) -> None:
     runs = _mk_runs(L.ln, cfg, doc)
     runs = _apply_textfix(runs, cfg, counts, L.page)
     if para.items and isinstance(para.items[-1], TextRun):
         prevrun = para.items[-1]
         if glue:
             sep = ""  # dropcap letter glues straight onto its continuation
+        elif verse:
+            # verse line seam: the printed line break IS content — join with
+            # U+2028 LINE SEPARATOR (emitted as <br/>), never dehyphenate
+            # (a verse line-end hyphen/dash is the poet's punctuation)
+            sep = "\u2028"
         else:
             nxt = next((r.text for r in runs
                         if isinstance(r, TextRun) and r.text.strip()), "")
