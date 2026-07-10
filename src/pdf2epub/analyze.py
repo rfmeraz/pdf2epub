@@ -209,6 +209,8 @@ class Analysis:
     cjk_pages: list[dict] = field(default_factory=list)   # {page, chars, vertical_lines}
     figure_pages_proposal: list[int] = field(default_factory=list)
     rtl_chars: int = 0
+    # semantic block shapes (evidence for the blocks: judgment)
+    verse_suspect_pages: list[dict] = field(default_factory=list)
     # layout anomalies
     column_suspect_pages: list[int] = field(default_factory=list)
     low_agreement_pages: list[dict] = field(default_factory=list)
@@ -647,6 +649,38 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
                              for p in doc.pages
                              if p.engine_agreement is not None and p.engine_agreement < 90]
 
+    # ---- verse-shaped blocks (same detector the build's verse-suspect
+    # witness runs — one derivation, see blockshapes). Raw-line evidence at
+    # init (no furniture strip yet), so the BUILD warning stays the
+    # authoritative witness; this section exists to seed the blocks.verse
+    # judgment with measured base/turn offsets per page range.
+    from .blockshapes import verse_shape_suspects
+
+    med = a.median_leading or geo.body_size * 1.3 or 13.0
+    for p in in_flow:
+        if p.number in a.column_suspect_pages or any(
+                ln.vertical for ln in p.lines):
+            continue
+        shift = geo.shift(p.number)
+
+        def _sz(ln):
+            f = doc.fonts.get(ln.dominant_font())
+            return f.size if f else None
+
+        centered = []
+        for i, ln in enumerate(p.lines):
+            ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None,
+                             page_shift=shift)
+            centered.append("/center" in ps)
+        for g in verse_shape_suspects(
+                p.lines, geo.col_left - shift, geo.col_right - shift,
+                geo.body_size, med, size_of=_sz, centered=centered):
+            a.verse_suspect_pages.append({
+                "page": p.number, "lines": [g.start, g.end - 1],
+                "n_lines": g.end - g.start,
+                "base": g.base_offsets, "turns": g.turn_offsets,
+                "first": p.lines[g.start].text()[:60]})
+
     # ---- cover proposal
     p1 = doc.pages[0]
     if p1.image_only or (p1.n_images > 0 and p1.n_chars < 200):
@@ -661,7 +695,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
         set(p["page"] for p in a.low_agreement_pages[:10]) | \
         set(x["pages"][0] for x in a.pua_census if x["pages"]) | \
         set(a.footnote_pages[:2]) | set(a.column_suspect_pages[:4]) | \
-        set(a.dropcap_pages[:2]) | {1} | set(a.image_only_pages[:4])
+        set(a.dropcap_pages[:2]) | {1} | set(a.image_only_pages[:4]) | \
+        set(v["page"] for v in a.verse_suspect_pages[:3])
     body_start = next((p.number for p in in_flow
                        if a.printed_folios.get(p.number, "").isdigit()), None)
     if body_start:

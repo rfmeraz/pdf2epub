@@ -104,6 +104,36 @@ def write_structure_report(doc: PdfDoc, a: Analysis, out: Path) -> None:
           f"{[c['page'] for c in inline_cjk][:15]}")
 
     w("")
+    w("## Block shapes (JP-P9 — blocks: judgment)")
+    if a.verse_suspect_pages:
+        w(f"- verse-shaped blocks on {len({v['page'] for v in a.verse_suspect_pages})} "
+          f"page(s) ({len(a.verse_suspect_pages)} group(s)) — verify against "
+          "renders, then record blocks.verse specs (base/turns are pt "
+          "offsets from the shift-corrected column left):")
+        for v in a.verse_suspect_pages[:20]:
+            w(f"  - p.{v['page']} lines {v['lines'][0]}..{v['lines'][1]} "
+              f"base {v['base']} turns {v['turns']}: {v['first']!r}")
+        if len(a.verse_suspect_pages) > 20:
+            w(f"  - … and {len(a.verse_suspect_pages) - 20} more group(s) "
+              "(see analysis.json verse_suspect_pages)")
+        # draft spec: aggregate contiguous page ranges sharing offsets
+        by_off: dict[tuple, list[int]] = {}
+        for v in a.verse_suspect_pages:
+            key = (tuple(v["base"]), tuple(v["turns"]))
+            by_off.setdefault(key, []).append(v["page"])
+        w("  paste-ready draft (VERIFY each range on renders first):")
+        w("  # blocks:")
+        w("  #   verse:")
+        for (base, turns), pages in sorted(by_off.items(),
+                                           key=lambda kv: -len(kv[1])):
+            w(f"  #     - {{pages: {sorted(set(pages))}, "
+              f"base: {list(base)}, turns: {list(turns)}, "
+              f"note: FILL render-verified}}")
+    else:
+        w("- no verse-shaped blocks detected (the build's verse-suspect "
+          "witness re-checks on kept lines)")
+
+    w("")
     w("## Layout anomalies")
     w(f"- column-suspect pages: {_ranges(a.column_suspect_pages)}")
     w(f"- image-only pages: {a.image_only_pages}")

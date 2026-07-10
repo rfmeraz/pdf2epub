@@ -98,3 +98,26 @@ def test_dominant_font():
     lines, _ = parse_page_dict(page, TRIM, table)
     fid = lines[0].dominant_font()
     assert table.fonts[fid].family == "Gentium"
+
+
+def test_analyze_verse_suspect_evidence():
+    # analyze surfaces verse-shaped blocks with measured base/turn offsets
+    # (the blocks.verse judgment seed); same detector as the build witness
+    from pdf2epub.analyze import analyze
+    from test_flow import _doc, _line, _page
+
+    lines = [
+        _line("Ordinary prose paragraph at full measure width to", 74,
+              x0=72, width=290),
+        _line("anchor the leading and the column edges properly.", 87,
+              x0=72, width=290),
+        _line("I dwell at your door always, like dirt,", 107,
+              x0=81, width=170),
+        _line("others come and go like the wind.", 120, x0=108, width=160),
+        _line("Whoever brings his heart to your door", 133,
+              x0=81, width=232),
+    ]
+    a = analyze(_doc([_page(1, lines)]))
+    assert len(a.verse_suspect_pages) == 1
+    v = a.verse_suspect_pages[0]
+    assert v["page"] == 1 and v["base"] == [9.0] and v["turns"] == [36.0]
