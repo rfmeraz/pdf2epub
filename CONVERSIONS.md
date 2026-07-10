@@ -299,3 +299,44 @@ suite, byte-reproducible (double-build hash check).
   seam; remaining approximate anchors are verified blank pages). Gates
   13-17 verdicts unchanged; proofread packets differ only in blank-page
   marker placement (now on the correct side of section boundaries).
+
+## me-and-rumi — 2026-07-10 re-ship (verse feature + proofread rounds 1-3)
+
+First book through the semantic block grammar (blocks.verse) and the
+heaviest proofread pass to date: 38 blind readers × 2 full rounds + a
+print-verification round. Build: 93 verse groups / 305 lines / 98 stanzas
+ship as z3998:verse blockquotes (gate 23: 305/305); all print-verified
+damage cells healed (p.35 quatrain, p.46 Kaaba couplet, p.165 ghazal,
+p.356 notes ghazal). qa Overall: PASS on all 23 gates; gate 6 8/8 TOC
+entries (parts now real entries) on their printed pages.
+
+Fixed this pass (each class print-verified before repair):
+- prepress lost-space classes incl. the long-deferred comma+lowercase
+  (~1000 additional restored spaces; residual grep-verified 0), the
+  wrong-side-of-closing-quote class (0 residual), text-asterisk seams,
+  citation seams, display-ampersand title seams
+- indent_threshold 10 -> 8 (paragraph indent 9-11pt vs per-page column
+  drift): +827 recovered paragraph breaks — the dialogue-turn and
+  re-opened-quotation fusion classes
+- 22 section-title+passage-number h3 fusions; copyright page block
+  structure (center-gap rule); printed-TOC part entries (were fused into
+  neighbors); page labels 28-30 (roman interpolation across the front/
+  body boundary — wrong in the old artifact's page-list too)
+- compound-chain dehyphenation (so-and-so kept; know-noth-/ing joins)
+
+READING CONVENTIONS (print-verified 2026-07-10; do NOT flag): the
+translator's elliptical English is as printed — "you'll along with
+thorns", "no else saw", "How do explain", "If I were I to tell",
+"it as if", "the neck one of those words", "conceal it my sleeve",
+"a another sobriety". '53 bis.' is set in lining figures vs the
+smallcaps passage numbers IN PRINT. The p.63 part-divider epigraph has
+no passage number or citation by design.
+
+HANDOFF (deferred to Phase L, blocks.lists): the notes apparatus
+(pp.337-373) and Works Cited ship with systematic hanging-indent damage
+— nearly every note's first line splits from its body and short-ending
+notes fuse into the next. That is the list shape (marker + turnovers);
+round-1/2 packet-037-040 findings are the Phase L acceptance evidence.
+Also open: single-line verse quotations ship as short paragraphs (the
+2-line classifier minimum, by design); 'earthof Tabriz' single in-PDF
+lost space (no safe pattern).
