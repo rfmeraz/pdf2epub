@@ -1313,3 +1313,92 @@ def test_verse_suspect_single_level_fires(tmp_path):
     res = build_flow(_doc([_page(1, lines)]), _cfg(tmp_path),
                      say=lambda *a: None)
     assert res.counts.get("verse-suspect") == 1
+
+
+def test_emit_verse_group(tmp_path):
+    # p.46-shaped page through flow AND emitter: one blockquote.verse with
+    # z3998 semantics, stanza <p class="vs">, line spans joined by <br/>,
+    # turn line carrying vt; prose before/after stays ordinary <p>
+    from pdf2epub.core.emit_xhtml import Emitter
+    from pdf2epub.core.roles import apply_roles
+
+    cfg = _verse_cfg(tmp_path, [1])
+    res = build_flow(_doc([_page(1, _p46_lines())]), cfg, say=lambda m: None)
+    apply_roles(res.flow.blocks, {}, "p")
+    out = Emitter(cfg, res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert '<blockquote class="verse" epub:type="z3998:verse">' in body
+    assert body.count('<p class="vs') == 1
+    assert body.count('<span class="vl">') == 1       # base line
+    assert body.count('<span class="vl vt">') == 1    # turn line
+    assert "<br/>" in body
+    assert "\u2028" not in body  # the separator never ships as a char
+    # apply_roles rebuilt role/classes but block_class survived untouched
+    assert '<span class="vl">Within the Kaaba' in body
+
+
+def test_emit_verse_inline_anchor_and_formatting(tmp_path):
+    # italic run spanning a U+2028 seam splits into per-line <i>; the
+    # cross-page inline anchor lands inside the stanza between line spans
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    p1 = _page(1, [
+        _line("Prose introduces the poem at full measure width", 87,
+              x0=72, width=290),
+        _line("continuing to the couplet with a colon here:", 100,
+              x0=72, width=290),
+        _line("I dwell at your door always, like dirt—", 120,
+              x0=81, width=170),
+    ])
+    p2 = _page(2, [
+        _line("others come and go like the wind.", 87, x0=108, width=160),
+        _line("Prose resumes after the poem at full measure and", 110,
+              x0=72, width=290),
+        _line("runs on to the end of the paragraph as usual.", 123,
+              x0=72, width=290),
+    ])
+    # make both verse lines italic at the run level
+    for pg in (p1, p2):
+        for ln in pg.lines:
+            if ln.x0 in (81.0, 108.0):
+                for r in ln.runs:
+                    r.italic = True
+    cfg = _verse_cfg(tmp_path, [1, 2])
+    res = build_flow(_doc([p1, p2]), cfg, say=lambda m: None)
+    out = Emitter(cfg, res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert body.count('<span class="vl">') == 1
+    assert body.count('<span class="vl vt">') == 1
+    # italic renders per line segment, not across the <br/>
+    assert body.count("<i>") == 2
+    # the page-2 anchor span sits INSIDE the stanza markup
+    stanza = body[body.index('<p class="vs'):body.index("</blockquote>")]
+    assert 'id="pg-2"' in stanza
+
+
+def test_emit_two_adjacent_stanzas_one_blockquote(tmp_path):
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges", 61,
+              x0=72, width=290),
+        _line("and a third, ending the paragraph a bit short.", 74,
+              x0=72, width=250),
+        _line("Seek refuge in the shape of your rosy cheek,", 94,
+              x0=81, width=220),
+        _line("have put rose into rosewater.", 107, x0=108, width=150),
+        _line("Though my gold and silver are spent,", 127, x0=81, width=200),
+        _line("I am rich in the coin of your love.", 140, x0=108, width=170),
+        _line("The commentary resumes at full measure across the", 160,
+              x0=81, width=281),
+        _line("column and continues like ordinary prose text here.", 173,
+              x0=72, width=290),
+    ]
+    cfg = _verse_cfg(tmp_path, [1])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda m: None)
+    out = Emitter(cfg, res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert body.count("<blockquote") == 1  # both stanzas coalesce
+    assert body.count('<p class="vs') == 2

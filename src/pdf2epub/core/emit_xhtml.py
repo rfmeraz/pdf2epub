@@ -223,6 +223,30 @@ class Emitter:
                     toc_done = True
                     i = j
                     continue
+                if b.block_class == "verse":
+                    # gather the consecutive verse run (stanza paragraphs +
+                    # interleaved page anchors) into ONE blockquote; trailing
+                    # anchors belong to what FOLLOWS the poem
+                    j = i
+                    vrun: list = []
+                    while j < len(blocks):
+                        nb = blocks[j]
+                        if isinstance(nb, Paragraph) and \
+                                nb.block_class == "verse" and \
+                                (nb.role or "p") != "drop":
+                            vrun.append(nb)
+                        elif isinstance(nb, PageAnchor):
+                            vrun.append(nb)
+                        else:
+                            break
+                        j += 1
+                    while vrun and isinstance(vrun[-1], PageAnchor):
+                        vrun.pop()
+                        j -= 1
+                    self._maybe_split_for(b, toc_done)
+                    self._emit_verse_group(vrun)
+                    i = j
+                    continue
                 self._maybe_split_for(b, toc_done)
                 self._emit_paragraph(b)
             i += 1
@@ -290,6 +314,54 @@ class Emitter:
                     f'role="doc-pagebreak" aria-label={quoteattr(it.label)}></span>'
                 )
         return "".join(parts)
+
+    def _verse_lines_html(self, p: Paragraph) -> str:
+        """Split a stanza Paragraph's items into line segments at the U+2028
+        separators the flow recorded, render each through the standard inline
+        machinery (noterefs and inline pagebreaks keep their bookkeeping),
+        and wrap every line <span class="vl"> (turn lines "vl vt"), joined by
+        <br/> — the CSS-less fallback IS the line break."""
+        segs: list[list] = [[]]
+        for it in p.items:
+            if isinstance(it, TextRun) and "\u2028" in it.text:
+                for k, piece in enumerate(it.text.split("\u2028")):
+                    if k:
+                        segs.append([])
+                    if piece:
+                        segs[-1].append(TextRun(piece, it.fmt))
+            else:
+                segs[-1].append(it)
+        turns = set(p.verse_turns)
+        out = []
+        for k, seg in enumerate(segs):
+            cls = "vl vt" if k in turns else "vl"
+            out.append(f'<span class="{cls}">{self._items_html(seg)}</span>')
+        return "<br/>".join(out)
+
+    def _emit_verse_group(self, run: list) -> None:
+        """Consecutive verse-stanza Paragraphs emit as ONE
+        <blockquote class="verse" epub:type="z3998:verse"> holding a
+        <p class="vs"> per stanza (the Standard Ebooks poetry pattern: the
+        1 flow-Paragraph = 1 emitted block invariant gate 17 depends on is
+        kept, stanza by stanza). Interleaved page anchors emit as the
+        standard pagebreak div between stanzas — page slicing is
+        tag-agnostic on epub:type."""
+        f = self._ensure_file()
+        parts = ['<blockquote class="verse" epub:type="z3998:verse">']
+        for b in run:
+            if isinstance(b, PageAnchor):
+                pid = f"pg-{b.label}"
+                parts.append(
+                    f'<div id="{pid}" class="pagebreak" epub:type="pagebreak" '
+                    f'role="doc-pagebreak" aria-label={quoteattr(b.label)}>'
+                    "</div>")
+                f.pagebreaks.append((b.label, pid))
+                continue
+            inner = self._verse_lines_html(b)
+            classes = " ".join(dict.fromkeys(["vs", *b.classes]))
+            parts.append(f'<p class="{classes}">{inner}</p>')
+        parts.append("</blockquote>")
+        f.body_parts.append("".join(parts))
 
     def _rescue_inline_anchors(self, p: Paragraph) -> None:
         """A skipped paragraph (role=drop, absorbed heading) must not swallow
@@ -448,6 +520,7 @@ class Emitter:
 _XHTML_SHELL = """<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"
+      epub:prefix="z3998: http://www.daisy.org/z3998/2012/vocab/structure/"
       lang={lang} xml:lang={lang}>
 <head>
 <title>{title}</title>
