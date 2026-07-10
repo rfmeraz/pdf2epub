@@ -25,7 +25,7 @@ inspects the finished EPUB in a reader; **every other decision is the agent's**.
 `/convert-pdf` skill (`.claude/skills/convert-pdf/SKILL.md`) is the process definition:
 deterministic extract+analyze produce evidence, the agent infers the book's structure
 (the AI-agent step: pstyle roles, page ranges, TOC source, footnotes, PUA glyphs, cover,
-columned back matter)
+columned back matter, semantic block shapes such as verse)
 and records every judgment in `book.yaml`, then `build` is fully deterministic. After QA,
 the mandatory reading-QA step (`/proofread-epub`: blind reader subagents over `pdf2epub
 proofread` packets, findings verified against print renders, fixes only via config/code)
@@ -59,7 +59,10 @@ clipping, outline, internal links, page labels) and cross-scores every page agai
 co-author). `analyze.py` gathers deterministic evidence (font clusters → pstyles, furniture,
 folio-vs-label agreement, TOC witnesses, footnote regions, PUA census, join stats) into
 `analysis/` for the agent. `flowbuilder.py` applies the recorded judgments to produce the
-typed FlowDoc IR (furniture strip, footnote split, paragraph join with dehyphenation,
+typed FlowDoc IR (furniture strip, footnote split, semantic block classification —
+`blocks.verse` calibrated indent specs make verse line breaks content: stanza Paragraphs
+with U+2028 line separators that bypass the prose joiner, plus an uncalibrated
+verse-suspect witness on every build — paragraph join with dehyphenation,
 drop-cap reattachment and cross-run lost-space seams, flow.columns re-split of columned back
 matter into print reading
 order, textfix, printed-TOC rebuild, exact page anchors — inline at the run seam when a
@@ -68,8 +71,10 @@ back-end forked from idml2epub: role application, CJK lang tagging, XHTML emitte
 CSS, nav, OFL font subsetting, deterministic packager, and the EPUB-generic QA gates.
 `qa/` runs 23 gates (incl. 11 lost-space, 11b noteref-seam, 19 Qurʾānic-citation validation
 against the fixed 114-sura structure, 20 garble residue in shipped text, 21 figure-image
-integrity vs re-rendered source regions, and 22 warnings-adjudicated — the build's coded
-warning queue re-derived via `warnqueue.py`, failing on open content-risk items); text
+integrity vs re-rendered source regions, 22 warnings-adjudicated — the build's coded
+warning queue re-derived via `warnqueue.py`, failing on open content-risk items — and
+23 verse integrity: the flow's classified verse line count vs shipped `span.vl` spans,
+the one structure-loss witness presence-based coverage cannot be); text
 ground truth is poppler-extracted,
 trim-cropped, footnote-stripped page text through the same textfix/normalize chain the flow
 used; gates 13-17 grade
@@ -89,7 +94,7 @@ which no deterministic gate has.
 - NEVER embed fonts extracted from the PDF or any proprietary font; OFL from system files only.
 - Builds are byte-reproducible: no wall-clock, no randomness in outputs.
 - Per-book workspaces `books/<slug>/` (tracked): `package/` archived source PDF, `book.yaml`
-  the complete record of judgments (JP-P1..P8), `analysis/` evidence (thumbs/ gitignored),
+  the complete record of judgments (JP-P1..P9), `analysis/` evidence (thumbs/ gitignored),
   `build/` outputs (only the .epub tracked). Treat original PDFs outside the repo as read-only.
 - book.yaml unknown keys are build errors; flow.overrides address RAW extract line indexes.
 - Commit messages: no AI attribution trailers (user preference).
