@@ -70,7 +70,7 @@ is cheap and fits the existing witness doctrine exactly.
   book-specific `qa.lost_space_allow`-style escape. NOT a gating check: two heuristics
   disagreeing is evidence, not a verdict (engines witness, never co-author).
 
-**Integration points**: `src/pdf2epub/groundtruth.py` (second pdftotext invocation +
+**Integration points**: `src/pdf2epub/qa/groundtruth.py` (second pdftotext invocation +
 version probe), `qa/runner.py` (comparison + warning emission), `warnqueue.py`
 (advisory code), NOTES.md verification-baselines entry (record the poppler version).
 

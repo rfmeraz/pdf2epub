@@ -2658,3 +2658,65 @@ def test_class_verse_beats_justified_veto(tmp_path):
     verse = [p for p in _paras(res.flow) if p.block_class == "verse"]
     assert len(verse) == 1
     assert verse[0].text().startswith("A poem line")
+
+
+def test_repair_wrong_script_alpha_lookalike():
+    """Greek Ᾱ (U+1FB1) standing in for Latin Ā (BoK 'ʿᾹmir') is repaired
+    before a Latin lowercase. The SAME shared repair runs on the flow AND the
+    QA ground truth (textfix.repair_wrong_script) — a flow-only fix would make
+    the witness carry a char the candidate 'lost'."""
+    from pdf2epub.textfix import repair_wrong_script
+    assert repair_wrong_script("ʿᾹmir") == ("ʿĀmir", 1)
+    # genuine Greek (alpha-macron before a Greek letter) is left alone
+    assert repair_wrong_script("Ᾱβγ") == ("Ᾱβγ", 0)
+    # no lookalike present: identity, zero count
+    assert repair_wrong_script("plain Latin") == ("plain Latin", 0)
+    # both the flow and the QA ground truth call the one shared derivation
+    import inspect
+    import pdf2epub.qa.groundtruth as _gt
+    assert "repair_wrong_script" in inspect.getsource(_gt)
+
+
+def test_probe_run_identity_and_repair():
+    """_probe_run repairs a shifted RUN — the fallback note-marker paths
+    (raised/size-down) inspect the first run directly, so a shifted marker
+    reaching them must probe through the repair, not read as raw bytes. It is
+    identity on clean text, when repair is off, and with no cfg."""
+    from pdf2epub.flowbuilder import _probe_run
+
+    class _On:
+        shifted_cmap_repair = True
+        shifted_cmap_highmap = {}
+
+    class _Off:
+        shifted_cmap_repair = False
+        shifted_cmap_highmap = {}
+
+    assert _probe_run("Bibliography", _On()) == "Bibliography"      # clean
+    assert _probe_run("%LEOLRJUDSK\\", _On()) == "Bibliography"     # shifted -> repaired
+    assert _probe_run("%LEOLRJUDSK\\", _Off()) == "%LEOLRJUDSK\\"   # off: raw
+    assert _probe_run("x", None) == "x"                            # no cfg: raw
+
+
+def test_forced_quote_ships_without_body_anchors(tmp_path):
+    """A class:quote override on a sparse page (no body-anchor cluster to
+    measure insets from) still ships as a quote — the pass falls back to the
+    page's column edges rather than consuming the override and dropping it
+    (which also tripped the stale-spec SystemExit)."""
+    from pdf2epub.config import QuoteSpec
+    # two body-size lines at DIFFERENT x0 -> body_anchors finds no >=2
+    # cluster -> None, and it is page 1 so there is no carried anchor either
+    lines = [
+        _line("A forced quotation line with no measurable body block here", 100,
+              x0=90, width=250),
+        _line("An unrelated display line set at a different indent entirely", 150,
+              x0=72, width=280),
+    ]
+    cfg = _cfg(tmp_path, blocks_quotes=[QuoteSpec(pages=[1], left_inset=18.0,
+                                                  note="test")])
+    cfg.flow_overrides = [FlowOverride(page=1, line=0, action="class:quote",
+                                       note="forced")]
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    quote = [p for p in _paras(res.flow) if p.block_class == "quote"]
+    assert len(quote) == 1
+    assert quote[0].text().startswith("A forced quotation")

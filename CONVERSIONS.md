@@ -106,6 +106,16 @@ book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
     stage's RTL escalation warning is ADJUDICATED for this variant: inline-only
     strong-RTL runs, bidi-verified on Chrome renders (ﷺ placement, multi-word phrase
     order, basmala line). The English-readings EPUB remains the default deliverable.
+    RE-SYNCED 2026-07-10 (review #455): the variant had frozen before Phase F, so its
+    `blocks:` (verse/quotes/lists), the 41 flow.overrides, the Minion@12→h2 census heal,
+    and the p.245 verse-suspect adjudication were missing — the verse-suspect witness
+    fired 8× and gate 22 FAILED (exactly the D6 drift-detection this witness exists for).
+    Mirrored the main variant's render-verified structural judgments (identical page
+    geometry; only pua_map/fonts differ); rebuilt to 2799 blocks — structurally identical
+    to the main — epubcheck clean, gate 22/23 PASS, Overall: PASS. Its committed artifact
+    was also stale (built pre-final-code); refreshed. Lesson: variant configs must track
+    the primary's structural judgments; the verse-suspect witness catches the drift on
+    rebuild, but only if the variant is rebuilt.
 - Lessons promoted: coverage/gt reconciliation for glyph substitutions and renumbered
   noterefs; note regions must start at a marker line (9pt block quotes); first-line indent
   is relative to the previous line (drop-cap wraps); visual verification of PUA glyphs via

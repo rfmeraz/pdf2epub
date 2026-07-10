@@ -257,6 +257,22 @@ def strip_control_chars(text: str) -> tuple[str, int]:
     return (_CTRL_RE.sub("", text), n) if n else (text, 0)
 
 
+# GREEK CAPITAL LETTER ALPHA WITH MACRON standing in for Latin Ā inside a
+# transliteration (BoK p.184 'ʿᾹmir' — the PDF's own ToUnicode maps a visually
+# identical wrong-script codepoint; search and screen readers break). Repair
+# only before a Latin lowercase so genuine Greek text keeps its Greek
+# neighbours.
+_WRONGSCRIPT_ALPHA = re.compile("Ᾱ(?=[a-z])")
+
+
+def repair_wrong_script(text: str) -> tuple[str, int]:
+    """Fix visually-identical wrong-script lookalikes the PDF's ToUnicode
+    emitted (Greek Ᾱ for Latin Ā). Shared by the flow and the QA ground truth
+    so coverage compares repaired-vs-repaired text, never repaired-vs-raw (a
+    flow-only repair makes the witness carry a char the candidate 'lost')."""
+    return _WRONGSCRIPT_ALPHA.subn("Ā", text)
+
+
 # standalone words that form permanently hyphenated compounds: a line-end
 # 'self-' + lowercase continuation is 'self-evident', never 'selfevident'
 # (proofread-confirmed casualties: selfevident, allembracing, selfdiscipline,

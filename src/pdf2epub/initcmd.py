@@ -8,6 +8,7 @@ A FILL-ME-IN left in place fails the build loudly — never silently.
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 from .analyze import Analysis, analysis_to_dict, analyze
@@ -58,21 +59,37 @@ def run_init(pdf_or_folder: Path, workspace: Path, *,
             # backend-API error, OOM — must NEVER abort init before the draft
             # book.yaml is written. layout_available() only proves the imports
             # resolve, not that from_pretrained() succeeds. Warn loudly, skip.
+            layout_dir = analysis_dir / "layout"
+            need_draw = (layout_pages in (None, "", "auto", "flagged", "default")
+                         or (isinstance(layout_pages, str)
+                             and layout_pages.startswith("+sample:")))
+            pages = None
             try:
-                need_draw = (layout_pages in (None, "", "auto", "flagged", "default")
-                             or (isinstance(layout_pages, str)
-                                 and layout_pages.startswith("+sample:")))
                 draw = lw.drawings_dense_pages(pdf, doc) if need_draw else frozenset()
                 pages, sel = lw.resolve_pages(layout_pages, doc, a, drawings_dense=draw)
-                layout_dir = analysis_dir / "layout"
-                boxes = lw.run_layout_witness(pdf, pages, overlay_dir=layout_dir)
-                lw.write_layout_evidence(doc, a, boxes, pages, sel, layout_dir)
-                print(f"layout witness: scanned {len(pages)}/{doc.n_pages} pages "
-                      f"({sel}) -> {layout_dir / 'report.md'}")
-            except Exception as e:  # noqa: BLE001 - advisory: never break init
-                print(f"layout witness failed ({type(e).__name__}: {e}) — "
-                      "skipping (draft book.yaml is still written; rerun "
-                      "`init --layout` once the backend/model is available).")
+            except ValueError as e:
+                # a malformed --layout-pages ('abc', '+sample:x') is USER input,
+                # not a backend failure — surface it instead of swallowing it in
+                # the advisory catch below (which reads as "backend unavailable")
+                raise SystemExit(
+                    f"--layout-pages: invalid page spec {layout_pages!r} ({e})")
+            except Exception as e:  # noqa: BLE001 - advisory setup: never break init
+                print(f"layout witness setup failed ({type(e).__name__}: {e}) "
+                      "— skipping (draft book.yaml is still written).")
+            if pages is not None:
+                # a prior run's layout.json/report.md must not survive a failure
+                # here and read as CURRENT evidence — clear before (re)writing
+                if layout_dir.exists():
+                    shutil.rmtree(layout_dir)
+                try:
+                    boxes = lw.run_layout_witness(pdf, pages, overlay_dir=layout_dir)
+                    lw.write_layout_evidence(doc, a, boxes, pages, sel, layout_dir)
+                    print(f"layout witness: scanned {len(pages)}/{doc.n_pages} pages "
+                          f"({sel}) -> {layout_dir / 'report.md'}")
+                except Exception as e:  # noqa: BLE001 - advisory: never break init
+                    print(f"layout witness failed ({type(e).__name__}: {e}) — "
+                          "skipping (draft book.yaml is still written; rerun "
+                          "`init --layout` once the backend/model is available).")
 
     draft = _draft_yaml(pdf, doc, a, workspace)
     target = workspace / "book.yaml"

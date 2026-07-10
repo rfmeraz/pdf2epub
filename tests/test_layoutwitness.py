@@ -184,6 +184,18 @@ def test_resolve_pages_modes():
     assert lw.resolve_pages("3,5-7", big, a)[0] == [3, 5, 6, 7]
 
 
+def test_resolve_pages_rejects_malformed_spec():
+    """A malformed explicit --layout-pages is USER input, not a backend
+    failure: resolve_pages raises so initcmd surfaces it, instead of the
+    advisory catch swallowing it as 'backend unavailable'."""
+    big = _doc(400)
+    a = Analysis(flagged_pages=[2])
+    with pytest.raises(ValueError):
+        lw.resolve_pages("abc", big, a)
+    with pytest.raises(ValueError):
+        lw.resolve_pages("+sample:x", big, a)
+
+
 def test_sample_is_seeded_and_non_duplicating():
     doc = _doc(50, sha="deadbeefcafebabe")
     a = Analysis(flagged_pages=[1])
@@ -241,3 +253,22 @@ def test_layout_failure_does_not_abort_init(tmp_path, monkeypatch):
     assert rc == 0
     assert (ws / "book.yaml").exists()                    # draft written anyway
     assert not (ws / "analysis" / "layout" / "report.md").exists()
+
+
+def test_layout_bad_pagespec_surfaces(tmp_path, monkeypatch):
+    # a malformed --layout-pages is USER input, not a backend failure: init
+    # must surface it (SystemExit) rather than swallow it in the advisory
+    # catch and write a draft as if the backend were merely unavailable.
+    import fitz
+    from pdf2epub.initcmd import run_init
+
+    pdf = tmp_path / "src.pdf"
+    d = fitz.open()
+    d.new_page().insert_text((72, 72), "hello world")
+    d.save(str(pdf))
+    d.close()
+
+    monkeypatch.setattr(lw, "layout_available", lambda: True)
+    ws = tmp_path / "ws"
+    with pytest.raises(SystemExit):
+        run_init(pdf, ws, layout=True, layout_pages="abc")

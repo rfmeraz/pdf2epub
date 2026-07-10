@@ -82,6 +82,16 @@ def _probe_line(L: "_L", cfg) -> str:
                    for r in L.ln.runs)
 
 
+def _probe_run(text: str, cfg) -> str:
+    """One run's text through the same per-run CMap repair — for the fallback
+    marker paths (raised/size-down) that inspect the FIRST run directly. A
+    shifted note marker set at note-1-size and superscript would otherwise
+    reach those paths as raw control bytes and never read as a digit."""
+    if cfg is None or not cfg.shifted_cmap_repair:
+        return text
+    return probe_text(text, True, cfg.shifted_cmap_highmap)
+
+
 def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
     """True when a footnote-region line opens a new note. A marker set at note
     size and separated by punctuation/tab/2-spaces is caught by the text
@@ -108,7 +118,7 @@ def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
         and r0_f.size <= line_f.size - 0.5)
     if not raised:
         return False
-    head = r0.text.strip()
+    head = _probe_run(r0.text, cfg).strip()
     if marker == "digits":
         return head.rstrip(".)").isdigit()
     return bool(head) and head[0] in "*†‡"
@@ -129,7 +139,7 @@ def _note_marker(L: "_L", marker: str, cfg=None) -> str:
         if m:
             return m.group(1)
     runs = [r for r in L.ln.runs if r.text.strip()]
-    head = runs[0].text.strip() if runs else ""
+    head = _probe_run(runs[0].text, cfg).strip() if runs else ""
     if marker == "digits":
         d = re.match(r"\d{1,3}", head)
         return d.group(0) if d else "*"
@@ -531,13 +541,25 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         # and stamped only if the next spec page's top run accepts the union
         pending: tuple[list, "object", int] | None = None  # (lines, tail, si)
         vcarried: tuple[float, float] | None = None
+        prev_vpage: int | None = None
+        prev_vsi: int | None = None
         for pno in sorted(pages_lines):
             si = verse_spec_by_page.get(pno)
             lines = pages_lines[pno]
             if si is None or not lines:
                 prev_page_ends_verse = False
                 pending = None
+                vcarried = None  # leaving the spec drops the carried body edges
                 continue
+            if (prev_vpage is not None and pno != prev_vpage + 1) \
+                    or (prev_vsi is not None and si != prev_vsi):
+                # a gap in the page range, or a different spec, ends the run:
+                # the carried body edges and the held tail belong to the prior
+                # region (body couplets must not stitch into notes-inset verse)
+                vcarried = None
+                pending = None
+                prev_page_ends_verse = False
+            prev_vpage, prev_vsi = pno, si
             vs = cfg.blocks_verse[si]
             page_right = max((L.ln.x1 for L in lines), default=0.0)
             blocked, forced = [], []
@@ -670,14 +692,19 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         carried_open = False   # previous spec page ended inside an item
         last_num: dict[int, int] = {}  # spec -> last decimal marker seen
         prev_spec_page: int | None = None
+        prev_list_si: int | None = None
         for pno in sorted(pages_lines):
             si = list_spec_by_page.get(pno)
             lines = pages_lines[pno]
             if si is None or not lines:
+                carried_open = False  # a non-spec page ends the open item
                 continue
-            if prev_spec_page is not None and pno != prev_spec_page + 1:
-                carried_open = False  # a gap in the page range ends the item
-            prev_spec_page = pno
+            if (prev_spec_page is not None and pno != prev_spec_page + 1) \
+                    or (prev_list_si is not None and si != prev_list_si):
+                # a gap in the page range, or a switch to a different list
+                # spec, ends the item (its markers/hang columns differ)
+                carried_open = False
+            prev_spec_page, prev_list_si = pno, si
             ls = cfg.blocks_lists[si]
             rx = LIST_MARKERS.get(ls.marker)
             stops = spec_stops[si]
@@ -786,15 +813,22 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         carried: tuple[float, float] | None = None
         prev_ends_quote = False
         prev_quote_page: int | None = None
+        prev_quote_si: int | None = None
         for pno in sorted(pages_lines):
             si = quote_spec_by_page.get(pno)
             lines = pages_lines[pno]
             if si is None or not lines:
                 prev_ends_quote = False
+                carried = None  # leaving the spec drops the carried body edges
                 continue
-            if prev_quote_page is not None and pno != prev_quote_page + 1:
+            if (prev_quote_page is not None and pno != prev_quote_page + 1) \
+                    or (prev_quote_si is not None and si != prev_quote_si):
+                # a gap in the page range, or a different spec, ends the run —
+                # a later sparse page must not anchor to an unrelated earlier
+                # page's body edges
                 prev_ends_quote = False
-            prev_quote_page = pno
+                carried = None
+            prev_quote_page, prev_quote_si = pno, si
             qs = cfg.blocks_quotes[si]
             blocked, forced = [], []
             for L in lines:
@@ -827,7 +861,14 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             if anchors is None:
                 anchors = carried
             if anchors is None:
-                continue  # sparse/display page: nothing to anchor against
+                if not any(forced):
+                    continue  # sparse/display page: nothing to anchor against
+                # a forced class:quote is an explicit render-verified judgment
+                # that must ship even with no measurable body block: fall back
+                # to the page's shift-corrected column edges (the verse pass'
+                # doctrine) rather than consume the override and drop it
+                shift = geo.shift(pno)
+                anchors = (geo.col_left - shift, geo.col_right - shift)
             runs = quote_shape_runs(
                 [L.ln for L in lines], anchors[0], anchors[1],
                 qs.left_inset, qs.right_inset, body_size, tol=qs.tol,
@@ -1620,7 +1661,8 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
 
 def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
                    counts: Counter, page: int = 0) -> list[TextRun]:
-    from .textfix import is_shifted_run, repair_shifted_cmap, strip_control_chars
+    from .textfix import (is_shifted_run, repair_shifted_cmap,
+                          repair_wrong_script, strip_control_chars)
 
     out: list[TextRun] = []
     trim_next_punct_seam = False
@@ -1638,14 +1680,11 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
             counts["cmap-unknown-chars"] += unk
         t, n_ctrl = strip_control_chars(t)
         counts["ctrl-stripped"] += n_ctrl
-        if "Ᾱ" in t:
-            # GREEK CAPITAL ALPHA WITH MACRON standing in for Latin Ā inside
-            # transliteration (BoK p.184 'ʿᾹmir' — the PDF's own ToUnicode
-            # maps a visually identical wrong-script codepoint; search and
-            # screen readers break). Repair only before a Latin lowercase —
-            # genuine Greek text keeps Greek neighbours.
-            t, n_ws = re.subn("Ᾱ(?=[a-z])", "Ā", t)
-            counts["wrongscript-repaired"] += n_ws
+        # wrong-script transliteration lookalikes (Greek Ᾱ for Latin Ā): the
+        # SAME repair runs on the QA ground truth (textfix.repair_wrong_script),
+        # so coverage compares repaired text on both sides
+        t, n_ws = repair_wrong_script(t)
+        counts["wrongscript-repaired"] += n_ws
         if "�" in t:
             # U+FFFD = extractor's unmapped-glyph placeholder; replaceable
             # only page-scoped with render evidence (glyphs.fffd_repairs).

@@ -1001,3 +1001,62 @@ boundary as poppler, one rung up (text→structure).
   single page already saturates cores via torch intra-op threads; batching/more-workers give
   ≤1.15×) — the lever is fewer pages or a GPU. Re-run this bench after a torch/transformers
   upgrade.
+
+## Code-review response — review #455 (2026-07-10)
+
+A consolidated 17-job review of the Phase F commit surfaced 12 findings. Triaged against
+the code AND the corpus; 8 applied, 4 refuted (the refutations matter as much as the
+fixes — several proposed changes would have regressed test-pinned behavior or added
+speculative repairs the project's no-lexicon doctrine forbids). All five main books stayed
+byte-identical; every fix is test-pinned (`pytest -q` 264 green).
+
+- **Carried-anchor / list-item resets** (flowbuilder verse/quote/list passes). `vcarried`,
+  the quote `carried`, and `carried_open` survived non-spec pages, page-range GAPS, and
+  spec-index changes — so a later sparse page could anchor to an unrelated earlier page's
+  body edges. Now all three reset on leaving the spec, on a gap, and on a spec change.
+  Byte-neutral on the corpus (BoK's non-contiguous quote pages [56,193,220,…] and I&B's
+  gapped list spec [38-39],57 exercise the reset), but it closes a latent mis-anchor.
+- **Forced `class:quote` on an anchorless page** was consumed then dropped (`anchors is
+  None → continue`), and the now-empty spec tripped the stale-spec SystemExit. Mirrors the
+  verse pass: fall back to the page's shift-corrected column edges when any line is forced.
+  Test `test_forced_quote_ships_without_body_anchors` FAILS on HEAD with the SystemExit.
+- **Wrong-script repair moved to shared `textfix.repair_wrong_script`** (Greek Ᾱ→Latin Ā).
+  It lived only in the flow, so the QA ground truth carried the un-repaired Ᾱ and coverage
+  compared repaired-candidate vs raw-witness. Now both sides call the one derivation
+  (textfix docstring's own invariant). BoK flow output byte-identical; gt now symmetric.
+- **Per-run fallback probe** (`_probe_run`) in the raised/size-down note-marker paths, for
+  consistency with the primary per-run probe (no corpus case needs it — belt-and-suspenders
+  where shifted bytes could reach the first run).
+- **Analyzer per-line vertical filter**: a lone vertical line no longer voids a whole page
+  of verse/quote/list evidence — the shape detectors already filter vertical per-line.
+- **init `--layout-pages` validation**: a malformed spec (`abc`, `+sample:x`) was swallowed
+  by the advisory backend catch as if the backend were missing. Page-spec resolution moved
+  OUTSIDE the catch (user-input `ValueError` → `SystemExit`); the layout evidence dir is
+  cleared before the run so a failure never leaves stale report.md reading as current.
+- **Doc fix**: specs/qa-methodology.md integration point `groundtruth.py`→`qa/groundtruth.py`.
+
+Refuted (verified, not applied):
+- **Re-veto far-inset justified verse runs**: BoK & I&B ship single-level verse specs; the
+  `x1 ≤ ref_right-40` acceptance exists precisely for the tested equal-length couplet
+  (Jami, I&B p.100) which shares the exact signature of the feared false positive. Spec
+  page + base level + `class:prose` override already gate it; re-vetoing breaks the pin.
+- **Centered-line gap `max(gap_factor·med_lead, 1.35·sz)`**: the current
+  `gap_factor·max(med_lead, 1.35·sz)` is test-pinned (copyright break @20.8, two-line 21pt
+  title no-split margin 45.4pt). The proposal shrinks that split-defect margin (HU Chapter-55
+  shape) to ~2pt for a ≤2pt gain on body-centered lines no corpus page needs.
+- **Compound-chain whitelist for `hundred-/thousand-year`**: no corpus instance — the real
+  multi-hyphen chains present ('spirit-of-the', 'seeds-in-the', 'View-of-Clinging') are
+  connector-based and already preserved. A lexical whitelist is the speculative addition
+  the dehyphenate comment explicitly refuses.
+- **Narrowing list membership / keeping terminal verse inside a list**: by-design
+  continuation capture and the deliberate "trailing verse belongs to what follows the list"
+  roll-back; the three list books proofread clean and no corpus item ends in verse.
+
+Bonus (found while verifying, not in the review): the **BoK Arabic variant** had frozen
+before Phase F, so `book.arabic.yaml` carried NO `blocks:`, 4 of 41 flow.overrides, a stale
+`Minion@12: p`, and no p.245 adjudication — its rebuild FAILED gate 22 (8 open verse-
+suspects) and its committed artifact was stale. This is the D6 scenario the verse-suspect
+witness is FOR: a re-judged book's structural judgments not mirrored to its variant. Synced
+the (geometry-identical) render-verified judgments from `book.yaml`; the variant now builds
+to 2799 blocks like the main, gate 22/23 PASS, Overall: PASS. Variant configs must track
+the primary's structural judgments — and must be REBUILT for the witness to catch the drift.

@@ -674,10 +674,14 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
 
     med = a.median_leading or geo.body_size * 1.3 or 13.0
     for p in in_flow:
-        if p.number in a.column_suspect_pages or any(
-                ln.vertical for ln in p.lines):
+        if p.number in a.column_suspect_pages:
             continue
         shift = geo.shift(p.number)
+        # a lone vertical line (a rotated caption/marginale) no longer voids
+        # the whole page: the shape detectors filter vertical lines per-line
+        # (blockshapes.verse_shape_suspects / body_anchors), so mask them and
+        # keep scanning the horizontal body for verse/quote/list evidence
+        vmask = [getattr(ln, "vertical", False) for ln in p.lines]
 
         def _sz(ln):
             f = doc.fonts.get(ln.dominant_font())
@@ -688,6 +692,7 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
             ps = line_pstyle(ln, doc, geo, p.lines[i - 1] if i else None,
                              page_shift=shift)
             centered.append("/center" in ps)
+        vskip = [c or v for c, v in zip(centered, vmask)]
         for g in verse_shape_suspects(
                 p.lines, geo.col_left - shift, geo.col_right - shift,
                 geo.body_size, med, size_of=_sz, centered=centered):
@@ -697,18 +702,18 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
                 "base": g.base_offsets, "turns": g.turn_offsets,
                 "first": p.lines[g.start].text()[:60]})
         for q in quote_shape_suspects(p.lines, geo.body_size, size_of=_sz,
-                                      skip=centered):
+                                      skip=vskip):
             a.quote_suspect_pages.append({
                 "page": p.number, "lines": [q.start, q.end - 1],
                 "n_lines": q.end - q.start,
                 "left_inset": q.left_offset, "right_inset": q.right_offset,
                 "first": p.lines[q.start].text()[:60]})
         pl_anchors = body_anchors(p.lines, geo.body_size, size_of=_sz,
-                                  skip=centered)
+                                  skip=vskip)
         if pl_anchors is not None:
             for mk, rx in LIST_MARKERS.items():
                 hits = [(i, ln) for i, ln in enumerate(p.lines)
-                        if not centered[i] and rx.match(ln.text())
+                        if not vskip[i] and rx.match(ln.text())
                         and (sz := _sz(ln)) is not None
                         and abs(sz - geo.body_size) <= 1.5]
                 # a list needs >=2 marker lines at ONE shared entry stop
