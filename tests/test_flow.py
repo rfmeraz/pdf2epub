@@ -1532,3 +1532,17 @@ def test_quote_swap_after_line_join(tmp_path):
     # whether the join produced one run or two — either counter is fine
     assert (res.counts.get("quote-side-swaps", 0)
             + res.counts.get("spaces-restored-crossrun", 0)) >= 1
+
+
+def test_dehyphenate_keeps_compound_chains():
+    # print-verified M&R proofread class: 'so-/and-so', 'such-/and-such',
+    # 'face-to-/face', 'hundred-/thousand-year' are compound chains whose
+    # line-end hyphen is lexical
+    assert dehyphenate_join("so-", "and-so a dervish") == ("so-", "", False)
+    assert dehyphenate_join("such-", "and-such") == ("such-", "", False)
+    assert dehyphenate_join("face-to-", "face") == ("face-to-", "", False)
+    assert dehyphenate_join("hundred-", "thousand-year journey") == \
+        ("hundred-", "", False)
+    # ordinary breaks still join closed
+    assert dehyphenate_join("tradi-", "tion") == ("tradi", "", True)
+    assert dehyphenate_join("com-", "munity") == ("com", "", True)

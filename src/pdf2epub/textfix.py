@@ -241,7 +241,16 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
     if mode != "off" and base.endswith("­"):
         return base[:-1], "", True
     if mode != "off" and re.search(r"[A-Za-zÀ-ſ]-$", base):
-        if nxt.lstrip()[:1].islower() and not _KEEP_HYPHEN_PREFIX.search(base):
+        # a compound CHAIN keeps its hyphen: when the fragment already
+        # carries an interior hyphen ('face-to-' / 'hundred-') or the
+        # continuation's first token does ('and-so', 'and-such',
+        # 'thousand-year'), the line-end hyphen is lexical, not a break
+        # ('so-/and-so' -> 'so-and-so'; 2026-07-10 M&R proofread class)
+        last_word = re.split(r"[^A-Za-zÀ-ſ\-’']", base[:-1])[-1]
+        next_word = re.split(r"[^A-Za-zÀ-ſ\-’']", nxt.lstrip(), maxsplit=1)[0]
+        chain = "-" in last_word or "-" in next_word
+        if nxt.lstrip()[:1].islower() and not chain \
+                and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True
         return base, "", False
     # a CLOSED em/en-dash at the line end abuts its neighbours ('object—or',
