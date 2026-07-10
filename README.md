@@ -1,18 +1,19 @@
 # pdf2epub
 
-Convert a print-oriented book PDF — the only input — into a validated, reflowable
-EPUB 3 with a hyperlinked table of contents. No InDesign, no source files, no
-Adobe products.
+Convert a print-oriented book PDF into a validated, reflowable EPUB 3 with a
+hyperlinked table of contents. The PDF is the sole input; the pipeline does not
+require an InDesign project, publisher source files, or Adobe software.
 
 ## The problem, and the approach
 
-A print PDF has no structure. It is a set of glyphs placed at fixed coordinates on
-fixed-size pages: no paragraphs, no heading levels, no notion of a footnote or a
-poem or a table. A reflowable EPUB needs all of that recovered — what is a heading,
-where a paragraph actually breaks, which lines are a footnote, which are verse, what
-reading order a two-column index has. Books typeset by different houses in different
-decades hide that structure differently, so no single fixed rule set gets every book
-right.
+A print-oriented PDF places glyphs at fixed coordinates on fixed-size pages and
+carries almost none of the logical structure a reflowable EPUB needs: no paragraphs,
+no heading levels, no notion of a footnote or a poem or a table. (Some PDFs include
+bookmarks or internal links, which the pipeline uses when present, but those do not
+describe the body text.) That structure has to be recovered — what is a heading, where
+a paragraph actually breaks, which lines are a footnote, which are verse, what reading
+order a two-column index has. Books typeset by different houses in different decades
+hide it differently, so no single fixed rule set handles every book.
 
 pdf2epub splits the job into five stages so the hard part — the judgment calls — is
 separated from the mechanism, written down, and checked:
@@ -27,13 +28,12 @@ separated from the mechanism, written down, and checked:
 5. **Proofread** (the agent) — read the finished book for damage a machine can't
    judge.
 
-The human drops the PDF, kicks the conversion off, and inspects the finished EPUB;
+The human drops in the PDF, starts the conversion, and inspects the finished EPUB;
 every judgment in between is the agent's, recorded in `book.yaml` where a person can
 review or override it.
 
 Because every judgment lives in `book.yaml`, a build is reproducible and auditable:
-you can see exactly why the converter did what it did, and change any decision in one
-place.
+you can see why the converter did what it did, and change any decision in one place.
 
 ## The stages in detail
 
@@ -54,9 +54,9 @@ tables and figures.)
 `book.yaml`: which font cluster is which heading level, where the front matter ends,
 which table-of-contents source to trust, how footnotes are marked, what each
 private-use glyph means, where verse and block quotes and lists sit, which pages are
-multi-column, what the cover is. This inference step is the point of the design — it
-is where the real, book-specific judgment gets made once and written down, so the
-build that follows can be purely mechanical.
+multi-column, what the cover is. This inference step is the central design decision —
+it is where the book-specific judgment is made once and written down, so the build
+that follows can be purely mechanical.
 
 **3. `build` — deterministic assembly.** From *(PDF + book.yaml)*, with no further
 judgment, the build:
@@ -66,8 +66,8 @@ judgment, the build:
   (print line breaks preserved as real lines, shipped as `z3998:verse`), **block
   quotes** (justified inset blocks become real `<blockquote>`s), and **lists**
   (marker lines become real `<ol>`/`<ul>`);
-- joins the remaining lines into paragraphs, repairing line-end hyphenation, drop
-  caps, and spaces lost at run seams;
+- joins the remaining lines into paragraphs (dehyphenating line breaks, reattaching
+  drop caps, restoring spaces lost at run seams);
 - re-orders multi-column back matter (indexes and similar apparatus) into reading
   order;
 - ships true tables and diagrams as cropped images with agent-written alt text;
@@ -76,27 +76,29 @@ judgment, the build:
 - emits XHTML + CSS, subsets OFL fonts, and packages a byte-reproducible EPUB.
 
 Anything ambiguous is written to `build/warnings.md` as a coded, severity-ranked
-queue with ready-to-paste fixes. Nothing is ever silently dropped, and judgments
-already recorded in `book.yaml` resolve their own warnings.
+queue with ready-to-paste fixes, so content is not dropped without surfacing a
+warning. Judgments already recorded in `book.yaml` resolve their own warnings.
 
 **4. `qa` — automated grading (23 gates).** The EPUB is checked against an
-independent poppler extraction of the same PDF, so QA measures the conversion, not
-the converter's own guesses. The gates cover:
+independent poppler extraction of the same PDF, so QA grades the conversion against a
+separate witness rather than against the converter's own output. The gates cover:
 
 - **Validity** — epubcheck passes.
-- **Text** — every word of the source is present; no garbled characters, no leaked
-  furniture, no lost spaces at note markers.
+- **Text** — the shipped text is measured for coverage of the source; no garbled
+  characters, no leaked furniture, no lost spaces at note markers.
 - **Structure** — footnotes land correctly, navigation and reading order hold (each
   table-of-contents entry's heading is on its printed page), and verse keeps its line
-  breaks (the one loss that presence-of-text checks can't see — a flattened poem
-  loses no characters, only its shape).
+  breaks (a structure loss that character-coverage cannot see — a flattened poem loses
+  no characters, only its line breaks).
 - **Fidelity** — the shipped CSS and markup match the source geometry: headings are
-  typographically real, emphasis is conserved, centering is genuine, and each page's
-  block signature matches print.
-- **Images** — every shipped figure perceptually matches a re-render of its source
-  region (a blank or corrupt image is content loss no text gate would catch).
+  set as headings rather than emphasized body text, emphasis is preserved, centered
+  paragraphs correspond to centered source lines, and each page's block signature
+  (size buckets plus centering) matches print.
+- **Images** — every shipped figure is compared (by perceptual hash) against a
+  re-render of its source region, since a blank or corrupt image is content loss no
+  text gate would catch.
 - **Adjudication** — the build fails if any risky-page warning went unaddressed, so
-  `Overall: PASS` certifies the warning queue was actually cleared.
+  `Overall: PASS` confirms the warning queue was resolved.
 
 A domain gate also validates a shipped "Qurʾānic verses cited" index against the
 Qurʾān's fixed structure. `qa --visual` adds side-by-side print-vs-EPUB contact
@@ -104,8 +106,8 @@ sheets for an agent to grade by eye, and `--reference <epub>` scores against a k
 good EPUB.
 
 **5. `proofread` — reading QA (mandatory).** The finished EPUB is re-rendered as
-per-section reading packets. An agent fans out one blind reader per packet, hunting
-for damage a gate can't judge — fused or split paragraphs, missing spaces, garbled
+per-section reading packets. An agent fans out one blind reader per packet, looking
+for damage a gate cannot judge — fused or split paragraphs, missing spaces, garbled
 words, flattened verse — verifies every finding against the print render, and fixes
 accepted ones only through `book.yaml` or code, never by editing text. Rebuild and
 re-read the changed sections until a pass comes back clean.
@@ -135,7 +137,8 @@ epub for books/<slug>" — the commands above are what it runs on your behalf. B
 ## Under the hood
 
 **Everything is files.** Each command reads and writes concrete artifacts under
-`books/<slug>/`, and `book.yaml` is the seam the whole design turns on:
+`books/<slug>/`, and `book.yaml` is the seam between the deterministic stages and the
+agent's judgment:
 
 ```
   package/*.pdf
@@ -178,12 +181,12 @@ see exactly where a change took effect):
 only observes and measures the PDF; it never decides. Everything *after* it — the
 whole build and all 23 QA gates — is a pure function of *(PDF, book.yaml)*: same
 inputs, same bytes out, no clock, no randomness. So the judgment calls are confined
-to one small, human-readable file, written by the agent and open to your review. The
-agent steps back in only where a program genuinely can't decide — reading the
-proofread packets, and adjudicating the risky-page warnings — and both of those
-decisions are written back into `book.yaml` too. That is what makes the tool
-auditable: the mechanical parts are reproducible and diffable, and every real choice
-is in one place.
+to one small, human-readable file, written by the agent and open to review. The agent
+re-enters only where a program cannot decide — reading the proofread packets and
+adjudicating the risky-page warnings; the resulting fixes go into `book.yaml`, or into
+the pipeline code when the cause is a general bug rather than a per-book judgment. The
+mechanical stages are therefore reproducible and diffable, and every per-book decision
+sits in one file.
 
 ## Design commitments
 
@@ -196,9 +199,10 @@ is in one place.
   proprietary faces (Minion, Bembo, MS Mincho…) are never embedded.
 - **Byte-reproducible builds.** Fixed timestamps, deterministic identifiers, no
   randomness — same PDF + same `book.yaml` = the same EPUB, on the same toolchain.
-- **Two extraction witnesses.** PyMuPDF is the spine; poppler independently scores
-  every page and grounds the QA coverage gate. Engines witness the text; they never
-  co-author it.
+- **Two extraction witnesses.** PyMuPDF is the primary extractor; poppler
+  independently scores every page and supplies the ground truth for the QA coverage
+  gate. The two extractions are compared to flag disagreements, never merged to
+  produce the text.
 
 ## Provenance
 
