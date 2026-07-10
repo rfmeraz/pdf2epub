@@ -257,3 +257,32 @@ def test_class_override_verbs(tmp_path):
                      "flow: {overrides: [{page: 1, line: 2, "
                      "action: \"class:poem\"}]}")
         load_config(p)
+
+
+def test_blocks_lists_parsing(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text(
+        "source: {folder: p, pdf: b.pdf}\n"
+        "blocks:\n"
+        "  lists:\n"
+        "    - {pages: [\"337-373\"], marker: decimal, hang: 27,\n"
+        "       note: notes apparatus}\n")
+    cfg = load_config(p)
+    assert cfg.blocks_lists[0].pages[0] == 337
+    assert cfg.blocks_lists[0].marker == "decimal"
+    assert cfg.blocks_lists[0].hang == 27.0
+    with pytest.raises(ConfigError, match="marker invalid"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {lists: [{pages: [1], marker: roman, "
+                     "note: n}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="requires a note"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "blocks: {lists: [{pages: [1], marker: bullet}]}")
+        load_config(p)
+    with pytest.raises(ConfigError, match="overlap"):
+        p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                     "flow: {columns: [{pages: [35], count: 2, note: n}]}\n"
+                     "blocks: {lists: [{pages: [35], marker: decimal, "
+                     "note: n}]}")
+        load_config(p)

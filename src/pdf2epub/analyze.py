@@ -225,6 +225,7 @@ class Analysis:
     # semantic block shapes (evidence for the blocks: judgment)
     verse_suspect_pages: list[dict] = field(default_factory=list)
     quote_suspect_pages: list[dict] = field(default_factory=list)
+    list_marker_pages: list[dict] = field(default_factory=list)
     # layout anomalies
     column_suspect_pages: list[int] = field(default_factory=list)
     low_agreement_pages: list[dict] = field(default_factory=list)
@@ -668,7 +669,8 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     # init (no furniture strip yet), so the BUILD warning stays the
     # authoritative witness; this section exists to seed the blocks.verse
     # judgment with measured base/turn offsets per page range.
-    from .blockshapes import quote_shape_suspects, verse_shape_suspects
+    from .blockshapes import (LIST_MARKERS, body_anchors,
+                              quote_shape_suspects, verse_shape_suspects)
 
     med = a.median_leading or geo.body_size * 1.3 or 13.0
     for p in in_flow:
@@ -701,6 +703,27 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
                 "n_lines": q.end - q.start,
                 "left_inset": q.left_offset, "right_inset": q.right_offset,
                 "first": p.lines[q.start].text()[:60]})
+        pl_anchors = body_anchors(p.lines, geo.body_size, size_of=_sz,
+                                  skip=centered)
+        if pl_anchors is not None:
+            for mk, rx in LIST_MARKERS.items():
+                hits = [(i, ln) for i, ln in enumerate(p.lines)
+                        if not centered[i] and rx.match(ln.text())
+                        and (sz := _sz(ln)) is not None
+                        and abs(sz - geo.body_size) <= 1.5]
+                # a list needs >=2 marker lines at ONE shared entry stop
+                stops: dict[float, list[int]] = {}
+                for i, ln in hits:
+                    off = round(ln.x0 - pl_anchors[0], 1)
+                    key = next((s for s in stops if abs(s - off) <= 3.0),
+                               off)
+                    stops.setdefault(key, []).append(i)
+                for off, idxs in stops.items():
+                    if len(idxs) >= 2:
+                        a.list_marker_pages.append({
+                            "page": p.number, "marker": mk,
+                            "left": off, "n_items": len(idxs),
+                            "first": p.lines[idxs[0]].text()[:60]})
 
     # ---- cover proposal
     p1 = doc.pages[0]

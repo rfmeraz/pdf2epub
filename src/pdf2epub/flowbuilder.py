@@ -24,6 +24,7 @@ from .analyze import (
     line_pstyle,
 )
 from .blockshapes import (
+    LIST_MARKERS,
     body_anchors,
     justified_rights,
     quote_shape_runs,
@@ -188,6 +189,9 @@ class _L:
     block_class: str | None = None
     verse_turn: bool = False          # line sits at a deeper (turn) level
     verse_stanza_start: bool = False  # stanza gap opens a new stanza here
+    list_entry: bool = False          # marker line opening a list item
+    list_hang: bool = False           # line at the item's hang column
+    list_sub: bool = False            # first-line indent WITHIN the item
 
 
 def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
@@ -553,6 +557,148 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                           for i in stale_specs) +
                 " — recalibrate base/turns or remove the spec")
 
+    # ---- semantic block classification: lists, per blocks.lists specs.
+    # Marker lines (decimal "43.Necessary" / bullet "• …") at the calibrated
+    # entry stop open items; hang-column turnovers always JOIN their item
+    # (the M&R apparatus shipped with nearly every note's first line split
+    # from its body); lines at other insets — sub-lemma paragraphs with
+    # their own first-line indent — keep the geometric rules and stay
+    # separate paragraphs INSIDE the item. Verse classified above passes
+    # through untouched (a ghazal quoted inside a note nests in its <li>).
+    if cfg.blocks_lists:
+        list_spec_by_page: dict[int, int] = {}
+        for si, ls in enumerate(cfg.blocks_lists):
+            for pg in ls.pages:
+                list_spec_by_page.setdefault(pg, si)
+        lspec_items = Counter()
+        # entry stops are a property of the SPEC, not the page (the
+        # flow.columns gutter precedent): cluster the marker lines' x0
+        # across the spec's pages. Recto/verso binding shifts yield two
+        # stops; marker look-alikes (a wrapped line opening with a year at
+        # the hang column) fall below the cluster threshold.
+        spec_stops: list[list[float]] = []
+        for si, ls in enumerate(cfg.blocks_lists):
+            rx = LIST_MARKERS[ls.marker]
+            xs: list[float] = []
+            for pg in ls.pages:
+                for L in pages_lines.get(pg, []):
+                    if L.region >= 0 or "/center" in L.ps:
+                        continue
+                    f = doc.fonts.get(L.ln.dominant_font())
+                    if f is not None and f.size > body_size + 1.0:
+                        continue
+                    if rx.match(L.ln.text()):
+                        xs.append(L.ln.x0)
+            clusters: list[list[float]] = []
+            for x in sorted(xs):
+                if clusters and x - clusters[-1][-1] <= ls.tol:
+                    clusters[-1].append(x)
+                else:
+                    clusters.append([x])
+            top = max((len(c) for c in clusters), default=0)
+            stops = sorted(sum(c) / len(c) for c in clusters
+                           if len(c) >= max(2, 0.25 * top))
+            spec_stops.append(stops)
+        carried_open = False   # previous spec page ended inside an item
+        last_num: dict[int, int] = {}  # spec -> last decimal marker seen
+        prev_spec_page: int | None = None
+        for pno in sorted(pages_lines):
+            si = list_spec_by_page.get(pno)
+            lines = pages_lines[pno]
+            if si is None or not lines:
+                continue
+            if prev_spec_page is not None and pno != prev_spec_page + 1:
+                carried_open = False  # a gap in the page range ends the item
+            prev_spec_page = pno
+            ls = cfg.blocks_lists[si]
+            rx = LIST_MARKERS[ls.marker]
+            stops = spec_stops[si]
+            if not stops:
+                continue  # stale check below reports it
+            member_floor = min(stops) - ls.tol
+            hang_cols = [st + ls.hang for st in stops]
+            in_item = carried_open
+            for L in lines:
+                act = ov.get((L.page, L.idx))
+                if act in ("class:list", "class:prose"):
+                    consumed.add((L.page, L.idx))
+                    class_applied.add((L.page, L.idx))
+                if L.region >= 0 or act == "class:prose":
+                    in_item = False
+                    continue
+                if L.block_class == "verse":
+                    continue  # a poem inside the item: pass through
+                f = doc.fonts.get(L.ln.dominant_font())
+                sz = f.size if f else None
+                text = L.ln.text()
+                is_entry = (rx.match(text) is not None
+                            and any(abs(L.ln.x0 - st) <= ls.tol
+                                    for st in stops)
+                            and "/center" not in L.ps
+                            and (sz is None or sz <= body_size + 1.0))
+                # a short lemma line at the item's own columns whose
+                # midpoint chances near the column center is mislabeled
+                # /center (the false-center trap; verse strips it too) —
+                # p.371 'He sits in front of me like a son.' split the ol
+                # in half. A centered line at an ARBITRARY x0 ('Part 2.'
+                # dividers) still ends the item and breaks the list.
+                false_center = "/center" in L.ps and L.ln.x0 <= \
+                    max(hang_cols) + cfg.indent_threshold + ls.tol
+                member = in_item and L.ln.x0 >= member_floor and \
+                    ("/center" not in L.ps or false_center) and \
+                    (sz is None or sz <= body_size + 1.0)
+                if act == "class:list":
+                    member = True
+                    if not in_item:
+                        is_entry = True
+                if not is_entry and not member:
+                    in_item = False
+                    continue
+                if member and "/center" in L.ps:
+                    L.ps = L.ps.replace("/center", "")
+                L.block_class = "list"
+                counts["list-lines"] += 1
+                if is_entry:
+                    L.list_entry = True
+                    in_item = True
+                    lspec_items[si] += 1
+                    counts["list-items"] += 1
+                    if ls.marker == "decimal":
+                        m = re.match(r"\d{1,3}", text)
+                        num = int(m.group(0)) if m else 0
+                        if si in last_num and num <= last_num[si]:
+                            warns.append(_Warn(
+                                f"p.{pno} line {L.idx}: list marker "
+                                f"{num} follows {last_num[si]} — numbering "
+                                "is not increasing (restart or misread "
+                                f"marker): {text[:40]!r}", pno, L.idx,
+                                code="list-marker-gap"))
+                            counts["list-marker-gap"] += 1
+                        last_num[si] = num
+                else:
+                    L.list_hang = any(abs(L.ln.x0 - hc) <= ls.tol
+                                      for hc in hang_cols)
+                    if not L.list_hang and ls.hang > 0 and \
+                            L.ln.x0 > max(hang_cols) + 3.0:
+                        # DEEPER than the hang column = a first-line indent
+                        # WITHIN the item: a sub-lemma paragraph opens here
+                        # (M&R sets lemma glosses at hang+9; 20+ fused after
+                        # full-width lines the geometric rules cannot see —
+                        # every one starts its own line in print)
+                        L.list_sub = True
+            carried_open = bool(lines) and \
+                lines[-1].block_class in ("list", "verse") and in_item
+        stale_l = [i for i in range(len(cfg.blocks_lists))
+                   if not lspec_items.get(i)]
+        if stale_l:
+            raise SystemExit(
+                "stale blocks.lists (classified no items): entries " +
+                ", ".join(f"#{i} pages {cfg.blocks_lists[i].pages[:6]}…"
+                          if len(cfg.blocks_lists[i].pages) > 6 else
+                          f"#{i} pages {cfg.blocks_lists[i].pages}"
+                          for i in stale_l) +
+                " — recalibrate marker/hang or remove the spec")
+
     # ---- semantic block classification: quotes, per blocks.quotes specs.
     # The witness is the OPPOSITE of verse: a justified inset block (shared
     # x0 run whose right edges cluster — the same block_right that vetoes
@@ -580,7 +726,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if act in ("class:quote", "class:prose"):
                     consumed.add((L.page, L.idx))
                     class_applied.add((L.page, L.idx))
-                blocked.append(L.region >= 0 or L.block_class == "verse"
+                blocked.append(L.region >= 0
+                               or L.block_class in ("verse", "list")
                                or act == "class:prose")
                 forced.append(act == "class:quote")
 
@@ -648,9 +795,11 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                      for L in lines],
             centered=["/center" in L.ps for L in lines])
         for g in suspects:
-            if any(lines[x].block_class == "verse"
+            if any(lines[x].block_class is not None
                    for x in range(g.start, g.end)):
-                continue  # covered by a blocks.verse spec
+                # covered by a recorded blocks: judgment (a bullet list of
+                # short ragged epithets is verse-SHAPED — I&B pp.39/57)
+                continue
             first = lines[g.start]
             warns.append(_Warn(
                 f"p.{pno} lines {first.idx}..{lines[g.end - 1].idx}: "
@@ -782,16 +931,56 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             elif L.colno >= 0:
                 # columned entry lines: indent decides (see _column_resplit)
                 brk = (act == "break") or (act != "join" and L.entry_break)
+            elif L.block_class == "list":
+                if act in ("break", "join"):
+                    brk = act == "break"
+                elif prev_L is None or \
+                        prev_L.block_class not in ("list", "verse"):
+                    brk = True   # entering the list is a block boundary
+                elif L.list_entry:
+                    brk = True   # a marker line opens its own item (heals
+                    #              the note-into-next-note fusions)
+                elif prev_L.block_class == "verse":
+                    brk = True   # apparatus resuming after an in-item poem
+                elif L.list_sub:
+                    # deeper than the hang column = the item's INSET block
+                    # (lemma glosses, quoted passages). Stepping into it
+                    # from the entry/hang level is a paragraph boundary
+                    # (heals 20+ lemma fusions after full-width lines);
+                    # WITHIN it the geometric rules hold — inset paragraphs
+                    # have their own first-line indents at inset+18, and a
+                    # per-line break shattered note 244's quotation
+                    if prev_L.list_entry or prev_L.list_hang:
+                        brk = True
+                    else:
+                        brk = _break_before(
+                            L, prev_L, act, body_ps, cfg, geo, med_lead,
+                            open_is_body, pno)
+                elif L.list_hang:
+                    # hang-column turnovers continue the item — the round-1
+                    # split damage came from the indent-break rule (the
+                    # entry sits at the column edge) — but a previous line
+                    # that visibly ENDED its paragraph still breaks: a
+                    # short entry line can be followed by a flush
+                    # continuation paragraph at the hang column (p.341
+                    # 'Intellect is a veil.' after '…See SPL 220-26.')
+                    brk = _prev_short(prev_L, L, geo)
+                else:
+                    brk = _break_before(
+                        L, prev_L, act, body_ps, cfg, geo, med_lead,
+                        open_is_body, pno)
             elif prev_L is not None and \
-                    (prev_L.block_class == "quote") != \
-                    (L.block_class == "quote"):
-                # entering/leaving a classified quote IS a block boundary in
-                # print (the verse precedent). The geometric joiner cannot
-                # see some of these seams: I&B's italic scripture quotes
-                # fused onto their intro prose on 38 boundaries — the ps-twin
-                # rule eats the style change, the indent-break rule requires
-                # the ROMAN body ps, and the leading gap sits under the
-                # threshold. Interior quote joins stay fully geometric.
+                    prev_L.block_class != L.block_class and \
+                    ("quote" in (prev_L.block_class, L.block_class)
+                     or prev_L.block_class == "list"):
+                # entering/leaving a classified quote or leaving a list IS a
+                # block boundary in print (the verse precedent). The
+                # geometric joiner cannot see some of these seams: I&B's
+                # italic scripture quotes fused onto their intro prose on 38
+                # boundaries — the ps-twin rule eats the style change, the
+                # indent-break rule requires the ROMAN body ps, and the
+                # leading gap sits under the threshold. Interior quote
+                # joins stay fully geometric.
                 brk = act != "join"
             else:
                 brk = _break_before(L, prev_L, act, body_ps, cfg, geo, med_lead,
@@ -810,6 +999,9 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     counts["verse-stanzas"] += 1
                 elif L.block_class == "quote":
                     open_para.block_class = "quote"
+                elif L.block_class == "list":
+                    open_para.block_class = "list"
+                    open_para.list_entry = L.list_entry
                 if is_dropcap:
                     open_para.classes = ["first-dropcap"]
                     open_para.style = body_ps  # dropcap letter belongs to body text
@@ -850,13 +1042,17 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     counts["verse-stanzas"] += 1
                 elif L.block_class == "quote":
                     open_para.block_class = "quote"
+                elif L.block_class == "list":
+                    open_para.block_class = "list"
+                    open_para.list_entry = L.list_entry
             if not brk and prev_L is not None and \
-                    open_para.block_class == "quote" and \
-                    L.block_class != "quote":
-                # a paragraph mixing quote and prose lines can only arise
+                    open_para.block_class in ("quote", "list") and \
+                    L.block_class != open_para.block_class:
+                # a paragraph mixing classed and prose lines can only arise
                 # from an explicit join override (a recorded judgment) or a
-                # dropcap glue; it ships OUTSIDE the blockquote
+                # dropcap glue; it ships OUTSIDE the blockquote/list
                 open_para.block_class = None
+                open_para.list_entry = False
             _append_line(open_para, L, cfg, doc, counts, glue=prev_dropcap,
                          verse=(L.block_class == "verse"
                                 and open_para.block_class == "verse"))
@@ -915,6 +1111,10 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         counts["quote-paras"] = sum(
             1 for b in res.flow.blocks
             if isinstance(b, Paragraph) and b.block_class == "quote")
+    if cfg.blocks_lists:
+        counts["list-paras"] = sum(
+            1 for b in res.flow.blocks
+            if isinstance(b, Paragraph) and b.block_class == "list")
 
     # ---- attach note markers (global pass: a marker can sit in a paragraph
     # that STARTED on the previous page)
@@ -1003,6 +1203,20 @@ def _assign_block_right(lines: list[_L]) -> None:
     vetoes verse is the blocks.quotes witness (one code path, never two)."""
     for L, m in zip(lines, justified_rights([L.ln for L in lines])):
         L.block_right = m
+
+
+def _prev_short(prev: _L, L: _L, geo: ColumnGeometry) -> bool:
+    """The bare ragged-paragraph-end signal of _break_before, without its
+    indent rules: did ``prev`` visibly END its paragraph? Used for list
+    hang-column lines, where the indent rules misfire by construction
+    (the entry sits at the column edge) but a genuine paragraph end must
+    still break."""
+    col_w = geo.col_right - geo.col_left
+    eff_right = geo.col_right - max(
+        0.0, geo.col_left - min(prev.ln.x0, L.ln.x0))
+    ref_right = prev.block_right if prev.block_right is not None else eff_right
+    return (prev.ln.x1 < ref_right - max(18.0, 0.06 * col_w)
+            and not prev.ln.text().rstrip().endswith(_CONT_DASHES))
 
 
 def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,

@@ -159,6 +159,34 @@ def write_structure_report(doc: PdfDoc, a: Analysis, out: Path) -> None:
               f"note: FILL render-verified}}")
     else:
         w("- no justified-inset (quote-shaped) blocks detected")
+    if a.list_marker_pages:
+        w(f"- marker-list shapes (>=2 marker lines at one entry stop) on "
+          f"{len({m['page'] for m in a.list_marker_pages})} page(s) — "
+          "verify against renders, then record blocks.lists specs (entry "
+          "stops derive per spec from the marker lines themselves; hang = "
+          "the turnover column's offset from the stop, measured on a "
+          "wrapped item):")
+        by_shape: dict[tuple, list[int]] = {}
+        for m in a.list_marker_pages:
+            by_shape.setdefault((m["marker"], round(m["left"])),
+                                []).append(m["page"])
+        for (mk, off), pages in sorted(by_shape.items(),
+                                       key=lambda kv: -len(kv[1]))[:8]:
+            ps = sorted(set(pages))
+            w(f"  - {mk} at left {off}pt on {len(ps)} page(s) "
+              f"{_ranges(ps[:40])}")
+        w("  paste-ready draft (VERIFY each range on renders; measure "
+          "hang from a wrapped item):")
+        w("  # blocks:")
+        w("  #   lists:")
+        for (mk, off), pages in sorted(by_shape.items(),
+                                       key=lambda kv: -len(kv[1]))[:4]:
+            rng = _ranges(sorted(set(pages)))[1:-1]
+            quoted = ", ".join(f'"{r}"' for r in rng.split(", "))
+            w(f"  #     - {{pages: [{quoted}], marker: {mk}, "
+              f"hang: FILL, note: FILL render-verified}}")
+    else:
+        w("- no marker-list shapes detected")
 
     w("")
     w("## Layout anomalies")

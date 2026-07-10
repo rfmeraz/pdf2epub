@@ -117,6 +117,15 @@ glyphs:
   fail_on_unmapped_pua: true
   gt_strip_phrases: []
 
+blocks:
+  # JP-P9: the Translator's Introduction summarizes the work as bulleted
+  # chapter digests ("•  Chapter 42: …") at body-left+18 with 9pt hanging
+  # turnovers; entry stops alternate 81/90 with the recto/verso binding
+  # shift (derived per spec). Render-verified pp.13/16.
+  lists:
+    - {pages: ["10-18"], marker: bullet, hang: 9,
+       note: "bulleted source and chapter digests in the Translator's Introduction; render-verified pp.13/16"}
+
 fonts:
   embed:
     - {family: "Noto Serif CJK SC",

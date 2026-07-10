@@ -48,6 +48,23 @@ _SPACE_AFTER_CITE = re.compile(r"([\])][.,;:])([A-Za-z])")
 _SPACE_BEFORE_PAREN = re.compile(r"([.!?”’])(\(\d)")
 _SPACE_AFTER_STAR = re.compile(r"([.!?]\*)([A-Za-z])")
 _SPACE_NUM_DOT_CAP = re.compile(r"([0-9A-Z]\.)([A-Z][a-z])")
+# the single-capital variant: a note marker abutting O/A/I ('84.O you',
+# '38.I\u2019ve never') — the capital must be a standalone word (space or
+# apostrophe follows), so initials ('R.A.') and citations never match
+_SPACE_NUM_DOT_ONECAP = re.compile("([0-9]\\.)([A-Z](?=[\\s\u2019]))")
+# a semicolon directly followed by a letter is never legitimate typography;
+# the lowercase-before guard of _SPACE_AFTER_PUNCT missed the digit/bracket
+# contexts ('2218-51;Attar', '[20:5];His') and lowercase continuations
+# ('manyness;it') — print-verified spaced (M&R pp.174/229)
+_SPACE_AFTER_SEMI = re.compile(r"(;)([A-Za-z])")
+# digit + comma + capital ('2.41,Shams is referring'): thousands separators
+# are digit-digit and never match
+_SPACE_NUM_COMMA_CAP = re.compile(r"([0-9],)([A-Z])")
+# digit + comma + FOUR digits ('October 11,1244'): a thousands separator
+# groups exactly three, so a four-digit year after the comma is a seam
+_SPACE_NUM_COMMA_YEAR = re.compile(r"([0-9],)([0-9]{4}(?![0-9]))")
+# closing quote + period + capital ('\u2026inheritor. . .\u201d.The word')
+_SPACE_CLOSEQ_DOT = re.compile("(\u201d\\.)([A-Z])")
 _SPACE_STAR_LETTER = re.compile(r"(\*)([A-Za-z])")
 # display-type ampersands lose their surrounding spaces in extraction
 # ('Me &Rumi', 'Me&Rumi' on the M&R title pages); the lowercase-before
@@ -63,8 +80,10 @@ _INSERT_PATTERNS = (
     _SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET,
     _SPACE_COMMA_LOWER, _SPACE_PUNCT_OPENQ, _SPACE_CLOSEQ,
     _SPACE_AFTER_CITE, _SPACE_BEFORE_PAREN, _SPACE_AFTER_STAR,
-    _SPACE_NUM_DOT_CAP, _SPACE_STAR_LETTER, _SPACE_AMP_LEFT,
-    _SPACE_AMP_RIGHT,
+    _SPACE_NUM_DOT_CAP, _SPACE_NUM_DOT_ONECAP, _SPACE_AFTER_SEMI,
+    _SPACE_NUM_COMMA_CAP, _SPACE_NUM_COMMA_YEAR, _SPACE_CLOSEQ_DOT,
+    _SPACE_STAR_LETTER,
+    _SPACE_AMP_LEFT, _SPACE_AMP_RIGHT,
 )
 
 
@@ -229,7 +248,16 @@ def strip_control_chars(text: str) -> tuple[str, int]:
 # START ordinary words (thought-ful, love-ly) and need a lexicon to decide.
 _KEEP_HYPHEN_PREFIX = re.compile(
     r"(?:^|[^A-Za-zÀ-ſ])(?:self|all|half|well|ill|cross|low|twenty|thirty|"
-    r"forty|fifty|sixty|seventy|eighty|ninety)-$", re.I)
+    r"forty|fifty|sixty|seventy|eighty|ninety|seven|just|"
+    r"wa\u2019l|wa\u2019t)-$", re.I)
+# the Arabic ARTICLE keeps its hyphen at a line break ('Q\u016bt al-/qul\u016bb',
+# 'Mirsad al-/ibad' — 13 of 14 corpus sites), but English syllable breaks
+# of 'allows'/'although'/'alchemy' must still dehyphenate ('teaching
+# al-/lows', I&B p.157). The discriminator is the word BEFORE the article:
+# Arabic titles put a capitalized or diacritical word there; plain
+# lowercase English never does.
+_ARABIC_ARTICLE = re.compile(
+    "(\\S+)\\s+al-$")
 
 
 def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str, str, bool]:
@@ -260,7 +288,12 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
         _conn = ("and", "to", "by")
         chain = (next_word.split("-", 1)[0] in _conn and "-" in next_word) \
             or ("-" in last_word and last_word.rsplit("-", 1)[1] in _conn)
+        art = _ARABIC_ARTICLE.search(base)
+        arabic_article = art is not None and (
+            art.group(1)[:1].isupper()
+            or any(ord(c) > 0x7f for c in art.group(1)))
         if nxt.lstrip()[:1].islower() and not chain \
+                and not arabic_article \
                 and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True
         return base, "", False

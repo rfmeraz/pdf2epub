@@ -47,6 +47,12 @@ def _doc_text(d) -> str:
     parts = []
     for el in body.iter():
         if el.tag in _BLOCKS:
+            if el.tag == f"{_X}li" and any(
+                    isinstance(c.tag, str) and c.tag == f"{_X}p"
+                    for c in el):
+                # a blocks.lists item is a container (li > p.lp…): its child
+                # paragraphs carry the text; counting the li too doubles it
+                continue
             parts.append(block_text(el))
     return " ".join(parts) if parts else " ".join(body.itertext())
 

@@ -94,6 +94,19 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
   single-level ragged verse at the same inset (calibrate verse FIRST —
   verse wins on shared pages). A 2-line quote paragraph alone on a page
   has no cluster witness: use `class:quote`.
+  Marker-list shapes (decimal "1."/"43.Necessary"/"1.·…"; bullet "• …")
+  get `blocks.lists` specs `{pages, marker, hang}` — hang is the turnover
+  column's offset from the entry stop (0 = flat), measured on a wrapped
+  item; entry stops derive per spec from the marker lines themselves.
+  Entry lines always break and hang turnovers always join (this heals
+  hanging-indent apparatus: split first lines, fused short notes); items
+  ship as real `<ol>/<ul>` with printed markers kept in the text
+  (packets show them as `- ` entries). Precedence on shared pages:
+  verse > lists > quotes. `list-marker-gap` warns (ADVISORY) when decimal
+  numbering fails to increase — expected at chapter-notes restarts, a
+  misread marker mid-section otherwise. NOT lists: enumerated prose
+  ("ten headings: first…"), centered title lists, and unmarked
+  hanging-indent bibliographies (no marker — out of scope).
 
 ## Step 3 — Build → QA → adjudicate → iterate (≤8)
 

@@ -182,6 +182,13 @@ blocks:
   quotes:
     - {pages: [56, 193, 220, 227, "259-261"], left_inset: 36,
        note: "36pt left-inset justified quotations; render-verified pp.193/220/259-261"}
+  # JP-P9: the Author's Introduction enumerates the forty books as four
+  # decimal lists ("1.·The Book of Knowledge" … "40.·…", interpunct
+  # separator) at one entry stop with 22.5pt hanging turnovers (item 10
+  # wraps). Render-verified pp.41-42.
+  lists:
+    - {pages: ["41-42"], marker: decimal, hang: 22.5,
+       note: "the forty books of the Revival, four numbered lists; render-verified pp.41-42"}
 
 fonts:
   embed: []      # readings are English text; no special glyphs remain

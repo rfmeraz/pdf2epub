@@ -340,3 +340,62 @@ round-1/2 packet-037-040 findings are the Phase L acceptance evidence.
 Also open: single-line verse quotations ship as short paragraphs (the
 2-line classifier minimum, by design); 'earthof Tabriz' single in-PDF
 lost space (no safe pattern).
+
+## me-and-rumi — 2026-07-10 re-ship 2 (blocks.lists: the notes apparatus healed)
+
+Phase L turns the notes apparatus (physical pp.336-374) into a real
+decimal list: 233 items / 364 list paragraphs ship as <ol>/<li> with the
+passage-number markers kept in the text. Blind re-reads of the changed
+packets (three rounds, 14 readers total incl. two textfix-delta packets)
+drove the fixes; every finding was verified against raw extraction or a
+print render before repair.
+
+Fixed this pass:
+- entry-break + hang-join heals the two shipped damage classes (nearly
+  every note's first line split from its body; full-width note ends fused
+  into the next entry) — round-1 packets 037-040 were the evidence
+- the apparatus's INSET BLOCK level (lemma glosses and quoted passages at
+  hang+9, their paragraphs indented a further 18pt): stepping into the
+  inset breaks (20+ geometry-verified lemma fusions healed), within it
+  geometry rules (note 244's quoted anecdote had shattered one paragraph
+  per print line under the first cut of the rule)
+- hang-column paragraphs after a short entry line break ('Intellect is a
+  veil.', p.341); range markers ('19-22.', '102-103.') are entries; the
+  notes actually START mid-p.336 and END p.374 (the first spec cut both)
+- the p.370-371 ghazal continuation: the page-top base line ending 7.3pt
+  short is the poem's second couplet, now verse with the page anchor
+  inline at the line seam (gate 23: 307/307)
+- the false-center trap inside items: short lemmas whose midpoints chance
+  near the column center ('He sits in front of me like a son.', 'Atabeg.')
+  were /center-labeled, splitting the ol and detaching downstream lemmas
+  ('Possessors of the kernels', 'On the sash and Abu Yazid',
+  'Saddle-cloth') — a centered line at the item's own columns now stays a
+  member with the label stripped (the verse precedent); genuinely
+  centered dividers ('Part 2.') still break the list
+- one per-line judgment: note-211's 'Unlettered.' lemma opens its inset
+  paragraph after a lemma ending only 12.2pt short — under the ragged-end
+  floor, invisible to geometry (flow.overrides break, p.357 line 20)
+- print-verified textfix classes: marker+single-capital ('84.O you', 7
+  sites), semicolon+letter (54 sites), digit+comma+capital, digit+comma+
+  year ('October 11,1244'), closing-quote+period+capital
+- dehyphenation: the Arabic article keeps its hyphen when a capitalized/
+  diacritical word precedes ('Mirsad al-ibad'; the rule also heals 12
+  'Qut alqulub'-class sites in the SHIPPED BoK, which re-ships in Phase
+  F); seven-/just- joined the closed compound set
+
+REFUTED (as-printed, verified against raw extraction/renders): the tight
+passage-citation seam '”(343)' and quote-bracket '”[kafshak]' (the book's
+convention), '(M I 638-38)', 'word's of Iblis', 'His father' tradition',
+'That this a commentary', 'is common theme', 'a things', 'awliya'Allah'
+(U+2019+letter stays permanently unsafe), '(nîstî )', MSM vs MMS sigla.
+
+HANDOFF (unchanged + new): the bibliography 'Abbreviations and Works
+Cited' (pp.334-336a) has no markers — its ~250 hanging-indent entries
+keep their old one-line-per-block damage until a hang-only shape exists
+(incl. 'SPL.W. C. Chittick' and the 'trans-'/'lated' stranded hyphen);
+the introduction's six digit-note pages stay inline as flagged at
+conversion; single-line verse quotations remain short paragraphs;
+'earthof Tabriz' and 'hundredthousand-year' remain.
+
+qa Overall: PASS (all 23 gates; gate 23 verse 307/307), epubcheck clean,
+246 unit tests green. Final state: 233 items / 366 list paragraphs.

@@ -224,3 +224,25 @@ def test_walk_rendering_quote_block():
     assert any(l == "Prose resumes after the quotation." for l in lines)
     q = [b for b in blocks if b.lines and b.lines[0].startswith(">")]
     assert len(q) == 2  # one block per quoted paragraph
+
+
+def test_walk_rendering_list_items():
+    # blocks.lists markup: the li is a CONTAINER — child paragraphs render
+    # once ('- ' entries, indented sub-lemma continuations), never doubled
+    doc = _doc("ch.xhtml", (
+        '<ol class="plist">'
+        '<li class="li1"><p class="lp">43.Necessary in existence. '
+        "Shaykh Muhammad is represented as criticizing this.</p>"
+        '<p class="lp lpc">Those people destroy the souls. See SPL.</p>'
+        "</li>"
+        '<li class="li1"><p class="lp">45.He does not know.</p></li>'
+        "</ol>"
+        "<p>Prose resumes after the apparatus.</p>"))
+    blocks, _ = walk_doc(doc, is_notes=False, k_start=0)
+    lines = [l for b in blocks for l in b.lines]
+    assert any(l.startswith("- 43.Necessary") for l in lines)
+    assert any(l.startswith("- 45.He does not know") for l in lines)
+    assert any(l.startswith("  Those people destroy") for l in lines)
+    joined = "\n".join(lines)
+    assert joined.count("43.Necessary") == 1  # never doubled via the li
+    assert any(l == "Prose resumes after the apparatus." for l in lines)

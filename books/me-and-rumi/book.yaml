@@ -127,6 +127,7 @@ flow:
     - {page: 35, line: 11, action: "class:prose", note: "dialogue 'I said,Repeat that…' at the paragraph indent directly under the quatrain — prose, not a 5th verse line (p.35 render)"}
     - {page: 231, line: 18, action: "class:prose", note: "dialogue 'The fellow said,You're a mad man.' directly under the Layla/Majnun couplet — prose (p.231 render)"}
     - {page: 119, line: 24, action: "class:verse", note: "couplet base line 'Glorification, religion, and monastery…' runs to full measure so the boundary-short rule sheds it; render shows it opening the two-couplet verse (p.119 render)"}
+    - {page: 357, line: 20, action: "break", note: "note-211 lemma 'Unlettered.' opens its own inset paragraph in print (starts its raw line at the inset column) but the previous lemma ends only 12.2pt short — under the ragged-end floor, invisible to geometry (proofread round 3)"}
     # proofread round 1 (2026-07-10): section title + passage number fused into
     # one centered smallcaps heading (join_center_lines) — the number line
     # starts its own heading, matching every unfused passage number
@@ -172,6 +173,20 @@ blocks:
        note: "body couplets/quatrains — renders pp.35/46/68/70/165 (2026-07-10)"}
     - {pages: ["337-373"], base: [37.5], turns: [50, 73.5], tol: 3.5,
        note: "notes-region verse — renders pp.341/367/370 + p.356 ghazal at turn offset 52 (proofread round 1, 2026-07-10)"}
+  # List judgment (2026-07-10, Phase L). The notes apparatus is a decimal
+  # hanging-indent list: passage-number entries at the body left
+  # ("43.Necessary in existence…"), turnovers 27pt deeper, sub-lemma
+  # paragraphs at +36 with their own 9pt first-line indent (render-verified
+  # pp.340/370). The shipped artifact split nearly every note's first line
+  # from its body and fused full-width note ends into the next entry
+  # (proofread round-1 packets 037-040) — entry-break + hang-join heals
+  # both classes. Numbering restarts at each chapter's notes section
+  # (list-marker-gap ADVISORY expected). The ghazals quoted inside notes
+  # stay verse and nest inside their items. Works Cited (pp.374+) has NO
+  # markers — out of scope for the marker detector (handoff).
+  lists:
+    - {pages: ["336-374"], marker: decimal, hang: 27,
+       note: "notes-apparatus passage entries with 27pt hanging turnovers; render-verified pp.340/370; heals proofread round-1 packets 037-040; numbered notes start mid-p.336 after the bibliography and end p.374 (index starts p.375)"}
 
 footnotes:
   policy: markers

@@ -21,7 +21,24 @@ the body face at body size); the signals are purely geometric:
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
+
+# list-item marker shapes at an entry stop. Decimal covers the corpus's
+# print habits: "148. The" (space), "43.Necessary" (prepress lost the
+# space — the marker abuts a capital/open quote), "1.·The" / "10.· The"
+# (BoK's interpunct separator), and RANGE markers for grouped entries
+# ("19-22. I have placed passages 19-22…", M&R). Four-digit years never
+# match (d{1,3} cannot absorb them). Bullet covers "• " (I&B/HU) plus the
+# common typographic bullets. Both are CALIBRATED signals: an entry line
+# must also sit at the spec's entry stop, so a year opening a wrapped
+# bibliography line never fires (its x0 is the hang column, not the stop).
+LIST_MARKERS: dict[str, re.Pattern] = {
+    "decimal": re.compile(
+        "^\\d{1,3}(?:-\\d{1,3})?[.)]"
+        "(?:[\\s\u00b7\u2027\u2219]|(?=[A-Z\u201c\u2018]))"),
+    "bullet": re.compile("^[\u2022\u00b7\u2023\u25aa\u25cf-]\\s"),
+}
 
 # calibrated: every verse line must end at least this short of the column
 # right (kills the full-width prose line at a base-level indent — M&R p.165)
@@ -150,8 +167,13 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
         if turns:
             # boundary trim: the first/last line of a poem at a BASE level
             # must end short (a full-measure line at the paragraph indent is
-            # prose — M&R p.165); interior and turn-level lines are exempt
-            while run and levels[run[0]] == "base" and not _short(run[0]):
+            # prose — M&R p.165); interior and turn-level lines are exempt,
+            # and so is a PAGE-TOP line continuing the previous page's
+            # verse — mid-poem base lines legitimately run near-full (M&R
+            # p.371: 'This thirst in our souls…' ends 7.3pt short as the
+            # second couplet of the poem the page turn interrupted)
+            while run and levels[run[0]] == "base" and not _short(run[0]) \
+                    and not (run[0] == 0 and cont_top):
                 run = run[1:]
             while run and levels[run[-1]] == "base" and not _short(run[-1]):
                 run = run[:-1]

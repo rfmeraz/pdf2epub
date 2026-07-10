@@ -698,6 +698,114 @@ tol, note}`. Lessons that shaped it:
   open verse-suspects that gate 22 rightly blocks until the Phase F
   verse re-judge; the tracked EPUBs stay at their shipped state.
 
+## Semantic block grammar: lists (2026-07-10, Phase L)
+
+`blocks.lists` classifies marker lists — the one class where the SIGNAL is
+textual (a marker regex) anchored by geometry (the entry stop). Spec:
+`{pages, marker: decimal|bullet, hang, tol, note}`. Lessons:
+
+- **Entry stops derive PER SPEC, not per page** (the flow.columns gutter
+  precedent): cluster the marker lines' x0 across the spec's pages, keep
+  clusters >= max(2, 25% of the top). Recto/verso binding shifts yield two
+  stops (HU/I&B bullets at 81/90); a wrapped bibliography line opening
+  with "1983." sits at the hang column in a sub-threshold cluster and
+  never becomes an entry. Per-page anchors are hopeless here: on
+  bullet-dominated pages the smallest shared x0 IS the bullet stop
+  (HU p.16), and on hang-dominated pages it is the hang column
+  (M&R long notes).
+- **Entry lines always break; hang-column turnovers always join; sub-lemma
+  paragraphs keep the geometric rules.** That triple heals BOTH shipped
+  M&R apparatus damage classes at once (first-line splits: the turnover's
+  indent-break fires because the entry sits at the column edge; fusions:
+  a note ending on a FULL turnover gave the joiner nothing to break on)
+  while keeping the within-item paragraph structure (sub-lemmas at +36
+  with their own 9pt first-line indent, e.g. p.340's "Those people
+  destroy the souls").
+- **Marker regexes carry the corpus's three decimal habits**: "148. The"
+  (space), "43.Necessary" (prepress lost the space), "1.·The" (BoK's
+  interpunct); a trailing capital/open-quote lookahead keeps years-in-
+  prose out. Kept IN the text on emission (never-rewrite; exact coverage)
+  with list-style:none.
+- **Emission**: consecutive list paragraphs -> real `<ol>/<ul
+  class="plist">`; each entry paragraph opens `<li class="li1">` holding
+  `<p class="lp">`, continuation paragraphs add `<p class="lp lpc">`
+  (1 flow-Paragraph = 1 emitted <p>, gate 17 held). An ol may only
+  contain li children: page anchors emit as pagebreak SPANS inside the
+  nearest li. A ghazal quoted inside a note nests as its verse blockquote
+  within the li (41 nested poems in M&R's notes file). The li is a
+  CONTAINER everywhere downstream: proofread's walker, qa_pageslice, and
+  runner._doc_text all skip an li with p children or the text doubles.
+- **Precedence**: verse > lists > quotes. I&B's bulleted scripture sits at
+  the same 18pt inset as its quotes spec — the marker is the stronger
+  signal; and a bullet list of short ragged epithets (I&B pp.39/57) is
+  verse-SHAPED, so the verse-suspect witness now skips any line covered
+  by a recorded blocks: judgment.
+- `list-marker-gap` (ADVISORY): decimal numbering must increase; a
+  restart marks a chapter's notes section (M&R fires exactly 2, its two
+  chapter boundaries) — a DECREASE mid-section would be a misread marker.
+- **The blind re-read of the healed packets found the classifier's own
+  blind spots** (round 2): the notes START mid-p.336 after the
+  bibliography (printed 309 = physical 336 — the spec's first page was
+  one short, leaving the old split damage on notes 4-17), the notes END
+  on p.374, and grouped-passage entries use RANGE markers ("19-22. I
+  have placed passages 19-22…", "102-103. Ibrahim Adham") the regex now
+  accepts (\d{1,3}(-\d{1,3})?[.)]; four-digit years still can't match).
+- **The apparatus has an INSET BLOCK level below the hang column** (M&R:
+  entry 71/73, hang 98/100, inset 107/109, and inset paragraphs carry
+  their OWN first-line indents at 125/127). Pure depth cannot decide
+  breaks: stepping INTO the inset from the entry/hang level is a
+  paragraph boundary (heals 20+ lemma glosses fused after full-width
+  lines — geometry verified every reader claim at once: each lemma
+  starts its own raw line at the inset), but WITHIN the inset the
+  geometric rules hold — a per-line break shattered note 244's quoted
+  anecdote into one paragraph per print line and stranded a kept
+  'serv-'/'ice' hyphen across two blocks.
+- **Hang-column lines join UNLESS the previous line visibly ended its
+  paragraph** (_prev_short — the bare ragged-end signal without the
+  indent rules): the round-1 split damage came from the indent-break
+  rule, but 'Intellect is a veil.' opens a flush continuation paragraph
+  at the hang column after a short entry line (p.341) and must break.
+- **A page-top verse base line continuing the previous page's poem is
+  exempt from the boundary-short trim**: M&R p.371's 'This thirst in our
+  souls…' ends 7.3pt short of the column as the SECOND couplet of the
+  poem the page turn interrupted — the trim shed it and the couplet
+  shipped as two list paragraphs. The page anchor now sits inline at the
+  exact verse line seam.
+- Print-verified textfix classes closed in the same pass: marker
+  abutting a single-capital word ('84.O you', '38.I\u2019ve' — 7 sites),
+  semicolon+letter ('2218-51;Attar', 'manyness;it' — the lowercase-
+  before guard of the round-1 pattern missed digit/bracket contexts; 54
+  sites, renders pp.174/229), digit+comma+capital ('2.41,Shams'),
+  closing-quote+period+capital. REFUTED by print: the passage-citation
+  seam '\u201d(343)' is set TIGHT (p.35 render) — the pre-existing
+  _SPACE_BEFORE_PAREN normalization stands, but no new quote-paren rule.
+- **The Arabic article keeps its line-break hyphen when a capitalized or
+  diacritical word precedes it** ('Q\u016bt al-/qul\u016bb' — 13 of 14 corpus
+  sites; the SHIPPED BoK carried 'alqul\u016bb'-style damage at 12 of them),
+  while English syllable breaks still dehyphenate ('teaching al-/lows',
+  I&B p.157 — the one collision, discriminated by the plain-lowercase
+  preceding word). 'as-/an-/ar-/ad-' must NEVER join a keep-hyphen set:
+  the corpus survey showed they are overwhelmingly English syllable
+  breaks. seven-/just- joined the closed compound set (M&R onesies).
+- Judged specs: M&R `{pages: ["336-374"], marker: decimal, hang: 27}`
+  (233 items, 375 list paragraphs; heals round-1 packets 037-040);
+  BoK `{pages: ["41-42"], marker: decimal, hang: 22.5}` (the forty books,
+  4 <ol>); HU `{pages: ["10-18"], marker: bullet, hang: 9}` (77 chapter
+  digests); I&B `{pages: ["38-39", 57], marker: bullet, hang: 0}` (flat).
+  M&R re-ships with this phase (qa Overall: PASS); BoK/HU/I&B artifacts
+  stay at their shipped state for the Phase F re-judge.
+- Handoff: the M&R bibliography ("Abbreviations and Works Cited",
+  pp.334-336a) has NO decimal/bullet markers — author-name and sigla
+  hanging indents are out of the marker detector's scope; its ~250
+  wrong-splits/fusions (incl. 'SPL.W. C. Chittick') stay until a
+  hang-only shape is designed (Phase F+). As-printed, verified against
+  raw extraction and never repaired: '(M I 638-38)', 'a things',
+  'word\u2019s of Iblis', 'His father\u2019 tradition', 'That this a
+  commentary', 'is common theme', 'awliya\u2019Allah' (the U+2019+letter
+  hamza/ayn class stays permanently unsafe), '(n\u00eest\u00ee )',
+  '\u201cbooties\u201d[kafshak]' (tight quote-bracket = the citation
+  convention), MSM vs MMS sigla (both exist in print).
+
 ## M&R proofread pass (2026-07-10) — prepress space classes closed
 
 38 blind readers over 40 packets, ~700 findings → systematic classes, each

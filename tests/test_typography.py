@@ -498,3 +498,26 @@ def test_slicer_quote_paragraph_one_block():
     assert len(blks) == 2
     assert all(b.in_blockquote for b in blks)
     assert "bq" in blks[0].classes
+
+
+def test_slicer_list_item_paragraphs(tmp_path):
+    # gate 17's 1 flow-Paragraph = 1 emitted block invariant, list cell:
+    # the li is a container — its child p.lp paragraphs slice as the
+    # blocks, never doubled
+    from pdf2epub.core.qa_pageslice import slice_pages
+
+    xhtml = (
+        '<div class="pagebreak" epub:type="pagebreak" role="doc-pagebreak" '
+        'aria-label="313" id="pg-313"></div>'
+        '<ol class="plist">'
+        '<li class="li1"><p class="lp">43.Necessary in existence.</p>'
+        '<p class="lp lpc">Those people destroy the souls.</p></li>'
+        '<li class="li1"><p class="lp">45.He does not know.</p></li>'
+        "</ol>")
+    docs = [_doc("c1.xhtml", xhtml)]
+    res = slice_pages(docs, [313], {313: "313"})
+    assert res.ok
+    blks = res.slices[313]
+    assert [b.tag for b in blks] == ["p", "p", "p"]
+    texts = " | ".join(b.text for b in blks)
+    assert texts.count("43.Necessary") == 1

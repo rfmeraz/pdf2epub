@@ -107,6 +107,32 @@ class QuoteSpec:
 
 
 @dataclass(slots=True)
+class ListSpec:
+    """Semantic block judgment: pages carrying print lists — marker lines
+    (``decimal`` "1." / "43.Necessary" / "10.·…"; ``bullet`` "• …") at one
+    shared entry x0, with hanging-indent turnovers ``hang`` pt deeper (0 =
+    flat, I&B-style). Entry lines always BREAK (healing note-fusions) and
+    hang-column turnovers always JOIN their item (healing the first-line
+    splits M&R's notes apparatus shipped with); lines at other insets —
+    sub-lemma paragraphs with their own first-line indent — keep the
+    geometric rules and stay separate paragraphs INSIDE the item. Items
+    ship as real <ol>/<ul> + <li>, printed markers KEPT in the text
+    (never-rewrite; exact coverage) with list-style:none. Entry stops are
+    derived PER SPEC by clustering the marker lines' x0 across the spec's
+    pages (the flow.columns precedent) — recto/verso binding shifts yield
+    two stops, and stray marker look-alikes (a wrapped line opening with a
+    year) fall below the cluster threshold. ``note``
+    records the render evidence and is REQUIRED; a spec that classifies
+    ZERO items is stale and fails the build. Per-line corrections:
+    flow.overrides ``class:list`` / ``class:prose``."""
+    pages: list[int]
+    marker: str = "decimal"   # decimal | bullet
+    hang: float = 0.0
+    tol: float = 3.0
+    note: str = ""
+
+
+@dataclass(slots=True)
 class CharStyleFlags:
     smallcaps: bool = False
     symbol: bool = False
@@ -253,6 +279,7 @@ class PdfBookConfig:
     # semantic block grammar (JP-P9): per-class judgment specs
     blocks_verse: list[VerseSpec] = field(default_factory=list)
     blocks_quotes: list[QuoteSpec] = field(default_factory=list)
+    blocks_lists: list[ListSpec] = field(default_factory=list)
 
     # footnotes (JP-P4)
     footnote_policy: str = "none"   # none | markers
@@ -477,8 +504,8 @@ def load_config(path: Path) -> PdfBookConfig:
     for ov in fl.get("overrides", []) or []:
         _check_keys("flow.overrides[]", ov, {"page", "line", "action", "note"})
         action = ov["action"]
-        if action not in ("join", "break", "drop", "keep",
-                          "class:verse", "class:quote", "class:prose") \
+        if action not in ("join", "break", "drop", "keep", "class:verse",
+                          "class:quote", "class:list", "class:prose") \
                 and not action.startswith("role:"):
             raise ConfigError(f"flow.overrides action invalid: {action}")
         cfg.flow_overrides.append(FlowOverride(page=int(ov["page"]), line=int(ov["line"]),
@@ -596,7 +623,7 @@ def load_config(path: Path) -> PdfBookConfig:
                                                note=fr.get("note", "")))
 
     bl = data.get("blocks", {})
-    _check_keys("blocks", bl, {"verse", "quotes"})
+    _check_keys("blocks", bl, {"verse", "quotes", "lists"})
     for vs in bl.get("verse", []) or []:
         _check_keys("blocks.verse[]", vs,
                     {"pages", "base", "turns", "tol", "stanza_gap", "note"})
@@ -649,6 +676,29 @@ def load_config(path: Path) -> PdfBookConfig:
             right_inset=float(qs.get("right_inset", 0.0)),
             tol=float(qs.get("tol", 3.0)),
             note=qs["note"]))
+    for ls in bl.get("lists", []) or []:
+        _check_keys("blocks.lists[]",
+                    ls, {"pages", "marker", "hang", "tol", "note"})
+        if not ls.get("note"):
+            raise ConfigError("blocks.lists requires a note "
+                              "(render-verified evidence)")
+        pages = _page_list(ls.get("pages", []) or [])
+        if not pages:
+            raise ConfigError("blocks.lists needs at least one page")
+        marker = ls.get("marker", "decimal")
+        if marker not in ("decimal", "bullet"):
+            raise ConfigError(f"blocks.lists marker invalid: {marker}")
+        col_pages = {p for cs in cfg.flow_columns for p in cs.pages}
+        fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
+        clash = set(pages) & (col_pages | fig_pages)
+        if clash:
+            raise ConfigError("blocks.lists pages overlap flow.columns/"
+                              f"figure_pages: {sorted(clash)[:8]}")
+        cfg.blocks_lists.append(ListSpec(
+            pages=pages, marker=marker,
+            hang=float(ls.get("hang", 0.0)),
+            tol=float(ls.get("tol", 3.0)),
+            note=ls["note"]))
 
     qa = data.get("qa", {})
     _check_keys("qa", qa, {"lost_space_allow", "garble_chars"})

@@ -126,6 +126,13 @@ def slice_pages(body_docs, in_flow: list[int],
                 if got != want:
                     label_misses.append(f"anchor {k}: label {got!r} != {want!r}")
             elif local in _BLOCK_TAGS:
+                if local == "li" and any(
+                        isinstance(c.tag, str) and c.tag == f"{_X}p"
+                        for c in el):
+                    # a blocks.lists item is a CONTAINER (li > p.lp…): its
+                    # child paragraphs are the blocks; slicing the li too
+                    # would double every item's text
+                    continue
                 blk = _make_block(el, doc.href)
                 if k < 0:
                     res.preamble.append(blk)

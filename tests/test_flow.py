@@ -1977,3 +1977,453 @@ def test_quote_full_page_carried_anchors(tmp_path):
     assert quoted[0].text().startswith("Hearts are vessels")
     assert quoted[0].text().endswith("every brayer.")
     assert res.counts.get("quote-lines") == 5
+
+
+# ---------------------------------------------------------------- blocks.lists
+
+def _list_cfg(tmp_path, pages, marker="decimal", hang=27.0, **kw):
+    from pdf2epub.config import ListSpec
+    return _cfg(tmp_path, blocks_lists=[ListSpec(
+        pages=pages, marker=marker, hang=hang,
+        note="test lists")], **kw)
+
+
+def _mr_notes_lines():
+    # M&R notes-apparatus shape (p.340): entries "43.<lemma>" at the body
+    # left, hang turnovers 27pt deeper, sub-lemma paragraphs at 36pt with
+    # their own first-line indent. The shipped damage: turnovers SPLIT from
+    # their entry (the indent-break fires: prev line sits at the column
+    # edge), and a note ending on a FULL turnover FUSES with the next entry.
+    return [
+        _line("43.Necessary in existence by His Essence. Shaykh M", 90,
+              x0=72, width=285),
+        _line("is represented as criticizing this expression, and", 103,
+              x0=99, width=258),
+        _line("proves of it.", 116, x0=99, width=60),
+        _line("45.He does not know. This is a philosophical claim", 129,
+              x0=72, width=285),
+        _line("position criticized by both theologians and Sufis.", 142,
+              x0=99, width=200),
+        _line("Those people destroy the souls. For some remarks", 155,
+              x0=108, width=249),
+        _line("on false teachers, see SPL 145-47 and elsewhere.", 168,
+              x0=99, width=230),
+        _line("47.He's reading his own page. See the note on 1.37", 181,
+              x0=72, width=250),
+    ]
+
+
+def test_list_apparatus_heals_splits_and_fusions(tmp_path):
+    res = build_flow(_doc([_page(1, _mr_notes_lines())]),
+                     _list_cfg(tmp_path, [1]), say=lambda *a: None)
+    paras = _paras(res.flow)
+    items = [p for p in paras if p.block_class == "list"]
+    entries = [p for p in items if p.list_entry]
+    # three notes; the hang turnover after entry 43 JOINED (no first-line
+    # split), and entry 45's FULL second line did not fuse into the
+    # sub-lemma or the next entry
+    assert len(entries) == 3
+    assert entries[0].text().startswith("43.Necessary")
+    assert "criticizing this expression" in entries[0].text()
+    assert "proves of it." in entries[0].text()
+    assert entries[1].text().startswith("45.He does not know")
+    assert entries[2].text().startswith("47.He's reading")
+    # the sub-lemma is its own paragraph INSIDE the item (list, not entry)
+    sub = [p for p in items if not p.list_entry]
+    assert len(sub) == 1 and sub[0].text().startswith("Those people")
+    assert res.counts.get("list-items") == 3
+    assert res.counts.get("list-paras") == 4
+
+
+def test_list_fusion_healed_after_full_width_note_end(tmp_path):
+    # a note whose LAST turnover runs full-measure fused into the next
+    # entry in the shipped M&R (nothing told the joiner to break); the
+    # marker line now always opens its own item
+    lines = [
+        _line("148. The tale-bearer is God. There is an allusion", 90,
+              x0=72, width=285),
+        _line("in Koran 66:3 and this line runs the full measure x", 103,
+              x0=99, width=258),
+        _line("149. Companion of the heart. A standard expression", 116,
+              x0=72, width=285),
+        _line("who lives in the awareness of God, a true dervish.", 129,
+              x0=99, width=200),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    entries = [p for p in _paras(res.flow)
+               if p.block_class == "list" and p.list_entry]
+    assert len(entries) == 2
+    assert entries[0].text().endswith("full measure x")
+    assert entries[1].text().startswith("149. Companion")
+    # decimal numbering increased: no gap warning
+    assert res.counts.get("list-marker-gap", 0) == 0
+
+
+def test_list_cross_page_item_and_hang_only_page(tmp_path):
+    # a long note spans the page turn onto a page that is ONLY turnovers
+    # (no entry, no body-left line): carried anchors + carried_open classify
+    # it and the item continues as one paragraph
+    p1 = _page(1, [
+        _line("151. God is greater. Compare passages 2.104, 105.", 77,
+              x0=72, width=224),
+        _line("152. Lote Tree of the Far Boundary. A tree growing", 90,
+              x0=72, width=285),
+        _line("most limit of paradise from which the Prophet had x", 103,
+              x0=99, width=258),
+    ])
+    p2 = _page(2, [
+        _line("a vision of God during his miraj according to the", 87,
+              x0=99, width=258),
+        _line("commentators (Koran 53:14) and much more besides.", 100,
+              x0=99, width=200),
+    ])
+    res = build_flow(_doc([p1, p2]), _list_cfg(tmp_path, [1, 2]),
+                     say=lambda *a: None)
+    items = [p for p in _paras(res.flow) if p.block_class == "list"]
+    assert len(items) == 2 and all(p.list_entry for p in items)
+    assert items[1].text().startswith("152. Lote Tree")
+    assert items[1].text().endswith("much more besides.")
+    assert res.counts.get("list-lines") == 5
+
+
+def test_list_negative_cells(tmp_path):
+    # a body paragraph OUTDENTED below the entry stop ends the item span;
+    # a wrapped line opening with a year at the hang column after it stays
+    # prose (it is neither at the entry stop nor inside an open item)
+    lines = [
+        _line("Body prose at the full measure anchors the column", 61,
+              x0=72, width=285),
+        _line("and introduces the little list with a colon here:", 74,
+              x0=72, width=280),
+        _line("1. Real item at the entry stop starts the list ok", 94,
+              x0=103.5, width=200),
+        _line("2. Second real item keeps the spec from going bad", 107,
+              x0=103.5, width=202),
+        _line("The bibliography discusses the year and then wraps", 127,
+              x0=72, width=285),
+        _line("1983. The year opens this WRAPPED line and must x", 140,
+              x0=126, width=200),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _list_cfg(tmp_path, [1], hang=22.5),
+                     say=lambda *a: None)
+    paras = _paras(res.flow)
+    entries = [p for p in paras if p.block_class == "list" and p.list_entry]
+    assert len(entries) == 2
+    biblio = [p for p in paras if "bibliography" in p.text()]
+    assert biblio and biblio[0].block_class is None
+    year = [p for p in paras if "1983. The year" in p.text()]
+    assert year and year[0].block_class is None  # prose, never an item
+
+
+def test_list_marker_gap_warns_on_decrease(tmp_path):
+    lines = [
+        _line("7. Seventh note of the chapter ends here quickly.", 90,
+              x0=72, width=270),
+        _line("1. Numbering restarts for the next chapter's notes", 103,
+              x0=72, width=280),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    assert res.counts.get("list-marker-gap") == 1
+    assert any(getattr(w, "code", "") == "list-marker-gap"
+               for w in res.warns)
+
+
+def test_list_stale_spec_fails_build(tmp_path):
+    lines = [_line("Ordinary full-measure prose only on this page and", 90,
+                   x0=72, width=285),
+             _line("nothing that looks like a marker list at all here.", 103,
+                   x0=72, width=285)]
+    with pytest.raises(SystemExit, match="stale blocks.lists"):
+        build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                   say=lambda *a: None)
+
+
+def test_emit_list_group_ol_li_structure(tmp_path):
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    res = build_flow(_doc([_page(1, _mr_notes_lines())]),
+                     _list_cfg(tmp_path, [1]), say=lambda *a: None)
+    out = Emitter(_list_cfg(tmp_path, [1]), res.flow,
+                  say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert body.count('<ol class="plist">') == 1
+    assert body.count('<li class="li1">') == 3
+    assert body.count('<p class="lp">') == 3   # one per entry paragraph
+    assert body.count('<p class="lp lpc') == 1  # the sub-lemma
+    # the sub-lemma paragraph sits INSIDE note 45's li
+    li45 = body.split('<li class="li1">')[2]
+    assert "Those people destroy" in li45
+    assert "43.Necessary" in body and "</ol>" in body
+
+
+def test_emit_list_bullet_ul_and_anchor_span(tmp_path):
+    from pdf2epub.core.emit_xhtml import Emitter
+
+    p1 = _page(1, [
+        _line("Intro prose at full measure introduces the listing", 74,
+              x0=72, width=290),
+        _line("and ends short:", 87, x0=72, width=90),
+        _line("• First bullet item of the run ends this page x", 107,
+              x0=90, width=230),
+    ])
+    p2 = _page(2, [
+        _line("• Second bullet item opens the following page ok", 87,
+              x0=90, width=240),
+        _line("Prose resumes at the full measure after the listing", 107,
+              x0=72, width=290),
+        _line("and anchors the modal column with one more line xx.", 120,
+              x0=72, width=290),
+    ])
+    cfg = _list_cfg(tmp_path, [1, 2], marker="bullet", hang=0.0)
+    res = build_flow(_doc([p1, p2]), cfg, say=lambda m: None)
+    out = Emitter(cfg, res.flow, say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert body.count('<ul class="plist">') == 1
+    assert body.count('<li class="li1">') == 2
+    ul = body[body.index('<ul class="plist">'):]
+    ul = ul[:ul.index("</ul>")]
+    assert 'aria-label="2"' in ul       # the page anchor span sits in a li
+    assert "<div" not in ul             # never a div child inside the list
+    assert "Prose resumes" not in ul
+
+
+def test_list_paragraph_roundtrip():
+    from pdf2epub.core.model import (Paragraph, RunFormat, SourceRef,
+                                     TextRun, _paragraph_from_dict)
+    from dataclasses import asdict
+
+    p = Paragraph(style="s", items=[TextRun("1. item", RunFormat())],
+                  src=SourceRef("p0001", 0), block_class="list",
+                  list_entry=True)
+    d = asdict(p)
+    q = _paragraph_from_dict(d)
+    assert q.block_class == "list" and q.list_entry is True
+
+
+def test_restore_spaces_apparatus_classes():
+    # M&R notes-apparatus prepress classes, print-verified 2026-07-10
+    # (renders pp.174/229: semicolons and digit-comma seams ARE spaced in
+    # print; every other note number is followed by a space)
+    assert restore_spaces("84.O you who died")[0] == "84. O you who died"
+    assert restore_spaces("38.I’ve never seen")[0] == \
+        "38. I’ve never seen"
+    assert restore_spaces("M II 2218-51;Attar gives")[0] == \
+        "M II 2218-51; Attar gives"
+    assert restore_spaces("is manyness;it is for")[0] == \
+        "is manyness; it is for"
+    assert restore_spaces("to 2.41,Shams is")[0] == "to 2.41, Shams is"
+    assert restore_spaces("inheritor. . .”.The word")[0] == \
+        "inheritor. . .”. The word"
+    # negatives: initials, tight caps, thousands, spaced refs stay
+    assert restore_spaces("R.A. Nicholson")[0] == "R.A. Nicholson"
+    assert restore_spaces("1,000 dirhems")[0] == "1,000 dirhems"
+    # the passage-citation seam normalizes to a spaced citation (round-1
+    # _SPACE_BEFORE_PAREN, shipped through three accepted rounds; print
+    # is mixed: 'eighteen. (209-10)' spaced, p.35 'dirhems.”(343)' tight)
+    assert restore_spaces("dirhems.”(343)")[0] == "dirhems.” (343)"
+
+
+def test_list_sub_lemma_breaks_after_full_line(tmp_path):
+    # a member line DEEPER than the hang column is a first-line indent
+    # WITHIN the item — it breaks even after a FULL-width line (the shape
+    # behind 20+ fused M&R lemma glosses; every one starts its own print
+    # line at hang+9)
+    lines = [
+        _line("47.He's reading his own page. See the note on 1.37", 90,
+              x0=72, width=285),
+        _line("and this turnover runs the full measure exactly xx", 103,
+              x0=99, width=258),
+        _line("Those people destroy the souls. For some remarks", 116,
+              x0=108, width=249),
+        _line("on false teachers, see SPL 145-47 and elsewhere.", 129,
+              x0=99, width=230),
+        _line("45.Another note keeps the page honest and full.", 142,
+              x0=72, width=250),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    items = [p for p in _paras(res.flow) if p.block_class == "list"]
+    subs = [p for p in items if not p.list_entry]
+    assert len(subs) == 1
+    assert subs[0].text().startswith("Those people")
+    assert subs[0].text().endswith("elsewhere.")
+    entry = [p for p in items if p.list_entry][0]
+    assert entry.text().endswith("exactly xx")
+
+
+def test_list_range_marker_entries(tmp_path):
+    # grouped-passage entries ("19-22. I have placed passages 19-22...")
+    # are real markers; four-digit years can never match
+    lines = [
+        _line("18. Five-year old child. The note makes this point", 90,
+              x0=72, width=285),
+        _line("19-22. I have placed passages 19-22 in an order xx", 103,
+              x0=72, width=285),
+        _line("that differs from the edited text, as follows now.", 116,
+              x0=99, width=200),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    entries = [p for p in _paras(res.flow)
+               if p.block_class == "list" and p.list_entry]
+    assert len(entries) == 2
+    assert entries[1].text().startswith("19-22. I have placed")
+    assert entries[1].text().endswith("as follows now.")
+
+
+def test_dehyphenation_arabic_article_and_compounds():
+    # the Arabic article keeps its line-break hyphen when a capitalized or
+    # diacritical word precedes it (13 of 14 corpus sites; the shipped BoK
+    # carried 'Qut alqulub'-style damage at 12 of them); English syllable
+    # breaks still dehyphenate — incl. 'teaching al-/lows' (I&B p.157)
+    assert dehyphenate_join("Qūt al-", "qulūb, 1:135")[0] == "Qūt al-"
+    assert dehyphenate_join("Mirsad al-", "ibad 92")[0] == "Mirsad al-"
+    assert dehyphenate_join("teaching al-", "lows mistreatment")[0] == \
+        "teaching al"
+    assert dehyphenate_join("wa’t-", "tanbihat)")[0] == "wa’t-"
+    assert dehyphenate_join("so “seven-", "colored” means")[0] == \
+        "so “seven-"
+    assert dehyphenate_join("and just-", "started.”")[0] == "and just-"
+    assert dehyphenate_join("the author ad-", "vances an")[0] == \
+        "the author ad"
+    assert dehyphenate_join("an ar-", "row well steeped")[0] == "an ar"
+
+
+def test_list_inset_block_interior_joins(tmp_path):
+    # note 244's shape: an indented quotation INSIDE the item — inset
+    # paragraphs at inset+18 first-line indents, bodies at the inset
+    # column. Stepping INTO the inset breaks; interior lines join
+    # geometrically (a per-line break shattered the quotation)
+    lines = [
+        _line("44. Establishing God. Fih 92 gives the anecdote at", 90,
+              x0=72, width=250),
+        _line("Someone said in the presence of Mawlana Shams ad-", 103,
+              x0=126, width=232),
+        _line("Din Tabrizi, “I have established God's existence", 116,
+              x0=108, width=250),
+        _line("with an incontrovertible proof over the night.”", 129,
+              x0=108, width=220),
+        _line("“Idiot! God is established. His existence needs", 142,
+              x0=126, width=232),
+        _line("no proof at all.”", 155, x0=108, width=90),
+        _line("45. Abu Bakr Siddiq. For a short version see Lings.", 168,
+              x0=72, width=270),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    items = [p for p in _paras(res.flow) if p.block_class == "list"]
+    texts = [p.text() for p in items]
+    assert len(items) == 4
+    assert texts[1].startswith("Someone said")
+    assert texts[1].endswith("over the night.”")  # interior joined
+    assert texts[2].startswith("“Idiot!")
+    assert texts[2].endswith("no proof at all.”")
+    # cross-boundary hyphen dehyphenated inside the joined paragraph
+    assert "Shams ad-Din Tabrizi" in texts[1]
+
+
+def test_list_hang_breaks_after_short_line(tmp_path):
+    # p.341 shape: the entry ends SHORT ('…See SPL 220-26.'), and a flush
+    # continuation paragraph opens at the hang column — a genuine
+    # paragraph end still breaks even at the hang column
+    lines = [
+        _line("2.Intellect takes you to the threshold. See SPL 22.", 90,
+              x0=72, width=220),
+        _line("Intellect is a veil. Compare these lines of Rumi and", 103,
+              x0=99, width=258),
+        _line("the commentary that follows them in that chapter now", 116,
+              x0=99, width=258),
+        _line("and ends short.", 129, x0=99, width=80),
+        _line("3. Another entry keeps the little page honest here,", 142,
+              x0=72, width=285),
+        _line("running to the full measure to anchor the column ok.", 155,
+              x0=99, width=258),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    items = [p for p in _paras(res.flow) if p.block_class == "list"]
+    assert len(items) == 3
+    assert items[0].text().endswith("See SPL 22.")
+    assert items[1].text().startswith("Intellect is a veil")
+    assert items[1].text().endswith("ends short.")  # its turnovers join
+
+
+def test_verse_cross_page_full_base_line_kept(tmp_path):
+    # M&R p.370->371: an accepted couplet ends the page; the SECOND couplet
+    # opens the next page with a base line ending only ~7pt short — the
+    # boundary-short trim must exempt the page-top continuation
+    p1 = _page(1, [
+        _line("Prose introduces the poem at full measure width and", 87,
+              x0=72, width=290),
+        _line("continues to the couplet with a colon here:", 100,
+              x0=72, width=200),
+        _line("The thirsty man laments, “O sweet water!”", 120,
+              x0=81, width=190),
+        _line("The water too laments, “Where is the drinker?”", 133,
+              x0=108, width=210),
+    ])
+    p2 = _page(2, [
+        _line("This thirst in our souls is the attraction of that w", 87,
+              x0=81, width=283),
+        _line("we belong to it and it belongs to us.", 100,
+              x0=108, width=160),
+        _line("Prose resumes after the poem at the full measure and", 120,
+              x0=72, width=290),
+        _line("runs on to the end of the paragraph as usual now.", 133,
+              x0=72, width=290),
+    ])
+    res = build_flow(_doc([p1, p2]), _verse_cfg(tmp_path, [1, 2]),
+                     say=lambda *a: None)
+    verse = [p for p in _paras(res.flow) if p.block_class == "verse"]
+    # the page-top couplet continues the open stanza (cross-page
+    # default): ONE stanza of four verse lines, near-full base kept
+    assert len(verse) == 1
+    assert verse[0].text().count("\u2028") == 3
+    assert "This thirst" in verse[0].text()
+
+
+def test_restore_spaces_date_comma():
+    # 'October 11,1244' — a thousands separator groups exactly three
+    # digits, so comma + four digits is always a prepress seam
+    assert restore_spaces("On October 11,1244, Shams")[0] == \
+        "On October 11, 1244, Shams"
+    assert restore_spaces("1,000 dirhems")[0] == "1,000 dirhems"
+    assert restore_spaces("10,000 men")[0] == "10,000 men"
+
+
+def test_list_false_center_lemma_stays_in_item(tmp_path):
+    # p.371: a short lemma whose midpoint chances near the column center is
+    # mislabeled /center — it must stay a member (the ol split in half),
+    # while a genuinely centered divider at an arbitrary x0 still ends the
+    # item and breaks the list
+    lines = [
+        _line("178. This is reversed. Shams explains what he mean", 90,
+              x0=72, width=277),
+        _line("He killed his mother. Women from Qazvin apparently", 103,
+              x0=108, width=250),
+        _line("did not have a good reputation in Persian humor ok.", 116,
+              x0=99, width=200),
+        # x0=108, width ~118 -> midpoint ~217 = column center of [72, 358]
+        _line("He sits in front of me like a son. See 3.61.", 129,
+              x0=108, width=213),
+        _line("180. A sama in the east. Compare passage 1.9 there.", 142,
+              x0=72, width=280),
+        _line("When he died he was veiled. A reference to Abu Yazid", 155,
+              x0=108, width=250),
+        _line("who appears in 2.207 and ends the page a bit short.", 168,
+              x0=99, width=230),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), _list_cfg(tmp_path, [1]),
+                     say=lambda *a: None)
+    from pdf2epub.core.emit_xhtml import Emitter
+    out = Emitter(_list_cfg(tmp_path, [1]), res.flow,
+                  say=lambda m: None).emit()
+    body = "".join(part for f in out.files for part in f.body_parts)
+    assert body.count('<ol class="plist">') == 1  # never split in half
+    items = [p for p in _paras(res.flow) if p.block_class == "list"]
+    lemma = [p for p in items if "He sits in front" in p.text()]
+    assert len(lemma) == 1 and not lemma[0].list_entry
+    assert "/center" not in lemma[0].style

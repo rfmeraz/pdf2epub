@@ -223,6 +223,35 @@ class Emitter:
                     toc_done = True
                     i = j
                     continue
+                if b.block_class == "list":
+                    # gather the list: item/continuation paragraphs, page
+                    # anchors, and any verse group QUOTED INSIDE an item (a
+                    # ghazal in an M&R endnote nests in its <li>). Trailing
+                    # verse/anchors that no list paragraph follows belong to
+                    # what comes AFTER the list.
+                    j = i
+                    lrun: list = []
+                    tentative: list = []
+                    while j < len(blocks):
+                        nb = blocks[j]
+                        if isinstance(nb, Paragraph) and \
+                                nb.block_class == "list" and \
+                                (nb.role or "p") != "drop":
+                            lrun.extend(tentative)
+                            tentative = []
+                            lrun.append(nb)
+                        elif isinstance(nb, PageAnchor) or (
+                                isinstance(nb, Paragraph)
+                                and nb.block_class == "verse"):
+                            tentative.append(nb)
+                        else:
+                            break
+                        j += 1
+                    j -= len(tentative)
+                    self._maybe_split_for(b, toc_done)
+                    self._emit_list_group(lrun)
+                    i = j
+                    continue
                 if b.block_class == "verse":
                     # gather the consecutive verse run (stanza paragraphs +
                     # interleaved page anchors) into ONE blockquote; trailing
@@ -385,6 +414,69 @@ class Emitter:
             classes = " ".join(dict.fromkeys(["vs", *b.classes]))
             parts.append(f'<p class="{classes}">{inner}</p>')
         parts.append("</blockquote>")
+        f.body_parts.append("".join(parts))
+
+    def _emit_list_group(self, run: list) -> None:
+        """Consecutive list-classified Paragraphs emit as ONE real
+        <ol>/<ul class="plist"> (ordered when the first entry's marker is a
+        digit). Each entry paragraph opens a <li class="li1">; continuation
+        paragraphs (sub-lemmas inside the same item) add <p class="lp lpc">;
+        printed markers stay IN the text (never-rewrite; exact coverage)
+        with list-style:none. Page anchors emit as pagebreak SPANS inside
+        the nearest <li> (an ol may only contain li children); a verse
+        group quoted inside an item nests as its blockquote within the li.
+        The 1 flow-Paragraph = 1 emitted <p> invariant gate 17 depends on
+        is kept."""
+        f = self._ensure_file()
+        first_entry = next((b for b in run if isinstance(b, Paragraph)
+                            and b.block_class == "list" and b.list_entry),
+                           None)
+        ordered = bool(first_entry) and first_entry.text()[:1].isdigit()
+        tag = "ol" if ordered else "ul"
+        parts: list[str] = [f'<{tag} class="plist">']
+        li_open = False
+        pending: list[str] = []  # anchor spans awaiting the next <li>
+
+        def _anchor_span(label: str) -> str:
+            pid = f"pg-{label}"
+            f.pagebreaks.append((label, pid))
+            return (f'<span id="{pid}" class="pagebreak" '
+                    f'epub:type="pagebreak" role="doc-pagebreak" '
+                    f'aria-label={quoteattr(label)}></span>')
+
+        for b in run:
+            if isinstance(b, PageAnchor):
+                pending.append(_anchor_span(b.label))
+                continue
+            if b.block_class == "verse":
+                if not li_open:
+                    parts.append('<li class="li1">')
+                    li_open = True
+                parts.extend(pending)
+                pending = []
+                parts.append(
+                    '<blockquote class="verse" epub:type="z3998:verse">'
+                    f'<p class="{" ".join(dict.fromkeys(["vs", *b.classes]))}">'
+                    f"{self._verse_lines_html(b)}</p></blockquote>")
+                continue
+            if b.list_entry or not li_open:
+                if li_open:
+                    parts.append("</li>")
+                parts.append('<li class="li1">')
+                li_open = True
+                parts.extend(pending)
+                pending = []
+                classes = " ".join(dict.fromkeys(["lp", *b.classes]))
+            else:
+                parts.extend(pending)
+                pending = []
+                classes = " ".join(dict.fromkeys(["lp", "lpc", *b.classes]))
+            parts.append(f'<p class="{classes}">'
+                         f"{self._items_html(b.items)}</p>")
+        parts.extend(pending)
+        if li_open:
+            parts.append("</li>")
+        parts.append(f"</{tag}>")
         f.body_parts.append("".join(parts))
 
     def _emit_quote_group(self, run: list) -> None:

@@ -96,7 +96,12 @@ def _render_block(local: str, classes: set[str], in_bq: bool, text: str,
     if note_no is not None:
         lines = _wrap(f"{{note {note_no}}} {text}")
         return lines[:1] + ["  " + l for l in lines[1:]]
-    if "listpara" in classes or local == "li":
+    if "lpc" in classes:
+        # continuation paragraph INSIDE a list item (a sub-lemma): indented
+        # under its item, never a new "- " entry
+        lines = _wrap(text)
+        return ["  " + l for l in lines]
+    if "listpara" in classes or "lp" in classes or local == "li":
         lines = _wrap(text)
         return [f"- {lines[0]}"] + ["  " + l for l in lines[1:]] if lines else []
     for cls, tag in (("caption", "{caption}"), ("titletext", "{titlepage}"),
@@ -147,6 +152,12 @@ def walk_doc(doc, is_notes: bool, k_start: int) -> tuple[list[Block], int]:
                                 words=0))
             continue
         if local not in _BLOCK_TAGS:
+            continue
+        if local == "li" and any(
+                isinstance(c.tag, str) and c.tag == f"{_X}p" for c in el):
+            # a blocks.lists item is a CONTAINER (<li><p class="lp">…</p>…):
+            # its child paragraphs render themselves ('- ' entries, indented
+            # sub-lemmas); rendering the li too would double the text
             continue
         classes = set((el.get("class") or "").split())
         if local == "p" and "vs" in classes:
@@ -305,6 +316,12 @@ fits the taxonomy below.
   blockquotes. Report `quote-boundary` only where quoted matter continues
   into an unmarked paragraph, body prose appears inside the `> ` block, or
   two separate quotations visibly fuse into one.
+- Paragraphs prefixed `- ` are print LIST/APPARATUS ITEMS shipped as real
+  list items; their printed markers (numbers, bullets) are kept in the
+  text by design, and indented unprefixed paragraphs directly under a
+  `- ` item belong to that item. Report `structure-loss` only where two
+  items visibly fuse into one `- ` entry or an item's own text appears
+  as a separate unmarked body paragraph.
 - Dash and curly-quote conventions as they appear; {{toc}} entries are a
   rebuilt hyperlinked Contents (page numbers removed by design) — but a
   visibly incomplete or garbled Contents IS reportable.

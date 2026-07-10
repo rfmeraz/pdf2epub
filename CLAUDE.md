@@ -63,7 +63,9 @@ typed FlowDoc IR (furniture strip, footnote split, semantic block classification
 `blocks.verse` calibrated indent specs make verse line breaks content: stanza Paragraphs
 with U+2028 line separators that bypass the prose joiner, plus an uncalibrated
 verse-suspect witness on every build; `blocks.quotes` classifies justified inset blocks
-into real coalesced blockquotes, class entry/exit breaking the paragraph —
+into real coalesced blockquotes, class entry/exit breaking the paragraph;
+`blocks.lists` turns marker lines at per-spec entry stops into real ol/ul lists,
+entry-break + hang-join healing split/fused apparatus entries —
 paragraph join with dehyphenation,
 drop-cap reattachment and cross-run lost-space seams, flow.columns re-split of columned back
 matter into print reading

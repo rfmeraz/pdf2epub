@@ -32,7 +32,11 @@ Adobe products.
    blocks — the right-edge cluster that vetoes ragged verse is the quote
    witness — which ship as real coalesced `<blockquote>`s; class entry/exit
    is a paragraph boundary, healing quote-boundary fusions the geometric
-   joiner cannot see, while interior joins stay purely geometric),
+   joiner cannot see, while interior joins stay purely geometric;
+   `blocks.lists`: marker lines (decimal/bullet) at per-spec-derived entry
+   stops open items that ship as real `<ol>/<ul>` + `<li>` with the printed
+   markers kept in the text — entry lines always break and hanging-indent
+   turnovers always join, healing the split/fused notes-apparatus entries),
    join lines into paragraphs (dehyphenation,
    drop-cap reattachment, cross-run lost-space seams), re-split columned back
    matter into print reading

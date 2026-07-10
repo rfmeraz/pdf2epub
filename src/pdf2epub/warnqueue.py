@@ -41,6 +41,8 @@ CODES: dict[str, str] = {
     #                                 blocks.verse — structure-loss risk
     "cover-missing": CONTENT_RISK,
     "flow-uncoded": CONTENT_RISK,  # fail-safe for future uncoded _Warns
+    "list-marker-gap": ADVISORY,  # decimal list numbering not increasing —
+    #                               a restart (fine) or a misread marker
     "uri-links": ADVISORY,
     "outline-broken-target": ADVISORY,
     "link-unresolvable": ADVISORY,
