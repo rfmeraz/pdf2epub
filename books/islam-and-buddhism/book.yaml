@@ -78,6 +78,13 @@ flow:
   join_center_lines: true
   reattach_dropcaps: true
   overrides:
+    # proofread Phase F round 1 (2026-07-10): display-block breaks the
+    # center-join gap rule cannot see (leading inside the block is normal)
+    - {page: 4, line: 6, action: "break", note: "title page: each introducer on its own line (print p.iii)"}
+    - {page: 4, line: 7, action: "break", note: "title page: introducer line 2"}
+    - {page: 4, line: 8, action: "break", note: "title page: introducer line 3"}
+    - {page: 5, line: 6, action: "break", note: "copyright: (c) notice starts its own block (print p.iv)"}
+    - {page: 5, line: 10, action: "break", note: "copyright: rights statement starts its own block (print p.iv)"}
     - {page: 26, line: 1, action: "break", note: "part label 'Part One' is its own display line; title starts here (proofread finding)"}
     - {page: 54, line: 1, action: "break", note: "part label 'Part Two' is its own display line; title starts here (proofread finding)"}
     - {page: 104, line: 1, action: "break", note: "part label 'Part Three' is its own display line; title starts here (proofread finding)"}
@@ -258,6 +265,17 @@ glyphs:
     - {pages: [98], replace: "", note: "FFFD run after 'utterly \u2018empty\u2019.' mid-paragraph; p.98 render shows the sentence flowing straight on"}
 
 blocks:
+  # JP-P9: Buddhist scripture VERSE (Dhammapada, Flower Ornament,
+  # Milarepa's songs, Qur'anic sura 107) set line-for-line at the same
+  # 18pt inset as the quotes but RAGGED — single-level convention
+  # (turns omitted; the ragged-right requirement discriminates).
+  # Render-verified pp.80 (two Flower Ornament stanzas incl. an
+  # ellipsis line) and 113 (sura 107 + two Milarepa stanzas); the
+  # build's verse-suspect witness found exactly these eight pages.
+  verse:
+    - {pages: [62, 63, 64, 73, 75, 80, 81, 82, 86, 87, 100, 103, 112,
+               113, 126, 132, 133, 134], base: [18],
+       note: "single-level scripture verse at the quote inset, ragged; renders pp.80/113 + Phase F blind-reader sites verified by line dumps: p63 Avatamsaka, p86 three Flower Ornament groups, p100 Jami couplet, p103 Milarepa, p112 sura 107 opening, pp.132-133 Milarepa (2026-07-10)"}
   # JP-P9: the book quotes at a justified 18pt inset off BOTH body edges
   # (verified on renders pp.51/151: Dalai Lama passages, al-Juzjani account;
   # detector evidence: 86 justified 18/18 runs on 61 pages across 11-160).

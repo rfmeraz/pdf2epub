@@ -105,8 +105,16 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                     continue
             kept.append(ln)
         text = "\n".join(kept)
+        # a page carrying shifted-CMap content has decode-DIVERGENT
+        # witnesses by construction (each engine mis-decodes the broken
+        # subset differently, and the per-line repair granularity differs
+        # between them); detected on the RAW witness text — the repair
+        # chain now heals the '=' seams the old post-repair regex keyed on
+        from ..textfix import is_shifted_run, repair_shifted_cmap
+        poppler_cmap_garble = bool(cfg.shifted_cmap_repair) and any(
+            is_shifted_run(l, cfg.shifted_cmap_highmap)
+            for l in text.split("\n"))
         if cfg.shifted_cmap_repair:
-            from ..textfix import is_shifted_run, repair_shifted_cmap
             text = "\n".join(
                 (repair_shifted_cmap(l, cfg.shifted_cmap_highmap)[0]
                  if is_shifted_run(l, cfg.shifted_cmap_highmap) else l)
@@ -136,7 +144,7 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
         # poppler's OWN garble of the broken-CMap section ('=word=word=' —
         # spaces decoded as '='): the witnesses disagree, so this page's gt
         # cannot arbitrate; itemized as engine-disputed
-        if cfg.shifted_cmap_repair and re.search(r"=\w+=\w+=\w+", norm):
+        if poppler_cmap_garble:
             gt.disputed_chars += len(norm)
             gt.disputed_pages.append(pno)
             gt.pages_raw[pno] = norm

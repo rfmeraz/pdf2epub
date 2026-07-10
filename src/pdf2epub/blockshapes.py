@@ -351,9 +351,15 @@ def justified_rights(lines) -> list[float | None]:
             j += 1
         if j - i >= 2:
             xs = [lines[x].x1 for x in range(i, j)]
+            # a justified block puts MOST lines at its margin; two
+            # coincidental edges in a long ragged run must not fire (13
+            # ragged verse lines had a chance pair 0.9pt apart and the
+            # whole poem was vetoed as a quote — I&B p.86)
+            need = max(2, -(-2 * len(xs) // 5))  # ceil(0.4 * n)
             margin = next(
                 (c for c in sorted(xs, reverse=True)
-                 if sum(1 for x in xs if abs(x - c) <= _JUST_RIGHT_TOL) >= 2),
+                 if sum(1 for x in xs
+                        if abs(x - c) <= _JUST_RIGHT_TOL) >= need),
                 None)
             if margin is not None:
                 for x in range(i, j):
@@ -384,17 +390,22 @@ def body_anchors(lines, body_size: float, size_of=None,
     left = next((c for c in sorted(xs0)
                  if sum(1 for x in xs0 if abs(x - c) <= _ANCHOR_TOL) >= 2),
                 None)
-    right = next((c for c in sorted(xs1, reverse=True)
-                  if sum(1 for x in xs1 if abs(x - c) <= _ANCHOR_TOL) >= 2),
-                 None)
-    if left is not None and right is None:
-        # quote-heavy pages often carry a SINGLE full-measure body line; the
-        # widest line starting at the left anchor witnesses the right edge
-        # alone. Safe direction only: an underestimating anchor shifts the
-        # quote target so real quotes MISS tol — never a misclassification.
+    right = None
+    if left is not None:
+        # the right edge is witnessed ONLY by lines STARTING at the left
+        # anchor (body continuation lines): a cluster over ALL lines pairs
+        # coincidental ragged edges (a verse base line + an intro's short
+        # end 1pt apart dragged the anchor 90pt left). Prefer a >=2
+        # cluster among at-left lines; a single full-measure body line
+        # witnesses alone (quote-heavy pages) — underestimates only MISS.
         at_left = [x1 for x0, x1 in zip(xs0, xs1)
                    if abs(x0 - left) <= _JUST_LEFT_TOL]
-        right = max(at_left, default=None)
+        right = next((c for c in sorted(at_left, reverse=True)
+                      if sum(1 for x in at_left
+                             if abs(x - c) <= _ANCHOR_TOL) >= 2),
+                     None)
+        if right is None:
+            right = max(at_left, default=None)
     if left is None or right is None or right - left < 100.0:
         return None
     return left, right
@@ -440,6 +451,7 @@ def quote_shape_runs(lines, left_anchor: float, right_anchor: float,
                      left_inset: float, right_inset: float,
                      body_size: float, tol: float = 3.0, size_of=None,
                      rights=None, blocked=None, forced=None,
+                     allow_continuation_top: bool = False,
                      ) -> list[QuoteRun]:
     """Calibrated classification of one page's kept lines against a
     blocks.quotes spec: maximal runs of consecutive lines whose x0 sits at
@@ -449,7 +461,15 @@ def quote_shape_runs(lines, left_anchor: float, right_anchor: float,
     (figure-region lines, class:prose overrides, lines already classified
     verse); ``forced`` marks class:quote overrides, which skip the geometric
     tests. A run needs >=2 candidate lines (a single inset line has no
-    justified witness) unless it contains a forced line."""
+    justified witness) unless it contains a forced line.
+
+    Two shapes the bare cluster witness misses (I&B readers, Phase F):
+    a quote PARAGRAPH's indented first line (a dialogue turn inside the
+    quotation sits at lt + ~18, a run of one — it joins as candidate when
+    an adjacent line is a base candidate and it stays inside the quote
+    measure), and a 2-line quotation tail at the TOP of a page whose
+    previous page ended mid-quote (``allow_continuation_top``: the page-top
+    run qualifies without a cluster when every line fits the measure)."""
     n = len(lines)
     rights = rights if rights is not None else justified_rights(lines)
     blocked = blocked or [False] * n
@@ -474,6 +494,32 @@ def quote_shape_runs(lines, left_anchor: float, right_anchor: float,
             continue
         cand.append(abs(ln.x0 - lt) <= tol and rights[i] is not None
                     and abs(rights[i] - rt) <= tol)
+    # indented first lines of quote paragraphs: x0 in (lt+6 .. lt+30),
+    # right edge inside the quote measure, adjacent to a base candidate.
+    # A body paragraph's own indent sits at lt itself (body-left + indent =
+    # the quote inset on this corpus) and its lines run PAST rt — rejected.
+    for i, ln in enumerate(lines):
+        if cand[i] or blocked[i] or dropcap[i]:
+            continue
+        sz = size_of(ln) if size_of else None
+        if sz is not None and sz > body_size + 1.0:
+            continue
+        if 6.0 < ln.x0 - lt <= 30.0 and ln.x1 <= rt + tol and (
+                (i > 0 and cand[i - 1]) or (i + 1 < n and cand[i + 1])):
+            cand[i] = True
+    if allow_continuation_top and n and not blocked[0] and not cand[0]:
+        j = 0
+        ok = True
+        while j < n and not blocked[j] and lines[j].x0 >= lt - tol and \
+                lines[j].x0 <= lt + 30.0 and lines[j].x1 <= rt + tol:
+            sz = size_of(lines[j]) if size_of else None
+            if sz is not None and sz > body_size + 1.0:
+                ok = False
+                break
+            j += 1
+        if ok and j >= 1 and abs(lines[0].x0 - lt) <= tol:
+            for x in range(j):
+                cand[x] = True
     runs: list[QuoteRun] = []
     i = 0
     while i < n:

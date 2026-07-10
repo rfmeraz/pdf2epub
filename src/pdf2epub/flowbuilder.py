@@ -345,7 +345,15 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 else:
                     break
             region.reverse()
-            if region and len(" ".join(x.ln.text() for x in region)) > 20:
+            # the length guard keeps stray small-font page-bottom fragments
+            # in the body, but a region carrying a note MARKER is a note at
+            # ANY length — '15. Ibid., p. 51.' is 17 chars, and the guard
+            # left it (and notes 16/17/30) leaking into I&B's prose, twice
+            # SPLITTING a sentence mid-flow
+            if region and (
+                    len(" ".join(x.ln.text() for x in region)) > 20
+                    or any(_note_start(L, cfg.footnote_marker, doc)
+                           for L in region)):
                 # small font is NOT sufficient — 9pt block quotes sit at page
                 # bottoms too (BoK p.186). The note region starts at the FIRST
                 # marker line; small-font lines above it stay body.
@@ -504,6 +512,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         # alone (a couplet's base line before the page turn) is held PENDING
         # and stamped only if the next spec page's top run accepts the union
         pending: tuple[list, "object", int] | None = None  # (lines, tail, si)
+        vcarried: tuple[float, float] | None = None
         for pno in sorted(pages_lines):
             si = verse_spec_by_page.get(pno)
             lines = pages_lines[pno]
@@ -512,9 +521,6 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 pending = None
                 continue
             vs = cfg.blocks_verse[si]
-            shift = geo.shift(pno)
-            eff_left = geo.col_left - shift
-            ref_right = geo.col_right - shift
             blocked, forced = [], []
             for L in lines:
                 act = ov.get((L.page, L.idx))
@@ -528,6 +534,29 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             def _size(ln):
                 f = doc.fonts.get(ln.dominant_font())
                 return f.size if f else None
+
+            # offsets anchor to the page's OWN body edges, never the
+            # modal-column shift frame: on inset-dominated pages the shift
+            # detector keys off the verse inset itself (I&B verso p.86:
+            # modal left 90 = the verse lines, shift -18, every offset
+            # wrong). Same doctrine as the quote pass; the carried
+            # substitution covers verse-dominated pages whose apparent
+            # body-left IS the verse base.
+            v_anchors = body_anchors(
+                [L.ln for L in lines], body_size, size_of=_size,
+                skip=[L.region >= 0 for L in lines])
+            if v_anchors is not None and vcarried is not None and vs.base \
+                    and abs(v_anchors[0] - (vcarried[0] + vs.base[0])) \
+                    <= vs.tol:
+                v_anchors = vcarried
+            elif v_anchors is not None:
+                vcarried = v_anchors
+            if v_anchors is None:
+                v_anchors = vcarried
+            if v_anchors is None:
+                shift = geo.shift(pno)
+                v_anchors = (geo.col_left - shift, geo.col_right - shift)
+            eff_left, ref_right = v_anchors
 
             groups, tail = verse_shape_groups(
                 [L.ln for L in lines], eff_left, ref_right, body_size,
@@ -714,11 +743,17 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 quote_spec_by_page.setdefault(pg, si)
         qspec_runs = Counter()
         carried: tuple[float, float] | None = None
+        prev_ends_quote = False
+        prev_quote_page: int | None = None
         for pno in sorted(pages_lines):
             si = quote_spec_by_page.get(pno)
             lines = pages_lines[pno]
             if si is None or not lines:
+                prev_ends_quote = False
                 continue
+            if prev_quote_page is not None and pno != prev_quote_page + 1:
+                prev_ends_quote = False
+            prev_quote_page = pno
             qs = cfg.blocks_quotes[si]
             blocked, forced = [], []
             for L in lines:
@@ -756,13 +791,16 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 [L.ln for L in lines], anchors[0], anchors[1],
                 qs.left_inset, qs.right_inset, body_size, tol=qs.tol,
                 size_of=_size, rights=[L.block_right for L in lines],
-                blocked=blocked, forced=forced)
+                blocked=blocked, forced=forced,
+                allow_continuation_top=prev_ends_quote)
             for r in runs:
                 qspec_runs[si] += 1
                 counts["quote-runs"] += 1
                 for x in range(r.start, r.end):
                     lines[x].block_class = "quote"
                     counts["quote-lines"] += 1
+            prev_ends_quote = bool(lines) and \
+                lines[-1].block_class == "quote"
         stale_q = [i for i in range(len(cfg.blocks_quotes))
                    if not qspec_runs.get(i)]
         if stale_q:

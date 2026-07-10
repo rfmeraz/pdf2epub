@@ -218,6 +218,17 @@ def repair_shifted_cmap(text: str, highmap: dict[str, str]) -> tuple[str, int]:
     # inside one run; poppler's newline form self-heals in normalize, so the
     # candidate must apply the same lower-only rejoin
     t = re.sub(r"([A-Za-zÀ-ſ])- ([a-zà-ÿ])", r"\1\2", t)
+    # MIXED-encoding runs: some glyphs inside a detected-shifted run are
+    # already correct ASCII, and the uniform shift corrupts them. A real
+    # 0x20 space becomes '=' (a char this corpus never prints) and a real
+    # line-end hyphen becomes 'J' ('conseJ quential' — capital J between a
+    # lowercase letter and a spaced lowercase word is impossible English,
+    # while the genuine shifted J of 'al-Jūzjānī' is followed by letters).
+    # Both damage shapes are deterministic; blind readers found ten 'J '
+    # words and dozens of '=' seams in the SHIPPED artifact.
+    t = re.sub(r"([a-zà-ÿ])J ([a-zà-ÿ])", r"\1\2", t)
+    if "=" in t:
+        t = re.sub(r" ?= ?", " ", t)
     return t, unknown
 
 
@@ -296,6 +307,11 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
                 and not arabic_article \
                 and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True
+        return base, "", False
+    # a URL or slash-compound broken at the line end joins WITHOUT a space
+    # ('www.' + 'acommonword.com'; 'Dhamma/' + 'Nirvana/Shunya' — a slash
+    # never ends a line before a spaced word in this corpus)
+    if mode != "off" and (base.endswith("www.") or base.endswith("/")):
         return base, "", False
     # a CLOSED em/en-dash at the line end abuts its neighbours ('object—or',
     # '26–28'); the break must NOT inject a space ('object— or', a false

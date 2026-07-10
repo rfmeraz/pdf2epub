@@ -2457,3 +2457,33 @@ def test_emit_epigraph_role(tmp_path):
     assert "knows his Lord" in body
     from pdf2epub.core import emit_css
     assert "blockquote.epigraph" in emit_css._BASE
+
+
+def test_short_single_line_footnote_captured(tmp_path):
+    # I&B '15. Ibid., p. 51.' (17 chars): a page-bottom small-font line
+    # WITH a note marker is a footnote at any length — the 20-char guard
+    # left it in the body, splitting a sentence around it
+    lines = [
+        _line("Body prose runs at the full measure and continues to", 90,
+              x0=72, width=290),
+        _line("the bottom of the page where the note apparatus sits.", 103,
+              x0=72, width=290),
+        _line("15. Ibid., p. 51.", 570, x0=72, width=55, font=SMALL),
+    ]
+    cfg = _cfg(tmp_path, footnote_policy="markers",
+               footnote_marker="digits")
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    body = " ".join(p.text() for p in _paras(res.flow))
+    assert "Ibid." not in body
+    assert len(res.flow.notes) == 1
+
+
+def test_join_url_and_slash_line_ends():
+    # 'www.' and '/' line ends join closed: 'www./acommonword.com',
+    # 'Dhamma//Nirvana' seams shipped with an injected space
+    assert dehyphenate_join("seen on www.", "acommonword.com), and")[:2] == \
+        ("seen on www.", "")
+    assert dehyphenate_join("the Dhamma/", "Nirvana/Shunya vis-a-vis")[:2] \
+        == ("the Dhamma/", "")
+    assert dehyphenate_join("ordinary prose", "continues here")[:2] == \
+        ("ordinary prose", " ")
