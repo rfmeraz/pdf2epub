@@ -227,6 +227,12 @@ def repair_shifted_cmap(text: str, highmap: dict[str, str]) -> tuple[str, int]:
     # Both damage shapes are deterministic; blind readers found ten 'J '
     # words and dozens of '=' seams in the SHIPPED artifact.
     t = re.sub(r"([a-zà-ÿ])J ([a-zà-ÿ])", r"\1\2", t)
+    # a trailing 0x2D at the run END is always a real line-end hyphen (the
+    # join dehyphenates it); as shifted 'J' it strands 'conJ stantly'
+    # across the line seam — eight such words shipped
+    if text.rstrip().endswith("-") and t.rstrip().endswith("J"):
+        r = t.rstrip()
+        t = r[:-1] + "-"
     if "=" in t:
         t = re.sub(r" ?= ?", " ", t)
     return t, unknown

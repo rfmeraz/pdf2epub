@@ -66,14 +66,18 @@ _NOTE_START_STAR = re.compile(r"^\s*([*†‡])\s*")
 _CONT_DASHES = ("-", "­", "‐", "‑", "–", "—")
 
 
-def _note_start(L: "_L", marker: str, doc: PdfDoc) -> bool:
+def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
     """True when a footnote-region line opens a new note. A marker set at note
     size and separated by punctuation/tab/2-spaces is caught by the text
     pattern; a marker RAISED or set one size down (this book prints '8' at 7pt
     over 9pt note text, so 'digit + single space' never matches the pattern)
     is caught by the head-run test: a superscript, or a smaller-font, leading
-    digit/asterisk."""
+    digit/asterisk. A shifted-CMap note line carries its marker as shifted
+    bytes — probe through the repair or the second essay's footnotes fuse
+    into one giant note per page (I&B '2. Surah refers…')."""
     txt = L.ln.text()
+    if cfg is not None and cfg.shifted_cmap_repair:
+        txt = probe_text(txt, True, cfg.shifted_cmap_highmap)
     if marker == "digits":
         if _NOTE_START_DIGIT.match(txt):
             return True
@@ -96,12 +100,14 @@ def _note_start(L: "_L", marker: str, doc: PdfDoc) -> bool:
     return bool(head) and head[0] in "*†‡"
 
 
-def _note_marker(L: "_L", marker: str) -> str:
+def _note_marker(L: "_L", marker: str, cfg=None) -> str:
     """The marker STRING of a note-region line (for in-body ref matching):
     the leading digit(s) or asterisk. Mirrors _note_start so a marker set one
     size down ('8 Let…', where the digit+delimiter text pattern misses) is
     still captured instead of falling back to '*'."""
     txt = L.ln.text()
+    if cfg is not None and cfg.shifted_cmap_repair:
+        txt = probe_text(txt, True, cfg.shifted_cmap_highmap)
     if marker == "digits":
         m = _NOTE_START_DIGIT.match(txt)
         if m:
@@ -352,7 +358,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             # SPLITTING a sentence mid-flow
             if region and (
                     len(" ".join(x.ln.text() for x in region)) > 20
-                    or any(_note_start(L, cfg.footnote_marker, doc)
+                    or any(_note_start(L, cfg.footnote_marker, doc, cfg)
                            for L in region)):
                 # small font is NOT sufficient — 9pt block quotes sit at page
                 # bottoms too (BoK p.186). The note region starts at the FIRST
@@ -360,7 +366,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 # A region with no marker at all is body — unless it
                 # continues the previous page's notes (merge pass below).
                 first_marked = next((i for i, L in enumerate(region)
-                                     if _note_start(L, cfg.footnote_marker, doc)),
+                                     if _note_start(L, cfg.footnote_marker, doc, cfg)),
                                     None)
                 prev_page_had_notes = prev_had_notes
                 if first_marked is None and not prev_page_had_notes:
@@ -371,7 +377,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     kept = kept[:len(kept) - len(region)]
                     cur: list[_L] = []
                     for L in region:
-                        if _note_start(L, cfg.footnote_marker, doc) and cur:
+                        if _note_start(L, cfg.footnote_marker, doc, cfg) and cur:
                             notes_here.append(cur)
                             cur = []
                         cur.append(L)
@@ -388,7 +394,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         for pno in sorted(page_notes):
             groups = page_notes[pno]
             if groups and prev_last_group is not None and \
-                    not _note_start(groups[0][0], cfg.footnote_marker, doc):
+                    not _note_start(groups[0][0], cfg.footnote_marker, doc, cfg):
                 prev_last_group.extend(groups.pop(0))
                 counts["note-continuation"] += 1
             if groups:
@@ -521,13 +527,21 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 pending = None
                 continue
             vs = cfg.blocks_verse[si]
+            page_right = max((L.ln.x1 for L in lines), default=0.0)
             blocked, forced = [], []
             for L in lines:
                 act = ov.get((L.page, L.idx))
                 if act in ("class:verse", "class:prose"):
                     consumed.add((L.page, L.idx))
                     class_applied.add((L.page, L.idx))
-                blocked.append(L.region >= 0 or L.block_right is not None
+                # the justified veto only counts clusters near the body/
+                # quote right edge: a COUPLET whose two lines chance within
+                # 2pt of each other clusters on itself (I&B p.100 Jami,
+                # 0.33pt apart, 100pt short of the margin) and must stay
+                # verse-eligible
+                just = L.block_right is not None and \
+                    L.block_right >= page_right - 45.0
+                blocked.append(L.region >= 0 or just
                                or act == "class:prose")
                 forced.append(act == "class:verse")
 
@@ -829,7 +843,9 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             geo.col_right - shift, body_size, med_lead,
             size_of=lambda ln: (f.size if (f := doc.fonts.get(
                 ln.dominant_font())) else None),
-            blocked=[L.region >= 0 or L.block_right is not None
+            blocked=[L.region >= 0 or (
+                L.block_right is not None and L.block_right >=
+                max((x.ln.x1 for x in lines), default=0.0) - 45.0)
                      for L in lines],
             centered=["/center" in L.ps for L in lines])
         for g in suspects:
@@ -1129,7 +1145,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             note_id = f"p{pno:04d}-{k}"
             note_paras = _note_paragraphs(group, cfg, doc, note_id, counts)
             res.flow.notes[note_id] = Note(note_id=note_id, paragraphs=note_paras)
-            marker = _note_marker(group[0], cfg.footnote_marker)
+            marker = _note_marker(group[0], cfg.footnote_marker, cfg)
             note_queue.append((pno, marker, note_id))
             res.note_markers[note_id] = marker
             # record the note's raw text split by the page each line sits on,
@@ -1701,7 +1717,7 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
             # marker is a smaller-font/superscript run set 'N ' with a single
             # space (often its OWN run), which that pattern misses — leaving a
             # stray '1' before the auto-numbered <li>.
-            marker = _note_marker(group[0], cfg.footnote_marker)
+            marker = _note_marker(group[0], cfg.footnote_marker, cfg)
             if marker and runs and isinstance(runs[0], TextRun):
                 runs[0].text = re.sub(
                     r"^\s*" + re.escape(marker) + r"[.)]?\s*", "",
@@ -1770,14 +1786,19 @@ def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                     # text (_append_line), i.e. often on this marker run —
                     # replacing it with a NoteRef must not swallow the space
                     # ('word.⁵ Next' shipped as 'word.⁵Next' book-wide)
-                    lead = it.text[:len(it.text) - len(it.text.lstrip())]
                     trail = it.text[len(it.text.rstrip()):]
                     b.items[i] = NoteRef(note_id)
                     if trail:
                         b.items.insert(i + 1, TextRun(" "))
-                    if lead:
-                        b.items.insert(i, TextRun(" "))
-                        i += 1
+                    # print sets the superscript FLUSH against the preceding
+                    # text: drop the marker run's own leading space and the
+                    # previous run's trailing one ('them.\u2019 [24]' shipped
+                    # book-wide; every blind reader flagged it)
+                    if i > 0 and isinstance(b.items[i - 1], TextRun) and \
+                            b.items[i - 1].text.endswith(" "):
+                        b.items[i - 1] = TextRun(
+                            b.items[i - 1].text.rstrip(),
+                            b.items[i - 1].fmt)
                     remaining.pop(0)
                     counts["noterefs"] += 1
             i += 1

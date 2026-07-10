@@ -227,7 +227,7 @@ images:
       # whole page ships as a raster, caption included
 
 adjudications:
-  - {warning: verse-suspect, pages: [68, 87, 99, 126, 206, 283], note: "renders reviewed 2026-07-10: single-level runs at the paragraph indent are DIALOGUE set one speech per line ('Sir, are you a Jew?' p.68, 'Peace be upon you.' p.87, 'He said,Five prayers.' p.99, 'Is it good?' p.126, 'We're at ease' p.206, 'Young man, look.' p.283) - prose paragraphs, correctly kept line-by-line by the short-line rule; not verse"}
+  - {warning: verse-suspect, pages: [68, 87, 99, 105, 126, 206, 283], note: "renders reviewed 2026-07-10: single-level runs at the paragraph indent are DIALOGUE set one speech per line ('Sir, are you a Jew?' p.68, 'Peace be upon you.' p.87, 'He said,Five prayers.' p.99, 'They ask,What did He reveal?' p.105, 'Is it good?' p.126, 'We're at ease' p.206, 'Young man, look.' p.283) - prose paragraphs, correctly kept line-by-line by the short-line rule; not verse"}
   - {warning: image-only-page, pages: [64, 204], note: "part-opener pages ('My Path to God', 'My Time with Mawlana'): the heading text is live in the flow; only a decorative medallion is unshipped - renders reviewed 2026-07-09"}
   - {warning: embedded-image-uncovered, pages: [4, 13, 15, 18, 25, 28, 64, 204], note: "renders reviewed 2026-07-09: title-page medallion + Fons Vitae logo (p.4), ornamental text dividers (pp.13/15/18/25), part-opener medallions (pp.28/64/204) - decorative, all live text flows"}
 

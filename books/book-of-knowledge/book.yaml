@@ -114,6 +114,8 @@ flow:
   join_center_lines: true
   reattach_dropcaps: true
   overrides:
+    - {page: 224, line: 17, action: "class:prose", note: "'A poet once said' — prose intro at the verse inset (p.224 render)"}
+    - {page: 224, line: 20, action: "class:prose", note: "'While another recounted' — prose intro at the verse inset (p.224 render)"}
     # hanging-indent turnovers the indent rule misreads as new paragraphs
     # (all verified: each continues a hyphenated word from the line above)
     - {page: 43, line: 22, action: join, note: "numbered-list turnover 'dif-/ficult'"}
@@ -173,6 +175,18 @@ glyphs:
   gt_strip_phrases: []
 
 blocks:
+  # JP-P9: two single-level VERSE quotations at the 18pt inset, ragged
+  # (render-verified: p.214 al-Shafi'i quatrain 'Shall I scatter my
+  # pearls…', p.224 two couplets with prose intro lines 'A poet once
+  # said'/'While another recounted' at the same inset — class:prose).
+  # The p.245 suspect is Malik's quoted EPISTLE (intro + centered italic
+  # salutation), adjudicated below; the p.220 poet quatrain wraps with
+  # hanging turnovers — a verse convention the classifier does not model
+  # (the turnover would become its own line) — and stays prose-shaped as
+  # originally shipped.
+  verse:
+    - {pages: [214, 224, 232, 279], base: [18],
+       note: "single-level poet quotations at the quote inset; renders pp.214/224 (2026-07-10)"}
   # JP-P9: long hadith/athar quotations set at a justified 36pt LEFT inset,
   # right edge at the body margin (render-verified pp.193/220/259-261: the
   # ʿAlī narrations, 'The scholar will be brought forward…'). Drop-cap wrap
@@ -215,6 +229,7 @@ images:
       note: "glyph legend table; verified on p.26 render"
 
 adjudications:
+  - {warning: verse-suspect, pages: [245], note: "render reviewed 2026-07-10: Malik's quoted letter — prose intro 'Malik wrote back in reply:' + centered italic basmala salutation + justified letter body; an epistolary block, not verse"}
   - {warning: top-band-kept, pages: [4], note: "'Al-Ghazali' is the title page's display line inside the top band, correctly kept - p.4 render 2026-07-09"}
 
 output: {slug: book-of-knowledge, include_ncx: true}

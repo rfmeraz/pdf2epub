@@ -209,7 +209,14 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
         elif continuation:
             ok = True
         elif single_level:
-            ok = len(run) >= 2 and _ragged(run)
+            # equal-length couplets fail the ragged test (I&B p.100's Jami
+            # pair ends 0.33pt apart) but justified prose clusters AT its
+            # block margin — a pair ending far short of the reference right
+            # cannot be a justified block (the near-margin case is already
+            # vetoed upstream by blocked/justified_rights)
+            ok = len(run) >= 2 and (
+                _ragged(run)
+                or max(lines[x].x1 for x in run) <= ref_right - 40.0)
         else:
             ok = len(run) >= 2 and "turn" in lv
         if not ok:
