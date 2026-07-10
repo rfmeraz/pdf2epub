@@ -132,6 +132,59 @@ In practice the whole flow is driven by asking the conversion agent to "build th
 epub for books/<slug>" — the commands above are what it runs on your behalf. Between
 `init` and `build`, editing `book.yaml` is how you correct or override any judgment.
 
+## Under the hood
+
+**Everything is files.** Each command reads and writes concrete artifacts under
+`books/<slug>/`, and `book.yaml` is the seam the whole design turns on:
+
+```
+  package/*.pdf
+      │  init       ── deterministic: extract + analyze the PDF
+      ▼
+  analysis/   +   book.yaml (draft)      evidence, and a first-guess config
+      │
+      │  ← the AGENT reads the evidence + page renders and fills in book.yaml
+      ▼
+  book.yaml (final)                       every judgment about this book, in one file
+      │  build      ── deterministic: (PDF + book.yaml) → EPUB, same bytes every time
+      ▼
+  build/<slug>.epub   build/warnings.md   build/ir/*.json (with --dump-ir)
+      │  qa          ── deterministic: 23 gates vs an independent poppler extraction
+      │  proofread   ── deterministic packets → the AGENT reads them for damage
+      ▼
+  epubcheck: clean  +  Overall: PASS  +  clean read  →  done
+```
+
+**Inside `build`** is a fixed internal pipeline —
+`extract → flow → map → images → xhtml → package` (`--upto <stage>` stops early;
+`--dump-ir` writes each stage's intermediate representation to `build/ir/` so you can
+see exactly where a change took effect):
+
+1. **extract** — PyMuPDF reads the PDF into typed page/line/span objects (text with
+   font, size, and position), each page cross-scored against a poppler extraction.
+2. **flow** — the core step: it applies the judgments in `book.yaml` to turn placed
+   glyphs into a document — strip furniture, split footnotes, classify verse/quote/
+   list blocks, join lines into paragraphs (dehyphenation, lost-space repair),
+   re-order columns, insert page markers. The output is a typed **FlowDoc**: a flat
+   list of blocks (paragraphs, page markers, figures) plus a footnote list.
+3. **map** — gives each paragraph its semantic role (h1/h2/body/…) from the font-to-
+   role table in `book.yaml`, and tags language runs (e.g. CJK).
+4. **images** — rasterizes the cover and any `figure_regions` (true tables and
+   diagrams) at the configured DPI.
+5. **xhtml** — emits XHTML + generated CSS, builds the navigation document, subsets
+   the OFL fonts, then **packages** a byte-reproducible EPUB.
+
+**Where the judgment lives.** Everything *before* `book.yaml` — extract and analyze —
+only observes and measures the PDF; it never decides. Everything *after* it — the
+whole build and all 23 QA gates — is a pure function of *(PDF, book.yaml)*: same
+inputs, same bytes out, no clock, no randomness. So the judgment calls are confined
+to one small, human-readable file, written by the agent and open to your review. The
+agent steps back in only where a program genuinely can't decide — reading the
+proofread packets, and adjudicating the risky-page warnings — and both of those
+decisions are written back into `book.yaml` too. That is what makes the tool
+auditable: the mechanical parts are reproducible and diffable, and every real choice
+is in one place.
+
 ## Design commitments
 
 - **Never rewrite the book's words.** Only deterministic, counted repairs — line-end
