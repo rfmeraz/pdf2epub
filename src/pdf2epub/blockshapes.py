@@ -105,14 +105,23 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
             if sz is not None and sz > body_size + 1.0:
                 levels.append(None)
                 continue
-            if ln.x1 > ref_right - SHORT_BY:
+            # single-level specs keep the per-line short test (the ragged
+            # inset IS the convention); two-level specs defer it to the
+            # boundary trim below — verse lines legitimately run to full
+            # measure mid-poem (M&R notes p.370: a turn line ends 4.4pt
+            # short of the column right)
+            if not turns and ln.x1 > ref_right - SHORT_BY:
                 levels.append(None)
                 continue
         levels.append(lvl)
 
+    def _short(x) -> bool:
+        return lines[x].x1 <= ref_right - SHORT_BY or forced[x]
+
     cont_top = allow_turn_start or carry_levels is not None
     groups: list[VerseGroup] = []
     tail: VerseGroup | None = None
+    raw_runs: list[list[int]] = []
     i = 0
     while i < n:
         if levels[i] is None:
@@ -121,14 +130,36 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
         j = i
         while j < n and levels[j] is not None:
             j += 1
+        if turns:
+            # two-level convention: strict base/turn ALTERNATION. Split the
+            # candidate run at consecutive-same-level seams — a note
+            # paragraph's first line sits at the verse base offset in the
+            # M&R notes apparatus, and the split sheds it into a subrun of
+            # one, which acceptance then rejects (print-verified p.370)
+            k = i
+            for x in range(i + 1, j):
+                if levels[x] == levels[x - 1] and not forced[x]:
+                    raw_runs.append(list(range(k, x)))
+                    k = x
+            raw_runs.append(list(range(k, j)))
+        else:
+            raw_runs.append(list(range(i, j)))
+        i = j
+
+    for run in raw_runs:
+        if turns:
+            # boundary trim: the first/last line of a poem at a BASE level
+            # must end short (a full-measure line at the paragraph indent is
+            # prose — M&R p.165); interior and turn-level lines are exempt
+            while run and levels[run[0]] == "base" and not _short(run[0]):
+                run = run[1:]
+            while run and levels[run[-1]] == "base" and not _short(run[-1]):
+                run = run[:-1]
         # trim leading turn lines: a group must open at a base level unless
         # it continues the previous page's verse across the page turn
-        k = i
-        while k < j and levels[k] == "turn" and not forced[k] \
-                and not (k == 0 and cont_top):
-            k += 1
-        run = list(range(k, j))
-        i = j
+        while run and levels[run[0]] == "turn" and not forced[run[0]] \
+                and not (run[0] == 0 and cont_top):
+            run = run[1:]
         if not run:
             continue
         continuation = cont_top and run[0] == 0

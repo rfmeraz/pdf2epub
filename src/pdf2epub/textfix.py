@@ -22,13 +22,43 @@ _LIG_RE = re.compile("[" + "".join(_LIGATURES) + "]")
 # lost spaces (Me and Rumi, Creo prepress, no ToUnicode):
 #   say,"If  /  Erzincan.They  /  word”We
 # lowercase-before guard keeps initials ("W.M.") and "op.cit." untouched
-_SPACE_AFTER_PUNCT = re.compile(r'([a-z][.!?,;:])(["“”’]?[A-Z“"])')
+# the optional-quote class holds OPENING marks only: a CLOSING ” after
+# punctuation must get its space AFTER the quote (the dedicated
+# _SPACE_CLOSEQ/_QUOTE_SPACE_SWAP patterns own that seam) — with ” in this
+# class the repair inserted 'believer. ”The', manufacturing the wrong-side
+# shape it took the 2026-07-10 proofread pass to hunt down
+_SPACE_AFTER_PUNCT = re.compile(r'([a-z][.!?,;:])(["“’]?[A-Z“"])')
 _SPACE_AFTER_QUOTE = re.compile(r'([a-z][”"])([A-Z])')
 # the lowercase-before guard has one safe relaxation: bracket/paren/digit +
 # comma/period + DOUBLE QUOTE + capital ('[about me],"This' / '(216),"We' /
 # '86:9,"On' — gate-11 residuals) is never legitimate prose; the mandatory
 # quote is what keeps initials and numerics out
 _SPACE_AFTER_BRACKET = re.compile(r'([\])0-9][.,])(["“”][A-Z“"])')
+# 2026-07-10 (M&R proofread pass): the comma+LOWERCASE class deferred on
+# 2026-07-09 is now print-verified (38 blind readers; pp.50/60/77 renders —
+# the print has every space, Creo prepress lost them), together with five
+# sibling classes from the same prepress failure. All are impossible in
+# legitimately-set English; transliteration apostrophes (Sana'i, wa'llah)
+# make any U+2019-followed-by-lowercase pattern UNSAFE — those few seams
+# stay unrepaired by doctrine.
+_SPACE_COMMA_LOWER = re.compile(r"([a-z],)([a-z])")
+_SPACE_PUNCT_OPENQ = re.compile(r"([a-zA-Z0-9\])][.!?,;:])([‘“])")
+_SPACE_CLOSEQ = re.compile(r"(”)([A-Za-z])")
+_SPACE_AFTER_CITE = re.compile(r"([\])][.,;:])([A-Za-z])")
+_SPACE_BEFORE_PAREN = re.compile(r"([.!?”’])(\(\d)")
+_SPACE_AFTER_STAR = re.compile(r"([.!?]\*)([A-Za-z])")
+_SPACE_NUM_DOT_CAP = re.compile(r"([0-9A-Z]\.)([A-Z][a-z])")
+# the space landed on the WRONG SIDE of a closing quote ('way. ”Then' for
+# 'way.” Then'); ‘/’ are directional in this corpus and a space before a
+# CLOSING quote is never legitimate, so the swap is deterministic
+_QUOTE_SPACE_SWAP = re.compile(r"([.!?,;:]) ([”’])")
+
+_INSERT_PATTERNS = (
+    _SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET,
+    _SPACE_COMMA_LOWER, _SPACE_PUNCT_OPENQ, _SPACE_CLOSEQ,
+    _SPACE_AFTER_CITE, _SPACE_BEFORE_PAREN, _SPACE_AFTER_STAR,
+    _SPACE_NUM_DOT_CAP,
+)
 
 
 def expand_ligatures(text: str) -> tuple[str, int]:
@@ -48,11 +78,23 @@ def inline_dehyphenate(text: str) -> tuple[str, int]:
     return _INRUN_HYPHEN.subn(r"\1\2", text)
 
 
+def swap_quote_sides(text: str) -> tuple[str, int]:
+    """Move a space from before a closing quote to after it ('sun. ”The' ->
+    'sun.” The'). Print puts the closing quote at the START of the next line
+    often enough that the seam only EXISTS after the line join inserts its
+    separator — so the flow re-applies this at close_para, when the joined
+    text is final; per-line textfix runs too early to see it."""
+    return _QUOTE_SPACE_SWAP.subn(r"\1\2 ", text)
+
+
 def restore_spaces(text: str) -> tuple[str, int]:
-    text, n1 = _SPACE_AFTER_PUNCT.subn(r"\1 \2", text)
-    text, n2 = _SPACE_AFTER_QUOTE.subn(r"\1 \2", text)
-    text, n3 = _SPACE_AFTER_BRACKET.subn(r"\1 \2", text)
-    return text, n1 + n2 + n3
+    # the swap runs FIRST so 'way. ”Then' reads 'way.” Then' before the
+    # insert patterns examine the seam
+    text, n = _QUOTE_SPACE_SWAP.subn(r"\1\2 ", text)
+    for pat in _INSERT_PATTERNS:
+        text, k = pat.subn(r"\1 \2", text)
+        n += k
+    return text, n
 
 
 def restore_space_seam(prev: str, nxt: str) -> tuple[str, str, int]:
@@ -63,10 +105,23 @@ def restore_space_seam(prev: str, nxt: str) -> tuple[str, str, int]:
     wholly inside one run are the per-run pass's job). The space lands at the
     pattern's split point — usually the tail of ``prev``, preserving run
     formatting. Returns (prev, nxt, insertions)."""
+    # the wrong-side-of-quote swap straddles run seams too (the closing
+    # quote usually opens a new run): 'copper. '+'”He', 'copper.'+' ”He',
+    # 'copper. '+' ”He' (both-sided spaces would otherwise survive restore
+    # and be fused into the residual '. ”' by the collapse pass), and
+    # 'copper. ”'+'He'
+    p_r = prev.rstrip(" ")
+    n_l = nxt.lstrip(" ")
+    if p_r[-1:] in ".!?,;:" and n_l[:1] in "”’" and \
+            (len(p_r) != len(prev) or len(n_l) != len(nxt)):
+        return p_r, n_l[0] + " " + n_l[1:].lstrip(" "), 1
+    if len(prev) >= 3 and prev[-1] in "”’" and prev[-2] == " " \
+            and prev[-3] in ".!?,;:":
+        return prev[:-2] + prev[-1], " " + nxt.lstrip(" "), 1
     tail = prev[-3:]
     window = tail + nxt[:3]
     seam = len(tail)
-    for pat in (_SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET):
+    for pat in _INSERT_PATTERNS:
         for m in pat.finditer(window):
             if m.start() < seam < m.end():
                 cut = m.end(1)

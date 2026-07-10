@@ -96,8 +96,21 @@ def column_geometry(doc: PdfDoc) -> ColumnGeometry:
         full_here = any(round(ln.x0) == edge
                         and (ln.x1 - ln.x0) >= col_w - FULL_MEASURE_TOL
                         for ln in wide)
+        # a shift means the WHOLE block slid: on a genuinely shifted page
+        # no line spans the GLOBAL column (col_left to col_right). On a
+        # verse-dense page (M&R p.165, a near-full-page ghazal) the verse
+        # BASE INDENT outvotes the prose margin for the page-modal left
+        # while full-measure prose anchors still span the global column —
+        # their presence vetoes the bogus shift, keeping the page's true
+        # offsets for the blocks.verse classifier. The x1 requirement keeps
+        # the veto off shifted pages whose INSET content (a quote at
+        # shift == inset, sufism verso) happens to stand at col_left.
+        at_col_left = sum(1 for ln in wide
+                          if abs(ln.x0 - col_left) <= 2.0
+                          and ln.x1 >= col_right - FULL_MEASURE_TOL)
         shift = col_left - edge
-        if support >= 3 and full_here and abs(shift) >= 6.0:
+        if support >= 3 and full_here and abs(shift) >= 6.0 \
+                and at_col_left < 3:
             page_shifts[p.number] = float(shift)
     return ColumnGeometry(col_left, col_right, body_size, page_shifts)
 

@@ -193,3 +193,13 @@ def test_verse_line_starting_book_text_is_escaped():
     doc = _doc("ch.xhtml", "<p>| shaped characters open this paragraph.</p>")
     blocks, _ = walk_doc(doc, is_notes=False, k_start=0)
     assert blocks[0].lines[0].startswith("\\|")
+
+
+def test_chunk_suffix_past_sixteen():
+    # a 130-page chapter legitimately splits past the old 16-letter alphabet
+    from pdf2epub.proofread import _chunk_suffix
+
+    assert _chunk_suffix(1) == "b"
+    assert _chunk_suffix(16) == "q"
+    assert _chunk_suffix(25) == "z"
+    assert _chunk_suffix(26) == "x26"

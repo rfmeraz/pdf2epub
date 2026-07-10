@@ -121,3 +121,38 @@ def test_analyze_verse_suspect_evidence():
     assert len(a.verse_suspect_pages) == 1
     v = a.verse_suspect_pages[0]
     assert v["page"] == 1 and v["base"] == [9.0] and v["turns"] == [36.0]
+
+
+def test_page_shift_vetoed_by_global_full_lines():
+    # M&R p.165: a near-full-page ghazal outvotes the prose margin for the
+    # page-modal left, but full-measure prose anchors still span the GLOBAL
+    # column — their presence vetoes the bogus binding shift. A genuinely
+    # shifted page (whole block slid, nothing at col_left) keeps its shift.
+    from pdf2epub.analyze import column_geometry
+    from test_flow import _doc, _line, _page
+
+    anchor = [
+        _line("Full measure prose line anchoring the modal column A", 40 + i * 13,
+              x0=72, width=290) for i in range(6)]
+    ghazal_page = _page(2, [
+        _line("Prose one at full measure spanning the global col", 40,
+              x0=72, width=290),
+        _line("prose two at full measure spanning the global col", 53,
+              x0=72, width=290),
+        _line("prose three at full measure spanning the global c", 66,
+              x0=72, width=290),
+        # verse-dense rest: base 82 outvotes 72, one long line near full
+        *[_line(f"verse base line number {i} of the long ghazal", 86 + i * 26,
+                x0=82, width=200 + (i % 3) * 26) for i in range(4)],
+        *[_line(f"verse turn line number {i} going deeper still", 99 + i * 26,
+                x0=109, width=190) for i in range(4)],
+        _line("a very long verse line reaching almost the column", 210,
+              x0=82, width=277),
+    ])
+    shifted_page = _page(3, [
+        _line("Whole block slid to the left by eighteen points aa", 40 + i * 13,
+              x0=54, width=290) for i in range(5)])
+    geo = column_geometry(_doc([_page(1, anchor), ghazal_page, shifted_page]))
+    assert geo.col_left == 72.0
+    assert geo.shift(2) == 0.0          # vetoed: global-full prose present
+    assert geo.shift(3) == 18.0         # genuine: nothing stands at col_left

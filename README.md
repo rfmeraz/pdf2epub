@@ -23,7 +23,12 @@ Adobe products.
    differently — this inference step is part of the design, and the file it
    produces makes the build reproducible and auditable.
 4. **`pdf2epub build`** is fully deterministic from (PDF, book.yaml): strip
-   furniture, split footnotes, join lines into paragraphs (dehyphenation,
+   furniture, split footnotes, classify semantic blocks (`blocks.verse`:
+   calibrated base/turn indent specs turn print verse into stanza paragraphs
+   whose line breaks are content — verse lines bypass the prose joiner and
+   ship as `z3998:verse` blockquotes with one span per line; an uncalibrated
+   verse-suspect witness flags verse-shaped runs on every book),
+   join lines into paragraphs (dehyphenation,
    drop-cap reattachment, cross-run lost-space seams), re-split columned back
    matter into print reading
    order (`flow.columns`: indexes and other tabular apparatus whose baseline-
@@ -62,7 +67,10 @@ Adobe products.
    content loss no text gate can see). Gate 22 re-derives the build's warning
    queue and fails on any open content-risk warning or stale `adjudications:`
    entry — `Overall: PASS` now certifies the risky-page queue was actually
-   adjudicated. `qa --visual` adds gate 18: sampled
+   adjudicated. Gate 23 (verse integrity) counts the flow's classified verse
+   lines against the shipped line spans — the one deterministic witness for
+   structure loss, which presence-based coverage cannot see (a flattened poem
+   loses no characters, only its line breaks). `qa --visual` adds gate 18: sampled
    side-by-side contact sheets (print page vs anchor-sliced EPUB render in
    headless Chrome), PUA glyph crop pairs, and figure perceptual-hash checks
    into `build/qa_visual/` for the converting agent to grade against a

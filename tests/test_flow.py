@@ -552,7 +552,9 @@ def test_textfix_functions():
     assert t == ('say [about me], "This man and (216), "We have '
                  'and Koran 86:9, "On the day') and n == 3
     assert restore_spaces("pp. 12,14 and 1,000 stay")[1] == 0
-    assert restore_spaces('lower,"case stays quoteless,next')[1] == 1  # a-z rule only
+    # 2026-07-10: the comma+lowercase class is repaired too (print-verified
+    # during the M&R proofread pass — the deferral this line used to pin)
+    assert restore_spaces('lower,"case stays quoteless,next')[1] == 2
     assert dehyphenate_join("tradi-", "tion") == ("tradi", "", True)
     assert dehyphenate_join("Kaccayanagotta-", "Sutta") == ("Kaccayanagotta-", "", False)
     assert dehyphenate_join("plain", "next") == ("plain", " ", False)
@@ -1402,3 +1404,131 @@ def test_emit_two_adjacent_stanzas_one_blockquote(tmp_path):
     body = "".join(part for f in out.files for part in f.body_parts)
     assert body.count("<blockquote") == 1  # both stanzas coalesce
     assert body.count('<p class="vs') == 2
+
+
+def test_verse_long_turn_line_kept_and_intro_prose_shed(tmp_path):
+    # print-verified M&R notes p.370 (folio 343): the couplet's turn line
+    # ends 4.4pt short of the column (full measure) and MUST stay verse;
+    # the note paragraph's first line sits at the verse BASE offset directly
+    # above the couplet and must be shed (strict-alternation split: B,B,T
+    # -> [B],[B,T]); real raw geometry, offsets vs col_left 72
+    from pdf2epub.config import VerseSpec
+
+    lines = [
+        _line("Anchor prose at full measure width for the modal", 48,
+              x0=72, width=290),
+        _line("column and a second anchor line to hold the edge.", 61,
+              x0=72, width=290),
+        # note continuation prose at x0=98 (offset 26) — outside levels
+        _line("animal soul, or the soul that commands to evil.", 74,
+              x0=98, width=206),
+        # note first line AT the verse base offset (x0=107, offset 35),
+        # short — the alternation split sheds it
+        _line("Water seeks a thirsty man. Compare M III 4398-99:", 87,
+              x0=107, width=228),
+        # the couplet: base short, turn nearly FULL measure (x1=352.6)
+        _line("The thirsty man laments, O sweet water!", 107,
+              x0=107, width=188),
+        _line("The water too laments, Where is the drinker?", 120,
+              x0=143, width=209.6),
+    ]
+    cfg = _cfg(tmp_path, indent_threshold=10.0,
+               blocks_verse=[VerseSpec(pages=[1], base=[35.0], turns=[71.0],
+                                       tol=3.0, note="notes couplets")])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    assert len(verse) == 1
+    assert verse[0].text() == ("The thirsty man laments, O sweet water!\u2028"
+                               "The water too laments, Where is the drinker?")
+    assert verse[0].verse_turns == [1]
+    intro = [p for p in paras if "Water seeks" in p.text()]
+    assert len(intro) == 1 and intro[0].block_class is None
+
+
+def test_restore_spaces_prepress_classes_2026_07_10():
+    # print-verified M&R prepress lost-space classes (proofread pass)
+    cases = [
+        ("One would become empty,and they went", "empty, and"),
+        ("sitting place of truthfulness,both here", "truthfulness, both"),
+        ("He said,‘Helpless fellow!", "said, ‘"),
+        ("denial and wonder:‘Since you are", "wonder: ‘"),
+        ("Koran 2:255:“God, there is", "2:255: “"),
+        ("the words “gnosis”and “dervishhood”have", "“gnosis” and"),
+        ("What does “I”have to do", "“I” have"),
+        ("as but one soul [31:28].Where is", "[31:28]. Where"),
+        ("upon the Throne [20:5];His words", "[20:5]; His"),
+        ("kill your souls [2:54],just as", "[2:54], just"),
+        ("in two volumes, 1990).Those who", "1990). Those"),
+        ("I found ease.(641)", "ease. (641)"),
+        ("give me two hundred dirhems.”(343)", "dirhems.” (343)"),
+        ("mentions on occasion.*They have no", "occasion.* They"),
+        ("4.With me you're like duck eggs", "4. With"),
+        ("52.Muhammad the Arab", "52. Muhammad"),
+        ("translated by W. M.Thackston", "W. M. Thackston"),
+        # the wrong-side-of-the-quote swap
+        ("like this. ”These people talk", "this.” These"),
+        ("protect them! ”This is the Sunnah", "them!” This"),
+        ("keep on denying. ’And that's my", "denying.’ And"),
+    ]
+    for src, want in cases:
+        out, n = restore_spaces(src)
+        assert want in out, (src, out)
+        assert n >= 1, src
+
+
+def test_restore_spaces_negative_guards():
+    # transliteration apostrophes, decimals, citations, abbreviations,
+    # and ordinary prose must pass through byte-identical
+    for src in [
+        "Sana'i and Ruba'iyyat and wa'llah and Abi'l-Khayr",
+        "Sana’i and Ruba’iyyat and wa’llah and Abi’l-Khayr",
+        "don’t and it’s and we’ll and I’m and you’ve",
+        "see 3.176 and compare 2.254 and M II 3766 ff.",
+        "i.e., the prophet; e.g., the saint; d. 1083",
+        "a normal sentence, with commas, stays as printed.",
+        "“A quoted phrase,” she said, “stays.”",
+        "passage 2.14 and note 42.5 and Koran 66:3",
+    ]:
+        out, n = restore_spaces(src)
+        assert out == src, (src, out)
+        assert n == 0, src
+
+
+def test_restore_space_seam_quote_swap():
+    from pdf2epub.textfix import restore_space_seam
+
+    # closing quote opens the NEXT run ('copper. ' + '”He beat')
+    p, n, k = restore_space_seam("cucumbers for a copper. ", "”He beat")
+    assert (p, n, k) == ("cucumbers for a copper.", "” He beat", 1)
+    # quote ends the PREVIOUS run ('copper. ”' + 'He beat')
+    p, n, k = restore_space_seam("cucumbers for a copper. ”", "He beat")
+    assert (p, n, k) == ("cucumbers for a copper.”", " He beat", 1)
+    # BOTH-sided spaces at the seam (the collapse pass would otherwise fuse
+    # them into the residual '. ”' shape)
+    p, n, k = restore_space_seam("of the believer. ", " ”The servants")
+    assert (p, n, k) == ("of the believer.", "” The servants", 1)
+    p, n, k = restore_space_seam("of the believer.", " ”The servants")
+    assert (p, n, k) == ("of the believer.", "” The servants", 1)
+    # apostrophe continuations across seams stay untouched
+    p, n, k = restore_space_seam("he said don", "’t go")
+    assert (p, n, k) == ("he said don", "’t go", 0)
+
+
+def test_quote_swap_after_line_join(tmp_path):
+    # print puts the closing quote at the NEXT line's start; the join's
+    # separator creates 'sun. ”The' inside one run — the close_para swap
+    # pass is the only walker that sees the joined text
+    lines = [
+        _line('whose name is “sun.', 100, x0=72, width=290),
+        _line('”The triumph of this sun became clear over', 113,
+              x0=72, width=290),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _cfg(tmp_path, restore_spaces=True), say=lambda *a: None)
+    text = _paras(res.flow)[0].text()
+    assert 'sun.” The triumph' in text
+    # the swap lands via the in-run pass or the seam branch depending on
+    # whether the join produced one run or two — either counter is fine
+    assert (res.counts.get("quote-side-swaps", 0)
+            + res.counts.get("spaces-restored-crossrun", 0)) >= 1

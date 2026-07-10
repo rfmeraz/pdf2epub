@@ -65,6 +65,16 @@ def _inline_text(el) -> str:
     return "".join(parts)
 
 
+_CHUNK_LETTERS = "bcdefghijklmnopqrstuvwxyz"
+
+
+def _chunk_suffix(ci: int) -> str:
+    """Suffix for chunk ci (1-based beyond the unsuffixed first): letters
+    b..z, then x27, x28… — a 130-page chapter legitimately splits past the
+    old 16-letter alphabet (M&R 'My Time with Mawlana': 17 chunks)."""
+    return _CHUNK_LETTERS[ci - 1] if ci <= len(_CHUNK_LETTERS) else f"x{ci}"
+
+
 def _escape(line: str) -> str:
     """A plain output line starting with a builder-meaningful char is book
     text — escape it so {…} and structural prefixes stay unambiguous."""
@@ -403,7 +413,7 @@ def run_proofread(epub: Path, config: Path, say=print) -> int:
         for ci, chunk in enumerate(chunks):
             nnn += 1
             stem = Path(href).stem
-            suffix = "" if ci == 0 else "-" + "bcdefghijklmnop"[ci - 1]
+            suffix = "" if ci == 0 else "-" + _chunk_suffix(ci)
             name = f"{nnn:03d}-{stem}{suffix}.md"
             labels = [b.label for b in chunk if b.kind == "pagebreak"]
             ks = [b.k for b in chunk if b.kind == "pagebreak"]

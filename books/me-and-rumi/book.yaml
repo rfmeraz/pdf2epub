@@ -115,9 +115,55 @@ flow:
     - {page: 371, line: 31, action: "join", note: "mid-word break seam '...rt of a sup-|plication ...'"}
     - {page: 371, line: 35, action: "join", note: "mid-word break seam '... Rumi’s dis-|cussion of...'"}
     - {page: 373, line: 11, action: "join", note: "mid-word break seam '...g and drink-|ing do, so...'"}
+    # proofread round 1 (2026-07-10): verse-boundary corrections, render-verified
+    - {page: 35, line: 11, action: "class:prose", note: "dialogue 'I said,Repeat that…' at the paragraph indent directly under the quatrain — prose, not a 5th verse line (p.35 render)"}
+    - {page: 231, line: 18, action: "class:prose", note: "dialogue 'The fellow said,You're a mad man.' directly under the Layla/Majnun couplet — prose (p.231 render)"}
+    - {page: 119, line: 24, action: "class:verse", note: "couplet base line 'Glorification, religion, and monastery…' runs to full measure so the boundary-short rule sheds it; render shows it opening the two-couplet verse (p.119 render)"}
+    # proofread round 1 (2026-07-10): section title + passage number fused into
+    # one centered smallcaps heading (join_center_lines) — the number line
+    # starts its own heading, matching every unfused passage number
+    - {page: 30, line: 1, action: "break", note: "passage number 1. own heading; section title Childhood above it"}
+    - {page: 34, line: 21, action: "break", note: "passage number 12. own heading; section title My Teaching Career above it"}
+    - {page: 40, line: 2, action: "break", note: "passage number 18. own heading; section title My Travels above it"}
+    - {page: 44, line: 22, action: "break", note: "passage number 25. own heading; section title Teachers and Shaykhs I Have Met above it"}
+    - {page: 66, line: 1, action: "break", note: "passage number 1. own heading; section title The Profit and Loss of Study above it"}
+    - {page: 89, line: 13, action: "break", note: "passage number 43. own heading; section title Philosophy above it"}
+    - {page: 95, line: 15, action: "break", note: "passage number 56. own heading; section title Following Muhammad above it"}
+    - {page: 115, line: 13, action: "break", note: "passage number 94. own heading; section title The Religion of Old Women above it"}
+    - {page: 130, line: 2, action: "break", note: "passage number 126. own heading; section title The Guidance of the Shaykh above it"}
+    - {page: 143, line: 2, action: "break", note: "passage number 152. own heading; section title Avoiding Caprice above it"}
+    - {page: 153, line: 2, action: "break", note: "passage number 172. own heading; section title The Companion of the Heart above it"}
+    - {page: 166, line: 18, action: "break", note: "passage number 200. own heading; section title The Saints above it"}
+    - {page: 179, line: 8, action: "break", note: "passage number 215. own heading; section title My Interpretations of Scripture above it"}
+    - {page: 206, line: 1, action: "break", note: "passage number 1. own heading; section title Our Encounter above it"}
+    - {page: 216, line: 21, action: "break", note: "passage number 22. own heading; section title My Spiritual Mastery above it"}
+    - {page: 232, line: 12, action: "break", note: "passage number 55. own heading; section title Mawlana's Exalted Station above it"}
+    - {page: 238, line: 21, action: "break", note: "passage number 65. own heading; section title Our Companionship above it"}
+    - {page: 257, line: 4, action: "break", note: "passage number 95. own heading; section title My Instructions to the Circle above it"}
+    - {page: 292, line: 8, action: "break", note: "passage number 154. own heading; section title My Critics above it"}
+    - {page: 304, line: 22, action: "break", note: "passage number 179. own heading; section title My Harshness with Friends above it"}
+    - {page: 329, line: 22, action: "break", note: "passage number 216. own heading; section title My Return from Aleppo above it"}
+    - {page: 341, line: 14, action: "break", note: "notes apparatus 'Part 2.' subheading fused with the line above it"}
     - {page: 21, line: 1, action: "drop", note: "running head 'William C. Chittick' the furniture template missed; shipped as a stray 9pt-italic paragraph — render p.21 shows it in the top band"}
     - {page: 62, line: 1, action: "drop", note: "running head 'Teachers and Shaykhs I Have Met' the furniture template missed; shipped as a stray smallcaps paragraph"}
     - {page: 156, line: 1, action: "drop", note: "running head 'The Companion of the Heart' the furniture template missed; shipped as a stray smallcaps paragraph"}
+
+blocks:
+  # Verse judgment (2026-07-10). Body verse is two-level: base at the
+  # paragraph indent (offset 9-11 pt recto/verso), couplet turn lines at
+  # 36-38 — render-verified pp.35 (quatrain), 46 (Kaaba couplet, the
+  # print-verified _CONT_DASHES fusion), 68, 70, 165. Single-level runs at
+  # the base offset are DIALOGUE set one speech per line (p.68 render:
+  # "Sir, are you a Jew?" exchange) — prose, hence turns required.
+  # Notes verse (pp.337-373) sits deeper: base 35-38, ghazal turns ~48.7
+  # (p.367 render) and quote turns ~71-74 (pp.341/345/370 renders); note
+  # first lines share the verse base offset and are shed by the
+  # strict-alternation split (p.370 "Water seeks a thirsty man...").
+  verse:
+    - {pages: ["28-336"], base: [10], turns: [37], tol: 2.5,
+       note: "body couplets/quatrains — renders pp.35/46/68/70/165 (2026-07-10)"}
+    - {pages: ["337-373"], base: [37.5], turns: [50, 73.5], tol: 3.5,
+       note: "notes-region verse — renders pp.341/367/370 + p.356 ghazal at turn offset 52 (proofread round 1, 2026-07-10)"}
 
 footnotes:
   policy: markers
@@ -158,6 +204,7 @@ images:
       # whole page ships as a raster, caption included
 
 adjudications:
+  - {warning: verse-suspect, pages: [68, 87, 126, 206, 283], note: "renders reviewed 2026-07-10: single-level runs at the paragraph indent are DIALOGUE set one speech per line ('Sir, are you a Jew?' p.68, 'Peace be upon you.' p.87, 'Is it good?' p.126, 'We're at ease' p.206, 'Young man, look.' p.283) - prose paragraphs, correctly kept line-by-line by the short-line rule; not verse"}
   - {warning: image-only-page, pages: [64, 204], note: "part-opener pages ('My Path to God', 'My Time with Mawlana'): the heading text is live in the flow; only a decorative medallion is unshipped - renders reviewed 2026-07-09"}
   - {warning: embedded-image-uncovered, pages: [4, 13, 15, 18, 25, 28, 64, 204], note: "renders reviewed 2026-07-09: title-page medallion + Fons Vitae logo (p.4), ornamental text dividers (pp.13/15/18/25), part-opener medallions (pp.28/64/204) - decorative, all live text flows"}
 

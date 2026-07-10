@@ -45,6 +45,7 @@ from .textfix import (
     probe_text,
     restore_space_seam,
     restore_spaces,
+    swap_quote_sides,
 )
 
 _PUA_RE = re.compile(r"[\ue000-\uf8ff]")
@@ -1087,10 +1088,18 @@ def _restore_cross_run_spaces(para: Paragraph, counts: Counter) -> None:
     """restore_spaces runs per run and cannot see a fusion at a run seam
     (roman/italic boundaries: 'believer.'+'This', MR prepress). Repair each
     adjacent-TextRun seam with the same patterns via restore_space_seam;
-    the space lands in the earlier run so run formatting is preserved."""
+    the space lands in the earlier run so run formatting is preserved.
+    The wrong-side-of-quote swap re-runs over each run's FINAL text: print
+    puts the closing quote at the next line's start often enough that the
+    'punct SPACE quote' shape only exists after the line join inserted its
+    separator — per-line textfix ran too early to see it."""
     prev_run = None
     for it in para.items:
         if isinstance(it, TextRun):
+            t, k = swap_quote_sides(it.text)
+            if k:
+                it.text = t
+                counts["quote-side-swaps"] += k
             if prev_run is not None:
                 a, b, n = restore_space_seam(prev_run.text, it.text)
                 if n:

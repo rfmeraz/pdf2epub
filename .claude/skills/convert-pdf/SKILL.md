@@ -69,7 +69,17 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
   `images.figure_pages` with real alt text (LOOK at the renders). Image-only
   pages you can verify from renders ship as figures with alt; unverifiable
   content is a HARD STOP.
-- Finish: `fail_on_unmapped: true`, `fail_on_unmapped_pua: true`.
+- **Blocks (JP-P9)**: the report's "## Block shapes" section lists
+  verse-shaped groups with measured base/turn offsets and a paste-ready
+  draft. VERIFY each page range on renders before recording `blocks.verse`
+  specs — two print conventions exist (two-level base/turn alternation à la
+  M&R; single-level ragged inset à la I&B, `turns: []`), and two look-alikes
+  are NOT verse: dialogue set one speech per line at the paragraph indent
+  (adjudicate the verse-suspect), and centered title lists. Every build
+  re-runs the suspect witness on kept lines; an open `verse-suspect` is a
+  render-verify queue item — cover it with a spec, a `class:` override, or
+  an adjudication, never ignore it. Verse lines then ship line-for-line
+  (gate 23 counts them; packets show them as `| ` lines).
 
 ## Step 3 — Build → QA → adjudicate → iterate (≤8)
 
