@@ -18,14 +18,18 @@ pdf2epub splits the job into five stages so the hard part — the judgment calls
 separated from the mechanism, written down, and checked:
 
 1. **Extract + analyze** (deterministic) — read the PDF and gather evidence.
-2. **Infer the structure** (an agent, or a person) — read the evidence, look at the
-   pages, and record every judgment in one file, `book.yaml`.
+2. **Infer the structure** (the agent) — read the evidence, look at the pages, and
+   record every judgment in one file, `book.yaml`.
 3. **Build** (deterministic) — turn *(PDF + book.yaml)* into an EPUB, the same way
    every time.
 4. **QA** (deterministic) — grade the EPUB against an independent extraction of the
    same PDF.
-5. **Proofread** (an agent, or a person) — read the finished book for damage a
-   machine can't judge.
+5. **Proofread** (the agent) — read the finished book for damage a machine can't
+   judge.
+
+The human drops the PDF, kicks the conversion off, and inspects the finished EPUB;
+every judgment in between is the agent's, recorded in `book.yaml` where a person can
+review or override it.
 
 Because every judgment lives in `book.yaml`, a build is reproducible and auditable:
 you can see exactly why the converter did what it did, and change any decision in one
@@ -46,12 +50,13 @@ page thumbnails. It writes `analysis/structure_report.md` and a draft `book.yaml
 tables and figures.)
 
 **2. The agent infers the structure.** A conversion agent (Claude, via the
-`/convert-pdf` skill) — or a person — reads the evidence, looks at the page renders,
-and fills in `book.yaml`: which font cluster is which heading level, where the front
-matter ends, which table-of-contents source to trust, how footnotes are marked, what
-each private-use glyph means, where verse and block quotes and lists sit, which pages
-are multi-column, what the cover is. This inference step is the point of the design —
-it is where a human-quality judgment about *this* book is made once and written down.
+`/convert-pdf` skill) reads the evidence, looks at the page renders, and fills in
+`book.yaml`: which font cluster is which heading level, where the front matter ends,
+which table-of-contents source to trust, how footnotes are marked, what each
+private-use glyph means, where verse and block quotes and lists sit, which pages are
+multi-column, what the cover is. This inference step is the point of the design — it
+is where the real, book-specific judgment gets made once and written down, so the
+build that follows can be purely mechanical.
 
 **3. `build` — deterministic assembly.** From *(PDF + book.yaml)*, with no further
 judgment, the build:
