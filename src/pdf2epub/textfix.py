@@ -49,6 +49,11 @@ _SPACE_BEFORE_PAREN = re.compile(r"([.!?”’])(\(\d)")
 _SPACE_AFTER_STAR = re.compile(r"([.!?]\*)([A-Za-z])")
 _SPACE_NUM_DOT_CAP = re.compile(r"([0-9A-Z]\.)([A-Z][a-z])")
 _SPACE_STAR_LETTER = re.compile(r"(\*)([A-Za-z])")
+# display-type ampersands lose their surrounding spaces in extraction
+# ('Me &Rumi', 'Me&Rumi' on the M&R title pages); the lowercase-before
+# guard keeps 'AT&T'-style tight caps untouched
+_SPACE_AMP_LEFT = re.compile(r"([a-z])(&(?=[A-Z]))")
+_SPACE_AMP_RIGHT = re.compile(r"((?<=[a-z ])&)([A-Z])")
 # the space landed on the WRONG SIDE of a closing quote ('way. ”Then' for
 # 'way.” Then'); ‘/’ are directional in this corpus and a space before a
 # CLOSING quote is never legitimate, so the swap is deterministic
@@ -58,7 +63,8 @@ _INSERT_PATTERNS = (
     _SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET,
     _SPACE_COMMA_LOWER, _SPACE_PUNCT_OPENQ, _SPACE_CLOSEQ,
     _SPACE_AFTER_CITE, _SPACE_BEFORE_PAREN, _SPACE_AFTER_STAR,
-    _SPACE_NUM_DOT_CAP, _SPACE_STAR_LETTER,
+    _SPACE_NUM_DOT_CAP, _SPACE_STAR_LETTER, _SPACE_AMP_LEFT,
+    _SPACE_AMP_RIGHT,
 )
 
 

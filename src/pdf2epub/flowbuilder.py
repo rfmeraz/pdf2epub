@@ -382,8 +382,28 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         for pno in cfg.toc_printed_pages:
             paras: list[Paragraph] = []
             last_entry: Paragraph | None = None
-            for L in pages_lines.get(pno, []):
+            toc_lines = pages_lines.get(pno, [])
+            skip_idx: set[int] = set()
+            for ti, L in enumerate(toc_lines):
+                if ti in skip_idx:
+                    continue
                 ent = _trailing_folio_entry(L.ln)
+                if not ent and ti + 1 < len(toc_lines):
+                    # a PART title carries its folio as a separate bare line
+                    # at the right edge on (almost) the same baseline (M&R:
+                    # 'My Years without Mawlana' + '1'); without this pairing
+                    # the part line fused into the previous entry as a fake
+                    # wrapped-title continuation
+                    nl = toc_lines[ti + 1].ln
+                    nt = nl.text().strip().rstrip(".")
+                    if nt and len(nt) <= 5 and \
+                            (nt.isdigit() or re.fullmatch(
+                                r"[ivxlc]+", nt, re.I)) and \
+                            nl.x0 > (geo.col_left + geo.col_right) / 2 and \
+                            abs(nl.y0 - L.ln.y0) <= 6.0 and \
+                            len(L.ln.text().strip()) >= 2:
+                        ent = (L.ln.text().strip(), nt.lower())
+                        skip_idx.add(ti + 1)
                 if ent:
                     title, label = ent
                     fixed = _apply_textfix([TextRun(f"{title}\t{label}", RunFormat())],
@@ -909,7 +929,21 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
         # 'particu-'/'lar' broke mid-word on I&B without this)
         return True
     if "/center" in L.ps:
-        return not cfg.join_center_lines
+        if not cfg.join_center_lines:
+            return True
+        # joined center lines still respect the GAP rule: a copyright page's
+        # 22pt block gaps are paragraph breaks even though every line is
+        # /center (M&R p.vii shipped as ONE fused paragraph without this;
+        # wrapped centered quotes at normal leading keep joining). The gap
+        # scales with the LINE'S OWN size — display type leads wider, and a
+        # body-scaled gap would split a two-line 21pt part title into two
+        # h1 spine files (the HU Chapter-55 defect shape)
+        try:
+            _sz = float(L.ps.split("@", 1)[1].split("/", 1)[0])
+        except (IndexError, ValueError):
+            _sz = 0.0
+        return (L.ln.y0 - prev.ln.y0) > \
+            cfg.gap_factor * max(med_lead, 1.35 * _sz)
     # a first-line indent is indented relative to the PREVIOUS line too —
     # drop-cap wrap lines all sit at the same inset (BoK p.35: 3 lines at
     # x0=87.9 around a 52.5pt initial) and must not break line-by-line
@@ -1100,6 +1134,13 @@ def _restore_cross_run_spaces(para: Paragraph, counts: Counter) -> None:
             if k:
                 it.text = t
                 counts["quote-side-swaps"] += k
+            if it.text == "&" and prev_run is not None \
+                    and prev_run.text[-1:].islower():
+                # a display-type ampersand as its own run lost BOTH spaces
+                # ('Me'+'&'+'Rumi', the 52pt title); single-char runs defeat
+                # the window-based seam patterns
+                it.text = " & "
+                counts["spaces-restored-crossrun"] += 2
             if prev_run is not None:
                 a, b, n = restore_space_seam(prev_run.text, it.text)
                 if n:

@@ -1552,3 +1552,103 @@ def test_dehyphenate_keeps_compound_chains():
     assert dehyphenate_join("One-col-", "ored words") == \
         ("One-col", "", True)
     assert dehyphenate_join("man-throw-", "ing") == ("man-throw", "", True)
+
+
+def test_center_lines_respect_gap_rule(tmp_path):
+    # M&R copyright page: every line /center under join_center_lines, but
+    # the 22pt block gaps are paragraph breaks (leading is 13pt)
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 40,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges.", 53,
+              x0=72, width=290),
+        _line("(c) 2004 William C. Chittick", 200, x0=166, width=100),
+        _line("This edition printed and distributed by", 222,
+              x0=146, width=140),
+        _line("Fons Vitae, Louisville, Kentucky", 235, x0=160, width=112),
+        _line("All rights reserved. No part of this book", 257,
+              x0=110, width=212),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _cfg(tmp_path, join_center_lines=True),
+                     say=lambda *a: None)
+    paras = [p.text() for p in _paras(res.flow)]
+    center = [t for t in paras if "Chittick" in t or "edition" in t
+              or "rights" in t]
+    assert any(t.startswith("(c) 2004") and "edition" not in t
+               for t in center)          # 22pt gap broke
+    assert any("distributed by Fons Vitae" in t for t in center)  # 13pt joined
+    assert any(t.startswith("All rights") for t in center)
+
+
+def test_restore_spaces_display_amp():
+    assert restore_spaces("Me &Rumi")[0] == "Me & Rumi"
+    assert restore_spaces("Me&Rumi")[0] == "Me & Rumi"
+    assert restore_spaces("AT&T stays")[0] == "AT&T stays"
+    assert restore_spaces("R&D stays")[0] == "R&D stays"
+
+
+def test_bare_ampersand_run_gets_spaces(tmp_path):
+    from pdf2epub.core.model import Paragraph as P, SourceRef, TextRun
+    from pdf2epub.flowbuilder import _restore_cross_run_spaces
+    from collections import Counter
+    from pdf2epub.core.model import RunFormat
+
+    p = P(style="s", src=SourceRef("p", 0), items=[
+        TextRun("Me", RunFormat()), TextRun("&", RunFormat(italic=True)),
+        TextRun("Rumi", RunFormat())])
+    _restore_cross_run_spaces(p, Counter())
+    assert p.text() == "Me & Rumi"
+
+
+def test_toc_part_title_with_separate_folio_line(tmp_path):
+    # M&R printed TOC: part titles carry their folio as a bare right-edge
+    # line on (almost) the same baseline; without pairing they fused into
+    # the previous entry as a fake wrapped-title continuation
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    def _run(text, x0, y, x1, font=BODY):
+        return PdfRun(text=text, font_id=font, superscript=False,
+                      x0=x0, y0=y, x1=x1, y1=y + 12)
+
+    def _entry_line(title, folio, y):
+        return PdfLine(runs=[_run(title, 82, y, 250),
+                             _run(folio, 346, y, 352)],
+                       x0=82, y0=y, x1=352, y1=y + 12)
+
+    lines = [
+        _line("Contents", 89, x0=177, width=74, font=BIG),
+        _entry_line("Foreword", "ix", 123),
+        _entry_line("Translator's Introduction", "xi", 137),
+        # part title: no folio on the line…
+        PdfLine(runs=[_run("My Years without Mawlana", 71, 162.7, 210)],
+                x0=71, y0=162.7, x1=210, y1=174),
+        # …the folio is its own bare line 2.3pt below at the right edge
+        PdfLine(runs=[_run("1", 346.4, 165, 351.8)],
+                x0=346.4, y0=165, x1=351.8, y1=177),
+        _entry_line("Childhood", "3", 179),
+    ]
+    cfg = _cfg(tmp_path, toc_source="printed", toc_printed_pages=[1])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    toc = [p.text() for p in _paras(res.flow) if p.style == "__toc__"]
+    assert "My Years without Mawlana\t1" in toc
+    assert "Translator's Introduction\txi" in toc
+    assert not any("Introduction My Years" in t for t in toc)
+
+
+def test_center_gap_scales_with_display_size(tmp_path):
+    # a two-line 21pt part title leads ~26pt — body-scaled gaps would split
+    # it into two h1 spine files (the HU Chapter-55 defect shape)
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 40,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges.", 53,
+              x0=72, width=290),
+        _line("My Years", 200, x0=160, width=110, font=BIG),
+        _line("without Mawlana", 226, x0=140, width=150, font=BIG),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _cfg(tmp_path, join_center_lines=True),
+                     say=lambda *a: None)
+    titles = [p.text() for p in _paras(res.flow) if "My Years" in p.text()]
+    assert titles == ["My Years without Mawlana"]
