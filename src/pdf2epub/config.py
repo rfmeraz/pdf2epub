@@ -686,8 +686,11 @@ def load_config(path: Path) -> PdfBookConfig:
         if not pages:
             raise ConfigError("blocks.lists needs at least one page")
         marker = ls.get("marker", "decimal")
-        if marker not in ("decimal", "bullet"):
+        if marker not in ("decimal", "bullet", "hang"):
             raise ConfigError(f"blocks.lists marker invalid: {marker}")
+        if marker == "hang" and float(ls.get("hang", 0.0)) <= 0:
+            raise ConfigError("blocks.lists marker 'hang' (marker-less "
+                              "hanging apparatus) requires hang > 0")
         col_pages = {p for cs in cfg.flow_columns for p in cs.pages}
         fig_pages = {p for fp in cfg.figure_pages for p in fp.pages}
         clash = set(pages) & (col_pages | fig_pages)

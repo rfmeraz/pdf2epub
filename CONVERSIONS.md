@@ -399,3 +399,184 @@ conversion; single-line verse quotations remain short paragraphs;
 
 qa Overall: PASS (all 23 gates; gate 23 verse 307/307), epubcheck clean,
 246 unit tests green. Final state: 233 items / 366 list paragraphs.
+
+## islam-and-buddhism — 2026-07-10 re-ship (quotes/verse/lists re-judge + CMap heals)
+
+Phase F re-judge under the semantic block grammar, driven by three blind-
+reader rounds (24 readers) plus a 2-reader round-2 verification pass; every
+accepted finding was verified against raw extraction or a line dump before
+repair.
+
+Fixed this pass:
+- blocks.quotes ships the 18/18pt justified insets as real blockquotes
+  (94 quote paragraphs) and blocks.verse the ragged scripture verse on 18
+  pages (24 groups / 130 lines: Dhammapada, Flower Ornament, Milarepa,
+  sura 107, the Jami couplet)
+- the Hamza Yusuf essay's footnotes: _note_start/_note_marker now probe
+  the shifted-CMap repair PER RUN — a clean line whose only 'shifted'
+  evidence is the lone honorific dingbat was line-shifted into garbage,
+  leaking note 1 ('The Sunnah is the normative…') into the body as 9pt
+  paragraphs with bare 'Sunnah1' markers; notes 199 -> 229, all linked
+- '3.The Dhammapada' / '4. The hadith' endnote fusions: a digit marker
+  abutting a capital (prepress lost the space) now opens a note
+- the Bibliography (printed 139-144) ships as a real hanging-indent list
+  via the new marker-less `blocks.lists marker: hang` — entries at the
+  column edge break, +18pt turnovers join (~40 reader-flagged splits and
+  fusions healed, incl. every '———.' same-author entry)
+- mixed-encoding CMap repairs: raw space->'=' seams, line-end hyphen->'J'
+  ('conJ stantly' class), trailing 0x2D; title-page/copyright display
+  breaks; 36 flush-left subsection heads role:h3 (TOC-corroborated);
+  'wa al-' keeps the article hyphen ('Kitāb al-milal wa al-nihal')
+
+REFUTED (as-printed, raw-verified): 'can only compared with', 'insofar',
+'Shakymuni', 'Budhha', 'nodharma', 'de-void', 'herebelow', 'Cha'n',
+'Ummayayd', 'Daihetz', 'op.cit,.', 'E.Conze', '422– 423' and the other
+round-3 lows; 'refrain in the Qur'ān' duplication (both sentences print).
+
+HANDOFF (round cap reached; all on the engine-disputed shifted-CMap pages
+unless noted): honorific-glyph drops leaving ' .'/' ,' seams (needs
+per-glyph render verification); mid-line note fusions ('…128. 17. Cyril
+Glasse' — two notes share one physical line; no mid-line split machinery);
+ragged-inset hadith/dialogue quotes (pp.82-86, 135-137) stay unmarked (the
+quote detector is justified-only by design); 'farwah bay\ā’'-class Arabic
+garbles (render-review queue); 'Kitābal-milal' lost space inside a shifted
+run; the al-Alusi quote opener (printed 116) outside its blockquote.
+
+Round-2 verification (2 readers): the essay-notes leak and the ~40
+bibliography splits/fusions confirmed healed; every residual is a
+pre-documented handoff class on the shifted pages (plus the biographies
+page's works-list fusions — same hanging shape, out of the current
+spec's pages).
+
+qa Overall: PASS (all 23 gates), epubcheck clean, 259 unit tests green.
+Final state: 796 blocks, 229 notes, 94 quote paras, 24 verse groups,
+96 list items.
+
+## book-of-knowledge — 2026-07-10 re-ship (verse corpus-wide + honorific seams)
+
+Phase F re-judge: blocks.verse/quotes/lists recorded (round 1), then a
+9-reader structural round and a 2-reader round-2 verification; findings
+verified by line dumps before repair.
+
+Fixed this pass:
+- blocks.verse on nine pages (11 groups / 47 lines): the ʿAlī poem
+  (printed 10), couplets printed 144/169/230, the al-Shāfiʿī poem
+  printed 167, the quatrain printed 173, admonisher verses printed 185,
+  the six-line poem printed 232 — near-full poem lines and hanging
+  turnovers pinned line-by-line with class:verse overrides (each
+  turnover ships as its own verse line, exactly as printed);
+  prose intros at the same inset pinned class:prose
+- honorific punctuation seams: the glyph's advance extracts as a literal
+  space before following punctuation ('(exalted is He) .') — collapsed
+  at the PUA substitution site, including across run boundaries
+  (13 seams; twice reader-flagged)
+- Minion@12 remapped p -> h2 (census: every such line is a heading); the
+  wide two-line chapter subtitles that lose /center no longer ship half
+  as body ('An Elucidation of the Traits… / Hereafter and of the
+  Reprehensible Scholars' is one h2, printed 170; also printed 1/135/141)
+- prepress size wobble: lone Minion@10.5 lines amid 11pt broke paragraphs
+  mid-sentence (printed 165/166, 'three blocks' readers) — join overrides
+- wrong-script lookalike: GREEK CAPITAL ALPHA WITH MACRON standing in for
+  Ā in transliteration ('ʿᾹmir', 8 sites) repaired before Latin lowercase
+- blocks.quotes (36pt justified insets) and the forty-books decimal lists
+  (pp.41-42) from round 1 stand
+
+REFUTED (as-printed, raw-verified): 'becaues', 'and or', 'mis-spoke',
+'this worldly', 'Hold fast to silence' (fresh indented line in print),
+'even if they give you a ruling' ×3 (hadith emphasis), the title-page
+letterspacing ('K i t ā b a l - ʿ i l m' — print display type), the
+p.ii Contents-list fusions (pre-existing front-matter display).
+
+Round-2 verification (2 readers) closed the loop: the quatrain's four
+missing verse lines exposed the justified veto silently unwinding
+class:verse forces (shared-code fix: explicit overrides now beat the
+geometric vetoes; gate check = build-log verse-lines vs recorded
+forces), and the p.220 quotation's page-turn continuation joined its
+blockquote (p.221 added to the quotes spec). The ']' and closing-quote
+flags are as-printed (raw-verified).
+
+HANDOFF: 'this-worldly' compound ambiguity; turnover verse elsewhere
+hides below geometry.
+
+qa Overall: PASS (all 23 gates; gate 23 verse 51/51), epubcheck clean,
+259 unit tests green. Final state: 2802 blocks, 671 notes, 11 verse
+groups (51 lines), 40 list items, 13 honorific seams healed.
+
+## harmonious-unity — 2026-07-10 re-ship (CJK seams + display blocks + lists)
+
+Phase F re-judge: bulleted chapter-digest lists (round 1), HU title-block
+overrides (round 2), then a 8-reader round plus 2-reader round-2
+verification; findings verified by line dumps and raw extraction.
+
+Fixed this pass:
+- CJK line-wrap seams (shared textfix rule): a Chinese title wrapping
+  across a print line now rejoins CLOSED — both-CJK seams and
+  bracket↔CJK seams ('天方至圣实录', '上海辞书出版社', '([天方性理]',
+  '一斋)…' — ~25 reader-flagged sites across the foreword)
+- title page (physical 3): U+FEFF line and CJK-placeholder dots dropped,
+  byline/credits display units broken apart ('…Five-Fold Path by Liu Zhi
+  Foreword by Wang Genming' fusion healed); copyright page (physical 4)
+  imprint lines each their own block; page-level roles were off by one
+  (physical 2 is empty — title-page role now on physical 3, copyright 4)
+- foreword ragged quotes (physical 24): the four 'I …' quotations were
+  each split into three paragraphs by the short-line rule — join
+  overrides restore them; the two-line section heading on physical 25
+  rejoined into one h3; '一斋).' pstyle-change split joined
+- the back part-title (physical 146) mirrors the p.35 fix: placeholder
+  dots dropped, 18pt byline role:p + join (gate 6 outline anchors hold)
+- bulleted source/chapter digests (pp.10-18) ship as real lists (77
+  items) with CJK turnovers now closing correctly
+
+REFUTED (as-printed, raw-verified): 'Liu Zhi's intellectual framework,
+the "Wisdom of Earth" constitutes' (print has no 'In'), 'In Liu Zhi's
+"Wisdom of Humanity" centers' (print grammar), 'Chuko Shinso, 1993,
+58 p)', ISBN 979-889640-0141, the '© dropped' suspicion (raw reads
+'Copyright Fons Vitae 2026').
+
+HANDOFF: 'far-reaching'/'lead-type' line-break hyphens eaten by
+lower-only dehyphenation (compound vs syllable is lexicon work —
+specs/qa-methodology.md second-witness proposal); the epigraph
+attribution 'Liu Zhi, Tianfang Dianli' shares its raw extract line with
+the quote end (no mid-line split machinery); printed-p4 inline digit
+notes stay inline (footnotes: none — the book's translated-text
+convention, flagged at conversion); the Chinese source-text section
+remains mirror-bound page images (idml2epub-parity limitation).
+
+Round-2 verification (2 readers): the ~25 CJK seams were confirmed
+healed; two residuals fixed and verified (the two-line section-I heading
+rejoined; the '十一年马福祥刻本).' ArialUnicodeMS pstyle split joined).
+Additional refuted-as-printed: 五功义/礼书五功义 (raw reads without 释 in
+both engine witnesses), the 384-acts sum, [] around CJK titles.
+Additional handoff: the foreword's inset quotations (Cihai entry, the
+declaration, the Ma Kuilin preface) stay unmarked body paragraphs — a
+mixed justified/ragged inset family; marking part of it would be worse
+than none.
+
+qa Overall: PASS (all 23 gates; gate 6 outline 70/70 with the byline
+overrides), epubcheck clean vs the idml2epub reference, 259 unit tests
+green. Final state: 750 blocks, 77 list items, 69 figure pages.
+
+## sufism-veil-and-quintessence — 2026-07-10 re-ship (front-matter list + re-verify)
+
+Phase F re-judge: the corpus-wide detector upgrades (verse suspects = 0
+firings; quotes witness re-checked) left the body untouched; blind
+readers (3 incl. round-2) flagged only the front matter.
+
+Fixed this pass:
+- the 'Books by Frithjof Schuon' page (physical 3): one title per print
+  line — the indent-join fused neighbours whose x0 steps sit under the
+  threshold (the 9pt display lines never trigger the body short-line
+  rule), and the round-2 justified-cluster coverage change had widened
+  the fusion; per-line break overrides with 'ed. …' turnovers joining
+  their titles (round-2 reader caught one residual seam — the indent
+  rule never fires on non-body pstyles; explicit break added)
+
+REFUTED (as-printed, verified): printed 112/114 'empty page' suspicions
+(both pages carry only paragraph continuations and notes — reading
+order is correct); the Koranic-signs sequence pp.111-115 intact.
+
+HANDOFF: unchanged from the original conversion (index column-split
+recto/verso specs stand; PUA ornaments dropped as recorded).
+
+qa Overall: PASS (all 23 gates), epubcheck clean, 259 unit tests green.
+Final state: 1580 blocks, 170 notes.

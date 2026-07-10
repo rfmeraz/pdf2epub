@@ -116,6 +116,50 @@ flow:
   overrides:                 # {page, line(RAW extract idx), action, note}
     - {page: 152, line: 1, action: join,
        note: "appendix content title wraps to a 2nd centered line ('Other Previously Unpublished Writings'); rejoin into one h2 (join_center_lines off). Verified p152 render."}
+    # Phase F round 3 (2026-07-10): the 'Books by Frithjof Schuon' page
+    # (physical 3) — one title per print line; the indent-join fused
+    # neighbours whose x0 steps sit under the threshold (reader-flagged,
+    # worsened by the round-2 justified-cluster coverage change).
+    # 'ed. …' lines are TURNOVERS of the title above (join).
+    - {page: 3, line: 2, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 3, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 4, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 5, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 6, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 7, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 8, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 9, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 10, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 11, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 12, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 13, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 14, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 15, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 16, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 17, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 18, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 19, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 20, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 21, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 22, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 23, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 24, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 25, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 26, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 27, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 28, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 29, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 30, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 31, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 32, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 33, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 34, action: "break", note: "book-list title, one per line (line dump 2026-07-10)"}
+    - {page: 3, line: 37, action: "break", note: "book-list title (edited-writings section; round-2 reader residual — the indent rule never fires on the non-body 9pt pstyle)"}
+    - {page: 3, line: 39, action: "break", note: "book-list title (edited-writings section)"}
+    - {page: 3, line: 41, action: "break", note: "book-list title (edited-writings section)"}
+    - {page: 3, line: 38, action: join, note: "turnover 'ed. James S. Cutsinger' completes the title above"}
+    - {page: 3, line: 40, action: join, note: "turnover 'ed. James S. Cutsinger' completes the title above"}
+    - {page: 3, line: 42, action: join, note: "turnover 'ed. Catherine Schuon' completes the title above"}
   columns:
     # two-column INDEX (printed 187-194). Verso and recto have different binding
     # margins (gutter at x~227 vs x~209), so aggregating all 8 pages smears the

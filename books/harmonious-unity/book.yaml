@@ -39,8 +39,9 @@ pages:
   label_overrides: {}
   role_overrides:
     - {page: 1, role: half-title}
-    - {page: 2, role: title-page}
-    - {page: 3, role: p}           # copyright
+    - {page: 3, role: title-page}  # physical 2 is EMPTY; the title page is
+    - {page: 4, role: p}           # physical 3, copyright physical 4
+                                   # (Phase F round 3: roles were off by one)
 
 furniture:
   top_band: 0
@@ -108,13 +109,58 @@ flow:
     - {page: 35, line: 1, action: "drop", note: "CJK-title placeholder glyph"}
     - {page: 35, line: 2, action: "drop", note: "CJK-title placeholder glyph"}
     - {page: 35, line: 3, action: "drop", note: "CJK-title placeholder glyph"}
-    - {page: 35, line: 6, action: "break", note: "byline 'by Liu Zhi' separate from the part title"}
+    - {page: 35, line: 6, action: "role:p", note: "the 18pt byline 'by Liu Zhi' is not a chapter head (its pstyle maps to h1); as an h1 it hijacked the fused outline title 'by Liu Zhi The Exposition...' onto printed 1 while the outline targets the p.37 title at printed 3 (gate 6)"}
     - {page: 37, line: 0, action: "drop", note: "CJK-title placeholder glyph (printed 3 title repeat)"}
     - {page: 37, line: 1, action: "drop", note: "CJK-title placeholder glyph"}
     - {page: 37, line: 2, action: "drop", note: "CJK-title placeholder glyph"}
     - {page: 37, line: 5, action: "break", note: "'Introduction' heading separate from the repeated title block"}
     - {page: 5, line: 5, action: drop, note: "part-header divider inside the printed Contents; as h3 it shadowed the real part opener for ordercheck"}
     - {page: 7, line: 10, action: drop, note: "same part-header repeated on the second Contents page (label vii)"}
+    # Phase F round 3 (2026-07-10): title page (physical 3) — display units
+    # the center-join gap rule fused ('…Five-Fold Path by Liu Zhi Foreword
+    # by Wang Genming', reader-flagged); '·' lines are separator dots
+    - {page: 3, line: 0, action: drop, note: "invisible U+FEFF-only line (known title-page artifact)"}
+    - {page: 3, line: 1, action: drop, note: "CJK-title placeholder glyph (p.35 precedent)"}
+    - {page: 3, line: 2, action: drop, note: "CJK-title placeholder glyph"}
+    - {page: 3, line: 3, action: drop, note: "CJK-title placeholder glyph"}
+    - {page: 3, line: 7, action: "break", note: "byline 'by Liu Zhi' is its own display unit"}
+    - {page: 3, line: 9, action: drop, note: "separator dot between byline and foreword credit"}
+    - {page: 3, line: 10, action: "break", note: "'Foreword by Wang Genming' is its own display unit"}
+    - {page: 3, line: 11, action: "break", note: "'Introduction and Translation by Naoki Yamamoto' is its own display unit"}
+    - {page: 3, line: 13, action: "break", note: "'FONS VITAE' imprint line is its own display unit"}
+    # copyright page (physical 4): imprint lines fused by the center join
+    - {page: 4, line: 0, action: drop, note: "vertical separator-dot column (6 lines) above the imprint"}
+    - {page: 4, line: 1, action: drop, note: "separator dot"}
+    - {page: 4, line: 2, action: drop, note: "separator dot"}
+    - {page: 4, line: 3, action: drop, note: "separator dot"}
+    - {page: 4, line: 4, action: drop, note: "separator dot"}
+    - {page: 4, line: 5, action: drop, note: "separator dot"}
+    - {page: 4, line: 7, action: "break", note: "imprint 'Fons Vitae' its own line (print p.iv)"}
+    - {page: 4, line: 8, action: "break", note: "imprint address line"}
+    - {page: 4, line: 9, action: "break", note: "imprint city line"}
+    - {page: 4, line: 10, action: "break", note: "imprint URL line"}
+    # foreword (physical 12/24/25): reader-flagged splits/fusions
+    - {page: 9, line: 4, action: join, note: "two-line section heading: 'and Its Presence in Chinese Classic Literature' continues 'I. The Author of…' (round-2 reader; one heading in print)"}
+    - {page: 12, line: 33, action: join, note: "'一斋).' — the CJK-only line's pstyle change (ArialUnicodeMS) split the sentence 'whose sobriquet was Yizhai (一斋).'"}
+    - {page: 19, line: 8, action: join, note: "'十一年马福祥刻本).' — same ArialUnicodeMS pstyle-change split; completes '(1922, …)' (round-2 reader)"}
+    - {page: 24, line: 27, action: join, note: "ragged quote 'I have no companions…' line 2 (prev line ends 18pt short)"}
+    - {page: 24, line: 28, action: join, note: "ragged quote 'I have no companions…' line 3"}
+    - {page: 24, line: 30, action: join, note: "ragged quote 'I write my manuscripts…' line 2"}
+    - {page: 24, line: 31, action: join, note: "ragged quote 'I write my manuscripts…' line 3"}
+    - {page: 24, line: 33, action: join, note: "ragged quote 'I have searched every bookstore…' line 2"}
+    - {page: 24, line: 34, action: join, note: "ragged quote 'I have searched every bookstore…' line 3"}
+    - {page: 24, line: 36, action: join, note: "ragged quote 'I know no moment of peace…' line 2"}
+    - {page: 24, line: 37, action: join, note: "ragged quote 'I know no moment of peace…' line 3"}
+    - {page: 24, line: 38, action: join, note: "ragged quote 'I know no moment of peace…' line 4"}
+    - {page: 25, line: 22, action: join, note: "two-line section heading: 'Liu Zhi's Vernacular Articulation…' continues 'The Dao of the five pillars of Islam:' (print p.xxv, one heading)"}
+    # back part-title (physical 146): mirror of the p.35 title block
+    - {page: 146, line: 0, action: drop, note: "CJK-title placeholder glyph"}
+    - {page: 146, line: 1, action: drop, note: "CJK-title placeholder glyph"}
+    - {page: 146, line: 2, action: drop, note: "CJK-title placeholder glyph"}
+    - {page: 146, line: 3, action: drop, note: "CJK-title placeholder glyph"}
+    - {page: 146, line: 6, action: drop, note: "separator dot between title and byline"}
+    - {page: 146, line: 7, action: "role:p", note: "18pt byline 'by' is not a chapter head (p.35 precedent)"}
+    - {page: 146, line: 8, action: join, note: "'Liu Zhi' completes the byline"}
 
 footnotes: {policy: none, marker: digits}   # translated text uses inline notes
 

@@ -294,6 +294,13 @@ blocks:
   lists:
     - {pages: ["38-39", 57], marker: bullet, hang: 0,
        note: "bulleted Quranic citations (p.38) and Buddha-epithet listings (pp.39/57); render-verified"}
+    # Phase F round 3 (2026-07-10): the Bibliography (printed 139-144) is a
+    # marker-less hanging-indent apparatus — entries at the column edge
+    # (63/72 recto/verso), turnovers 18pt deeper. Round-3 readers found
+    # nearly every entry split at its turnover and new entries fused onto
+    # the previous imprint; geometry verified by line dumps pp.164-165.
+    - {pages: ["164-169"], marker: hang, hang: 18,
+       note: "bibliography hanging entries; entry-break + hang-join heals the ~40 reader-flagged splits/fusions; line dumps pp.164-165 (2026-07-10)"}
 
 fonts:
   embed: []

@@ -627,6 +627,112 @@ with analyze.
   Corpus diff: M&R loses all 49 (all bogus), BoK/HU/sufism unchanged, I&B
   loses 7 with byte-identical output. Width alone is NOT full measure.
 
+## Phase F corpus re-ship (2026-07-10) — the readers audit the pipeline
+
+Re-judging the four stale books through blind-reader rounds surfaced
+pipeline defects no gate had seen; each became a shared-code fix:
+
+- **Per-page body anchors, everywhere.** The verse pass still used the
+  modal-column shift frame; on inset-dominated versos the shift detector
+  keys off the verse itself (I&B p.86: modal left = the verse lines,
+  shift -18, every offset wrong). Verse now anchors like quotes do.
+- **Cluster witnesses need coverage AND locality.** justified_rights
+  fired on ANY chance pair (a 13-line ragged poem vetoed by two edges
+  0.9pt apart → margins need ceil(0.4n) coverage); body_anchors' right
+  edge paired a couplet base with an intro's short end 1pt apart →
+  witnessed only by lines STARTING at the left anchor; the verse veto
+  counted couplets clustering on themselves (Jami pair 0.33pt apart,
+  100pt short of the margin) → a justified cluster must sit within 45pt
+  of the page right edge; single-level acceptance admits equal-length
+  pairs ending >=40pt short (justified prose clusters AT its margin).
+- **Everything that reads print text must probe through the CMap
+  repair.** _note_start/_note_marker read raw shifted bytes: the I&B
+  Yusuf essay's footnotes fused into one note per page and their body
+  markers stayed bare digits ('surah2'). Notes went 199 -> 240+.
+- **Mixed-encoding shifted runs**: real ASCII glyphs inside a
+  detected-shifted run corrupt under the uniform shift — space -> '='
+  (dozens of seams), line-end hyphen -> 'J' ('conJ stantly' x10); a
+  trailing 0x2D is ALWAYS a real hyphen. Both repair deterministically;
+  genuine shifted 'J' (al-Juzjani) is never followed by a space. The
+  groundtruth's disputed-page detection keyed on the '=' garble the
+  repair now heals — a page carrying ANY shifted-run line is disputed
+  by construction (same 8 pages excluded either way).
+- **A marked page-bottom region is a footnote at ANY length**: the
+  20-char guard leaked '15. Ibid., p. 51.'-class notes into prose,
+  twice splitting sentences around them.
+- **Quote runs extend to shapes the cluster misses**: indented first
+  lines of quote paragraphs (dialogue turns inside quotations) join via
+  neighbor candidacy; page-top continuation tails qualify without a
+  cluster when the previous page ended mid-quote.
+- **Noterefs sit flush** after the preceding text (print convention;
+  the ' [n]' gap was flagged by every blind reader in every book).
+- **Chain-tail connectors** for dehyphenation gained the/in/of —
+  interior hyphens required, so 'seeds-in-the-/flesh' keeps its hyphen
+  while plain 'the-/ories', 'love-/liness', 'in-/terpretation' still
+  join (corpus survey: every plain-prefix hit is a syllable break).
+- **HU's fused-bookmark gate-6 lesson**: the byline pstyle mapped to h1,
+  so the PDF's own fused outline title ('by Liu Zhi The Exposition…')
+  matched the byline heading on the wrong page — a role:p override on
+  the byline let the outline match the true title. The 28pt/18pt '·'
+  lines are placeholder glyphs of the untranslated Chinese title (drop
+  overrides); HU's book-wide soft-hyphen 'prin- ciple' seams healed
+  uniformly (verified by packet diffs across all 60+ chapters).
+- Handoffs that remain by design: I&B honorific-glyph drops leaving
+  spaces before punctuation on the disputed pages (needs per-glyph
+  render verification); 'love-/compassion' (geometrically
+  indistinguishable from 'love-/liness'); the I&B pp.138-145
+  Arabic-script garbles (engine-disputed, render-review queue).
+
+### Round 3 (2026-07-10): 34 readers over the four re-judged books
+
+Every accepted finding traced to a shared-code root; five more pipeline
+fixes fell out:
+
+- **Marker probing is per-RUN, like the repair itself.** _note_start's
+  line-level probe garbled a CLEAN line whose only 'shifted' evidence
+  was the lone \x0e honorific dingbat run (is_shifted_run fires on any
+  marker char): '1.' became garbage, first_marked moved, and
+  region[first_marked:] dumped the I&B essay's note 1 into the body as
+  9pt paragraphs. The flow's own repair was always per-run — the probe
+  now matches its granularity. Notes 224 -> 229, plus the '3.The
+  Dhammapada' digit-abuts-capital marker shape (the LIST_MARKERS
+  decimal lesson, mirrored).
+- **class: overrides beat the geometric vetoes.** The justified
+  right-edge veto silently unwound class:verse forces whose full-measure
+  poem lines chanced into the body-right cluster (BoK p.220: four of six
+  forces vanished, caught only because the round-2 reader re-read the
+  packet). An explicit render-verified judgment now wins over blocked=.
+  Corollary: verse-lines in the build log is the assertion to check
+  after recording forces — 47 shipped where 51 were recorded.
+- **blocks.lists marker: hang** — the marker-less hanging apparatus
+  (I&B bibliography, entries at the column edge, turnovers +18):
+  stops = x0 clusters left of min+hang, entry = any line at a stop.
+  It dodges the garble problem entirely (no marker regex to fail on
+  shifted bytes). M&R's 'Abbreviations and Works Cited' (pp.334-336a,
+  same shape, ~250 entries) is now a one-spec follow-up — deliberately
+  deferred: its packet loop is closed and reopening costs a reader round.
+- **CJK seams join CLOSED** (textfix.dehyphenate_join): both-CJK and
+  bracket-CJK line-wrap seams take no space ('天方至/圣实录'); Latin-CJK
+  seams keep theirs. ~25 reader-flagged sites in HU's foreword, one rule.
+  The CJK-only ArialUnicodeMS lines still pstyle-break their sentence —
+  per-line joins ('一斋).', '十一年马福祥刻本).').
+- **PUA glyph advances extract as literal spaces before punctuation**
+  ('God\xa0<glyph> . But'): collapsed at the substitution site, including
+  across run boundaries (the glyph usually IS its own run) — 13 seams in
+  BoK; 'wrong-script lookalike' Ᾱ->Ā before Latin lowercase (the PDF's
+  own ToUnicode, 8 sites); 'wa' joined the Arabic-article keep-set
+  ('wa al-/nihal').
+- **Census before mapping.** BoK's Minion@12 mapped role p since JP; the
+  round-3 reader flagged ONE split subtitle, and the corpus census showed
+  every Minion@12 line is a heading — wide two-line subtitles lose
+  /center and shipped half-as-body on four chapters. One mapping line
+  (h2) + four joins healed what per-page overrides would have chased.
+- **The indent rule and prev_short only serve the BODY pstyle** — 9pt
+  display lists (sufism's 'Books by' page) neither break nor join by
+  those rules; the indent-join fused neighbours whose x0 steps sit under
+  the threshold. Per-line breaks are the honest fix (37 overrides, each
+  one title per print line).
+
 ## Semantic block grammar: quotes (2026-07-10, Phase B)
 
 `blocks.quotes` classifies JUSTIFIED inset blocks — the right-edge cluster

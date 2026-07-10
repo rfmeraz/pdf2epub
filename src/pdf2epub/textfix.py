@@ -302,13 +302,16 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
         # must still dehyphenate (round-2 proofread findings).
         last_word = re.split(r"[^A-Za-zÀ-ſ\-’']", base[:-1])[-1]
         next_word = re.split(r"[^A-Za-zÀ-ſ\-’']", nxt.lstrip(), maxsplit=1)[0]
-        _conn = ("and", "to", "by")
+        _conn = ("and", "to", "by", "the", "in", "of")
         chain = (next_word.split("-", 1)[0] in _conn and "-" in next_word) \
             or ("-" in last_word and last_word.rsplit("-", 1)[1] in _conn)
         art = _ARABIC_ARTICLE.search(base)
         arabic_article = art is not None and (
             art.group(1)[:1].isupper()
-            or any(ord(c) > 0x7f for c in art.group(1)))
+            or any(ord(c) > 0x7f for c in art.group(1))
+            # the conjunction 'wa' before the article is Arabic context too
+            # ('Kitāb al-milal wa al-/nihal', I&B bibliography)
+            or art.group(1).lower() in ("wa", "wal"))
         if nxt.lstrip()[:1].islower() and not chain \
                 and not arabic_article \
                 and not _KEEP_HYPHEN_PREFIX.search(base):
@@ -325,4 +328,30 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
     # leaves spaced dashes ('word —\nword') alone — their base ends ' —'.
     if mode != "off" and re.search(r"[A-Za-zÀ-ſ0-9][—–]$", base):
         return base, "", False
+    # CJK sets no inter-word spaces: a Chinese title wrapping across a print
+    # line rejoins CLOSED ('天方至/圣实录' -> 天方至圣实录, not 天方至 圣实录 —
+    # ~25 HU foreword seams reader-flagged), as does a CJK char meeting a
+    # bracket at the seam ('([' + '天方…', '一斋' + ')'). Latin↔CJK seams keep
+    # their space.
+    if mode != "off" and base:
+        nx = nxt.lstrip()[:1]
+        if nx and _cjk_seam(base[-1], nx):
+            return base, "", False
     return prev, " ", False
+
+
+def _is_cjk(c: str) -> bool:
+    o = ord(c)
+    return (0x3000 <= o <= 0x9FFF or 0xF900 <= o <= 0xFAFF
+            or 0xFF00 <= o <= 0xFFEF)
+
+
+def _cjk_seam(a: str, b: str) -> bool:
+    ca, cb = _is_cjk(a), _is_cjk(b)
+    if ca and cb:
+        return True
+    if ca and b in ")]":
+        return True
+    if a in "([" and cb:
+        return True
+    return False

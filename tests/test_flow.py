@@ -2487,3 +2487,174 @@ def test_join_url_and_slash_line_ends():
         == ("the Dhamma/", "")
     assert dehyphenate_join("ordinary prose", "continues here")[:2] == \
         ("ordinary prose", " ")
+
+
+def test_dehyphenation_chain_tail_connectors():
+    # chain tails require INTERIOR hyphens: 'seeds-in-the-/flesh' keeps its
+    # hyphen while plain 'the-/ories', 'love-/liness', 'in-/terpretation'
+    # still dehyphenate (corpus survey 2026-07-10: every plain prefix hit
+    # is an English syllable break)
+    assert dehyphenate_join("seeds-in-the-", "flesh fruit")[0] == \
+        "seeds-in-the-"
+    assert dehyphenate_join("mother-in-", "law came")[0] == "mother-in-"
+    assert dehyphenate_join("number of the-", "ories have")[0] == \
+        "number of the"
+    assert dehyphenate_join("beauty and love-", "liness.")[0] == \
+        "beauty and love"
+
+
+def test_note_start_probe_is_per_run():
+    """A CLEAN note line whose only 'shifted' evidence is a lone highmap
+    dingbat run (I&B p.138: the '\\x0e' honorific after 'Prophet Muhammad')
+    keeps its healthy marker — the line-level probe +0x1D-shifted the whole
+    line, '1.' became garbage, and the essay's note 1 leaked into the body."""
+    from pdf2epub.flowbuilder import _note_marker, _note_start
+
+    class _C:
+        shifted_cmap_repair = True
+        shifted_cmap_highmap = {"\x0e": " (may peace be upon him)"}
+
+    doc = _doc([])
+    ln = _fline([
+        _frun("1. The Sunnah is the normative practice of the Prophet",
+              SMALL, 81, 300, 460),
+        _frun("\x0e", SMALL, 300, 306, 460),
+    ])
+    assert _note_start(_Lw(ln), "digits", doc, _C()) is True
+    assert _note_marker(_Lw(ln), "digits", _C()) == "1"
+    # a genuinely shifted marker line still probes THROUGH the repair
+    shifted = _fline([_frun("\x15\x11\x036XUDK\x03UHIHUV\x03WR\x03D\x03FKDSWHU",
+                            SMALL, 72, 300, 470)])
+    assert _note_start(_Lw(shifted), "digits", doc, _C()) is True
+    assert _note_marker(_Lw(shifted), "digits", _C()) == "2"
+
+
+def test_note_start_digit_abuts_capital():
+    """Prepress lost the space after the marker ('3.The Dhammapada', I&B
+    p.55): digit+period directly against a capital still opens a note."""
+    from pdf2epub.flowbuilder import _note_marker, _note_start
+    doc = _doc([])
+    ln = _fline([_frun("3.The Dhammapada—The Path of Perfection, tr. Juan",
+                       SMALL, 72, 320, 560)])
+    assert _note_start(_Lw(ln), "digits", doc) is True
+    assert _note_marker(_Lw(ln), "digits") == "3"
+    # digit+period+lowercase stays a continuation ('...vol. 2.of' shapes)
+    low = _fline([_frun("2.of the second chapter continues here",
+                        SMALL, 72, 300, 560)])
+    assert _note_start(_Lw(low), "digits", doc) is False
+
+
+def test_cjk_seam_joins_closed():
+    # a Chinese title wrapping across a print line rejoins with NO space
+    assert dehyphenate_join("Tianfang Zhisheng Shilu ([天方至",
+                            "圣实录], p. 127)") == \
+        ("Tianfang Zhisheng Shilu ([天方至", "", False)
+    # bracket meets CJK at the seam ('([' + '天方性理')
+    assert dehyphenate_join("Tianfang Xingli ([", "天方性理], p. 126)")[1] == ""
+    # CJK meets a closing bracket ('一斋' + ').')
+    assert dehyphenate_join("whose sobriquet was Yizhai (一斋", "). A native")[1] == ""
+    # Latin ↔ CJK seams KEEP their space
+    assert dehyphenate_join("Publishing House", "上海辞书出版社, 1997")[1] == " "
+    assert dehyphenate_join("宗教文化出版社", "November 2020")[1] == " "
+
+
+def test_dehyphenation_wa_article():
+    # 'wa' before the article is Arabic context: 'wa al-/nihal' keeps its
+    # hyphen (I&B bibliography 'Kitāb al-milal wa al-nihal')
+    assert dehyphenate_join("Kitāb al-milal wa al-", "nihal. Beirut") == \
+        ("Kitāb al-milal wa al-", "", False)
+    # plain lowercase English before 'al-' still dehyphenates ('teaching
+    # al-/lows')
+    assert dehyphenate_join("teaching al-", "lows the student")[0] == \
+        "teaching al"
+
+
+def test_list_hang_marker_less_bibliography(tmp_path):
+    """I&B bibliography: marker-less hanging apparatus — entries at the
+    column edge, turnovers at +18 join their entry, next entry breaks."""
+    lines = [
+        _line("Aronson, Harvey. Love and Sympathy in Theravada Buddhism.",
+              90, x0=72, width=295),
+        _line("Delhi: Motilal Banarsidass, 1980.", 103, x0=90, width=150),
+        _line("Arnold, Thomas W. The Preaching of Islam. New Delhi: Adam",
+              116, x0=72, width=295),
+        _line("Publishers & Distributors, 2002.", 129, x0=90, width=140),
+        _line("Conze, Edward. Buddhism. Oxford: Oneworld, 2003.", 142,
+              x0=72, width=280),
+    ]
+    res = build_flow(_doc([_page(1, lines)]),
+                     _list_cfg(tmp_path, [1], marker="hang", hang=18.0),
+                     say=lambda *a: None)
+    items = [p for p in _paras(res.flow) if p.block_class == "list"]
+    assert len(items) == 3
+    assert items[0].list_entry and items[0].text().endswith(
+        "Banarsidass, 1980.")
+    assert items[1].text().endswith("Distributors, 2002.")
+    assert items[2].text().startswith("Conze")
+
+
+def test_pua_reading_punct_seam(tmp_path):
+    """The honorific glyph's advance extracts as a literal space before the
+    following punctuation ('God\\xa0\\uf094 . But'): the seam collapses so the
+    period sits tight against the substituted reading (BoK pp.162/171)."""
+    from pdf2epub.config import PuaRule
+    lines = [_line("to draw near to God\xa0 . But then they expend",
+                   100, width=290)]
+    cfg = _cfg(tmp_path, pua_map={
+        "": PuaRule(action="char", char=" (exalted is He)")})
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    text = _paras(res.flow)[0].text()
+    assert "(exalted is He). But" in text
+    assert ") ." not in text
+    # the glyph usually extracts as its OWN run (Honorifics font): the
+    # ' . But' seam sits in the FOLLOWING run and still collapses
+    ln = PdfLine(runs=[
+        PdfRun(text="to draw near to God\xa0", font_id=BODY,
+               x0=72, y0=100, x1=200, y1=112),
+        PdfRun(text="", font_id=BODY, x0=200, y0=100, x1=210, y1=112),
+        PdfRun(text=" . But then they expend", font_id=BODY,
+               x0=210, y0=100, x1=362, y1=112),
+    ], x0=72, y0=100, x1=362, y1=112)
+    res2 = build_flow(_doc([_page(1, [ln])]), cfg, say=lambda *a: None)
+    text2 = _paras(res2.flow)[0].text()
+    assert "(exalted is He). But" in text2
+
+
+def test_wrong_script_lookalike_repair(tmp_path):
+    """GREEK CAPITAL ALPHA WITH MACRON standing in for Ā inside Latin
+    transliteration is repaired; a Greek neighbour keeps it."""
+    lines = [_line("[Abū ʿAmr ʿᾹmir b. Sharāḥīl] al-Shaʿbī said this",
+                   100, width=290),
+             _line("the Greek reads Ᾱθήνα in the original text here",
+                   113.5, width=290)]
+    res = build_flow(_doc([_page(1, lines)]), _cfg(tmp_path),
+                     say=lambda *a: None)
+    text = _paras(res.flow)[0].text()
+    assert "ʿĀmir" in text and "Ᾱ" not in text.split("Sharāḥīl")[0]
+    assert "Ᾱθήνα" in text
+
+
+def test_class_verse_beats_justified_veto(tmp_path):
+    """A class:verse override wins over the justified-right-edge veto —
+    full-measure poem lines chance into the body's right cluster (BoK
+    p.220) and silently unwound the forces before this rule."""
+    from pdf2epub.config import VerseSpec
+    lines = [
+        _line("Body prose runs to the full measure of the column here ok", 87,
+              x0=72, width=290),
+        _line("and continues at the same full measure right edge again.", 100,
+              x0=72, width=290),
+        _line("A poem line that also ends at the body right edge fully", 113,
+              x0=90, width=272),
+        _line("and its pair likewise runs to the full column measure ok", 126,
+              x0=90, width=272),
+    ]
+    cfg = _cfg(tmp_path, blocks_verse=[VerseSpec(
+        pages=[1], base=[18.0], turns=[], note="test")])
+    cfg.flow_overrides = [
+        FlowOverride(page=1, line=2, action="class:verse", note="forced"),
+        FlowOverride(page=1, line=3, action="class:verse", note="forced")]
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    verse = [p for p in _paras(res.flow) if p.block_class == "verse"]
+    assert len(verse) == 1
+    assert verse[0].text().startswith("A poem line")

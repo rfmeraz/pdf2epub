@@ -70,7 +70,11 @@ styles:
     "Minion-Italic@9":            {role: footnote}
     "Minion-Italic@11/center":    {role: p}
     "Minion-Italic@8.5/center":   {role: p}
-    "Minion@12":                  {role: p}
+    "Minion@12":                  {role: h2}   # census 2026-07-10: every
+                                  # Minion@12 line is a heading — the wide
+                                  # two-line chapter subtitles lose /center
+                                  # and shipped as body p (reader-flagged
+                                  # p.170 'An Elucidation…' split)
     "Minion-SemiBold@15/center":  {role: h1}     # section heads (Foreword etc.)
     "Minion-Italic@12/center":    {role: h2}
     "Minion@21":                  {role: title-page}
@@ -122,6 +126,50 @@ flow:
     - {page: 236, line: 16, action: join, note: "Quran-quote turnover 'destruc-/tion'"}
     - {page: 239, line: 16, action: join, note: "quote turnover 'atten-/tion'"}
     - {page: 276, line: 14, action: join, note: "quote turnover 'sub-/missive'"}
+    # Phase F round 3 (2026-07-10): prepress size wobble — a lone Minion@10.5
+    # line amid 11pt broke the paragraph mid-sentence (readers: printed
+    # 165/166 'three blocks'); geometry pp.212/213
+    - {page: 212, line: 31, action: join, note: "10.5pt line mid-paragraph 'intellect has no means of accessing'"}
+    - {page: 212, line: 32, action: join, note: "11pt resumes mid-sentence after the 10.5pt line"}
+    - {page: 213, line: 19, action: join, note: "11pt resumes mid-sentence after the 10.5pt 'Measure everyone' line"}
+    # two-line chapter subtitles: the wide first line loses /center, the
+    # pstyle seam split the subtitle mid-phrase (reader-flagged printed 170)
+    - {page: 46, line: 2, action: join, note: "subtitle line 2 'book of the Revival…' continues 'the opening'"}
+    - {page: 166, line: 11, action: join, note: "subtitle line 3 'the Mutual Consultations…' continues line 2"}
+    - {page: 174, line: 28, action: join, note: "subtitle line 2 'Destruction of Morals…' continues line 1"}
+    - {page: 217, line: 3, action: join, note: "subtitle line 2 'Hereafter and of the Reprehensible Scholars' continues line 1 (print p.170)"}
+    # Phase F round 3 verse extensions — near-full poem lines and hanging
+    # turnovers the single-level acceptance sheds (class:verse skips the
+    # candidacy tests); prose intro lines share the 18pt inset (class:prose).
+    # All render-verified via line dumps 2026-07-10.
+    - {page: 57, line: 4, action: "class:prose", note: "'And in verse he [ʿAlī] said' — prose intro at the inset"}
+    - {page: 57, line: 8, action: "class:verse", note: "ʿAlī poem line ends 8.3pt short (< SHORT_BY)"}
+    - {page: 57, line: 10, action: "class:verse", note: "ʿAlī poem line ends 2pt short"}
+    - {page: 214, line: 14, action: "class:verse", note: "al-Shāfiʿī poem: full-measure verse line 'Should God the Gracious…'"}
+    - {page: 214, line: 15, action: "class:verse", note: "hanging turnover 'to me' (27pt stop)"}
+    - {page: 214, line: 16, action: "class:verse", note: "verse line ends 2.5pt short"}
+    - {page: 214, line: 17, action: "class:verse", note: "full-measure verse line"}
+    - {page: 214, line: 18, action: "class:verse", note: "hanging turnover 'personally'"}
+    - {page: 214, line: 21, action: "class:verse", note: "full-measure closing verse line"}
+    - {page: 214, line: 22, action: "class:verse", note: "hanging turnover 'injustice'"}
+    - {page: 220, line: 10, action: "class:prose", note: "'In this regard a poet said:' — prose intro at the inset"}
+    - {page: 220, line: 11, action: "class:verse", note: "'Astonished I was…' quatrain line ends 2pt short"}
+    - {page: 220, line: 12, action: "class:verse", note: "hanging turnover 'wardness'"}
+    - {page: 220, line: 13, action: "class:verse", note: "quatrain line ends 2pt short"}
+    - {page: 220, line: 14, action: "class:verse", note: "quatrain line ends 2.1pt short"}
+    - {page: 220, line: 15, action: "class:verse", note: "full-measure quatrain line"}
+    - {page: 220, line: 16, action: "class:verse", note: "hanging turnover 'astounding'"}
+    - {page: 232, line: 11, action: "class:verse", note: "'O you who admonish…' verse line ends 2pt short"}
+    - {page: 232, line: 12, action: "class:verse", note: "full-measure verse line"}
+    - {page: 232, line: 13, action: "class:verse", note: "hanging turnover 'with62'"}
+    - {page: 232, line: 14, action: "class:verse", note: "verse line ends 6.6pt short"}
+    - {page: 232, line: 15, action: "class:verse", note: "verse line ends 2.1pt short"}
+    - {page: 232, line: 18, action: "class:prose", note: "'Another [poet]64 once said,' — prose intro between the poems"}
+    - {page: 277, line: 3, action: "class:prose", note: "'For this reason the poet said,' — prose intro at the inset"}
+    - {page: 277, line: 5, action: "class:verse", note: "couplet line 2 ends 1.9pt short"}
+    - {page: 279, line: 19, action: "class:prose", note: "'The poet205 was correct when he stated,' — prose intro at the inset"}
+    - {page: 279, line: 20, action: "class:verse", note: "six-line poem line 1 ends 3.7pt short"}
+    - {page: 279, line: 21, action: "class:verse", note: "six-line poem line 2 ends 8.8pt short"}
   # columned back matter (verified on p.322/324/330 renders + run geometry:
   # gutters at ~170/270 for the 3-col verse index, ~215 for the 2-col index;
   # entries one per line with hanging-indent turnovers)
@@ -175,27 +223,26 @@ glyphs:
   gt_strip_phrases: []
 
 blocks:
-  # JP-P9: two single-level VERSE quotations at the 18pt inset, ragged
-  # (render-verified: p.214 al-Shafi'i quatrain 'Shall I scatter my
-  # pearls…', p.224 two couplets with prose intro lines 'A poet once
-  # said'/'While another recounted' at the same inset — class:prose).
-  # The p.245 suspect is Malik's quoted EPISTLE (intro + centered italic
-  # salutation), adjudicated below; the p.220 poet quatrain wraps with
-  # hanging turnovers — a verse convention the classifier does not model
-  # (the turnover would become its own line) — and stays prose-shaped as
-  # originally shipped.
+  # JP-P9 + Phase F round 3: single-level VERSE quotations at the 18pt
+  # inset, ragged (render-verified: p.214 al-Shafi'i 'Shall I scatter my
+  # pearls…', p.224 two couplets with prose intros — class:prose). The
+  # p.245 suspect is Malik's quoted EPISTLE (intro + centered italic
+  # salutation), adjudicated below. Poems whose lines run near-full or
+  # wrap with hanging turnovers (pp.57/214/220/232/277/279) are pinned
+  # line-by-line with class:verse overrides above — each turnover ships
+  # as its own verse line, exactly as printed.
   verse:
-    - {pages: [214, 224, 232, 279], base: [18],
-       note: "single-level poet quotations at the quote inset; renders pp.214/224 (2026-07-10)"}
+    - {pages: [57, 191, 214, 216, 220, 224, 232, 277, 279], base: [18],
+       note: "single-level poet quotations at the quote inset; renders pp.214/224 + Phase F round-3 blind-reader sites verified by line dumps: p57 ʿAlī poem, p191/216/277 couplets, p220 quatrain, p232 admonisher verses, p279 six-line poem (2026-07-10)"}
   # JP-P9: long hadith/athar quotations set at a justified 36pt LEFT inset,
   # right edge at the body margin (render-verified pp.193/220/259-261: the
   # ʿAlī narrations, 'The scholar will be brought forward…'). Drop-cap wrap
   # lines share the same 36pt inset beside wide initials (pp.9/50/163/294)
   # and are vetoed by the detector; the p.220 poet quatrain above the quote
-  # is ragged VERSE and stays for the Phase F verse re-judge.
+  # is ragged VERSE, classified via the round-3 class:verse overrides.
   quotes:
-    - {pages: [56, 193, 220, 227, "259-261"], left_inset: 36,
-       note: "36pt left-inset justified quotations; render-verified pp.193/220/259-261"}
+    - {pages: [56, 193, 220, 221, 227, "259-261"], left_inset: 36,
+       note: "36pt left-inset justified quotations; render-verified pp.193/220/259-261; p.221 carries the p.220 quotation's page-turn continuation ('I used to enjoin…', round-2 reader)"}
   # JP-P9: the Author's Introduction enumerates the forty books as four
   # decimal lists ("1.·The Book of Knowledge" … "40.·…", interpunct
   # separator) at one entry stop with 22.5pt hanging turnovers (item 10

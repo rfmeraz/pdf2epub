@@ -56,14 +56,30 @@ from .textfix import (
 )
 
 _PUA_RE = re.compile(r"[\ue000-\uf8ff]")
-# note bodies start '9. text' (I&B), '9) text', or '1<TAB>text' (BoK)
-_NOTE_START_DIGIT = re.compile(r"^\s*(\d{1,3})(?:[.)]\s+|\t+| {2,})")
+# note bodies start '9. text' (I&B), '9) text', '1<TAB>text' (BoK), or
+# '3.The' — prepress lost the space and the marker abuts a capital/open
+# quote (I&B p.55 '3.The Dhammapada' fused notes 3+4 into one endnote)
+_NOTE_START_DIGIT = re.compile(
+    r"^\s*(\d{1,3})(?:[.)](?:\s+|(?=[A-Z“‘]))|\t+| {2,})")
 _NOTE_START_STAR = re.compile(r"^\s*([*†‡])\s*")
 
 # dashes that, at a line end, signal a hyphenation/clause continuation rather
 # than a paragraph-ending ragged-short line: ASCII/soft/unicode hyphens and
 # en/em dashes (the closed-dash style breaks lines after '—' mid-sentence).
 _CONT_DASHES = ("-", "­", "‐", "‑", "–", "—")
+
+
+def _probe_line(L: "_L", cfg) -> str:
+    """Line text for marker probing, repaired per RUN — the flow's own
+    repair granularity. A line-level probe garbles a CLEAN line whose only
+    'shifted' evidence is a lone highmap dingbat run (I&B p.138: the '\\x0e'
+    honorific after 'Prophet Muhammad' made is_shifted_run treat the whole
+    healthy line as shifted, '1.' became garbage, and the essay's note 1
+    leaked into the body as 9pt paragraphs)."""
+    if cfg is None or not cfg.shifted_cmap_repair:
+        return L.ln.text()
+    return "".join(probe_text(r.text, True, cfg.shifted_cmap_highmap)
+                   for r in L.ln.runs)
 
 
 def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
@@ -73,11 +89,9 @@ def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
     over 9pt note text, so 'digit + single space' never matches the pattern)
     is caught by the head-run test: a superscript, or a smaller-font, leading
     digit/asterisk. A shifted-CMap note line carries its marker as shifted
-    bytes — probe through the repair or the second essay's footnotes fuse
-    into one giant note per page (I&B '2. Surah refers…')."""
-    txt = L.ln.text()
-    if cfg is not None and cfg.shifted_cmap_repair:
-        txt = probe_text(txt, True, cfg.shifted_cmap_highmap)
+    bytes — probe through the repair (per run) or the second essay's
+    footnotes fuse into one giant note per page (I&B '2. Surah refers…')."""
+    txt = _probe_line(L, cfg)
     if marker == "digits":
         if _NOTE_START_DIGIT.match(txt):
             return True
@@ -105,9 +119,7 @@ def _note_marker(L: "_L", marker: str, cfg=None) -> str:
     the leading digit(s) or asterisk. Mirrors _note_start so a marker set one
     size down ('8 Let…', where the digit+delimiter text pattern misses) is
     still captured instead of falling back to '*'."""
-    txt = L.ln.text()
-    if cfg is not None and cfg.shifted_cmap_repair:
-        txt = probe_text(txt, True, cfg.shifted_cmap_highmap)
+    txt = _probe_line(L, cfg)
     if marker == "digits":
         m = _NOTE_START_DIGIT.match(txt)
         if m:
@@ -541,9 +553,15 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 # verse-eligible
                 just = L.block_right is not None and \
                     L.block_right >= page_right - 45.0
-                blocked.append(L.region >= 0 or just
+                # a class:verse override is an explicit render-verified
+                # judgment — it must beat the geometric justified veto
+                # (BoK p.220: full-measure poem lines chance into the body
+                # right cluster and the veto silently unwound the forces)
+                forced_line = act == "class:verse"
+                blocked.append(L.region >= 0
+                               or (just and not forced_line)
                                or act == "class:prose")
-                forced.append(act == "class:verse")
+                forced.append(forced_line)
 
             def _size(ln):
                 f = doc.fonts.get(ln.dominant_font())
@@ -621,7 +639,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         # the hang column) fall below the cluster threshold.
         spec_stops: list[list[float]] = []
         for si, ls in enumerate(cfg.blocks_lists):
-            rx = LIST_MARKERS[ls.marker]
+            rx = LIST_MARKERS.get(ls.marker)  # None: marker-less 'hang'
             xs: list[float] = []
             for pg in ls.pages:
                 for L in pages_lines.get(pg, []):
@@ -630,7 +648,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     f = doc.fonts.get(L.ln.dominant_font())
                     if f is not None and f.size > body_size + 1.0:
                         continue
-                    if rx.match(L.ln.text()):
+                    if rx is None or rx.match(L.ln.text()):
                         xs.append(L.ln.x0)
             clusters: list[list[float]] = []
             for x in sorted(xs):
@@ -641,6 +659,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             top = max((len(c) for c in clusters), default=0)
             stops = sorted(sum(c) / len(c) for c in clusters
                            if len(c) >= max(2, 0.25 * top))
+            if rx is None and stops:
+                # marker-less hanging apparatus (I&B bibliography): EVERY
+                # body line witnessed a cluster, so keep only the leftmost
+                # stop(s) — entries sit at the column edge (recto/verso
+                # pair); anything at/right of +hang is the turnover column
+                floor = min(stops)
+                stops = [s for s in stops if s < floor + ls.hang - ls.tol]
             spec_stops.append(stops)
         carried_open = False   # previous spec page ended inside an item
         last_num: dict[int, int] = {}  # spec -> last decimal marker seen
@@ -654,7 +679,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 carried_open = False  # a gap in the page range ends the item
             prev_spec_page = pno
             ls = cfg.blocks_lists[si]
-            rx = LIST_MARKERS[ls.marker]
+            rx = LIST_MARKERS.get(ls.marker)
             stops = spec_stops[si]
             if not stops:
                 continue  # stale check below reports it
@@ -674,11 +699,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 f = doc.fonts.get(L.ln.dominant_font())
                 sz = f.size if f else None
                 text = L.ln.text()
-                is_entry = (rx.match(text) is not None
+                is_entry = ((rx is None or rx.match(text) is not None)
                             and any(abs(L.ln.x0 - st) <= ls.tol
                                     for st in stops)
                             and "/center" not in L.ps
-                            and (sz is None or sz <= body_size + 1.0))
+                            and (sz is None or sz <= body_size + 1.0)
+                            and not (act or "").startswith("role:")
+                            and act != "drop")
                 # a short lemma line at the item's own columns whose
                 # midpoint chances near the column center is mislabeled
                 # /center (the false-center trap; verse strips it too) —
@@ -1596,14 +1623,29 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
     from .textfix import is_shifted_run, repair_shifted_cmap, strip_control_chars
 
     out: list[TextRun] = []
+    trim_next_punct_seam = False
     for run in runs:
         t = run.text
+        if trim_next_punct_seam:
+            t2, n = re.subn(r"^[ \xa0]+([.,;:!?])", r"\1", t)
+            if n:
+                t = t2
+                counts["pua-punct-seam"] += n
+            trim_next_punct_seam = False
         if cfg.shifted_cmap_repair and is_shifted_run(t, cfg.shifted_cmap_highmap):
             t, unk = repair_shifted_cmap(t, cfg.shifted_cmap_highmap)
             counts["cmap-repaired-runs"] += 1
             counts["cmap-unknown-chars"] += unk
         t, n_ctrl = strip_control_chars(t)
         counts["ctrl-stripped"] += n_ctrl
+        if "Ᾱ" in t:
+            # GREEK CAPITAL ALPHA WITH MACRON standing in for Latin Ā inside
+            # transliteration (BoK p.184 'ʿᾹmir' — the PDF's own ToUnicode
+            # maps a visually identical wrong-script codepoint; search and
+            # screen readers break). Repair only before a Latin lowercase —
+            # genuine Greek text keeps Greek neighbours.
+            t, n_ws = re.subn("Ᾱ(?=[a-z])", "Ā", t)
+            counts["wrongscript-repaired"] += n_ws
         if "�" in t:
             # U+FFFD = extractor's unmapped-glyph placeholder; replaceable
             # only page-scoped with render evidence (glyphs.fffd_repairs).
@@ -1643,6 +1685,7 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
         # PUA substitution, splitting the run when a mapped char carries lang
         if _PUA_RE.search(t):
             segs: list[tuple[str, str | None]] = []  # (text, lang|None)
+            used_readings: set[str] = set()
             buf = ""
             for ch in t:
                 rule = cfg.pua_map.get(ch)
@@ -1666,9 +1709,30 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
                     if rule.char and rule.char.startswith(" "):
                         buf = buf.rstrip(" \xa0")
                     buf += rule.char or ""
+                    if rule.char:
+                        used_readings.add(rule.char)
                     counts["pua-substituted"] += 1
             if buf:
                 segs.append((buf, None))
+            if used_readings:
+                # the print sets its punctuation tight against the honorific
+                # glyph, but the extraction leaves the glyph's advance as a
+                # literal space ('God\xa0 . But'): collapse the seam right
+                # after a substituted reading only ('…(exalted is He) .' ->
+                # '…(exalted is He).' — twice reader-flagged in BoK)
+                fixed = []
+                for text, lang in segs:
+                    for rc in used_readings:
+                        pat = re.escape(rc) + r"[ \xa0]+([.,;:!?])"
+                        text, n = re.subn(pat, rc + r"\1", text)
+                        counts["pua-punct-seam"] += n
+                    fixed.append((text, lang))
+                segs = fixed
+                # the glyph usually IS its own run (Honorifics font), so the
+                # ' . But' seam lives in the NEXT run — flag the trim for it
+                if segs and any(segs[-1][0].endswith(rc)
+                                for rc in used_readings):
+                    trim_next_punct_seam = True
             for text, lang in segs:
                 if not text:
                     continue

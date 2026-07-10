@@ -73,8 +73,8 @@ def _match_level(off: float, base: list[float], turns: list[float],
 
 def _nearest_level(off: float, base: list[float], turns: list[float]) -> str:
     db = min(abs(off - b) for b in base)
-    dt = min(abs(off - t) for t in turns)
-    return "base" if db <= dt else "turn"
+    dt = min((abs(off - t) for t in turns), default=None)
+    return "base" if dt is None or db <= dt else "turn"
 
 
 def verse_shape_groups(lines, eff_left: float, ref_right: float,
