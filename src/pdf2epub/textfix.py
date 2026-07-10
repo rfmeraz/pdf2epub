@@ -48,6 +48,7 @@ _SPACE_AFTER_CITE = re.compile(r"([\])][.,;:])([A-Za-z])")
 _SPACE_BEFORE_PAREN = re.compile(r"([.!?”’])(\(\d)")
 _SPACE_AFTER_STAR = re.compile(r"([.!?]\*)([A-Za-z])")
 _SPACE_NUM_DOT_CAP = re.compile(r"([0-9A-Z]\.)([A-Z][a-z])")
+_SPACE_STAR_LETTER = re.compile(r"(\*)([A-Za-z])")
 # the space landed on the WRONG SIDE of a closing quote ('way. ”Then' for
 # 'way.” Then'); ‘/’ are directional in this corpus and a space before a
 # CLOSING quote is never legitimate, so the swap is deterministic
@@ -57,7 +58,7 @@ _INSERT_PATTERNS = (
     _SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET,
     _SPACE_COMMA_LOWER, _SPACE_PUNCT_OPENQ, _SPACE_CLOSEQ,
     _SPACE_AFTER_CITE, _SPACE_BEFORE_PAREN, _SPACE_AFTER_STAR,
-    _SPACE_NUM_DOT_CAP,
+    _SPACE_NUM_DOT_CAP, _SPACE_STAR_LETTER,
 )
 
 
@@ -241,14 +242,18 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
     if mode != "off" and base.endswith("­"):
         return base[:-1], "", True
     if mode != "off" and re.search(r"[A-Za-zÀ-ſ]-$", base):
-        # a compound CHAIN keeps its hyphen: when the fragment already
-        # carries an interior hyphen ('face-to-' / 'hundred-') or the
-        # continuation's first token does ('and-so', 'and-such',
-        # 'thousand-year'), the line-end hyphen is lexical, not a break
-        # ('so-/and-so' -> 'so-and-so'; 2026-07-10 M&R proofread class)
+        # a compound CHAIN keeps its hyphen — but only closed-set
+        # CONNECTORS mark one: continuation starting 'and-'/'to-'/'by-'
+        # ('so-/and-so', 'such-/and-such') or a fragment whose tail after
+        # its last hyphen is such a connector ('face-to-/face'). A bare
+        # interior hyphen is NOT enough: ordinary breaks of hyphenated
+        # compounds ('know-noth-/ing', 'bro-/ken-head', 'One-col-/ored')
+        # must still dehyphenate (round-2 proofread findings).
         last_word = re.split(r"[^A-Za-zÀ-ſ\-’']", base[:-1])[-1]
         next_word = re.split(r"[^A-Za-zÀ-ſ\-’']", nxt.lstrip(), maxsplit=1)[0]
-        chain = "-" in last_word or "-" in next_word
+        _conn = ("and", "to", "by")
+        chain = (next_word.split("-", 1)[0] in _conn and "-" in next_word) \
+            or ("-" in last_word and last_word.rsplit("-", 1)[1] in _conn)
         if nxt.lstrip()[:1].islower() and not chain \
                 and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True

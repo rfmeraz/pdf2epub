@@ -577,6 +577,95 @@ only reviewer that sees paragraph integrity and reader-level fusion/splitting.**
   hyphenation/clause continuation, not a ragged short line (`_CONT_DASHES`); a closed
   em/en-dash across a break joins WITHOUT a space (this book's dash style is closed).
 
+## Semantic block grammar: verse (2026-07-10)
+
+The block ontology gained its first class end-to-end: `blocks.verse` specs
+(pages + base/turn pt offsets from the SHIFT-CORRECTED column left, tol,
+stanza_gap, note REQUIRED) drive a pre-join classifier in flowbuilder;
+classified lines BYPASS `_break_before` entirely (the flow.columns
+entry_break precedent) — a stanza is ONE Paragraph, lines joined with
+U+2028, no dehyphenation. Emission: consecutive stanzas coalesce into
+`<blockquote class="verse" epub:type="z3998:verse">` with `<p class="vs">`
+per stanza and `<span class="vl">`/`"vl vt"` per line joined by `<br/>`
+(SE poetry pattern; `epub:prefix` for z3998 is REQUIRED in the shell or
+epubcheck errors). Gate 23 counts flow verse lines against shipped span.vl
+— the ONLY structure-loss witness (a flattened poem loses no chars). The
+UNCALIBRATED verse-suspect witness runs on every build (how future books
+discover verse); blockshapes.py is the single detector derivation shared
+with analyze.
+
+- **Verse has NO font/size signal on this corpus** — Bembo@11 == body.
+  Geometry only: base/turn alternation, ragged right edges (justified
+  right-edge clusters VETO — `_assign_block_right`), all-short.
+- **Two print conventions**: two-level base/turn alternation (M&R body
+  9-11/36-38, notes 37.5/50+73.5) and SINGLE-LEVEL ragged inset (I&B's
+  Buddhist-scripture quotes at inset 18, `turns: []`). BoK quotes poets at
+  single-level 18 too. The suspect witness found REAL uncovered verse in
+  I&B (10) and BoK (3) on first corpus contact — the corpus survey's "no
+  verse outside M&R" was wrong.
+- **Look-alikes that are NOT verse** (render-verified): dialogue set one
+  speech per line at the paragraph indent (M&R pp.68/87/126/206/283 —
+  single-level runs at base≈para-indent; hence turns required in body
+  specs, and the suspect witness demands base inset >= 6pt); centered
+  title lists; hanging-indent apparatus.
+- **Boundary rules from print evidence**: strict base/turn ALTERNATION
+  (consecutive same-level splits the run — sheds note first-lines that
+  share the verse base offset, p.370); the short test applies only to
+  BOUNDARY base lines (interior/turn lines legitimately run to full
+  measure — p.370 turn ends 4.4pt short of col_right; a full-measure base
+  line at a boundary is prose — p.165); cross-page stitching BOTH ways
+  (accepted verse relaxes next page's base-start; a pending page-bottom
+  tail is stamped only when the next page's top run accepts the union).
+  Correction verbs `class:verse`/`class:prose`; a spec classifying zero
+  groups is stale (SystemExit).
+- **Verse-dense pages break the recto/verso shift detector**: on M&R
+  p.165 (near-full-page ghazal) the verse BASE INDENT outvotes the prose
+  margin for the page-modal left and a long verse line passes the
+  width-only full-measure confirm → bogus shift −10 → spec offsets miss.
+  Fix: the shift is vetoed when >=3 wide lines SPAN THE GLOBAL COLUMN
+  (x0≈col_left AND x1≈col_right — presence of true full-measure prose).
+  Corpus diff: M&R loses all 49 (all bogus), BoK/HU/sufism unchanged, I&B
+  loses 7 with byte-identical output. Width alone is NOT full measure.
+
+## M&R proofread pass (2026-07-10) — prepress space classes closed
+
+38 blind readers over 40 packets, ~700 findings → systematic classes, each
+print-verified before repair (the class-level verification the 2026-07-09
+deferral demanded):
+
+- **comma+LOWERCASE (`sun,he`) is now repaired** along with five sibling
+  prepress classes (punct+opening-quote, closing-”+letter, `[2:36].From`,
+  `ease.(641)`, `others.*They`, `4.With`/`M.Thackston`). U+2019+lowercase
+  stays UNREPAIRED forever: hamza/ayn transliteration (Sana'i, wa'llah,
+  Ruba'iyyat) is indistinguishable from a quote seam.
+- **The wrong-side-quote class (`way. ”Then`) was ~1/3 SELF-INFLICTED**:
+  _SPACE_AFTER_PUNCT's optional-quote class contained the CLOSING ” and
+  inserted the space between punct and quote. Openers only now; a swap
+  pattern owns that seam. The rest of the class comes from print putting
+  the closing quote at the NEXT line's start — the 'punct SPACE quote'
+  shape only exists AFTER the line join inserts its separator, so the
+  swap re-runs at close_para (per-line textfix is too early) and the
+  seam walker handles both-sided-space variants (which the collapse pass
+  would otherwise fuse back into the residual shape). Shipped residuals: 0.
+- **Compound CHAINS keep their line-end hyphen**: fragment or continuation
+  first-token carrying an interior hyphen ('so-/and-so', 'face-to-/face',
+  'hundred-/thousand-year') is lexical, not a break.
+- **Section title + passage number fused into one h3** (join_center_lines
+  on adjacent centered smallcaps): 22 instances broken by override at the
+  number line — found by scanning emitted h3 text for `title + N.` and
+  mapping through para_lines provenance.
+- **Proofread chunking past 16**: a 130-page chapter splits into 17
+  chunks; the suffix alphabet was 15 letters (pre-existing crash).
+- **HANDOFF → Phase L (lists)**: the notes apparatus (pp.337-373) and
+  bibliography ship with systematic hanging-indent damage — nearly every
+  note's FIRST line splits from its body (marker line at col-left is not
+  'indented', so the turnover triggers the indent break), and short-ending
+  notes FUSE into the next ('…MSM 114. 205. Despite…'). That is the
+  blocks.lists shape (marker + hanging turnovers); fixing by override
+  would take ~250 entries. Round-1/2 reader findings for packets 037-040
+  are the Phase L acceptance evidence; notes packets excluded from round 2
+  for this reason.
+
 ## Layout witness — optional ML third witness (2026-07-09)
 
 `src/pdf2epub/layoutwitness.py` adds a vision layout model as a THIRD analyze-time

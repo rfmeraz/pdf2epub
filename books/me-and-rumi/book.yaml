@@ -80,7 +80,11 @@ styles:
   fail_on_unmapped: true
 
 flow:
-  indent_threshold: 10
+  indent_threshold: 8   # paragraph indent measures 9-11pt against a column
+                        # that drifts 71-73 per page; at 10, verso paragraph
+                        # starts at offset 8-9 never fired — the systematic
+                        # dialogue-turn/re-opened-quote fusion class the
+                        # 2026-07-10 proofread rounds exposed
   gap_factor: 1.6
   dehyphenate: lower-only
   restore_spaces: true            # 3054 lost-space hits (no ToUnicode maps)

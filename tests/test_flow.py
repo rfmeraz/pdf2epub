@@ -1541,8 +1541,14 @@ def test_dehyphenate_keeps_compound_chains():
     assert dehyphenate_join("so-", "and-so a dervish") == ("so-", "", False)
     assert dehyphenate_join("such-", "and-such") == ("such-", "", False)
     assert dehyphenate_join("face-to-", "face") == ("face-to-", "", False)
-    assert dehyphenate_join("hundred-", "thousand-year journey") == \
-        ("hundred-", "", False)
-    # ordinary breaks still join closed
+    # ordinary breaks still join closed — INCLUDING breaks inside
+    # hyphenated compounds (round-2 proofread findings)
     assert dehyphenate_join("tradi-", "tion") == ("tradi", "", True)
     assert dehyphenate_join("com-", "munity") == ("com", "", True)
+    assert dehyphenate_join("faint-hearted-", "ness") == \
+        ("faint-hearted", "", True)
+    assert dehyphenate_join("know-noth-", "ing") == ("know-noth", "", True)
+    assert dehyphenate_join("bro-", "ken-head kept") == ("bro", "", True)
+    assert dehyphenate_join("One-col-", "ored words") == \
+        ("One-col", "", True)
+    assert dehyphenate_join("man-throw-", "ing") == ("man-throw", "", True)
