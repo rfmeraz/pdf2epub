@@ -100,6 +100,19 @@ flow:
   join_center_lines: true
   reattach_dropcaps: true
   overrides:
+    # Phase F (2026-07-10): the part title p.35 — four 28pt '·' lines are
+    # placeholder glyphs of the untranslated Chinese title (unrepresentable;
+    # the English title follows); the 18pt byline is its own display block,
+    # not part of the h1 (gate 6 caught the fusion)
+    - {page: 35, line: 0, action: "drop", note: "CJK-title placeholder glyph"}
+    - {page: 35, line: 1, action: "drop", note: "CJK-title placeholder glyph"}
+    - {page: 35, line: 2, action: "drop", note: "CJK-title placeholder glyph"}
+    - {page: 35, line: 3, action: "drop", note: "CJK-title placeholder glyph"}
+    - {page: 35, line: 6, action: "break", note: "byline 'by Liu Zhi' separate from the part title"}
+    - {page: 37, line: 0, action: "drop", note: "CJK-title placeholder glyph (printed 3 title repeat)"}
+    - {page: 37, line: 1, action: "drop", note: "CJK-title placeholder glyph"}
+    - {page: 37, line: 2, action: "drop", note: "CJK-title placeholder glyph"}
+    - {page: 37, line: 5, action: "break", note: "'Introduction' heading separate from the repeated title block"}
     - {page: 5, line: 5, action: drop, note: "part-header divider inside the printed Contents; as h3 it shadowed the real part opener for ordercheck"}
     - {page: 7, line: 10, action: drop, note: "same part-header repeated on the second Contents page (label vii)"}
 
