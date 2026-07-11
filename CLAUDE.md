@@ -40,6 +40,7 @@ proceeds with safe defaults + handoff flags.
 ~/pyenv/bin/pdf2epub qa    books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml [--reference <epub>] [--visual]
 ~/pyenv/bin/pdf2epub proofread books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml   # reading-QA packets (proofread-epub skill)
 ~/pyenv/bin/pdf2epub lines books/<slug>/book.yaml <page> [--render]   # RAW line indexes for flow.overrides
+~/pyenv/bin/pdf2epub kindle books/<slug>/build/<slug>.epub [--out <path>]   # EPUB -> Kindle AZW3 via Calibre (post-process; optional)
 ~/pyenv/bin/pytest -q                 # unit tests
 bash scripts/bootstrap.sh             # one-time machine setup (pip, epubcheck jar, fonts)
 ```

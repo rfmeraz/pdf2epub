@@ -26,9 +26,10 @@ from __future__ import annotations
 
 import re
 import unicodedata
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 
 from ..core.model import InlinePageBreak, PageAnchor, Paragraph, TextRun
+from ..core.runlinks import apply_link as _apply_link
 
 # ------------------------------------------------------------------ config
 
@@ -117,33 +118,6 @@ def _is_bold_range(items, start: int, end: int) -> bool:
         if not it.fmt.bold:
             return False
     return seen
-
-
-def _apply_link(items, start: int, end: int, link: str) -> list:
-    """Return items with the TextRun text over char range [start, end) (offsets
-    counted over TextRun text only) carrying ``fmt.link = link``. Splits runs at
-    the boundaries; non-text items pass through untouched. Total text is
-    unchanged, so successive calls with original offsets stay valid."""
-    out: list = []
-    pos = 0
-    for it in items:
-        if not isinstance(it, TextRun):
-            out.append(it)
-            continue
-        t = it.text
-        a, b = pos, pos + len(t)
-        pos = b
-        if b <= start or a >= end:
-            out.append(it)
-            continue
-        s = max(start, a) - a
-        e = min(end, b) - a
-        if s > 0:
-            out.append(TextRun(t[:s], it.fmt))
-        out.append(TextRun(t[s:e], replace(it.fmt, link=link)))
-        if e < len(t):
-            out.append(TextRun(t[e:], it.fmt))
-    return out
 
 
 def _footnote_map(blocks) -> tuple[dict[tuple[str, int], str], set[str]]:

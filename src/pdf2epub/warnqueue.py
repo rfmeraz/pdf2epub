@@ -50,6 +50,9 @@ CODES: dict[str, str] = {
     "imprint-note-unlinked": ADVISORY,  # an imprint transform (e.g. World
     #   Wisdom editor's notes) could not resolve a page/footnote cross-ref to
     #   an anchor; the note text ships intact, just without the hyperlink
+    "index-locator-unlinked": ADVISORY,  # an index page-number locator had no
+    #   matching page anchor (out-of-range, roman front-matter, or an "n."
+    #   note suffix); the number ships as plain text, just not hyperlinked
 }
 
 

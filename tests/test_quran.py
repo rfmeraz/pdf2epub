@@ -32,6 +32,20 @@ def test_valid_index_passes():
     assert res.found and res.n_entries == 4 and res.ok
 
 
+def test_linked_locators_are_transparent_to_parse():
+    # index_locators wraps page numbers in <a href="#pg-N">; gate 19 parses
+    # entry text via itertext() (walks INTO the <a>), so the citation parse
+    # must be byte-identical to the unwrapped form above.
+    d = _doc('<h2>Qurʾānic Verses Cited</h2>'
+             '<p>2:44, \t<a href="a.xhtml#pg-169">169</a>, 183</p>'
+             '<p>7:175–176,\t<a href="a.xhtml#pg-174">174</a></p>'
+             '<p>35:28,\t 3, <a href="a.xhtml#pg-67">67</a>, 142, 229</p>'
+             '<p>114:4, 12</p>')
+    res = check_quran_index([d], {"3", "12", "67", "142", "169", "174",
+                                  "183", "229"})
+    assert res.found and res.n_entries == 4 and res.ok
+
+
 def test_interleaved_columns_fire():
     # the shipped BoK defect: three columns fused into one paragraph
     d = _doc("<h2>Qurʾānic Verses Cited</h2>"

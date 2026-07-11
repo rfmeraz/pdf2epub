@@ -7,7 +7,12 @@ The per-book config's pstyle_map always wins; unmapped pstyles get
 ``unmapped_role`` and are reported (an error once ``fail_on_unmapped`` is set).
 
 Roles: h1 h2 h3 p li blockquote footnote toc-entry title-page half-title
-caption drop
+caption drop index
+
+``index`` marks a single-column back-of-book index entry so the index-locator
+pass links its page numbers (the columned-index case uses the
+``flow.columns[].index`` flag instead; see src/pdf2epub/index_locators.py).
+Emission treats ``index`` like a plain ``<p>`` (generic fall-through).
 """
 
 from __future__ import annotations

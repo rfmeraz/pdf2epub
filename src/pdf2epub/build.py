@@ -97,6 +97,10 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     if cfg.imprint is not None:
         from .imprints import apply_imprint
         apply_imprint(res, cfg, ctx.pdf_doc, ctx.say)
+    # ---- linked index locators: wrap index page numbers in #pg-<label> links
+    # (opt-in via flow.columns[].index or the `index` role; no-op otherwise).
+    from .index_locators import link_index_locators
+    link_index_locators(res, cfg, ctx.say)
     ctx.ir_dump("map", flowdoc_to_dict(ctx.flow))
     if upto == "map":
         _write_warnings(ctx)

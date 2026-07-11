@@ -7,6 +7,14 @@ apparatus, textfix counting).
 
 ## 1. Linked index locators
 
+**IMPLEMENTED 2026-07-11** (`src/pdf2epub/index_locators.py`; opt-in via
+`flow.columns[].index: true` or the new `index` role; DAISY `<section
+epub:type="index">` container; guarded page-anchor linking + advisory
+`index-locator-unlinked`; BoK ships 3770 linked locators, epubcheck clean, gates
+4/19/Overall PASS). Deferred: aria-label on ranges, roman-numeral fm locators,
+and Me & Rumi's index pages (a separate conversion effort that now inherits
+this). See NOTES.md "Linked index locators + Kindle output (2026-07-11)".
+
 **Problem.** Back-of-book indexes ship (via `flow.columns`) as plain paragraphs whose
 page numbers are dead text. The DAISY knowledge base's recommended shape is an index
 whose every locator hyperlinks to an anchor at the referenced location

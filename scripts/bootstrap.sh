@@ -48,4 +48,8 @@ echo "== chrome (qa --visual EPUB-slice renders; warn-only) =="
 command -v google-chrome >/dev/null || command -v chromium >/dev/null || \
   echo "NOTE: no chrome/chromium — 'pdf2epub qa --visual' will skip EPUB-side renders (PDF panels + manifest still produced)"
 
+echo "== calibre (pdf2epub kindle -> AZW3; warn-only) =="
+command -v ebook-convert >/dev/null || \
+  echo "NOTE: no calibre/ebook-convert — 'pdf2epub kindle' is unavailable (install calibre; or set PDF2EPUB_EBOOK_CONVERT)"
+
 echo "bootstrap OK"

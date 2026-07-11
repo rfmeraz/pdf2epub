@@ -1146,3 +1146,37 @@ not join bugs (verified: they sit inside a single raw extracted line).
   to `qa_lost_space_allow` — an explicit agent judgment, NOT the automatic global lexicon the
   dehyphenate doctrine refuses. Unused entries are inert (no stale-fail), so it's safe to list
   a compound that only sometimes breaks at its hyphen.
+
+## Linked index locators + Kindle output (2026-07-11)
+
+Two `specs/commercial-parity.md` roadmap items, both pure reuse of existing machinery.
+
+- **Linked index locators** (`src/pdf2epub/index_locators.py`, a generic map-stage transform
+  hooked in `build.py` right after the imprint hook). Back-of-book index page numbers were dead
+  text; DAISY wants each locator hyperlinked. The transform reuses the imprint's `RunFormat.link
+  -> {XREF|page:<label>} -> resolve_crossref_links` chain wholesale: it stamps
+  `fmt.link="page:<label>"` on each locator's char range via the now-shared `core/runlinks.py`
+  `apply_link` (factored out of `world_wisdom._apply_link` — the imprint imports it back, so the
+  Sufism EPUB is byte-identical). **Opt-in, never guesses:** fires only on a `flow.columns[].index:
+  true` block or the new `index` role, so every other book is byte-identical. A number links ONLY
+  when its `pg-<label>` anchor exists (guarded against the label set), so a **broken index link is
+  structurally impossible** — and gate 4 (navigation) already validates every href, so no new gate
+  was needed. Unresolved numeric locators ship plain + an advisory `index-locator-unlinked` count.
+- **Container.** Index paragraphs (except the section's own `h1` title) get `block_class="index"`,
+  which the emitter gathers into ONE `<section epub:type="index" role="doc-index">` — the exact
+  verse/quote/list gather-and-wrap pattern (letter-group heads are h2/h3, below `split.at_roles`,
+  so the section never crosses a file split). `block_class` is set only when currently `None`, so
+  a real verse/quote/list classification is never clobbered.
+- **Tokenizer** `(?<![:\w.])(\d+)(?:[–—-]\d+)?(?![:\w])`: the `\w`/`:`  guards skip `S:V` Qurʾānic
+  citations (`35:8`), `189n.4` note suffixes, and digits inside words (`20th`); a range links to
+  its FIRST page. Gate 19 parses via `itertext()`, which walks INTO the `<a>`, so wrapping numbers
+  is transparent to it (pinned by a `test_quran.py` regression). **BoK is the proof:** both index
+  blocks flagged `index: true` -> 3770 locators linked in 873 entries, epubcheck clean, gate 4 +
+  gate 19 + Overall PASS. aria-label on ranges + roman-numeral fm locators are deferred non-goals.
+- **Kindle output** (`src/pdf2epub/kindle.py`, `pdf2epub kindle <epub> [--out]`). A thin
+  post-process — no pipeline change; the EPUB is the source of truth. Shells to Calibre
+  `ebook-convert` (found via `PDF2EPUB_EBOOK_CONVERT` or PATH; wrapped in `try/except OSError` so a
+  bad override fails cleanly, not with a traceback), emits `<slug>.azw3` (KF8), reports size +
+  converter warnings. Missing tool is a hard error (the artifact was explicitly requested), unlike
+  the optional-tool skip. Documented warn-only in `bootstrap.sh` (chrome precedent). The `.azw3` is
+  gitignored (only `.epub` is tracked). BoK -> a real "Mobipocket E-book … version 8" AZW3.

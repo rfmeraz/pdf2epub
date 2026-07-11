@@ -306,6 +306,31 @@ class Emitter:
                     self._emit_quote_group(qrun)
                     i = j
                     continue
+                if b.block_class == "index":
+                    # gather the contiguous index run (entry + letter-group-head
+                    # paragraphs, interleaved page anchors for the page seams
+                    # inside the index) into ONE <section epub:type="index">;
+                    # trailing anchors belong to what FOLLOWS the index
+                    j = i
+                    xrun: list = []
+                    while j < len(blocks):
+                        nb = blocks[j]
+                        if isinstance(nb, Paragraph) and \
+                                nb.block_class == "index" and \
+                                (nb.role or "p") != "drop":
+                            xrun.append(nb)
+                        elif isinstance(nb, PageAnchor):
+                            xrun.append(nb)
+                        else:
+                            break
+                        j += 1
+                    while xrun and isinstance(xrun[-1], PageAnchor):
+                        xrun.pop()
+                        j -= 1
+                    self._maybe_split_for(b, toc_done)
+                    self._emit_index_group(xrun)
+                    i = j
+                    continue
                 self._maybe_split_for(b, toc_done)
                 self._emit_paragraph(b)
             i += 1
@@ -516,6 +541,24 @@ class Emitter:
             parts.append(f'<p class="{classes}">{inner}</p>')
         parts.append("</blockquote>")
         f.body_parts.append("".join(parts))
+
+    def _emit_index_group(self, run: list) -> None:
+        """A back-of-book index emits inside ONE
+        <section epub:type="index" role="doc-index"> (the DAISY index
+        container). Entries emit as ordinary <p> — their locators already carry
+        the #pg-<label> links stamped by index_locators — letter-group heads by
+        their heading role, and interleaved page anchors as the standard
+        pagebreak div. The run never crosses a file split (index letter-heads
+        are h2/h3, below split.at_roles), so the whole section stays in one
+        file."""
+        f = self._ensure_file()
+        f.body_parts.append('<section epub:type="index" role="doc-index">')
+        for b in run:
+            if isinstance(b, PageAnchor):
+                self._emit_pagebreak(b)
+            else:
+                self._emit_paragraph(b)
+        f.body_parts.append("</section>")
 
     def _rescue_inline_anchors(self, p: Paragraph) -> None:
         """A skipped paragraph (role=drop, absorbed heading) must not swallow

@@ -62,6 +62,13 @@ def main(argv: list[str] | None = None) -> int:
     p_proof.add_argument("--config", type=Path, required=True,
                          help="Path to book.yaml")
 
+    p_kindle = sub.add_parser(
+        "kindle", help="Convert a built EPUB to Kindle AZW3 (KF8) via Calibre "
+                       "ebook-convert (post-process; the EPUB stays the source)")
+    p_kindle.add_argument("epub", type=Path)
+    p_kindle.add_argument("--out", type=Path, default=None,
+                          help="Output path (default: <epub>.azw3)")
+
     p_lines = sub.add_parser(
         "lines", help="Dump RAW extraction line indexes + geometry per page "
                       "(the key for flow.overrides)")
@@ -97,6 +104,10 @@ def main(argv: list[str] | None = None) -> int:
         from .proofread import run_proofread
 
         return run_proofread(args.epub, args.config)
+    if args.command == "kindle":
+        from .kindle import run_kindle
+
+        return run_kindle(args.epub, out=args.out)
     if args.command == "lines":
         from .proofread import run_lines
 

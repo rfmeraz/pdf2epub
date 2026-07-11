@@ -56,10 +56,15 @@ class ColumnSpec:
     tables). The flow re-splits baseline-fused lines at the column gutters
     and reads column-by-column; every column-left line starts its own entry
     paragraph, indented lines are hanging-indent turnovers that join.
-    Columned PROSE is still out of scope (escalate per the skill)."""
+    Columned PROSE is still out of scope (escalate per the skill).
+
+    ``index: true`` marks this columned block as a back-of-book index whose
+    page-number locators the index-locator pass links to ``#pg-<label>``
+    anchors (opt-in; see src/pdf2epub/index_locators.py)."""
     pages: list[int]
     count: int
     note: str = ""
+    index: bool = False
 
 
 @dataclass(slots=True)
@@ -527,7 +532,7 @@ def load_config(path: Path) -> PdfBookConfig:
         cfg.flow_overrides.append(FlowOverride(page=int(ov["page"]), line=int(ov["line"]),
                                                action=action, note=ov.get("note", "")))
     for cs in fl.get("columns", []) or []:
-        _check_keys("flow.columns[]", cs, {"pages", "count", "note"})
+        _check_keys("flow.columns[]", cs, {"pages", "count", "note", "index"})
         pages = _page_list(cs["pages"])
         count = int(cs["count"])
         if count < 2:
@@ -535,7 +540,8 @@ def load_config(path: Path) -> PdfBookConfig:
         if not pages:
             raise ConfigError("flow.columns needs at least one page")
         cfg.flow_columns.append(ColumnSpec(pages=pages, count=count,
-                                           note=cs.get("note", "")))
+                                           note=cs.get("note", ""),
+                                           index=bool(cs.get("index", False))))
 
     fn = data.get("footnotes", {})
     _check_keys("footnotes", fn, {"policy", "marker", "region_max_size"})

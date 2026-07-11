@@ -174,8 +174,8 @@ flow:
   # gutters at ~170/270 for the 3-col verse index, ~215 for the 2-col index;
   # entries one per line with hanging-indent turnovers)
   columns:
-    - {pages: [322, 323], count: 3, note: "Qurʾānic Verses Cited"}
-    - {pages: ["324-336"], count: 2, note: "general index"}
+    - {pages: [322, 323], count: 3, index: true, note: "Qurʾānic Verses Cited"}
+    - {pages: ["324-336"], count: 2, index: true, note: "general index"}
 
 footnotes:
   policy: markers
