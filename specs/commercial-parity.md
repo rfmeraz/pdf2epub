@@ -135,11 +135,12 @@ EPUB2 fallback, fixed-layout, tagged PDF from one source.
 **Integration**: new thin `pdf2epub kindle` subcommand shelling to the external converter;
 document the external dependency in `scripts/bootstrap.sh` (epubcheck-jar precedent).
 
-### §6 Body cross-reference linking  (priority: medium; reuses machinery we have)
+### §6 Body cross-reference linking  (priority: medium; the cheapest open feature — its chain is now proven)
 
 **Problem.** "see p. 42", "cf. figure 3", "as in chapter 2", "→ Glossary" ship as dead
-text. Index locators are covered ([semantic-polish.md #1](semantic-polish.md)); this is the
-general in-prose case.
+text. Index locators shipped this exact `page:<label>` linking for the back-of-book index
+([semantic-polish.md #1](semantic-polish.md), `src/pdf2epub/index_locators.py`); this is the
+general in-prose case — the tokenizer/guard/advisory pattern there is the template to copy.
 
 **Design sketch.** A conservative emit/textfix pass detecting *explicit* locator patterns
 — `p{p}. \d+`, `pp. \d+[–-]\d+`, `fig(ure)? \d+`, `chapter \d+`/`ch. \d+` — and wrapping
@@ -172,13 +173,25 @@ deliberately excludes:
 
 ## Priority ranking (for this corpus)
 
-1. **A11y certification** ([semantic-polish.md #2](semantic-polish.md)) — small, closes a
-   legal/market gap (EAA), metadata already 80% present. ← now the top open item; the
-   index-locator container (`epub:type="index"`) is a down payment on it.
-2. ~~Index locator hyperlinking~~ — **SHIPPED 2026-07-11** ([semantic-polish.md #1](semantic-polish.md)).
-3. **§6 body cross-refs** — medium value, reuses the imprint's `RunFormat.link` machinery
-   (same chain the shipped index locators use).
-4. ~~§5 Kindle output~~ — **SHIPPED 2026-07-11** (`pdf2epub kindle`).
-5. **§1 tables** / **§3 RTL layout** — do whichever the actual backlist demands (tables if
-   the books have them; RTL only for non-romanized Arabic titles).
-6. **§2 math** / **§4 CJK vertical** — documented non-goals until a title forces them.
+**Shipped 2026-07-11** (were #2 and #4): index locator hyperlinking
+([semantic-polish.md #1](semantic-polish.md)) and Kindle AZW3 output (§5). Both reused
+existing machinery — the `RunFormat.link → resolve_crossref_links` cross-ref chain, and a
+Calibre `ebook-convert` post-process — so neither cost a pipeline change. Earlier waves
+shipped the semantic block grammar (verse/quote/list) and the World Wisdom imprint relink.
+
+Remaining open items, re-ranked:
+
+1. **A11y certification** ([semantic-polish.md #2](semantic-polish.md)) — the top open item:
+   small, closes a legal/market gap (EU Accessibility Act, in force since 2025-06-28),
+   metadata is already ~80% present, and the just-shipped index-locator container
+   (`epub:type="index"`) is a down payment on it. Add `dcterms:conformsTo` + an Ace-by-DAISY
+   gate.
+2. **§6 body cross-references** — auto-link "see p. N" / "fig. 3" / "ch. 2"; the cheapest
+   open feature to build because it reuses the *exact* `RunFormat.link → resolve_crossref_links`
+   chain the index locators now use (high-precision, per-book opt-in, WARN-and-skip the rest).
+3. **typogrify-lite** ([semantic-polish.md #3](semantic-polish.md)) — opt-in presentation
+   polish (word-joiners around em-dashes, hair spaces between adjacent quotes); small and
+   self-contained, insertion-only of invisible codepoints.
+4. **§1 tables** / **§3 RTL layout** — backlist-driven: tables if the books have them; RTL
+   only for a genuinely non-romanized Arabic title (today a `rtl-live-text` hard stop).
+5. **§2 math** / **§4 CJK vertical writing** — documented non-goals until a title forces them.
