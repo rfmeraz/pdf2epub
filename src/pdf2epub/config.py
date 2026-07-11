@@ -292,6 +292,10 @@ class PdfBookConfig:
     toc_handling: str = "rebuild"   # rebuild | drop (the in-body contents page)
     strip_toc_page_numbers: bool = True
     nav_depth: int = 2
+    # printed-TOC lines that carry NO folio but are their own entry (a part
+    # divider like "Appendix"), not a wrapped-title continuation of the line
+    # above; matched on stripped text. Render-verified per book.
+    toc_standalone_lines: list[str] = field(default_factory=list)
 
     # glyphs (JP-P6)
     pua_map: dict[str, PuaRule] = field(default_factory=dict)
@@ -537,7 +541,8 @@ def load_config(path: Path) -> PdfBookConfig:
 
     tc = data.get("toc", {})
     _check_keys("toc", tc, {"source", "printed_pages", "handling",
-                            "strip_page_numbers", "nav_depth"})
+                            "strip_page_numbers", "nav_depth",
+                            "standalone_lines"})
     cfg.toc_source = tc.get("source", cfg.toc_source)
     if cfg.toc_source not in ("outline", "printed", "links"):
         raise ConfigError(f"toc.source invalid: {cfg.toc_source}")
@@ -545,6 +550,7 @@ def load_config(path: Path) -> PdfBookConfig:
     cfg.toc_handling = tc.get("handling", cfg.toc_handling)
     cfg.strip_toc_page_numbers = bool(tc.get("strip_page_numbers", True))
     cfg.nav_depth = int(tc.get("nav_depth", cfg.nav_depth))
+    cfg.toc_standalone_lines = list(tc.get("standalone_lines", []) or [])
 
     gl = data.get("glyphs", {})
     _check_keys("glyphs", gl, {"pua_map", "fail_on_unmapped_pua", "gt_strip_phrases",

@@ -1100,3 +1100,31 @@ so it lives behind a gated **imprint** hook, not in the generic flow.
 - **Deferred:** `body_backlinks` (a body-side marker at the annotated passage) is parsed but
   rejected as unimplemented — v1 keys off print-page anchors only, no body mutation. Intra-notes
   cross-refs ("see editor's note for Preface, p. 4") ship as plain text.
+
+## Proofread pass: back-matter page-top fusions + TOC part-dividers (2026-07-11, Sufism)
+
+First full `/proofread-epub` pass on Sufism (29 blind readers / 31 packets, 15 clean; 24
+findings, almost all pre-existing). Two fix classes worth generalizing:
+
+- **Back-matter entries that begin at a page TOP fuse into the previous page's last entry.**
+  Blank-line-separated entries (editor's notes, glossary, selections) give the join pass a gap
+  signal mid-page, but across a page boundary there is none, so the first entry of a page
+  continues the prior paragraph. Detect them ALL (not just what readers sample) with a
+  pagebreak-anchor + entry-label scan of the shipped back matter — `<span pg-N …></span>` NOT at
+  block start, immediately followed by a `Note N:` / `Selection N:` / `Headword (Lang):` label.
+  On Sufism this found EXACTLY the 4 the readers flagged. Fix = `flow.overrides` `break` at each
+  (page, line 1). Bonus: breaking a fused `Note N` entry also un-suppresses its World-Wisdom
+  footnote link — the imprint linker only fires "Note N" detection at a paragraph START, so a
+  mid-paragraph fused label was never linked (imprint count 61→62 after the fix).
+- **A printed-TOC part-divider label carries no folio** ("Appendix" above "Selections from
+  Letters… 133"). The rebuild treated it as a wrapped-title continuation and fused it onto the
+  entry above. New `toc.standalone_lines` (render-verified per book) makes such a line its own
+  entry. Gate 6 (reading order) then had nothing to page-verify it against, so it now SKIPS
+  folio-less entries as info — correct scope, not a weakening (only the opt-in knob produces an
+  empty label; every normal entry still carries its folio).
+
+Everything else was routed to a documented handoff queue (CONVERSIONS.md 2026-07-11), the biggest
+theme being `dehyphenate: lower-only` over-stripping real compound hyphens (`religion-quintessence`,
+`karma-yoga`, `prayer-niche`…) — the keep-hyphen lexicon the project deliberately refuses — and
+spurious in-line spaces after a hyphen/dash (`al- Bātin`) that are SOURCE-PDF extraction artifacts,
+not join bugs (verified: they sit inside a single raw extracted line).

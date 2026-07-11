@@ -460,6 +460,15 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                         items=[TextRun(text, RunFormat())],
                         src=SourceRef(f"p{L.page:04d}", L.idx))
                     paras.append(last_entry)
+                elif L.ln.text().strip() in cfg.toc_standalone_lines:
+                    # a part-divider label carrying no folio ('Appendix'): its
+                    # OWN entry, NOT a wrapped-title continuation of the line
+                    # above (which the folio-less branch below would assume)
+                    last_entry = Paragraph(
+                        style="__toc__",
+                        items=[TextRun(f"{L.ln.text().strip()}\t", RunFormat())],
+                        src=SourceRef(f"p{L.page:04d}", L.idx))
+                    paras.append(last_entry)
                 elif L.ps != body_ps and "center" in L.ps:
                     paras.append(Paragraph(
                         style=L.ps,

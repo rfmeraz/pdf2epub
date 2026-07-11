@@ -160,6 +160,14 @@ flow:
     - {page: 3, line: 38, action: join, note: "turnover 'ed. James S. Cutsinger' completes the title above"}
     - {page: 3, line: 40, action: join, note: "turnover 'ed. James S. Cutsinger' completes the title above"}
     - {page: 3, line: 42, action: join, note: "turnover 'ed. Catherine Schuon' completes the title above"}
+    # Proofread 2026-07-11: back-matter entries beginning at a page TOP fused
+    # into the previous page's last entry (no gap signal across the page seam).
+    # Break each new entry off. Render-verified on p182/184/193/202; the scan
+    # (pagebreak-anchor + entry-label mid-paragraph) found exactly these four.
+    - {page: 182, line: 1, action: "break", note: "editor's note 'Gaudapada (sixth-seventh century…)' is a new entry, fused onto the Shaykh al-Akbar/Ibn Arabi note across the pg-163 seam"}
+    - {page: 184, line: 1, action: "break", note: "editor's note 'Note 15: Ahmad al-Alawi' is a new entry, fused onto the [29]:45 citation note across the pg-165 seam (also restores its footnote link)"}
+    - {page: 193, line: 1, action: "break", note: "'Selection 22: “The Book of Keys”' is a new entry, fused onto the previous selection note across the pg-174 seam"}
+    - {page: 202, line: 1, action: "break", note: "glossary entry 'Sepher Torah (Hebrew)' is a new entry, fused onto the Sattva entry across the pg-183 seam"}
   columns:
     # two-column INDEX (printed 187-194). Verso and recto have different binding
     # margins (gutter at x~227 vs x~209), so aggregating all 8 pages smears the
@@ -185,6 +193,9 @@ toc:                          # JP-P3 — printed TOC (p6) chosen: it lists the 
   handling: rebuild
   strip_page_numbers: true
   nav_depth: 1                # printed TOC is flat (one level)
+  standalone_lines:           # proofread 2026-07-11: 'Appendix' (p6) carries no
+    - "Appendix"              # folio -> was fused onto 'Hypostatic Dimensions of
+                              # Unity' as a fake turnover; it's its own entry
 
 glyphs:                       # JP-P6 — verified on renders
   pua_map:

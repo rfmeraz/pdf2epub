@@ -55,6 +55,19 @@ def test_unmatched_toc_entry_is_info_not_failure():
     assert res.ok and res.matched_entries == 1 and res.notes
 
 
+def test_folioless_part_divider_entry_is_skipped():
+    # a printed-TOC part-divider label carrying no folio ('Appendix', via
+    # toc.standalone_lines) cannot be page-verified — it must be skipped as
+    # info, not reported as sitting on the wrong page
+    seq = [("page", "1"), ("heading", "Chapter 1: The Origin"),
+           ("page", "2"), ("heading", "Appendix")]
+    toc = [("Chapter 1: The Origin", "1"), ("Appendix", "")]
+    res = check_heading_pages(seq, toc, PAGE_ORDER)
+    assert res.ok  # no violation despite 'Appendix' heading on page '2'
+    assert res.matched_entries == 1  # the folio-less entry is not verified
+    assert any("part-divider" in n for n in res.notes)
+
+
 def test_orphan_heading_detector():
     files = [
         ("003-foreword.xhtml", True, 5, False),      # heading, no body: flagged

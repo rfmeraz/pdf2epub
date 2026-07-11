@@ -90,6 +90,13 @@ def check_heading_pages(
         return " ".join(s.lower().split())
 
     def process(title: str, label: str) -> None:
+        if not label:
+            # a printed-TOC part-divider label carrying no folio ('Appendix'):
+            # there is no page in the source to verify it against, so it is out
+            # of this gate's scope (it still ships + links via the contents pass)
+            res.notes.append(
+                f"TOC part-divider entry has no folio to verify (info): {title!r}")
+            return
         res.checked += 1
         best_score = 0.0
         candidates: list[int] = []

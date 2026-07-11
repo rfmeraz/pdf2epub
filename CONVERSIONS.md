@@ -614,3 +614,43 @@ HANDOFF: `body_backlinks` deferred (parsed, rejected as unimplemented);
 intra-notes cross-refs ("see editor's note for Preface, p. 4") ship as plain
 text. Consider a blind-reader `/proofread-epub` pass to confirm the linked
 page numbers read naturally in a reader.
+
+### 2026-07-11 addendum — full /proofread-epub pass (31 packets)
+
+First full blind-reader pass over the shipped book (29 readers, 31 packets;
+15 clean). 24 findings, almost all pre-existing (orthogonal to the imprint
+change, whose Editor's Notes area read textually clean). User scope decision:
+fix the **high-value subset** (Editor's Notes entry-fusions + TOC Appendix),
+document the rest.
+
+FIXED (render-verified; rebuild epubcheck clean, qa Overall PASS; changed
+packets 003/024/025 re-read clean of these):
+- 4 back-matter entry-fusions — an entry starting at a page TOP fused into the
+  previous page's last entry (no gap signal across the seam). A pagebreak-anchor
+  + entry-label scan found EXACTLY the 4 readers flagged: `Gaudapada` (p182),
+  `Note 15: Ahmad al-Alawi` (p184), `Selection 22` (p193), `Sepher Torah` (p202).
+  Fixed with `flow.overrides` breaks at each (page, line 1). Fixing `Note 15`
+  also un-suppressed its imprint footnote link (61→62 — the linker only fires
+  "Note N" detection at a paragraph start).
+- TOC `Appendix` fused onto `Hypostatic Dimensions of Unity` (part-divider line
+  carries no folio → was read as a wrapped-title turnover). New `toc.standalone_lines`
+  knob (config + printed-TOC rebuild branch) makes it its own entry; gate 6 now
+  skips folio-less part-divider entries (can't page-verify a page-less label).
+
+HANDOFF QUEUE (pre-existing; not fixed this pass, print-verify before acting):
+- Dropped compound hyphens from `dehyphenate: lower-only` over-stripping a real
+  compound broken at its hyphen (8): `religion-quintessence` p29, `prayer-niche`
+  n162, `karma-yoga` p138, `quasi-supernatural` p89, `vis-à-vis` p.ix,
+  `lightning-like` p73, `logician-like` n42, `non-theological` p90. The project
+  deliberately refuses a keep-hyphen lexicon (see the dehyphenate doctrine);
+  a per-book render-verified keep-list would be the sanctioned mechanism if wanted.
+- Spurious space after a hyphen/dash WITHIN a source line (5) — an extraction
+  artifact, NOT a join bug (verified: `al- Bātin` sits inside one raw line):
+  `al- Bātin` p106, `Apara- Brahma` p176, `[113]:1- 2` p12, `ʾIhyā— whether` p51,
+  `God”— and` p47. Would need a shared textfix normalization (risk of over-firing).
+- Index column line-break hyphens RETAINED (2): `anthropomor- phist` p187,
+  `Muham- mad` p189 — dehyphenation not applied on the column re-split path.
+- Other: stray U+00AD in `poverty` p27; `beyondcaste` (lost space) n120;
+  Ibn Arabi Fusūs passage p39 should be a blockquote (quote-boundary).
+- Structural: `Seyyed Hossein Nasr Bethesda, Maryland` signature block (foreword)
+  low-confidence fusion — verify against p.x before touching.
