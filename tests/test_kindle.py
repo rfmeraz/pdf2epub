@@ -61,6 +61,25 @@ def test_env_override_and_explicit_out(tmp_path, monkeypatch):
     assert calls["cmd"][2] == str(out)
 
 
+def test_stderr_warnings_are_reported_on_success(tmp_path, monkeypatch):
+    # a WARNING routed to stderr on a zero exit must not be reported as clean
+    monkeypatch.delenv("PDF2EPUB_EBOOK_CONVERT", raising=False)
+    monkeypatch.setattr(kindle.shutil, "which",
+                        lambda name: "/usr/bin/ebook-convert")
+
+    def fake_run(cmd, **kw):
+        Path(cmd[2]).write_bytes(b"d")
+        return SimpleNamespace(returncode=0, stdout="",
+                               stderr="WARNING: cover not found")
+
+    monkeypatch.setattr(kindle.subprocess, "run", fake_run)
+    msgs: list[str] = []
+    assert kindle.run_kindle(_epub(tmp_path), say=msgs.append) == 0
+    assert any("WARNING: cover not found" in m for m in msgs)
+    assert any("1 warning(s)" in m for m in msgs)
+    assert not any("kindle: clean" in m for m in msgs)
+
+
 def test_converter_failure_returns_1(tmp_path, monkeypatch):
     monkeypatch.delenv("PDF2EPUB_EBOOK_CONVERT", raising=False)
     monkeypatch.setattr(kindle.shutil, "which",

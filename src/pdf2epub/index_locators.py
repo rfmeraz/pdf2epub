@@ -66,6 +66,42 @@ def _page_of(p: Paragraph) -> int:
         return -1
 
 
+def _role_index_runs(blocks) -> set[int]:
+    """``id()`` of every block belonging to a single-column index (the
+    ``index`` role path). A run is a MAXIMAL span anchored by ``role=='index'``
+    paragraphs that bridges only interleaved page anchors and headings
+    (letter-group dividers) — NOT arbitrary body paragraphs. This keeps two
+    separate single-column indexes (or an index followed by unrelated content)
+    from being fused into one span whose intervening prose would be wrongly
+    tagged and locator-linked. Trailing bridged blocks after the last entry
+    belong to what follows the index, so they are dropped."""
+    ids: set[int] = set()
+    n = len(blocks)
+    i = 0
+    while i < n:
+        b = blocks[i]
+        if not (isinstance(b, Paragraph) and (b.role or "") == "index"):
+            i += 1
+            continue
+        run: list = []
+        j = i
+        while j < n:
+            nb = blocks[j]
+            is_entry = isinstance(nb, Paragraph) and (nb.role or "") == "index"
+            is_bridge = isinstance(nb, PageAnchor) or (
+                isinstance(nb, Paragraph) and (nb.role or "p") in _HEAD_ROLES)
+            if not (is_entry or is_bridge):
+                break
+            run.append(nb)
+            j += 1
+        while run and not (isinstance(run[-1], Paragraph)
+                           and (run[-1].role or "") == "index"):
+            run.pop()  # a trailing anchor/heading belongs to the next section
+        ids.update(id(x) for x in run)
+        i = j
+    return ids
+
+
 def link_index_locators(res, cfg, say=print) -> None:
     """Link page-number locators in the book's index(es). No-op unless a
     ``flow.columns`` block is flagged ``index: true`` or a paragraph carries the
@@ -79,13 +115,11 @@ def link_index_locators(res, cfg, say=print) -> None:
         if getattr(cs, "index", False):
             idx_pages.update(cs.pages)
 
-    # single-column index: the span from the first to the last role=='index'
-    # paragraph (so interleaved letter-group heads are inside the container too)
-    role_idx = [i for i, b in enumerate(blocks)
-                if isinstance(b, Paragraph) and (b.role or "") == "index"]
-    role_span = (role_idx[0], role_idx[-1]) if role_idx else None
+    # single-column index: contiguous run(s) of role=='index' paragraphs,
+    # bridging only interleaved page anchors and letter-group headings
+    role_run_ids = _role_index_runs(blocks)
 
-    if not idx_pages and role_span is None:
+    if not idx_pages and not role_run_ids:
         return  # opt-in: byte-identical when unused
 
     from .flowbuilder import _Warn  # local: flowbuilder imports this lazily
@@ -93,11 +127,10 @@ def link_index_locators(res, cfg, say=print) -> None:
     labels = _page_labels(blocks)
     n_link = n_para = n_unlinked = 0
 
-    for i, b in enumerate(blocks):
+    for b in blocks:
         if not isinstance(b, Paragraph):
             continue
-        in_index = (_page_of(b) in idx_pages) or (
-            role_span is not None and role_span[0] <= i <= role_span[1])
+        in_index = (_page_of(b) in idx_pages) or (id(b) in role_run_ids)
         if not in_index:
             continue
         role = b.role or "p"

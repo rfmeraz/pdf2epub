@@ -67,7 +67,10 @@ def run_kindle(epub: Path, out: Path | None = None, say=print) -> int:
             say(f"  {ln}")
         return 1
 
-    warns = [ln.strip() for ln in proc.stdout.splitlines()
+    # calibre logs mostly to stdout but routes some notices to stderr — scan
+    # both so a "clean" report can't hide a captured warning
+    warns = [ln.strip()
+             for ln in (proc.stdout + "\n" + proc.stderr).splitlines()
              if ln.strip().startswith("WARNING")]
     for ln in warns[:8]:
         say(f"  {ln}")

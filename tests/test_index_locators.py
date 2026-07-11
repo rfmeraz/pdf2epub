@@ -98,6 +98,27 @@ def test_role_index_single_column_path():
     assert ("322", "page:322") in _links(entry.items)
 
 
+def test_role_index_bridges_headings_not_body_between_runs():
+    # two separate single-column indexes with unrelated body prose between them:
+    # the divider heading bridges INSIDE an index; the body prose must NOT be
+    # tagged or locator-linked, even though its number matches a real anchor.
+    e1 = _p("apple, 33", 33, role="index")
+    div = _p("B", 33, role="h2")               # letter-group divider (bridged)
+    e2 = _p("banana, 41", 41, role="index")
+    body = _p("See page 33 for details.", 60)  # unrelated prose between indexes
+    e3 = _p("Qurʾān, 33", 300, role="index")   # a second, separate index
+    blocks = [PageAnchor(33, "33"), e1, div, e2, PageAnchor(60, "60"),
+              body, PageAnchor(300, "300"), e3]
+    res = _result(blocks)
+    link_index_locators(res, _cols(), say=lambda m: None)
+
+    assert div.block_class == "index"          # heading bridged into the section
+    assert e1.block_class == e2.block_class == e3.block_class == "index"
+    assert body.block_class is None            # untouched
+    assert _links(body.items) == [("See page 33 for details.", None)]  # not linked
+    assert ("33", "page:33") in _links(e1.items)
+
+
 def test_no_op_without_flag():
     entry = _p("Kaʿba, 322", 322)
     res = _result([PageAnchor(322, "322"), entry])
