@@ -334,6 +334,10 @@ class PdfBookConfig:
     # adjudications (gate 22)
     adjudications: list[Adjudication] = field(default_factory=list)
 
+    # imprint (publisher-specific structural transforms; None = generic tool).
+    # Parsed and owned by pdf2epub.imprints; the core only routes the block.
+    imprint: "ImprintSpec | None" = None
+
     # output
     slug: str = "book"
     include_ncx: bool = True
@@ -401,7 +405,7 @@ def load_config(path: Path) -> PdfBookConfig:
     _check_keys("book.yaml", data, {
         "source", "metadata", "pages", "furniture", "styles", "flow",
         "footnotes", "toc", "glyphs", "fonts", "languages", "split",
-        "images", "output", "qa", "adjudications", "blocks",
+        "images", "output", "qa", "adjudications", "blocks", "imprint",
     })
     cfg = PdfBookConfig(path=path)
 
@@ -734,5 +738,11 @@ def load_config(path: Path) -> PdfBookConfig:
     _check_keys("output", out, {"slug", "include_ncx"})
     cfg.slug = out.get("slug", cfg.slug)
     cfg.include_ncx = bool(out.get("include_ncx", True))
+
+    imp = data.get("imprint")
+    if imp is not None:
+        # the imprint package owns its sub-schema; the core only routes it
+        from .imprints import parse_imprint
+        cfg.imprint = parse_imprint(imp)
 
     return cfg

@@ -23,6 +23,11 @@ class RunFormat:
     applied_font: str | None = None
     char_style: str | None = None
     lang: str | None = None  # filled by mapping.lang, not the parser
+    # symbolic internal cross-reference target set by an imprint transform
+    # (never the PDF parser): "page:<label>" or "note:<note_id>". The emitter
+    # wraps the run in an <a> and a second pass resolves the target to
+    # <file>#<id> once every file's anchors are known. None = plain run.
+    link: str | None = None
 
     def key(self) -> tuple:
         return (
@@ -34,6 +39,7 @@ class RunFormat:
             self.applied_font,
             self.char_style,
             self.lang,
+            self.link,
         )
 
 

@@ -171,6 +171,14 @@ footnotes:                    # JP-P4 — verified on p21 render
   policy: markers   # census {'*-inline': 54 (these are '* * *' section breaks), 'digit': 170}
   marker: digits
 
+imprint:                      # World Wisdom back-matter convention (see NOTES.md)
+  name: world-wisdom
+  editors_notes:              # notes keyed to ORIGINAL PRINT PAGES, no body marker.
+    heading: "Editor's Notes" # relink page nums -> #pg-<label>, "Note N" -> author fn
+    link_page_refs: true      # "4:" / "xiv:" -> the print-page anchor
+    link_footnote_refs: true  # "Note 2" -> resolved global author footnote
+    body_backlinks: "off"     # no body-side markers in v1 (deferred)
+
 toc:                          # JP-P3 — printed TOC (p6) chosen: it lists the Appendix
   source: printed   # outline(15) omits "Selections from Letters…"(p152); printed(15) includes it
   printed_pages: [6]

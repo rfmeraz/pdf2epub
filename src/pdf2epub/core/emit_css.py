@@ -94,6 +94,7 @@ ol.notes li { margin-bottom: 0.6em; }
 ol.notes p { text-indent: 0; text-align: left; }
 a.noteref { text-decoration: none; }
 a.backlink { text-decoration: none; }
+a.xref { text-decoration: none; color: inherit; }
 span.smallcaps { font-variant: small-caps; }
 """
 

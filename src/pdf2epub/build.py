@@ -90,6 +90,13 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     from .mapping import stage_map
 
     stage_map(ctx, res)
+    # ---- imprint-specific structural transforms (publisher back-matter the
+    # generic flow can't model, e.g. World Wisdom editor's notes). Runs after
+    # roles/lang are final so it can key on headings, and adds link markers
+    # only — never rewords. No-op unless book.yaml sets `imprint:`.
+    if cfg.imprint is not None:
+        from .imprints import apply_imprint
+        apply_imprint(res, cfg, ctx.pdf_doc, ctx.say)
     ctx.ir_dump("map", flowdoc_to_dict(ctx.flow))
     if upto == "map":
         _write_warnings(ctx)
@@ -110,6 +117,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     emitter = Emitter(cfg, ctx.flow, ctx.say, text_width_pt=geo_width)
     result = emitter.emit()
     emitter.resolve_contents_links()
+    emitter.resolve_crossref_links()
     ctx.emit_warnings = emitter.warnings
     out_dir = cfg.build_dir / "oebps"
     out_dir.mkdir(parents=True, exist_ok=True)

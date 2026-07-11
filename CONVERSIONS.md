@@ -590,3 +590,27 @@ recto/verso specs stand; PUA ornaments dropped as recorded).
 
 qa Overall: PASS (all 23 gates), epubcheck clean, 259 unit tests green.
 Final state: 1580 blocks, 170 notes.
+
+### 2026-07-10 addendum — Editor's Notes relinked (World Wisdom imprint)
+
+User request: the Editor's Notes are keyed to ORIGINAL PRINT PAGE NUMBERS
+with no body-text marker — dead after reflow. Two asks: (1) a World-Wisdom-
+specific module that doesn't clutter the generic pipeline, (2) an intelligible
+EPUB link. Decision (with user): a gated `imprint:` block routing to
+`pdf2epub.imprints.world_wisdom`; **Tier C** linking, **no body-side markers
+in v1**. See NOTES.md "Imprint transforms + Editor's Notes relinking".
+
+- `imprint: {name: world-wisdom, editors_notes: {…}}` added to book.yaml.
+- Each note's leading bold page number → the `#pg-<label>` print-page anchor
+  (carry-forward across continuation paragraphs); each `Note N` → the author
+  footnote, resolved chapter-aware `(chapter, local N) → global fn` (the EPUB
+  renumbers footnotes globally, so Exo-Esoteric "Note 3" = fn22, not fn3).
+- Result: 99 page links + 61 footnote links, 0 unresolved. Every note link
+  verified to point at the correct footnote (61/61; 5 callout-page readings
+  differ by ±1 only because the marker sits at a page seam — not a mislink).
+- qa Overall: PASS, epubcheck clean; me-and-rumi rebuilt clean (imprint inert).
+
+HANDOFF: `body_backlinks` deferred (parsed, rejected as unimplemented);
+intra-notes cross-refs ("see editor's note for Preface, p. 4") ship as plain
+text. Consider a blind-reader `/proofread-epub` pass to confirm the linked
+page numbers read naturally in a reader.

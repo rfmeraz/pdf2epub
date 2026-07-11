@@ -71,6 +71,12 @@ def _run_html(run: TextRun) -> str:
         text = f"<b>{text}</b>"
     if fmt.italic:
         text = f"<i>{text}</i>"
+    if fmt.link:
+        # symbolic target; resolve_crossref_links() rewrites the {XREF|...}
+        # placeholder href to <file>#<id> (or unwraps it) after every file's
+        # anchors are known. cls tells CSS a page-ref from a note-ref.
+        cls = "xref xref-note" if fmt.link.startswith("note:") else "xref xref-page"
+        text = f'<a class="{cls}" href="{{XREF|{escape(fmt.link, {chr(34): "&quot;"})}}}">{text}</a>'
     return text
 
 
@@ -305,6 +311,7 @@ class Emitter:
             i += 1
 
         notes_file = self._emit_notes()
+        self._notes_out = notes_file  # for resolve_crossref_links (not in self.files)
         # second pass: contents links can now resolve (headings known)
         return EmitResult(
             files=self.files,
@@ -622,6 +629,49 @@ class Emitter:
             self.warnings.append(
                 f"contents entries without a matching heading (left unlinked): {unmatched}"
             )
+
+    def resolve_crossref_links(self) -> None:
+        """Second pass: resolve {XREF|page:<label>} / {XREF|note:<note_id>}
+        placeholder hrefs (set via RunFormat.link, e.g. by an imprint
+        transform) to <file>#<id> now that every file's page anchors and the
+        global note order are known. An unresolvable target unwraps its <a>
+        so the text still ships plainly."""
+        page_reg: dict[str, tuple[str, str]] = {}
+        for f in self.files:
+            for label, pid in f.pagebreaks:
+                page_reg.setdefault(label, (f.file_name, pid))
+        note_n = {nid: i + 1 for i, nid in enumerate(self._note_order)}
+        unresolved: list[str] = []
+        _SENT = "\x00XREF-UNRESOLVED\x00"
+
+        def repl(m: "re.Match") -> str:
+            kind, key = m.group(1), m.group(2)
+            if kind == "page":
+                tgt = page_reg.get(key)
+                if tgt:
+                    return f"{tgt[0]}#{tgt[1]}"
+            elif kind == "note":
+                n = note_n.get(key)
+                if n:
+                    return f"notes.xhtml#fn{n}"
+            unresolved.append(f"{kind}:{key}")
+            return _SENT
+
+        href_pat = re.compile(r"\{XREF\|(page|note):([^}]*)\}")
+        drop_pat = re.compile(
+            r'<a class="xref[^"]*" href="' + re.escape(_SENT) + r'">(.*?)</a>',
+            re.S)
+        files = list(self.files) + (
+            [self._notes_out] if getattr(self, "_notes_out", None) else [])
+        for f in files:
+            parts = [href_pat.sub(repl, part) for part in f.body_parts]
+            if _SENT in "".join(parts):
+                parts = [drop_pat.sub(r"\1", part) for part in parts]
+            f.body_parts = parts
+        if unresolved:
+            self.warnings.append(
+                f"cross-reference targets left unlinked (text ships plain): "
+                f"{sorted(set(unresolved))}")
 
     # ---------------- notes ----------------
 

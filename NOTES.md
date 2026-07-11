@@ -1060,3 +1060,43 @@ witness is FOR: a re-judged book's structural judgments not mirrored to its vari
 the (geometry-identical) render-verified judgments from `book.yaml`; the variant now builds
 to 2799 blocks like the main, gate 22/23 PASS, Overall: PASS. Variant configs must track
 the primary's structural judgments — and must be REBUILT for the witness to catch the drift.
+
+## Imprint transforms + Editor's Notes relinking (2026-07-10, Sufism)
+
+World Wisdom scholarly editions carry back-matter **Editor's Notes** keyed to the ORIGINAL
+PRINT PAGE NUMBERS with NO marker in the running body text (rubric: "Numbers in bold indicate
+pages in the text for which the following … are provided"). Reflow makes "page 4" meaningless,
+so the whole apparatus goes dead. This is one publisher's convention, not a general PDF shape —
+so it lives behind a gated **imprint** hook, not in the generic flow.
+
+- **Extension point.** `book.yaml` gains a namespaced `imprint:` block; `pdf2epub.imprints`
+  owns its sub-schema (`config.py` only routes it). The core calls `apply_imprint(res, cfg,
+  doc, say)` ONCE — in `build.py` right after `stage_map` (NOT in `build_flow`: roles are
+  applied in the map stage, so a flow-time hook sees `role is None` on every paragraph and can't
+  find the h1/h3 headings it keys on). No-op unless `imprint:` is set → the other four books are
+  untouched (all still build epubcheck-clean, QA PASS).
+- **Links are markup, never words.** New `RunFormat.link` carries a SYMBOLIC target
+  (`page:<label>` / `note:<note_id>`); the emitter wraps the run in `<a class="xref">` with a
+  `{XREF|…}` placeholder href, and `resolve_crossref_links()` (a second pass modeled on
+  `resolve_contents_links`) rewrites it to `<file>#<id>` once every file's `pagebreaks` and the
+  global `_note_order` are known. Cross-file targets (`015` → `pg-4` in `007`) REQUIRE this
+  second pass — a flow-time literal href can't know the split filename. Unresolvable → unwrap
+  the `<a>`, keep the text, advisory-warn. Keeping links on `TextRun` (vs. a new inline type)
+  means `Paragraph.text()`, the PUA scan, and every QA text gate see the linked text unchanged.
+- **Chapter-aware `Note N` → footnote.** An editor entry `4: Note 2:` annotates the author's
+  footnote 2 on print page 4, using the PRINT per-chapter numbering — but the EPUB renumbers
+  footnotes GLOBALLY (`fn1..fn170`). So `Note N` resolves via `(norm(chapter), local_k) ->
+  note_id`, built by walking the flow and resetting a per-chapter counter at each h1; chapter 2's
+  "Note 1" is `fn20`, not `fn1`. The leading bold page number carries forward across an entry's
+  continuation paragraphs (reset at each chapter subhead), exactly as it governs them in print.
+- **Verification baseline (Sufism).** 99 page-ref links + 61 footnote-ref links, 0 unresolved
+  placeholders, epubcheck clean, QA Overall PASS (page-list still 216, notes still 170).
+  Cross-checked every note link against where its footnote is actually called: 56/61 exact,
+  and all 5 residual are off by exactly ONE page — the footnote marker sits at a page seam
+  (e.g. `fnref29` renders immediately before the `pg-24` span, ending page 23; the editor
+  counts it as page 24). The LINK still points to the correct footnote in all 61 — the ±1 is a
+  callout-page measurement artifact at boundaries, not a mapping error. Regression: me-and-rumi
+  builds clean + QA PASS; the only shared-output change is one inert `a.xref` CSS rule.
+- **Deferred:** `body_backlinks` (a body-side marker at the annotated passage) is parsed but
+  rejected as unimplemented — v1 keys off print-page anchors only, no body mutation. Intra-notes
+  cross-refs ("see editor's note for Preface, p. 4") ship as plain text.

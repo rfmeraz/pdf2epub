@@ -47,6 +47,9 @@ CODES: dict[str, str] = {
     "outline-broken-target": ADVISORY,
     "link-unresolvable": ADVISORY,
     "contents-unlinked": ADVISORY,
+    "imprint-note-unlinked": ADVISORY,  # an imprint transform (e.g. World
+    #   Wisdom editor's notes) could not resolve a page/footnote cross-ref to
+    #   an anchor; the note text ships intact, just without the hyperlink
 }
 
 
