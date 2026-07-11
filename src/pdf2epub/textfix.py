@@ -293,7 +293,8 @@ _ARABIC_ARTICLE = re.compile(
     "(\\S+)\\s+al-$")
 
 
-def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str, str, bool]:
+def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only",
+                     keep: "frozenset[str] | set[str]" = frozenset()) -> tuple[str, str, bool]:
     """Decide the junction when ``nxt`` continues ``prev`` across a line break.
 
     Returns (prev_out, separator, dehyphenated). lower-only: strip the
@@ -328,6 +329,12 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only") -> tuple[str
             # the conjunction 'wa' before the article is Arabic context too
             # ('Kitāb al-milal wa al-/nihal', I&B bibliography)
             or art.group(1).lower() in ("wa", "wal"))
+        # a per-book render-verified keep-list preserves a real compound whose
+        # hyphen happens to fall at a line break ('religion-/quintessence' —
+        # lower-only would strip it, but print keeps it); matched on the
+        # reconstructed 'lastword-nextword', case-insensitive
+        if keep and f"{last_word}-{next_word}".lower() in keep:
+            return base, "", False
         if nxt.lstrip()[:1].islower() and not chain \
                 and not arabic_article \
                 and not _KEEP_HYPHEN_PREFIX.search(base):

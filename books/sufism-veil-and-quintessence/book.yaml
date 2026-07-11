@@ -107,6 +107,17 @@ flow:
   indent_threshold: 13.5
   gap_factor: 1.6             # median leading 13.1pt
   dehyphenate: lower-only
+  keep_hyphens:              # proofread 2026-07-11: real compounds whose hyphen
+                            # fell at a line break; lower-only stripped it. Each
+                            # verified hyphenated elsewhere in the book.
+    - "religion-quintessence"   # p29; cf. "religion-synthesis" adjacent
+    - "prayer-niche"            # note 162; hyphenated at its 1st occurrence
+    - "karma-yoga"              # p138; hyphenated at every other occurrence
+    - "quasi-supernatural"      # p89; cf. "quasi-natural"
+    - "vis-à-vis"               # p.ix; standard hyphenated phrase
+    - "non-theological"         # p90; cf. "non-esoteric"/"non-formal"
+    - "lightning-like"          # p73; "-like" compound
+    - "logician-like"           # note 42; cf. hyphenated "logician-like" in ch.1
   restore_spaces: false      # lost-space hits: 0
   join_center_lines: false   # centered lines are DISTINCT items here (the
                              # 'Books by Frithjof Schuon' list, title-page

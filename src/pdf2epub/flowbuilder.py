@@ -1659,7 +1659,7 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
             nxt = next((r.text for r in runs
                         if isinstance(r, TextRun) and r.text.strip()), "")
             prevrun_text, sep, dehy = dehyphenate_join(
-                prevrun.text, nxt, cfg.dehyphenate)
+                prevrun.text, nxt, cfg.dehyphenate, cfg.keep_hyphens)
             if dehy:
                 counts["dehyphenated"] += 1
             prevrun.text = prevrun_text
@@ -1848,7 +1848,7 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
             nxt = next((r.text for r in runs
                         if isinstance(r, TextRun) and r.text.strip()), "")
             new_text, sep, _ = dehyphenate_join(para.items[-1].text, nxt,
-                                                cfg.dehyphenate)
+                                                cfg.dehyphenate, cfg.keep_hyphens)
             para.items[-1].text = new_text + sep
         para.items.extend(runs)
     if cfg.restore_spaces:

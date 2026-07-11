@@ -654,3 +654,32 @@ HANDOFF QUEUE (pre-existing; not fixed this pass, print-verify before acting):
   Ibn Arabi Fusūs passage p39 should be a blockquote (quote-boundary).
 - Structural: `Seyyed Hossein Nasr Bethesda, Maryland` signature block (foreword)
   low-confidence fusion — verify against p.x before touching.
+
+### 2026-07-11 addendum 2 — nav nesting + handoff compound-hyphens
+
+Follow-up ("continue with both"): side-nav nesting fix + first handoff theme.
+
+- **Nav nesting bug (user-reported):** the Editor's Notes chapter subheads (all
+  h3) nested UNDER `Preface` instead of being its siblings. Root cause in
+  `nav._nest`: the old `min(level, stack+1)` clamp lost same-level identity
+  across the `h1->h3` jump. Rewrote to compute each heading's depth as its count
+  of strictly-shallower ancestors — same-level headings are now siblings
+  regardless of the gap, and no `<li>` ever gets a second `<ol>` (an earlier
+  attempt did, failing epubcheck via GLOSSARY h2 after the h3 chapters). Shared
+  fix; 6 new `test_nav` cases; all books re-QA clean.
+- **Handoff theme FIXED — dropped compound hyphens (8):** new per-book
+  `flow.keep_hyphens` (render/in-book-verified list, like `qa_lost_space_allow`
+  — an agent judgment, NOT the global lexicon the doctrine refuses). Preserves a
+  real compound's hyphen when it falls at a line break. `religion-quintessence`,
+  `prayer-niche`, `karma-yoga`, `quasi-supernatural`, `vis-à-vis`,
+  `non-theological`, `lightning-like`, `logician-like` — all now hyphenated, 0
+  fused. `dehyphenate_join` gained a `keep` param.
+- Soft-hyphen `poverty` (U+00AD): already resolved — 0 soft hyphens in the
+  current build (the reader saw a pre-fix build).
+
+STILL DEFERRED (lower value / higher regression risk): hyphen/dash space-seam
+SOURCE artifacts (`al- Bātin` etc. — gate-9-tolerated, ~1-3 left, would need a
+shared or per-book close-rule with over-fire risk); index column-hyphen
+retention (intricate column-join path); `beyondcaste` lost space (no clean
+per-book split knob); Ibn Arabi Fusūs quote-boundary (needs a blocks.quotes
+spec).

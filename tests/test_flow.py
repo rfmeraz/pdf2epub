@@ -79,6 +79,20 @@ def test_dehyphenation_cases(tmp_path):
     assert "Kaccayanagotta-Sutta" in text         # capital -> hyphen kept
 
 
+def test_dehyphenate_keep_list():
+    # a real compound broken at its hyphen: lower-only strips it by default...
+    assert dehyphenate_join("the religion-", "quintessence and") == \
+        ("the religion", "", True)
+    # ...but a per-book keep-list preserves the hyphen (no space), case-insensitive
+    keep = frozenset({"religion-quintessence", "karma-yoga"})
+    assert dehyphenate_join("the religion-", "Quintessence and", "lower-only",
+                            keep) == ("the religion-", "", False)
+    assert dehyphenate_join("a karma-", "yoga now", "lower-only", keep) == \
+        ("a karma-", "", False)
+    # an unlisted compound still dehyphenates
+    assert dehyphenate_join("the know-noth-", "ing here", "lower-only", keep)[2]
+
+
 def test_dropcap_reattaches_and_flags(tmp_path):
     pages = [_page(1, [
         _line("A", 100, font=BIG, width=20.0),

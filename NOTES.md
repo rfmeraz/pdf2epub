@@ -1128,3 +1128,21 @@ theme being `dehyphenate: lower-only` over-stripping real compound hyphens (`rel
 `karma-yoga`, `prayer-niche`…) — the keep-hyphen lexicon the project deliberately refuses — and
 spurious in-line spaces after a hyphen/dash (`al- Bātin`) that are SOURCE-PDF extraction artifacts,
 not join bugs (verified: they sit inside a single raw extracted line).
+
+## Nav nesting by ancestor-count + per-book keep-hyphens (2026-07-11, Sufism)
+
+- **`nav._nest` nests by strictly-shallower-ancestor COUNT, not raw level.** The old
+  `min(level, stack[-1]+1)` clamp collapsed an `h1->h3` jump so the first h3 landed at depth 1
+  and the NEXT h3 was allowed one deeper — nesting same-level siblings under the first (Sufism's
+  Editor's Notes chapter subheads under `Preface`). The rewrite computes each heading's depth as
+  `len(stack of strictly-shallower open levels)`, so headings sharing the same shallower ancestors
+  are siblings regardless of the level gap. Two invariants keep the nav valid: depth rises by at
+  most one per step, and every `<li>` gets at most one child `<ol>` (a second `<ol>` in one `<li>`
+  — what a naive "reopen a child after popping" produces for `h1>h3…>h2` — fails epubcheck).
+- **`flow.keep_hyphens`** — a per-book, render-verified list of compounds whose hyphen must
+  survive a line-break split, threaded into `dehyphenate_join(prev, nxt, mode, keep)` and matched
+  on the reconstructed `lastword-nextword` (case-insensitive). This is the sanctioned per-book
+  escape hatch for `dehyphenate: lower-only` over-stripping (`religion-quintessence`), analogous
+  to `qa_lost_space_allow` — an explicit agent judgment, NOT the automatic global lexicon the
+  dehyphenate doctrine refuses. Unused entries are inert (no stale-fail), so it's safe to list
+  a compound that only sometimes breaks at its hyphen.

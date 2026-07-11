@@ -270,6 +270,11 @@ class PdfBookConfig:
     indent_threshold: float = 9.0   # pt of first-line indent that starts a paragraph
     gap_factor: float = 1.6         # vgap >= factor x median leading = block break
     dehyphenate: str = "lower-only"  # lower-only | off
+    # render-verified compounds whose hyphen must survive a line-break split
+    # ('religion-quintessence') — lower-only would otherwise strip it; matched
+    # case-insensitively on the reconstructed 'word-word'. Per-book, like
+    # qa_lost_space_allow (an agent judgment, NOT a global lexicon).
+    keep_hyphens: frozenset = frozenset()
     restore_spaces: bool = False
     join_center_lines: bool = True
     reattach_dropcaps: bool = True
@@ -500,12 +505,15 @@ def load_config(path: Path) -> PdfBookConfig:
     fl = data.get("flow", {})
     _check_keys("flow", fl, {"indent_threshold", "gap_factor", "dehyphenate",
                              "restore_spaces", "join_center_lines",
-                             "reattach_dropcaps", "overrides", "columns"})
+                             "reattach_dropcaps", "overrides", "columns",
+                             "keep_hyphens"})
     cfg.indent_threshold = float(fl.get("indent_threshold", cfg.indent_threshold))
     cfg.gap_factor = float(fl.get("gap_factor", cfg.gap_factor))
     cfg.dehyphenate = fl.get("dehyphenate", cfg.dehyphenate)
     if cfg.dehyphenate not in ("lower-only", "off"):
         raise ConfigError(f"flow.dehyphenate invalid: {cfg.dehyphenate}")
+    cfg.keep_hyphens = frozenset(
+        str(h).lower() for h in (fl.get("keep_hyphens", []) or []))
     cfg.restore_spaces = bool(fl.get("restore_spaces", False))
     cfg.join_center_lines = bool(fl.get("join_center_lines", True))
     cfg.reattach_dropcaps = bool(fl.get("reattach_dropcaps", True))

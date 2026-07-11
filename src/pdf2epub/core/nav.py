@@ -25,32 +25,43 @@ def _toc_entries(files: list[OutFile]) -> list[tuple[int, str, str]]:
 
 
 def _nest(entries: list[tuple[int, str, str]]) -> str:
-    """Render nested <ol> from (level, title, href), tolerating level jumps."""
+    """Render nested <ol> from (level, title, href), tolerating level jumps.
+
+    Each heading's nesting DEPTH is its number of strictly-shallower open
+    ancestors — so headings sharing the same set of shallower ancestors are
+    SIBLINGS regardless of the raw level gap between them (World Wisdom
+    editor's-notes chapter subheads, all h3, sit as siblings under the h1
+    'EDITOR'S NOTES' even though nothing at h2 intervenes). Depth rises by at
+    most one per step, keeping the nav valid: every <li> has at most one child
+    <ol>, and an <ol> only ever opens right after an <li>."""
+    depths: list[int] = []
+    levels: list[int] = []
+    for level, _title, _href in entries:
+        while levels and levels[-1] >= level:
+            levels.pop()
+        depths.append(len(levels))
+        levels.append(level)
+
     html: list[str] = ["<ol>"]
-    stack = [1]
+    cur = 0
     open_li = False
-    for level, title, href in entries:
-        level = max(1, min(level, stack[-1] + 1))
-        while level < stack[-1]:
+    for (level, title, href), depth in zip(entries, depths):
+        depth = min(depth, cur + 1)  # never jump more than one <ol> deep
+        while cur > depth:
             html.append("</li></ol>")
-            stack.pop()
-            open_li = True
-        if level > stack[-1]:
-            if not open_li:
-                # nothing to nest under (e.g. the document's FIRST heading is
-                # an h2): flatten instead of emitting <ol> directly in <ol>
-                level = stack[-1]
-            else:
-                html.append("<ol>")
-                stack.append(level)
-                open_li = False
-        if open_li:
+            cur -= 1
+            open_li = True  # the parent <li> is open again after closing its <ol>
+        if depth > cur:
+            html.append("<ol>")  # descend one level (right after the parent <li>)
+            cur += 1
+            open_li = False
+        elif open_li:
             html.append("</li>")
         html.append(f'<li><a href="{escape(href)}">{escape(title)}</a>')
         open_li = True
-    while stack[-1] > 1:
+    while cur > 0:
         html.append("</li></ol>")
-        stack.pop()
+        cur -= 1
     if open_li:
         html.append("</li>")
     html.append("</ol>")
