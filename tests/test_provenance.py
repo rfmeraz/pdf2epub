@@ -42,17 +42,60 @@ def test_verify_book_yaml_drift(tmp_path):
     assert run_verify(epub) == 1
 
 
+def test_verify_fails_on_recorded_input_missing(tmp_path):
+    # a recorded input that has since VANISHED must fail, not silently pass
+    epub = tmp_path / "book.epub"
+    epub.write_bytes(b"e")
+    by = tmp_path / "book.yaml"
+    by.write_text("schema_version: 1\n")
+    (tmp_path / "book.manifest.json").write_text(json.dumps({
+        "epub_sha256": _sha(b"e"),
+        "book_yaml_path": str(by),
+        "book_yaml_sha256": _sha(b"schema_version: 1\n"),
+    }))
+    assert run_verify(epub) == 0
+    by.unlink()                                          # input deleted/relocated
+    assert run_verify(epub) == 1
+
+
+def test_verify_checks_source_pdf(tmp_path):
+    epub = tmp_path / "book.epub"
+    epub.write_bytes(b"e")
+    pdf = tmp_path / "src.pdf"
+    pdf.write_bytes(b"PDF-v1")
+    (tmp_path / "book.manifest.json").write_text(json.dumps({
+        "epub_sha256": _sha(b"e"),
+        "source_pdf_path": str(pdf),
+        "source_pdf_sha256": _sha(b"PDF-v1"),
+    }))
+    assert run_verify(epub) == 0
+    pdf.write_bytes(b"PDF-v2-changed")                   # source drift
+    assert run_verify(epub) == 1
+
+
 def test_manifest_deterministic_and_no_wallclock(tmp_path):
     (tmp_path / "book.yaml").write_text("schema_version: 1\n")
     cfg = PdfBookConfig(path=tmp_path / "book.yaml")
     cfg.slug = "x"
     cfg.pdf = "missing.pdf"
-    m1 = build_manifest(cfg, epub_sha256="abc", epubcheck_ok=True,
+    m1 = build_manifest(cfg, epub_sha256="abc", epubcheck_status="passed",
                         epubcheck_version="5.3.0")
-    m2 = build_manifest(cfg, epub_sha256="abc", epubcheck_ok=True,
+    m2 = build_manifest(cfg, epub_sha256="abc", epubcheck_status="passed",
                         epubcheck_version="5.3.0")
     assert m1 == m2                                    # reproducible, no wall-clock
     assert m1["epub_sha256"] == "abc"
     assert m1["book_yaml_sha256"] == _sha((tmp_path / "book.yaml").read_bytes())
-    # no field should carry a current timestamp
+    assert m1["source_pdf_path"] is None               # missing.pdf → recorded null
+    assert m1["epubcheck"] == {"ok": True, "status": "passed", "version": "5.3.0"}
     assert "timestamp" not in json.dumps(m1).lower()
+
+
+def test_manifest_skipped_epubcheck_is_not_ok(tmp_path):
+    (tmp_path / "book.yaml").write_text("schema_version: 1\n")
+    cfg = PdfBookConfig(path=tmp_path / "book.yaml")
+    cfg.slug = "x"
+    cfg.pdf = "missing.pdf"
+    m = build_manifest(cfg, epub_sha256="abc", epubcheck_status="skipped",
+                       epubcheck_version=None)
+    # skipped must NOT read as a passing check
+    assert m["epubcheck"] == {"ok": None, "status": "skipped", "version": None}

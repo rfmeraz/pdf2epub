@@ -86,18 +86,27 @@ def _release_epoch(cfg) -> str:
     return os.environ.get("SOURCE_DATE_EPOCH", _DEFAULT_EPOCH)
 
 
-def build_manifest(cfg, *, epub_sha256: str, epubcheck_ok: bool,
-                   epubcheck_version: str) -> dict:
+def build_manifest(cfg, *, epub_sha256: str, epubcheck_status: str,
+                   epubcheck_version: str | None) -> dict:
     src_pdf = cfg.pdf_path()
+    src_exists = src_pdf.exists()
     return {
         "slug": cfg.slug,
         "schema_version": cfg.schema_version,
         "release_epoch": _release_epoch(cfg),
         "book_yaml_path": str(cfg.path),
-        "source_pdf_sha256": _sha256(src_pdf) if src_pdf.exists() else None,
         "book_yaml_sha256": _sha256(cfg.path),
+        # resolvable path so `verify` can re-hash the source, not just the config
+        "source_pdf_path": str(src_pdf) if src_exists else None,
+        "source_pdf_sha256": _sha256(src_pdf) if src_exists else None,
         "epub_sha256": epub_sha256,
-        "epubcheck": {"ok": epubcheck_ok, "version": epubcheck_version},
+        # ok is True ONLY for an executed, passing check; None means skipped
+        # (--no-epubcheck) — never conflate "not run" with "passed".
+        "epubcheck": {
+            "ok": True if epubcheck_status == "passed" else None,
+            "status": epubcheck_status,
+            "version": epubcheck_version,
+        },
         "tools": {
             "python": sys.version.split()[0],
             "pymupdf": _fitz_version(),
@@ -113,17 +122,16 @@ def manifest_path(cfg) -> Path:
     return cfg.build_dir / f"{cfg.slug}.manifest.json"
 
 
-def write_manifest(cfg, manifest: dict) -> Path:
-    out = manifest_path(cfg)
-    out.write_text(json.dumps(manifest, indent=1, ensure_ascii=False,
-                              sort_keys=True) + "\n")
-    return out
+def dumps(manifest: dict) -> str:
+    return json.dumps(manifest, indent=1, ensure_ascii=False,
+                      sort_keys=True) + "\n"
 
 
 def run_verify(epub: Path) -> int:
     """Fail if the EPUB no longer matches its provenance manifest (torn write /
-    post-build corruption / stale manifest) or its book.yaml drifted since the
-    build (the EPUB is stale — rebuild)."""
+    post-build corruption / stale manifest), or if a RECORDED input (book.yaml,
+    source PDF) is now missing/relocated or changed — a vanished input means we
+    cannot confirm the EPUB is current, so it is a failure, not a silent skip."""
     epub = epub.expanduser().resolve()
     mpath = epub.parent / f"{epub.stem}.manifest.json"
     if not mpath.exists():
@@ -134,14 +142,27 @@ def run_verify(epub: Path) -> int:
     except Exception as e:
         print(f"VERIFY FAIL {epub.name}: unreadable manifest — {e}")
         return 1
-    problems = []
+    problems: list[str] = []
     if not epub.exists():
         problems.append("EPUB missing")
     elif _sha256(epub) != m.get("epub_sha256"):
         problems.append("EPUB hash != manifest (torn write / corruption / stale)")
-    byp = m.get("book_yaml_path")
-    if byp and Path(byp).exists() and _sha256(Path(byp)) != m.get("book_yaml_sha256"):
-        problems.append("book.yaml changed since build — EPUB is stale, rebuild")
+    # recorded inputs: a path that was recorded but is now gone (or whose hash
+    # drifted) fails — never silently skip a recorded-but-vanished input.
+    for label, path_key, sha_key in (
+        ("book.yaml", "book_yaml_path", "book_yaml_sha256"),
+        ("source PDF", "source_pdf_path", "source_pdf_sha256"),
+    ):
+        rec_path, rec_sha = m.get(path_key), m.get(sha_key)
+        if rec_sha is None:
+            continue  # not recorded at build (e.g. source PDF absent then)
+        if not rec_path:
+            problems.append(f"{label} hash recorded but no path to re-check "
+                            "(stale manifest schema — rebuild)")
+        elif not Path(rec_path).exists():
+            problems.append(f"recorded {label} missing/relocated: {rec_path}")
+        elif _sha256(Path(rec_path)) != rec_sha:
+            problems.append(f"{label} changed since build — EPUB is stale, rebuild")
     if problems:
         for p in problems:
             print(f"VERIFY FAIL {epub.name}: {p}")

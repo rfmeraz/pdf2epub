@@ -148,13 +148,20 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     ctx.style_catalog = build_catalog(ctx)
     from .core.packager import stage_package
 
-    # transactional promotion: package to a temp, epubcheck it, and os.replace
-    # onto the canonical name ONLY after it passes — so the canonical .epub is
-    # always a build that passed epubcheck (or the prior good one), never an
-    # invalid/stale artifact. The provenance manifest is written after promotion.
+    # transactional promotion: package to a temp, epubcheck it, GENERATE the
+    # provenance manifest to a second temp — all before the point of no return
+    # — then os.replace both onto their canonical names. The manifest is
+    # generated first because that's where the failures are (hashing, tool
+    # probes): if it throws, the prior EPUB is left intact. The two renames are
+    # same-dir and near-atomic; `pdf2epub verify` catches the vanishingly-rare
+    # torn state between them.
+    from .provenance import build_manifest, dumps, manifest_path
+
     tmp_epub = stage_package(ctx, result)
     final_epub = cfg.build_dir / f"{cfg.slug}.epub"
-    epubcheck_ok, epubcheck_version = True, "skipped"
+    final_manifest = manifest_path(cfg)
+    tmp_manifest: Path | None = None
+    epubcheck_status, epubcheck_version = "skipped", None
     try:
         _write_warnings(ctx)  # may raise SystemExit (stale adjudications)
         if epubcheck:
@@ -163,18 +170,30 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
             ok, messages = run_epubcheck(tmp_epub)
             for m in messages:
                 ctx.say(f"  {m}")
-            epubcheck_version = _epubcheck_version(messages)
             if not ok:
                 ctx.say("epubcheck: FAILED — canonical EPUB left unchanged")
                 return 1
-            epubcheck_ok = True
+            epubcheck_status = "passed"
+            epubcheck_version = _epubcheck_version(messages)
             ctx.say("epubcheck: clean")
         epub_sha = hashlib.sha256(tmp_epub.read_bytes()).hexdigest()
-        os.replace(tmp_epub, final_epub)  # atomic within build_dir
+        manifest = build_manifest(cfg, epub_sha256=epub_sha,
+                                  epubcheck_status=epubcheck_status,
+                                  epubcheck_version=epubcheck_version)
+        tmp_manifest = final_manifest.parent / f".{final_manifest.name}.tmp"
+        tmp_manifest.write_text(dumps(manifest))
+        os.replace(tmp_epub, final_epub)          # both artifacts staged; promote
+        os.replace(tmp_manifest, final_manifest)  # epub then its manifest
+        tmp_manifest = None
+        ctx.say(f"provenance: {final_manifest.name} (epub {epub_sha[:12]}…, "
+                f"epubcheck {epubcheck_status}, "
+                f"rev {manifest['git'].get('rev', '?')[:12]}"
+                f"{' +dirty' if manifest['git'].get('dirty') else ''})")
     finally:
         if tmp_epub.exists():
             tmp_epub.unlink()  # stray temp from an early bail
-    _write_manifest(ctx, epub_sha, epubcheck_ok, epubcheck_version)
+        if tmp_manifest is not None and tmp_manifest.exists():
+            tmp_manifest.unlink()
     return 0
 
 
@@ -183,19 +202,6 @@ def _epubcheck_version(messages: list[str]) -> str:
         if m.startswith("epubcheck "):
             return m.split(":", 1)[0].removeprefix("epubcheck ").strip()
     return "unknown"
-
-
-def _write_manifest(ctx, epub_sha: str, epubcheck_ok: bool,
-                    epubcheck_version: str) -> None:
-    from .provenance import build_manifest, write_manifest
-
-    manifest = build_manifest(ctx.cfg, epub_sha256=epub_sha,
-                              epubcheck_ok=epubcheck_ok,
-                              epubcheck_version=epubcheck_version)
-    out = write_manifest(ctx.cfg, manifest)
-    ctx.say(f"provenance: {out.name} (epub {epub_sha[:12]}…, "
-            f"rev {manifest['git'].get('rev', '?')[:12]}"
-            f"{' +dirty' if manifest['git'].get('dirty') else ''})")
 
 
 def _text_width_pt(ctx) -> float:
