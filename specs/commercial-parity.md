@@ -9,7 +9,7 @@ built, or deliberately excluded.
 
 **Framing (honest).** On pure *conversion correctness* for print book PDFs — text
 fidelity, footnote marker↔note linking, witnessed dehyphenation, page anchors, semantic
-verse, byte-reproducibility, a 23-gate QA harness + blind-reader proofread — we are
+verse, byte-reproducibility, a 24-gate QA harness + blind-reader proofread — we are
 competitive-to-ahead of commercial practice (their own paid conversions of this corpus
 ship the mid-word-gap defects gate 11 catches; see strategic research 2026-07-09). What we
 lack is (a) accessibility *certification*, (b) content types we don't reconstruct, (c)
@@ -26,6 +26,7 @@ automatic linking beyond footnotes, and (d) output breadth — NOT core text fid
 | Furniture strip, column reading-order | yes | yes | shipped |
 | **A11y CERTIFICATION** (`conformsTo`, Ace/DAISY, alt-text coverage) | yes | metadata only, no claim/gate | **[semantic-polish.md #2](semantic-polish.md)** |
 | Index locator hyperlinking | yes | yes (opt-in, DAISY-container) | shipped (2026-07-11) |
+| Site-specific regression tripwires (per-page assertion cells) | ad hoc / manual re-read | yes (gate 24) | shipped — **[qa-methodology.md #1](qa-methodology.md)** |
 | Scanned / image-only pages (OCR) | yes | detect + escalate, no OCR | **[ocr-witness.md](ocr-witness.md)** |
 | Arabic-script font coverage (honorifics) | yes | pairing spec'd | **[arabic-fonts.md](arabic-fonts.md)** |
 | **Tables** → reflowable `<table>` | yes | flatten to prose (structure-loss) | **OPEN — §1** |
@@ -178,6 +179,10 @@ deliberately excludes:
 existing machinery — the `RunFormat.link → resolve_crossref_links` cross-ref chain, and a
 Calibre `ebook-convert` post-process — so neither cost a pipeline change. Earlier waves
 shipped the semantic block grammar (verse/quote/list) and the World Wisdom imprint relink.
+Also 2026-07-11: **gate 24 per-page regression assertions**
+([qa-methodology.md #1](qa-methodology.md)) — every print-verified fix becomes a
+`qa_assertions.yaml` tripwire, a QA-only change (shipped `.epub` bytes unchanged) hardening
+the corpus ahead of the text-mutating features below.
 
 Remaining open items, re-ranked:
 

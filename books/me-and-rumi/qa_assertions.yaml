@@ -1,0 +1,19 @@
+# Gate-24 regression assertions — me-and-rumi (see src/pdf2epub/qa/assertions.py).
+# A TEST fixture, not a build input. Each cell pins a print-verified defect we
+# fixed so a future change that re-breaks it fails LOUDLY. Operands copied from
+# the SHIPPED normalized text; pages are printed labels (aria-label).
+#
+# These are the prepress lost-space / cross-run-seam fusions (NOTES.md, M&R):
+# the broken fused form must stay ABSENT. Reverting the space repair reintroduces
+# them (the gate's acceptance test), so each cell flips to FAIL on regression.
+
+- {page: "13",   type: absent, text: "Erzincan.They",     note: "lost-space seam (Erzincan. They)"}
+- {page: "21",   type: absent, text: "believer.This",     note: "cross-run seam (believer. This)"}
+- {page: "23",   type: absent, text: "ease.(641)",        note: "period+paren seam (ease. (641))"}
+- {page: "28",   type: absent, text: "sun,he",            note: "comma+lowercase fusion (sun, he)"}
+- {page: "30",   type: absent, text: "aiming.When",       note: "cross-run seam (aiming. When)"}
+- {page: "42",   type: absent, text: "Now,however",       note: "comma+lowercase fusion (Now, however)"}
+- {page: "83",   type: absent, text: "another,higher",    note: "comma+lowercase fusion (another, higher)"}
+- {page: "337",  type: absent, text: "38.I've",           note: "marker+capital fusion (38. I've)"}
+- {page: "xiii", type: absent, text: "October 11,1244",   note: "digit+comma+year fusion (October 11, 1244)"}
+- {page: "330",  type: present, text: "2218-51; Attar",   note: "semicolon+space restored (was 2218-51;Attar)"}

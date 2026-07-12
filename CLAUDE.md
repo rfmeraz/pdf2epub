@@ -74,12 +74,14 @@ order, textfix, printed-TOC rebuild, exact page anchors — inline at the run se
 page begins mid-paragraph). `core/` is the
 back-end forked from idml2epub: role application, CJK lang tagging, XHTML emitter, synthetic
 CSS, nav, OFL font subsetting, deterministic packager, and the EPUB-generic QA gates.
-`qa/` runs 23 gates (incl. 11 lost-space, 11b noteref-seam, 19 Qurʾānic-citation validation
+`qa/` runs 24 gates (incl. 11 lost-space, 11b noteref-seam, 19 Qurʾānic-citation validation
 against the fixed 114-sura structure, 20 garble residue in shipped text, 21 figure-image
 integrity vs re-rendered source regions, 22 warnings-adjudicated — the build's coded
-warning queue re-derived via `warnqueue.py`, failing on open content-risk items — and
+warning queue re-derived via `warnqueue.py`, failing on open content-risk items —
 23 verse integrity: the flow's classified verse line count vs shipped `span.vl` spans,
-the one structure-loss witness presence-based coverage cannot be); text
+the one structure-loss witness presence-based coverage cannot be; and 24 per-book
+regression assertions — the tracked `books/<slug>/qa_assertions.yaml` tripwire fixture that
+pins every print-verified fix against silent regression, `assertions.py`); text
 ground truth is poppler-extracted,
 trim-cropped, footnote-stripped page text through the same textfix/normalize chain the flow
 used; gates 13-17 grade

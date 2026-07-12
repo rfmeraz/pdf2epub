@@ -1,0 +1,12 @@
+# Gate-24 regression assertions — sufism-veil-and-quintessence (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+#
+# These compounds must keep their hyphen across a line-break split — the exact
+# defect flow.keep_hyphens guards (dehyphenate: lower-only once over-stripped
+# them to religionquintessence / karmayoga …). present-of-the-hyphenated-form
+# FAILs the moment the hyphen is dropped again. Hyphen survives normalize.
+
+- {page: "138", type: present, text: "karma-yoga",       note: "keep_hyphens compound (not karmayoga)"}
+- {page: "ix",  type: present, text: "vis-à-vis",         note: "keep_hyphens compound (not visàvis)"}
+- {page: "73",  type: present, text: "lightning-like",   note: "keep_hyphens compound (not lightninglike)"}
+- {page: "90",  type: present, text: "non-theological",  note: "keep_hyphens compound (not nontheological)"}

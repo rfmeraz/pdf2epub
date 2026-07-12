@@ -530,7 +530,7 @@ paragraph — lines into the page — were silently imprecise).
 ## Footnotes, soft hyphens, recto/verso shift — 2026-07-09 (Sufism)
 
 First non-validation book, and the one that proved the deterministic gates +
-sampled visual QA can BOTH pass a build that reads as damaged. The 23 gates and
+sampled visual QA can BOTH pass a build that reads as damaged. The 24 gates and
 gate-18 contact sheets were green while ~412 body/footnote paragraphs (a third of
 the book) were wrongly split. Only the blind-reader proofread caught it. Lesson:
 **never present a build as done on gates alone — the mandatory proofread is the
@@ -1180,3 +1180,50 @@ Two `specs/commercial-parity.md` roadmap items, both pure reuse of existing mach
   converter warnings. Missing tool is a hard error (the artifact was explicitly requested), unlike
   the optional-tool skip. Documented warn-only in `bootstrap.sh` (chrome precedent). The `.azw3` is
   gitignored (only `.epub` is tracked). BoK -> a real "Mobipocket E-book … version 8" AZW3.
+
+## Gate 24: per-page regression assertions (2026-07-11)
+
+qa-methodology.md item 1, shipped. Every print-verified defect we fixed becomes a cell in a
+per-book `books/<slug>/qa_assertions.yaml` so a future change that re-breaks it fails LOUDLY,
+naming the spot — the gate-level FIRE matrices only prove a gate fires *somewhere*.
+QA-only: no build-path change, so shipped `.epub` bytes are untouched (git shows no `.epub`
+modified). Design lessons that the implementation forced:
+
+- **The fixture is NOT book.yaml.** It is a tracked TEST artifact, located at
+  `cfg.path.parent / qa_assertions.yaml` (variant configs: `qa_assertions.<stem>.yaml`, the
+  `warnings.<stem>.md` rule), loaded by `qa/assertions.py` — never through `load_config`
+  (`_check_keys` would reject it, and the build must stay a pure function of book.yaml). Keeps
+  the build byte-reproducible and book.yaml a clean record of judgments while the test corpus
+  grows every proofread.
+- **Matching is on the shipped per-page slice, normalized through the SAME
+  `core.textnorm.normalize` both QA sides use.** This decides expressibility: `normalize`
+  folds curly/straight quotes, en/em-dash→hyphen, soft-hyphen/BOM (deleted), and collapses
+  whitespace runs. So punctuation-SHAPE, EXTRA-space, and soft-hyphen fixes are
+  NON-discriminable (a reverted fix normalizes identically) and are excluded from seeding —
+  they belong to gates 9/10/11/20. A *missing* space IS expressible (`Now,however` survives
+  normalize); an *extra* space is not. Structure loss (paragraph split/merge, blockquote
+  flatten) is invisible to per-page concatenation and stays with gates 23/6; the `block_present`
+  type covers the narrow "must stay one block" case (the al-Jūzjānī hadith, I&B p126).
+- **Prefer `present`-of-correct-form over `absent`-of-broken.** Present also catches "glyph
+  dropped entirely" (absent cannot) and reads as a positive guard. Operands are copied from the
+  SHIPPED normalized text, not the poppler ground truth (GT strips PUA readings differently), and
+  case is preserved (never lowercase).
+- **Boundary matching** (`re.search(r"(?<!\w)…(?!\w)")`, default ON for `order`) keeps a
+  citation token like `35:8` from matching inside `135:8`/`35:80` without a tokenizer.
+- **Fail loudly, never silently pass.** Missing fixture → PASS; malformed fixture → FAIL (the
+  worst QA failure mode is a bad fixture that silently drops every check); slicing failure
+  (`SliceResult.ok == False`) → advisory-skip (the pagebreak gate owns that, don't double-fail);
+  unresolvable/ambiguous label, non-contiguous range, or empty page slice → stale/FAIL (the
+  lost_space / adjudication staleness doctrine).
+
+### Verification baseline (revert acceptance test)
+Seeded ~26 render-verified cells across the five books (MR 10, BoK 3, I&B 4, HU 3, Sufism 4 +
+the two-book totals); every book ends `24 assertions: PASS`, `Overall: PASS`. The discrimination
+proof: rebuild me-and-rumi with `flow.restore_spaces: false` (reintroduces the 3054 lost-space
+fusions) to a scratch workspace carrying a copy of `qa_assertions.yaml`, then `qa` the regressed
+EPUB → gate 24 flips to **FAIL, 10/10 lost-space cells naming their notes** (9 `absent` fusions
+back, 1 `present` semicolon-fix gone), alongside gate 11 firing 2701 patterns. Two candidate MR
+cells (`84.O you` p83, `M.Thackston` p308) did NOT flip — their period-space is in the source,
+not a `restore_spaces` repair, so the `absent` form can't recur — and were DROPPED as
+non-discriminating (the plan's rule: a cell that can't flip is inert). Runtime cost < 1s/book;
+`slice_pages` is currently recomputed in the gate (typography already calls it — candidate hoist).

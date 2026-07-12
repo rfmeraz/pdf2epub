@@ -1,0 +1,13 @@
+# Gate-24 regression assertions — book-of-knowledge (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+#
+# present-of-correct-form guards repairs no residue gate re-checks: if the
+# Arabic-article dehyphenation or the Greek→Latin wrong-script repair regresses,
+# the correct string vanishes and the cell FAILs. The order cell guards the
+# Qurʾānic index against the column-interleaving that once shipped it garbled
+# (also gate 19's territory — but this survives gate 19 going silent if the
+# index heading ever stops being detected).
+
+- {page: "268", type: present, text: "Qūt al-qulūb", note: "Arabic-article dehyphenation kept the hyphen (not Qut alqulub)"}
+- {page: "184", type: present, text: "ʿĀmir",        note: "wrong-script repair: Latin Ā (U+0100), not Greek Ᾱ"}
+- {page: "275-276", type: order, text: "35:8", text2: "35:28", note: "Qurʾānic index monotone across the columned seam (B2)"}

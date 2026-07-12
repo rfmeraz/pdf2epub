@@ -79,7 +79,7 @@ Anything ambiguous is written to `build/warnings.md` as a coded, severity-ranked
 queue with ready-to-paste fixes, so content is not dropped without surfacing a
 warning. Judgments already recorded in `book.yaml` resolve their own warnings.
 
-**4. `qa` — automated grading (23 gates).** The EPUB is checked against an
+**4. `qa` — automated grading (24 gates).** The EPUB is checked against an
 independent poppler extraction of the same PDF, so QA grades the conversion against a
 separate witness rather than against the converter's own output. The gates cover:
 
@@ -152,7 +152,7 @@ agent's judgment:
       │  build      ── deterministic: (PDF + book.yaml) → EPUB, same bytes every time
       ▼
   build/<slug>.epub   build/warnings.md   build/ir/*.json (with --dump-ir)
-      │  qa          ── deterministic: 23 gates vs an independent poppler extraction
+      │  qa          ── deterministic: 24 gates vs an independent poppler extraction
       │  proofread   ── deterministic packets → the AGENT reads them for damage
       ▼
   epubcheck: clean  +  Overall: PASS  +  clean read  →  done
@@ -179,7 +179,7 @@ see exactly where a change took effect):
 
 **Where the judgment lives.** Everything *before* `book.yaml` — extract and analyze —
 only observes and measures the PDF; it never decides. Everything *after* it — the
-whole build and all 23 QA gates — is a pure function of *(PDF, book.yaml)*: same
+whole build and all 24 QA gates — is a pure function of *(PDF, book.yaml)*: same
 inputs, same bytes out, no clock, no randomness. So the judgment calls are confined
 to one small, human-readable file, written by the agent and open to review. The agent
 re-enters only where a program cannot decide — reading the proofread packets and

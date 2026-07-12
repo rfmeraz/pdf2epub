@@ -1,0 +1,13 @@
+# Gate-24 regression assertions — islam-and-buddhism (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+#
+# present-of-correct guards the shifted-CMap / hyphen→'J' / space→'=' repairs
+# (the garbled form is gate 20's job; the CORRECT reading is checked here, which
+# also catches a glyph dropped entirely — absent cannot). block_present guards
+# the al-Jūzjānī hadith, which once shattered into 23 fragments (I16), against
+# re-fragmentation — a structure loss no residue gate can see.
+
+- {page: "139", type: present, text: "Bibliography", note: "shifted-CMap heading repair (was %LEOLRJUDSK)"}
+- {page: "126", type: present, text: "constantly",   note: "line-end hyphen→'J' repair (was conJ stantly)"}
+- {page: "126", type: block_present, text: "Trustworthy persons have related that Kuyūk", note: "al-Jūzjānī hadith stays one block (space→'=' + I16 shatter)"}
+- {page: "115", type: present, text: "al-nihal",     note: "article hyphen kept at line break (Kitāb al-milal wa al-nihal)"}

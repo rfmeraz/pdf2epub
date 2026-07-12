@@ -1,9 +1,23 @@
 # QA methodology imports
 
-Status: spec'd, not implemented. Two independent, opportunistic improvements borrowed
-from the strongest external practice found in the 2026-07-09 research pass.
+Status: item 1 SHIPPED 2026-07-11; item 2 spec'd, blocked on toolchain. Two independent,
+opportunistic improvements borrowed from the strongest external practice found in the
+2026-07-09 research pass.
 
-## 1. Per-page machine-checkable assertion cells (olmOCR-bench pattern)
+## 1. Per-page machine-checkable assertion cells (olmOCR-bench pattern) — SHIPPED 2026-07-11
+
+**Shipped** as gate 24 (`src/pdf2epub/qa/assertions.py`, per-book
+`books/<slug>/qa_assertions.yaml` fixture). Diverged from the sketch below in two ways the
+implementation forced: (a) matching is on the shipped per-page slice normalized through
+`core.textnorm.normalize`, so classes that normalizer *folds* (quote/dash shape, extra-space,
+soft-hyphen/BOM) are NON-expressible and excluded — they stay with gates 9/10/11/20, and
+structure loss stays with gates 23/6; (b) added `order` and `block_present` types plus
+boundary-aware matching (`(?<!\w)…(?!\w)`) so a citation token like `35:8` cannot match inside
+`135:8`. Seeded ~26 render-verified cells across the five books; the acceptance test
+(me-and-rumi rebuilt `restore_spaces: false`) flips 10/10 lost-space cells to FAIL. The
+proofread fix-loop now lands a cell per confirmed fix. Original sketch retained for provenance.
+
+## 1 (original sketch). Per-page machine-checkable assertion cells (olmOCR-bench pattern)
 
 **What it is.** olmOCR-bench evaluates document extraction not by fuzzy similarity but
 by per-page *unit tests*: presence assertions ("this exact string appears on page N"),

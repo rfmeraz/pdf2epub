@@ -1,0 +1,10 @@
+# Gate-24 regression assertions — harmonious-unity (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+#
+# CJK foreword line-wrap / pstyle-change seams once split these titles mid-string;
+# present-of-the-joined-CJK guards the seam staying closed (if it reopens, the
+# contiguous string breaks and the cell FAILs). CJK survives normalize intact.
+
+- {page: "x",  type: present, text: "天方至圣实录", note: "CJK line-wrap seam rejoined (was 天方至/圣实录)"}
+- {page: "ix", type: present, text: "上海辞书出版社", note: "CJK seam closed (publisher name)"}
+- {page: "ix", type: present, text: "天方性理",     note: "bracket↔CJK seam closed (title)"}

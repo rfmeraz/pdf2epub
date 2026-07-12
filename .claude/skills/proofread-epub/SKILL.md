@@ -67,6 +67,14 @@ Fix layer by defect class:
 
 - NEVER edit emitted XHTML or the book's words; every fix is a book.yaml
   entry (stale-override hard-fail self-validates them) or code + unit test.
+- After a fix confirms, land a **gate-24 assertion cell** in
+  `books/<slug>/qa_assertions.yaml` (a tracked TEST fixture, NOT book.yaml)
+  so the fixed site can never silently regress: `absent` the broken form or
+  (preferred) `present` the correct one, on the finding's page label. This is
+  the book-level analog of "misfire → code fix + unit test" for defects a unit
+  test can't reach. Only seed classes that survive `normalize` (see
+  qa/assertions.py: NOT quote/dash shape, extra-space, or soft-hyphen) and
+  copy the operand from the SHIPPED text.
 - Rebuild (`epubcheck: clean`), `qa` must end `Overall: PASS`, re-run
   `proofread`, re-read ONLY packets whose sha256 changed in the manifest.
   Stop at zero new confirmed findings or after 3 rounds — remaining

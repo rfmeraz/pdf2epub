@@ -1,6 +1,7 @@
-"""QA gate suite: 23 gates. Gates 1-11 (11 lost spaces promoted 2026-07-09),
+"""QA gate suite: 24 gates. Gates 1-11 (11 lost spaces promoted 2026-07-09),
 11b (noteref seams), 19 (Qurʾānic citations), 20 (garble residue), 21
-(figure integrity) and 22 (warnings adjudicated) must pass; 12
+(figure integrity), 22 (warnings adjudicated) and 24 (per-book regression
+assertions — the qa_assertions.yaml tripwire fixture) must pass; 12
 informational; 13-17 (typographic fidelity) report would-PASS/would-FAIL
 and gate once promoted via typography.GATING; 18 (--visual) emits
 agent-graded contact sheets and is always informational.
@@ -365,6 +366,19 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
         gates.append(("23 verse integrity", exp_vlines == got_vlines,
                       [f"flow: {n_stanzas} stanza(s) / {exp_vlines} "
                        f"line(s); shipped span.vl count: {got_vlines}"]))
+
+    # ---- gate 24: per-book regression assertions — the qa_assertions.yaml
+    # tripwire fixture. Every print-verified defect we fixed becomes a cell so
+    # a future change that re-breaks it fails LOUDLY, naming the spot (the
+    # gate-level FIRE matrices only prove a gate fires *somewhere*). Matches on
+    # shipped per-page text; missing fixture -> PASS, malformed -> FAIL, slicing
+    # failure -> advisory (the pagebreak gate owns that). See qa/assertions.py.
+    from ..core.qa_pageslice import slice_pages
+    from .assertions import fixture_path, run_assertions
+
+    ao = run_assertions(fixture_path(cfg),
+                        slice_pages(body_docs, in_flow, labels), labels, in_flow)
+    gates.append(("24 assertions", ao.verdict, ao.lines))
 
     # ---- gate 22: warnings adjudicated — re-derives the build's warning
     # queue from (doc, flow, cfg) via warnqueue (the build writes the same
