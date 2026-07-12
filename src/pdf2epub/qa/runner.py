@@ -1,7 +1,9 @@
-"""QA gate suite: 24 gates. Gates 1-11 (11 lost spaces promoted 2026-07-09),
+"""QA gate suite: 26 gates. Gates 1-11 (11 lost spaces promoted 2026-07-09),
 11b (noteref seams), 19 (Qurʾānic citations), 20 (garble residue), 21
-(figure integrity), 22 (warnings adjudicated) and 24 (per-book regression
-assertions — the qa_assertions.yaml tripwire fixture) must pass; 12
+(figure integrity), 22 (warnings adjudicated), 24 (per-book regression
+assertions — the qa_assertions.yaml tripwire fixture), 25 (page-aligned
+fidelity: recall+precision+order+duplication) and 26 (a11y readiness: alt +
+metadata + Ace critical/serious) must pass; 12, 25b (disputed-page defense)
 informational; 13-17 (typographic fidelity) report would-PASS/would-FAIL
 and gate once promoted via typography.GATING; 18 (--visual) emits
 agent-graded contact sheets and is always informational.
@@ -23,7 +25,6 @@ from ..core.qa_imagecheck import check_images
 from ..core.qa_navcheck import check_nav
 from ..core.qa_ordercheck import check_reading_order
 from ..core.qa_refcompare import compare as ref_compare
-from ..core.qa_textdiff import coverage
 from ..core.textnorm import normalize
 from ..extract import extract
 from ..flowbuilder import _page_labels, build_flow
@@ -136,7 +137,6 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
                  if d not in notes_docs and "cover" not in d.href]
     spine_text = " ".join(_doc_text(d) for d in body_docs)
     notes_text = " ".join(_doc_text(d) for d in notes_docs)
-    spine_text_norm = normalize(spine_text)
     # coverage compares 'text minus honorific glyphs' on BOTH sides: the gt
     # strips PUA chars; the candidate must shed their inserted readings. The
     # candidate is ALL shipped text (body + extracted endnotes): the gt excises
@@ -373,21 +373,60 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     # gate-level FIRE matrices only prove a gate fires *somewhere*). Matches on
     # shipped per-page text; missing fixture -> PASS, malformed -> FAIL, slicing
     # failure -> advisory (the pagebreak gate owns that). See qa/assertions.py.
-    from ..core.qa_pageslice import slice_pages
+    from ..core.qa_pageslice import slice_page_chars, slice_pages
     from .assertions import fixture_path, run_assertions
 
-    ao = run_assertions(fixture_path(cfg),
-                        slice_pages(body_docs, in_flow, labels), labels, in_flow)
+    sl = slice_pages(body_docs, in_flow, labels)   # block-level (gate 24 + anchor integrity)
+    ao = run_assertions(fixture_path(cfg), sl, labels, in_flow)
     gates.append(("24 assertions", ao.verdict, ao.lines))
+
+    # ---- gate 25: page-aligned fidelity (recall + precision + order +
+    # duplication) — the structure-loss witness gate 2's one-directional recall
+    # cannot be (it passes a reordered/duplicated book at ~100%). Page-local
+    # scores compare each source page's ground truth to its shipped slice;
+    # order/duplication run over the whole candidate. See qa/fidelity.py.
+    from .fidelity import check_fidelity
+
+    char_slices = slice_page_chars(body_docs, in_flow)
+    epub_pages = {pno: normalize(_unsub(txt)) for pno, txt in char_slices.items()}
+    fid = check_fidelity(gt.pages, epub_pages, in_flow, coverage_candidate,
+                         cov.per_page, sl.ok, sl.detail)
+    gates.append(("25 page fidelity", fid.ok, fid.lines))
+
+    # ---- gate 25b (advisory): every engine-disputed page (excluded from gate 2)
+    # should carry a machine-checkable defense — a gate-24 assertion cell or a
+    # figure treatment. Advisory now; promote to gating once the OCR witness
+    # supplies the alternate witness for these pages.
+    defended = _assertion_covered_pages(cfg, labels, in_flow)
+    for fp in cfg.figure_pages:
+        defended |= set(fp.pages)
+    defended |= {fr.page for fr in cfg.figure_regions}
+    undefended = [p for p in sorted(set(disputed_pages)) if p not in defended]
+    gates.append(("25b disputed-page defense (info)", None,
+                  [f"{len(set(disputed_pages))} engine-disputed pages; "
+                   f"{len(undefended)} without a machine-checkable defense "
+                   f"(assertion cell or figure): {undefended[:12]}"]))
+
+    # ---- gate 26: accessibility readiness (automated) — alt coverage +
+    # accessibility metadata block + Ace critical/serious. NOT a conformance
+    # claim (no dcterms:conformsTo; manual certification is a separate step).
+    from .a11y import check_a11y
+
+    a11y_ok, a11y_lines = check_a11y(ep, cfg)
+    gates.append(("26 a11y readiness", a11y_ok, a11y_lines))
 
     # ---- gate 22: warnings adjudicated — re-derives the build's warning
     # queue from (doc, flow, cfg) via warnqueue (the build writes the same
     # queue to warnings.md), applies auto-resolve + adjudications:, and
     # fails on open content-risk warnings or stale adjudication entries.
     # Advisory warnings never gate.
-    from ..warnqueue import (CONTENT_RISK, adjudication_snippet,
-                             apply_adjudications, auto_resolve,
-                             derive_warnings)
+    from ..warnqueue import (
+        CONTENT_RISK,
+        adjudication_snippet,
+        apply_adjudications,
+        auto_resolve,
+        derive_warnings,
+    )
 
     aw = derive_warnings(doc, res, flow, cfg)
     n_auto = auto_resolve(aw, cfg)
@@ -432,6 +471,41 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     print(f"report: {report}")
     print(f"Overall: {'PASS' if overall else 'FAIL'}")
     return 0 if overall else 1
+
+
+def _assertion_covered_pages(cfg, labels, in_flow) -> set[int]:
+    """Source page numbers referenced by the gate-24 assertion fixture
+    (best-effort label resolution; feeds the advisory gate 25b only)."""
+    import yaml
+
+    from .assertions import fixture_path
+    fp = fixture_path(cfg)
+    if not fp or not fp.exists():
+        return set()
+    try:
+        cells = yaml.safe_load(fp.read_text()) or []
+    except Exception:
+        return set()
+    inv: dict[str, list[int]] = {}
+    for p in in_flow:
+        inv.setdefault(str(labels.get(p, str(p))), []).append(p)
+    covered: set[int] = set()
+    for c in cells:
+        if not isinstance(c, dict):
+            continue
+        if c.get("pno") is not None:
+            covered.add(int(c["pno"]))
+            continue
+        page = str(c.get("page", ""))
+        if "-" in page:
+            a, b = (s.strip() for s in page.split("-", 1))
+            pa, pb = inv.get(a, [None])[0], inv.get(b, [None])[0]
+            if pa in in_flow and pb in in_flow:
+                i, j = in_flow.index(pa), in_flow.index(pb)
+                covered.update(in_flow[min(i, j):max(i, j) + 1])
+        else:
+            covered.update(inv.get(page, []))
+    return covered
 
 
 def _source_entries(cfg, doc: PdfDoc, flow, labels) -> list[tuple[str, str]]:

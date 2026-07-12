@@ -1,6 +1,9 @@
 # Build outputs: track only the finished EPUB per book
 books/*/build/*
 !books/*/build/*.epub
+# but NOT the transactional temp epubs (hidden ".<slug>.<rand>.epub") or manifests
+books/*/build/.*.epub
+books/*/build/*.manifest.json
 # Regenerable analysis renders (analysis.json + structure_report.md ARE tracked)
 books/*/analysis/thumbs/
 books/*/analysis/pages/
@@ -8,6 +11,8 @@ books/*/analysis/pages/
 books/*/analysis/layout/
 # Vendored tools fetched by bootstrap
 vendor/
+# Ace by DAISY node deps (pinned via tools/ace/package.json + package-lock.json)
+tools/ace/node_modules/
 # Python
 __pycache__/
 *.egg-info/

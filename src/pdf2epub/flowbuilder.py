@@ -14,8 +14,8 @@ from collections import Counter
 from dataclasses import dataclass, field
 
 from .analyze import (
-    ColumnGeometry,
     _FOLIO_BAND,
+    ColumnGeometry,
     _printed_folio,
     _trailing_folio_entry,
     column_geometry,
@@ -1670,8 +1670,12 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
 
 def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
                    counts: Counter, page: int = 0) -> list[TextRun]:
-    from .textfix import (is_shifted_run, repair_shifted_cmap,
-                          repair_wrong_script, strip_control_chars)
+    from .textfix import (
+        is_shifted_run,
+        repair_shifted_cmap,
+        repair_wrong_script,
+        strip_control_chars,
+    )
 
     out: list[TextRun] = []
     trim_next_punct_seam = False

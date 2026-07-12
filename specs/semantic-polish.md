@@ -59,6 +59,16 @@ inherits it for free.
 
 ## 2. EAA / accessibility conformance
 
+**Automated readiness SHIPPED 2026-07-12 as gate 26** (`src/pdf2epub/qa/a11y.py` + `qa/ace.py`,
+pinned via `tools/ace/package.json`): stricter alt coverage (role=presentation OR non-empty alt,
+not qa_imagecheck's permissive empty-is-decorative) + accessibility-metadata presence + Ace by
+DAISY gating on critical/serious (absence skips, a crash/timeout FAILS). The baseline surfaced a
+real **serious** `epub-pagesource` violation on every page-numbered book — fixed by emitting
+`<meta property="pageBreakSource">` + the `printPageNumbers` feature (packager); 3 moderate
+`heading-order` findings remain (non-gating, documented). All six books PASS. **`dcterms:conformsTo`
+is deliberately NOT emitted** — the manual-certification workflow below is still required for a
+conformance claim and remains deferred.
+
 **Problem.** The European Accessibility Act has been in force for products/services
 since 2025-06-28; the W3C's EPUB-a11y↔EAA mapping (Group Note 2025-08-28,
 https://www.w3.org/TR/epub-a11y-eaa-mapping/) concludes EPUB Accessibility 1.1 + WCAG
@@ -68,7 +78,8 @@ already writes accessMode/accessModeSufficient/accessibilityFeature/accessibilit
 
 **Design.**
 - Add to the OPF: `dcterms:conformsTo` = `EPUB Accessibility 1.1 - WCAG 2.1 Level AA`
-  (only when the checks below pass), `schema:accessibilitySummary` (already optional —
+  (only when the automated checks below pass AND a manual certification is recorded — see the
+  readiness-vs-certification split under Acceptance), `schema:accessibilitySummary` (already optional —
   make the convert-pdf skill record one per book), and verify `dc:source` carries the
   print ISBN (pagination source requirement, https://www.w3.org/TR/epub-a11y-11/).
 - New QA gate: run **Ace by DAISY** (https://daisy.org/activities/software/ace/) when
@@ -79,9 +90,28 @@ already writes accessMode/accessModeSufficient/accessibilityFeature/accessibilit
   spans). Heading hierarchy: gate 6/audit already police h1–h3 sanity.
 - ONIX codelist 196 metadata is out of scope (no ONIX feed exists for these books).
 
-**Acceptance**: all five shipped books re-validate through Ace clean (or with
-documented, adjudicated exceptions); OPF carries conformsTo + summary; epubcheck stays
-clean (it validates the a11y metadata vocabulary).
+**Automated readiness ≠ a conformance claim (2026-07-12 review refinement).** Ace by DAISY
+explicitly cannot verify all of WCAG — image alt *appropriateness*, reading-order sense,
+heading *meaning*, table semantics need human inspection; DAISY and W3C both require manual
+evaluation of the *complete publication* before a WCAG conformance claim
+(https://kb.daisy.org/publishing/docs/epub/validation/ace.html;
+https://www.w3.org/TR/epub-a11y-11/). So split this item in two, and DO NOT assert
+`dcterms:conformsTo` from a green Ace run alone:
+- **Automated readiness (ship first):** the Ace gate above + metadata + alt-text *coverage*
+  (every non-decorative image has non-empty alt) + language/heading checks. This gates the
+  build and is fully machine-checkable. It emits `schema:accessibilityFeature`/`accessMode`
+  metadata but stops short of `conformsTo`.
+- **Manual certification workflow (before any `conformsTo`):** a per-book checklist step
+  (alt-text adequacy, reading order, table/figure semantics, navigation) recorded like a
+  proofread finding, tied to a specific EPUB revision (the §3 build epoch / manifest). Only a
+  passed, recorded certification writes `dcterms:conformsTo` — so the claim is auditable, not
+  asserted by a tool that admits it can't check everything. The convert-pdf/proofread skills
+  gain the checklist; over-claiming conformance is itself an accessibility (and legal) risk.
+
+**Acceptance**: all five shipped books re-validate through Ace clean (or with documented,
+adjudicated exceptions); the automated-readiness metadata + alt coverage gate passes; epubcheck
+stays clean (it validates the a11y metadata vocabulary); `conformsTo` appears ONLY on books
+with a recorded manual certification against the shipped revision.
 
 ## 3. typogrify-lite (presentation-codepoint polish)
 

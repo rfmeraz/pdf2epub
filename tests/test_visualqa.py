@@ -4,12 +4,18 @@ from types import SimpleNamespace
 
 from PIL import Image
 
-from pdf2epub.core.model import (Figure, NoteRef, PageAnchor, Paragraph,
-                                 RunFormat, SourceRef, TextRun)
+from pdf2epub.core.model import (
+    Figure,
+    NoteRef,
+    PageAnchor,
+    Paragraph,
+    RunFormat,
+    SourceRef,
+    TextRun,
+)
 from pdf2epub.qa.visual import plan_slices
 from pdf2epub.qa.visual_pixels import dhash, hamming
-from pdf2epub.qa.visual_sample import (SampleEvidence, checks_by_page,
-                                       sample_pages)
+from pdf2epub.qa.visual_sample import SampleEvidence, checks_by_page, sample_pages
 
 SHA = "abcdef0123456789" * 4
 

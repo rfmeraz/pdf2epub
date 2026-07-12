@@ -232,6 +232,7 @@ def test_layout_failure_does_not_abort_init(tmp_path, monkeypatch):
     # a runtime witness failure (e.g. uncached weights, no network) must NOT
     # abort init — the draft book.yaml must still be written.
     import fitz
+
     from pdf2epub.initcmd import run_init
 
     pdf = tmp_path / "src.pdf"
@@ -260,6 +261,7 @@ def test_layout_bad_pagespec_surfaces(tmp_path, monkeypatch):
     # must surface it (SystemExit) rather than swallow it in the advisory
     # catch and write a draft as if the backend were merely unavailable.
     import fitz
+
     from pdf2epub.initcmd import run_init
 
     pdf = tmp_path / "src.pdf"

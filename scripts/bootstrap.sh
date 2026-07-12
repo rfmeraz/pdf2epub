@@ -52,4 +52,13 @@ echo "== calibre (pdf2epub kindle -> AZW3; warn-only) =="
 command -v ebook-convert >/dev/null || \
   echo "NOTE: no calibre/ebook-convert — 'pdf2epub kindle' is unavailable (install calibre; or set PDF2EPUB_EBOOK_CONVERT)"
 
+echo "== Ace by DAISY (QA gate 26 a11y readiness; warn-only, pinned) =="
+if command -v npm >/dev/null; then
+  ( cd "$REPO_DIR/tools/ace" && npm ci --no-audit --no-fund >/dev/null 2>&1 ) \
+    && echo "Ace pinned install OK (npx --no-install @daisy/ace)" \
+    || echo "NOTE: 'npm ci' for Ace failed — gate 26 will SKIP the Ace check (alt+metadata still gate)"
+else
+  echo "NOTE: no npm — gate 26 will SKIP the Ace check; install Node/npm to enable it"
+fi
+
 echo "bootstrap OK"

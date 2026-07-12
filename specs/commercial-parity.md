@@ -9,11 +9,26 @@ built, or deliberately excluded.
 
 **Framing (honest).** On pure *conversion correctness* for print book PDFs — text
 fidelity, footnote marker↔note linking, witnessed dehyphenation, page anchors, semantic
-verse, byte-reproducibility, a 24-gate QA harness + blind-reader proofread — we are
+verse, byte-reproducibility, a 26-gate QA harness + blind-reader proofread — we are
 competitive-to-ahead of commercial practice (their own paid conversions of this corpus
 ship the mid-word-gap defects gate 11 catches; see strategic research 2026-07-09). What we
 lack is (a) accessibility *certification*, (b) content types we don't reconstruct, (c)
 automatic linking beyond footnotes, and (d) output breadth — NOT core text fidelity.
+
+**A fifth category the landscape map missed — reliability substrate (2026-07-12 review).** An
+external implementation review read the code and found that several of our *own* trust claims
+are unenforced or leaky: the flagship coverage gate is recall-only and cannot fail on a
+reordered or duplicated book (its own comment delegates order to a gate that only checks
+headings); FILL-ME-IN placeholders and seven config fields load silently despite the promise
+that config records applied judgment; builds aren't transactional (an invalid EPUB can sit at
+the canonical path); tests aren't hermetic and there's no CI. These aren't parity *features* —
+they're the substrate that makes "validated" and "byte-reproducible" true. The review's core
+argument is sound and is now reflected below: several reliability/QA-integrity items are
+interleaved *ahead* of most remaining features. Details:
+[reliability-hardening.md](reliability-hardening.md) (build/test/config/provenance) and
+[qa-methodology.md §3](qa-methodology.md) (the page-aligned fidelity gate). Where I diverge
+from the review's exact ordering — keeping a11y high rather than demoting it, ranking process
+limits low, noting two of its items were already spec'd — is argued in the ranking notes.
 
 ## Capability map
 
@@ -184,19 +199,89 @@ Also 2026-07-11: **gate 24 per-page regression assertions**
 `qa_assertions.yaml` tripwire, a QA-only change (shipped `.epub` bytes unchanged) hardening
 the corpus ahead of the text-mutating features below.
 
-Remaining open items, re-ranked:
+Remaining open items — **re-ranked 2026-07-12 to interleave reliability/QA-integrity ahead of
+most features** (external implementation review; see the "fifth category" framing above). The
+review's ordering is adopted where its argument is strong and adjusted where I disagree; the
+`[R]` reliability items live in [reliability-hardening.md](reliability-hardening.md), `[Q]` in
+[qa-methodology.md](qa-methodology.md), `[F]` are features.
 
-1. **A11y certification** ([semantic-polish.md #2](semantic-polish.md)) — the top open item:
-   small, closes a legal/market gap (EU Accessibility Act, in force since 2025-06-28),
-   metadata is already ~80% present, and the just-shipped index-locator container
-   (`epub:type="index"`) is a down payment on it. Add `dcterms:conformsTo` + an Ace-by-DAISY
-   gate.
-2. **§6 body cross-references** — auto-link "see p. N" / "fig. 3" / "ch. 2"; the cheapest
-   open feature to build because it reuses the *exact* `RunFormat.link → resolve_crossref_links`
-   chain the index locators now use (high-precision, per-book opt-in, WARN-and-skip the rest).
-3. **typogrify-lite** ([semantic-polish.md #3](semantic-polish.md)) — opt-in presentation
-   polish (word-joiners around em-dashes, hair spaces between adjacent quotes); small and
-   self-contained, insertion-only of invisible codepoints.
-4. **§1 tables** / **§3 RTL layout** — backlist-driven: tables if the books have them; RTL
-   only for a genuinely non-romanized Arabic title (today a `rtl-live-text` hard stop).
-5. **§2 math** / **§4 CJK vertical writing** — documented non-goals until a title forces them.
+**SHIPPED 2026-07-12** (Tier 0 + most of Tier 1): config integrity (0a), test hermeticity (0b),
+transactional builds + provenance (0c/3), the page-aligned **fidelity gate 25** (Tier 1 #1),
+the **a11y readiness gate 26** (Tier 1 #2, automated portion — manual certification still
+deferred), CI + markers + hashed lockfile + ruff (Tier 1 #3), and the config validator +
+identity/revision metadata (Tier 1 #4). Corpus re-shipped: all six EPUBs rebuilt, `Overall:
+PASS`. Still open below: a11y **manual certification** + `conformsTo`; §6 body cross-refs;
+typogrify-lite; the PDF-era census (ocr-witness step 1); process limits (§5); tables/RTL/math.
+
+**Tier 0 — cheap correctness fixes, do first (each ~hours, they're effectively bugs):**
+
+0a. `[R]` **Config integrity** ([reliability-hardening.md §1](reliability-hardening.md)) —
+    enforce FILL-ME-IN (the promise at `initcmd.py:5` is currently a lie; 3/5 tracked drafts
+    load with `title: FILL-ME-IN`), and reject/remove the seven dead config fields. Protects
+    the "config = applied judgment" doctrine directly; near-free. *Ranked above the review's
+    #4 placement because it's cheap and strikes at a core doctrine.*
+0b. `[R]` **Test hermeticity** ([reliability-hardening.md §4](reliability-hardening.md)) —
+    drop the `idml2epub` sibling-repo import in `test_lang.py:35`; fix `test_cdp.py` to skip on
+    Chrome *launch* failure, not just absence. Two isolated bug-fixes; the CI/lockfile buildout
+    (same §) is the larger follow-on in Tier 1.
+0c. `[R]` **Transactional build** ([reliability-hardening.md §2](reliability-hardening.md)) —
+    package to a temp path, `os.replace` only after epubcheck passes. Small; stops an invalid/
+    stale EPUB from sitting at the canonical path.
+
+**Tier 1 — top substantive items, ahead of new features:**
+
+1. `[Q]` **Page-aligned fidelity gate** ([qa-methodology.md §3](qa-methodology.md)) — the
+   review's "priority zero", and I agree it's the #1 substantive item. Recall+precision+order+
+   duplication over the existing page anchors; folds in the disputed-page machine-defense
+   requirement (66k/27k/13.6k chars currently defended by one heading assertion). Cheap
+   (anchors exist), and it closes a hole in the project's central "validated" claim — a gate
+   that can't fail on a duplicated book is false assurance.
+2. `[F]` **A11y — automated readiness gate** ([semantic-polish.md #2](semantic-polish.md)) —
+   **kept high, NOT demoted to the review's #5.** It has an external legal forcing function
+   (EU Accessibility Act in force 2025-06-28) and is ~80% built; the Ace gate + alt-coverage +
+   metadata is small. Refinement adopted from the review: ship *automated readiness* now but
+   assert `dcterms:conformsTo` ONLY behind a recorded *manual* certification (Ace can't verify
+   WCAG alone) — so this splits into a near-term gate (here) and a later certification workflow.
+3. `[R]` **CI + test tiers + lockfile + provenance manifest** ([reliability-hardening.md
+   §4](reliability-hardening.md), [§2](reliability-hardening.md)) — the substrate that keeps
+   items 0–2 from silently regressing, plus the `{slug}.manifest.json` the byte-reproducible
+   claim implies. Medium effort; foundational.
+4. `[R]` **Config validator + schema_version + package identity/revision metadata**
+   ([reliability-hardening.md §1](reliability-hardening.md), [§3](reliability-hardening.md)) —
+   `pdf2epub config validate`; persistent book identifier (not slug-derived UUID);
+   `dcterms:modified` from a release epoch, not the print year. Incremental on the existing
+   parser — explicitly NOT a Pydantic rewrite.
+
+**Tier 2 — features & continuous quality:**
+
+5. `[R]` **PDF-era / font / ToUnicode pathology census** — the review's "cheap census"; note
+   it is **already spec'd as [ocr-witness.md](ocr-witness.md) step 1** (pure metadata reading,
+   always-on). Pull it forward independently of the OCR witness: cheap legacy-backlist
+   insurance, a fact on page one of the structure report.
+6. **Broader holdout corpus + aggregate quality metrics** — build/QA more real titles, track
+   aggregate fidelity over time; continuous, medium value.
+7. `[F]` **§6 body cross-references** — auto-link "see p. N" / "fig. 3" / "ch. 2"; the cheapest
+   open *feature*, reusing the exact `RunFormat.link → resolve_crossref_links` chain the index
+   locators now use (high-precision, per-book opt-in, WARN-and-skip the rest). Below the
+   QA-integrity + a11y items because it's additive polish, not a trust fix.
+8. `[F]` **typogrify-lite** ([semantic-polish.md #3](semantic-polish.md)) — opt-in
+   presentation polish (word-joiners around em-dashes, hair spaces between adjacent quotes);
+   small, self-contained, insertion-only of invisible codepoints.
+
+**Tier 3 — demand-driven / conditional:**
+
+9.  `[F]` **§1 tables** / **§3 RTL layout** — backlist-driven: tables if the books have them;
+    RTL only for a genuinely non-romanized Arabic title (today a `rtl-live-text` hard stop).
+10. `[R]` **External-process resource limits** ([reliability-hardening.md
+    §5](reliability-hardening.md)) — **ranked low, deliberately below the review's implicit
+    placement.** It's threat-model-conditional (today's workflow is a *trusted* dropped PDF),
+    and the Chrome/CDP path the review flagged is *already* bounded — only three `subprocess.run`
+    sites are unbounded. Do it when untrusted/batch intake becomes real.
+11. `[F]` **§2 math** / **§4 CJK vertical writing** / **guarded `verified-ocr` source mode**
+    ([ocr-witness.md](ocr-witness.md)) / **EPUB2 / FXL** — documented non-goals until a title
+    forces them.
+
+**Cross-cutting (not a numbered slot):** the maintainability extraction
+([reliability-hardening.md §6](reliability-hardening.md)) — flowbuilder/emitter/config/QA-runner
+concentration — is gated on characterization tests (Tier 1 item 3) and done *alongside* the
+first big content feature, never as a standalone rewrite.

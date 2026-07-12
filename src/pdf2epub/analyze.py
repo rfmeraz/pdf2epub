@@ -669,8 +669,7 @@ def analyze(doc: PdfDoc, min_repeat_pages: int = 3) -> Analysis:
     # init (no furniture strip yet), so the BUILD warning stays the
     # authoritative witness; this section exists to seed the blocks.verse
     # judgment with measured base/turn offsets per page range.
-    from .blockshapes import (LIST_MARKERS, body_anchors,
-                              quote_shape_suspects, verse_shape_suspects)
+    from .blockshapes import LIST_MARKERS, body_anchors, quote_shape_suspects, verse_shape_suspects
 
     med = a.median_leading or geo.body_size * 1.3 or 13.0
     for p in in_flow:

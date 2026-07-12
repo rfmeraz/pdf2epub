@@ -79,7 +79,7 @@ Anything ambiguous is written to `build/warnings.md` as a coded, severity-ranked
 queue with ready-to-paste fixes, so content is not dropped without surfacing a
 warning. Judgments already recorded in `book.yaml` resolve their own warnings.
 
-**4. `qa` — automated grading (24 gates).** The EPUB is checked against an
+**4. `qa` — automated grading (26 gates).** The EPUB is checked against an
 independent poppler extraction of the same PDF, so QA grades the conversion against a
 separate witness rather than against the converter's own output. The gates cover:
 
@@ -152,7 +152,7 @@ agent's judgment:
       │  build      ── deterministic: (PDF + book.yaml) → EPUB, same bytes every time
       ▼
   build/<slug>.epub   build/warnings.md   build/ir/*.json (with --dump-ir)
-      │  qa          ── deterministic: 24 gates vs an independent poppler extraction
+      │  qa          ── deterministic: 26 gates vs an independent poppler extraction
       │  proofread   ── deterministic packets → the AGENT reads them for damage
       ▼
   epubcheck: clean  +  Overall: PASS  +  clean read  →  done

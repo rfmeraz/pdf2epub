@@ -1,6 +1,8 @@
 # Me & Rumi — final judgments (2026-07-08). Creo prepress 2004, no bookmarks,
 # no ToUnicode: printed TOC + 32 link annotations are the witnesses.
 
+schema_version: 1
+
 source:
   folder: "package"
   pdf: "Me and Rumi with TOC links and cover.pdf"
@@ -17,6 +19,8 @@ metadata:
   additional_languages: []
   isbn_epub:                     # none printed; urn:uuid — FLAGGED
   isbn_print: "1-887752-52-8"
+  identifier: e2c0cb39-6ee1-4b7d-8152-6b9f6101d759   # persistent EPUB id (was slug-derived urn:uuid; FLAGGED)
+  released: "2026-07-12"   # dcterms:modified = this EPUB revision
   date: "2004"
   cover: assets/cover.jpg
   cover_render: {page: 1, box: trim, dpi: 300}   # p.1 CropBox isolates the
@@ -217,8 +221,6 @@ split: {at_roles: [h1], warn_over_files: 90}
 images:
   raster_dpi: 300
   max_pixels: 1600
-  alt: {}
-  decorative: []
   figure_pages:
     - pages: [437]
       alt_template: "Photograph of a sculpture on the portal of the Yakutiye Medrese in Erzurum (1308): two confronted lions on either side of a palm tree representing the Tree of Life and the Fountain of Immortality, the lions symbolizing the cherubim guarding the way; with the publisher's caption on its symbolism"

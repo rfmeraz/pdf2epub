@@ -6,6 +6,8 @@
 # glyph identifications verified on analysis/glyph-grid*.png (350 dpi crops)
 # against the book's own legend (Publisher's Note, p.26 render).
 
+schema_version: 1
+
 source:
   folder: "package"
   pdf: "adult-The_Book_of_Knowledge_cover and TOC links.pdf"
@@ -23,6 +25,8 @@ metadata:                     # from title (p.4) + copyright (p.5) page text
   additional_languages: []
   isbn_epub: "978-1-941610-21-3"   # printed on the copyright page (eBook ISBN)
   isbn_print: "978-1-941610-15-2"
+  identifier: ca5082fd-303f-4f54-9950-7cef1b374c93   # persistent EPUB id (was slug-derived urn:uuid; FLAGGED)
+  released: "2026-07-12"   # dcterms:modified = this EPUB revision
   date: "2015"
   cover: assets/cover.jpg
   cover_render: {page: 1, box: trim, dpi: 300}   # p.1 is the cover JPEG
@@ -267,8 +271,6 @@ split: {at_roles: [h1], warn_over_files: 90}
 images:
   raster_dpi: 300
   max_pixels: 1600
-  alt: {}
-  decorative: []
   figure_pages: []
   # Publisher's Note glyph legend (p.26, label xxvii): a TRUE 3-column table
   # (Arabic glyph | English meaning | Usage) the line flow cannot represent —

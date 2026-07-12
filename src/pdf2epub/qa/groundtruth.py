@@ -15,12 +15,12 @@ from pathlib import Path
 
 from ..analyze import detect_furniture, furniture_template
 from ..config import PdfBookConfig
-
-_PUA_RE = re.compile(r"[\ue000-\uf8ff]")
 from ..core.textnorm import is_folio_line, normalize
 from ..extract import poppler_page_texts
 from ..pdfmodel import PdfDoc
 from ..textfix import expand_ligatures, restore_spaces
+
+_PUA_RE = re.compile(r"[\ue000-\uf8ff]")
 
 
 @dataclass(slots=True)
@@ -221,6 +221,7 @@ def paged_coverage(gt: GroundTruth, candidate: str):
     total = 0
     matched = 0
     missing: list[str] = []
+    per_page: list[tuple[int, int, int, int]] = []
     cursor = 0
     for pno in sorted(gt.pages):
         page = gt.pages[pno]
@@ -257,18 +258,25 @@ def paged_coverage(gt: GroundTruth, candidate: str):
         # unmatched runs of the page >= 20 chars are reportable segments
         pos = 0
         last_b_end = 0
+        first_b = None
         for b in blocks:
             if b.a - pos >= 20:
                 missing.append(f"p.{pno}: {page[pos:b.a][:120]}")
             pos = b.a + b.size
             if b.size:
+                if first_b is None:
+                    first_b = b.b
                 last_b_end = b.b + b.size
         if len(page) - pos >= 20:
             missing.append(f"p.{pno}: {page[pos:][:120]}")
+        # actual candidate offset where this page's text begins (window_start is
+        # only the search-window start; add the first real matched block's b)
+        per_page.append((pno, page_matched, len(page),
+                         window_start + (first_b or 0)))
         if page_matched > len(page) * 0.3 and last_b_end:
             cursor = window_start + last_b_end
     return CoverageResult(pdf_chars=total, matched_chars=matched,
-                          missing_segments=missing)
+                          missing_segments=missing, per_page=per_page)
 
 
 _SQUEEZE_CHARS = "-­‐‑–— \t\n"

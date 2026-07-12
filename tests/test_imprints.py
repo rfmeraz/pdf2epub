@@ -13,7 +13,6 @@ import pytest
 from pdf2epub.core.emit_xhtml import Emitter, OutFile, _run_html
 from pdf2epub.core.model import (
     FlowDoc,
-    InlinePageBreak,
     NoteRef,
     PageAnchor,
     Paragraph,
@@ -24,7 +23,6 @@ from pdf2epub.core.model import (
 from pdf2epub.flowbuilder import FlowResult
 from pdf2epub.imprints import apply_imprint, parse_imprint
 from pdf2epub.imprints import world_wisdom as ww
-
 
 # ------------------------------------------------------------------ helpers
 

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import shutil
+import uuid
 from pathlib import Path
 
 from .analyze import Analysis, analysis_to_dict, analyze
@@ -127,9 +128,11 @@ def _draft_yaml(pdf: Path, doc: PdfDoc, a: Analysis, workspace: Path) -> str:
 
     L: list[str] = []
     w = L.append
-    w(f"# pdf2epub book.yaml — DRAFT written by init; every judgment below is a")
-    w(f"# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail")
-    w(f"# the build until the agent decides them (by LOOKING at analysis/pages/).")
+    w("# pdf2epub book.yaml — DRAFT written by init; every judgment below is a")
+    w("# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail")
+    w("# the build until the agent decides them (by LOOKING at analysis/pages/).")
+    w("")
+    w("schema_version: 1")
     w("")
     w("source:")
     w(f"  folder: {q(folder)}")
@@ -142,8 +145,10 @@ def _draft_yaml(pdf: Path, doc: PdfDoc, a: Analysis, workspace: Path) -> str:
     w("  publisher: \"\"               # from the copyright page; no default")
     w("  language: en")
     w("  additional_languages: []")
-    w("  isbn_epub:                  # never invented; empty -> urn:uuid (flagged)")
+    w("  isbn_epub:                  # never invented; empty -> identifier/urn:uuid")
     w("  isbn_print:")
+    w(f"  identifier: {uuid.uuid4()}   # persistent EPUB id; keep STABLE across revisions")
+    w("  released:                   # YYYY-MM-DD of this EPUB revision (dcterms:modified)")
     w("  date:")
     if a.cover_proposal.get("mode") == "render":
         w("  cover: assets/cover.jpg     # produced by cover_render at build time")
@@ -169,7 +174,7 @@ def _draft_yaml(pdf: Path, doc: PdfDoc, a: Analysis, workspace: Path) -> str:
     w("")
     w("furniture:")
     w(f"  top_band: {a.top_band}")
-    w(f"  repeat_min_pages: 3")
+    w("  repeat_min_pages: 3")
     w("  extra: []")
     w("  keep: []")
     for r in a.repeated_lines[:8]:
@@ -232,12 +237,10 @@ def _draft_yaml(pdf: Path, doc: PdfDoc, a: Analysis, workspace: Path) -> str:
     w("split: {at_roles: [h1], warn_over_files: 90}")
     w("")
     w("images:                       # JP-P4b")
-    w(f"  raster_dpi: 300")
-    w(f"  max_pixels: 1600")
-    w("  alt: {}")
-    w("  decorative: []")
+    w("  raster_dpi: 300")
+    w("  max_pixels: 1600")
     if a.figure_pages_proposal:
-        w(f"  figure_pages:")
+        w("  figure_pages:")
         w(f"    - {{pages: {a.figure_pages_proposal}, alt_template: \"FILL-ME-IN describing page {{label}}\", lang: zh}}")
     else:
         w("  figure_pages: []")

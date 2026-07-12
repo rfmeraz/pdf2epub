@@ -10,7 +10,6 @@ from .flowbuilder import FlowResult
 from .warnqueue import rtl_census
 
 
-
 def stage_map(ctx, res: FlowResult) -> None:
     cfg: PdfBookConfig = ctx.cfg
     flow = ctx.flow

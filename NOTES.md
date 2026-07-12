@@ -530,7 +530,7 @@ paragraph — lines into the page — were silently imprecise).
 ## Footnotes, soft hyphens, recto/verso shift — 2026-07-09 (Sufism)
 
 First non-validation book, and the one that proved the deterministic gates +
-sampled visual QA can BOTH pass a build that reads as damaged. The 24 gates and
+sampled visual QA can BOTH pass a build that reads as damaged. The deterministic gates and
 gate-18 contact sheets were green while ~412 body/footnote paragraphs (a third of
 the book) were wrongly split. Only the blind-reader proofread caught it. Lesson:
 **never present a build as done on gates alone — the mandatory proofread is the
@@ -1227,3 +1227,78 @@ cells (`84.O you` p83, `M.Thackston` p308) did NOT flip — their period-space i
 not a `restore_spaces` repair, so the `absent` form can't recur — and were DROPPED as
 non-discriminating (the plan's rule: a cell that can't flip is inert). Runtime cost < 1s/book;
 `slice_pages` is currently recomputed in the gate (typography already calls it — candidate hoist).
+
+## External implementation review + roadmap re-rank (2026-07-12)
+
+An outside reviewer read the code and ran focused experiments; all eight code findings were
+independently re-verified here before acting (line cites in `specs/reliability-hardening.md`
+and `specs/qa-methodology.md §3`). Confirmed: (1) gate-2 coverage is recall-only and passes
+**reordered and duplicated** books at 100% — its comment delegates order to gate 6, but gate 6
+checks only TOC/heading placement, not body order; (2) engine-disputed pages drop 66612 (I&B) /
+27661 (BoK) / 13604 (Sufism) chars from the coverage denominator, defended by ~1 assertion cell
+across 24 pages; (3) FILL-ME-IN unenforced (`initcmd.py:5` promises it fails the build; 3/5
+`book.draft.yaml` load with `title: FILL-ME-IN`); (4) tests non-hermetic (`test_lang.py:35`
+imports the sibling repo; `test_cdp.py` skips only on Chrome *absence*) + no CI/lockfile/linter;
+(5) builds non-transactional (zip written straight to `{slug}.epub`; invalid EPUB left on
+epubcheck fail; no provenance manifest — though the source-sha256 pin already exists); (6) seven
+dead config fields (incl. `output.include_ncx`, ignored — packager hardwires the NCX); (7)
+slug-only UUID fallback + `dcterms:modified` from the print year.
+
+Two review claims were narrowed on verification: finding #8's Chrome/CDP path is **already**
+bounded (DEVNULL output, per-op deadlines, 600×≤3000px clip) — only the three `subprocess.run`
+sites (poppler/epubcheck/Calibre) are unbounded; and the review's "cheap pathology census" and
+"verified-ocr mode" were **already** spec'd (`ocr-witness.md` step 1 and `source.text_layer`).
+
+Roadmap outcome (single merged ranking in `specs/commercial-parity.md`): the reliability/QA
+substrate is interleaved ahead of most features. Divergences from the reviewer's order, argued
+in-spec: kept a11y high (external EAA forcing + ~80% done) rather than demoting it, but adopted
+its correct refinement that `dcterms:conformsTo` needs a recorded *manual* certification, not a
+green Ace run; ranked process limits low (threat-model-conditional; trusted-PDF workflow today);
+promoted the FILL-ME-IN/dead-field fixes to Tier-0 cheap-correctness. New hand-off docs:
+`specs/reliability-hardening.md`; `specs/qa-methodology.md §3` (page-aligned fidelity gate). No
+code changed in this pass — spec/roadmap only.
+
+## Reliability roadmap Tier 0 + Tier 1 SHIPPED (2026-07-12)
+
+Implemented the above roadmap in seven phases (a second review of the plan caught real design
+flaws — all incorporated; see the plan's "corrections incorporated" section).
+
+- **Config integrity** (`config.py`): a shared `load_config(require_complete=)` validator now
+  enforces FILL-ME-IN rejection (recursive over the raw dict), required metadata (presence
+  checked on the raw dict — `language` defaults to `en`), and a strict-int `schema_version`
+  (rejects YAML `true`); `build` and the new `pdf2epub validate` both call it. Dead fields
+  removed (`furniture.bottom_band`, `images.alt`, `images.decorative`); `output.include_ncx`
+  implemented (respects the flag + unlinks a stale `toc.ncx`, since the packager zips all of
+  oebps); `pages.front/body/back` given structural validation (the folio cross-check is noisy —
+  I&B declares body.first 25 but folio "1" lands on p.26 — so shipped OFF).
+- **Transactional builds** (`build.py`, `packager.py`, `provenance.py`): package to a unique
+  `tempfile.mkstemp` temp, epubcheck it, `os.replace` onto the canonical name ONLY on pass — a
+  failed build leaves the prior good `.epub` untouched (verified). Immutable
+  `build/<slug>.manifest.json` (gitignored): source/book.yaml/epub sha256, tool+dep versions,
+  git rev + **dirty flag**, release epoch — no wall-clock, byte-stable across rebuilds. New
+  `pdf2epub verify` is the torn-write/stale invariant (epub hash vs manifest; book.yaml drift).
+- **Gate 25 page fidelity** (`qa/fidelity.py`): see qa-methodology.md §3 for the shipped design
+  (char-level anchor slicer, ±1-page window, rapidfuzz LCS, Rabin-Karp duplication). Thresholds
+  from mutation-vs-corpus margin. **The first draft's alignment math was unsound** (window_start
+  is a search-window start; `matched` sums non-contiguous blocks) — the corrected version
+  compares page-local and uses real coordinates only for order. All six books PASS with margin;
+  a real injected dup and a real anchor corruption FAIL end-to-end.
+- **Gate 26 a11y readiness** (`qa/a11y.py`, `qa/ace.py`): alt + metadata + Ace (pinned in
+  `tools/ace/`, absence-skips-but-crash-FAILS). The Ace baseline caught a real **serious**
+  `epub-pagesource` on every page-numbered book → fixed with `<meta property="pageBreakSource">`
+  + `printPageNumbers`. 3 moderate `heading-order` findings remain (non-gating). No `conformsTo`
+  (manual cert deferred).
+- **CI/tooling**: pytest markers (only `test_cdp` is non-hermetic — everything else mocks/
+  synthesizes); removed the sibling-repo `class_hint` test; Chrome skip env-gated so the browser
+  CI tier still catches launch/protocol regressions; `websocket-client` promoted to a real dep;
+  hashed `requirements.lock` (pip-compile, Python 3.14); ruff E4/E7/E9/F/I clean (E741/E731
+  ignored as established style); mypy advisory; portable GitHub Actions (unit/locked-install/
+  browser/corpus, epubcheck downloaded+sha256-verified).
+- **Identity + corpus reship**: `metadata.identifier` (validated UUID/urn) + `metadata.released`
+  (validated YYYY-MM-DD → `dcterms:modified`). The 4 UUID-flagged books + a **distinct** UUID for
+  the BoK arabic variant (the two BoK EPUBs no longer share `urn:isbn:9781941610213`). All six
+  rebuilt; every one epubcheck-clean, gates 25/26 PASS, `Overall: PASS`.
+
+Verification baseline: `pytest -q` 361 passed; `ruff check` clean; six-book corpus all
+`Overall: PASS`; two clean builds byte-identical (epub + manifest). Deferred (documented):
+reliability-hardening §5 (process limits) + §6 (maintainability); a11y manual certification.

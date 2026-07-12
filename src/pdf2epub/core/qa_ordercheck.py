@@ -30,8 +30,8 @@ from dataclasses import dataclass, field
 
 from rapidfuzz import fuzz
 
-from .textnorm import normalize
 from .qa_epubload import LoadedEpub
+from .textnorm import normalize
 
 _XHTML = "{http://www.w3.org/1999/xhtml}"
 _EPUB = "{http://www.idpf.org/2007/ops}"

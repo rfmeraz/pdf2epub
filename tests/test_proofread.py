@@ -5,8 +5,7 @@ from types import SimpleNamespace
 from lxml import etree
 
 import pdf2epub.proofread as pf
-from pdf2epub.proofread import (Block, format_page_lines, render_packet,
-                                split_chunks, walk_doc)
+from pdf2epub.proofread import Block, format_page_lines, render_packet, split_chunks, walk_doc
 
 _NS = ('xmlns="http://www.w3.org/1999/xhtml" '
        'xmlns:epub="http://www.idpf.org/2007/ops"')

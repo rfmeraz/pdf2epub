@@ -1,4 +1,3 @@
-from collections import Counter
 
 from pdf2epub.core.lang import _split_run
 from pdf2epub.core.model import RunFormat, TextRun
@@ -30,11 +29,7 @@ def test_no_cjk_untouched():
     out = _langs("plain latin text")
     assert out == [("plain latin text", None)]
 
-
-def test_class_hints():
-    from idml2epub.mapping.styles import class_hint
-
-    assert class_hint("Paragraph First Drop Cap", "p") == "first-dropcap"
-    assert class_hint("First Para Space Belo", "p") == "first"
-    assert class_hint("Paragraph Body", "p") is None
-    assert class_hint("Half Title", "half-title") is None  # only body styles
+# NOTE: the former test_class_hints exercised idml2epub.mapping.styles.class_hint
+# — sibling-repo code that pdf2epub/src never imports. A cross-repo parity check
+# does not belong in this suite; it was removed for hermeticity (see
+# specs/reliability-hardening.md §4).

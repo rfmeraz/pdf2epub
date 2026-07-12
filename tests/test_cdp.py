@@ -1,13 +1,21 @@
-"""CDP screenshot capture — skips when no Chrome is installed."""
+"""CDP screenshot capture — skips when no Chrome is installed.
+
+Locally, an installed-but-unlaunchable Chrome (sandboxed / headless-broken)
+skips too; in the browser CI tier (PDF2EPUB_REQUIRE_BROWSER=1), a launch or
+protocol failure FAILS instead of hiding a CDP regression."""
 
 import io
+import os
 
 import pytest
 
-from pdf2epub.qa.cdp import Chrome, file_url, find_chrome
+from pdf2epub.qa.cdp import Chrome, ChromeUnavailable, file_url, find_chrome
 
-pytestmark = pytest.mark.skipif(find_chrome() is None,
-                                reason="no chrome/chromium on this machine")
+pytestmark = [
+    pytest.mark.browser,
+    pytest.mark.skipif(find_chrome() is None,
+                       reason="no chrome/chromium on this machine"),
+]
 
 
 def test_capture_clip(tmp_path):
@@ -24,18 +32,23 @@ def test_capture_clip(tmp_path):
         "</body></html>")
     (tmp_path / "css").mkdir()
     (tmp_path / "css" / "s.css").write_text("p { background: #ddeeff; }")
-    with Chrome() as ch:
-        ch.open(file_url(str(tmp_path / "page.xhtml")))
-        got = ch.eval(
-            "JSON.stringify({h: document.documentElement.scrollHeight,"
-            " pb: [...document.querySelectorAll('div[id^=pg-]')]"
-            ".map(d => d.getBoundingClientRect().top + window.scrollY)})")
-        import json
+    try:
+        with Chrome() as ch:
+            ch.open(file_url(str(tmp_path / "page.xhtml")))
+            got = ch.eval(
+                "JSON.stringify({h: document.documentElement.scrollHeight,"
+                " pb: [...document.querySelectorAll('div[id^=pg-]')]"
+                ".map(d => d.getBoundingClientRect().top + window.scrollY)})")
+            import json
 
-        info = json.loads(got)
-        assert len(info["pb"]) == 2 and info["pb"][1] > info["pb"][0]
-        png = ch.screenshot(0, info["pb"][0], 600,
-                            info["pb"][1] - info["pb"][0], scale=2.0)
+            info = json.loads(got)
+            assert len(info["pb"]) == 2 and info["pb"][1] > info["pb"][0]
+            png = ch.screenshot(0, info["pb"][0], 600,
+                                info["pb"][1] - info["pb"][0], scale=2.0)
+    except ChromeUnavailable as e:
+        if os.environ.get("PDF2EPUB_REQUIRE_BROWSER"):
+            raise
+        pytest.skip(f"chrome present but would not launch: {e}")
     from PIL import Image
 
     img = Image.open(io.BytesIO(png))

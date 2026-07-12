@@ -23,7 +23,6 @@ from pdf2epub.core.model import (
 from pdf2epub.flowbuilder import FlowResult
 from pdf2epub.index_locators import link_index_locators
 
-
 # ------------------------------------------------------------------ helpers
 
 def _p(text, page, role=None):

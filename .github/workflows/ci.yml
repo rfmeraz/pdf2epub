@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # Hermetic tier: no external programs. The whole suite except the browser
+  # test mocks/synthesizes its inputs, so this needs no poppler/epubcheck/Java.
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Lint (ruff — E4/E7/E9/F/I)
+        run: ruff check src/ tests/
+      - name: Unit tests
+        run: pytest -q -m "not browser and not integration and not corpus"
+
+  # Verify the hashed lockfile actually resolves+installs (reproducible-install
+  # contract). Python must match the lock's interpreter (see requirements.lock
+  # header); regenerate with:
+  #   pip-compile --extra=dev --generate-hashes --strip-extras -o requirements.lock pyproject.toml
+  locked-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: pip install --require-hashes -r requirements.lock
+      - run: pip install -e . --no-deps
+      - run: python -c "import pdf2epub.cli, pdf2epub.qa.fidelity, pdf2epub.provenance"
+
+  # Browser tier: Chrome present, so a CDP launch/protocol regression FAILS
+  # (locally the same test skips — see tests/test_cdp.py).
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Browser tests
+        env:
+          PDF2EPUB_REQUIRE_BROWSER: "1"
+        run: pytest -q -m browser
+
+  # Corpus tier: real-book builds + full QA. Heavy (toolchain + Ace/chromium);
+  # manual/nightly only. epubcheck is DOWNLOADED and sha256-verified, not
+  # trusted from a local cache.
+  corpus:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    env:
+      EPUBCHECK_VERSION: "5.3.0"
+      EPUBCHECK_SHA256: "f7f96617c929371821609b88c8484d6dc9f24fe916499863c46094c5fb778a65"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: System tools (poppler + Java)
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils default-jre unzip
+      - name: epubcheck (pinned + verified)
+        run: |
+          curl -sL -o ec.zip "https://github.com/w3c/epubcheck/releases/download/v${EPUBCHECK_VERSION}/epubcheck-${EPUBCHECK_VERSION}.zip"
+          unzip -q ec.zip
+          mkdir -p vendor/epubcheck
+          mv "epubcheck-${EPUBCHECK_VERSION}/epubcheck.jar" vendor/epubcheck/epubcheck.jar
+          mv "epubcheck-${EPUBCHECK_VERSION}/lib" vendor/epubcheck/lib
+          echo "${EPUBCHECK_SHA256}  vendor/epubcheck/epubcheck.jar" | sha256sum -c -
+      - run: pip install -e ".[dev]"
+      - name: Build + QA the corpus
+        run: |
+          set -e
+          for cfg in books/*/book*.yaml; do
+            case "$cfg" in *draft*) continue;; esac
+            slug=$(python -c "import sys,yaml;print(yaml.safe_load(open('$cfg'))['output']['slug'])")
+            pdf2epub build "$cfg"
+            pdf2epub qa "books/$(basename $(dirname $cfg))/build/$slug.epub" --config "$cfg"
+          done

@@ -1,8 +1,10 @@
 # QA methodology imports
 
-Status: item 1 SHIPPED 2026-07-11; item 2 spec'd, blocked on toolchain. Two independent,
-opportunistic improvements borrowed from the strongest external practice found in the
-2026-07-09 research pass.
+Status: item 1 SHIPPED 2026-07-11; item 2 spec'd, blocked on toolchain; **item 3 (page-aligned
+fidelity gate) SHIPPED 2026-07-12 as gate 25 — the top QA-integrity item, gating**. Items 1-2
+are opportunistic improvements borrowed from the strongest external practice found in the
+2026-07-09 research pass; item 3 closes a blind spot in the flagship coverage gate surfaced by
+the 2026-07-12 implementation review.
 
 ## 1. Per-page machine-checkable assertion cells (olmOCR-bench pattern) — SHIPPED 2026-07-11
 
@@ -93,8 +95,85 @@ is small and explicable (spot-verify 5 sites against renders); the known compoun
 ('self-evident', 'all-embracing') appear as class-(a) sites — confirming the witness
 sees what our prefix list guards; no gate verdict changes.
 
+## 3. Page-aligned fidelity gate (recall + precision + order + duplication) — TOP QA-integrity item
+
+**SHIPPED 2026-07-12 as gate 25** (`src/pdf2epub/qa/fidelity.py`, `test_fidelity.py`). Diverged
+from the sketch where the implementation forced it: (a) per-page comparison uses a NEW
+**char-level** page slicer (`qa_pageslice.slice_page_chars`) that splits at the inline
+pagebreak anchors — block-level slices mis-assign a page-spanning paragraph wholesale to the
+first page, tanking recall on prose; (b) recall/precision compare each page against a **±1-page
+window** because poppler's physical-page boundary and the EPUB anchor legitimately disagree by
+up to a paragraph (chapter-opener drop caps, page-spanning paragraphs); (c) matching is
+**rapidfuzz LCS** (fast enough to window a 360-page book); (d) duplication is a **Rabin-Karp
+rolling hash** (fixed-stride shingling misses a repeat whose copies aren't stride-aligned —
+which is every real duplicate). Thresholds (recall 0.75 / precision 0.72) set from the
+mutation-vs-corpus separation margin (legit floor 0.84/0.82; mutations near 0). All six shipped
+books PASS; a real injected duplication and a real anchor corruption both FAIL end-to-end. The
+disputed-page defense (25b) ships advisory as planned. Original sketch retained below.
+
+**What it is / why we want it.** Gate 2 (`qa/groundtruth.py:212 paged_coverage`) is
+one-directional *recall*: for each source page it searches the WHOLE candidate
+(`candidate.find(snippet)`, lines 241-244) and keeps whichever window matches best regardless
+of position (line 251); its own comment (235) delegates order to gate 6. But gate 6
+(`runner.py:229-249`) only checks that TOC/source **headings** land on their printed page —
+not general body order. Consequences, confirmed by a focused experiment in the 2026-07-12
+review:
+
+```
+correct text     100% coverage
+swapped pages     100% coverage      <- reordered body passes
+duplicated book   100% coverage      <- excess/duplicated text is invisible (recall-only)
+```
+
+The deterministic build makes gross reorder/duplication a *regression-bug* class, not a
+routine event — but a QA harness whose flagship gate cannot fail on a duplicated book is a
+false assurance, and "validated conversion" is the project's central claim. This is the
+highest-value QA finding in the review. The raw material already exists: the emitter writes an
+exact `epub:type="pagebreak"` anchor per printed page (used by the page-list nav and index
+locators), so the candidate can be sliced per source page — the same partition gates 13-17 and
+gate 24 already use.
+
+**Design.**
+- **Precision (new):** for each source-page slice of the candidate, what fraction is justified
+  by *that* source page's ground truth? Recall + precision together catch both dropped and
+  *duplicated/injected* text that recall alone misses.
+- **Monotonicity (new, cheap):** run a SECOND coverage pass that is strictly cursor-monotonic
+  (no whole-candidate `find` fallback) and flag any page whose monotonic match falls far below
+  its best-window match — that delta is the reordering signal the current best-window search
+  hides.
+- **Duplicate-span detection:** hash shingles of the candidate; report any long span (e.g.
+  ≥ a paragraph) that appears more than once and isn't a legitimate repeat (running head text
+  is already stripped; footnote-marker text is short).
+- **Explicit, itemized exceptions** (not blanket exclusions): relocated footnotes/endnotes
+  (moved to the notes file by design), the rebuilt hyperlinked TOC (replaces printed TOC
+  pages), and figure/figure-region pages — each already tracked, so the exception list is
+  derivable, not hand-maintained.
+
+**Disputed-page defense (the review's finding #2, folded in here).** `runner.py:162-172`
+blanks engine-disputed pages (`engine_agreement < 90`) out of the coverage denominator —
+66612 chars in islam-and-buddhism (pp.138-145), 27661 in book-of-knowledge (322-329), 13604 in
+sufism (206-213). That exclusion is *reasonable* (both witnesses decode the broken CMap
+differently; neither is ground truth), but a prose adjudication note is too weak for ~8k
+chars/page, and gate-24 assertions currently cover those 24 pages with **one** heading-string
+cell. Require, per disputed page, at least one machine-checkable defense: a page-level
+alternate witness (OCR witness once [ocr-witness.md](ocr-witness.md) ships), figure treatment,
+gate-24 assertion cells, or a reviewed block/order signature. Gate fails on a disputed page
+with zero machine defense — turning "trust the render review happened" into a checked
+invariant.
+
+**Integration points**: `qa/groundtruth.py` (precision + monotonic passes, dup detection),
+`qa/runner.py` (new gate 25, exception itemization, disputed-page defense check),
+`qa_pageslice`/pagebreak-anchor partition (exists), gate-24 `assertions.py` (disputed-page
+coverage requirement), NOTES.md expected-FIRE matrix (record the swapped/duplicated fixtures).
+
+**Acceptance**: a scratch build with two pages swapped FAILS (monotonicity); a scratch build
+with a chapter duplicated FAILS (precision + dup-span); the five current books PASS; every
+disputed page in I&B/BoK/sufism either gains machine defense or the gate names it.
+
 ## Non-goals
 
 - Replacing gate-level regression matrices (assertion cells complement them).
-- Making either check gate/fail builds — both are evidence generators for adjudication.
+- Making the borrowed witnesses (§1 assertions aside) gate/fail builds — §1/§2 are evidence
+  generators for adjudication. **§3 is the exception: it IS a gating check** — an unfalsifiable
+  coverage number is worse than none.
 - Back-porting poppler: if the system poppler is old, the witness just doesn't run.

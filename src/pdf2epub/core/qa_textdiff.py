@@ -17,6 +17,11 @@ class CoverageResult:
     pdf_chars: int
     matched_chars: int
     missing_segments: list[str] = field(default_factory=list)
+    # per-page diagnostics for the fidelity gate (25): one tuple per non-blank
+    # source page, in reading order — (pno, matched_chars, page_len,
+    # candidate_start). candidate_start is the actual best-match offset in the
+    # candidate, so gate 25 can test start-monotonicity (reorder witness).
+    per_page: list[tuple[int, int, int, int]] = field(default_factory=list)
 
     @property
     def coverage(self) -> float:

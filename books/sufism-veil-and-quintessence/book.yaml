@@ -2,6 +2,8 @@
 # Judgments recorded by the structure-inference agent from analysis evidence +
 # page renders. See CONVERSIONS.md for the decision log.
 
+schema_version: 1
+
 source:
   folder: "package"
   pdf: "Sufism-Veil-and-Quintessence-by-Frithjof-Schuon.pdf"
@@ -21,6 +23,8 @@ metadata:                     # JP-P5 — verified on p4 (title) + p5 (copyright
   additional_languages: []    # transliterated Arabic/Sanskrit/etc. are romanized (Latin)
   isbn_epub:                  # none printed -> urn:uuid ships (flagged in handoff)
   isbn_print: "978-1-933316-28-4"
+  identifier: 050293d0-2a14-4a8c-9f71-289d7d2e8085   # persistent EPUB id (was slug-derived urn:uuid; FLAGGED)
+  released: "2026-07-12"   # dcterms:modified = this EPUB revision
   date: "2006"
   cover: assets/cover.jpg     # rendered from PDF page 1 (full designed cover)
   cover_render: {page: 1, box: trim, dpi: 300}
@@ -229,8 +233,6 @@ split: {at_roles: [h1], warn_over_files: 90}
 images:                       # JP-P4b
   raster_dpi: 300
   max_pixels: 1600
-  alt: {}
-  decorative: []
   figure_pages:
     - {pages: [18], alt_template: "Frithjof Schuon in 1989 — a portrait photograph of the author, white-haired and bearded, wearing a light jacket over a paisley-patterned shawl, before foliage.", lang: en}
   figure_regions: []

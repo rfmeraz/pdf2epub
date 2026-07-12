@@ -14,12 +14,18 @@ resolve_workspace().
 
 from __future__ import annotations
 
+import uuid
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import yaml
 
 from .core.roles import StyleRule
+
+if TYPE_CHECKING:
+    from .imprints import ImprintSpec
 
 
 class ConfigError(Exception):
@@ -226,6 +232,7 @@ class Adjudication:
 @dataclass(slots=True)
 class PdfBookConfig:
     path: Path  # config file location; relative paths resolve against its parent
+    schema_version: int = 1  # book.yaml grammar version (top-level key)
 
     # source
     source_folder: Path = Path()
@@ -241,6 +248,8 @@ class PdfBookConfig:
     additional_languages: list[str] = field(default_factory=list)
     isbn_epub: str | None = None
     isbn_print: str | None = None
+    identifier: str | None = None       # persistent EPUB id (UUID/urn); NOT slug-derived
+    released: str | None = None         # YYYY-MM-DD; feeds dcterms:modified (EPUB revision)
     date: str | None = None
     cover: str | None = None            # packaged image path (workspace-relative)
     cover_render: CoverRender | None = None
@@ -259,7 +268,6 @@ class PdfBookConfig:
 
     # furniture (JP-P2)
     top_band: float = 0.0      # PDF points from trim top; 0 = analyzer default
-    bottom_band: float = 0.0   # PDF points from trim bottom
     repeat_min_pages: int = 3
     furniture_extra: list[str] = field(default_factory=list)
     furniture_keep: list[str] = field(default_factory=list)
@@ -336,8 +344,6 @@ class PdfBookConfig:
     # images (JP-P4b)
     raster_dpi: int = 300
     max_pixels: int = 1600
-    image_alt: dict[str, str] = field(default_factory=dict)
-    decorative: list[str] = field(default_factory=list)
     figure_pages: list[FigurePages] = field(default_factory=list)
     figure_regions: list[FigureRegion] = field(default_factory=list)
 
@@ -413,15 +419,95 @@ def _page_list(items) -> list[int]:
     return pages
 
 
-def load_config(path: Path) -> PdfBookConfig:
+SCHEMA_VERSION = 1
+
+_PLACEHOLDER = "FILL-ME-IN"
+
+
+def _reject_placeholders(value, path: str = "") -> None:
+    """Recursively refuse any surviving FILL-ME-IN marker — the init draft's
+    unresolved-judgment placeholder. initcmd promises this fails the build
+    loudly; this is the enforcement."""
+    if isinstance(value, str):
+        if _PLACEHOLDER in value:
+            raise ConfigError(
+                f"unresolved {_PLACEHOLDER} placeholder at "
+                f"{path or 'book.yaml'} — finalize book.yaml before building")
+    elif isinstance(value, dict):
+        for k, v in value.items():
+            _reject_placeholders(v, f"{path}.{k}" if path else str(k))
+    elif isinstance(value, (list, tuple)):
+        for i, v in enumerate(value):
+            _reject_placeholders(v, f"{path}[{i}]")
+
+
+def _check_schema_version(data: dict, require: bool) -> None:
+    """schema_version must be a plain int equal to the supported version. Type
+    is always enforced (YAML `true` coerces to 1 via bool-is-int — reject it);
+    PRESENCE is required only for a complete config (build/validate), so partial
+    parser fixtures need not carry it."""
+    if "schema_version" not in data:
+        if require:
+            raise ConfigError(
+                f"schema_version is required — add `schema_version: {SCHEMA_VERSION}`")
+        return
+    sv = data["schema_version"]
+    if isinstance(sv, bool) or not isinstance(sv, int):
+        raise ConfigError(f"schema_version must be an integer, got {sv!r}")
+    if sv != SCHEMA_VERSION:
+        raise ConfigError(
+            f"schema_version {sv} unsupported (this build expects {SCHEMA_VERSION})")
+
+
+def _check_required_metadata(data: dict) -> None:
+    """title/creators/language must be PRESENT (checked on the raw dict —
+    cfg.language defaults to 'en', so a post-parse cfg check can't prove the
+    key was authored)."""
+    md = data.get("metadata") or {}
+    for key in ("title", "creators", "language"):
+        if not md.get(key):
+            raise ConfigError(f"metadata.{key} is required and must be non-empty")
+
+
+def _validate_page_ranges(cfg: PdfBookConfig) -> None:
+    """Structural invariants on the front/body/back partition: each range
+    positive with first <= last, and the declared ranges strictly ordered and
+    non-overlapping. (These annotate the folio-inferred partition; the printed-
+    folio cross-check is a separate, noisy advisory kept off by default.)"""
+    present = [(name, r) for name, r in
+               (("front", cfg.pages_front), ("body", cfg.pages_body),
+                ("back", cfg.pages_back)) if r is not None]
+    for name, r in present:
+        if r.first < 1 or r.last < r.first:
+            raise ConfigError(
+                f"pages.{name} must be a positive range with first <= last, "
+                f"got {r.first}..{r.last}")
+    for (n1, r1), (n2, r2) in zip(present, present[1:]):
+        if r2.first <= r1.last:
+            raise ConfigError(
+                f"pages.{n1} ({r1.first}..{r1.last}) and pages.{n2} "
+                f"({r2.first}..{r2.last}) must be ordered and non-overlapping")
+
+
+def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
+    """Parse book.yaml. Structural checks (unknown keys, page-range order) and
+    placeholder rejection always run; `require_complete` additionally demands a
+    finalized config (schema_version present, required metadata) — `build` and
+    `validate` set it, low-level parser tests do not."""
     path = path.expanduser().resolve()
     data = yaml.safe_load(path.read_text()) or {}
     _check_keys("book.yaml", data, {
+        "schema_version",
         "source", "metadata", "pages", "furniture", "styles", "flow",
         "footnotes", "toc", "glyphs", "fonts", "languages", "split",
         "images", "output", "qa", "adjudications", "blocks", "imprint",
     })
+    _reject_placeholders(data)
+    _check_schema_version(data, require_complete)
+    if require_complete:
+        _check_required_metadata(data)
     cfg = PdfBookConfig(path=path)
+    cfg.schema_version = int(data.get("schema_version", SCHEMA_VERSION))
 
     src = data.get("source", {})
     _check_keys("source", src, {"folder", "pdf", "sha256"})
@@ -440,7 +526,8 @@ def load_config(path: Path) -> PdfBookConfig:
     md = data.get("metadata", {})
     _check_keys("metadata", md, {
         "title", "subtitle", "creators", "publisher", "language",
-        "additional_languages", "isbn_epub", "isbn_print", "date", "cover",
+        "additional_languages", "isbn_epub", "isbn_print", "identifier",
+        "released", "date", "cover",
         "cover_render", "cover_synthesize", "accessibility_summary",
     })
     cfg.title = md.get("title", "")
@@ -451,6 +538,20 @@ def load_config(path: Path) -> PdfBookConfig:
     cfg.additional_languages = md.get("additional_languages", []) or []
     cfg.isbn_epub = md.get("isbn_epub") or None
     cfg.isbn_print = md.get("isbn_print") or None
+    cfg.identifier = md.get("identifier") or None
+    if cfg.identifier and not cfg.identifier.startswith("urn:"):
+        try:
+            uuid.UUID(cfg.identifier)
+        except (ValueError, AttributeError, TypeError):
+            raise ConfigError("metadata.identifier must be a UUID or urn: value, "
+                              f"got {cfg.identifier!r}")
+    cfg.released = str(md.get("released")) if md.get("released") is not None else None
+    if cfg.released:
+        try:
+            datetime.strptime(cfg.released, "%Y-%m-%d")
+        except ValueError:
+            raise ConfigError("metadata.released must be YYYY-MM-DD, "
+                              f"got {cfg.released!r}")
     cfg.date = str(md.get("date")) if md.get("date") is not None else None
     cfg.cover = md.get("cover")
     cr = md.get("cover_render")
@@ -480,12 +581,12 @@ def load_config(path: Path) -> PdfBookConfig:
         _check_keys("pages.role_overrides[]", ro, {"page", "role", "class"})
         cfg.role_overrides.append(RoleOverride(page=int(ro["page"]), role=ro["role"],
                                                class_=ro.get("class")))
+    _validate_page_ranges(cfg)
 
     fu = data.get("furniture", {})
-    _check_keys("furniture", fu, {"top_band", "bottom_band", "repeat_min_pages",
+    _check_keys("furniture", fu, {"top_band", "repeat_min_pages",
                                   "extra", "keep"})
     cfg.top_band = float(fu.get("top_band", 0.0))
-    cfg.bottom_band = float(fu.get("bottom_band", 0.0))
     cfg.repeat_min_pages = int(fu.get("repeat_min_pages", cfg.repeat_min_pages))
     cfg.furniture_extra = list(fu.get("extra", []) or [])
     cfg.furniture_keep = list(fu.get("keep", []) or [])
@@ -618,12 +719,10 @@ def load_config(path: Path) -> PdfBookConfig:
     cfg.warn_over_files = int(sp.get("warn_over_files", cfg.warn_over_files))
 
     im = data.get("images", {})
-    _check_keys("images", im, {"raster_dpi", "max_pixels", "alt", "decorative",
+    _check_keys("images", im, {"raster_dpi", "max_pixels",
                                "figure_pages", "figure_regions"})
     cfg.raster_dpi = int(im.get("raster_dpi", cfg.raster_dpi))
     cfg.max_pixels = int(im.get("max_pixels", cfg.max_pixels))
-    cfg.image_alt = im.get("alt", {}) or {}
-    cfg.decorative = list(im.get("decorative", []) or [])
     for fp in im.get("figure_pages", []) or []:
         _check_keys("images.figure_pages[]", fp,
                     {"pages", "alt_template", "lang", "keep_text"})

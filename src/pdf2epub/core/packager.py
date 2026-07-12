@@ -11,14 +11,16 @@ the build deterministic (fixed zip timestamps, uuid5 fallback identifier).
 from __future__ import annotations
 
 import mimetypes
+import os
 import re
+import tempfile
 import uuid
 import zipfile
 from pathlib import Path
 from xml.sax.saxutils import escape
 
 from .emit_xhtml import EmitResult, OutFile
-from .nav import build_nav_xhtml, _toc_entries
+from .nav import _toc_entries, build_nav_xhtml
 
 _FIXED_STAMP = (2026, 1, 1, 0, 0, 0)  # reproducible builds
 
@@ -56,9 +58,14 @@ def _media_type(name: str) -> str:
 
 
 def _identifier(cfg) -> str:
+    ident = getattr(cfg, "identifier", None)
+    if ident:  # explicit persistent id (a UUID, or an already-formed urn:)
+        return ident if ident.startswith("urn:") else f"urn:uuid:{ident}"
     if cfg.isbn_epub:
         digits = re.sub(r"[^0-9Xx]", "", cfg.isbn_epub)
         return f"urn:isbn:{digits}"
+    # last-resort slug-derived UUID: NOT unique across unrelated books with the
+    # same slug — build.py warns loudly when this path is taken.
     return "urn:uuid:" + str(
         uuid.uuid5(uuid.NAMESPACE_URL, f"pdf2epub:{cfg.slug}")
     )
@@ -96,7 +103,10 @@ def _opf(cfg, manifest: list[tuple[str, str, str, str]], spine_ids: list[str],
     if cfg.isbn_print:
         digits = re.sub(r"[^0-9Xx]", "", cfg.isbn_print)
         L.append(f"<dc:source>urn:isbn:{digits}</dc:source>")
-    stamp = f"{cfg.date or '2026'}-01-01T00:00:00Z"
+    # dcterms:modified describes the EPUB REVISION, not the print date: use the
+    # explicit release epoch when set, else fall back to the print year.
+    released = getattr(cfg, "released", None)
+    stamp = f"{released}T00:00:00Z" if released else f"{cfg.date or '2026'}-01-01T00:00:00Z"
     L.append(f'<meta property="dcterms:modified">{stamp}</meta>')
     # accessibility
     L.append('<meta property="schema:accessMode">textual</meta>')
@@ -104,9 +114,16 @@ def _opf(cfg, manifest: list[tuple[str, str, str, str]], spine_ids: list[str],
     L.append('<meta property="schema:accessModeSufficient">textual,visual</meta>')
     features = ["tableOfContents", "alternativeText"]
     if has_pagelist:  # only claim page navigation when a print PDF gave us anchors
-        features += ["pageNavigation", "pageBreakMarkers"]
+        features += ["pageNavigation", "pageBreakMarkers", "printPageNumbers"]
     for feat in features:
         L.append(f'<meta property="schema:accessibilityFeature">{feat}</meta>')
+    if has_pagelist:
+        # pagination source (EPUB a11y / Ace epub-pagesource): identify the
+        # print edition the page breaks came from — the print ISBN when known,
+        # else the book's own identifier.
+        pbsrc = (f"urn:isbn:{re.sub(r'[^0-9Xx]', '', cfg.isbn_print)}"
+                 if cfg.isbn_print else _identifier(cfg))
+        L.append(f'<meta property="pageBreakSource">{escape(pbsrc)}</meta>')
     L.append('<meta property="schema:accessibilityHazard">none</meta>')
     if cfg.accessibility_summary:
         L.append(
@@ -124,7 +141,7 @@ def _opf(cfg, manifest: list[tuple[str, str, str, str]], spine_ids: list[str],
         L.append(f'<item id="{mid}" href="{escape(href)}" media-type="{mt}"{prop_attr}/>')
     L.append("</manifest>")
 
-    L.append('<spine toc="ncx">')
+    L.append(f'<spine{" toc=\"ncx\"" if cfg.include_ncx else ""}>')
     for sid in spine_ids:
         linear = ' linear="no"' if sid == "coverpage" else ""
         L.append(f'<itemref idref="{sid}"{linear}/>')
@@ -218,14 +235,22 @@ def stage_package(ctx, result: EmitResult) -> Path:
 
     # nav
     (oebps / "nav.xhtml").write_text(build_nav_xhtml(result, cfg, has_cover=bool(cover_asset)))
-    (oebps / "toc.ncx").write_text(_ncx(cfg, result))
+    # legacy NCX: opt-out via output.include_ncx. Remove any stale toc.ncx when
+    # disabled — stage_package zips ALL of oebps, so a leftover would ship
+    # despite the manifest/spine omitting it.
+    ncx_path = oebps / "toc.ncx"
+    if cfg.include_ncx:
+        ncx_path.write_text(_ncx(cfg, result))
+    elif ncx_path.exists():
+        ncx_path.unlink()
 
     # manifest + spine
     manifest: list[tuple[str, str, str, str]] = [
         ("nav", "nav.xhtml", "application/xhtml+xml", "nav"),
-        ("ncx", "toc.ncx", "application/x-dtbncx+xml", ""),
         ("css", "css/styles.css", "text/css", ""),
     ]
+    if cfg.include_ncx:
+        manifest.insert(1, ("ncx", "toc.ncx", "application/x-dtbncx+xml", ""))
     spine: list[str] = []
     if cover_asset:
         manifest.append(("coverimg", f"image/{cover_asset}", _media_type(cover_asset), "cover-image"))
@@ -243,8 +268,15 @@ def stage_package(ctx, result: EmitResult) -> Path:
     has_pagelist = any(f.pagebreaks for f in all_files)
     (oebps / "content.opf").write_text(_opf(cfg, manifest, spine, has_pagelist))
 
-    # zip it
-    epub_path = cfg.build_dir / f"{cfg.slug}.epub"
+    # zip into a UNIQUE temp in build_dir (same filesystem, so run_build can
+    # os.replace() it onto the canonical name atomically only after epubcheck
+    # passes — a fixed .part name would let concurrent builds clobber it).
+    # keep the .epub extension so epubcheck accepts it; the leading "." + the
+    # .gitignore hidden-epub rule keep the temp out of version control.
+    fd, tmp = tempfile.mkstemp(dir=cfg.build_dir, prefix=f".{cfg.slug}.",
+                               suffix=".epub")
+    os.close(fd)
+    epub_path = Path(tmp)
     with zipfile.ZipFile(epub_path, "w") as zf:
         info = zipfile.ZipInfo("mimetype", date_time=_FIXED_STAMP)
         zf.writestr(info, "application/epub+zip", compress_type=zipfile.ZIP_STORED)
@@ -257,5 +289,6 @@ def stage_package(ctx, result: EmitResult) -> Path:
             info = zipfile.ZipInfo(arc, date_time=_FIXED_STAMP)
             zf.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED)
     size_mb = epub_path.stat().st_size / 1e6
-    ctx.say(f"packaged {epub_path.name} ({size_mb:.1f} MB, {len(manifest)} manifest items)")
+    ctx.say(f"packaged {cfg.slug}.epub ({size_mb:.1f} MB, {len(manifest)} manifest "
+            f"items; staged, pending epubcheck)")
     return epub_path

@@ -1,0 +1,9 @@
+{
+  "name": "pdf2epub-ace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pinned Ace by DAISY for the pdf2epub a11y-readiness gate (26). Install with `npm ci` here; scripts/bootstrap.sh does this warn-only. The QA gate resolves ace via `npx --no-install @daisy/ace`, so it never auto-downloads.",
+  "dependencies": {
+    "@daisy/ace": "1.3.3"
+  }
+}

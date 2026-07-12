@@ -26,12 +26,10 @@ from difflib import SequenceMatcher
 
 from rapidfuzz import fuzz
 
-from ..analyze import ColumnGeometry, column_geometry, \
-    continues_justified_block
+from ..analyze import ColumnGeometry, column_geometry, continues_justified_block
 from ..core.emit_css import _css_class
 from ..core.model import Paragraph
-from ..core.qa_cssresolve import parse_stylesheet, resolve_block, \
-    effective_font_size_em
+from ..core.qa_cssresolve import effective_font_size_em, parse_stylesheet, resolve_block
 from ..core.qa_pageslice import slice_pages
 from ..core.roles import StyleRule, apply_roles
 from ..core.textnorm import is_folio_line, normalize

@@ -104,10 +104,39 @@ is used for *verification and evidence*, never merged into the flow.
   (existing image-only/agreement warnings), never silently.
 - Tesseract absent → clean skip with install hint (layoutwitness precedent).
 
+## Two related notes from the 2026-07-12 implementation review
+
+**The era/pathology census (step 1) is the review's "cheap PDF-era/font/ToUnicode pathology
+census" — already spec'd here.** It is pure metadata reading (producer strings, per-font
+type + ToUnicode presence + encoding class, GlyphLess/render-mode-3 signature, image-only
+list), always-on, and de-risks the whole legacy-backlist question for near-zero cost. It does
+NOT require the OCR witness (steps 2-4) to ship — pull step 1 forward as an independent,
+cheap win; it turns "different times, different processes" into a fact on page one of the
+structure report.
+
+**`source.text_layer: verified-ocr` — a controlled source mode, not just a witness.** The
+review pushed back (fairly) on "OCR never enters the flow" as a permanent policy: for a
+genuinely-scanned backlist title, witness-only is a hard product limitation. Step 3 above
+already sketches `source.text_layer: ocr`; promote it to a *guarded* mode when a fully-scanned
+title actually arrives, with these mandatory guardrails so it never becomes silent ML
+authorship:
+- **Version-locked** OCR engine + language data, recorded in book.yaml and the §2 build
+  manifest ([reliability-hardening.md §2](reliability-hardening.md)) — otherwise verdicts stop
+  being byte-reproducible.
+- **Per-word/page provenance + confidence** retained as evidence; no silent mixing of OCR and
+  embedded-PDF text on the same page (a page is one source or the other, declared).
+- **Mandatory** gate-24 assertions + visual review on every OCR-sourced page (coverage
+  thresholds and gate-11 zero-tolerance re-based, never silently relaxed).
+- **Explicit disclosure** in metadata that OCR is the textual source (a `dc:source`/summary
+  note), so downstream readers know the provenance.
+This stays a documented non-goal until a scanned title demands it — but it is the *right*
+escalation of the witness, not a replacement of the deterministic doctrine.
+
 ## Non-goals
 
-- OCR text entering the flow or the EPUB. Never. The flow's words come from the PDF
-  text layer or from a human-verified deterministic repair.
+- OCR text entering the flow SILENTLY, or as anything other than the explicitly-declared,
+  guarded `verified-ocr` source mode above. The default flow's words come from the PDF text
+  layer or from a human-verified deterministic repair — never an unlabelled OCR merge.
 - Automatic ToUnicode repair inference (the I&B lesson: font-scoped repair was proved
   IMPOSSIBLE on identical font names; per-book render-verified maps only).
 - RTL/Arabic OCR (compounds two unsolved problems; escalate those books).

@@ -14,7 +14,11 @@ dependencies = [
     "rapidfuzz>=3",
     "Pillow>=10",
     "fonttools>=4.50",
+    "websocket-client>=1.7",   # qa/cdp.py (Chrome DevTools socket); was bootstrap-only
 ]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10", "pip-tools>=7"]
 
 [project.scripts]
 pdf2epub = "pdf2epub.cli:main"
@@ -24,3 +28,29 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "unit: no external programs (default CI tier)",
+    "integration: needs poppler/epubcheck/real PDFs",
+    "browser: needs a launchable Chrome/Chromium",
+    "corpus: real-book builds + full QA (nightly/manual)",
+]
+
+[tool.ruff]
+# Conservative rule set to bound the fix diff: pyflakes (F), import (E4),
+# statement (E7), runtime/syntax (E9), isort (I). Line-length (E501) is
+# intentionally NOT enforced.
+line-length = 100
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+# E741 (ambiguous name l/L/I/O) and E731 (lambda assignment) clash with the
+# established codebase style (L = list accumulator; quiet = lambda m: None);
+# renaming ~40 sites is invasive churn, not a correctness gain.
+ignore = ["E741", "E731"]
+
+[tool.mypy]
+# Advisory only — NOT gated in CI (the large modules are largely un-annotated;
+# typing is an incremental follow-on, not a blocker for this pass).
+python_version = "3.12"
+ignore_missing_imports = true
+warn_unused_ignores = false
+files = ["src/pdf2epub"]

@@ -8,11 +8,15 @@ from pdf2epub.analyze import ColumnGeometry
 from pdf2epub.core.qa_cssresolve import parse_stylesheet
 from pdf2epub.core.qa_pageslice import EpubBlock, slice_pages
 from pdf2epub.pdfmodel import PdfDoc, PdfFont, PdfLine, PdfPage, PdfRun
-from pdf2epub.qa.typography import (PdfParaGeo, check_emphasis,
-                                    check_heading_census,
-                                    check_signature_diff,
-                                    check_size_fidelity, genuinely_centered,
-                                    left_stops)
+from pdf2epub.qa.typography import (
+    PdfParaGeo,
+    check_emphasis,
+    check_heading_census,
+    check_signature_diff,
+    check_size_fidelity,
+    genuinely_centered,
+    left_stops,
+)
 
 _NS = ('xmlns="http://www.w3.org/1999/xhtml" '
        'xmlns:epub="http://www.idpf.org/2007/ops"')

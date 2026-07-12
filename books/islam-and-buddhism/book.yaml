@@ -2,6 +2,8 @@
 # The pure printed-TOC book: zero bookmarks, zero link annotations; unusable
 # InDesign /PageLabels ('Sec1:') overridden by printed folios.
 
+schema_version: 1
+
 source:
   folder: "package"
   pdf: "Islam and Buddhism.pdf"
@@ -20,6 +22,8 @@ metadata:                      # from copyright page (p.6 text, read at planning
   additional_languages: []
   isbn_epub:                   # none printed; urn:uuid ships — FLAGGED
   isbn_print: "978-1-891785-62-7"
+  identifier: c9df58ed-eeb3-4915-ba43-91ff5b7b87ea   # persistent EPUB id (was slug-derived urn:uuid; FLAGGED)
+  released: "2026-07-12"   # dcterms:modified = this EPUB revision
   date: "2010"
   cover: assets/cover.jpg
   cover_render: {page: 1, box: trim, dpi: 300}   # p.1 = 1799x2706 cover JPEG
@@ -313,8 +317,6 @@ split: {at_roles: [h1], warn_over_files: 90}
 images:
   raster_dpi: 300
   max_pixels: 1600
-  alt: {}
-  decorative: []
   figure_pages:
     - pages: [8]
       keep_text: true

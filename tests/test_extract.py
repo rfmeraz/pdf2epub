@@ -103,8 +103,9 @@ def test_dominant_font():
 def test_analyze_verse_suspect_evidence():
     # analyze surfaces verse-shaped blocks with measured base/turn offsets
     # (the blocks.verse judgment seed); same detector as the build witness
-    from pdf2epub.analyze import analyze
     from test_flow import _doc, _line, _page
+
+    from pdf2epub.analyze import analyze
 
     lines = [
         _line("Ordinary prose paragraph at full measure width to", 74,
@@ -128,8 +129,9 @@ def test_page_shift_vetoed_by_global_full_lines():
     # page-modal left, but full-measure prose anchors still span the GLOBAL
     # column — their presence vetoes the bogus binding shift. A genuinely
     # shifted page (whole block slid, nothing at col_left) keeps its shift.
-    from pdf2epub.analyze import column_geometry
     from test_flow import _doc, _line, _page
+
+    from pdf2epub.analyze import column_geometry
 
     anchor = [
         _line("Full measure prose line anchoring the modal column A", 40 + i * 13,

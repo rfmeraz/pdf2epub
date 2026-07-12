@@ -3,8 +3,7 @@
 import pytest
 
 from pdf2epub.core.qa_pageslice import EpubBlock, SliceResult
-from pdf2epub.qa.assertions import (AssertionSchemaError, evaluate,
-                                    parse_assertions, run_assertions)
+from pdf2epub.qa.assertions import AssertionSchemaError, evaluate, parse_assertions, run_assertions
 
 
 def _blk(text):

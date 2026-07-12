@@ -506,7 +506,6 @@ def format_page_lines(doc, geo, pno: int) -> list[str]:
 
     page = doc.page(pno)
     t = page.trim
-    body_f = None
     out = [f"page {pno} label {page.label!r} "
            f"trim {t[2] - t[0]:.0f}x{t[3] - t[1]:.0f}pt "
            f"col [{geo.col_left:.1f}, {geo.col_right:.1f}] "

@@ -21,7 +21,6 @@ def test_folio_lines():
 
 def test_strip_page_furniture_leading_only():
     page = "The Harmonious Unity\nreal text starts\nThe Harmonious Unity quoted mid-page\n17"
-    out = strip_page_furniture(page, {"the harmonious unity"})
     # normalized furniture is compared case-sensitively against normalize() output
     out2 = strip_page_furniture(page, {normalize("The Harmonious Unity")})
     assert "real text starts" in out2

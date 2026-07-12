@@ -1,7 +1,6 @@
 """Mini CSS resolver over the shapes emit_css.py actually generates."""
 
-from pdf2epub.core.qa_cssresolve import (effective_font_size_em,
-                                         parse_stylesheet, resolve_block)
+from pdf2epub.core.qa_cssresolve import effective_font_size_em, parse_stylesheet, resolve_block
 
 SHEET = """\
 @font-face {

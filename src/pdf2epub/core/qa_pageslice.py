@@ -99,6 +99,49 @@ def _make_block(el, href: str) -> EpubBlock:
     return blk
 
 
+def slice_page_chars(body_docs, in_flow: list[int]) -> dict[int, str]:
+    """Character-level page text, split at the pagebreak anchors in document
+    order — including anchors placed INSIDE a paragraph (the exact inline seam
+    when a page begins mid-paragraph). Unlike ``slice_pages`` (whole blocks by
+    the page where they start), this aligns with the char-level poppler ground
+    truth, so gate 25's per-page recall/precision is apples-to-apples for prose
+    that flows across a page boundary. Notereferences are assumed already
+    stripped by the caller; notes docs are excluded upstream."""
+    bufs: dict[int, list[str]] = {p: [] for p in in_flow}
+    preamble: list[str] = []
+    state = {"k": -1}
+
+    def cur() -> list[str] | None:
+        k = state["k"]
+        if k < 0:
+            return preamble
+        return bufs[in_flow[k]] if k < len(in_flow) else None
+
+    def walk(el) -> None:
+        tag = el.tag
+        local = tag[len(_X):] if isinstance(tag, str) and tag.startswith(_X) else ""
+        if (el.get(f"{_E}type") or "") == "pagebreak":
+            state["k"] += 1            # everything after this anchor is the next page
+        else:
+            b = cur()
+            if b is not None:
+                if local in _BLOCK_TAGS:
+                    b.append(" ")       # keep words separated across blocks
+                if el.text:
+                    b.append(el.text)
+        for child in el:
+            walk(child)
+            b = cur()
+            if b is not None and child.tail:
+                b.append(child.tail)
+
+    for doc in body_docs:
+        body = doc.root.find(f"{_X}body")
+        if body is not None:
+            walk(body)
+    return {p: "".join(bufs[p]) for p in in_flow}
+
+
 def slice_pages(body_docs, in_flow: list[int],
                 labels: dict[int, str]) -> SliceResult:
     res = SliceResult(ok=True)

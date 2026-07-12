@@ -286,3 +286,109 @@ def test_blocks_lists_parsing(tmp_path):
                      "blocks: {lists: [{pages: [35], marker: decimal, "
                      "note: n}]}")
         load_config(p)
+
+
+# ---- Phase 1: shared semantic validation + dead-field removal + page ranges
+
+_COMPLETE = ("schema_version: 1\n"
+             "source: {folder: p, pdf: b.pdf}\n"
+             "metadata: {title: T, creators: [{name: A}], language: en}\n")
+
+
+def test_placeholder_rejected_always(tmp_path):
+    # FILL-ME-IN is a hard error even on a lenient (parser-level) load
+    p = tmp_path / "book.yaml"
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "metadata: {title: FILL-ME-IN}\n")
+    with pytest.raises(ConfigError, match="FILL-ME-IN placeholder at metadata.title"):
+        load_config(p)
+    # nested inside a list/dict too
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "images: {figure_pages: [{pages: [1], "
+                 "alt_template: 'FILL-ME-IN x'}]}\n")
+    with pytest.raises(ConfigError, match="FILL-ME-IN"):
+        load_config(p)
+
+
+def test_require_complete_gate(tmp_path):
+    p = tmp_path / "book.yaml"
+    # missing schema_version
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "metadata: {title: T, creators: [{name: A}], language: en}\n")
+    load_config(p)  # lenient default is fine
+    with pytest.raises(ConfigError, match="schema_version is required"):
+        load_config(p, require_complete=True)
+    # missing title
+    p.write_text("schema_version: 1\nsource: {folder: p, pdf: b.pdf}\n"
+                 "metadata: {creators: [{name: A}], language: en}\n")
+    with pytest.raises(ConfigError, match="metadata.title is required"):
+        load_config(p, require_complete=True)
+    # complete config passes
+    p.write_text(_COMPLETE)
+    cfg = load_config(p, require_complete=True)
+    assert cfg.schema_version == 1
+
+
+def test_schema_version_strict_type(tmp_path):
+    p = tmp_path / "book.yaml"
+    # YAML `true` coerces to 1 via bool-is-int — must be rejected
+    p.write_text("schema_version: true\nsource: {folder: p, pdf: b.pdf}\n")
+    with pytest.raises(ConfigError, match="schema_version must be an integer"):
+        load_config(p)
+    p.write_text("schema_version: 99\nsource: {folder: p, pdf: b.pdf}\n")
+    with pytest.raises(ConfigError, match="schema_version 99 unsupported"):
+        load_config(p)
+
+
+@pytest.mark.parametrize("section", [
+    "furniture: {bottom_band: 40}",
+    "images: {alt: {a: b}}",
+    "images: {decorative: [x]}",
+])
+def test_removed_dead_fields_rejected(tmp_path, section):
+    p = tmp_path / "book.yaml"
+    p.write_text(f"source: {{folder: p, pdf: b.pdf}}\n{section}\n")
+    with pytest.raises(ConfigError, match="unknown key"):
+        load_config(p)
+
+
+def test_identifier_and_released_validation(tmp_path):
+    p = tmp_path / "book.yaml"
+    base = "source: {folder: p, pdf: b.pdf}\nmetadata: {%s}\n"
+    # valid UUID identifier + YYYY-MM-DD released
+    p.write_text(base % "identifier: 9f70c565-13dc-411b-9713-e02cddcb64e2, "
+                        "released: '2026-07-12'")
+    cfg = load_config(p)
+    assert cfg.identifier.startswith("9f70c565")
+    assert cfg.released == "2026-07-12"
+    # an explicit urn: passes through
+    p.write_text(base % "identifier: 'urn:isbn:9781941610213'")
+    assert load_config(p).identifier == "urn:isbn:9781941610213"
+    # a non-UUID / non-urn identifier is rejected
+    p.write_text(base % "identifier: my-book-1")
+    with pytest.raises(ConfigError, match="must be a UUID or urn"):
+        load_config(p)
+    # an invalid calendar date is rejected
+    p.write_text(base % "released: '2026-13-40'")
+    with pytest.raises(ConfigError, match="must be YYYY-MM-DD"):
+        load_config(p)
+
+
+def test_page_range_structural_validation(tmp_path):
+    p = tmp_path / "book.yaml"
+    # front and body overlap
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "pages: {front: {first: 2, last: 30}, body: {first: 25, last: 90}}\n")
+    with pytest.raises(ConfigError, match="ordered and non-overlapping"):
+        load_config(p)
+    # negative / inverted range
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "pages: {body: {first: 90, last: 20}}\n")
+    with pytest.raises(ConfigError, match="positive range with first <= last"):
+        load_config(p)
+    # valid ordered ranges pass
+    p.write_text("source: {folder: p, pdf: b.pdf}\n"
+                 "pages: {front: {first: 2, last: 20}, body: {first: 21, last: 90}, "
+                 "back: {first: 91, last: 100}}\n")
+    cfg = load_config(p)
+    assert cfg.pages_back.first == 91

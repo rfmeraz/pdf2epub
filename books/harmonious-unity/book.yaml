@@ -3,6 +3,8 @@
 # is the qa --reference benchmark (never an input). Metadata judgments mirror
 # the idml2epub book.yaml (the worked example for this same title).
 
+schema_version: 1
+
 source:
   folder: "package"
   pdf: "Harmonious Unity EBOOK.pdf"
@@ -20,6 +22,8 @@ metadata:
   additional_languages: [zh]
   isbn_epub:                       # none assigned; urn:uuid ships — FLAGGED
   isbn_print: "979-889640-0141"
+  identifier: 9f70c565-13dc-411b-9713-e02cddcb64e2   # persistent EPUB id (was slug-derived urn:uuid; FLAGGED)
+  released: "2026-07-12"   # dcterms:modified = this EPUB revision
   date: "2026"
   cover: assets/cover.jpg
   cover_synthesize: true           # NO cover in the PDF (p.1 is a text
@@ -200,8 +204,6 @@ split: {at_roles: [h1], warn_over_files: 90}
 images:
   raster_dpi: 300
   max_pixels: 1600
-  alt: {}
-  decorative: []
   figure_pages:
     - pages: [8]
       keep_text: true

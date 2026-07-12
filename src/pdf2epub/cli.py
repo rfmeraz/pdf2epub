@@ -31,6 +31,11 @@ def main(argv: list[str] | None = None) -> int:
                              "the subset; 'all'; '+sample:N'; or '26' / "
                              "'322-336' (comma/space list)")
 
+    p_validate = sub.add_parser(
+        "validate", help="Validate a book.yaml (schema_version, required "
+                         "metadata, no FILL-ME-IN) without building")
+    p_validate.add_argument("config", type=Path, help="Path to book.yaml")
+
     p_build = sub.add_parser("build", help="Deterministic build: book.yaml -> EPUB")
     p_build.add_argument("config", type=Path, help="Path to book.yaml")
     p_build.add_argument("--dump-ir", action="store_true",
@@ -69,6 +74,11 @@ def main(argv: list[str] | None = None) -> int:
     p_kindle.add_argument("--out", type=Path, default=None,
                           help="Output path (default: <epub>.azw3)")
 
+    p_verify = sub.add_parser(
+        "verify", help="Check a built EPUB still matches its provenance "
+                       "manifest (torn write / stale build)")
+    p_verify.add_argument("epub", type=Path)
+
     p_lines = sub.add_parser(
         "lines", help="Dump RAW extraction line indexes + geometry per page "
                       "(the key for flow.overrides)")
@@ -86,6 +96,17 @@ def main(argv: list[str] | None = None) -> int:
 
         return run_init(args.pdf_or_folder, args.workspace,
                         layout=args.layout, layout_pages=args.layout_pages)
+    if args.command == "validate":
+        from .config import ConfigError, load_config
+
+        try:
+            cfg = load_config(args.config, require_complete=True)
+        except ConfigError as e:
+            print(f"INVALID {args.config}: {e}")
+            return 1
+        print(f"OK {args.config}: schema_version {cfg.schema_version}, "
+              f"title {cfg.title!r}")
+        return 0
     if args.command == "build":
         from .build import run_build
 
@@ -108,6 +129,10 @@ def main(argv: list[str] | None = None) -> int:
         from .kindle import run_kindle
 
         return run_kindle(args.epub, out=args.out)
+    if args.command == "verify":
+        from .provenance import run_verify
+
+        return run_verify(args.epub)
     if args.command == "lines":
         from .proofread import run_lines
 

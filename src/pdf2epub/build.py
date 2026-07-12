@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
 from pathlib import Path
 
@@ -45,8 +46,12 @@ class BuildContext:
 
 def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
               epubcheck: bool = True) -> int:
-    cfg = load_config(config_path)
+    cfg = load_config(config_path, require_complete=True)
     ctx = BuildContext(cfg, dump_ir)
+    if not cfg.identifier and not cfg.isbn_epub:
+        ctx.say("WARNING: no metadata.identifier and no isbn_epub — the EPUB id "
+                "falls back to a slug-derived UUID (not unique across unrelated "
+                "books with the same slug). Add metadata.identifier.")
 
     # stale-tree invariant: the packager zips a directory, so anything stale ships
     oebps = cfg.build_dir / "oebps"
@@ -143,20 +148,54 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     ctx.style_catalog = build_catalog(ctx)
     from .core.packager import stage_package
 
-    epub_path = stage_package(ctx, result)
-    _write_warnings(ctx)
+    # transactional promotion: package to a temp, epubcheck it, and os.replace
+    # onto the canonical name ONLY after it passes — so the canonical .epub is
+    # always a build that passed epubcheck (or the prior good one), never an
+    # invalid/stale artifact. The provenance manifest is written after promotion.
+    tmp_epub = stage_package(ctx, result)
+    final_epub = cfg.build_dir / f"{cfg.slug}.epub"
+    epubcheck_ok, epubcheck_version = True, "skipped"
+    try:
+        _write_warnings(ctx)  # may raise SystemExit (stale adjudications)
+        if epubcheck:
+            from .core.qa_epubcheck import run_epubcheck
 
-    if epubcheck:
-        from .core.qa_epubcheck import run_epubcheck
-
-        ok, messages = run_epubcheck(epub_path)
-        for m in messages:
-            ctx.say(f"  {m}")
-        if not ok:
-            ctx.say("epubcheck: FAILED")
-            return 1
-        ctx.say("epubcheck: clean")
+            ok, messages = run_epubcheck(tmp_epub)
+            for m in messages:
+                ctx.say(f"  {m}")
+            epubcheck_version = _epubcheck_version(messages)
+            if not ok:
+                ctx.say("epubcheck: FAILED — canonical EPUB left unchanged")
+                return 1
+            epubcheck_ok = True
+            ctx.say("epubcheck: clean")
+        epub_sha = hashlib.sha256(tmp_epub.read_bytes()).hexdigest()
+        os.replace(tmp_epub, final_epub)  # atomic within build_dir
+    finally:
+        if tmp_epub.exists():
+            tmp_epub.unlink()  # stray temp from an early bail
+    _write_manifest(ctx, epub_sha, epubcheck_ok, epubcheck_version)
     return 0
+
+
+def _epubcheck_version(messages: list[str]) -> str:
+    for m in messages:
+        if m.startswith("epubcheck "):
+            return m.split(":", 1)[0].removeprefix("epubcheck ").strip()
+    return "unknown"
+
+
+def _write_manifest(ctx, epub_sha: str, epubcheck_ok: bool,
+                    epubcheck_version: str) -> None:
+    from .provenance import build_manifest, write_manifest
+
+    manifest = build_manifest(ctx.cfg, epub_sha256=epub_sha,
+                              epubcheck_ok=epubcheck_ok,
+                              epubcheck_version=epubcheck_version)
+    out = write_manifest(ctx.cfg, manifest)
+    ctx.say(f"provenance: {out.name} (epub {epub_sha[:12]}…, "
+            f"rev {manifest['git'].get('rev', '?')[:12]}"
+            f"{' +dirty' if manifest['git'].get('dirty') else ''})")
 
 
 def _text_width_pt(ctx) -> float:
@@ -173,8 +212,14 @@ def _write_warnings(ctx) -> None:
     ``warnings.<stem>.md`` for variant configs (no last-run-wins collision).
     Stale adjudications are config bugs and fail the build AFTER the file
     is written (the file shows what went stale)."""
-    from .warnqueue import (CONTENT_RISK, AdjWarning, apply_adjudications,
-                            auto_resolve, derive_warnings, render_queue)
+    from .warnqueue import (
+        CONTENT_RISK,
+        AdjWarning,
+        apply_adjudications,
+        auto_resolve,
+        derive_warnings,
+        render_queue,
+    )
 
     cfg = ctx.cfg
     name = ("warnings.md" if cfg.path.name == "book.yaml"

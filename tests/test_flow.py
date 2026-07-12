@@ -2,8 +2,8 @@
 
 import pytest
 
-from pdf2epub.config import PdfBookConfig, FlowOverride
-from pdf2epub.core.model import NoteRef, Paragraph, PageAnchor, TextRun
+from pdf2epub.config import FlowOverride, PdfBookConfig
+from pdf2epub.core.model import NoteRef, PageAnchor, Paragraph, TextRun
 from pdf2epub.flowbuilder import build_flow
 from pdf2epub.pdfmodel import PdfDoc, PdfFont, PdfLine, PdfPage, PdfRun
 from pdf2epub.textfix import dehyphenate_join, expand_ligatures, restore_spaces
@@ -362,7 +362,6 @@ def test_noteref_keeps_join_separator(tmp_path):
 
 
 def test_inline_anchor_at_continuation_seam(tmp_path):
-    from pdf2epub.core.model import InlinePageBreak
 
     pages = [_page(1, [
         _line("First paragraph line one", 100),
@@ -394,7 +393,6 @@ def test_inline_anchor_at_continuation_seam(tmp_path):
 
 
 def test_inline_anchor_dehyphenated_seam(tmp_path):
-    from pdf2epub.core.model import InlinePageBreak
 
     pages = [
         _page(1, [_line("the discussion of the rational tradi-", 520)]),
@@ -430,8 +428,13 @@ def test_inline_anchor_blank_page_flush(tmp_path):
 def test_inline_pagebreak_roundtrip():
     import json
 
-    from pdf2epub.core.model import (InlinePageBreak, Paragraph, SourceRef,
-                                     block_from_dict, block_to_dict)
+    from pdf2epub.core.model import (
+        InlinePageBreak,
+        Paragraph,
+        SourceRef,
+        block_from_dict,
+        block_to_dict,
+    )
 
     p = Paragraph(style="s",
                   items=[TextRun("a"), InlinePageBreak(5, "v"), TextRun("b")],
@@ -501,8 +504,8 @@ def test_is_shifted_run_highmap_wordshape():
 
 
 def test_probe_text_repairs_folio_shape():
-    from pdf2epub.textfix import probe_text
     from pdf2epub.core.textnorm import is_folio_line
+    from pdf2epub.textfix import probe_text
     # I&B p.154 folio '129' arrives as control bytes; the furniture SHAPE test
     # runs before the flow's per-run repair, so probe_text must repair first
     assert probe_text("\x14\x15\x1c", True, {}) == "129"
@@ -819,7 +822,7 @@ class _Lw:
 def test_note_start_and_marker_smaller_font():
     """A digit marker set one size down ('8' at 6.5pt over 9pt note text) is a
     note start even though 'digit + single space' misses the text pattern."""
-    from pdf2epub.flowbuilder import _note_start, _note_marker
+    from pdf2epub.flowbuilder import _note_marker, _note_start
     doc = _doc([])
     ln = _fline([_frun("8", SUP, 72, 78, 560),
                  _frun(" Let us note the relative frequency in Arab texts", SMALL,
@@ -981,8 +984,7 @@ def test_page_shift_skips_centered_display_sharing_x0(tmp_path):
 def test_verse_fields_roundtrip():
     import json
 
-    from pdf2epub.core.model import (Paragraph, SourceRef, block_from_dict,
-                                     block_to_dict)
+    from pdf2epub.core.model import Paragraph, SourceRef, block_from_dict, block_to_dict
 
     p = Paragraph(style="s", items=[TextRun("line one\u2028line two")],
                   src=SourceRef("p0001", 0), block_class="verse",
@@ -1610,10 +1612,11 @@ def test_restore_spaces_display_amp():
 
 
 def test_bare_ampersand_run_gets_spaces(tmp_path):
-    from pdf2epub.core.model import Paragraph as P, SourceRef, TextRun
-    from pdf2epub.flowbuilder import _restore_cross_run_spaces
     from collections import Counter
-    from pdf2epub.core.model import RunFormat
+
+    from pdf2epub.core.model import Paragraph as P
+    from pdf2epub.core.model import RunFormat, SourceRef, TextRun
+    from pdf2epub.flowbuilder import _restore_cross_run_spaces
 
     p = P(style="s", src=SourceRef("p", 0), items=[
         TextRun("Me", RunFormat()), TextRun("&", RunFormat(italic=True)),
@@ -1899,8 +1902,7 @@ def test_emit_quote_group_with_anchor(tmp_path):
 def test_blockshapes_quote_helpers():
     # body_anchors and quote_shape_suspects on the real I&B p.51 numbers:
     # body 63..362.8, quotes x0=81 justified at 344.8 -> insets 18/18
-    from pdf2epub.blockshapes import (body_anchors, justified_rights,
-                                      quote_shape_suspects)
+    from pdf2epub.blockshapes import body_anchors, justified_rights, quote_shape_suspects
 
     class _Ln:
         def __init__(self, x0, x1):
@@ -2205,9 +2207,9 @@ def test_emit_list_bullet_ul_and_anchor_span(tmp_path):
 
 
 def test_list_paragraph_roundtrip():
-    from pdf2epub.core.model import (Paragraph, RunFormat, SourceRef,
-                                     TextRun, _paragraph_from_dict)
     from dataclasses import asdict
+
+    from pdf2epub.core.model import Paragraph, RunFormat, SourceRef, TextRun, _paragraph_from_dict
 
     p = Paragraph(style="s", items=[TextRun("1. item", RunFormat())],
                   src=SourceRef("p0001", 0), block_class="list",
@@ -2687,6 +2689,7 @@ def test_repair_wrong_script_alpha_lookalike():
     assert repair_wrong_script("plain Latin") == ("plain Latin", 0)
     # both the flow and the QA ground truth call the one shared derivation
     import inspect
+
     import pdf2epub.qa.groundtruth as _gt
     assert "repair_wrong_script" in inspect.getsource(_gt)
 

@@ -4,14 +4,26 @@ from types import SimpleNamespace
 
 import pytest
 
-from pdf2epub.config import (Adjudication, ColumnSpec, FigurePages,
-                             FigureRegion, FlowOverride, PdfBookConfig)
+from pdf2epub.config import (
+    Adjudication,
+    ColumnSpec,
+    FigurePages,
+    FigureRegion,
+    FlowOverride,
+    PdfBookConfig,
+)
 from pdf2epub.core.model import Paragraph, RunFormat, SourceRef, TextRun
 from pdf2epub.flowbuilder import _Warn
 from pdf2epub.pdfmodel import PdfDoc, PdfPage
-from pdf2epub.warnqueue import (CODES, CONTENT_RISK, apply_adjudications,
-                                auto_resolve, derive_warnings, render_queue,
-                                rtl_census, uncovered_image_pages)
+from pdf2epub.warnqueue import (
+    CODES,
+    CONTENT_RISK,
+    apply_adjudications,
+    auto_resolve,
+    derive_warnings,
+    render_queue,
+    rtl_census,
+)
 
 
 def _page(number, image_only=False, agreement=None, n_images=0):
