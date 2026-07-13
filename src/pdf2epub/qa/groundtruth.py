@@ -119,12 +119,17 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                 (repair_shifted_cmap(l, cfg.shifted_cmap_highmap)[0]
                  if is_shifted_run(l, cfg.shifted_cmap_highmap) else l)
                 for l in text.split("\n"))
-        from ..textfix import repair_wrong_script, strip_control_chars
+        from ..textfix import (
+            repair_wrong_script,
+            strip_control_chars,
+            strip_stray_grave,
+        )
         text, _ = strip_control_chars(text)
         # wrong-script lookalikes (Greek Ᾱ for Latin Ā) — the flow repairs
         # these too, so the witness must carry the repaired form or coverage
         # counts a char the candidate 'lost'
         text, _ = repair_wrong_script(text)
+        text, _ = strip_stray_grave(text)   # same flow/witness parity
         if cfg.fffd_repairs and "�" in text:
             # same chain both sides — a no-op when poppler decoded the
             # glyphs the candidate's extractor could not

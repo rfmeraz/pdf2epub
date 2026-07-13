@@ -1,0 +1,220 @@
+# pdf2epub book.yaml — Form and Substance in the Religions (Frithjof Schuon).
+# Judgments recorded by the structure-inference agent from analysis evidence +
+# page renders (and the ML layout witness, which agreed on footnotes/furniture/
+# no-figures/no-columns). World Wisdom imprint, 2002 English edition — same
+# design family as sufism-veil-and-quintessence but the 2002 typography uses
+# NewBaskerville directly (headings are ROMAN, sized, not bold). See
+# CONVERSIONS.md for the decision log.
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "Form and Substance in the Religions.pdf"
+  sha256: "1f713dd182720d52657abb8056ae693f45839d97e6673dda9a7f3671a166cba1"
+
+metadata:                     # JP-P5 — verified on p4 (title) + p5 (copyright) renders
+  title: "Form and Substance in the Religions"
+  creators:
+    - {name: "Frithjof Schuon", role: aut}
+    - {name: "Mark Perry", role: trl}          # "Lead Translator" (p5)
+    - {name: "Jean-Pierre LaFouge", role: trl}  # "Translator" (p5, spelled LaFouge)
+  publisher: "World Wisdom, Inc."               # p5: "© 2002 World Wisdom, INC."
+  language: en
+  additional_languages: []    # transliterated Arabic/Sanskrit are romanized (Latin); RTL chars: 0
+  isbn_epub:                  # none printed -> urn:uuid ships (flagged in handoff)
+  isbn_print: "978-0-941532-25-9"   # p5 prints ISBN-10 0-941532-25-9; back-cover EAN 9 780941 532259
+  identifier: 260c9742-c638-44a6-8396-4a3efe2405c4   # persistent EPUB id (draft urn:uuid; FLAGGED)
+  released: "2026-07-13"      # dcterms:modified = this EPUB revision
+  date: "2002"               # World Wisdom English edition (orig. French "Forme et Substance", 1975)
+  cover: assets/cover.jpg     # rendered from PDF page 1 (full designed cover: Bagan temple photo)
+  cover_render: {page: 1, box: trim, dpi: 300}
+
+pages:                        # JP-P2 — folio-vs-label agreement 99.6% (only mismatch is p266 back cover)
+  cover: [1]
+  front: {first: 2, last: 9}   # series(2), blank(3), title(4), copyright(5),
+                               # contents(6), blank(7), preface vii-viii(8-9)
+  body:  {first: 10, last: 266}   # printed folio '1' begins on p10 (ch.1 "Truth and Presence")
+  exclude: [266]                # p266 = physical BACK COVER (endorsements, barcode,
+                                # price $17.95, author photo, category) — marketing paratext
+  label_source: pdf-page-labels   # agreement 99.6%
+  label_overrides: {}
+  role_overrides:
+    - {page: 4, role: title-page}   # display title / "by FRITHJOF SCHUON" / colophon
+
+furniture:
+  top_band: 38.8              # running heads: book title (verso) / chapter title (recto)
+  repeat_min_pages: 3
+  keep:                       # NOT furniture: '*' is a section-break marker
+    - "*"                     #   ('*' / '* *' pyramid); some fall at a page top
+  extra:                      # short-chapter running heads below repeat_min_pages=3
+    # NB the ch.11 running head carries a PRINT TYPO 'Feminime' (title/TOC/body
+    # correctly read 'Feminine'); match the head as printed so it strips (p146/148)
+    - "A Note on the Feminime Element in Mahâyâna"
+    - "Comments on an Eschatological Problem"
+
+styles:                       # JP-P1 — every one of the 32 clusters mapped
+  body_pstyle: "NewBaskerville-Roman@10.5"
+  pstyle_map:
+    # --- shipped body / front / back-matter prose ---
+    "NewBaskerville-Roman@10.5":          {role: p}   # dominant body text
+    "NewBaskerville-Roman@9":             {role: p}   # footnotes (split geometrically) + series-page(p2) prose
+    "NewBaskerville-Italic@9":            {role: p}   # italic phrases inside footnotes
+    "NewBaskerville-Italic@10.5":         {role: p}   # inline italic / Latin phrases / long running heads
+    "NewBaskerville-Italic@11":           {role: p}   # ch.6 long running head (fills line, non-centered)
+    # --- furniture (top-band-stripped; role p so any leak reads as prose, not a phantom heading) ---
+    "NewBaskerville-Italic@10.5/center":  {role: p}   # running head — book title (verso)
+    "NewBaskerville-Italic@11/center":    {role: p}   # running head — chapter title (recto)
+    "NewBaskerville-Roman@10.5/center":   {role: p}   # folios (page numbers)
+    # --- section-break asterisks (content) ---
+    "NewBaskerville-Roman@14/center":     {role: p}   # '*' / '* *' pyramid dividers
+    "NewBaskerville-Roman@14":            {role: p}   # stray asterisk span
+    # --- chapter titles (headings distinguished by SIZE, not weight) ---
+    "NewBaskerville-Roman@17/center":     {role: h1}  # chapter titles ("Truth and Presence", "Preface")
+    "NewBaskerville-Italic@17/center":    {role: h1}  # italic chapter-title words ("Âtmâ-Mâyâ", "Pâramitâs", "Mahâyâna")
+    # --- printed TOC (p6, rebuilt) ---
+    "NewBaskerville-Roman@11":            {role: p}   # TOC entries "1. Truth and Presence … 1"
+    "NewBaskerville-Roman@11/center":     {role: p}   # short centered TOC bits
+    # --- series page (p2) ---
+    "NewBaskerville-Roman@9/center":      {role: p}   # "THE LIBRARY OF PERENNIAL PHILOSOPHY" masthead
+    "NewBaskerville-Bold@9/center":       {role: p}   # "The Writings of Frithjof Schuon" subhead
+    # --- copyright page (p5) ---
+    "NewBaskerville-Roman@8/center":      {role: p}   # centered title/credit/publication blocks
+    "NewBaskerville-Roman@8":             {role: p}   # flush-left LCCN block
+    # --- back matter "By the Same Author" (p265) ---
+    "NewBaskerville-Roman@9.5":           {role: p}   # heading + book titles (roman)
+    "NewBaskerville-Italic@9.5":          {role: p}   # publication info (italic years/publishers)
+    # --- title page (p4) display type (Hadriano-Light); page is role title-page ---
+    "Hadriano-Light@36":                  {role: title-page}
+    "Hadriano-Light@36/center":           {role: title-page}
+    "Hadriano-Light@30/center":           {role: title-page}
+    "Hadriano-Light@24/center":           {role: title-page}   # "FRITHJOF SCHUON"
+    "Hadriano-Light@18/center":           {role: title-page}
+    "Hadriano-Light@13.5/center":         {role: title-page}   # "by"
+    # --- back cover (p266, excluded); never ships ---
+    "AJensonMM_371_10_@10.5":             {role: p}
+    "AJensonMM_371_10_@10/center":        {role: p}
+    "AJensonMM_371_10_@10":               {role: p}
+    "AJensonMM_371_10_@8.5":              {role: p}   # "Religion/Philosophy"
+    "AJensonMM_371_12_@12":               {role: p}
+    "OCR-B-Seagull@8":                    {role: p}   # ISBN barcode digits
+  charstyles: {}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 9.0       # body first-line indent is 12pt (histogram); threshold must sit below it
+  gap_factor: 1.6             # median leading 12.7pt
+  dehyphenate: lower-only
+  keep_hyphens:               # proofread 2026-07-13: real compounds whose hyphen
+                              # fell at a line break; lower-only stripped it. Each
+                              # verified hyphenated elsewhere in the book / on render.
+    - "three-dimensionality"  # p.104 render: 'three-'/'dimensionality' line wrap
+    - "equilibrium-restoring" # note 179; compound adjective
+    - "near-divine"           # note 128; cf. 'non-temporal' etc. in same note
+    - "prayer-niche"          # p.117; hyphenated at pp.113/116/121 (cf. sufism book)
+    - "super-eminence"        # p.119; cf. 'super-eminent' same page
+    - "non-attachment"        # p.177; cf. 'non-human'/'non-theism' this chapter
+    - "void-like"             # p.178; cf. 'dream-like' same sentence
+    - "multi-dimensional"     # p.210 render: 'multi-'/'dimensional' line wrap (round 2)
+    - "bi-idhni’llâh"         # note 25 (p.83): 'bi-'/'idhni’Llâh'; cf. 'bi-Hi'/'fî-Hi' same passage (round 2)
+    # transliterated Arabic definite article 'al-'/'ash-' (lowercase, so the
+    # arabic-article keeper skips it) — verified hyphenated on p.58 render
+    - "al-malakût"            # p.58: '‘âlam al-malakût'
+    - "ash-shahâdah"          # p.57: '‘âlam ash-shahâdah'
+    - "al-mutlaq"             # p.59: 'al-ghayb al-mutlaq'
+    - "al-qism"               # p.58: 'al-qism al-jabarûtî'
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: false    # centered lines are DISTINCT items (p265 book list one-per-line,
+                              # p5 copyright blocks). Wrapped chapter titles rejoined via overrides.
+  reattach_dropcaps: true     # no drop caps detected; harmless
+  overrides:                  # {page, line(RAW extract idx), action, note}
+    # 6 chapter titles wrap to a 2nd centered line; rejoin each into one h1
+    # (join_center_lines off). Turnover is RAW idx 1 (per `pdf2epub lines`).
+    - {page: 22,  line: 1, action: join, note: "ch.2 title wraps: 'in the Religions' rejoins 'Form and Substance'"}
+    - {page: 78,  line: 1, action: join, note: "ch.6 title wraps: 'in Koranic Onomatology' rejoins 'The Cross of Space and Time'"}
+    - {page: 94,  line: 1, action: join, note: "ch.7 title wraps: 'Phenomenon' rejoins 'Insights into the Muhammadan'"}
+    - {page: 144, line: 1, action: join, note: "ch.11 title wraps: 'in Mahâyâna' (italic) rejoins 'A Note on the Feminine Element'"}
+    - {page: 174, line: 1, action: join, note: "ch.14 title wraps: 'in Sacred Scriptures' rejoins 'Some Difficulties Found'"}
+    - {page: 246, line: 1, action: join, note: "ch.17 title wraps: 'an Eschatological Problem' rejoins 'Comments on'"}
+    # p.123: the 2 Sam 22:28 proof-text (idx 1) fused onto the Ps 89:10 quote
+    # across the p.122 seam (verso last line ended in the ambiguous zone, neither
+    # short nor full); each Biblical citation is its own paragraph in print.
+    - {page: 132, line: 1, action: break, note: "'And the afflicted people…' (2 Sam. 22:28) is its own citation paragraph (round 2)"}
+    # p265 'By the Same Author' centered book list: each print line is centered
+    # (varying x0) and role p, so the prose joiner mis-reads a short publication
+    # turnover as an indented new paragraph (and, pre-shift-fix, fused long
+    # neighbours). Drive it explicitly — BREAK each title line, JOIN each
+    # publication-info turnover onto its title -> ONE paragraph per book
+    # (satisfies both proofread rounds: no fused titles, no split entries).
+    - {page: 265, line: 1,  action: break, note: "The Transcendent Unity of Religions"}
+    - {page: 265, line: 2,  action: join,  note: "turnover -> Revised Edition …1993"}
+    - {page: 265, line: 3,  action: break, note: "Spiritual Perspectives and Human Facts"}
+    - {page: 265, line: 4,  action: join,  note: "turnover -> New Translation …1987"}
+    - {page: 265, line: 5,  action: break, note: "Gnosis: Divine Wisdom"}
+    - {page: 265, line: 6,  action: break, note: "Language of the Self"}
+    - {page: 265, line: 7,  action: break, note: "Stations of Wisdom"}
+    - {page: 265, line: 8,  action: join,  note: "turnover -> Revised Translation …1995"}
+    - {page: 265, line: 9,  action: break, note: "Understanding Islam"}
+    - {page: 265, line: 10, action: join,  note: "turnover -> Revised Translation …1998"}
+    - {page: 265, line: 11, action: break, note: "Light on the Ancient Worlds"}
+    - {page: 265, line: 12, action: break, note: "In the Tracks of Buddhism"}
+    - {page: 265, line: 13, action: join,  note: "turnover -> New Translation, Treasures …1993"}
+    - {page: 265, line: 14, action: break, note: "Logic and Transcendence"}
+    - {page: 265, line: 15, action: break, note: "Esoterism as Principle and as Way"}
+    - {page: 265, line: 16, action: break, note: "Castes and Races"}
+    - {page: 265, line: 17, action: break, note: "Sufism: Veil and Quintessence"}
+    - {page: 265, line: 18, action: break, note: "From the Divine to the Human"}
+    - {page: 265, line: 19, action: break, note: "Christianity/Islam"}
+    - {page: 265, line: 20, action: break, note: "The Essential Writings of Frithjof Schuon"}
+    - {page: 265, line: 21, action: join,  note: "turnover -> 1986, Element, 1991"}
+    - {page: 265, line: 22, action: break, note: "Survey of Metaphysics and Esoterism"}
+    - {page: 265, line: 23, action: break, note: "In the Face of the Absolute"}
+    - {page: 265, line: 24, action: break, note: "The Feathered Sun"}
+    - {page: 265, line: 25, action: join,  note: "turnover -> World Wisdom Books, 1990"}
+    - {page: 265, line: 26, action: break, note: "To Have a Center"}
+    - {page: 265, line: 27, action: break, note: "Roots of the Human Condition"}
+    - {page: 265, line: 28, action: break, note: "Images of Primordial & Mystic Beauty"}
+    - {page: 265, line: 29, action: join,  note: "turnover -> Abodes, 1992"}
+    - {page: 265, line: 30, action: break, note: "Echoes of Perennial Wisdom"}
+    - {page: 265, line: 31, action: break, note: "The Play of Masks"}
+    - {page: 265, line: 32, action: break, note: "Road to the Heart"}
+    - {page: 265, line: 33, action: break, note: "The Transfiguration of Man"}
+    - {page: 265, line: 34, action: break, note: "The Eye of the Heart"}
+    - {page: 265, line: 35, action: break, note: "Songs for a Spiritual Traveler"}
+    - {page: 265, line: 36, action: join,  note: "turnover -> World Wisdom, 2002"}
+
+footnotes:                    # JP-P4 — verified on p10/p20 renders (digit markers, hanging indent)
+  policy: markers   # census {'digit': 334, '*-inline': 249 (the '*' are section breaks, not notes)}
+  marker: digits
+
+toc:                          # JP-P3 — printed TOC (p6) chosen
+  source: printed   # outline(23) has 4 junk front-matter entries; printed is the numbered 1-18 contents
+  printed_pages: [6]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 1                # printed TOC is flat (one level: Preface + 18 chapters)
+
+glyphs:                       # JP-P6 — PUA census empty; transliteration diacritics are real Latin Unicode
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL system fonts only; no CJK/RTL live text
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8 — 0 CJK, 0 RTL
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b — no figures/tables/plates in this text
+  raster_dpi: 300
+  max_pixels: 1600
+  figure_pages: []
+  figure_regions: []
+
+adjudications:
+  - {warning: "embedded-image-uncovered", pages: [4],
+     note: "World Wisdom publisher colophon (starburst logo) at the foot of the title page — decorative mark, no textual content; title/'by'/author ship as flowed title-page text. Verified on p4 render + layout-witness Picture box."}
+
+output: {slug: form-and-substance-in-the-religions, include_ncx: true}

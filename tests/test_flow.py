@@ -125,6 +125,27 @@ def test_footnote_split_and_marker_pairing(tmp_path):
     assert len(refs) == 1 and refs[0].note_id == note.note_id
 
 
+def test_footnote_region_stops_at_large_gap(tmp_path):
+    # A copyright page set wholly sub-body-size: an LCCN catalog block (with a
+    # '1.' subject-heading line) at top, a large vertical gap, then a colophon
+    # address block at the foot. The note-region scan must STOP at the gap, so
+    # the catalog block is not swallowed from '1. …' downward into a phantom
+    # note and silently dropped (it carries no in-body reference marker).
+    lines = [
+        _line("Library of Congress cataloging data", 100, font=SMALL),
+        _line("1. Subject heading and call number", 113, font=SMALL),
+        _line("catalog identifier line two", 126, font=SMALL),
+        _line("Printed on acid free paper here", 300, font=SMALL),
+        _line("For information address the publisher", 313, font=SMALL),
+    ]
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda m: None)
+    assert len(res.flow.notes) == 0          # no phantom note split off
+    body = " ".join(p.text() for p in _paras(res.flow))
+    assert "1. Subject heading and call number" in body
+    assert "For information address the publisher" in body
+
+
 def test_flow_overrides_break_and_stale(tmp_path):
     pages = [_page(1, [
         _line("Line one flows", 100),
@@ -588,6 +609,11 @@ def test_textfix_functions():
     assert dehyphenate_join("cast by an object—", "or that") == ("cast by an object—", "", False)
     assert dehyphenate_join("al-Khidr—", "and outside") == ("al-Khidr—", "", False)
     assert dehyphenate_join("a range 26–", "28 pages") == ("a range 26–", "", False)
+    # the dash often arrives as its OWN run (italic word + roman em-dash:
+    # '<i>Vajrayâna</i>—'), so prev is a bare '—'; and a closing quote can
+    # precede it ('salvation”—in') — both must still join closed, no space
+    assert dehyphenate_join("—", "Buddhist Tantrism") == ("—", "", False)
+    assert dehyphenate_join("system of salvation”—", "in the sense") == ("system of salvation”—", "", False)
     # a SPACED dash keeps the space (base ends ' —', not a letter)
     assert dehyphenate_join("word —", "word") == ("word —", " ", False)
     # a soft hyphen (U+00AD) at the line end is an explicit hyphenation point:
@@ -1660,6 +1686,80 @@ def test_toc_part_title_with_separate_folio_line(tmp_path):
     assert not any("Introduction My Years" in t for t in toc)
 
 
+def test_break_before_shift_corrected_indent(tmp_path):
+    # a verso binding margin slides the block left: continuations sit at x0≈43,
+    # so a real ~16pt first-line indent lands at x0≈59.6 — only ~5pt past the
+    # modal col_left(55). Measured against the SHIFT-corrected left(43) it is a
+    # clear paragraph break; without the shift a page of short Biblical
+    # citations fused into one paragraph (F&S p.122).
+    from pdf2epub.analyze import ColumnGeometry
+    from pdf2epub.flowbuilder import _L, _break_before
+    cfg = _cfg(tmp_path)
+    cfg.indent_threshold = 9.0
+    prev = _L(122, 0, _line("a full continuation line to the right margin", 100,
+                            x0=43.0, width=309.0), "Serif@11")
+    L = _L(122, 1, _line("The next citation starts here indented", 113,
+                         x0=59.6, width=281.0), "Serif@11")
+    geo_shift = ColumnGeometry(55.0, 353.0, 11.0, {122: 12.0})   # block 12pt left
+    geo_flat = ColumnGeometry(55.0, 353.0, 11.0, {})             # no recorded shift
+    # with the shift applied, the shallow indent is recognised -> break
+    assert _break_before(L, prev, None, "Serif@11", cfg, geo_shift, 12.0, True, 122)
+    # without the shift, x0-col_left is only ~5pt (< threshold) -> stays joined
+    assert not _break_before(L, prev, None, "Serif@11", cfg, geo_flat, 12.0, True, 122)
+
+
+def test_ps_root_folds_roman_and_italic_twins():
+    # a full-line inline italic phrase (Latin/Arabic gloss) mid-paragraph must
+    # NOT read as a pstyle change and split the paragraph: the '-Roman' and
+    # '-Italic' weight tokens fold to one family root (F&S ch.12 opening split
+    # into 3 lowercase-initial blocks at the 'Spiritus ubi vult…' italic line).
+    from pdf2epub.flowbuilder import _ps_root
+    assert _ps_root("NewBaskerville-Roman@10.5") == \
+        _ps_root("NewBaskerville-Italic@10.5")
+    assert _ps_root("TimesNewRomanPSMT@11") == \
+        _ps_root("TimesNewRomanPS-ItalicMT@11")
+    assert _ps_root("Garamond@10") != _ps_root("Helvetica@10")   # real families differ
+    assert _ps_root("NewBaskerville-Roman@10.5") != \
+        _ps_root("NewBaskerville-Roman@14")                       # size still matters
+
+
+def test_toc_wrapped_numbered_entry_folio_on_turnover(tmp_path):
+    # F&S printed TOC: a long numbered entry wraps, pushing its folio onto the
+    # turnover line ('6. …in Koranic' | 'Onomatology 69'). The marker line must
+    # OPEN a new entry (not fuse into ch5), and the number-less folio turnover
+    # must COMPLETE it (not ship as a bogus 'Onomatology' entry).
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    def _run(text, x0, y, x1, font=BODY):
+        return PdfRun(text=text, font_id=font, superscript=False,
+                      x0=x0, y0=y, x1=x1, y1=y + 12)
+
+    def _entry_line(title, folio, y, tx0=82):
+        return PdfLine(runs=[_run(title, tx0, y, 250),
+                             _run(folio, 346, y, 352)],
+                       x0=tx0, y0=y, x1=352, y1=y + 12)
+
+    lines = [
+        _line("Contents", 89, x0=177, width=74, font=BIG),
+        _entry_line("5. The Five Divine Presences", "51", 123),
+        # ch6 wraps: the marker line carries NO folio…
+        PdfLine(runs=[_run("6. The Cross of Space and Time in Koranic",
+                           82, 137, 300)],
+                x0=82, y0=137, x1=300, y1=149),
+        # …its folio rides the turnover line, which has NO leading number
+        _entry_line("Onomatology", "69", 151, tx0=100),
+        _entry_line("7. Insights into the Muhammadan Phenomenon", "85", 165),
+    ]
+    cfg = _cfg(tmp_path, toc_source="printed", toc_printed_pages=[1])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    toc = [p.text() for p in _paras(res.flow) if p.style == "__toc__"]
+    assert "6. The Cross of Space and Time in Koranic Onomatology\t69" in toc
+    assert "5. The Five Divine Presences\t51" in toc
+    assert "7. Insights into the Muhammadan Phenomenon\t85" in toc
+    assert not any("Divine Presences 6." in t for t in toc)   # no ch5+ch6 fusion
+    assert not any(t.startswith("Onomatology") for t in toc)  # no bogus entry
+
+
 def test_center_gap_scales_with_display_size(tmp_path):
     # a two-line 21pt part title leads ~26pt — body-scaled gaps would split
     # it into two h1 spine files (the HU Chapter-55 defect shape)
@@ -2692,6 +2792,24 @@ def test_repair_wrong_script_alpha_lookalike():
 
     import pdf2epub.qa.groundtruth as _gt
     assert "repair_wrong_script" in inspect.getsource(_gt)
+
+
+def test_strip_stray_grave():
+    """A lone grave accent abutting punctuation/space/end is a ToUnicode
+    artifact ('Subjectivity itself`.' — F&S p.49) and is dropped; a grave
+    FOLLOWED by a letter is a transliteration ʿayn (M&R 'a`a', ' `Ali') and is
+    preserved. Shared flow/ground-truth like repair_wrong_script."""
+    from pdf2epub.textfix import strip_stray_grave
+    assert strip_stray_grave("Subjectivity itself`.") == ("Subjectivity itself.", 1)
+    assert strip_stray_grave("a word` ") == ("a word ", 1)
+    assert strip_stray_grave("trailing`") == ("trailing", 1)
+    # ʿayn stand-in: grave before a letter (ASCII or accented) is preserved
+    assert strip_stray_grave("ma`na") == ("ma`na", 0)
+    assert strip_stray_grave(" `Ali and `â") == (" `Ali and `â", 0)
+    import inspect
+
+    import pdf2epub.qa.groundtruth as _gt2
+    assert "strip_stray_grave" in inspect.getsource(_gt2)
 
 
 def test_probe_run_identity_and_repair():

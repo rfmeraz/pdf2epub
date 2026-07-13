@@ -368,10 +368,18 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             region: list[_L] = []
             for L in reversed(kept):
                 f = doc.fonts.get(L.ln.dominant_font())
-                if L.region < 0 and f and f.size <= max_sz and not L.ln.vertical:
-                    region.append(L)
-                else:
+                if not (L.region < 0 and f and f.size <= max_sz
+                        and not L.ln.vertical):
                     break
+                # a note block is vertically CONTIGUOUS; a large gap up to the
+                # next small-font line means separate page content, not one
+                # note region — a copyright page set wholly sub-body-size
+                # (LCCN cataloging block + colophon address, gap-separated)
+                # would otherwise be swallowed from its '1. …' LCCN line down
+                # and, having no in-body marker, silently DROPPED
+                if region and region[-1].ln.y0 - L.ln.y1 > 2.5 * max_sz:
+                    break
+                region.append(L)
             region.reverse()
             # the length guard keeps stray small-font page-bottom fragments
             # in the body, but a region carrying a note MARKER is a note at
@@ -425,9 +433,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     # ---- printed-TOC pages -> toc-entry paragraphs
     toc_paras: dict[int, list[Paragraph]] = {}
     if cfg.toc_handling == "rebuild":
+        _entry_marker = re.compile(r"^\d+\.\s")   # a numbered TOC entry ('6. …')
         for pno in cfg.toc_printed_pages:
             paras: list[Paragraph] = []
             last_entry: Paragraph | None = None
+            # a numbered entry whose title wrapped and pushed its folio onto the
+            # NEXT line ('6. …in Koranic' | 'Onomatology 69'): (paragraph, raw title)
+            pending: tuple[Paragraph, str] | None = None
             toc_lines = pages_lines.get(pno, [])
             skip_idx: set[int] = set()
             for ti, L in enumerate(toc_lines):
@@ -450,6 +462,23 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                             len(L.ln.text().strip()) >= 2:
                         ent = (L.ln.text().strip(), nt.lower())
                         skip_idx.add(ti + 1)
+                starts_entry = bool(_entry_marker.match(L.ln.text().strip()))
+                if ent and not starts_entry and pending is not None:
+                    # folio-bearing line with NO leading number: the turnover of
+                    # a wrapped numbered entry, carrying its folio — complete it
+                    # (else the marker line above fused into the PRIOR entry and
+                    # this shipped as a bogus 'Onomatology' entry)
+                    ppara, base = pending
+                    title, label = ent
+                    fixed = _apply_textfix(
+                        [TextRun(f"{base} {title}\t{label}", RunFormat())],
+                        cfg, counts, L.page)
+                    ppara.items[0].text = "".join(
+                        r.text for r in fixed if isinstance(r, TextRun))
+                    counts["toc-continuation"] += 1
+                    pending = None
+                    continue
+                pending = None
                 if ent:
                     title, label = ent
                     fixed = _apply_textfix([TextRun(f"{title}\t{label}", RunFormat())],
@@ -475,6 +504,21 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                         items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts,
                                              L.page),
                         src=SourceRef(f"p{L.page:04d}", L.idx)))
+                elif starts_entry:
+                    # a NEW numbered entry whose folio wrapped to a later line:
+                    # open it now with a pending (empty) folio; the following
+                    # number-less folio line completes it
+                    raw = L.ln.text().strip()
+                    fixed = _apply_textfix([TextRun(f"{raw}\t", RunFormat())],
+                                           cfg, counts, L.page)
+                    last_entry = Paragraph(
+                        style="__toc__",
+                        items=[TextRun("".join(
+                            r.text for r in fixed if isinstance(r, TextRun)),
+                            RunFormat())],
+                        src=SourceRef(f"p{L.page:04d}", L.idx))
+                    paras.append(last_entry)
+                    pending = (last_entry, raw)
                 elif last_entry is not None:
                     # continuation of a wrapped entry title
                     t = last_entry.items[0].text
@@ -1307,10 +1351,15 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 # ------------------------------------------------------------------ helpers
 
 def _ps_root(ps: str) -> str:
-    """Fold italic variants into their roman base for break decisions
-    ('TimesNewRomanPS-ItalicMT' == 'TimesNewRomanPSMT')."""
+    """Fold italic/roman weight variants into one family base for break
+    decisions ('TimesNewRomanPS-ItalicMT' == 'TimesNewRomanPSMT'). Fonts named
+    with an explicit '-Roman' style token (NewBaskerville-Roman vs
+    NewBaskerville-Italic) must fold too, or a full-line inline italic phrase
+    (a Latin/Arabic gloss mid-paragraph) reads as a pstyle change and splits
+    the paragraph, stranding a lowercase-initial block."""
     fam, _, rest = ps.partition("@")
-    fam = re.sub(r"[^A-Za-z0-9]", "", fam.replace("Italic", ""))
+    fam = re.sub(r"[^A-Za-z0-9]", "",
+                 fam.replace("Italic", "").replace("Roman", ""))
     return f"{fam}@{rest}"
 
 
@@ -1382,8 +1431,14 @@ def _break_before(L: _L, prev: _L | None, act: str | None, body_ps: str,
             cfg.gap_factor * max(med_lead, 1.35 * _sz)
     # a first-line indent is indented relative to the PREVIOUS line too —
     # drop-cap wrap lines all sit at the same inset (BoK p.35: 3 lines at
-    # x0=87.9 around a 52.5pt initial) and must not break line-by-line
-    indented = (L.ln.x0 - geo.col_left >= cfg.indent_threshold
+    # x0=87.9 around a 52.5pt initial) and must not break line-by-line.
+    # The absolute test is against the page's SHIFT-CORRECTED left: a verso
+    # binding margin slides the whole block left (F&S p.122 continuations at
+    # x0≈43 vs the modal col_left 55), so a real ~16pt citation indent read
+    # only ~5pt past the global edge and a page of Biblical proof-texts fused
+    # into one paragraph. Same shift the verse/quote passes already apply.
+    eff_left = geo.col_left - geo.shift(pno)
+    indented = (L.ln.x0 - eff_left >= cfg.indent_threshold
                 and L.ln.x0 - prev.ln.x0 >= cfg.indent_threshold - 2)
     # a justified line only ends visibly SHORT of the right margin when its
     # paragraph ends there (I&B p.29: the epigraph's '(Udāna, 80–81)' line
@@ -1675,6 +1730,7 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
         repair_shifted_cmap,
         repair_wrong_script,
         strip_control_chars,
+        strip_stray_grave,
     )
 
     out: list[TextRun] = []
@@ -1698,6 +1754,10 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
         # so coverage compares repaired text on both sides
         t, n_ws = repair_wrong_script(t)
         counts["wrongscript-repaired"] += n_ws
+        # a stray grave accent abutting punctuation is a ToUnicode artifact
+        # (also stripped on the QA ground truth, same as repair_wrong_script)
+        t, n_gr = strip_stray_grave(t)
+        counts["stray-grave-stripped"] += n_gr
         if "�" in t:
             # U+FFFD = extractor's unmapped-glyph placeholder; replaceable
             # only page-scoped with render evidence (glyphs.fffd_repairs).

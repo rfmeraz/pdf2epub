@@ -1314,3 +1314,42 @@ flaws — all incorporated; see the plan's "corrections incorporated" section).
 Verification baseline: `pytest -q` 361 passed; `ruff check` clean; six-book corpus all
 `Overall: PASS`; two clean builds byte-identical (epub + manifest). Deferred (documented):
 reliability-hardening §5 (process limits) + §6 (maintainability); a11y manual certification.
+
+## Form & Substance conversion — 6 corpus-general fixes (2026-07-13)
+
+New Schuon/World Wisdom book (`form-and-substance-in-the-religions`); see
+CONVERSIONS.md for the full log. Six pipeline fixes it surfaced, all with unit
+tests and all 5 reference books re-QA `Overall: PASS`:
+
+- **Note-region scan must stop at a large vertical gap.** A copyright page set
+  wholly sub-body-size let the bottom-region walk swallow the LCCN + colophon
+  from its `1.`-marker line down, then DROP it (no in-body ref). `flowbuilder`
+  note walk now breaks when `region[-1].y0 - L.y1 > 2.5*max_sz` — a real note
+  block is contiguous. Content-loss class; the reason gate 2 exists.
+- **`_ps_root` must fold `Roman` as well as `Italic`.** Fonts named
+  `Family-Roman`/`Family-Italic` (not just an italic-suffix on a shared name)
+  didn't share a root, so a full-line inline italic gloss split the paragraph
+  (lowercase-initial blocks). One-line fix; watch for this whenever a book's
+  body face carries an explicit `-Roman` style token.
+- **Closed em-dash at a line seam often arrives as its OWN run** (an italic word
+  then a roman `—`), so `dehyphenate_join` sees a bare `"—"`. Guard is now
+  `(?<!\s)[—–]$` (covers bare-dash and quote-before-dash), not `[letter][—]$`.
+- **Indent detection must shift-correct `col_left`.** `_break_before`'s absolute
+  first-line-indent test used the global `col_left`; a verso binding shift slid
+  the block left so a real ~16pt indent read ~5pt and short citation paragraphs
+  fused. `eff_left = col_left - geo.shift(pno)` — the same page shift the
+  verse/quote passes already apply. LATENT corpus-wide (also un-fused ~105
+  paragraphs in sufism). The one fix most worth remembering.
+- **TOC rebuild** handles a numbered entry whose folio wrapped to the turnover
+  line (marker line → pending entry; number-less folio line completes it).
+- **`strip_stray_grave`** drops a lone ToUnicode `` ` `` not followed by a
+  letter (shared flow/ground-truth); ʿayn graves (letter-following) survive.
+
+Also: `flow.keep_hyphens` now the standard channel for dropped compounds AND
+lowercase transliterated Arabic articles (`al-malakût` etc. — the arabic-article
+keeper only protects Upper/non-ASCII forms). Centered book-list pages (varying
+x0, role p) need explicit break(title)/join(turnover) overrides — the geometric
+joiner cannot read a short centered turnover as a continuation.
+
+Verification baseline: `pytest -q` **370 passed**; `ruff check` clean; six-book
+corpus (+ F&S) all `Overall: PASS`.

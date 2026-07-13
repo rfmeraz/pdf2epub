@@ -1,0 +1,6639 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/pdf2epub/books/form-and-substance-in-the-religions/package/Form and Substance in the Religions.pdf",
+  "sha256": "1f713dd182720d52657abb8056ae693f45839d97e6673dda9a7f3671a166cba1",
+  "producer": "",
+  "n_pages": 266,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "Hadriano-Light",
+    "raw_family": "Hadriano-Light",
+    "size": 36.0,
+    "color": "#000000"
+   },
+   "1": {
+    "id": 1,
+    "family": "Hadriano-Light",
+    "raw_family": "Hadriano-Light",
+    "size": 30.0,
+    "color": "#fff6ea"
+   },
+   "2": {
+    "id": 2,
+    "family": "Hadriano-Light",
+    "raw_family": "Hadriano-Light",
+    "size": 24.0,
+    "color": "#fff6ea"
+   },
+   "3": {
+    "id": 3,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "4": {
+    "id": 4,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "5": {
+    "id": 5,
+    "family": "NewBaskerville-Bold",
+    "raw_family": "NewBaskerville-Bold",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "6": {
+    "id": 6,
+    "family": "Hadriano-Light",
+    "raw_family": "Hadriano-Light",
+    "size": 30.0,
+    "color": "#000000"
+   },
+   "7": {
+    "id": 7,
+    "family": "Hadriano-Light",
+    "raw_family": "Hadriano-Light",
+    "size": 18.0,
+    "color": "#000000"
+   },
+   "8": {
+    "id": 8,
+    "family": "Hadriano-Light",
+    "raw_family": "Hadriano-Light",
+    "size": 13.5,
+    "color": "#000000"
+   },
+   "9": {
+    "id": 9,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 8.0,
+    "color": "#000000"
+   },
+   "10": {
+    "id": 10,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 17.0,
+    "color": "#000000"
+   },
+   "11": {
+    "id": 11,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "12": {
+    "id": 12,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "13": {
+    "id": 13,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 10.5,
+    "color": "#000000"
+   },
+   "14": {
+    "id": 14,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 10.5,
+    "color": "#000000"
+   },
+   "15": {
+    "id": 15,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 7.0,
+    "color": "#000000"
+   },
+   "16": {
+    "id": 16,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 14.0,
+    "color": "#000000"
+   },
+   "17": {
+    "id": 17,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 17.0,
+    "color": "#000000"
+   },
+   "18": {
+    "id": 18,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 9.5,
+    "color": "#000000"
+   },
+   "19": {
+    "id": 19,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 9.5,
+    "color": "#000000"
+   },
+   "20": {
+    "id": 20,
+    "family": "AJensonMM_371_10_",
+    "raw_family": "AJensonMM_371_10_",
+    "size": 10.5,
+    "color": "#980a0e"
+   },
+   "21": {
+    "id": 21,
+    "family": "AJensonMM_371_12_",
+    "raw_family": "AJensonMM_371_12_",
+    "size": 12.0,
+    "color": "#980a0e"
+   },
+   "22": {
+    "id": 22,
+    "family": "AJensonMM_371_10_",
+    "raw_family": "AJensonMM_371_10_",
+    "size": 10.0,
+    "color": "#980a0e"
+   },
+   "23": {
+    "id": 23,
+    "family": "AJensonMM_371_10_",
+    "raw_family": "AJensonMM_371_10_",
+    "size": 10.5,
+    "color": "#a74252"
+   },
+   "24": {
+    "id": 24,
+    "family": "AJensonMM_371_10_",
+    "raw_family": "AJensonMM_371_10_",
+    "size": 10.5,
+    "color": "#000000"
+   },
+   "25": {
+    "id": 25,
+    "family": "AJensonMM_371_12_",
+    "raw_family": "AJensonMM_371_12_",
+    "size": 12.0,
+    "color": "#000000"
+   },
+   "26": {
+    "id": 26,
+    "family": "OCR-B-Seagull",
+    "raw_family": "OCR-B-Seagull",
+    "size": 8.0,
+    "color": "#000000"
+   },
+   "27": {
+    "id": 27,
+    "family": "AJensonMM_371_10_",
+    "raw_family": "AJensonMM_371_10_",
+    "size": 8.5,
+    "color": "#000000"
+   }
+  },
+  "outline": [
+   {
+    "level": 1,
+    "title": "Series Page",
+    "target_page": 2
+   },
+   {
+    "level": 1,
+    "title": "Title Page",
+    "target_page": 4
+   },
+   {
+    "level": 1,
+    "title": "Copyright Page",
+    "target_page": 5
+   },
+   {
+    "level": 1,
+    "title": "Table of Content",
+    "target_page": 6
+   },
+   {
+    "level": 1,
+    "title": "Preface",
+    "target_page": 8
+   },
+   {
+    "level": 1,
+    "title": "Truth and Presence",
+    "target_page": 10
+   },
+   {
+    "level": 1,
+    "title": "Form and Substance in the Religions",
+    "target_page": 22
+   },
+   {
+    "level": 1,
+    "title": "Âtmâ-Mâyâ",
+    "target_page": 40
+   },
+   {
+    "level": 1,
+    "title": "Substance: Subject and Object",
+    "target_page": 52
+   },
+   {
+    "level": 1,
+    "title": "The Five Divine Presences",
+    "target_page": 60
+   },
+   {
+    "level": 1,
+    "title": "The Cross of Space and Time in Koranic Onomatology",
+    "target_page": 78
+   },
+   {
+    "level": 1,
+    "title": "Insights into the Muhammadan Phenomenon",
+    "target_page": 94
+   },
+   {
+    "level": 1,
+    "title": "The Koranic Message of Sayyidna Isa",
+    "target_page": 108
+   },
+   {
+    "level": 1,
+    "title": "The Virginal Doctrine",
+    "target_page": 120
+   },
+   {
+    "level": 1,
+    "title": "Synthesis of the Pâramitâs",
+    "target_page": 134
+   },
+   {
+    "level": 1,
+    "title": "A Note on the Feminine Element in Mahâyâna",
+    "target_page": 144
+   },
+   {
+    "level": 1,
+    "title": "The Mystery of the Two Natures",
+    "target_page": 150
+   },
+   {
+    "level": 1,
+    "title": "The Question of Theodicies",
+    "target_page": 160
+   },
+   {
+    "level": 1,
+    "title": "Some Difficulties Found in Sacred Scriptures",
+    "target_page": 174
+   },
+   {
+    "level": 1,
+    "title": "Paradoxes of Spiritual Expression",
+    "target_page": 190
+   },
+   {
+    "level": 1,
+    "title": "The Human Margin",
+    "target_page": 210
+   },
+   {
+    "level": 1,
+    "title": "Comments on an Eschatological Problem",
+    "target_page": 246
+   },
+   {
+    "level": 1,
+    "title": "The Two Paradises",
+    "target_page": 252
+   }
+  ],
+  "links": [],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   0,
+   0,
+   396,
+   612
+  ],
+  "warnings": [
+   "engine agreement below 90 on 1 page(s): [1] — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "NewBaskerville-Roman@10.5",
+  "body_size": 10.5,
+  "clusters": [
+   {
+    "pstyle": "NewBaskerville-Roman@10.5",
+    "family": "NewBaskerville-Roman",
+    "size": 10.5,
+    "n_lines": 7243,
+    "n_chars": 449651,
+    "n_pages": 251,
+    "first_page": 8,
+    "samples": [
+     "When reading the essays contained in this collection, the",
+     "reader will appreciate that we have in mind less traditional infor-",
+     "mation as such than the exposition of intrinsic doctrine; in other"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@9",
+    "family": "NewBaskerville-Roman",
+    "size": 9.0,
+    "n_lines": 1853,
+    "n_chars": 123185,
+    "n_pages": 198,
+    "first_page": 2,
+    "samples": [
+     "The Library of Perennial Philosophy is dedicated to the exposition of the",
+     "timeless Truth underlying the diverse religions. This Truth, often referred to",
+     "as the Sophia Perennis—or Perennial Wisdom—finds its expression in the"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "family": "NewBaskerville-Italic",
+    "size": 10.5,
+    "n_lines": 134,
+    "n_chars": 4542,
+    "n_pages": 133,
+    "first_page": 8,
+    "samples": [
+     "Form and Substance in the Religions",
+     "Form and Substance in the Religions",
+     "Truth and Presence"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "family": "NewBaskerville-Italic",
+    "size": 11.0,
+    "n_lines": 85,
+    "n_chars": 2339,
+    "n_pages": 85,
+    "first_page": 54,
+    "samples": [
+     "Substance: Subject and Object",
+     "Substance: Subject and Object",
+     "Substance: Subject and Object"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "11.0pt centered"
+   },
+   {
+    "pstyle": "AJensonMM_371_10_@10.5",
+    "family": "AJensonMM_371_10_",
+    "size": 10.5,
+    "n_lines": 30,
+    "n_chars": 1810,
+    "n_pages": 1,
+    "first_page": 266,
+    "samples": [
+     "“The man is a living wonder; intellectually",
+     "apropos religion, equally in depth and breadth, the",
+     "paragon of our time. I know of no living thinker"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@9.5",
+    "family": "NewBaskerville-Roman",
+    "size": 9.5,
+    "n_lines": 18,
+    "n_chars": 931,
+    "n_pages": 1,
+    "first_page": 265,
+    "samples": [
+     "BY THE SAME AUTHOR",
+     "The Transcendent Unity of Religions, 1953",
+     "Spiritual Perspectives and Human Facts, 1954, 1969"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.5pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@9.5",
+    "family": "NewBaskerville-Italic",
+    "size": 9.5,
+    "n_lines": 19,
+    "n_chars": 831,
+    "n_pages": 1,
+    "first_page": 265,
+    "samples": [
+     "Revised Edition, 1975, 1984, The Theosophical Publishing House, 1993",
+     "New Translation, Perennial Books, 1987",
+     "Gnosis: Divine Wisdom, 1959, 1978, Perennial Books, 1990"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.5pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@11",
+    "family": "NewBaskerville-Roman",
+    "size": 11.0,
+    "n_lines": 19,
+    "n_chars": 635,
+    "n_pages": 1,
+    "first_page": 6,
+    "samples": [
+     "1. Truth and Presence1",
+     "2. Form and Substance in the Religions13",
+     "4. Substance: Subject and Object43"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@10.5/center",
+    "family": "NewBaskerville-Roman",
+    "size": 10.5,
+    "n_lines": 246,
+    "n_chars": 633,
+    "n_pages": 246,
+    "first_page": 10,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@8/center",
+    "family": "NewBaskerville-Roman",
+    "size": 8.0,
+    "n_lines": 19,
+    "n_chars": 596,
+    "n_pages": 1,
+    "first_page": 5,
+    "samples": [
+     "Form and Substance in the Religions",
+     "by Frithjof Schuon",
+     "© 2002 World Wisdom, INC."
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (8.0pt), frequent"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@9",
+    "family": "NewBaskerville-Italic",
+    "size": 9.0,
+    "n_lines": 16,
+    "n_chars": 596,
+    "n_pages": 15,
+    "first_page": 20,
+    "samples": [
+     "Generosity” (Dhû ’l-Jalâli wa ’l-Ikrâm) in the Surah Ar-Rahmân.",
+     "the Holy Spirit” (Mater mou to Hagion Pneuma)—Homily 15.",
+     "was born” (Das fliessende Licht der Gottheit, 1: 22)."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "family": "NewBaskerville-Roman",
+    "size": 17.0,
+    "n_lines": 24,
+    "n_chars": 521,
+    "n_pages": 19,
+    "first_page": 6,
+    "samples": [
+     "Truth and Presence",
+     "Form and Substance",
+     "in the Religions"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 17.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@11",
+    "family": "NewBaskerville-Italic",
+    "size": 11.0,
+    "n_lines": 9,
+    "n_chars": 379,
+    "n_pages": 9,
+    "first_page": 6,
+    "samples": [
+     "The Cross of Space and Time in Koranic Onomatology",
+     "The Cross of Space and Time in Koranic Onomatology",
+     "The Cross of Space and Time in Koranic Onomatology"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@10.5",
+    "family": "NewBaskerville-Italic",
+    "size": 10.5,
+    "n_lines": 11,
+    "n_chars": 365,
+    "n_pages": 11,
+    "first_page": 29,
+    "samples": [
+     "Spiritus autem ubi vult spirat.",
+     "Form and Substance in the Religions",
+     "asmâ wa’ s-sifât al-ilâhîyah),6 whereas for most authors al-jabarût is"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "family": "NewBaskerville-Roman",
+    "size": 14.0,
+    "n_lines": 164,
+    "n_chars": 328,
+    "n_pages": 82,
+    "first_page": 11,
+    "samples": [],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@8",
+    "family": "NewBaskerville-Roman",
+    "size": 8.0,
+    "n_lines": 9,
+    "n_chars": 271,
+    "n_pages": 1,
+    "first_page": 5,
+    "samples": [
+     "Schuon, Frithjof, 1907-1998",
+     "[Forme et substance dans les religions. English}",
+     "Form and substance in the religions / by Frithjof Schuon."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@9/center",
+    "family": "NewBaskerville-Roman",
+    "size": 9.0,
+    "n_lines": 2,
+    "n_chars": 47,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [
+     "THE LIBRARY OF PERENNIAL PHILOSOPHY"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@11/center",
+    "family": "NewBaskerville-Roman",
+    "size": 11.0,
+    "n_lines": 5,
+    "n_chars": 45,
+    "n_pages": 5,
+    "first_page": 42,
+    "samples": [],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "11.0pt centered"
+   },
+   {
+    "pstyle": "OCR-B-Seagull@8",
+    "family": "OCR-B-Seagull",
+    "size": 8.0,
+    "n_lines": 3,
+    "n_chars": 41,
+    "n_pages": 1,
+    "first_page": 266,
+    "samples": [
+     "ISBN 0- 941532- 25- 9"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.0pt)"
+   },
+   {
+    "pstyle": "Hadriano-Light@30/center",
+    "family": "Hadriano-Light",
+    "size": 30.0,
+    "n_lines": 2,
+    "n_chars": 34,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "Form and Substance",
+     "in the Religions"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 30.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "NewBaskerville-Bold@9/center",
+    "family": "NewBaskerville-Bold",
+    "size": 9.0,
+    "n_lines": 1,
+    "n_chars": 31,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [
+     "The Writings of Frithjof Schuon"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "AJensonMM_371_10_@10/center",
+    "family": "AJensonMM_371_10_",
+    "size": 10.0,
+    "n_lines": 1,
+    "n_chars": 29,
+    "n_pages": 1,
+    "first_page": 266,
+    "samples": [
+     "—Huston Smith, University of"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@17/center",
+    "family": "NewBaskerville-Italic",
+    "size": 17.0,
+    "n_lines": 2,
+    "n_chars": 20,
+    "n_pages": 2,
+    "first_page": 40,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 17.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "AJensonMM_371_10_@10",
+    "family": "AJensonMM_371_10_",
+    "size": 10.0,
+    "n_lines": 1,
+    "n_chars": 20,
+    "n_pages": 1,
+    "first_page": 266,
+    "samples": [
+     "California, Berkeley"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "AJensonMM_371_10_@8.5",
+    "family": "AJensonMM_371_10_",
+    "size": 8.5,
+    "n_lines": 1,
+    "n_chars": 19,
+    "n_pages": 1,
+    "first_page": 266,
+    "samples": [
+     "Religion/Philosophy"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.5pt)"
+   },
+   {
+    "pstyle": "Hadriano-Light@36",
+    "family": "Hadriano-Light",
+    "size": 36.0,
+    "n_lines": 1,
+    "n_chars": 18,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "Form and Substance"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Hadriano-Light@36/center",
+    "family": "Hadriano-Light",
+    "size": 36.0,
+    "n_lines": 1,
+    "n_chars": 16,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "in the Religions"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 36.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Hadriano-Light@24/center",
+    "family": "Hadriano-Light",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 16,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "FRITHJOF  SCHUON"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Hadriano-Light@13.5/center",
+    "family": "Hadriano-Light",
+    "size": 13.5,
+    "n_lines": 1,
+    "n_chars": 15,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.5pt centered"
+   },
+   {
+    "pstyle": "AJensonMM_371_12_@12",
+    "family": "AJensonMM_371_12_",
+    "size": 12.0,
+    "n_lines": 1,
+    "n_chars": 7,
+    "n_pages": 1,
+    "first_page": 266,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@14",
+    "family": "NewBaskerville-Roman",
+    "size": 14.0,
+    "n_lines": 2,
+    "n_chars": 4,
+    "n_pages": 1,
+    "first_page": 117,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Hadriano-Light@18/center",
+    "family": "Hadriano-Light",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 2,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "Form and Substance in the Religions",
+    "count": 131,
+    "pages": [
+     5,
+     9,
+     11,
+     13,
+     15,
+     17,
+     19,
+     23
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Human Margin",
+    "count": 18,
+    "pages": [
+     210,
+     212,
+     214,
+     216,
+     218,
+     220,
+     222,
+     224
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Paradoxes of Spiritual Expression",
+    "count": 10,
+    "pages": [
+     190,
+     192,
+     194,
+     196,
+     198,
+     200,
+     202,
+     204
+    ],
+    "band": "top"
+   },
+   {
+    "text": "*",
+    "count": 9,
+    "pages": [
+     20,
+     70,
+     92,
+     102,
+     104,
+     126,
+     128,
+     195
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Five Divine Presences",
+    "count": 9,
+    "pages": [
+     60,
+     62,
+     64,
+     66,
+     68,
+     70,
+     72,
+     74
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Cross of Space and Time in Koranic Onomatology",
+    "count": 7,
+    "pages": [
+     80,
+     82,
+     84,
+     86,
+     88,
+     90,
+     92
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Virginal Doctrine",
+    "count": 7,
+    "pages": [
+     120,
+     122,
+     124,
+     126,
+     128,
+     130,
+     132
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Question of Theodicies",
+    "count": 7,
+    "pages": [
+     160,
+     162,
+     164,
+     166,
+     168,
+     170,
+     172
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Some Difficulties Found in Sacred Scriptures",
+    "count": 7,
+    "pages": [
+     176,
+     178,
+     180,
+     182,
+     184,
+     186,
+     188
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Two Paradises",
+    "count": 7,
+    "pages": [
+     252,
+     254,
+     256,
+     258,
+     260,
+     262,
+     264
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Truth and Presence",
+    "count": 6,
+    "pages": [
+     10,
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Âtmâ-Mâyâ",
+    "count": 6,
+    "pages": [
+     40,
+     42,
+     44,
+     46,
+     48,
+     50
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#nsights into the Muhammadan Phenomenon",
+    "count": 6,
+    "pages": [
+     96,
+     98,
+     100,
+     102,
+     104,
+     106
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Koranic Message of Sayyidna Isa",
+    "count": 6,
+    "pages": [
+     108,
+     110,
+     112,
+     114,
+     116,
+     118
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Synthesis of the Pâramitâs",
+    "count": 5,
+    "pages": [
+     134,
+     136,
+     138,
+     140,
+     142
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Mystery of the Two Natures",
+    "count": 5,
+    "pages": [
+     150,
+     152,
+     154,
+     156,
+     158
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Substance: Subject and Object",
+    "count": 4,
+    "pages": [
+     52,
+     54,
+     56,
+     58
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Form and Substance",
+    "count": 3,
+    "pages": [
+     1,
+     4,
+     22
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#n the Religions",
+    "count": 3,
+    "pages": [
+     1,
+     4,
+     22
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 38.8,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 99.6,
+  "folio_mismatches": [
+   {
+    "page": 266,
+    "printed": "95",
+    "label": "257"
+   }
+  ],
+  "label_source_proposal": "pdf-page-labels",
+  "printed_folios": {
+   "8": "vii",
+   "9": "viii",
+   "10": "1",
+   "11": "2",
+   "12": "3",
+   "13": "4",
+   "14": "5",
+   "15": "6",
+   "16": "7",
+   "17": "8",
+   "18": "9",
+   "19": "10",
+   "20": "11",
+   "22": "13",
+   "23": "14",
+   "24": "15",
+   "25": "16",
+   "26": "17",
+   "27": "18",
+   "28": "19",
+   "29": "20",
+   "30": "21",
+   "31": "22",
+   "32": "23",
+   "33": "24",
+   "34": "25",
+   "35": "26",
+   "36": "27",
+   "37": "28",
+   "38": "29",
+   "39": "30",
+   "40": "31",
+   "41": "32",
+   "42": "33",
+   "43": "34",
+   "44": "35",
+   "45": "36",
+   "46": "37",
+   "47": "38",
+   "48": "39",
+   "49": "40",
+   "50": "41",
+   "52": "43",
+   "53": "44",
+   "54": "45",
+   "55": "46",
+   "56": "47",
+   "57": "48",
+   "58": "49",
+   "59": "50",
+   "60": "51",
+   "61": "52",
+   "62": "53",
+   "63": "54",
+   "64": "55",
+   "65": "56",
+   "66": "57",
+   "67": "58",
+   "68": "59",
+   "69": "60",
+   "70": "61",
+   "71": "62",
+   "72": "63",
+   "73": "64",
+   "74": "65",
+   "75": "66",
+   "76": "67",
+   "77": "68",
+   "78": "69",
+   "79": "70",
+   "80": "71",
+   "81": "72",
+   "82": "73",
+   "83": "74",
+   "84": "75",
+   "85": "76",
+   "86": "77",
+   "87": "78",
+   "88": "79",
+   "89": "80",
+   "90": "81",
+   "91": "82",
+   "92": "83",
+   "93": "84",
+   "94": "85",
+   "95": "86",
+   "96": "87",
+   "97": "88",
+   "98": "89",
+   "99": "90",
+   "100": "91",
+   "101": "92",
+   "102": "93",
+   "103": "94",
+   "104": "95",
+   "105": "96",
+   "106": "97",
+   "107": "98",
+   "108": "99",
+   "109": "100",
+   "110": "101",
+   "111": "102",
+   "112": "103",
+   "113": "104",
+   "114": "105",
+   "115": "106",
+   "116": "107",
+   "117": "108",
+   "118": "109",
+   "119": "110",
+   "120": "111",
+   "121": "112",
+   "122": "113",
+   "123": "114",
+   "124": "115",
+   "125": "116",
+   "126": "117",
+   "127": "118",
+   "128": "119",
+   "129": "120",
+   "130": "121",
+   "131": "122",
+   "132": "123",
+   "133": "124",
+   "134": "125",
+   "135": "126",
+   "136": "127",
+   "137": "128",
+   "138": "129",
+   "139": "130",
+   "140": "131",
+   "141": "132",
+   "142": "133",
+   "143": "134",
+   "144": "135",
+   "145": "136",
+   "146": "137",
+   "147": "138",
+   "148": "139",
+   "150": "141",
+   "151": "142",
+   "152": "143",
+   "153": "144",
+   "154": "145",
+   "155": "146",
+   "156": "147",
+   "157": "148",
+   "158": "149",
+   "159": "150",
+   "160": "151",
+   "161": "152",
+   "162": "153",
+   "163": "154",
+   "164": "155",
+   "165": "156",
+   "166": "157",
+   "167": "158",
+   "168": "159",
+   "169": "160",
+   "170": "161",
+   "171": "162",
+   "172": "163",
+   "174": "165",
+   "175": "166",
+   "176": "167",
+   "177": "168",
+   "178": "169",
+   "179": "170",
+   "180": "171",
+   "181": "172",
+   "182": "173",
+   "183": "174",
+   "184": "175",
+   "185": "176",
+   "186": "177",
+   "187": "178",
+   "188": "179",
+   "190": "181",
+   "191": "182",
+   "192": "183",
+   "193": "184",
+   "194": "185",
+   "195": "186",
+   "196": "187",
+   "197": "188",
+   "198": "189",
+   "199": "190",
+   "200": "191",
+   "201": "192",
+   "202": "193",
+   "203": "194",
+   "204": "195",
+   "205": "196",
+   "206": "197",
+   "207": "198",
+   "208": "199",
+   "209": "200",
+   "210": "201",
+   "211": "202",
+   "212": "203",
+   "213": "204",
+   "214": "205",
+   "215": "206",
+   "216": "207",
+   "217": "208",
+   "218": "209",
+   "219": "210",
+   "220": "211",
+   "221": "212",
+   "222": "213",
+   "223": "214",
+   "224": "215",
+   "225": "216",
+   "226": "217",
+   "227": "218",
+   "228": "219",
+   "229": "220",
+   "230": "221",
+   "231": "222",
+   "232": "223",
+   "233": "224",
+   "234": "225",
+   "235": "226",
+   "236": "227",
+   "237": "228",
+   "238": "229",
+   "239": "230",
+   "240": "231",
+   "241": "232",
+   "242": "233",
+   "243": "234",
+   "244": "235",
+   "246": "237",
+   "247": "238",
+   "248": "239",
+   "249": "240",
+   "250": "241",
+   "251": "242",
+   "252": "243",
+   "253": "244",
+   "254": "245",
+   "255": "246",
+   "256": "247",
+   "257": "248",
+   "258": "249",
+   "259": "250",
+   "260": "251",
+   "261": "252",
+   "262": "253",
+   "263": "254",
+   "264": "255",
+   "266": "95"
+  },
+  "headings": [
+   {
+    "page": 1,
+    "pstyle": "Hadriano-Light@36",
+    "text": "Form and Substance"
+   },
+   {
+    "page": 1,
+    "pstyle": "Hadriano-Light@36/center",
+    "text": "in the Religions"
+   },
+   {
+    "page": 1,
+    "pstyle": "Hadriano-Light@24/center",
+    "text": "FRITHJOF  SCHUON"
+   },
+   {
+    "page": 4,
+    "pstyle": "Hadriano-Light@30/center",
+    "text": "Form and Substance"
+   },
+   {
+    "page": 4,
+    "pstyle": "Hadriano-Light@30/center",
+    "text": "in the Religions"
+   },
+   {
+    "page": 4,
+    "pstyle": "Hadriano-Light@18/center",
+    "text": "by"
+   },
+   {
+    "page": 4,
+    "pstyle": "Hadriano-Light@13.5/center",
+    "text": "FRITHJOF SCHUON"
+   },
+   {
+    "page": 6,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Contents"
+   },
+   {
+    "page": 8,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Preface"
+   },
+   {
+    "page": 9,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 10,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Truth and Presence"
+   },
+   {
+    "page": 11,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 11,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 11,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 12,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Truth and Presence"
+   },
+   {
+    "page": 12,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 12,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 13,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 14,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Truth and Presence"
+   },
+   {
+    "page": 14,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 14,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 15,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 15,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 15,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 16,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Truth and Presence"
+   },
+   {
+    "page": 16,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 16,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 17,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 18,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Truth and Presence"
+   },
+   {
+    "page": 19,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 20,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Truth and Presence"
+   },
+   {
+    "page": 20,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 20,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 22,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Form and Substance"
+   },
+   {
+    "page": 22,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "in the Religions"
+   },
+   {
+    "page": 23,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 24,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 25,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 26,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 26,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 26,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 27,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 28,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 29,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 29,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 29,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 30,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 31,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 32,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 33,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 34,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 35,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 36,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 36,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 36,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 37,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 38,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 39,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 40,
+    "pstyle": "NewBaskerville-Italic@17/center",
+    "text": "Âtmâ-Mâyâ"
+   },
+   {
+    "page": 41,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 42,
+    "pstyle": "NewBaskerville-Roman@11/center",
+    "text": "Âtmâ-Mâyâ"
+   },
+   {
+    "page": 42,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 42,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 43,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 43,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 43,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 44,
+    "pstyle": "NewBaskerville-Roman@11/center",
+    "text": "Âtmâ-Mâyâ"
+   },
+   {
+    "page": 44,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 44,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 45,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 46,
+    "pstyle": "NewBaskerville-Roman@11/center",
+    "text": "Âtmâ-Mâyâ"
+   },
+   {
+    "page": 46,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 46,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 47,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 48,
+    "pstyle": "NewBaskerville-Roman@11/center",
+    "text": "Âtmâ-Mâyâ"
+   },
+   {
+    "page": 48,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 48,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 49,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 50,
+    "pstyle": "NewBaskerville-Roman@11/center",
+    "text": "Âtmâ-Mâyâ"
+   },
+   {
+    "page": 52,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Substance: Subject and Object"
+   },
+   {
+    "page": 53,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 54,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Substance: Subject and Object"
+   },
+   {
+    "page": 55,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 56,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Substance: Subject and Object"
+   },
+   {
+    "page": 57,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 57,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 57,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 58,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Substance: Subject and Object"
+   },
+   {
+    "page": 60,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 61,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 62,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 62,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 62,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 63,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 64,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 64,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 64,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 65,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 66,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 66,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 66,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 67,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 68,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 69,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 70,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 70,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 70,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 71,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 71,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 71,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 72,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 73,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 74,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 74,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 74,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 75,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 76,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Five Divine Presences"
+   },
+   {
+    "page": 77,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 78,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Cross of Space and Time"
+   },
+   {
+    "page": 78,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "in Koranic Onomatology"
+   },
+   {
+    "page": 79,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 81,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 81,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 81,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 83,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 84,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 84,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 85,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 86,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 86,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 87,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 88,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 88,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 89,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 89,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 89,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 91,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 92,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 92,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 93,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 94,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Insights into the Muhammadan"
+   },
+   {
+    "page": 94,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Phenomenon"
+   },
+   {
+    "page": 95,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 96,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Insights into the Muhammadan Phenomenon"
+   },
+   {
+    "page": 97,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 98,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Insights into the Muhammadan Phenomenon"
+   },
+   {
+    "page": 98,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 98,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 99,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 100,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Insights into the Muhammadan Phenomenon"
+   },
+   {
+    "page": 101,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 102,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Insights into the Muhammadan Phenomenon"
+   },
+   {
+    "page": 102,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 102,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 103,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 104,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Insights into the Muhammadan Phenomenon"
+   },
+   {
+    "page": 104,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 104,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 105,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 106,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Insights into the Muhammadan Phenomenon"
+   },
+   {
+    "page": 106,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 106,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 107,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 108,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Koranic Message of Sayyidna Isa"
+   },
+   {
+    "page": 109,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 110,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Koranic Message of Sayyidna Isa"
+   },
+   {
+    "page": 111,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 112,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Koranic Message of Sayyidna Isa"
+   },
+   {
+    "page": 113,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 114,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Koranic Message of Sayyidna Isa"
+   },
+   {
+    "page": 115,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 115,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 115,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 116,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Koranic Message of Sayyidna Isa"
+   },
+   {
+    "page": 118,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Koranic Message of Sayyidna Isa"
+   },
+   {
+    "page": 119,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 120,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 121,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 122,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 122,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 122,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 123,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 124,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 124,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 124,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 125,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 126,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 126,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 126,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 128,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 128,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 128,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 129,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 130,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 130,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 130,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 131,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 132,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Virginal Doctrine"
+   },
+   {
+    "page": 133,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 134,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Synthesis of the Pâramitâs"
+   },
+   {
+    "page": 135,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 136,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Synthesis of the Pâramitâs"
+   },
+   {
+    "page": 137,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 137,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 137,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 138,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Synthesis of the Pâramitâs"
+   },
+   {
+    "page": 139,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 139,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 139,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 140,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Synthesis of the Pâramitâs"
+   },
+   {
+    "page": 141,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 141,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 141,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 142,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Synthesis of the Pâramitâs"
+   },
+   {
+    "page": 143,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 144,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "A Note on the Feminine Element"
+   },
+   {
+    "page": 144,
+    "pstyle": "NewBaskerville-Italic@17/center",
+    "text": "in Mahâyâna"
+   },
+   {
+    "page": 145,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 146,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "A Note on the Feminime Element in Mahâyâna"
+   },
+   {
+    "page": 147,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 148,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "A Note on the Feminime Element in Mahâyâna"
+   },
+   {
+    "page": 150,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Mystery of the Two Natures"
+   },
+   {
+    "page": 151,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 152,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystery of the Two Natures"
+   },
+   {
+    "page": 152,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 152,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 153,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 153,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 153,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 154,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystery of the Two Natures"
+   },
+   {
+    "page": 155,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 156,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystery of the Two Natures"
+   },
+   {
+    "page": 157,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 157,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 157,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 158,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystery of the Two Natures"
+   },
+   {
+    "page": 159,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 160,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 161,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 161,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 161,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 162,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 163,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 164,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 164,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 164,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 165,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 166,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 166,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 166,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 167,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 167,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 167,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 168,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 169,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 169,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 169,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 170,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 171,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 171,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 171,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 172,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Question of Theodicies"
+   },
+   {
+    "page": 174,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Some Difficulties Found"
+   },
+   {
+    "page": 174,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "in Sacred Scriptures"
+   },
+   {
+    "page": 175,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 176,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 177,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 177,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 177,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 178,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 179,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 180,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 181,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 182,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 183,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 184,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 184,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 184,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 185,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 186,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 187,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 188,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Some Difficulties Found in Sacred Scriptures"
+   },
+   {
+    "page": 190,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 191,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 191,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 191,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 192,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 192,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 192,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 193,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 194,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 195,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 195,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 195,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 196,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 196,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 196,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 197,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 197,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 197,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 198,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 199,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 199,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 199,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 200,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 201,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 201,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 201,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 202,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 203,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 204,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 204,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 204,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 205,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 205,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 205,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 206,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 207,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 207,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 207,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 208,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Paradoxes of Spiritual Expression"
+   },
+   {
+    "page": 209,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 210,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 211,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 212,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 212,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 212,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 213,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 213,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 213,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 214,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 215,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 216,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 216,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 216,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 217,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 218,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 219,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 219,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 219,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 220,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 221,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 222,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 222,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 222,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 223,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 223,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 223,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 224,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 225,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 225,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 225,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 226,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 226,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 226,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 227,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 228,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 228,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 228,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 229,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 230,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 231,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 231,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 231,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 232,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 233,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 233,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 233,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 234,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 235,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 236,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 236,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 236,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 237,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 237,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 237,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 238,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 239,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 239,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 239,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 240,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 241,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 241,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 241,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 242,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 243,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 244,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Human Margin"
+   },
+   {
+    "page": 246,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "Comments on"
+   },
+   {
+    "page": 246,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "an Eschatological Problem"
+   },
+   {
+    "page": 247,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 248,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Comments on an Eschatological Problem"
+   },
+   {
+    "page": 249,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 250,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Comments on an Eschatological Problem"
+   },
+   {
+    "page": 250,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 250,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 251,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 252,
+    "pstyle": "NewBaskerville-Roman@17/center",
+    "text": "The Two Paradises"
+   },
+   {
+    "page": 253,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 254,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Two Paradises"
+   },
+   {
+    "page": 254,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 254,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 255,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 256,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Two Paradises"
+   },
+   {
+    "page": 257,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 258,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Two Paradises"
+   },
+   {
+    "page": 258,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 258,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 259,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 260,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Two Paradises"
+   },
+   {
+    "page": 260,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 260,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 261,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 261,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 261,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 262,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Two Paradises"
+   },
+   {
+    "page": 262,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "*"
+   },
+   {
+    "page": 262,
+    "pstyle": "NewBaskerville-Roman@14/center",
+    "text": "* *"
+   },
+   {
+    "page": 263,
+    "pstyle": "NewBaskerville-Italic@10.5/center",
+    "text": "Form and Substance in the Religions"
+   },
+   {
+    "page": 264,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Two Paradises"
+   }
+  ],
+  "toc_pages": [
+   6
+  ],
+  "toc_entries": [
+   {
+    "page": 6,
+    "text": "Preface",
+    "label": "vii",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "1. Truth and Presence",
+    "label": "1",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "2. Form and Substance in the Religions",
+    "label": "13",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "3. Âtmâ-Mâyâ",
+    "label": "31",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "4. Substance: Subject and Object",
+    "label": "43",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "5. The Five Divine Presences",
+    "label": "51",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Onomatology",
+    "label": "69",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "7. Insights into the Muhammadan Phenomenon",
+    "label": "85",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "8. The Koranic Message of Sayyidna Isa",
+    "label": "99",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "9. The Virginal Doctrine",
+    "label": "111",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "10. Synthesis of the Pâramitâs",
+    "label": "125",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "11. A Note on the Feminine Element in Mahâyâna",
+    "label": "135",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "12. The Mystery of the Two Natures",
+    "label": "141",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "13. The Question of Theodicies",
+    "label": "151",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "14. Some Difficulties Found in Sacred Scriptures",
+    "label": "165",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "15. Paradoxes of Spiritual Expression",
+    "label": "181",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "16. The Human Margin",
+    "label": "201",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "17. Comments on an Eschatological Problem",
+    "label": "237",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "18. The Two Paradises",
+    "label": "243",
+    "target": null
+   }
+  ],
+  "toc_witness_table": [
+   {
+    "outline": "Series Page",
+    "level": 1,
+    "target": 2,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Title Page",
+    "level": 1,
+    "target": 4,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Copyright Page",
+    "level": 1,
+    "target": 5,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Table of Content",
+    "level": 1,
+    "target": 6,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Preface",
+    "level": 1,
+    "target": 8,
+    "printed": "Preface",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Truth and Presence",
+    "level": 1,
+    "target": 10,
+    "printed": "1. Truth and Presence",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Form and Substance in the Religions",
+    "level": 1,
+    "target": 22,
+    "printed": "2. Form and Substance in the Religions",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Âtmâ-Mâyâ",
+    "level": 1,
+    "target": 40,
+    "printed": "3. Âtmâ-Mâyâ",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Substance: Subject and Object",
+    "level": 1,
+    "target": 52,
+    "printed": "4. Substance: Subject and Object",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Five Divine Presences",
+    "level": 1,
+    "target": 60,
+    "printed": "5. The Five Divine Presences",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Cross of Space and Time in Koranic Onomatology",
+    "level": 1,
+    "target": 78,
+    "printed": "Onomatology",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Insights into the Muhammadan Phenomenon",
+    "level": 1,
+    "target": 94,
+    "printed": "7. Insights into the Muhammadan Phenomenon",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Koranic Message of Sayyidna Isa",
+    "level": 1,
+    "target": 108,
+    "printed": "8. The Koranic Message of Sayyidna Isa",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Virginal Doctrine",
+    "level": 1,
+    "target": 120,
+    "printed": "9. The Virginal Doctrine",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Synthesis of the Pâramitâs",
+    "level": 1,
+    "target": 134,
+    "printed": "10. Synthesis of the Pâramitâs",
+    "heading_on_target": true
+   },
+   {
+    "outline": "A Note on the Feminine Element in Mahâyâna",
+    "level": 1,
+    "target": 144,
+    "printed": "11. A Note on the Feminine Element in Mahâyâna",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Mystery of the Two Natures",
+    "level": 1,
+    "target": 150,
+    "printed": "12. The Mystery of the Two Natures",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Question of Theodicies",
+    "level": 1,
+    "target": 160,
+    "printed": "13. The Question of Theodicies",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Some Difficulties Found in Sacred Scriptures",
+    "level": 1,
+    "target": 174,
+    "printed": "14. Some Difficulties Found in Sacred Scriptures",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Paradoxes of Spiritual Expression",
+    "level": 1,
+    "target": 190,
+    "printed": "15. Paradoxes of Spiritual Expression",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Human Margin",
+    "level": 1,
+    "target": 210,
+    "printed": "16. The Human Margin",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Comments on an Eschatological Problem",
+    "level": 1,
+    "target": 246,
+    "printed": "17. Comments on an Eschatological Problem",
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Two Paradises",
+    "level": 1,
+    "target": 252,
+    "printed": "18. The Two Paradises",
+    "heading_on_target": true
+   }
+  ],
+  "toc_source_proposal": "outline",
+  "footnote_pages": [
+   2,
+   5,
+   10,
+   11,
+   12,
+   13,
+   14,
+   16,
+   17,
+   18,
+   19,
+   20,
+   22,
+   23,
+   24,
+   25,
+   26,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   53,
+   55,
+   56,
+   57,
+   59,
+   62,
+   63,
+   64,
+   65,
+   68,
+   69,
+   71,
+   72,
+   74,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   86,
+   87,
+   88,
+   89,
+   90,
+   93,
+   95,
+   96,
+   98,
+   99,
+   100,
+   101,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119,
+   120,
+   122,
+   123,
+   124,
+   125,
+   126,
+   127,
+   128,
+   129,
+   130,
+   131,
+   132,
+   133,
+   135,
+   136,
+   138,
+   139,
+   140,
+   141,
+   142,
+   143,
+   144,
+   145,
+   146,
+   147,
+   148,
+   152,
+   153,
+   154,
+   155,
+   156,
+   157,
+   160,
+   164,
+   165,
+   168,
+   169,
+   170,
+   171,
+   172,
+   174,
+   175,
+   176,
+   177,
+   178,
+   179,
+   180,
+   182,
+   183,
+   184,
+   185,
+   186,
+   187,
+   188,
+   191,
+   193,
+   194,
+   195,
+   196,
+   198,
+   199,
+   200,
+   201,
+   202,
+   204,
+   205,
+   206,
+   207,
+   208,
+   209,
+   210,
+   211,
+   212,
+   213,
+   214,
+   215,
+   216,
+   217,
+   218,
+   219,
+   220,
+   226,
+   227,
+   228,
+   230,
+   233,
+   234,
+   235,
+   236,
+   237,
+   239,
+   240,
+   241,
+   242,
+   244,
+   246,
+   247,
+   248,
+   249,
+   252,
+   254,
+   255,
+   256,
+   259,
+   260,
+   261,
+   262,
+   263,
+   264
+  ],
+  "footnote_marker_census": {
+   "digit": 334,
+   "*-inline": 249
+  },
+  "footnote_samples": [
+   {
+    "page": 2,
+    "text": "WORLD WISDOM THE LIBRARY OF PERENNIAL PHILOSOPHY The Library of Perennial Philosophy is dedicated to the exposition of the timeless Truth underlying t"
+   },
+   {
+    "page": 5,
+    "text": "Form and Substance in the Religions by Frithjof Schuon © 2002 World Wisdom, INC. First English language version. Mark Perry, Lead Translator Jean-Pier"
+   },
+   {
+    "page": 10,
+    "text": "1. This reservation means that the theological point of view, by the very fact of its devotional and voluntarist perspective, cannot avoid a certain d"
+   },
+   {
+    "page": 11,
+    "text": "2. The saving Truth of Islam is “Truth”—not “such and such” a Truth—for it concerns the Absolute and not a phenomenon."
+   },
+   {
+    "page": 12,
+    "text": "3. There are Muslims who spend their life reciting the Koran, and there are non-Arab Muslims who chant the Koran even if they do not understand it."
+   }
+  ],
+  "footnote_policy_proposal": "markers",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 12.7,
+  "indent_histogram": {
+   "12": 3374,
+   "16": 39,
+   "17": 192,
+   "23": 1,
+   "28": 33,
+   "29": 204,
+   "31": 1,
+   "33": 1
+  },
+  "indent_threshold_proposal": 9.0,
+  "eol_hyphen_count": 1151,
+  "lost_space_count": 0,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [],
+  "pua_census": [],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 0,
+  "verse_suspect_pages": [],
+  "quote_suspect_pages": [
+   {
+    "page": 14,
+    "lines": [
+     25,
+     38
+    ],
+    "n_lines": 14,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "at the end of time for having been worshiped by men; such an"
+   },
+   {
+    "page": 18,
+    "lines": [
+     33,
+     39
+    ],
+    "n_lines": 7,
+    "left_inset": 14.2,
+    "right_inset": 0.1,
+    "first": "of knowing to whom the messages are addressed. Be that as it"
+   },
+   {
+    "page": 19,
+    "lines": [
+     32,
+     36
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "the absolute Buddha is identified with the Dharma-Principle,"
+   },
+   {
+    "page": 23,
+    "lines": [
+     33,
+     38
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "whereas wisdom on the contrary is substance considered indep"
+   },
+   {
+    "page": 24,
+    "lines": [
+     25,
+     39
+    ],
+    "n_lines": 15,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "the extermination of the last of their satellites” (Praise o"
+   },
+   {
+    "page": 26,
+    "lines": [
+     34,
+     38
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "they would a saint of Islam, and side by side with Sayyid Al"
+   },
+   {
+    "page": 28,
+    "lines": [
+     21,
+     24
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "such, the Divine Rahmah. But this polygamy, possessing a con"
+   },
+   {
+    "page": 28,
+    "lines": [
+     26,
+     31
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "heaven, but not in the case of Enoch, Elijah, Jesus, and Mar"
+   },
+   {
+    "page": 28,
+    "lines": [
+     33,
+     42
+    ],
+    "n_lines": 10,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "had entered the pool naked, “having seen a person of great b"
+   },
+   {
+    "page": 31,
+    "lines": [
+     32,
+     36
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "tion of this perspective. As for Greek hedonism, that of an "
+   },
+   {
+    "page": 32,
+    "lines": [
+     29,
+     32
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "the descendants of Abraham, including the Arabs, thus includ"
+   },
+   {
+    "page": 32,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "not a half-truth; it was an affirmation—of unsurpassable gra"
+   },
+   {
+    "page": 33,
+    "lines": [
+     29,
+     40
+    ],
+    "n_lines": 12,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "account of our intentions, for we are obliged to condense ma"
+   },
+   {
+    "page": 34,
+    "lines": [
+     32,
+     39
+    ],
+    "n_lines": 8,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "consequence, it needed a religion that could surpass and sub"
+   },
+   {
+    "page": 35,
+    "lines": [
+     29,
+     35
+    ],
+    "n_lines": 7,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "Vedantin doctrine is false since Christ, who is born of a vi"
+   },
+   {
+    "page": 35,
+    "lines": [
+     37,
+     40
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "soundness of the Christian upâya as such, but of taking acco"
+   },
+   {
+    "page": 37,
+    "lines": [
+     30,
+     39
+    ],
+    "n_lines": 10,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "of extinction, at least of becoming increasingly reduced to "
+   },
+   {
+    "page": 38,
+    "lines": [
+     31,
+     39
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "that many of the ahâdîth treat of Love and that it could not"
+   },
+   {
+    "page": 39,
+    "lines": [
+     18,
+     21
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "the world criteria of a sincere faith which as such is alway"
+   },
+   {
+    "page": 40,
+    "lines": [
+     21,
+     28
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "in practice to be more or less synonymous, differ in that su"
+   },
+   {
+    "page": 41,
+    "lines": [
+     29,
+     35
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "question of terminology, what matters is to know with respec"
+   },
+   {
+    "page": 41,
+    "lines": [
+     37,
+     40
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "sons—“constitute” the Absolute is not inherent in Christiani"
+   },
+   {
+    "page": 42,
+    "lines": [
+     31,
+     38
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "tive, but it contains formaliter eminenter both absoluteness"
+   },
+   {
+    "page": 46,
+    "lines": [
+     30,
+     33
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "beloved inwardly to the point of forgetting the earthly Layl"
+   },
+   {
+    "page": 46,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "can operate only with simple notions, clearly defined and co"
+   },
+   {
+    "page": 47,
+    "lines": [
+     33,
+     39
+    ],
+    "n_lines": 7,
+    "left_inset": 14.2,
+    "right_inset": -0.1,
+    "first": "century), the Blessed Virgin attests to her quality as Logos"
+   },
+   {
+    "page": 48,
+    "lines": [
+     34,
+     38
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "so beauteous (quella ch’è tanto bella = Eve) at her feet ope"
+   },
+   {
+    "page": 49,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "ciple, which proves moreover that creation is not an “absolu"
+   },
+   {
+    "page": 50,
+    "lines": [
+     21,
+     24
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "from Beauty-Love, Rahmah; this is what is called the “Breath"
+   },
+   {
+    "page": 53,
+    "lines": [
+     29,
+     40
+    ],
+    "n_lines": 12,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "sive and the second inclusive: the Absolute excludes everyth"
+   },
+   {
+    "page": 56,
+    "lines": [
+     27,
+     40
+    ],
+    "n_lines": 14,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "allegedly “exact”, not for having discovered or understood s"
+   },
+   {
+    "page": 57,
+    "lines": [
+     29,
+     32
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "it with an “altruism” that is sentimental and devoid of suff"
+   },
+   {
+    "page": 59,
+    "lines": [
+     6,
+     11
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": -0.3,
+    "first": "the Self in him. Lo, verily, not for love of the wife is a w"
+   },
+   {
+    "page": 62,
+    "lines": [
+     26,
+     31
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "mal’ak), “angel”; the translation “angelic realm”, which one"
+   },
+   {
+    "page": 63,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.2,
+    "first": "cepts are “theist” or “non-theist”; whoever admits, first, t"
+   },
+   {
+    "page": 64,
+    "lines": [
+     31,
+     38
+    ],
+    "n_lines": 8,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "each containing five concentric regions, one showing the Pri"
+   },
+   {
+    "page": 65,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "given to the word nâsût and other analogous terms or, in gen"
+   },
+   {
+    "page": 68,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.2,
+    "right_inset": -0.2,
+    "first": "insofar as they can be distinguished—by the fact that they a"
+   },
+   {
+    "page": 69,
+    "lines": [
+     34,
+     37
+    ],
+    "n_lines": 4,
+    "left_inset": 14.4,
+    "right_inset": 0.1,
+    "first": "Koran, notably in the verse: “He is Allah, than whom there i"
+   },
+   {
+    "page": 72,
+    "lines": [
+     33,
+     40
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "“sages”: their intelligence—notwithstanding their genius, if"
+   },
+   {
+    "page": 79,
+    "lines": [
+     28,
+     34
+    ],
+    "n_lines": 7,
+    "left_inset": 14.2,
+    "right_inset": -0.1,
+    "first": "to be, in Myself as well as in the form of the world of phen"
+   },
+   {
+    "page": 79,
+    "lines": [
+     38,
+     41
+    ],
+    "n_lines": 4,
+    "left_inset": 14.4,
+    "right_inset": -0.2,
+    "first": "2:156). “What Thou hast created returns to Thee”, says a pra"
+   },
+   {
+    "page": 80,
+    "lines": [
+     29,
+     33
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "Divine Names, is symbolical and by no means fixes or exhaust"
+   },
+   {
+    "page": 80,
+    "lines": [
+     35,
+     40
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "indefinite series of veils that envelop the Essence. The mul"
+   },
+   {
+    "page": 81,
+    "lines": [
+     31,
+     34
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "tion of criterion and basis of total knowledge, as modern sc"
+   },
+   {
+    "page": 81,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "seen God” (Al-Haqq, “the Truth” or “the Reality”)—and the sa"
+   },
+   {
+    "page": 83,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "“the Clement” and “the Merciful”—although the first comprise"
+   },
+   {
+    "page": 84,
+    "lines": [
+     27,
+     35
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "things are Âtmâ, to speak in Vedantin terms. Normally “the O"
+   },
+   {
+    "page": 96,
+    "lines": [
+     24,
+     42
+    ],
+    "n_lines": 19,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "Semitic languages: its phonetics preserve, with the exceptio"
+   },
+   {
+    "page": 99,
+    "lines": [
+     32,
+     36
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "did not hesitate to affirm that the transformation of a staf"
+   },
+   {
+    "page": 100,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.2,
+    "right_inset": -0.2,
+    "first": "case of Kab presents an aspect of magic analogous to that oc"
+   },
+   {
+    "page": 101,
+    "lines": [
+     32,
+     40
+    ],
+    "n_lines": 9,
+    "left_inset": 14.2,
+    "right_inset": -0.2,
+    "first": "ever, he enjoined Solomon to slay the insulter—his oath havi"
+   },
+   {
+    "page": 103,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "become liturgical of this interiorizing manifestation—or of "
+   },
+   {
+    "page": 104,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "a different order, is provided in the life of Abd al-Qadir a"
+   },
+   {
+    "page": 105,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "restrial meaning of the terms; nonetheless, they comprise st"
+   },
+   {
+    "page": 106,
+    "lines": [
+     20,
+     30
+    ],
+    "n_lines": 11,
+    "left_inset": 14.2,
+    "right_inset": 0.0,
+    "first": "submitting to “reason”, both human and cosmic, they were ref"
+   },
+   {
+    "page": 106,
+    "lines": [
+     32,
+     39
+    ],
+    "n_lines": 8,
+    "left_inset": 14.2,
+    "right_inset": 0.0,
+    "first": "own is denied by some on the pretext that it is composed of "
+   },
+   {
+    "page": 108,
+    "lines": [
+     18,
+     22
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "hath no associate; that Muhammad is His servant and His Mess"
+   },
+   {
+    "page": 108,
+    "lines": [
+     24,
+     29
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "right (sâlihâ). Lo! I am Aware of what ye do” (23:51). Now t"
+   },
+   {
+    "page": 109,
+    "lines": [
+     31,
+     37
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "‘doing right’—by their very nature by virtue of this very Co"
+   },
+   {
+    "page": 110,
+    "lines": [
+     30,
+     42
+    ],
+    "n_lines": 13,
+    "left_inset": 13.9,
+    "right_inset": 0.0,
+    "first": "According to the commentators, this meal was a fish, which s"
+   },
+   {
+    "page": 111,
+    "lines": [
+     32,
+     40
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "command of my Lord (min Amrî Rabbî), and of knowledge ye hav"
+   },
+   {
+    "page": 112,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.3,
+    "right_inset": -0.1,
+    "first": "words of Jesus that lend it its doctrinal substance, carry t"
+   },
+   {
+    "page": 113,
+    "lines": [
+     25,
+     32
+    ],
+    "n_lines": 8,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "ways: first, it is the historical message of Jesus; secondly"
+   },
+   {
+    "page": 113,
+    "lines": [
+     37,
+     42
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "glad tidings of a word from him (bi-Kalimatin minhu), whose "
+   },
+   {
+    "page": 114,
+    "lines": [
+     17,
+     26
+    ],
+    "n_lines": 10,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "“word” of God, which means that he will be a posteriori near"
+   },
+   {
+    "page": 114,
+    "lines": [
+     33,
+     38
+    ],
+    "n_lines": 6,
+    "left_inset": 14.2,
+    "right_inset": -0.1,
+    "first": "morning and evening, brought my spirit to contemplating the "
+   },
+   {
+    "page": 114,
+    "lines": [
+     40,
+     43
+    ],
+    "n_lines": 4,
+    "left_inset": 14.2,
+    "right_inset": -0.0,
+    "first": "Spirit . . . Alma Mater, hidden and secret Mother. . . . The"
+   },
+   {
+    "page": 115,
+    "lines": [
+     22,
+     40
+    ],
+    "n_lines": 19,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "divine union by other paths. . . . But by the path of Mary, "
+   },
+   {
+    "page": 116,
+    "lines": [
+     33,
+     37
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "men. The Virgin dwelt in effacement and refused to perform m"
+   },
+   {
+    "page": 117,
+    "lines": [
+     18,
+     21
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "ferred thee above (all) the women of creation” (3:42). The f"
+   },
+   {
+    "page": 117,
+    "lines": [
+     23,
+     30
+    ],
+    "n_lines": 8,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "trate (usjudî) thyself and bow (arka’i) with those who bow ("
+   },
+   {
+    "page": 117,
+    "lines": [
+     32,
+     37
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "breathed therein something of Our Spirit (min Rûhinâ). And s"
+   },
+   {
+    "page": 118,
+    "lines": [
+     29,
+     39
+    ],
+    "n_lines": 11,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "“desert and void” (tohu wa bohu), but must be interpreted as"
+   },
+   {
+    "page": 120,
+    "lines": [
+     16,
+     23
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "one who bestows enlightenment. There is among Muslims a dive"
+   },
+   {
+    "page": 120,
+    "lines": [
+     25,
+     29
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "servitude enters into the very definition of Israel, to the "
+   },
+   {
+    "page": 122,
+    "lines": [
+     23,
+     26
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "nothing in itself; a monarch is necessarily rich, and there "
+   },
+   {
+    "page": 122,
+    "lines": [
+     30,
+     33
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "remembers” (Zekaryah), contains in Arabic (Zakarîyâ) the roo"
+   },
+   {
+    "page": 122,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "the Blessed Virgin. The association of ideas between Mary an"
+   },
+   {
+    "page": 124,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.1,
+    "first": "the East nor of the West” seem to indicate that the Virgin, "
+   },
+   {
+    "page": 125,
+    "lines": [
+     33,
+     39
+    ],
+    "n_lines": 7,
+    "left_inset": 14.2,
+    "right_inset": -0.0,
+    "first": "saint of Shiraz, “Mary’s substance is the substance of origi"
+   },
+   {
+    "page": 126,
+    "lines": [
+     26,
+     37
+    ],
+    "n_lines": 12,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "“prosperity” and of “flowering”, which well become her whom "
+   },
+   {
+    "page": 127,
+    "lines": [
+     26,
+     43
+    ],
+    "n_lines": 18,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "not hesitate to make their devotions in front of statues of "
+   },
+   {
+    "page": 128,
+    "lines": [
+     25,
+     30
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "ental origin; let us likewise recall that Artemis is the pro"
+   },
+   {
+    "page": 129,
+    "lines": [
+     35,
+     40
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "From another point of view, however, this cycle is perpetuat"
+   },
+   {
+    "page": 130,
+    "lines": [
+     33,
+     37
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "tery, is probably the following verse: “And Allah is the bes"
+   },
+   {
+    "page": 131,
+    "lines": [
+     34,
+     40
+    ],
+    "n_lines": 7,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "sonifies the primordial chaos under its “watery” aspect, if "
+   },
+   {
+    "page": 132,
+    "lines": [
+     34,
+     38
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "restoring function of the Principle; that is to say, there i"
+   },
+   {
+    "page": 139,
+    "lines": [
+     29,
+     39
+    ],
+    "n_lines": 11,
+    "left_inset": 14.3,
+    "right_inset": 0.0,
+    "first": "far the most important and which Honen qualified as the “kin"
+   },
+   {
+    "page": 140,
+    "lines": [
+     27,
+     35
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "excludes all dissimulation and all lukewarmness; the second "
+   },
+   {
+    "page": 140,
+    "lines": [
+     37,
+     41
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "Tibetan invocatory formula Om Mani Padme Hum, by virtue of i"
+   },
+   {
+    "page": 144,
+    "lines": [
+     19,
+     29
+    ],
+    "n_lines": 11,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "free from all illusion (mâyâ): a splendor proceeding from hi"
+   },
+   {
+    "page": 145,
+    "lines": [
+     27,
+     34
+    ],
+    "n_lines": 8,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "with the Greeks and Romans, Maïa was also the mother of Herm"
+   },
+   {
+    "page": 145,
+    "lines": [
+     36,
+     40
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "of Shakyamuni, and about their son Rahula. All the nobility "
+   },
+   {
+    "page": 146,
+    "lines": [
+     23,
+     27
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "Sukhâvati-Vyûha and the Amitâyur-Dhyâna-Sûtra, is the chief "
+   },
+   {
+    "page": 146,
+    "lines": [
+     29,
+     42
+    ],
+    "n_lines": 14,
+    "left_inset": 14.1,
+    "right_inset": -0.2,
+    "first": "Sûtra is addressed by the Buddha to a woman, the queen Vaide"
+   },
+   {
+    "page": 147,
+    "lines": [
+     24,
+     28
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "– “Every son or daughter of a family who shall hear the name"
+   },
+   {
+    "page": 147,
+    "lines": [
+     30,
+     33
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "Queen Vaidehi, the famous woman disciple of the Buddha, a su"
+   },
+   {
+    "page": 147,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "ized egalitarianism, and then to a certain—strictly negative"
+   },
+   {
+    "page": 148,
+    "lines": [
+     20,
+     23
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "the Dharma to Maya; and this meeting can well symbolize the "
+   },
+   {
+    "page": 152,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.2,
+    "right_inset": -0.1,
+    "first": "Hellenist tradition, which we cannot term “pagan” since we a"
+   },
+   {
+    "page": 153,
+    "lines": [
+     34,
+     38
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "moreover, not that he was heretical, but that he was conside"
+   },
+   {
+    "page": 154,
+    "lines": [
+     30,
+     40
+    ],
+    "n_lines": 11,
+    "left_inset": 14.0,
+    "right_inset": -0.2,
+    "first": "heaped upon him canonically would be inexplicable. Be that a"
+   },
+   {
+    "page": 155,
+    "lines": [
+     28,
+     41
+    ],
+    "n_lines": 14,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "metaphysics, is but an abuse of language; the “wisdom” of Ec"
+   },
+   {
+    "page": 156,
+    "lines": [
+     24,
+     31
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "for an objection since all castes—inasmuch as they are parti"
+   },
+   {
+    "page": 156,
+    "lines": [
+     33,
+     43
+    ],
+    "n_lines": 11,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "also have a dogmatic character, practically speaking, but wi"
+   },
+   {
+    "page": 157,
+    "lines": [
+     29,
+     34
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "and artistic deviation—and its reoccurrence at the time of t"
+   },
+   {
+    "page": 157,
+    "lines": [
+     36,
+     40
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "world, which is due to a convergence of various factors, suc"
+   },
+   {
+    "page": 160,
+    "lines": [
+     24,
+     28
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "Brahma nirguna (“without attributes”) of the Vedantins, wher"
+   },
+   {
+    "page": 164,
+    "lines": [
+     30,
+     34
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "best” is not even conceivable since it evaporates into the i"
+   },
+   {
+    "page": 164,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "who advocated the golden mean inasmuch as this is situated b"
+   },
+   {
+    "page": 170,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "a consequence of the Fall. Objectively speaking, intellectio"
+   },
+   {
+    "page": 171,
+    "lines": [
+     29,
+     35
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "Beatitude”; the effect of Beatitude, on the plane of creatur"
+   },
+   {
+    "page": 172,
+    "lines": [
+     7,
+     14
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "and to the Feminine, whereas the second evokes the Absolute "
+   },
+   {
+    "page": 174,
+    "lines": [
+     23,
+     27
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "able if one did not systematically ignore rabbinical exegesi"
+   },
+   {
+    "page": 175,
+    "lines": [
+     32,
+     35
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "influence of the charm, even if he does not understand it, g"
+   },
+   {
+    "page": 177,
+    "lines": [
+     25,
+     31
+    ],
+    "n_lines": 7,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "the Buddha; in the latter case the central role of the sacre"
+   },
+   {
+    "page": 177,
+    "lines": [
+     34,
+     40
+    ],
+    "n_lines": 7,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "of the Bible, and that it had been written several centuries"
+   },
+   {
+    "page": 178,
+    "lines": [
+     31,
+     39
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "an unchanging religion. The natural movement of things const"
+   },
+   {
+    "page": 179,
+    "lines": [
+     26,
+     40
+    ],
+    "n_lines": 15,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "ass that carried the Virgin and Child on their flight into E"
+   },
+   {
+    "page": 182,
+    "lines": [
+     31,
+     36
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "than to the “confirmed” (mukhamât) verses (3:7), the latter "
+   },
+   {
+    "page": 183,
+    "lines": [
+     35,
+     40
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "emphasizing that what lures man into Satan’s net is lack of "
+   },
+   {
+    "page": 184,
+    "lines": [
+     28,
+     40
+    ],
+    "n_lines": 13,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "of people who put all their faith in outward austerities and"
+   },
+   {
+    "page": 185,
+    "lines": [
+     27,
+     38
+    ],
+    "n_lines": 12,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "tarians, for example the affirmation by the Ahmadis of Lahor"
+   },
+   {
+    "page": 186,
+    "lines": [
+     24,
+     31
+    ],
+    "n_lines": 8,
+    "left_inset": 14.2,
+    "right_inset": 0.0,
+    "first": "cometh unto the Father but by me”, it is a question not only"
+   },
+   {
+    "page": 186,
+    "lines": [
+     33,
+     42
+    ],
+    "n_lines": 10,
+    "left_inset": 14.2,
+    "right_inset": 0.0,
+    "first": "closer to the mentality of Hindus than to that of Arabs. In "
+   },
+   {
+    "page": 187,
+    "lines": [
+     26,
+     42
+    ],
+    "n_lines": 17,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "tery; the term “aspects” is used because the whole question "
+   },
+   {
+    "page": 188,
+    "lines": [
+     26,
+     30
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "tain fashion within the framework of Buddhism, notably in th"
+   },
+   {
+    "page": 193,
+    "lines": [
+     33,
+     37
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "sin or, inversely, between ugliness and virtue; often cleanl"
+   },
+   {
+    "page": 195,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "here is the classic response of devotees: if notorious sinne"
+   },
+   {
+    "page": 198,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "and preparatory. The symbolist and doctrinally unarticulated"
+   },
+   {
+    "page": 200,
+    "lines": [
+     29,
+     34
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "his protectress in the early days of his mission, was very w"
+   },
+   {
+    "page": 200,
+    "lines": [
+     36,
+     41
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "mean an absolutely rigorous and thus integral metaphysical p"
+   },
+   {
+    "page": 201,
+    "lines": [
+     33,
+     38
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "together moreover with a singular tendency toward ingratitud"
+   },
+   {
+    "page": 202,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "Revelation, but the “outward” form for the sake of the “inwa"
+   },
+   {
+    "page": 205,
+    "lines": [
+     27,
+     33
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "that Islam did not exist in the time of Christ, there are tw"
+   },
+   {
+    "page": 205,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "appears in relation to the dryness of Islam: if the Prophet "
+   },
+   {
+    "page": 206,
+    "lines": [
+     33,
+     39
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "mended to Ali that the best means to attain the goal is to s"
+   },
+   {
+    "page": 207,
+    "lines": [
+     33,
+     38
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "or keen approval denotes a lack of “objectivity”, and that i"
+   },
+   {
+    "page": 210,
+    "lines": [
+     21,
+     28
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "Virgin: was Mary a priori free from the capacity to sin, or "
+   },
+   {
+    "page": 211,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "meaningless. The Immaculate Conception—attributed to Mary al"
+   },
+   {
+    "page": 212,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.1,
+    "first": "same proof. Psychologically—not doctrinally—Protestantism in"
+   },
+   {
+    "page": 213,
+    "lines": [
+     25,
+     40
+    ],
+    "n_lines": 16,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "happened in the Latin West, where the papacy became the prey"
+   },
+   {
+    "page": 214,
+    "lines": [
+     29,
+     37
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "plane, but also on the operative plane, where the volitive e"
+   },
+   {
+    "page": 216,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "directly Mercy—the verb “to be” indicating an identity of es"
+   },
+   {
+    "page": 217,
+    "lines": [
+     30,
+     33
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "things—which is not the case since it has no knowledge of th"
+   },
+   {
+    "page": 217,
+    "lines": [
+     35,
+     40
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "is “opinion”, doxa, which is not unrelated to the notion of "
+   },
+   {
+    "page": 219,
+    "lines": [
+     32,
+     38
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "cians; they are above all visual in their outlook. The purel"
+   },
+   {
+    "page": 220,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "part, which rejects false divinities, and a positive part, w"
+   },
+   {
+    "page": 226,
+    "lines": [
+     29,
+     39
+    ],
+    "n_lines": 11,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "words “sentimental” and “intellectual” in their proper and n"
+   },
+   {
+    "page": 227,
+    "lines": [
+     31,
+     35
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "to pull man into the blind alleys of poisonous dreams and me"
+   },
+   {
+    "page": 227,
+    "lines": [
+     37,
+     40
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "in principle less harmful than the novel—provided it is auth"
+   },
+   {
+    "page": 228,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "edge”, hardly coincide with the three types of gnosticism: t"
+   },
+   {
+    "page": 230,
+    "lines": [
+     35,
+     39
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "substance that had become visible in order to receive the bo"
+   },
+   {
+    "page": 233,
+    "lines": [
+     33,
+     38
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "transposed onto a higher plane—sin being then identified wit"
+   },
+   {
+    "page": 234,
+    "lines": [
+     26,
+     30
+    ],
+    "n_lines": 5,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "conclusion. Until the tenth century, most Catholic priests w"
+   },
+   {
+    "page": 234,
+    "lines": [
+     32,
+     40
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "Gospel, placing the emphasis on the mystery of union—symboli"
+   },
+   {
+    "page": 235,
+    "lines": [
+     33,
+     37
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "the Renaissance is combined with a complex of inferiority to"
+   },
+   {
+    "page": 236,
+    "lines": [
+     33,
+     38
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "ticing prescriptions mentally or of making up for them in so"
+   },
+   {
+    "page": 237,
+    "lines": [
+     31,
+     34
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "oureth me with their lips; but their heart is far from me. B"
+   },
+   {
+    "page": 237,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "may repent me of the evil, which I purpose to do unto them b"
+   },
+   {
+    "page": 240,
+    "lines": [
+     23,
+     29
+    ],
+    "n_lines": 7,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "monks, he does so above all in the name of a methodological "
+   },
+   {
+    "page": 240,
+    "lines": [
+     31,
+     34
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "immense success of Arianism—not to mention the excessive inf"
+   },
+   {
+    "page": 240,
+    "lines": [
+     36,
+     42
+    ],
+    "n_lines": 7,
+    "left_inset": 14.0,
+    "right_inset": -0.1,
+    "first": "one is struck by the fact that they refer in part to the rui"
+   },
+   {
+    "page": 241,
+    "lines": [
+     25,
+     32
+    ],
+    "n_lines": 8,
+    "left_inset": 14.0,
+    "right_inset": -0.0,
+    "first": "the prophecies of Isaiah concerning Cyrus, the liberator of "
+   },
+   {
+    "page": 241,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "occasion the same remark. According to St Augustine, the Sep"
+   },
+   {
+    "page": 244,
+    "lines": [
+     9,
+     17
+    ],
+    "n_lines": 9,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "tion here of legislating prophecy, this would seem obvious; "
+   },
+   {
+    "page": 247,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "good but one, that is, God” (Nemo bonus nisi unus Deus) (Mar"
+   },
+   {
+    "page": 248,
+    "lines": [
+     30,
+     33
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": 0.0,
+    "first": "sity of his merits and his knowledge, produces a Paradise si"
+   },
+   {
+    "page": 248,
+    "lines": [
+     35,
+     41
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "into rajas, and rajas into sattva. In the Apocalypse of St P"
+   },
+   {
+    "page": 249,
+    "lines": [
+     33,
+     36
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.0,
+    "first": "refers to this saying when echoing a doctrine according to w"
+   },
+   {
+    "page": 254,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "left_inset": 14.1,
+    "right_inset": -0.1,
+    "first": "in Paradise are simple-minded” (al-bulh), that is, without g"
+   },
+   {
+    "page": 255,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 14.0,
+    "right_inset": 0.1,
+    "first": "of the Sunnah, but only that which My Gnosis bringeth thee, "
+   },
+   {
+    "page": 259,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 13.9,
+    "right_inset": 0.0,
+    "first": "ceding state is that of the Pratyeka-Buddha. To surpass the "
+   },
+   {
+    "page": 260,
+    "lines": [
+     33,
+     39
+    ],
+    "n_lines": 7,
+    "left_inset": 14.1,
+    "right_inset": -0.2,
+    "first": "beheld God before what had been created, the other after it,"
+   },
+   {
+    "page": 262,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "tures and angelic creatures. Each one of these three degrees"
+   },
+   {
+    "page": 264,
+    "lines": [
+     18,
+     22
+    ],
+    "n_lines": 5,
+    "left_inset": 14.0,
+    "right_inset": 0.0,
+    "first": "realized in advance through the divine homogeneity of the Un"
+   }
+  ],
+  "list_marker_pages": [
+   {
+    "page": 6,
+    "marker": "decimal",
+    "left": 6.0,
+    "n_items": 9,
+    "first": "1. Truth and Presence1"
+   },
+   {
+    "page": 6,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 9,
+    "first": "10. Synthesis of the Pâramitâs125"
+   },
+   {
+    "page": 13,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 4,
+    "first": "4. The Fusûs al-Hikam of Ibn Arabi offers some patent exampl"
+   },
+   {
+    "page": 14,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "8. According to an Islamic tradition, the sun and moon will "
+   },
+   {
+    "page": 16,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "10. It is this hypostatic constellation that produces the te"
+   },
+   {
+    "page": 19,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 2,
+    "first": "14. This Buddhahood is also presented as “Body of the Law”, "
+   },
+   {
+    "page": 20,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "16. In Islam, the terms salâh and salâm, “blessing” and “pea"
+   },
+   {
+    "page": 23,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. Heresy is a form severed from its substance, hence its il"
+   },
+   {
+    "page": 25,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "4. This is where the saint wrote and published, with the cal"
+   },
+   {
+    "page": 28,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 3,
+    "first": "7. Traditional polygamy depersonalizes woman in view of Femi"
+   },
+   {
+    "page": 30,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "11. It is true that God as creator, revealer, and savior is "
+   },
+   {
+    "page": 31,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "13. In Paradise: “As often as they are regaled with food of "
+   },
+   {
+    "page": 33,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "18. For analogous reasons—or even, in a certain sense, for t"
+   },
+   {
+    "page": 35,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "21. The reasoning implicit in this affirmation is really the"
+   },
+   {
+    "page": 37,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "23. Five hundred years after the Buddha, the tradition was i"
+   },
+   {
+    "page": 38,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "25. For reasons already alluded to, one would have no ground"
+   },
+   {
+    "page": 39,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "27. Such near-definitions are both exact and approximate, fo"
+   },
+   {
+    "page": 41,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. It is in this sense that one can speak of the “Existence "
+   },
+   {
+    "page": 43,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "4. We allow ourselves this orthographic neologism in order t"
+   },
+   {
+    "page": 44,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 3,
+    "first": "6. Freedom refers to the Infinite, and Necessity to the Abso"
+   },
+   {
+    "page": 46,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 2,
+    "first": "10. In the famous tale of Laylah and Majnun—he who sublimize"
+   },
+   {
+    "page": 50,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "15. In medieval German, âtem still meant “spirit”, whereas m"
+   },
+   {
+    "page": 55,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. We use the plural form to specify that the direct Subject"
+   },
+   {
+    "page": 57,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 2,
+    "first": "5. With respect to “egoism”, we want to specify that we are "
+   },
+   {
+    "page": 62,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 3,
+    "first": "1. Malakût is derived from malik, “king”, and not from malak"
+   },
+   {
+    "page": 71,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "8. Vedantists make a distinction between a Mâyâ that is “pur"
+   },
+   {
+    "page": 72,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "10. Heat and light symbolize respectively the animic and ang"
+   },
+   {
+    "page": 78,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 3,
+    "first": "1. Thus named because it mentions iron as a gift from Heaven"
+   },
+   {
+    "page": 79,
+    "marker": "decimal",
+    "left": 4.9,
+    "n_items": 3,
+    "first": "4. “Before this universe was, I alone was . . . After manife"
+   },
+   {
+    "page": 80,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 2,
+    "first": "7. It is opportune to point out here that ninety-nine, the n"
+   },
+   {
+    "page": 83,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "12. This is also true for the secondary and still relative m"
+   },
+   {
+    "page": 84,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "14. It is the Divine “Outwardness” that makes it permissible"
+   },
+   {
+    "page": 86,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "16. Hence the sacred character of nudity in Hinduism and els"
+   },
+   {
+    "page": 87,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "18. Not a fragmentary good that is opposed, in principle or "
+   },
+   {
+    "page": 88,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "21. There is, besides, in every man a latent revolt which mo"
+   },
+   {
+    "page": 93,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "25. For the Intellect, even though it attain to “the depths "
+   },
+   {
+    "page": 99,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "3. Carried away by his zeal to refute the doctrine of incarn"
+   },
+   {
+    "page": 106,
+    "marker": "decimal",
+    "left": 4.9,
+    "n_items": 2,
+    "first": "8. When the Ancients considered that wisdom and felicity con"
+   },
+   {
+    "page": 108,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "1. Hadîth: “He who attesteth that there is no other divinity"
+   },
+   {
+    "page": 110,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 4,
+    "first": "4. This qualification is necessary because there is also an "
+   },
+   {
+    "page": 112,
+    "marker": "decimal",
+    "left": 0.3,
+    "n_items": 2,
+    "first": "10. Sayyidatna Maryam—the Virgin Mary—shares in this pre-emi"
+   },
+   {
+    "page": 113,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 3,
+    "first": "12. In other words, the Isan perspective can be understood i"
+   },
+   {
+    "page": 114,
+    "marker": "decimal",
+    "left": 0.2,
+    "n_items": 4,
+    "first": "15. Or again: “And she who was chaste, therefor We breathed "
+   },
+   {
+    "page": 116,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "20. For “the Buddhas also save by their superhuman beauty”; "
+   },
+   {
+    "page": 117,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "23. “O Mary! Lo! Allah hath chosen thee and made thee pure, "
+   },
+   {
+    "page": 118,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "27. But this is independent of the prestige enjoyed by Mary "
+   },
+   {
+    "page": 120,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "1. A Prophetess, not in the role of a law-giver and founder "
+   },
+   {
+    "page": 122,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 5,
+    "first": "3. And not the mere fact of being rich, because an outward s"
+   },
+   {
+    "page": 123,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "8. Literally: “who cover (kafarû)”, that is to say, who cove"
+   },
+   {
+    "page": 124,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "10. It is actually a burning wick, and not a “lamp”."
+   },
+   {
+    "page": 126,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "13. The triliteral root of this name contains among other me"
+   },
+   {
+    "page": 127,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "15. In “The Interpreter of Desires” (Tarjumân al-Ashwâq)."
+   },
+   {
+    "page": 128,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "18. But nonetheless without excluding, in the esoteric order"
+   },
+   {
+    "page": 129,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "22. Brahmanically speaking, an avataric woman is necessarily"
+   },
+   {
+    "page": 130,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 3,
+    "first": "24. The most direct Koranic expression of this aspect, or of"
+   },
+   {
+    "page": 131,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "27. It is permissible precisely in the sense that this oriso"
+   },
+   {
+    "page": 133,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "31. The horn symbolizes strength; the exaltation of the horn"
+   },
+   {
+    "page": 140,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 2,
+    "first": "5. According to the Amitâyur-Dhyâna-Sûtra, 22, the first-nam"
+   },
+   {
+    "page": 142,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 2,
+    "first": "8. Who correspond to the four archangels of Islam, Vairochan"
+   },
+   {
+    "page": 143,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 3,
+    "first": "11. Hence of relative esoterism, which does not exclude, in "
+   },
+   {
+    "page": 144,
+    "marker": "decimal",
+    "left": 4.6,
+    "n_items": 2,
+    "first": "1. This is the sambhoga-kâya, or beatific body, which is sit"
+   },
+   {
+    "page": 146,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "4. According to the greater Sukhâvati-Vyûha which, together "
+   },
+   {
+    "page": 147,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 3,
+    "first": "6. We could mention here the visit Honen received on his dea"
+   },
+   {
+    "page": 153,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. According to a hadîth, Jesus and Mary were the only human"
+   },
+   {
+    "page": 155,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "4. Either one of two things: either there is theological pro"
+   },
+   {
+    "page": 156,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 3,
+    "first": "6. For the spirit of innovation is to be found with the Lati"
+   },
+   {
+    "page": 157,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 2,
+    "first": "10. It goes without saying that the classical period—with it"
+   },
+   {
+    "page": 164,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. As for the “best of all possible worlds” of Leibnitz, the"
+   },
+   {
+    "page": 170,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "6. To speak of “Being” is to speak of “Spirit” and “Beatitud"
+   },
+   {
+    "page": 171,
+    "marker": "decimal",
+    "left": 4.8,
+    "n_items": 2,
+    "first": "8. According to the meaning of the Sanskrit term Ânanda, “co"
+   },
+   {
+    "page": 175,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. “Charms have a certain natural force: and any one who com"
+   },
+   {
+    "page": 176,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "4. For ideas are also to be found in the great theological t"
+   },
+   {
+    "page": 177,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 3,
+    "first": "6. Tradition emphasizes this feature especially in the cases"
+   },
+   {
+    "page": 180,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "11. This verse is not unconnected with the following one: “W"
+   },
+   {
+    "page": 182,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "14. This characteristic belongs much more to the “parabolic”"
+   },
+   {
+    "page": 183,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 7,
+    "first": "17. The “companions of the right” (the saved) will be found "
+   },
+   {
+    "page": 185,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "25. This is the inscription on the Throne of Allah: “Verily,"
+   },
+   {
+    "page": 186,
+    "marker": "decimal",
+    "left": 0.1,
+    "n_items": 2,
+    "first": "29. Analogously, but on another plane, when Christ declares "
+   },
+   {
+    "page": 187,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "31. We shall note that traditional India admits both a flat "
+   },
+   {
+    "page": 188,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "33. As the author has remarked elsewhere, “theism” is to be "
+   },
+   {
+    "page": 193,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "2. There are other such pious equations, notably that betwee"
+   },
+   {
+    "page": 200,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "8. All the more surprising since Khadijah, the first wife of"
+   },
+   {
+    "page": 202,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "11. Fusûs al-Hikam, the chapter on Moses. This passage, whic"
+   },
+   {
+    "page": 208,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "18. It would be tempting to state the contrary, but the fact"
+   },
+   {
+    "page": 214,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "4. The deterioration in question is detectable, not only on "
+   },
+   {
+    "page": 217,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "8. Had philosophical pantheism taken into consideration this"
+   },
+   {
+    "page": 227,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "13. Moreover, be it said in passing, this is the role of a l"
+   },
+   {
+    "page": 234,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "18. Whereas the Orthodox, who are no less Christian, did not"
+   },
+   {
+    "page": 235,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "20. Quintessentially, but not theologically. The Church is n"
+   },
+   {
+    "page": 237,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "24. Christ, paraphrasing Isaiah, expresses himself thus: “Th"
+   },
+   {
+    "page": 240,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "27. The suppression of all gnosis, the condemnation of Orige"
+   },
+   {
+    "page": 241,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "29. And Christian theologians would doubtless be of the same"
+   },
+   {
+    "page": 246,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "1. The Gospels: “Heaven and earth shall pass away, but my Wo"
+   },
+   {
+    "page": 247,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 4,
+    "first": "3. This explains an apparent contradiction in the Koran whic"
+   },
+   {
+    "page": 248,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "7. Here is another analogy: the Samyaksam-Buddha, thanks to "
+   },
+   {
+    "page": 262,
+    "marker": "decimal",
+    "left": 4.7,
+    "n_items": 2,
+    "first": "8. We have no intention of denying the problematical charact"
+   },
+   {
+    "page": 263,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "10. According to other commentators—Qashani foremost—the two"
+   },
+   {
+    "page": 264,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "13. This is the complementarity between the “axial” dimensio"
+   }
+  ],
+  "column_suspect_pages": [],
+  "low_agreement_pages": [
+   {
+    "page": 1,
+    "score": 4.4
+   }
+  ],
+  "image_only_pages": [],
+  "cover_proposal": {
+   "mode": "render",
+   "page": 1,
+   "reason": "page 1 is image-dominated (4 image(s), 50 chars)"
+  },
+  "flagged_pages": [
+   1,
+   2,
+   5,
+   6,
+   10
+  ],
+  "warnings": []
+ }
+}

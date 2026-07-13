@@ -273,6 +273,19 @@ def repair_wrong_script(text: str) -> tuple[str, int]:
     return _WRONGSCRIPT_ALPHA.subn("Ā", text)
 
 
+# a lone ASCII grave accent (U+0060) NOT followed by a letter is a ToUnicode
+# artifact in this prose corpus ('Subjectivity itself`.' — F&S p.49, invisible
+# in the render). A grave FOLLOWED by a letter is a transliteration ʿayn
+# stand-in (M&R 'a`a', ' `Ali', 27 of them) and MUST be preserved — the
+# lookahead draws exactly that line. Shared flow/ground-truth like the above.
+_STRAY_GRAVE = re.compile(r"`(?![^\W\d_])")
+
+
+def strip_stray_grave(text: str) -> tuple[str, int]:
+    """Drop a stray grave accent that abuts punctuation/space/end; keep ʿayn."""
+    return _STRAY_GRAVE.subn("", text)
+
+
 # standalone words that form permanently hyphenated compounds: a line-end
 # 'self-' + lowercase continuation is 'self-evident', never 'selfevident'
 # (proofread-confirmed casualties: selfevident, allembracing, selfdiscipline,
@@ -347,9 +360,13 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only",
         return base, "", False
     # a CLOSED em/en-dash at the line end abuts its neighbours ('object—or',
     # '26–28'); the break must NOT inject a space ('object— or', a false
-    # 'word- word' after normalize). The non-space-immediately-before guard
-    # leaves spaced dashes ('word —\nword') alone — their base ends ' —'.
-    if mode != "off" and re.search(r"[A-Za-zÀ-ſ0-9][—–]$", base):
+    # 'word- word' after normalize). The dash frequently arrives as its OWN
+    # run (an italic word then a roman em-dash: '<i>Vajrayâna</i>—'), so the
+    # base is a bare '—' with the letter one run back; a closing quote can
+    # also precede it ('salvation”—in'). Fire on ANY dash not immediately
+    # preceded by a space — that guard still leaves spaced dashes
+    # ('word —\nword', base ' —') alone.
+    if mode != "off" and re.search(r"(?<!\s)[—–]$", base):
         return base, "", False
     # CJK sets no inter-word spaces: a Chinese title wrapping across a print
     # line rejoins CLOSED ('天方至/圣实录' -> 天方至圣实录, not 天方至 圣实录 —

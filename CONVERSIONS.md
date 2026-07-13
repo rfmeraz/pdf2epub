@@ -683,3 +683,97 @@ shared or per-book close-rule with over-fire risk); index column-hyphen
 retention (intricate column-join path); `beyondcaste` lost space (no clean
 per-book split knob); Ibn Arabi Fusūs quote-boundary (needs a blocks.quotes
 spec).
+
+## form-and-substance-in-the-religions — 2026-07-13 (new conversion + 6 pipeline fixes)
+
+Frithjof Schuon, *Form and Substance in the Religions* (World Wisdom, 2002;
+trans. Mark Perry & Jean-Pierre LaFouge from *Forme et Substance dans les
+Religions*, Dervy-Livres 1975). 266pp PDF, source
+sha256 `1f713dd1…a166cba1`. ISBN-13 978-0-941532-25-9. Sixth+ shipped book;
+first NEW conversion since the 2026-07-10 re-ship wave. Build `epubcheck: clean`,
+`qa Overall: PASS` (coverage 99.94%, 334 notes, fidelity min-recall 0.997,
+a11y ace pass). Backend ML layout witness installed for the run
+(torch 2.13.0+cpu / transformers 5.13 / timm 1.0.28, Python 3.14).
+
+### Structure judgments
+- Classic World Wisdom / Library of Perennial Philosophy design — a near-twin of
+  `sufism-veil-and-quintessence`, but this 2002 edition uses **NewBaskerville**
+  directly and **headings are ROMAN, sized (17pt), NOT bold** (`@17/center` +
+  italic-`@17/center` for `Âtmâ-Mâyâ`/`Pâramitâs`/`Mahâyâna` chapter titles → h1).
+- Furniture: italic-centered running heads (book title verso / chapter title
+  recto) + centered folios → role p (band-stripped). NB the ch.11 running head
+  carries a **print typo `Feminime`** (title/TOC/body read `Feminine`) — added
+  as-printed to `furniture.extra` so it strips.
+- Section dividers: `* / * *` asterisk pyramid (`@14/center`) kept as content;
+  `keep: ["*"]` so top-of-page ones aren't stripped.
+- Cover = rendered p1 (Bagan temple photo). Back cover p266 (endorsements,
+  barcode, $17.95) **excluded**. Copyright p5 role p; title p4 role title-page.
+- TOC: `source: printed`, nav_depth 1; ch.6 wraps ("…in Koranic / Onomatology").
+- Footnotes: digit markers, geometric bottom-region split (334 notes).
+- **NO** verse / blocks.quotes / blocks.lists / flow.columns / PUA / CJK / RTL —
+  the analyzer's list/quote flags were footnote numbers + footnote hanging
+  indents (verified on renders); the layout witness's "columns" were the known
+  weak signal (analyzer `column_suspect_pages` empty). Simplest corpus book yet.
+- 6 chapter titles wrap to 2 lines → join overrides (join_center_lines off).
+
+### Six pipeline code fixes (each with a unit test; all 5 reference books re-QA PASS)
+Surfaced by this book, all generalizable:
+1. **Note-region gap-break** (`flowbuilder` + test): the copyright page is set
+   WHOLLY sub-body-size, so the note-region scan walked up a 107pt gap from the
+   LCCN `1. Religious. I. Title` line and swallowed the whole cataloging + World
+   Wisdom address block, which — having no in-body marker — was **silently
+   dropped**. Fix: the scan stops at a gap > 2.5×max-note-size (a note block is
+   contiguous). *Content-loss bug.*
+2. **TOC wrapped-numbered-entry** (`flowbuilder` + test): a numbered entry whose
+   folio wrapped to the turnover line ("6. …in Koranic" | "Onomatology 69")
+   fused ch5+ch6 and shipped a bogus "Onomatology" entry. Fix: a marker line
+   with no folio opens a pending entry; the number-less folio turnover completes
+   it. (Guarded so standalone entries like sufism's "Appendix" are untouched.)
+3. **`_ps_root` roman/italic fold** (`flowbuilder` + test): only "Italic" was
+   stripped, so `NewBaskerville-Roman@x` ≠ `NewBaskerville-Italic@x` and a
+   full-line inline italic Latin/Arabic gloss read as a pstyle change — **8
+   paragraphs split** into lowercase-initial blocks (ch.12 "Spiritus ubi vult…"
+   opening broke into 3). Fix: fold "Roman" too.
+4. **Em-dash line-join seam** (`textfix.dehyphenate_join` + test): a closed
+   em-dash arriving as its OWN roman run after an italic word (`<i>Vajrayâna</i>—`)
+   left `prev = "—"`; the old `[letter][—]$` guard missed a bare dash and a
+   quote-before-dash. Fix: `(?<!\s)[—–]$`. ~19 seams closed.
+5. **`strip_stray_grave`** (`textfix` + groundtruth + test): a lone ToUnicode
+   grave accent `Subjectivity itself`.` (invisible in the render, unique in the
+   book) stripped when NOT followed by a letter — preserves M&R's 27 ʿayn
+   graves (`a`a`, ` `Ali`) by construction. Shared flow/ground-truth.
+6. **Shift-corrected indent** (`flowbuilder` + test): the absolute indent test
+   used the global `col_left`, so on a left-shifted verso page (continuations at
+   x0≈43 vs modal 55) a real ~16pt citation indent read ~5pt and a page of
+   Biblical proof-texts fused into one paragraph (ch.13 Magnificat). Fix:
+   `eff_left = col_left - geo.shift(pno)` (same shift the verse/quote passes use).
+   *Latent across the corpus — also un-fused ~105 paragraphs in sufism, still
+   PASS at recall 0.997.*
+
+### keep_hyphens (13, render/reader-verified real compounds broken at a line)
+`three-dimensionality` p104, `equilibrium-restoring` n179, `near-divine` n128,
+`prayer-niche` p117, `super-eminence` p119, `non-attachment` p177, `void-like`
+p178, `multi-dimensional` p210, `bi-idhni’llâh` n25; transliterated definite
+article `al-malakût`/`ash-shahâdah`/`al-mutlaq`/`al-qism` (lowercase, so the
+arabic-article keeper skips them). NOT `reabsorbed` (authorial-solid, 5×) /
+`preeminent` (n122 as-printed solid, cf. hyphenated `pre-eminent` on same page).
+
+### Reading QA — 3 rounds (mandatory /proofread-epub)
+- Round 1 (37 packets, 34 blind readers): ~40 findings. Fixed the real ones via
+  the 6 code fixes + keep_hyphens; refuted as-printed (`worldy` p189, `intent,:`
+  p191, doubled `"the "First"` p70, LCCN `English}` p.iv, `Ps.126` no-space).
+- Round 2 (32 changed packets re-read): caught a **regression** — the shift fix
+  re-fused the p265 centered book list — plus `bi-idhni` (my rejoin dropped its
+  transliteration hyphen) and `multi-dimensional`. All fixed.
+- Round 3 (5 changed packets): the p265 line-per-line breaks over-split the
+  2-line entries; final fix = BREAK each title + JOIN each publication turnover
+  → one paragraph per book (satisfies both rounds). Converged.
+- Verified false-positive: `{p.136–139}` "truncation" — all body content present
+  (clustered page markers = a long paragraph spanning the pages, protocol-exempt).
+
+### Documented (deferred — justified-extraction spurious spaces, gate-9-tolerated)
+Consistent with prior books' deferral (over-fire risk of a shared close-rule):
+3 mid-line em-dash spaces (`another— otherwise` p18, `way— it` p192, `Throne—
+Heaven` p55), 2 transliteration-elision spaces (`wa’ s-sifât`, `wa’ shshahâdati`),
+2 verse-range spaces (`17- 18`, `27- 30`), `aspects , two` (space-before-comma),
+`“ Hear` (space-after-open-quote). All in-source; render shows the closed form.
