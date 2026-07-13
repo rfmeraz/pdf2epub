@@ -73,29 +73,36 @@ def test_verify_checks_source_pdf(tmp_path):
     assert run_verify(epub) == 1
 
 
-def test_manifest_deterministic_and_no_wallclock(tmp_path):
+def _cfg(tmp_path):
     (tmp_path / "book.yaml").write_text("schema_version: 1\n")
     cfg = PdfBookConfig(path=tmp_path / "book.yaml")
     cfg.slug = "x"
     cfg.pdf = "missing.pdf"
+    return cfg
+
+
+def test_manifest_deterministic_and_no_wallclock(tmp_path):
+    cfg = _cfg(tmp_path)
+    snap = dict(book_yaml_sha256="bookhash", source_pdf_path="/src/x.pdf",
+                source_pdf_sha256="pdfhash")
     m1 = build_manifest(cfg, epub_sha256="abc", epubcheck_status="passed",
-                        epubcheck_version="5.3.0")
+                        epubcheck_version="5.3.0", **snap)
     m2 = build_manifest(cfg, epub_sha256="abc", epubcheck_status="passed",
-                        epubcheck_version="5.3.0")
+                        epubcheck_version="5.3.0", **snap)
     assert m1 == m2                                    # reproducible, no wall-clock
     assert m1["epub_sha256"] == "abc"
-    assert m1["book_yaml_sha256"] == _sha((tmp_path / "book.yaml").read_bytes())
-    assert m1["source_pdf_path"] is None               # missing.pdf → recorded null
+    # the manifest records the SNAPSHOTTED input hashes/paths verbatim (not
+    # recomputed at manifest time)
+    assert m1["book_yaml_sha256"] == "bookhash"
+    assert m1["source_pdf_path"] == "/src/x.pdf"
+    assert m1["source_pdf_sha256"] == "pdfhash"
     assert m1["epubcheck"] == {"ok": True, "status": "passed", "version": "5.3.0"}
     assert "timestamp" not in json.dumps(m1).lower()
 
 
 def test_manifest_skipped_epubcheck_is_not_ok(tmp_path):
-    (tmp_path / "book.yaml").write_text("schema_version: 1\n")
-    cfg = PdfBookConfig(path=tmp_path / "book.yaml")
-    cfg.slug = "x"
-    cfg.pdf = "missing.pdf"
-    m = build_manifest(cfg, epub_sha256="abc", epubcheck_status="skipped",
-                       epubcheck_version=None)
+    m = build_manifest(_cfg(tmp_path), epub_sha256="abc", epubcheck_status="skipped",
+                       epubcheck_version=None, book_yaml_sha256="b",
+                       source_pdf_path=None, source_pdf_sha256=None)
     # skipped must NOT read as a passing check
     assert m["epubcheck"] == {"ok": None, "status": "skipped", "version": None}

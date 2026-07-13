@@ -63,12 +63,18 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     pdf = cfg.pdf_path()
     if not pdf.exists():
         raise SystemExit(f"source PDF not found: {pdf}")
-    if cfg.sha256:
-        actual = hashlib.sha256(pdf.read_bytes()).hexdigest()
-        if actual != cfg.sha256:
-            raise SystemExit(
-                f"source PDF sha256 mismatch: config pins {cfg.sha256[:12]}…, "
-                f"file is {actual[:12]}… — re-run init or fix source.sha256")
+    # snapshot the INPUTS the build is about to read (book.yaml + PDF). The
+    # manifest records THESE hashes — the inputs the EPUB was actually built
+    # from — and they are rechecked just before promotion, so a mid-build change
+    # to book.yaml or the PDF aborts rather than shipping an EPUB mislabelled
+    # with the changed input's hash.
+    input_book_sha = _sha256(cfg.path)
+    input_pdf_path = str(pdf)
+    input_pdf_sha = _sha256(pdf)
+    if cfg.sha256 and input_pdf_sha != cfg.sha256:
+        raise SystemExit(
+            f"source PDF sha256 mismatch: config pins {cfg.sha256[:12]}…, "
+            f"file is {input_pdf_sha[:12]}… — re-run init or fix source.sha256")
     from .extract import extract
     from .pdfmodel import pdfdoc_to_dict
 
@@ -176,15 +182,46 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
             epubcheck_status = "passed"
             epubcheck_version = _epubcheck_version(messages)
             ctx.say("epubcheck: clean")
-        epub_sha = hashlib.sha256(tmp_epub.read_bytes()).hexdigest()
+        # inputs must not have changed during the build, else the manifest would
+        # label this EPUB with the hash of inputs it was NOT built from.
+        if _sha256(cfg.path) != input_book_sha:
+            raise SystemExit("book.yaml changed during the build — aborting "
+                             "(the EPUB was built from the prior config; rebuild)")
+        cur_pdf = cfg.pdf_path()
+        if not cur_pdf.exists() or _sha256(cur_pdf) != input_pdf_sha:
+            raise SystemExit("source PDF changed or vanished during the build — "
+                             "aborting (the EPUB was built from the prior PDF)")
+
+        epub_sha = _sha256(tmp_epub)
         manifest = build_manifest(cfg, epub_sha256=epub_sha,
                                   epubcheck_status=epubcheck_status,
-                                  epubcheck_version=epubcheck_version)
+                                  epubcheck_version=epubcheck_version,
+                                  book_yaml_sha256=input_book_sha,
+                                  source_pdf_path=input_pdf_path,
+                                  source_pdf_sha256=input_pdf_sha)
         tmp_manifest = final_manifest.parent / f".{final_manifest.name}.tmp"
         tmp_manifest.write_text(dumps(manifest))
-        os.replace(tmp_epub, final_epub)          # both artifacts staged; promote
-        os.replace(tmp_manifest, final_manifest)  # epub then its manifest
-        tmp_manifest = None
+
+        # promote both staged artifacts. Back up the prior EPUB so a
+        # promotion-time exception (incl. Ctrl-C) rolls back to the consistent
+        # prior state; the sole residual window is a hard process-kill BETWEEN
+        # the two same-dir renames, which `pdf2epub verify` still detects (the
+        # new EPUB won't match the stale manifest's recorded hash).
+        epub_backup = final_epub.parent / f".{final_epub.name}.prev"
+        had_prev = final_epub.exists()
+        if had_prev:
+            os.replace(final_epub, epub_backup)
+        try:
+            os.replace(tmp_epub, final_epub)
+            os.replace(tmp_manifest, final_manifest)
+            tmp_manifest = None
+        except BaseException:
+            if had_prev and epub_backup.exists():
+                os.replace(epub_backup, final_epub)  # roll back to the prior EPUB
+            raise
+        finally:
+            if had_prev and epub_backup.exists():
+                epub_backup.unlink()
         ctx.say(f"provenance: {final_manifest.name} (epub {epub_sha[:12]}…, "
                 f"epubcheck {epubcheck_status}, "
                 f"rev {manifest['git'].get('rev', '?')[:12]}"
@@ -195,6 +232,10 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
         if tmp_manifest is not None and tmp_manifest.exists():
             tmp_manifest.unlink()
     return 0
+
+
+def _sha256(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
 def _epubcheck_version(messages: list[str]) -> str:

@@ -87,18 +87,21 @@ def _release_epoch(cfg) -> str:
 
 
 def build_manifest(cfg, *, epub_sha256: str, epubcheck_status: str,
-                   epubcheck_version: str | None) -> dict:
-    src_pdf = cfg.pdf_path()
-    src_exists = src_pdf.exists()
+                   epubcheck_version: str | None, book_yaml_sha256: str,
+                   source_pdf_path: str | None, source_pdf_sha256: str | None) -> dict:
+    # Input hashes/paths are SNAPSHOTTED by the caller before processing (and
+    # rechecked before promotion), not recomputed here — recomputing at
+    # manifest time could record a post-build input hash for an EPUB built from
+    # the pre-build content, which `verify` would then falsely accept.
     return {
         "slug": cfg.slug,
         "schema_version": cfg.schema_version,
         "release_epoch": _release_epoch(cfg),
         "book_yaml_path": str(cfg.path),
-        "book_yaml_sha256": _sha256(cfg.path),
+        "book_yaml_sha256": book_yaml_sha256,
         # resolvable path so `verify` can re-hash the source, not just the config
-        "source_pdf_path": str(src_pdf) if src_exists else None,
-        "source_pdf_sha256": _sha256(src_pdf) if src_exists else None,
+        "source_pdf_path": source_pdf_path,
+        "source_pdf_sha256": source_pdf_sha256,
         "epub_sha256": epub_sha256,
         # ok is True ONLY for an executed, passing check; None means skipped
         # (--no-epubcheck) — never conflate "not run" with "passed".
