@@ -228,6 +228,7 @@ def test_initcmd_import_does_not_pull_ml_backend():
     assert r.returncode == 0, r.stderr
 
 
+@pytest.mark.integration  # run_init extracts a PDF -> poppler pdftotext
 def test_layout_failure_does_not_abort_init(tmp_path, monkeypatch):
     # a runtime witness failure (e.g. uncached weights, no network) must NOT
     # abort init — the draft book.yaml must still be written.
@@ -256,6 +257,7 @@ def test_layout_failure_does_not_abort_init(tmp_path, monkeypatch):
     assert not (ws / "analysis" / "layout" / "report.md").exists()
 
 
+@pytest.mark.integration  # run_init extracts a PDF -> poppler pdftotext
 def test_layout_bad_pagespec_surfaces(tmp_path, monkeypatch):
     # a malformed --layout-pages is USER input, not a backend failure: init
     # must surface it (SystemExit) rather than swallow it in the advisory

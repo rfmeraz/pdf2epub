@@ -53,6 +53,21 @@ jobs:
           PDF2EPUB_REQUIRE_BROWSER: "1"
         run: pytest -q -m browser
 
+  # Integration tier: tests that shell to an external tool (poppler pdftotext
+  # via a real extract). Java/epubcheck are NOT needed — no test invokes them.
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - run: pip install -e ".[dev]"
+      - name: Integration tests
+        run: pytest -q -m integration
+
   # Corpus tier: real-book builds + full QA. Heavy (toolchain + Ace/chromium);
   # manual/nightly only. epubcheck is DOWNLOADED and sha256-verified, not
   # trusted from a local cache.
