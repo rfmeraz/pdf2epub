@@ -198,18 +198,20 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
                                   book_yaml_sha256=input_book_sha,
                                   source_pdf_path=input_pdf_path,
                                   source_pdf_sha256=input_pdf_sha)
-        # The EPUB is the build's single atomic commit point: one same-dir
-        # os.replace, which is atomic and never loses the prior EPUB on failure.
-        # The provenance manifest is an atomically-written SIDECAR, not a second
-        # transaction: if it fails to update, the EPUB is still a valid,
-        # epubcheck-passed artifact and `pdf2epub verify` detects the stale/absent
-        # manifest (hash mismatch) — so there is no rollback to get wrong, no
-        # prior EPUB to lose, and no silently-verifiable torn state. (True joint
-        # atomicity would need directory indirection, which conflicts with the
-        # git-tracked fixed EPUB path.)
-        os.replace(tmp_epub, final_epub)
+        # Stage the manifest temp — the LAST fallible I/O (disk-full, encoding)
+        # — BEFORE promoting, so a write failure aborts with the prior EPUB
+        # intact. After this, only two same-dir os.replace renames remain. The
+        # EPUB rename is the build's single atomic commit (never torn, never
+        # loses the prior EPUB); the manifest is a sidecar promoted right after.
+        # If the manifest rename alone fails/interrupts, the EPUB is still a
+        # valid epubcheck-passed artifact and `pdf2epub verify` detects the
+        # stale/absent manifest (hash mismatch) — no rollback to get wrong, no
+        # prior EPUB at risk, no silently-verifiable torn state. (True joint
+        # two-file atomicity would need directory indirection, which conflicts
+        # with the git-tracked fixed EPUB path.)
         tmp_manifest = final_manifest.parent / f".{final_manifest.name}.tmp"
         tmp_manifest.write_text(dumps(manifest))
+        os.replace(tmp_epub, final_epub)
         os.replace(tmp_manifest, final_manifest)
         tmp_manifest = None
         ctx.say(f"provenance: {final_manifest.name} (epub {epub_sha[:12]}…, "
