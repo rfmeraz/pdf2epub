@@ -63,12 +63,12 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     pdf = cfg.pdf_path()
     if not pdf.exists():
         raise SystemExit(f"source PDF not found: {pdf}")
-    # snapshot the INPUTS the build is about to read (book.yaml + PDF). The
-    # manifest records THESE hashes — the inputs the EPUB was actually built
-    # from — and they are rechecked just before promotion, so a mid-build change
-    # to book.yaml or the PDF aborts rather than shipping an EPUB mislabelled
-    # with the changed input's hash.
-    input_book_sha = _sha256(cfg.path)
+    # snapshot the INPUTS the build actually reads (book.yaml + PDF). book.yaml's
+    # hash is of the exact bytes load_config PARSED (cfg.config_sha256), not a
+    # re-read that could differ. These go in the manifest and are rechecked just
+    # before promotion, so a mid-build change to either input aborts rather than
+    # shipping an EPUB mislabelled with the changed input's hash.
+    input_book_sha = cfg.config_sha256
     input_pdf_path = str(pdf)
     input_pdf_sha = _sha256(pdf)
     if cfg.sha256 and input_pdf_sha != cfg.sha256:
@@ -154,13 +154,12 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     ctx.style_catalog = build_catalog(ctx)
     from .core.packager import stage_package
 
-    # transactional promotion: package to a temp, epubcheck it, GENERATE the
-    # provenance manifest to a second temp — all before the point of no return
-    # — then os.replace both onto their canonical names. The manifest is
-    # generated first because that's where the failures are (hashing, tool
-    # probes): if it throws, the prior EPUB is left intact. The two renames are
-    # same-dir and near-atomic; `pdf2epub verify` catches the vanishingly-rare
-    # torn state between them.
+    # transactional promotion: package to a temp and epubcheck it; everything
+    # that can fail (epubcheck, the input recheck, manifest generation — hashing
+    # and tool probes) happens BEFORE the EPUB is promoted, so on any of those
+    # the prior EPUB is left intact. The EPUB is then committed by a single
+    # atomic os.replace; the manifest is an atomically-written sidecar (see the
+    # commit block below).
     from .provenance import build_manifest, dumps, manifest_path
 
     tmp_epub = stage_package(ctx, result)
@@ -199,29 +198,20 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
                                   book_yaml_sha256=input_book_sha,
                                   source_pdf_path=input_pdf_path,
                                   source_pdf_sha256=input_pdf_sha)
+        # The EPUB is the build's single atomic commit point: one same-dir
+        # os.replace, which is atomic and never loses the prior EPUB on failure.
+        # The provenance manifest is an atomically-written SIDECAR, not a second
+        # transaction: if it fails to update, the EPUB is still a valid,
+        # epubcheck-passed artifact and `pdf2epub verify` detects the stale/absent
+        # manifest (hash mismatch) — so there is no rollback to get wrong, no
+        # prior EPUB to lose, and no silently-verifiable torn state. (True joint
+        # atomicity would need directory indirection, which conflicts with the
+        # git-tracked fixed EPUB path.)
+        os.replace(tmp_epub, final_epub)
         tmp_manifest = final_manifest.parent / f".{final_manifest.name}.tmp"
         tmp_manifest.write_text(dumps(manifest))
-
-        # promote both staged artifacts. Back up the prior EPUB so a
-        # promotion-time exception (incl. Ctrl-C) rolls back to the consistent
-        # prior state; the sole residual window is a hard process-kill BETWEEN
-        # the two same-dir renames, which `pdf2epub verify` still detects (the
-        # new EPUB won't match the stale manifest's recorded hash).
-        epub_backup = final_epub.parent / f".{final_epub.name}.prev"
-        had_prev = final_epub.exists()
-        if had_prev:
-            os.replace(final_epub, epub_backup)
-        try:
-            os.replace(tmp_epub, final_epub)
-            os.replace(tmp_manifest, final_manifest)
-            tmp_manifest = None
-        except BaseException:
-            if had_prev and epub_backup.exists():
-                os.replace(epub_backup, final_epub)  # roll back to the prior EPUB
-            raise
-        finally:
-            if had_prev and epub_backup.exists():
-                epub_backup.unlink()
+        os.replace(tmp_manifest, final_manifest)
+        tmp_manifest = None
         ctx.say(f"provenance: {final_manifest.name} (epub {epub_sha[:12]}…, "
                 f"epubcheck {epubcheck_status}, "
                 f"rev {manifest['git'].get('rev', '?')[:12]}"

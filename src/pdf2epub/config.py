@@ -14,6 +14,7 @@ resolve_workspace().
 
 from __future__ import annotations
 
+import hashlib
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -233,6 +234,7 @@ class Adjudication:
 class PdfBookConfig:
     path: Path  # config file location; relative paths resolve against its parent
     schema_version: int = 1  # book.yaml grammar version (top-level key)
+    config_sha256: str = ""  # sha256 of the exact bytes load_config parsed
 
     # source
     source_folder: Path = Path()
@@ -495,7 +497,11 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
     finalized config (schema_version present, required metadata) — `build` and
     `validate` set it, low-level parser tests do not."""
     path = path.expanduser().resolve()
-    data = yaml.safe_load(path.read_text()) or {}
+    # hash the EXACT bytes we parse, so the provenance manifest records the
+    # config content the build actually used — not a re-read that could differ
+    # if book.yaml changes between parse and hash.
+    raw = path.read_bytes()
+    data = yaml.safe_load(raw.decode("utf-8")) or {}
     _check_keys("book.yaml", data, {
         "schema_version",
         "source", "metadata", "pages", "furniture", "styles", "flow",
@@ -507,6 +513,7 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
     if require_complete:
         _check_required_metadata(data)
     cfg = PdfBookConfig(path=path)
+    cfg.config_sha256 = hashlib.sha256(raw).hexdigest()
     cfg.schema_version = int(data.get("schema_version", SCHEMA_VERSION))
 
     src = data.get("source", {})

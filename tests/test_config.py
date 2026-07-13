@@ -295,6 +295,17 @@ _COMPLETE = ("schema_version: 1\n"
              "metadata: {title: T, creators: [{name: A}], language: en}\n")
 
 
+def test_config_sha256_is_of_the_parsed_bytes(tmp_path):
+    # the recorded hash must be of the EXACT bytes load_config parsed, so the
+    # provenance manifest can't record a config the build didn't use
+    import hashlib
+    p = tmp_path / "book.yaml"
+    body = "schema_version: 1\nsource: {folder: p, pdf: b.pdf}\n"
+    p.write_text(body)
+    cfg = load_config(p)
+    assert cfg.config_sha256 == hashlib.sha256(body.encode()).hexdigest()
+
+
 def test_placeholder_rejected_always(tmp_path):
     # FILL-ME-IN is a hard error even on a lenient (parser-level) load
     p = tmp_path / "book.yaml"
