@@ -114,7 +114,9 @@ which no deterministic gate has.
 
 ## Test books
 
-Four books validate the pipeline (see CONVERSIONS.md): book-of-knowledge (bookmark-rich,
-PUA honorifics), harmonious-unity (PDF-only rerun of idml2epub's test book — its idml2epub
+Five books validate the pipeline (see CONVERSIONS.md): book-of-knowledge (bookmark-rich,
+PUA honorifics — also an Arabic-glyph variant `book.arabic.yaml`, so six shipped EPUBs total),
+harmonious-unity (PDF-only rerun of idml2epub's test book — its idml2epub
 EPUB is the `qa --reference` benchmark, not an input), islam-and-buddhism (printed-TOC-only,
-digit footnotes), me-and-rumi (prepress quirks, lost spaces, asterisk footnotes).
+digit footnotes), me-and-rumi (prepress quirks, lost spaces, asterisk footnotes),
+sufism-veil-and-quintessence (World Wisdom imprint back-matter relinking, engine-disputed pages).

@@ -1272,11 +1272,23 @@ flaws — all incorporated; see the plan's "corrections incorporated" section).
   oebps); `pages.front/body/back` given structural validation (the folio cross-check is noisy —
   I&B declares body.first 25 but folio "1" lands on p.26 — so shipped OFF).
 - **Transactional builds** (`build.py`, `packager.py`, `provenance.py`): package to a unique
-  `tempfile.mkstemp` temp, epubcheck it, `os.replace` onto the canonical name ONLY on pass — a
-  failed build leaves the prior good `.epub` untouched (verified). Immutable
-  `build/<slug>.manifest.json` (gitignored): source/book.yaml/epub sha256, tool+dep versions,
-  git rev + **dirty flag**, release epoch — no wall-clock, byte-stable across rebuilds. New
-  `pdf2epub verify` is the torn-write/stale invariant (epub hash vs manifest; book.yaml drift).
+  `tempfile.mkstemp` temp; ALL fallible work (epubcheck, input recheck, manifest generation +
+  temp write) happens BEFORE promotion; the EPUB is then committed by a SINGLE atomic
+  `os.replace` and the manifest is an atomically-written sidecar — a failed build leaves the
+  prior `.epub` untouched (verified). Input hashes are snapshotted before processing (book.yaml's
+  hash is of the EXACT bytes `load_config` parsed — `cfg.config_sha256`, not a re-read) and
+  rechecked before promotion, so a mid-build change to book.yaml or the PDF aborts rather than
+  shipping an EPUB mislabelled with the changed input's hash. Immutable
+  `build/<slug>.manifest.json` (gitignored): book.yaml + source-PDF paths and sha256, epub
+  sha256, **tri-state** epubcheck (`ok`/`skipped`, never conflated), tool+dep versions, git rev +
+  **dirty flag**, release epoch — no wall-clock, byte-stable across rebuilds. `pdf2epub verify`
+  checks the EPUB↔manifest hash AND book.yaml/source-PDF drift-or-absence (a recorded input now
+  missing or changed is a failure, not a silent skip). **Reviews #1–#5 refined this**: an initial
+  two-rename-with-rollback design was replaced by the single-commit + sidecar model after the
+  rollback logic proved to have more failure modes than it closed; the sole residual is a
+  process-kill BETWEEN the two same-dir renames (EPUB then manifest), which `verify` detects —
+  true joint atomicity would need directory indirection, which conflicts with the git-tracked
+  fixed EPUB path.
 - **Gate 25 page fidelity** (`qa/fidelity.py`): see qa-methodology.md §3 for the shipped design
   (char-level anchor slicer, ±1-page window, rapidfuzz LCS, Rabin-Karp duplication). Thresholds
   from mutation-vs-corpus margin. **The first draft's alignment math was unsound** (window_start

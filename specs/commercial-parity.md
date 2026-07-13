@@ -39,7 +39,7 @@ limits low, noting two of its items were already spec'd — is argued in the ran
 | Semantic verse / blockquote / list | partial | yes (block grammar) | shipped |
 | Print page anchors + page-list nav | yes | yes | shipped |
 | Furniture strip, column reading-order | yes | yes | shipped |
-| **A11y CERTIFICATION** (`conformsTo`, Ace/DAISY, alt-text coverage) | yes | metadata only, no claim/gate | **[semantic-polish.md #2](semantic-polish.md)** |
+| **A11y readiness + CERTIFICATION** (Ace/DAISY, alt/metadata; `conformsTo`) | yes | **readiness gate 26 shipped** (alt+metadata+Ace critical/serious); conformance *claim* (manual cert + `conformsTo`) deferred | **[semantic-polish.md #2](semantic-polish.md)** |
 | Index locator hyperlinking | yes | yes (opt-in, DAISY-container) | shipped (2026-07-11) |
 | Site-specific regression tripwires (per-page assertion cells) | ad hoc / manual re-read | yes (gate 24) | shipped — **[qa-methodology.md #1](qa-methodology.md)** |
 | Scanned / image-only pages (OCR) | yes | detect + escalate, no OCR | **[ocr-witness.md](ocr-witness.md)** |

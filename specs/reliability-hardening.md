@@ -12,14 +12,22 @@ line cites; read one before re-litigating it.
 **Shipped (§1–§4):** shared semantic validator in `load_config(require_complete=)` (FILL-ME-IN
 rejection, `schema_version`, structural page-range validation) + `pdf2epub validate`; dead
 fields removed, `include_ncx` implemented with stale-`toc.ncx` removal; transactional promotion
-(unique temp + atomic `os.replace` after epubcheck) + immutable `provenance.py` manifest
-(hashes, tool/dep versions, git rev + dirty flag, release epoch) + `pdf2epub verify`;
+where the EPUB is the SINGLE atomic `os.replace` commit and the manifest is an
+atomically-written sidecar (all fallible work — epubcheck, input recheck, manifest generate +
+write — precedes promotion), plus an immutable `provenance.py` manifest (book.yaml hash of the
+EXACT parsed bytes + source-PDF path/hash, snapshotted before processing and rechecked before
+promotion; tri-state epubcheck; tool/dep versions; git rev + dirty flag; release epoch) and a
+`pdf2epub verify` that checks the EPUB↔manifest hash AND book.yaml/source-PDF drift-or-absence;
 `metadata.identifier` (validated UUID/urn; distinct id for the BoK arabic variant) +
 `metadata.released` → `dcterms:modified`; hermetic tests (sibling-repo test removed, Chrome
 skip env-gated), pytest markers, hashed `requirements.lock`, ruff (E4/E7/E9/F/I), and portable
-GitHub Actions CI. Diverged from the sketch where the code forced it (below); the reviewer's
-"scoped down" calls (torn-write `verify` invariant instead of crash-recovery theater; `pages.*`
-folio cross-check shipped OFF) held.
+GitHub Actions CI. Diverged from the sketch where the code forced it (below), and **five rounds
+of implementation review (#1–#5) refined the transactional/provenance guarantees**: a
+two-rename-with-rollback design was dropped for the single-commit + detected-sidecar model after
+the rollback logic proved to add more failure modes than it closed. The residual (a process-kill
+between the two same-dir renames) is `verify`-detected, not silently verifiable; true joint
+atomicity would need directory indirection, which conflicts with the git-tracked fixed EPUB
+path. The `pages.*` folio cross-check shipped OFF (noisy), as sketched.
 
 **Framing.** The pipeline's value proposition is *trustworthiness through independence*:
 evidence → recorded judgment → deterministic build → independent QA → proofread. The review
