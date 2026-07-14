@@ -1,0 +1,492 @@
+# pdf2epub book.yaml — Pray Without Ceasing (World Wisdom, 2006)
+# Every judgment below is the agent's, traced to analysis/structure_report.md
+# and verified on page renders. See CONVERSIONS.md for the conversion ledger.
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "Pray Without Ceasing.pdf"
+  sha256: "67d07b5adcb859f79eba15244de8bd32de4320c5173c499c85b3ae94c9eab456"
+
+metadata:                     # JP-P5 — verified on p6 (title) + p7 (copyright) renders
+  title: "Pray Without Ceasing"
+  subtitle: "The Way of the Invocation in World Religions"
+  creators:
+    - {name: "Patrick Laude", role: edt}   # "Edited by Patrick Laude" (p6 title page)
+  publisher: "World Wisdom, Inc."          # "© 2006 World Wisdom, Inc." (p7)
+  language: en
+  additional_languages: []    # transliterated Sanskrit/Arabic/Japanese are romanized (Latin)
+  isbn_epub:                  # none printed -> urn:uuid ships (flagged in handoff)
+  isbn_print: "978-1-933316-14-7"   # p7 copyright page (pbk. : alk. paper); ISBN-10 1-933316-14-4
+  identifier: 68708160-b8f6-438c-a6a1-41f59219debc   # persistent EPUB id; keep STABLE across revisions
+  released: "2026-07-14"      # dcterms:modified = this EPUB revision
+  date: "2006"
+  cover: assets/cover.jpg
+  # p1 is the full designed COVER SPREAD: MediaBox 915pt wide (back cover +
+  # spine + front), CropBox (483,0,915,648) isolating the front. box:media
+  # passes clip=None, which PyMuPDF renders as the CROPBOX — the front cover
+  # alone. box:trim would map the 915pt TrimBox back across the spread.
+  # (The analyzer proposed cover_synthesize: p1 carries a text layer, so it
+  # read as a text page — the render says otherwise.)
+  cover_render: {page: 1, box: media, dpi: 300}
+  # cover art credit (p5): "Detail of pilgrim praying at Sarnath, India /
+  # Photograph by Michael Oren Fitzgerald"
+
+pages:                        # JP-P2 — printed folio = pdf page - 21 (verified p24=3, p240=219)
+  cover: [1]
+  front: {first: 2, last: 21}   # praise leaves(2-3, excluded), series i(4), cover
+                                # credit ii(5), title iii(6), copyright iv(7),
+                                # contents v-vi(8-9), introduction vii-xviii(10-21)
+  body:  {first: 22, last: 249} # printed folio '1' = p22 (part opener "I. FOUNDATIONAL
+                                # TEXTS"); index ends folio 227 = p248; p249 = the
+                                # publisher's "Titles in the Treasures…" list
+  exclude: [2, 3, 228, 250]
+  # p2-3: the two PRAISE leaves ("About the Editor and This Book" — five
+  #   endorsement blurbs). FLAGGED in the handoff. The print book's own
+  #   pagination does not count them: the title page's drop folio 'iii' (p6)
+  #   fixes the series page (p4) as page i, so these leaves sit BEFORE page i
+  #   and carry no printed folio — there is no print page for a page-list entry
+  #   to name. Keeping them forces a fabricated label that duplicates the
+  #   body's own page 3 and puts an arabic label in front of the roman block
+  #   (gate 4). They are marketing paratext of the same kind as the excluded
+  #   back cover, which reprints the Laurence Freeman endorsement and the
+  #   editor bio verbatim. Render-verified p0002/p0003.
+  # p228: full-page decorative MEDALLION ornament, image-only (no text layer —
+  #   poppler returns a bare form feed). Closes the main text before the
+  #   glossary; carries no content. Render-verified p0228.
+  # p250: physical BACK COVER (blurb, contributions list, endorsement, author
+  #   bio, ISBN barcode, price) — marketing paratext. Render-verified.
+  label_source: printed-folios   # /PageLabels absent (agreement: None%)
+  label_overrides:
+    # the roman sequence ENDS at xviii (p21, the Introduction's last page) and
+    # arabic '1' begins on the part opener — but neither p22 (part opener) nor
+    # p23 (blank) prints its folio, so the labeler carried the roman run on to
+    # 'xix'/'xx', naming two print pages that do not exist and leaving the
+    # book's real pages 1-2 unreachable from the page-list. p24 prints '3'.
+    22: "1"    # "I. FOUNDATIONAL TEXTS" part opener
+    23: "2"    # blank verso
+  role_overrides:
+    - {page: 6, role: title-page}   # display title / "Edited by" / colophon
+    - {page: 7, role: p}            # copyright page (centered rights block reads as prose)
+
+furniture:
+  top_band: 55.0              # measured: running heads sit at y0 37-38, the first BODY
+                              # line at 71.7 and the second at 85.0. The analyzer's 86.5
+                              # proposal swallowed both body lines and warned on 263 of
+                              # them; 55 covers the head band and nothing else.
+  repeat_min_pages: 3
+  # Running heads for SHORT selections repeat on fewer than repeat_min_pages
+  # pages, so the detector never templates them and they would ship as h3
+  # headings mid-chapter. A census of the whole book confirms every line inside
+  # the 55pt band is a running head — not one is body content — so naming the
+  # short-run ones here is exact. (Lowering repeat_min_pages to 1 would sweep
+  # them too, but it would also template ~500 first-body-line texts into the
+  # strip set for no gain.) Each is the recto title or verso author of a
+  # 1-2 page selection; the strip only ever fires inside the band, so the
+  # identically-worded chapter titles (set caps, y0 82.5) are untouched.
+  extra:
+    - "Kabīr"                                            # p28
+    - "Passages on the Pure Land Way"                    # p45
+    - "Zohar"                                            # p48
+    - "The Light of the Intellect"                       # p51
+    - "The Question of Prophecy"                         # p53
+    - "St. Symeon the New Theologian"                    # p58
+    - "The Cloud of Unknowing"                           # p70
+    - "Strike Down Every Kind of Thought"                # p71
+    - "The Sermon for Palm Sunday"                       # p73
+    - "St. Bernardino of Siena"                          # p74
+    - "The Sacrament of the Present Moment"              # p77
+    - "Rites"                                            # p101, p103
+    - "Titus Burckhardt"                                 # p102
+    - "Srī Ramakrishna"                                  # p168
+    - "Swami Ramdas"                                     # p170
+    - "Prayer"                                           # p173
+    - "Japa-Sādhanā"                                     # p175
+    - "Advaita and Japa"                                 # p177
+    - "Namo Amitofu"                                     # p195, p197
+    - "William Johnston"                                 # p200
+    - "Breathing and Rhythm in Christian and Buddhist Prayer"   # p201
+    - "Glossary"                                         # p232
+    - "Acknowledgments"                                  # p236, p238
+  keep: []
+  # running heads (stripped): 'Pray Without Ceasing' (verso) + the selection
+  # title/author (recto), all MinionPro-It@11/center; 'Introduction' (12-20)
+
+styles:                       # JP-P1 — every cluster reviewed against sample + render
+  body_pstyle: "MinionPro-Regular@11"
+  pstyle_map:
+    # --- body / apparatus
+    "MinionPro-Regular@11": {role: p}          # dominant text cluster
+    "MinionPro-Regular@9": {role: footnote}    # author footnotes (digit markers)
+    "MinionPro-It@9": {role: footnote}         # italic runs inside footnotes
+    "MinionPro-It@10": {role: p}               # the editor's italic biographical HEADNOTE
+                                               # opening each selection (40 pages)
+    "MinionPro-Regular@10": {role: p}          # 10pt INSET BLOCK QUOTES (59 pages) — NOT
+                                               # footnotes: they sit in the text block, and
+                                               # blocks.quotes below coalesces them
+    "MinionPro-Regular@10.5": {role: p}        # p32 Sukhāvatīvyūha long quote
+    "MinionPro-Regular@9.5": {role: p}         # p4 series-page tail line
+    "MinionPro-It@11": {role: p}               # italic-dominated body lines; endorsement
+                                               # attributions (p2-3)
+    "MinionPro-It@13": {role: h3}              # the source line 'Hōnen' (p35) — its ONLY
+                                               # member. p35 is quote-dominated (16 quote
+                                               # lines at x0=54 vs 2 body lines at 36), so
+                                               # the binding-shift detector rightly abstains
+                                               # and the centering test measures against the
+                                               # unshifted centre, missing the /center suffix
+                                               # every other source line gets
+    # --- headings
+    "MinionPro-Bold@20/center": {role: h1}     # PART OPENERS: 'I.' + 'FOUNDATIONAL TEXTS'
+                                               # (p22/88/164) — the draft proposed
+                                               # title-page; renders show part titles
+    "MinionPro-Bold@14/center": {role: h2}     # selection titles ('HE WHO THINKS OF ME…')
+    "MinionPro-BoldIt@14/center": {role: h2}   # selection titles carrying italic ('ADVAITA
+                                               # AND JAPA')
+    "MinionPro-Bold@14": {role: h2}            # 2-line selection titles whose 2nd line
+                                               # misses the centering test (p199/203)
+    "MinionPro-Bold@13": {role: h2}            # p35 'TAKING REFUGE IN THE RIGHT PRACTICE'
+    "MinionPro-It@13/center": {role: h3}       # the source/author line under each selection
+                                               # title ('Bhagavad Gītā', 'Chaitanya')
+    "MinionPro-Regular@11/center": {role: h3}  # roman-set source lines ('The Way of a
+                                               # Pilgrim') + stripped running heads
+    "MinionPro-It@11/center": {role: h3}       # in-selection subheads ('St. Philotheos of
+                                               # Sinai', p56) — the running heads in this
+                                               # cluster are furniture-stripped first
+    "MinionPro-It@10.5/center": {role: h3}     # 'Introduction' running head (12-20), stripped
+    "MinionPro-Bold@11/center": {role: h3}     # printed-TOC part headings (p8-9)
+    "Present-Black@17/center": {role: h1}      # p2 'About the Editor and This Book'
+    "Present-Black@16/center": {role: h1}      # p4 series headings
+    "Present-Black@17": {role: h1}             # p249 'Titles in the Treasures…'
+    # --- epigraphs (part openers) — a role judgment; no detector
+    "MinionPro-It@14/center": {role: epigraph}      # the part epigraph itself
+    "MinionPro-Regular@14/center": {role: epigraph} # its attribution ('simone weil') —
+                                                    # set in SMALL CAPS the text layer
+                                                    # records lowercase (see handoff)
+    # --- title page
+    "MinionPro-Bold@24/center": {role: title-page}   # 'PRAY WITHOUT CEASING' (p6)
+    "MinionPro-Regular@16/center": {role: title-page}  # subtitle / 'Edited by' / 'PATRICK LAUDE'
+    # --- back matter
+    "WorldWisdomFont@11": {role: p}            # index entries (240-248); flow.columns
+                                               # below re-splits and links them
+    "WorldWisdomFont@11/center": {role: p}     # index page-number runs read as centered
+    "WorldWisdomFont-Italic@11": {role: p}     # italic index lemmas ('Sefer Yetzirah')
+    "WorldWisdomFont-Italic@12": {role: p}     # p249 title list
+    "MinionPro-Regular@10/center": {role: p}   # p248 glossary/dictionary footer note
+    # --- ornament
+    "WoodtypeOrnaments-Two@18/center": {role: drop}   # p4 section ornament: the font
+                                               # encodes it as C0 control bytes
+                                               # (\x01-\x05), carrying no text
+  charstyles: {}              # the small-caps glyphs share family AND size with the body
+                              # (separate gids 94+, one font object) — not separable here
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 10.0      # NOT the analyzer's 13.5 (= 0.75 x the body's 18pt
+                              # first-line indent). The INDEX's hanging indent is
+                              # 10.8pt — measured on every column of every index
+                              # page — so at 13.5 every turnover read as a new
+                              # entry and ~90 entries shipped split from their
+                              # locators ('Abhishiktananda, Swami, 157-163,' |
+                              # '216; see Le Saux, Fr. Henri'). Blind readers
+                              # found it; the columns gate cannot. Any threshold
+                              # <= 10.8 serves both: this book's ONLY body
+                              # paragraph indent is 18pt (census: 278 lines at
+                              # 18, one at 37), so 18 >= 10 still breaks.
+  gap_factor: 1.6             # median leading measured: 13.2pt
+  dehyphenate: lower-only
+  keep_hyphens:
+    # Real compounds whose hyphen happened to fall at a print line break;
+    # lower-only would strip it and rewrite the word. Each is ATTESTED
+    # hyphenated MID-LINE elsewhere in this same book (count below) — the book
+    # is its own witness, which a render of a line-break hyphen can never be
+    # (the Keys method). Audited by hooking every one of the 41 line-end hyphen
+    # joins in flow and testing each result against the book's own mid-line
+    # attestations; these are the complete attested set. Every one was also
+    # reported by a blind reader.
+    - "japa-yoga"        # 10x hyphenated, 0 closed. Breaks p.176
+    - "single-mindedly"  # 7x, 0 closed. Breaks pp.35/36 (Shan-tao's five practices)
+    - "shan-tao"         # 6x, 0 closed. Wade-Giles name. Breaks p.39
+    - "twelve-letter"    # 2x, 0 closed ('the twelve-letter name'). Breaks p.109
+    - "mani-walls"       # attested mid-line on the SAME page (p.129 l.35, 'one of
+                         #   these mani-walls'); the break at l.32 shipped 'mani- walls'
+    - "other-power"      # 1x, 0 closed; the book's term opposite 'self-power'.
+                         #   Breaks pp.190/192
+    # NB 'ninety-nine' needs no entry: textfix._KEEP_HYPHEN_PREFIX already keeps
+    # it (5x correct in the shipped text).
+  restore_spaces: false       # lost-space hits: 1 (this PDF's defect is the OPPOSITE —
+                              # ligature-pad spaces, repaired at extract)
+  join_center_lines: true
+  reattach_dropcaps: true
+  columns:
+    # back-of-book INDEX, printed folios 219-227, two columns with hanging-indent
+    # turnovers — confirmed on the p0240/p0248 renders; engine agreement 57-77% on
+    # exactly these pages (poppler reads columns, MuPDF y-sorts them into fused lines).
+    # SPLIT BY BINDING SHIFT: gutters are computed per spec over ALL its pages, so a
+    # spec mixing recto and verso smears the channel — this book's even pages set their
+    # block at x0=63 and its odd pages at x0=36, and one 240-248 spec found no gutter at
+    # all (the whole index would have shipped y-sorted/interleaved). One spec per side
+    # gives each a consistent column grid.
+    - {pages: [240, 242, 244, 246, 248], count: 2, index: true,
+       note: "index recto pages (block x0=63); verified on the p0240 render"}
+    - {pages: [241, 243, 245, 247], count: 2, index: true,
+       note: "index verso pages (block x0=36); verified on the p0241 render"}
+  overrides:
+    # PART OPENERS: print sets the numeral and the title as separate display
+    # lines ~90pt apart, so the centered-line joiner (which keys off leading)
+    # leaves them as two h1s — the split then opened a file per numeral
+    # ('006-i.xhtml', 0 chars, an orphaned heading) and the outline's
+    # 'I. FOUNDATIONAL TEXTS' matched no heading. Joined, each part opener is
+    # one h1 reading exactly as its bookmark does.
+    # p4's series note is ONE printed sentence — "Pray Without Ceasing: The Way
+    # of the Invocation in World Religions appears as one of our selections in
+    # the Treasures of the World's Religions series." — but its two lines are
+    # set a half-point apart (the italic title line at 10pt, the continuation at
+    # 9.5pt), and the pstyle change broke the paragraph mid-phrase at "appears
+    # as one" | "of our selections". Verified on the p0004 render.
+    - {page: 4, line: 14, action: join, note: "series note continuation (p0004 render)"}
+    # SECTION-BREAK ORNAMENTS: a centered '*  *  *' rule between passages. It
+    # shares the body font and size with the source lines ('The Way of a
+    # Pilgrim', 'PREFACE') that legitimately earn h3, so the pstyle cannot
+    # separate them — these 13 lines are the whole ornament population
+    # (verified on the p0177 render: three breaks between Ramana Maharshi's
+    # answers). As <h3> each became a heading in the nav's reach and a
+    # "body-type heading without TOC corroboration" (gate 16).
+    - {page: 13, line: 25, action: "role:p", note: "'*  *  *' section break (p0013 render)"}
+    - {page: 16, line: 14, action: "role:p", note: "'*  *  *' section break (p0016 render)"}
+    - {page: 19, line: 24, action: "role:p", note: "'*  *  *' section break (p0019 render)"}
+    - {page: 95, line: 3, action: "role:p", note: "'*  *  *' section break (p0095 render)"}
+    - {page: 111, line: 6, action: "role:p", note: "'*  *  *' section break (p0111 render)"}
+    - {page: 124, line: 28, action: "role:p", note: "'*  *  *' section break (p0124 render)"}
+    - {page: 133, line: 7, action: "role:p", note: "'*  *  *' section break (p0133 render)"}
+    - {page: 170, line: 5, action: "role:p", note: "'*  *  *' section break (p0170 render)"}
+    - {page: 170, line: 22, action: "role:p", note: "'*  *  *' section break (p0170 render)"}
+    - {page: 176, line: 36, action: "role:p", note: "'*  *  *' section break (p0176 render)"}
+    - {page: 177, line: 7, action: "role:p", note: "'*  *  *' section break (p0177 render)"}
+    - {page: 177, line: 11, action: "role:p", note: "'*  *  *' section break (p0177 render)"}
+    - {page: 177, line: 24, action: "role:p", note: "'*  *  *' section break (p0177 render)"}
+    # TWO-LINE SELECTION TITLES: print sets them as two display lines, and only
+    # the second is narrow enough to earn /center — so each shipped as TWO h2s
+    # and the outline's full title matched neither ('BREATHING AND RHYTHM IN
+    # CHRISTIAN AND' | 'BUDDHIST PRAYER'). Blind readers found both.
+    - {page: 199, line: 1, action: join, note: "'BUDDHIST PRAYER' -> 'BREATHING AND RHYTHM IN CHRISTIAN AND' (p0199 render)"}
+    - {page: 202, line: 1, action: join, note: "'CONSOLATA' -> 'THE UNCEASING ACT OF LOVE OF SISTER MARY' (p0202 render)"}
+    # Two of Father Lorenzo Sales's section heads sit on pages whose centering
+    # test fails (the shift detector abstains), so they missed /center and
+    # shipped as body <p> — one of them fused with the paragraph under it, the
+    # way its four correctly-headed siblings never do.
+    - {page: 210, line: 15, action: "role:h3", note: "'THE ACT OF LOVE AND THE PARTICULAR EXAMEN' — a section head like its siblings (p0210 render)"}
+    - {page: 215, line: 3, action: "role:h3", note: "'THE HEIGHT OF HEROISM IN THE UNCEASING ACT OF LOVE' section head (p0215 render)"}
+    - {page: 215, line: 4, action: break, note: "body must not fuse onto the head above (p0215 render)"}
+    - {page: 22, line: 1, action: join, note: "'FOUNDATIONAL TEXTS' -> 'I.' (p0022 render)"}
+    - {page: 88, line: 1, action: join, note: "'CONTEMPORARY' -> 'II.' (p0088 render)"}
+    - {page: 88, line: 2, action: join, note: "'DOCTRINAL ESSAYS' -> 'II. CONTEMPORARY' (p0088 render)"}
+    - {page: 164, line: 1, action: join, note: "'CONTEMPORARY TESTIMONIES' -> 'III.' (p0164 render)"}
+    # p48 is a verse-ONLY page (the Zohar poem continues from p47 with nothing else on
+    # it), so body_anchors keys off the verse's own left (81) and its 18pt offset reads
+    # as 0 — the spec cannot match. The carried-anchor fallback does not reach it either:
+    # p47 is a verso page (body left 36) and p48 a recto (63), so the carry test misses
+    # by the 27pt binding shift. These 11 lines ARE the poem (p0048 render).
+    - {page: 48, line: 1, action: "class:verse", note: "Zohar 'Who sees the mighty ones' — p0048 render"}
+    - {page: 48, line: 2, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 3, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 4, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 5, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 6, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 7, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 8, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 9, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 10, action: "class:verse", note: "Zohar verse line — p0048 render"}
+    - {page: 48, line: 11, action: "class:verse", note: "Zohar 'The Holy One's Name?' — p0048 render"}
+
+footnotes:                    # JP-P4
+  policy: markers   # small-font bottom regions on 61 pages; census {'digit': 108}
+  marker: digits
+
+toc:                          # JP-P3 — outline(48) | printed p8-9 | links(0)
+  source: outline   # 48 entries, 0/48 lacking a heading on their target page; the printed
+                    # Contents parses to 0 entries for the analyzer because its folios are
+                    # set in PUA oldstyle figures (the build decodes them via glyphs.pua_map)
+  printed_pages: [8, 9]   # the in-body Contents, rebuilt into linked entries
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2      # part openers (I/II/III) -> selections
+
+glyphs:                       # JP-P6 — every entry verified on its render
+  pua_map:
+    # Minion's OLDSTYLE FIGURES, PUA-encoded: U+F643-F64C = 0-9. Verified by
+    # decoding p8's printed-TOC folio column and matching the p0008 render
+    # 1:1 (3, 4, 6, 8, 10, 11, 12, 22, 26, 28, 33, 35, 41, 48, 51, 54, 55,
+    # 57, 69, 79, 83, 87, 101, 117 — all 24 entries).
+    "\uF643": {action: char, char: "0", note: "oldstyle 0; verified on p.8 render"}
+    "\uF644": {action: char, char: "1", note: "oldstyle 1; verified on p.8 render"}
+    "\uF645": {action: char, char: "2", note: "oldstyle 2; verified on p.8 render"}
+    "\uF646": {action: char, char: "3", note: "oldstyle 3; verified on p.8 render"}
+    "\uF647": {action: char, char: "4", note: "oldstyle 4; verified on p.8 render"}
+    "\uF648": {action: char, char: "5", note: "oldstyle 5; verified on p.8 render"}
+    "\uF649": {action: char, char: "6", note: "oldstyle 6; verified on p.8 render"}
+    "\uF64A": {action: char, char: "7", note: "oldstyle 7; verified on p.8 render"}
+    "\uF64B": {action: char, char: "8", note: "oldstyle 8; verified on p.8 render"}
+    "\uF64C": {action: char, char: "9", note: "oldstyle 9; verified on p.8 render"}
+    # transliteration letters the font PUA-encodes rather than using Latin Unicode
+    "\uF66E": {action: char, char: "ā",
+               note: "a-macron: 'amitābha'/'japa-sādhanā' (p8/p9), 'tulsīdās' (p164 render)"}
+    "\uF685": {action: char, char: "ī",
+               note: "i-macron: 'tulsīdās' (p164 render; matches the p8 TOC entry 'Tulsīdās')"}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []                   # no live CJK/Arabic runs; Latin body needs no embed
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8 — 0 CJK pages; RTL chars: 11
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+blocks:                       # JP-P9 — every spec render-verified
+  verse:
+    - {pages: [24, 47, 48, 128, 162], base: [18.0], turns: [],
+       note: "single-level ragged inset (I&B convention), every page render-verified:
+              Bhagavad Gītā p24 ('And at the hour of death…'), Zohar p47-48 ('The secret
+              Garden' / 'Who sees the mighty ones'), Marco Pallis p128 (the two Chenrezig
+              quatrains I and II), Mir Valiuddin p162 ('Though the heart did not know the
+              reality,'). p48 additionally needs class:verse overrides — see flow.overrides"}
+  quotes:
+    - {pages: ["4", "35", "38-42", "44", "79", "82", "84", "105", "139-143", "161"],
+       left_inset: 18, right_inset: 18,
+       note: "justified 10pt block quotes inset 18pt both sides — verified on the p0039
+              render (Hōnen, 'When sentient beings arouse themselves…') and p4 (the
+              Treasures series description)"}
+  lists:
+    - {pages: ["25-27", "56-57", "185-193"], marker: decimal, hang: 0,
+       note: "numbered prose entries, FLAT turnovers at the entry stop — verified on p25
+              (Chaitanya's Shikshashtaka 1-8), p56 (Philokalia 96-99) and p185 (Gōjun
+              Shichiri 1-4) renders"}
+    - {pages: ["156"], marker: decimal, hang: 18,
+       note: "Mir Valiuddin's Koran citations 1-4 then hadīth 1-2: markers at the entry
+              stop with turnovers hanging 18pt — verified on the p156 render (the
+              marker-gap restart at '1.' after '4.' is the print's own)"}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  figure_pages: []            # the only image-only page (p228) is a decorative ornament,
+                              # excluded above; the layout witness's other Picture
+                              # candidates are the World Wisdom logo (p6) and section
+                              # ornaments (p4) — decorative, not content
+  figure_regions:
+    # Two DIAGRAMS drawn in live type inside Mir Valiuddin's essay. Their
+    # meaning is the SPATIAL arrangement, which the line-based flow cannot
+    # carry: it read both as centered body-size lines, fused them through
+    # join_center_lines and shipped each as one <h3> ('Akhfā Khafī Sirr Rūh
+    # Qalb The Throne (‘Arsh) Nafs Fire Air Water Earth'). Rastered, each keeps
+    # exactly what print draws, and the alt carries the reading order.
+    - page: 158
+      rect: [168.0, 130.0, 292.0, 180.0]
+      alt: "Diagram of the head movement of the dhikr, drawn in the form of the
+            inverted letter Lām-alif: BRAIN at the top, with HEART below it to the
+            left and NAVEL below it to the right."
+      note: "p0158 render (folio 137), following 'The form of dhikr in this case is
+             like the inverted letter Lam-alif.' — the horizontal gap between HEART
+             and NAVEL is the diagram, and HTML would collapse it to one space"
+    - page: 160
+      rect: [180.0, 356.0, 280.0, 508.0]
+      alt: "Diagram of the sphere of possibility (daira-i-imkān), listing the ten
+            latīfas in a vertical column from top to bottom: Akhfā, Khafī, Sirr, Rūh,
+            Qalb — then The Throne (‘Arsh) at the centre — then Nafs, Fire, Air,
+            Water, Earth. The five above the Throne are the faculties of the
+            ‘ālam-i-amr, the world of command; the five below it are the faculties of
+            the ‘ālam-i-khalq, the world of creation."
+      note: "p0160 render (folio 139), following 'The form of the sphere will be as
+             follows:' — the vertical order above/below the Throne IS the content"
+
+qa:
+  # Gate 16 accepts a heading's typography as evidence only when it is set in
+  # display size, a non-body family, or a small-caps face. This book marks each
+  # selection's SUB-SECTIONS with centered full caps at the body face and size,
+  # carrying none of the three — real headings the gate must be told about one
+  # render at a time. (Centeredness cannot stand in as blanket evidence: it is
+  # what the pstyle_map keys the h3 off, and this same gate correctly caught
+  # both the '*  *  *' section-break ornaments and the two Mir Valiuddin
+  # diagrams now rastered as figure_regions. A stale entry fails the gate.)
+  heading_allow:
+    - {snippet: "PREFACE",
+       note: "The Way of a Pilgrim's section head (p43 render)"}
+    - {snippet: "BENEFITS OF THE INVOCATION IN GENERAL",
+       note: "Ibn ‘Atā’ Allāh section head (p78 render)"}
+    - {snippet: "ON CHOOSING THE TYPE OF REMEMBRANCE",
+       note: "Ibn ‘Atā’ Allāh section head (p82 render)"}
+    - {snippet: "1. THE FORM OF THE PRAYER",
+       note: "Lev Gillet's numbered section head — centered caps above its first
+              paragraph (p145 render)"}
+    - {snippet: "2. EPISODE OR METHOD?",
+       note: "Lev Gillet section head (p146 render)"}
+    - {snippet: "3. THE FIRST STEPS: ADORATION AND SALVATION",
+       note: "Lev Gillet section head (p148 render)"}
+    - {snippet: "4. INCARNATION",
+       note: "Lev Gillet section head (p148 render)"}
+    - {snippet: "5. TRANSFIGURATION",
+       note: "Lev Gillet section head (p149 render)"}
+    - {snippet: "6. THE BODY OF CHRIST",
+       note: "Lev Gillet section head (p150 render)"}
+    - {snippet: "7. THE SUPPER OF THE LORD",
+       note: "Lev Gillet section head (p152 render)"}
+    - {snippet: "8. THE NAME AND THE SPIRIT",
+       note: "Lev Gillet section head (p153 render)"}
+    - {snippet: "9. TOWARDS THE FATHER",
+       note: "Lev Gillet section head (p154 render)"}
+    - {snippet: "THE ACT OF LOVE AND VOCAL PRAYER",
+       note: "Father Lorenzo Sales section head (p208 render)"}
+    - {snippet: "THE ACT OF LOVE AND MEDITATION",
+       note: "Father Lorenzo Sales section head (p209 render)"}
+    - {snippet: "THE ACT OF LOVE AND SPIRITUAL READING",
+       note: "Father Lorenzo Sales section head (p211 render)"}
+    - {snippet: "THE ACT OF LOVE AND THE SPIRITUAL RETREAT",
+       note: "Father Lorenzo Sales section head (p212 render)"}
+    - {snippet: "THE ACT OF LOVE IN VARIOUS SPIRITUAL STATES",
+       note: "Father Lorenzo Sales section head (p213 render)"}
+    - {snippet: "THE ACT OF LOVE AND THE PARTICULAR EXAMEN",
+       note: "Father Lorenzo Sales section head, recovered by a role:h3 override —
+              its page defeats the shift detector so it missed /center (p210 render:
+              centered, x0 100.2-358.8, midpoint 229.5 vs column centre 230.5)"}
+    - {snippet: "THE HEIGHT OF HEROISM IN THE UNCEASING ACT OF LOVE",
+       note: "same, recovered by role:h3 + a break (p215 render: centered, x0
+              49.5-355.6, midpoint 202.5 vs the page block's centre 203.7)"}
+  signature_allow:
+    - {page: 4,
+       note: "the series note is ONE printed sentence set in two sizes — a 10pt
+              italic book title then 9.747pt roman prose (p4 render). The flow's
+              paragraph takes its style from the first line (10pt = body) while the
+              gate's PDF side takes the char-weighted size (9.747, stored 9.5 by the
+              0.5pt pstyle quantizer = exactly the 'small' boundary). The two sides
+              can only agree if the sentence is left SPLIT mid-phrase at 'appears as
+              one' | 'of our selections' — the defect flow.overrides now heals."}
+  lost_space_allow:          # render-verified as-printed (not fused-word defects)
+    - {snippet: "Ph.D. in French literature",
+       note: "the abbreviation in Patrick Laude's Biographical Note — print sets
+              'obtained a Ph.D. in French literature in 1985' (p239 render)"}
+    - {snippet: "www.DictionaryofSpiritualTerms.org",
+       note: "web address in the glossary footer — domains carry no spaces (p248
+              render); the same World Wisdom footer sufism p194 allows"}
+
+adjudications:
+  - {warning: rtl-live-text, note: "11 Hebrew chars in FOUR short inline runs inside
+      English prose, render-verified p110/p112/p232: 'YH (יה)', 'YHVH (יהוה);', 'the vav
+      (ו).', and the Glossary's 'Yod-He-Vav-He (יהוה),'. No RTL paragraph and no RTL page
+      direction — the reader's Unicode bidi algorithm lays these out from the characters
+      themselves. The producer drew each run's CLOSING punctuation as a jump back out to
+      its right, so the text layer had it displaced ('( ,)יהוה'); extract.mupdf.
+      reorder_bidi_lines now restores logical order and all four read exactly as printed.
+      Escalated to the user 2026-07-14, who chose the reorder over shipping as-is."}
+  - {warning: embedded-image-uncovered, pages: [6, 125], note: "render-verified, both
+      decorative: p6 is the World Wisdom colophon logo on the title page (240x189), p125
+      carries a 5x5-pixel artifact on an otherwise ordinary prose page (Marco Pallis,
+      folio 104). Neither carries content; no alt text is owed."}
+  - {warning: verse-suspect, pages: [7], note: "render-verified p0007: the COPYRIGHT page.
+      Its centered rights block ('All rights reserved. / No part of this book may be used
+      or reproduced / in any manner without written permission,') is centered display
+      prose, whose ragged centered edges the suspect witness reads as verse levels — the
+      turns [46.2…105.4] are the centering, not an indent scheme. Not verse."}
+
+output: {slug: pray-without-ceasing, include_ncx: true}

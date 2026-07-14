@@ -837,3 +837,81 @@ Index sub-entry levels are a 9pt ladder; `flow.columns` flattens level 3 into
 its level-2 parent (level 3's base and level 2's turnover share x0 exactly).
 Same as sufism. Text, order and locator links are intact — only the sub-entry
 line structure inside a top-level entry runs on.
+
+## Pray Without Ceasing — ed. Patrick Laude (World Wisdom, 2006) — 2026-07-14
+
+- Source: `Pray Without Ceasing.pdf` (sha256 67d07b5a…, 250 pp, World Wisdom
+  2006, Minion Pro + WorldWisdomFont). An anthology: 3 parts, 45 selections,
+  108 footnotes, a 9-page 2-column index.
+- Outcome: **epubcheck clean; all 26 gates PASS** (coverage 99.97%; 44 gate-24
+  assertion cells). 2 proofread rounds, 33 packets, ~95k words.
+
+### The book's defining defect: a producer that pads with phantom spaces
+Four distinct shapes, ALL invisible to the gates (both engines read one stream)
+and all repaired in `extract.mupdf` from glyph geometry alone:
+1. **Ligature pads (2572 sites)** — a Minion ligature advances less than its own
+   ink (`Th` = 10.71pt of ink, 5.34pt of advance) and a space is drawn back
+   UNDER it. Text layer: `Th e Way`, `oft en`, `fi rst`, `affi  rmation` on
+   nearly every page. Poppler reconstructs words from gaps and never sees it,
+   so gate 2 was measuring against a witness that disagreed on 2779 words.
+   Discriminator: the pad is drawn ENTIRELY BEFORE the nearest preceding
+   non-space glyph. Scanning back past earlier pads catches a 3-char ligature's
+   second pad; the alphabetic guard keeps BoK's 1225 kerned TOC dot leaders out.
+2. **Presentation-form pads (9)** — a one-glyph `ﬁ` has no continuation glyph to
+   hide behind, so the pad overlaps the ligature's OWN ink. Six words shipped
+   broken through the INDEX (`Cruciﬁ ed`, `Abulafi a`, `Sufi sm`), where gate 2
+   is blind (engine-disputed pages) — only the gate-18 visual sheet caught them.
+3. **Zero-advance spaces (9)** — the next letter drawn at the space's own
+   origin: `invoca tion`, `qual ity`, `antici pation`. Blind readers only.
+4. **Inline RTL (11 glyphs)** — the producer draws a Hebrew run's CLOSING
+   punctuation as a jump back out to its right, so the stream emits it BEFORE
+   the Hebrew: `Yod-He-Vav-He ( ,)יהוה`. Escalated (RTL is a hard stop); the
+   user chose the reorder. Only the displaced neutrals move.
+
+**These fixes repaired SIX other corpus books** — Keys shipped `im plies`,
+`es sence`; I&B `athe istic`; BoK/F&S/sufism spaced number ranges.
+
+### Structure decisions worth remembering
+- **PUA oldstyle figures**: the printed Contents sets its folios in Minion's
+  PUA-encoded oldstyle digits (U+F643-F64C = 0-9), so NO line looked like a TOC
+  entry and the analyzer parsed zero. Decoded by matching all 24 folios against
+  the p8 render. The build now passes `glyphs.pua_map` to the folio parse.
+- **Unnumbered wrapped TOC entries**: 8 of 48 entries wrap and push their folio
+  onto the turnover; the folio-less first line fused into the PRIOR entry and
+  the turnover shipped as a bogus one (`in the right practice`). The indent is
+  the unnumbered form's marker — stored as geometry (p8) OR as leading spaces
+  (p9), so test both. **This fixed book-of-knowledge too: 53 -> 64 linked
+  Contents entries.**
+- **The index needed `indent_threshold: 10.0`, not the analyzer's 13.5**: its
+  hanging indent is 10.8pt (the body's is 18). At 13.5 every turnover read as a
+  new entry and ~90 entries shipped split from their locators. Readers only.
+- **Columns split by BINDING SHIFT**: gutters are computed per spec over all its
+  pages, so one 240-248 spec smeared recto (x0=63) against verso (x0=36) and
+  found NO gutter — the whole index would have shipped y-sorted. One spec a side.
+- **Two diagrams drawn in live type** (Mir Valiuddin's latīfa sphere p160, the
+  Lām-alif p158): `join_center_lines` fused each into one `<h3>`. Rastered via
+  `images.figure_regions` — their meaning is the spatial arrangement.
+- p1 is a full cover SPREAD (MediaBox 915pt; CropBox isolates the front) —
+  `box: media` renders the CropBox, which is what a cover wants.
+- Print's own pagination excludes the 2 praise leaves: the title page's drop
+  folio `iii` fixes the series page as `i`. FLAGGED.
+
+### Reading QA — 2 rounds (33 packets, ~95k words)
+- Round 1 found all four phantom-space classes plus the index turnover split,
+  two-line titles shipping as two h2s, and two section heads that missed
+  `/center` on pages where the shift detector abstains.
+- REFUTED against the print: `you should he completely detached` (p38) and
+  `will still he hungry` (p39) are the **2006 edition's own typos** — both
+  engines agree and the p59 render shows `he`. Pinned as `present` cells so a
+  future "repair" cannot rewrite the book's words.
+
+### Known limitations (documented, not defects)
+- **Small caps ship lowercase** on 5 pages: the printed Contents' 45 titles
+  (`he who thinks of me constantly`) and 3 epigraph attributions (`simone
+  weil`). The font's small-cap glyphs sit at gids 94-108 of the SAME subset and
+  size as the body, so no pstyle or charstyle can separate them, and rawdict
+  exposes no gid. The nav (from the outline) carries proper Title Case.
+- Unattested Wade-Giles/compound hyphens (`Tao-ch'o`, `Huai-kan`,
+  `wu-liang-shou`, `tailor-made`): the book prints them ONCE, at the break, so
+  neither the render nor the book can settle them. 6 attested ones are in
+  `flow.keep_hyphens`.

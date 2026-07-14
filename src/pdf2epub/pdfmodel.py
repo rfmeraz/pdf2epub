@@ -104,6 +104,12 @@ class PdfDoc:
     subscript_dots: int = 0
     # spaces the layout cancelled at a hyphen seam, dropped at extract
     cancelled_spaces: int = 0
+    # pad spaces making up a ligature glyph's deficient advance, drawn behind
+    # its own ink and dropped at extract (see extract.mupdf.repair_span_text)
+    ligature_pads: int = 0
+    # neutrals moved back across an inline RTL run to restore logical order
+    # (see extract.mupdf.reorder_bidi_lines)
+    bidi_moved: int = 0
     warnings: list[str] = field(default_factory=list)
 
     def page(self, number: int) -> PdfPage:

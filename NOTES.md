@@ -1437,3 +1437,53 @@ book's own encoding is wrong, only the RENDER is ground truth.**
 
 Verification baseline: `pytest -q` **391 passed**; seven-book corpus all
 `Overall: PASS`. Only I&B's EPUB changed (the `no-dharma` fix, print-verified).
+
+## Phantom spaces: one producer, four geometries (Pray Without Ceasing, 2026-07-14)
+
+A PDF can pad with spaces that occupy no room, and NO text gate can see it:
+both engines read the same stream, so coverage compares a defect against
+itself. Only geometry — or a human reader — can tell. PWC carries four shapes,
+and the discriminator differs for each because MuPDF's bboxes differ:
+
+| shape | the pad's geometry | why the others miss it |
+|---|---|---|
+| ToUnicode-expanded ligature (`Th e`) | drawn entirely BEFORE the synthetic continuation glyph | the continuation's bbox is invented |
+| presentation-form ligature (`Cruciﬁ ed`) | contained by the ligature's OWN ink | ONE glyph — no continuation to hide behind |
+| zero-advance (`invoca tion`) | next letter at the space's own origin | prev glyph is an ordinary letter |
+| inline RTL (`( ,)יהוה`) | closing neutrals emitted before the run, drawn right of it | not a pad at all — an ORDER defect |
+
+Lessons that generalize:
+
+- **A whole-line visual sort is the textbook bidi transform and is WRONG here.**
+  MuPDF gives a ligature's continuation a synthetic bbox that overlaps the next
+  letter (`T`@77.40-88.11, `h`@88.11-93.45, `e`@88.07-92.32), so sorting by x
+  turns `The` into `Teh`. Move only what you can prove displaced.
+- **Widen a scoped rule by its GUARD, not its tolerance.** The layout-cancelled
+  space rule is scoped to hyphen seams because a general phantom rule ate BoK's
+  1195 kerned post-period spaces. The letter/letter guard replaces that scope
+  safely: a kerned space still ADVANCES. Measured corpus-wide, every true
+  phantom sits within 0.005pt of zero while the tightest real word space (M&R
+  `seek You`) advances 0.427pt — the 0.05pt tolerance sits in that gap.
+- **Guard x-reasoning against ROTATED lines.** A spine (`dir=(0,1)`) advances in
+  Y and gives every glyph the same x-box, so every space reads as zero-advance
+  (`TheWayoftheInvocation`). Check `line["dir"]`.
+- **The corpus is the test.** Every rule here was probed against all 8 configs
+  BEFORE it was written, and each printed the WORDS it would reconstruct — a
+  rule whose output is `affirmation`/`Crucified` is right; one whose output is
+  `seekYou` is not. Four of the six rules turned out to fix OTHER books; two
+  would have broken one if shipped as first drafted.
+- **A per-book PUA reading that is plain alphanumeric is not a phrase.**
+  `qa/runner._unsub` strips PUA readings from the candidate before comparison —
+  designed for BoK's ` (may God have mercy on him)`. PWC's readings are `0`-`9`,
+  `ā`, `ī`, so it stripped every digit and every ā in the book: coverage 98.38%,
+  33 bogus note-placement failures. Only phrase readings (`not r.char.isalnum()`)
+  may be unsubbed.
+- **`slice_pages` attributes a whole BLOCK to the page it STARTS on.** A gate-24
+  cell must name that page, not the page the words are printed on, and an
+  `absent` cell cannot express "these two blocks must stay separate" — the page
+  slice joins block texts with a space. Use `block_present`.
+
+Verification baseline: `pytest -q` **413 passed**; eight-book corpus (9 EPUBs)
+all `Overall: PASS`. Six EPUBs changed, every change an improvement re-QA'd:
+BoK +11 linked Contents entries, Keys/I&B intra-word splits, BoK/F&S/sufism
+number ranges.

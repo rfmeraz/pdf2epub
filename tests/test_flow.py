@@ -1771,6 +1771,136 @@ def test_toc_part_title_with_separate_folio_line(tmp_path):
     assert not any("Introduction My Years" in t for t in toc)
 
 
+def test_dehyphenate_closes_a_broken_number_range():
+    # 'pp. 8-' + '18.' is ONE range: the hyphen is the range's own, so the join
+    # must close it. The letter-hyphen rule never sees these and the default
+    # join spaced them ('pp. 8- 18') — ~20 sites in PWC's index alone.
+    assert dehyphenate_join("London, S.P.C.K., 1954, pp. 8-", "18.") == \
+        ("London, S.P.C.K., 1954, pp. 8-", "", False)
+    assert dehyphenate_join("Isaac Luria (1534-", "72) and which") == \
+        ("Isaac Luria (1534-", "", False)
+
+
+def test_dehyphenate_number_range_needs_digits_on_BOTH_sides():
+    # sufism's columned index puts a NEW entry on the next line
+    # ('92, 162, 166-' + 'ʿabd, 86') — closing that would fuse two entries
+    prev, sep, dehy = dehyphenate_join("92, 162, 166-", "ʿabd, 86, 11")
+    assert (prev, sep, dehy) == ("92, 162, 166-", " ", False)
+
+
+def test_toc_folio_in_pua_oldstyle_figures_parses(tmp_path):
+    # PWC sets its printed Contents folios in Minion's OLDSTYLE FIGURES, which
+    # the font encodes in the PUA (U+F643-F64C = 0-9). Undecoded, no line looks
+    # like an entry and the whole Contents ships as one fused prose paragraph.
+    # The build passes the verified glyphs.pua_map to the folio parse.
+    from pdf2epub.config import PuaRule
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    def _run(text, x0, y, x1, font=BODY):
+        return PdfRun(text=text, font_id=font, superscript=False,
+                      x0=x0, y0=y, x1=x1, y1=y + 12)
+
+    def _entry_line(title, folio, y):
+        return PdfLine(runs=[_run(title, 82, y, 250),
+                             _run(folio, 346, y, 352)],
+                       x0=82, y0=y, x1=352, y1=y + 12)
+
+    lines = [
+        _line("Contents", 89, x0=177, width=74, font=BIG),
+        _entry_line("Chaitanya I Shall Repeat Thy Name", "\uF647", 123),      # 4
+        _entry_line("Zohar The Holy One Speaks His Name", "\uF645\uF649", 137),  # 26
+    ]
+    cfg = _cfg(tmp_path, toc_source="printed", toc_printed_pages=[1])
+    cfg.pua_map = {chr(0xF643 + i): PuaRule(action="char", char=str(i))
+                   for i in range(10)}
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    toc = [p.text() for p in _paras(res.flow) if p.style == "__toc__"]
+    assert "Chaitanya I Shall Repeat Thy Name\t4" in toc
+    assert "Zohar The Holy One Speaks His Name\t26" in toc
+
+
+def test_toc_unnumbered_wrapped_entry_folio_on_turnover(tmp_path):
+    # PWC p8: an UNNUMBERED entry whose title wrapped, pushing its folio onto
+    # the turnover. The folio-less first line must OPEN the entry, not fuse into
+    # the prior one — 8 of 48 entries shipped mangled ('…amitābha Hōnen the bud'
+    # plus a bogus 'in the right practice' entry) before the indent test.
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    def _run(text, x0, y, x1, font=BODY):
+        return PdfRun(text=text, font_id=font, superscript=False,
+                      x0=x0, y0=y, x1=x1, y1=y + 12)
+
+    def _entry(title, folio, y, x0=63):
+        return PdfLine(runs=[_run(title, x0, y, 250), _run(folio, 346, y, 352)],
+                       x0=x0, y0=y, x1=352, y1=y + 12)
+
+    lines = [
+        _entry("Sukhāvatīvyūha  glorify the name of the lord", "10", 110),
+        # the wrapped entry: no folio on its first line…
+        PdfLine(runs=[_run("Hōnen  the buddha of boundless light", 63, 123, 300)],
+                x0=63, y0=123, x1=300, y1=135),
+        # …the turnover is INDENTED and carries the folio
+        _entry("in the right practice", "12", 137, x0=81),
+        _entry("Shinran  passages on the pure land way", "22", 151),
+    ]
+    cfg = _cfg(tmp_path, toc_source="printed", toc_printed_pages=[1])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    toc = [p.text() for p in _paras(res.flow) if p.style == "__toc__"]
+    assert "Hōnen  the buddha of boundless light in the right practice\t12" in toc
+    assert "Sukhāvatīvyūha  glorify the name of the lord\t10" in toc
+    assert "Shinran  passages on the pure land way\t22" in toc
+    assert not any(t.startswith("in the right practice") for t in toc)
+
+
+def test_toc_turnover_indented_by_leading_spaces(tmp_path):
+    # PWC p9 stores the same wrap the OTHER way: the turnover's indent is
+    # LEADING SPACES inside the run, so its x0 equals the entry stop exactly
+    # and a geometry-only test reads it as a new entry.
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    def _run(text, x0, y, x1, font=BODY):
+        return PdfRun(text=text, font_id=font, superscript=False,
+                      x0=x0, y0=y, x1=x1, y1=y + 12)
+
+    lines = [
+        PdfLine(runs=[_run("Archimandrite Lev Gillet  on the practical use of the jesus",
+                           37, 70, 326)],
+                x0=37, y0=70, x1=326, y1=82),
+        PdfLine(runs=[_run("       prayer ", 37, 83, 90), _run("124", 352, 83, 368)],
+                x0=37, y0=83, x1=368, y1=95),
+        PdfLine(runs=[_run("Mir Valiuddin  some important dhikrs", 37, 96, 192),
+                      _run("134", 352, 96, 368)],
+                x0=37, y0=96, x1=368, y1=108),
+    ]
+    cfg = _cfg(tmp_path, toc_source="printed", toc_printed_pages=[1])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    toc = [p.text() for p in _paras(res.flow) if p.style == "__toc__"]
+    assert any(t.startswith("Archimandrite Lev Gillet") and t.endswith("\t124")
+               for t in toc)
+    assert "Mir Valiuddin  some important dhikrs\t134" in toc
+    assert not any(t.strip().startswith("prayer") for t in toc)
+
+
+def test_toc_folio_without_pua_map_is_unchanged(tmp_path):
+    # the decoder is None when a book maps no PUA: plain-digit folios (every
+    # other book in the corpus) must parse exactly as before.
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    def _run(text, x0, y, x1, font=BODY):
+        return PdfRun(text=text, font_id=font, superscript=False,
+                      x0=x0, y0=y, x1=x1, y1=y + 12)
+
+    lines = [
+        _line("Contents", 89, x0=177, width=74, font=BIG),
+        PdfLine(runs=[_run("Foreword", 82, 123, 250), _run("ix", 346, 123, 352)],
+                x0=82, y0=123, x1=352, y1=135),
+    ]
+    cfg = _cfg(tmp_path, toc_source="printed", toc_printed_pages=[1])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    toc = [p.text() for p in _paras(res.flow) if p.style == "__toc__"]
+    assert "Foreword\tix" in toc
+
+
 def test_break_before_shift_corrected_indent(tmp_path):
     # a verso binding margin slides the block left: continuations sit at x0≈43,
     # so a real ~16pt first-line indent lands at x0≈59.6 — only ~5pt past the
@@ -2653,8 +2783,12 @@ def test_emit_epigraph_role(tmp_path):
     paras[0].classes = ["Serif-11"]
     out = Emitter(cfg, res.flow, say=lambda m: None).emit()
     body = "".join(part for f in out.files for part in f.body_parts)
-    assert ('<blockquote class="epigraph Serif-11" epub:type="epigraph" '
-            'role="doc-epigraph"><p>') in body
+    # the blockquote carries the SEMANTIC class; the pstyle classes sit on the
+    # <p>, where the typographic gates read a block's face and size (hung on the
+    # blockquote alone, gate 17 reads every epigraph as body type — PWC's three
+    # part openers, the corpus's first epigraphs)
+    assert ('<blockquote class="epigraph" epub:type="epigraph" '
+            'role="doc-epigraph"><p class="Serif-11">') in body
     assert "knows his Lord" in body
     from pdf2epub.core import emit_css
     assert "blockquote.epigraph" in emit_css._BASE

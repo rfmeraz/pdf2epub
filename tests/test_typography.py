@@ -334,6 +334,31 @@ def test_census_body_face_h3_fires_sc_and_toc_silent():
     assert len(findings) == 1 and "subsection head" in findings[0]
 
 
+def test_census_heading_allow_clears_a_verified_body_type_head():
+    # PWC sets each selection's sub-sections in CENTERED FULL CAPS at the body
+    # face and size ('1. THE FORM OF THE PRAYER', p.145) — real headings with
+    # none of the gate's three evidences. qa.heading_allow records the render.
+    line = _line("1. THE FORM OF THE PRAYER", x0=72.0, width=200.0)
+    doc = _pdoc([_ppage(1, [line])])
+    slices = {1: [_blk(tag="h3", classes=("Serif-11",),
+                       text="1. THE FORM OF THE PRAYER")]}
+    ok, _, findings = check_heading_census(
+        slices, doc, GEO, "Serif", {"Caps"}, [], set(), {}, [], 11.0, {},
+        ["1. THE FORM OF THE PRAYER"])
+    assert ok and not findings
+
+
+def test_census_stale_heading_allow_fails():
+    # an entry matching no flagged heading is config rot — it must never
+    # quietly license a real promotion later (qa_duplicate_allow doctrine)
+    doc = _pdoc([_ppage(1, [])])
+    ok, _, findings = check_heading_census(
+        slices := {}, doc, GEO, "Serif", {"Caps"}, [], set(), {}, [], 11.0, {},
+        ["A HEADING THAT NO LONGER PRINTS"])
+    assert not ok
+    assert any("stale qa.heading_allow" in f for f in findings)
+
+
 def test_census_fused_heading():
     doc = _pdoc([_ppage(1, [])])
     titles = ["Oneness: The Highest Common Denominator", "Foreword"]
@@ -409,6 +434,29 @@ def test_signature_wrong_cluster_fires():
     ok, summary, findings = check_signature_diff(slices, paras, RULES, 11.0, [1])
     assert not ok and "p.1" in findings[0]
     assert "body" in findings[0] and "display" in findings[0]
+
+
+def test_signature_allow_clears_a_verified_page():
+    # PWC p.4 sets ONE sentence in two sizes, so the flow's first-line style
+    # (body) and the gate's char-weighted PDF size (small) cannot agree — the
+    # gate would only pass on the SPLIT paragraph it exists to catch.
+    paras = [PdfParaGeo(start_page=1, role="p", style="Serif@11",
+                        lines=[_line("x")], size_pt=11.0, letters=50,
+                        text="an ordinary body paragraph")]
+    slices = {1: [_blk(classes=("Serif-30",), text="rendered display sized",
+                       letters=50)]}
+    ok, _, findings = check_signature_diff(slices, paras, RULES, 11.0, [1], [1])
+    assert ok and not findings
+
+
+def test_signature_stale_allow_fails():
+    # a page that no longer mismatches must fail, not silently linger
+    paras = [PdfParaGeo(start_page=1, role="p", style="Serif@11",
+                        lines=[_line("x")], size_pt=11.0, letters=50, text="p")]
+    slices = {1: [_blk(text="matching body block", letters=50)]}
+    ok, _, findings = check_signature_diff(slices, paras, RULES, 11.0, [1], [1])
+    assert not ok
+    assert any("stale qa.signature_allow" in f for f in findings)
 
 
 def test_signature_join_drift_invisible_after_rle():

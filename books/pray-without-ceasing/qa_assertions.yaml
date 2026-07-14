@@ -1,0 +1,173 @@
+# Gate-24 regression assertions — pray-without-ceasing (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+# `page` is the PRINTED folio, not the PDF page.
+#
+# Every cell pins a print-verified defect this conversion found and fixed. The
+# index cells do double duty: pages 219-227 are engine-disputed (poppler reads
+# the columns, MuPDF y-sorts them), so gate 2's coverage witness is BLIND there
+# and these are the only machine-checkable defense those pages have (gate 25b).
+
+# --- LIGATURE-PAD spaces (extract.mupdf.repair_span_text case 3a).
+# Minion's Th/fi/ft/ff/ffi ligatures advance less than their own ink, and the
+# producer pads the difference with a space drawn back UNDER the ligature. The
+# text layer read 'Th e Way', 'oft en', 'fi rst', 'affi  rmation' on nearly
+# every page — 2572 sites. present-of-correct, not absent-of-broken: it also
+# catches a dropped glyph.
+- {page: "i", type: present, text: "The Library of Perennial Philosophy is dedicated to the exposition",
+   note: "'Th e Library' — the Th ligature pad; p4 render"}
+- {page: "i", type: present, text: "finds its expression in the revealed Scriptures",
+   note: "'fi nds' — the fi ligature pad; p4 render"}
+- {page: "3", type: present, text: "The following excerpts are taken from Song VIII",
+   note: "'Th e following' — Th pad in the Bhagavad Gītā headnote; p24 render"}
+- {page: "136", type: present, text: "The form of dhikr in this case is like the inverted letter",
+   note: "'Th e form' — Th pad. Folio 136: the paragraph OPENS on p157 and slice_pages
+          attributes a block to the page it starts on; p158 render"}
+- {page: "218", type: present, text: "obtained a Ph.D. in French literature in 1985",
+   note: "Ph.D. as printed (qa.lost_space_allow); p239 render"}
+
+# --- LIGATURE-PAD case 3b: a PRESENTATION-FORM ligature (one glyph, one char)
+# has no continuation glyph for the pad to hide behind, so the pad overlaps the
+# ligature's OWN ink. Six index words shipped broken ('Cruciﬁ ed', 'Abulafi a',
+# 'Sufi sm') past every gate — only the gate-18 visual sheet caught them.
+- {page: "220", type: present, text: "Crucified, 76, 194",
+   note: "index: 'Cruciﬁ ed' — pad inside the U+FB01 ligature's ink; p241 render"}
+- {page: "220", type: present, text: "Crucifix, 75, 190",
+   note: "index: 'Cruciﬁ x'; p241 render"}
+- {page: "219", type: present, text: "Abulafia, Abraham 28-29, 31, 33",
+   note: "index: 'Abulafi a'; p240 render"}
+- {page: "225", type: present, text: "Sacrifices",
+   note: "index: 'Sacrifi ces'; p246 render"}
+
+# --- INLINE RTL (extract.mupdf.reorder_bidi_lines). The producer draws the
+# punctuation that CLOSES a Hebrew run as a jump back out to its right, so the
+# stream emitted it BEFORE the Hebrew: 'Yod-He-Vav-He ( ,)יהוה'.
+- {page: "211", type: present, text: "Yod-He-Vav-He (יהוה), which form the supreme Divine Name",
+   note: "Glossary Tetragrammaton entry — logical order restored; p232 render"}
+- {page: "89", type: present, text: "the “two-letter name,” YH (יה) which is pronounced",
+   note: "inline Hebrew, closing paren restored; p110 render"}
+- {page: "91", type: present, text: "by the vav (ו). According to the",
+   note: "inline Hebrew, closing paren + period restored; p112 render"}
+
+# --- PUA OLDSTYLE FIGURES + transliteration letters (glyphs.pua_map). The
+# printed Contents sets its folios in Minion's PUA-encoded oldstyle figures, so
+# no line looked like a TOC entry and the whole Contents parsed to zero.
+- {page: "143", type: present, text: "tulsīdās",
+   note: "U+F685 -> ī and U+F66E -> ā in the part-III epigraph attribution; p164 render"}
+
+# --- PRINTED-TOC rebuild: an UNNUMBERED entry whose title wrapped pushed its
+# folio onto the turnover, so the folio-less first line fused into the PRIOR
+# entry and the turnover shipped as a bogus entry ('in the right practice').
+- {page: "v", type: present, text: "Hōnen the buddha of boundless light & taking refuge in the right practice",
+   note: "wrapped Contents entry kept whole and linked; p8 render"}
+- {page: "v", type: block_present, text: "Sukhāvatīvyūha glorify the name of the lord amitābha",
+   note: "the Sukhāvatīvyūha entry must be its OWN block, not swallow Hōnen's
+          folio-less first line (an `absent` cannot say this: the page slice joins
+          block texts, so 'amitābha Hōnen' spans two correct entries); p8 render"}
+- {page: "vi", type: present, text: "Archimandrite Lev Gillet on the practical use of the jesus prayer",
+   note: "wrapped entry whose turnover is indented by LEADING SPACES; p9 render"}
+
+# --- flow.columns: the INDEX is two columns whose grid alternates with the
+# binding shift (even pages x0=63, odd x0=36). One 240-248 spec found no gutter
+# at all and the whole index would have shipped y-sorted/interleaved.
+- {page: "220", type: order, text: "Cloud of Unknowing, 48-50, 178", text2: "Comfort, 10, 115, 185, 213",
+   note: "column 1 must read out FULLY before column 2 begins; p241 render"}
+- {page: "219", type: order, text: "Apostle, 36, 51-52, 137, 188", text2: "Arabic, 70, 83, 198",
+   note: "column 1's last entry precedes column 2's first; p240 render"}
+
+# --- blocks.verse: p48 is a verse-ONLY page, so body_anchors keys off the
+# verse's own left and its 18pt offset reads as 0 — the spec cannot match and
+# the joiner would have shredded the Zohar poem.
+- {page: "26", type: present, text: "Who sees the mighty ones",
+   note: "Zohar verse line 1 (flow.overrides class:verse). Folio 26: the stanza opens
+          on p47 and runs onto p48; p48 render"}
+- {page: "26", type: present, text: "The Holy One’s Name?",
+   note: "Zohar verse last line — the poem's tail on p48; p48 render"}
+
+# --- the p4 series note is ONE printed sentence whose two lines are set a half
+# point apart; the pstyle change broke it mid-phrase.
+- {page: "i", type: present, text: "appears as one of our selections in the Treasures of the World’s Religions series",
+   note: "series note kept whole across the 10pt/9.747pt seam; p4 render"}
+
+# --- part openers: print sets the numeral and title as separate display lines
+# ~90pt apart, which shipped as two h1s and a 0-char orphan file per part.
+- {page: "1", type: present, text: "I. FOUNDATIONAL TEXTS",
+   note: "part opener joined into one h1 matching its bookmark; p22 render"}
+
+# --- the two Mir Valiuddin DIAGRAMS are rastered (images.figure_regions):
+# join_center_lines fused each into a single <h3>.
+- {page: "139", type: absent, text: "Akhfā Khafī Sirr Rūh Qalb The Throne",
+   note: "the latīfa diagram must not ship as a fused heading; p160 render"}
+
+# --- ZERO-ADVANCE spaces (extract.mupdf.repair_span_text case 4). The producer
+# also drops a space with NO advance inside a word: the next letter is drawn at
+# the space's own origin. Both engines read the same stream, so no gate can see
+# it — every one of these was found by a blind reader (round 1).
+- {page: "70", type: present, text: "human invocation is only the",
+   note: "'invoca tion' — p91 render shows 'invocation'"}
+- {page: "71", type: present, text: "is prefigured by concentration",
+   note: "'concentra tion'; p92 render"}
+- {page: "109", type: present, text: "but the quality of",
+   note: "'qual ity'. Folio 109: the paragraph opens on p130; p131 render"}
+- {page: "131", type: present, text: "it is an anticipation of the eternal kingdom",
+   note: "'antici pation'; p152 render"}
+- {page: "45", type: present, text: "has endowed even the bodily nature",
+   note: "'en dowed'; p66 render"}
+- {page: "22", type: present, text: "was the chief disciple of Hōnen",
+   note: "'H ōnen'; p43 render"}
+
+# --- keep_hyphens: real compounds whose hyphen fell at a line break, each
+# attested hyphenated MID-LINE by the book itself (see book.yaml).
+- {page: "155", type: present, text: "japa-yoga",
+   note: "'japayoga' — 10x hyphenated mid-line; p176 render"}
+- {page: "14", type: present, text: "single-mindedly",
+   note: "'singlemindedly' — 7x hyphenated; p35 render"}
+- {page: "18", type: present, text: "Shan-tao",
+   note: "'Shantao' — Wade-Giles name, 6x hyphenated; p39 render"}
+- {page: "87", type: present, text: "twelve-letter",
+   note: "'twelveletter' — 2x hyphenated; p109 render"}
+- {page: "108", type: present, text: "mani-walls",
+   note: "'mani- walls' — attested mid-line on the same page; p129 render"}
+- {page: "169", type: present, text: "Other-power",
+   note: "'Otherpower' — the book's term opposite self-power; p190 render"}
+
+# --- flow.indent_threshold: the INDEX's hanging indent is 10.8pt but the
+# analyzer proposed 13.5 (0.75 x the body's 18pt first-line indent), so every
+# index turnover read as a NEW entry and ~90 entries shipped split from their
+# own locators. Blind readers found it; no gate can (these pages are
+# engine-disputed, so gate 2's witness is blind).
+- {page: "219", type: block_present,
+   text: "Abhishiktananda, Swami, 157-163, 216; see Le Saux, Fr. Henri",
+   note: "index entry + its turnover must be ONE block; p240 render"}
+- {page: "219", type: block_present, text: "Abulafia, Abraham 28-29, 31, 33, 214",
+   note: "index turnover '214' joins its headword; p240 render"}
+
+# --- two-line selection TITLES: print sets them as two display lines and only
+# the narrower second earns /center, so each shipped as TWO h2s and matched no
+# bookmark. Round-1 blind readers found both.
+- {page: "178", type: block_present,
+   text: "BREATHING AND RHYTHM IN CHRISTIAN AND BUDDHIST PRAYER",
+   note: "one heading, not two; p199 render"}
+- {page: "181", type: block_present,
+   text: "THE UNCEASING ACT OF LOVE OF SISTER MARY CONSOLATA",
+   note: "one heading, not two; p202 render"}
+- {page: "194", type: block_present,
+   text: "THE HEIGHT OF HEROISM IN THE UNCEASING ACT OF LOVE",
+   note: "the section head is its OWN block, not fused with the paragraph under it
+          (an `absent` cannot say this: the page slice joins block texts); p215 render"}
+
+# --- NUMBER RANGES broken at their own hyphen (textfix.dehyphenate_join). The
+# letter-hyphen rule never saw them, so the default join spaced them ('pp. 8-
+# 18', '119- 120'). ~20 sites in the index and acknowledgments; round-2 readers.
+- {page: "214", type: present, text: "London, S.P.C.K., 1954, pp. 8-18.",
+   note: "'pp. 8- 18'; p235 render"}
+- {page: "216", type: present, text: "pp. 126-127.",
+   note: "'126- 127' in the Yellowtail acknowledgment; p237 render"}
+- {page: "220", type: present, text: "Buddhahood, 11, 21, 105-106, 119-120, 209",
+   note: "'119- 120' — an index locator range; p241 render"}
+
+# --- as-printed, NOT defects (print is ground truth; both engines agree and the
+# p59 render shows the book's own 'he'): 'you should he completely detached'
+# (p38) and 'will still he hungry' (p39) are the 2006 edition's own typos.
+- {page: "38", type: present, text: "you should he completely detached",
+   note: "AS PRINTED — p59 render. Pinned so a future 'repair' cannot silently
+          rewrite the book's own words"}

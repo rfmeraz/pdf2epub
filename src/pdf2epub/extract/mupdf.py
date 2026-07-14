@@ -101,10 +101,105 @@ def _decode_label(label: str | None) -> str | None:
 _DOT_BELOW = "̣"
 _DOT_ABOVE = "̇"
 
+# Alphabetic Presentation Forms: ligatures a font encodes as ONE glyph mapping
+# to ONE char (textfix.expand_ligatures splits them into letters downstream)
+_LIG_CHARS = frozenset("ﬀﬁﬂﬃﬄﬅﬆ")
 
-def repair_span_text(pagedict: dict) -> tuple[int, int]:
-    """Rebuild each span's ``text`` from its GLYPHS, repairing two things only
-    the glyph geometry can see. Returns (dots composed, cancelled spaces dropped).
+# scripts written right-to-left (Hebrew, Arabic, Syriac, Thaana + presentation
+# forms). Kept to the ranges this corpus can meet.
+_RTL_RE = re.compile("[֐-׿؀-ۿ܀-ݏހ-޿"
+                     "יִ-﷿ﹰ-﻿]")
+
+
+def _is_rtl(c: str) -> bool:
+    return bool(_RTL_RE.match(c))
+
+
+def reorder_bidi_lines(pagedict: dict) -> int:
+    """Repair the LOGICAL order of a line carrying an inline RTL run. Returns
+    the number of glyphs moved.
+
+    PWC sets four short Hebrew runs inside English prose ('Yod-He-Vav-He
+    (יהוה), which form the supreme Divine Name' — p232 Glossary, p110, p112).
+    The producer draws the RTL run right-to-left, then draws the punctuation
+    that CLOSES it — ')', ',', ';', '.', the trailing space — as a separate
+    jump back out to the right of the run. Those glyphs are therefore emitted
+    BEFORE the Hebrew in the content stream while being drawn AFTER it, and the
+    text layer reads 'Yod-He-Vav-He ( ,)יהוה' — the book's own words with their
+    punctuation displaced.
+
+    The RTL glyphs themselves need no help: the stream already holds them in
+    logical order (verified against the Glossary's own gloss — 'Yod-He-Vav-He'
+    = י-ה-ו-ה). Only the closing neutrals move, and the geometry says exactly
+    which: they are the maximal run emitted immediately before the RTL glyphs
+    yet drawn at or past the run's right edge. The opening '(' is drawn LEFT of
+    the run and so never matches — it stays where print puts it.
+
+    A whole-line visual sort would be the textbook transform and is WRONG here:
+    MuPDF gives a ligature's continuation glyph a synthetic bbox that overlaps
+    the next letter ('Th'+'e' -> T@77.40-88.11, h@88.11-93.45, e@88.07-92.32),
+    so sorting by x reorders 'The' into 'Teh'. This moves only the neutrals it
+    can prove displaced, and only on lines that carry RTL at all — the other
+    seven books have ZERO RTL in their text layers (book-of-knowledge's Arabic
+    is glyphs.pua_map substitution, applied at flow time), so they cannot reach
+    this code.
+    """
+    n = 0
+    for block in pagedict.get("blocks", []):
+        for line in block.get("lines", []):
+            spans = [s for s in line.get("spans", []) if s.get("chars") is not None]
+            if not spans:
+                continue
+            flat = [(si, ch) for si, s in enumerate(spans) for ch in s["chars"]]
+            if not any(_is_rtl(ch["c"]) for _, ch in flat):
+                continue
+            out: list[int] = []
+            i = 0
+            moved_any = 0
+            while i < len(flat):
+                if not _is_rtl(flat[i][1]["c"]):
+                    out.append(i)
+                    i += 1
+                    continue
+                j = i
+                while j < len(flat) and _is_rtl(flat[j][1]["c"]):
+                    j += 1
+                rtl_hi = max(flat[k][1]["bbox"][2] for k in range(i, j))
+                moved: list[int] = []
+                while out and flat[out[-1]][1]["bbox"][0] >= rtl_hi - 0.5:
+                    moved.append(out.pop())
+                out.extend(range(i, j))
+                moved.sort(key=lambda k: flat[k][1]["bbox"][0])
+                out.extend(moved)
+                moved_any += len(moved)
+                i = j
+            if not moved_any:
+                continue
+            new_spans: list[dict] = []
+            last_si: int | None = None
+            for k in out:
+                si, ch = flat[k]
+                if si != last_si:
+                    ns = dict(spans[si])
+                    ns["chars"] = []
+                    new_spans.append(ns)
+                    last_si = si
+                new_spans[-1]["chars"].append(ch)
+            for ns in new_spans:
+                ns["text"] = "".join(c["c"] for c in ns["chars"])
+                bb = list(ns.get("bbox", (0.0, 0.0, 0.0, 0.0)))
+                bb[0] = min(c["bbox"][0] for c in ns["chars"])
+                bb[2] = max(c["bbox"][2] for c in ns["chars"])
+                ns["bbox"] = tuple(bb)
+            line["spans"] = new_spans
+            n += moved_any
+    return n
+
+
+def repair_span_text(pagedict: dict) -> tuple[int, int, int]:
+    """Rebuild each span's ``text`` from its GLYPHS, repairing four things only
+    the glyph geometry can see. Returns (dots composed, cancelled spaces dropped,
+    ligature pads + zero-advance spaces dropped).
 
     1. DOT diacritics the font encodes as a bare period.
 
@@ -141,14 +236,72 @@ def repair_span_text(pagedict: dict) -> tuple[int, int]:
     the BASE's span, where NFC can fold it.
 
     2. A space the layout CANCELLED after a hyphen (see inline).
+
+    3. A LIGATURE-PAD space.
+
+    Pray Without Ceasing sets its Minion body with the Th/fi/fl/ff/ffi/ft
+    ligatures, and each ligature glyph carries an advance far NARROWER than its
+    own ink (the 'Th' of p.4 is drawn 10.71pt wide but advances only 5.34pt).
+    The producer made up the deficit with a SPACE glyph, drawn back underneath
+    the ligature's ink where it occupies no room of its own. MuPDF expands the
+    ligature through its ToUnicode ('Th' -> 'T','h'), keeps the pad, and the
+    text layer reads 'Th e Way', 'oft en', 'fi rst', 'affi  rmation' — the
+    book's own words, split by its own encoding, on nearly every page (2572
+    sites). Poppler reconstructs words from glyph gaps and never sees it, so
+    gate 2 measures the flow against a witness that disagrees on 2779 words.
+
+    The discriminator is geometric and exact: the pad is drawn ENTIRELY BEFORE
+    the nearest preceding non-space glyph — impossible for a real word space,
+    which always follows the ink it separates. Scanning back PAST earlier pads
+    is what catches the second pad of a 3-char ligature ('ffi' pads twice), and
+    the alphabetic guard on that preceding glyph is what keeps BoK's 1225
+    kerned TOC dot leaders ('. . . .', drawn with the same backward geometry)
+    untouched. Measured over the whole corpus it fires 2572 times here — every
+    site reconstructing a real word (The, first, affirmation, left) — and NEVER
+    once in the other seven books.
+
+    A ligature the font encodes as ONE glyph mapping to ONE char (U+FB01 'ﬁ' —
+    the index's WorldWisdomFont, 'Cruciﬁ ed') pads the same way but leaves no
+    continuation glyph for the pad to hide behind, so it overlaps the
+    ligature's own ink instead and the test above cannot see it. Six such words
+    shipped broken through the INDEX, where gate 2 is blind (those pages are
+    engine-disputed) — only the visual sheet caught them. Same doctrine: the
+    pad is contained by the ligature it pads, where a real word space is drawn
+    clear of it. Nine sites here, seven in sufism (all on its cover and its
+    excluded back cover), zero in the other six books.
+
+    4. A ZERO-ADVANCE space between two LETTERS.
+
+    The same producer also drops a space with NO advance at all inside a word:
+    the next letter is drawn at the space's own origin, so print shows one word
+    where the text layer reads two ('invoca tion', 'qual ity', 'antici pation',
+    'en dowed' — the p.91 render shows 'invocation'). Blind readers found these;
+    no gate can, since both witnesses read the same stream.
+
+    Test 2's shape, freed of its hyphen scope. That scope exists because a
+    GENERAL phantom-space rule eats BoK's 1195 kerned post-period spaces — the
+    LETTER/LETTER guard is what replaces it, and it holds because a kerned space
+    still ADVANCES: measured across the corpus, every true phantom sits within
+    0.005pt of zero advance while the tightest real space (M&R p.154 'seek You',
+    the only letter/letter candidate outside this class) advances 0.427pt. The
+    0.05pt tolerance sits in that gap. It fires 9 times here, 5 in Keys ('im
+    plies', 'es sence' — shipped, and its blind readers missed them), once in
+    I&B, and nowhere else.
     """
     n = 0
     n_sp = 0
+    n_lig = 0
+    n_zero = 0
     for block in pagedict.get("blocks", []):
         for line in block.get("lines", []):
             spans = [s for s in line.get("spans", []) if s.get("chars") is not None]
             if not spans:
                 continue
+            # every repair below reasons in X: a rotated line (PWC's spine,
+            # dir=(0,1)) advances in Y and gives every glyph the same x-box, so
+            # the zero-advance test below reads its every space as a phantom
+            # ('Th e Way of the Invocation' -> 'TheWayoftheInvocation')
+            horizontal = abs(line.get("dir", (1.0, 0.0))[1]) < 0.01
             flat = [(si, ch) for si, s in enumerate(spans) for ch in s["chars"]]
             out: list[list[str]] = [[] for _ in spans]
             fixed: set[int] = set()
@@ -191,6 +344,46 @@ def repair_span_text(pagedict: dict) -> tuple[int, int]:
                         n_sp += 1
                         i += 1
                         continue
+                # a LIGATURE-PAD space (see 3. above), in either of the two
+                # shapes this book's fonts produce. The scan back over earlier
+                # pads reaches the ligature's own glyph for a 3-char ligature.
+                if ch["c"] == " ":
+                    j = i - 1
+                    while j >= 0 and flat[j][1]["c"] == " ":
+                        j -= 1
+                    if j >= 0:
+                        base = flat[j][1]
+                        # (a) EXPANDED ligature ('Th' -> 'T','h'): the pad is
+                        # drawn entirely BEHIND the synthetic continuation
+                        # glyph MuPDF split out of it
+                        if base["c"].isalpha() \
+                                and ch["bbox"][2] <= base["bbox"][0] + 0.01:
+                            n_lig += 1
+                            i += 1
+                            continue
+                        # (b) PRESENTATION-FORM ligature (one glyph, one char:
+                        # 'Cruciﬁ ed' in the index's WorldWisdomFont): there is
+                        # no continuation glyph to hide behind, so the pad
+                        # simply overlaps the ligature's OWN ink, and the next
+                        # letter resumes at that ink's end. Guarding on the
+                        # ligature char keeps this off ordinary kerned spaces —
+                        # a real word space after a ligature is drawn CLEAR of
+                        # it and fails the containment test.
+                        if base["c"] in _LIG_CHARS \
+                                and ch["bbox"][0] >= base["bbox"][0] - 0.5 \
+                                and ch["bbox"][2] <= base["bbox"][2] + 0.5:
+                            n_lig += 1
+                            i += 1
+                            continue
+                # 4. a ZERO-ADVANCE space between two letters (see 4. above).
+                if ch["c"] == " " and horizontal and prev is not None \
+                        and prev["c"].isalpha() and i + 1 < len(flat):
+                    _, nxt = flat[i + 1]
+                    if nxt["c"].isalpha() \
+                            and nxt["bbox"][0] <= ch["bbox"][0] + 0.05:
+                        n_zero += 1
+                        i += 1
+                        continue
                 out[si].append(ch["c"])
                 i += 1
             for si, (span, chunk) in enumerate(zip(spans, out)):
@@ -202,7 +395,7 @@ def repair_span_text(pagedict: dict) -> tuple[int, int]:
                 # a separate decision, not this repair's to make.
                 span["text"] = (unicodedata.normalize("NFC", text)
                                 if si in fixed else text)
-    return n, n_sp
+    return n, n_sp, n_lig + n_zero
 
 
 def trim_in_text_space(page) -> tuple[float, float, float, float]:
@@ -321,6 +514,8 @@ class MuPdfEngine:
         crop_votes: dict[tuple[int, int, int, int], int] = {}
         n_dots = 0
         n_spaces = 0
+        n_ligpads = 0
+        n_bidi = 0
 
         # outline (\x00 padding seen in the wild: BoK InDesign CS6)
         for level, title, page_no in doc.get_toc(simple=True):
@@ -346,9 +541,13 @@ class MuPdfEngine:
             # geometry; span text is rebuilt identically when nothing fires
             # (verified span-for-span across the corpus)
             pagedict = page.get_text("rawdict")
-            d_n, s_n = repair_span_text(pagedict)
+            # bidi BEFORE the span repair: it reorders the raw glyphs, which
+            # the repair then reads to rebuild each span's text
+            n_bidi += reorder_bidi_lines(pagedict)
+            d_n, s_n, l_n = repair_span_text(pagedict)
             n_dots += d_n
             n_spaces += s_n
+            n_ligpads += l_n
             lines, clipped = parse_page_dict(pagedict, trim, table)
             n_chars = sum(len(ln.text()) for ln in lines)
             n_images = len(page.get_images(full=False))
@@ -393,5 +592,7 @@ class MuPdfEngine:
             out.trim_crop_box = max(crop_votes, key=crop_votes.get)
         out.subscript_dots = n_dots
         out.cancelled_spaces = n_spaces
+        out.ligature_pads = n_ligpads
+        out.bidi_moved = n_bidi
         doc.close()
         return out

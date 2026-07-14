@@ -72,7 +72,11 @@ def extract(pdf: Path, say=print, engine_name: str = "mupdf",
         + (f", {doc.subscript_dots} dot diacritic(s) recomposed"
            if doc.subscript_dots else "")
         + (f", {doc.cancelled_spaces} layout-cancelled space(s) dropped"
-           if doc.cancelled_spaces else ""))
+           if doc.cancelled_spaces else "")
+        + (f", {doc.ligature_pads} ligature-pad space(s) dropped"
+           if doc.ligature_pads else "")
+        + (f", {doc.bidi_moved} glyph(s) reordered across an inline RTL run"
+           if doc.bidi_moved else ""))
     if image_only:
         msg = (f"{len(image_only)} image-only page(s) (no usable text layer): "
                f"{image_only[:10]}{'…' if len(image_only) > 10 else ''} — OCR is out of "

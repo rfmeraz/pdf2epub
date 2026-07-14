@@ -490,7 +490,9 @@ def _foldn(s: str) -> str:
 
 def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
                          source_titles, skip_pages, cache, paras, body_size,
-                         furniture):
+                         furniture, allow=()):
+    allow = set(allow)
+    allow_hit: set[str] = set()
     findings: list[str] = []
     audit: list[str] = []
     info: list[str] = []
@@ -556,8 +558,14 @@ def check_heading_census(slices, doc, geo, body_famroot, smallcaps_fams,
             if want and any(fuzz.partial_ratio(want, t) >= 85
                             for t in folded_titles):
                 continue  # TOC-corroborated flush-left head (by design)
+            if text in allow:
+                allow_hit.add(text)
+                continue  # render-verified body-type head (qa.heading_allow)
             findings.append(f'p.{page} <{blk.tag}> body-type heading without '
                             f'TOC corroboration: "{text[:60]}"')
+    for a in sorted(allow - allow_hit):
+        findings.append(f'stale qa.heading_allow entry (matched no flagged '
+                        f'heading): {a!r}')
     # demotion direction: informational count only (ornament display numerals
     # are legitimately role p)
     heads_pages = {p for p in slices if any(b.tag in _H_TAGS for b in slices[p])}
@@ -598,7 +606,10 @@ def _rle(tuples, snippets):
     return out_t, out_s
 
 
-def check_signature_diff(slices, paras, rules, body_size, pages_scope):
+def check_signature_diff(slices, paras, rules, body_size, pages_scope,
+                         allow=()):
+    allow = set(allow)
+    allow_hit: set[int] = set()
     by_page: dict[int, list[PdfParaGeo]] = {}
     for g in paras:
         if g.role in SIG_SKIP_ROLES or g.style.startswith("__") or not g.lines:
@@ -629,12 +640,18 @@ def check_signature_diff(slices, paras, rules, body_size, pages_scope):
         b, b_s = _rle(ep_t, ep_s)
         sm = SequenceMatcher(None, a, b, autojunk=False)
         ops = [op for op in sm.get_opcodes() if op[0] != "equal"]
+        if ops and page in allow:
+            allow_hit.add(page)
+            continue      # render-verified (qa.signature_allow)
         if ops:
             tag, i1, i2, j1, j2 = ops[0]
             near = (a_s[i1] if i1 < len(a_s) else
                     (b_s[j1] if j1 < len(b_s) else ""))
             findings.append(f"p.{page}: pdf {_sig_fmt(a)} vs epub {_sig_fmt(b)} "
                             f'near "{near}"')
+    for a in sorted(allow - allow_hit):
+        findings.append(f"stale qa.signature_allow entry (page {a} no longer "
+                        f"mismatches)")
     summary = f"{n_pages} pages compared, {len(findings)} signature mismatches"
     return not findings, summary, findings
 
@@ -682,14 +699,16 @@ def run_typography_checks(*, doc, res, flow, cfg, labels, in_flow, body_docs,
         check_heading_census(sl.slices, doc, geo, body_famroot, smallcaps_fams,
                              [t for t, _ in source_entries],
                              design_pages | disputed, cache, paras, body_size,
-                             res.furniture_texts),
-        check_signature_diff(sl.slices, paras, rules, body_size, scope),
+                             res.furniture_texts,
+                             [a.snippet for a in cfg.qa_heading_allow]),
+        check_signature_diff(sl.slices, paras, rules, body_size, scope,
+                             [a.page for a in cfg.qa_signature_allow]),
     ]
     gates: list[GateOut] = []
     for name, (ok, summary, findings) in zip(_NAMES, results):
         lines = [("would-PASS — " if ok else "would-FAIL — ") + summary]
         lines += findings[:10]
         if len(findings) > 10:
-            lines.append(f"… and {len(findings) - 10} more")
+            lines.append(f"… and {len(findings) - 10} more")  # TMP
         gates.append(GateOut(name, ok, lines))
     return gates

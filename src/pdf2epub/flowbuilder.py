@@ -469,6 +469,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
     toc_paras: dict[int, list[Paragraph]] = {}
     if cfg.toc_handling == "rebuild":
         _entry_marker = re.compile(r"^\d+\.\s")   # a numbered TOC entry ('6. …')
+        _pua_dec = _pua_decoder(cfg)
         for pno in cfg.toc_printed_pages:
             paras: list[Paragraph] = []
             last_entry: Paragraph | None = None
@@ -477,10 +478,25 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             pending: tuple[Paragraph, str] | None = None
             toc_lines = pages_lines.get(pno, [])
             skip_idx: set[int] = set()
+            # the page's ENTRY STOP: the modal line x0. Per PAGE, not per book —
+            # the recto/verso binding shift moves it (PWC: 63 on p8, 37 on p9).
+            _stops = Counter(round(L.ln.x0) for L in toc_lines)
+            entry_stop = _stops.most_common(1)[0][0] if _stops else None
+
+            def _indented(ln, stop=entry_stop) -> bool:
+                """Is this line a wrapped-title TURNOVER rather than an entry?
+
+                Print marks a turnover by indenting it, but stores that indent
+                two ways: as geometry (PWC p8 'in the right practice', x0 81 vs
+                the 63 stop) or as LEADING SPACES inside the run, whose x0 then
+                equals the stop exactly (PWC p9 '       prayer'). Test both."""
+                t = ln.text()
+                return bool(t[:1].isspace()) or (
+                    stop is not None and ln.x0 > stop + 3.0)
             for ti, L in enumerate(toc_lines):
                 if ti in skip_idx:
                     continue
-                ent = _trailing_folio_entry(L.ln)
+                ent = _trailing_folio_entry(L.ln, _pua_dec)
                 if not ent and ti + 1 < len(toc_lines):
                     # a PART title carries its folio as a separate bare line
                     # at the right edge on (almost) the same baseline (M&R:
@@ -488,7 +504,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     # the part line fused into the previous entry as a fake
                     # wrapped-title continuation
                     nl = toc_lines[ti + 1].ln
-                    nt = nl.text().strip().rstrip(".")
+                    nt = _pua_dec(nl.text()).strip().rstrip(".") if _pua_dec \
+                        else nl.text().strip().rstrip(".")
                     if nt and len(nt) <= 5 and \
                             (nt.isdigit() or re.fullmatch(
                                 r"[ivxlc]+", nt, re.I)) and \
@@ -498,6 +515,19 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                         ent = (L.ln.text().strip(), nt.lower())
                         skip_idx.add(ti + 1)
                 starts_entry = bool(_entry_marker.match(L.ln.text().strip()))
+                # an UNNUMBERED entry whose title wrapped, pushing its folio onto
+                # the turnover ('Hōnen  the buddha of boundless light & taking
+                # refuge' | '    in the right practice  12' — PWC p8/p9, 8 of 48
+                # entries). Without this the folio-less first line falls to the
+                # continuation branch below and fuses into the PRIOR entry, while
+                # its turnover ships as a bogus 'in the right practice' entry.
+                # The numbered form of exactly this shape is what _entry_marker
+                # catches; the indent is the unnumbered form's marker.
+                if not starts_entry and not ent and not _indented(L.ln) \
+                        and ti + 1 < len(toc_lines):
+                    nxt = toc_lines[ti + 1].ln
+                    if _indented(nxt) and _trailing_folio_entry(nxt, _pua_dec):
+                        starts_entry = True
                 if ent and not starts_entry and pending is not None:
                     # folio-bearing line with NO leading number: the turnover of
                     # a wrapped numbered entry, carrying its folio — complete it
@@ -1776,6 +1806,43 @@ def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
         if sep:
             prevrun.text += sep
     para.items.extend(runs)
+
+
+def _pua_decoder(cfg: PdfBookConfig):
+    """A text -> text decoder for the config's verified glyphs.pua_map, or None
+    when the book maps no PUA. SHAPE TESTS ONLY (the printed-TOC folio parse):
+    the shipped text is decoded by _apply_textfix, which also owns the lang
+    splitting a plain string cannot carry. Mirrors that pass's char semantics —
+    drop = gone, else the verified reading — so both agree on what a line SAYS.
+    """
+    if not cfg.pua_map:
+        return None
+
+    def dec(s: str) -> str:
+        if not _PUA_RE.search(s):
+            return s
+        out: list[str] = []
+        for ch in s:
+            rule = cfg.pua_map.get(ch)
+            if rule is None:
+                out.append(ch)          # unmapped: the PUA gate reports it
+            elif rule.action == "drop":
+                continue
+            else:
+                reading = rule.char or ""
+                # a reading that carries its OWN leading space ('␣(may God have
+                # mercy on him)' — BoK's honorifics) must not gain a second from
+                # the text it follows. _apply_textfix rstrips there; decoding
+                # without that shipped 'Imām al-Shāfiʿī␣␣(may God…' into BoK's
+                # rebuilt Contents, because the decoded title reaches textfix
+                # with no PUA left for it to collapse.
+                if reading.startswith(" "):
+                    while out and out[-1] in (" ", "\xa0"):
+                        out.pop()
+                out.append(reading)
+        return "".join(out)
+
+    return dec
 
 
 def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,

@@ -382,6 +382,16 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only",
                 and not _KEEP_HYPHEN_PREFIX.search(base):
             return base[:-1], "", True
         return base, "", False
+    # a NUMBER RANGE broken at its own hyphen ('pp. 8-' + '18', 'Luria (1534-'
+    # + '72)', an index locator '119-' + '120'): the hyphen belongs to the
+    # range, so the join must CLOSE it — the letter-hyphen rule above never
+    # sees these, and the default join spaced them ('pp. 8- 18'). PWC's blind
+    # readers found ~20 in its index and acknowledgments alone.
+    # BOTH sides must be digits: sufism's columned index puts a NEW entry on
+    # the next line ('92, 162, 166-' + 'ʿabd, 86'), which must not close.
+    if mode != "off" and re.search(r"\d-$", base) \
+            and nxt.lstrip()[:1].isdigit():
+        return base, "", False
     # a URL or slash-compound broken at the line end joins WITHOUT a space
     # ('www.' + 'acommonword.com'; 'Dhamma/' + 'Nirvana/Shunya' — a slash
     # never ends a line before a spaced word in this corpus)

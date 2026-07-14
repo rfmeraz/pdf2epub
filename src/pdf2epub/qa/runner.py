@@ -99,8 +99,21 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     in_flow = cfg.in_flow_pages(doc.n_pages)
 
     # glyph substitutions inserted English readings; the poppler ground truth
-    # has (stripped) PUA chars instead — remove readings before excision/probes
-    subs = [r.char for r in cfg.pua_map.values() if r.action == "char" and r.char]
+    # has (stripped) PUA chars instead — remove readings before excision/probes.
+    #
+    # ONLY phrase readings. A reading that is plain ALPHANUMERIC text is a
+    # glyph-for-glyph transliteration, not an inserted phrase: the PUA char
+    # stands for that very character ('1' for an oldstyle figure, 'ā' for a
+    # PUA-encoded a-macron — PWC), so poppler either reads the same character
+    # or leaves the PUA for the gt's own strip. Nothing needs removing, and
+    # removing it strips EVERY ordinary digit and every ā/ī in the book from
+    # the candidate and from every note probe: PWC's 12 such readings dragged
+    # coverage to 98.38% and manufactured 33 note-placement failures and 28
+    # excision misses, none of them real. Phrase readings (' (may God have
+    # mercy on him)', ' ﷺ', '•', '﷽' — the other six books' maps) are text the
+    # poppler side genuinely cannot have, and still come out.
+    subs = [r.char for r in cfg.pua_map.values()
+            if r.action == "char" and r.char and not r.char.isalnum()]
 
     def _unsub(text: str) -> str:
         for s in subs:

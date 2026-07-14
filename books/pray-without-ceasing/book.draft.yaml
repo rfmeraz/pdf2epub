@@ -1,0 +1,141 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "Pray Without Ceasing.pdf"
+  sha256: "67d07b5adcb859f79eba15244de8bd32de4320c5173c499c85b3ae94c9eab456"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> identifier/urn:uuid
+  isbn_print:
+  identifier: 68708160-b8f6-438c-a6a1-41f59219debc   # persistent EPUB id; keep STABLE across revisions
+  released:                   # YYYY-MM-DD of this EPUB revision (dcterms:modified)
+  date:
+  cover: assets/cover.jpg     # produced by cover_synthesize at build time
+  cover_synthesize: true      # no cover in the PDF — flagged in handoff
+  # cover evidence: page 1 is text (241 chars, 9 images) — no cover in PDF
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: []
+  front: {first: 1, last: 1}   # FILL-ME-IN: no arabic folio '1' found
+  body:  {first: 2, last: 250}   # FILL-ME-IN
+  exclude: []
+  label_source: printed-folios   # folio-vs-label agreement: None%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 86.5
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 12p): 'Pray Without Ceasing'
+  # repeated (top, 8p): '#arco Pallis'
+  # repeated (top, 8p): 'Nembutsu as Remembrance'
+  # repeated (top, 7p): 'Hōnen'
+  # repeated (top, 7p): '#eo Schaya'
+  # repeated (top, 7p): 'Th e Great Name of Go#'
+  # repeated (top, 7p): 'Th e Unceasing Act of Love of Sister Mary Consolata'
+  # repeated (top, 6p): 'Frithjof Schuon'
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "MinionPro-Regular@11"
+  pstyle_map:
+    "MinionPro-Regular@11": {role: p}   # high: dominant text cluster
+    "MinionPro-Regular@9": {role: footnote}   # low: small (9.0pt), frequent
+    "MinionPro-It@10": {role: p}   # low: smaller than body (10.0pt)
+    "MinionPro-Regular@10": {role: p}   # low: smaller than body (10.0pt)
+    "WorldWisdomFont@11": {role: p}   # low: body-like
+    "MinionPro-It@11": {role: p}   # low: body-like
+    "MinionPro-It@11/center": {role: h3}   # low: centered, body-sized
+    "MinionPro-Regular@10.5": {role: p}   # low: smaller than body (10.5pt)
+    "ACaslonPro-Regular@11": {role: p}   # low: body-like
+    "MinionPro-Bold@14/center": {role: h2}   # medium: 14.0pt centered
+    "MinionPro-Regular@11/center": {role: h3}   # low: centered, body-sized
+    "MinionPro-It@13/center": {role: h2}   # medium: 13.0pt centered
+    "WorldWisdomFont-Italic@12": {role: p}   # low: body-like
+    "MinionPro-It@9": {role: p}   # low: smaller than body (9.0pt)
+    "ACaslonPro-Italic@9": {role: p}   # low: smaller than body (9.0pt)
+    "MinionPro-It@14/center": {role: h2}   # medium: 14.0pt centered
+    "MinionPro-Regular@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "ACaslonPro-Semibold@15": {role: h1}   # medium: size 15.0pt >= 1.35x body
+    "ACaslonPro-Regular@9": {role: p}   # low: smaller than body (9.0pt)
+    "ACaslonPro-Italic@11": {role: p}   # low: body-like
+    "Present-Black@16/center": {role: h1}   # medium: size 16.0pt >= 1.35x body
+    "MinionPro-Bold@11/center": {role: h3}   # low: centered, body-sized
+    "MinionPro-Bold@20/center": {role: title-page}   # medium: size 20.0pt >= 1.8x body
+    "MinionPro-Bold@14": {role: p}   # low: body-like
+    "MinionPro-Regular@16/center": {role: h1}   # medium: size 16.0pt >= 1.35x body
+    "MinionPro-Regular@9.5": {role: p}   # low: smaller than body (9.5pt)
+    "MinionPro-It@10.5/center": {role: p}   # low: smaller than body (10.5pt)
+    "WorldWisdomFont@11/center": {role: h3}   # low: centered, body-sized
+    "Present-Black@17": {role: h1}   # medium: size 17.0pt >= 1.35x body
+    "WorldWisdomFont-Italic@11": {role: p}   # low: body-like
+    "MinionPro-BoldIt@14/center": {role: h2}   # medium: 14.0pt centered
+    "ACaslonPro-Italic@20": {role: title-page}   # medium: size 20.0pt >= 1.8x body
+    "ACaslonPro-Italic@14": {role: p}   # low: body-like
+    "MinionPro-Regular@14/center": {role: h2}   # medium: 14.0pt centered
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 13.5
+  gap_factor: 1.6             # median leading measured: 13.2pt
+  dehyphenate: lower-only
+  restore_spaces: false       # lost-space hits: 1
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: markers   # regions on 61 pages; census {'digit': 108}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: outline   # outline=48 printed=0 links=0
+  printed_pages: []
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map:
+    "\uF646": {action: FILL-ME-IN, note: "U+F646 x9 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF647": {action: FILL-ME-IN, note: "U+F647 x10 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF649": {action: FILL-ME-IN, note: "U+F649 x6 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF64B": {action: FILL-ME-IN, note: "U+F64B x9 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF644": {action: FILL-ME-IN, note: "U+F644 x29 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF643": {action: FILL-ME-IN, note: "U+F643 x4 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF66E": {action: FILL-ME-IN, note: "U+F66E x4 from MinionPro-It/MinionPro-Regular — LOOK at analysis/pages/p0008.png"}
+    "\uF645": {action: FILL-ME-IN, note: "U+F645 x11 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF648": {action: FILL-ME-IN, note: "U+F648 x13 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF64A": {action: FILL-ME-IN, note: "U+F64A x7 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF64C": {action: FILL-ME-IN, note: "U+F64C x5 from MinionPro-It — LOOK at analysis/pages/p0008.png"}
+    "\uF685": {action: FILL-ME-IN, note: "U+F685 x1 from MinionPro-Regular — LOOK at analysis/pages/p0164.png"}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  # honorific/symbol glyphs likely need: {family: Amiri, file: /usr/share/fonts/amiri-fonts/Amiri-Regular.ttf, script: cjk, lang: ar}
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  figure_pages: []
+
+output: {slug: pray-without-ceasing, include_ncx: true}

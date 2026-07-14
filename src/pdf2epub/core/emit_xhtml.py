@@ -362,13 +362,21 @@ class Emitter:
         elif role == "blockquote":
             f.body_parts.append(f'<blockquote class="{classes}"><p>{inner}</p></blockquote>')
         elif role == "epigraph":
-            # emission-only semantics (no detector — zero corpus instances):
-            # a pstyle_map/role: judgment ships a real epigraph. 'epigraph'
-            # is in the default EPUB SSV; doc-epigraph is DPUB-ARIA.
-            ecls = " ".join(dict.fromkeys(["epigraph", *p.classes]))
+            # emission-only semantics (no detector): a pstyle_map/role: judgment
+            # ships a real epigraph. 'epigraph' is in the default EPUB SSV;
+            # doc-epigraph is DPUB-ARIA. Used by Keys (p7, a role: override) and
+            # PWC (the three part openers, via pstyle_map).
+            #
+            # The blockquote carries the SEMANTIC class; the pstyle classes go
+            # on the <p>, which is where the typographic gates read a block's
+            # face and size from. Hung on the blockquote alone they still cascade
+            # to the text, but gate 17 reads every epigraph as body type and
+            # reports a signature mismatch against its display-size source
+            # (PWC's three part openers — the corpus's first epigraphs).
             f.body_parts.append(
-                f'<blockquote class="{ecls}" epub:type="epigraph" '
-                f'role="doc-epigraph"><p>{inner}</p></blockquote>')
+                f'<blockquote class="epigraph" epub:type="epigraph" '
+                f'role="doc-epigraph"><p class="{classes}">{inner}</p>'
+                '</blockquote>')
         elif role == "li":
             f.body_parts.append(f'<p class="listpara {classes}">{inner}</p>')
         elif role == "footnote":

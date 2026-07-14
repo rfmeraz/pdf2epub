@@ -145,6 +145,46 @@ class ListSpec:
 
 
 @dataclass(slots=True)
+class HeadingAllow:
+    """A render-verified real heading that gate 16 reads as a promotion suspect.
+
+    The gate accepts a heading's typography as evidence only when it is set in
+    DISPLAY size, in a non-body family, or in a small-caps face. PWC falsifies
+    that: this book marks a selection's sub-sections with CENTERED FULL CAPS at
+    the body face and size ('1. THE FORM OF THE PRAYER', p.145) — real headings
+    carrying none of the three. Centeredness alone cannot stand in as evidence:
+    it is what the pstyle_map keys the h3 off in the first place, and the same
+    gate correctly caught this book's centered '*  *  *' section-break
+    ornaments. So each such heading is allowed BY TEXT, one render at a time.
+
+    Exact snippet; note is the render evidence and is REQUIRED. Per-book, like
+    qa_duplicate_allow (an agent judgment); a stale entry fails the gate, so a
+    heading that later stops printing cannot silently license a real promotion.
+    """
+    snippet: str
+    note: str
+
+
+@dataclass(slots=True)
+class SignatureAllow:
+    """A render-verified page whose gate-17 typographic signature cannot match.
+
+    Gate 17 compares a per-page run of size buckets. PWC p.4 sets ONE printed
+    sentence in two sizes — a 10pt italic book title followed by 9.747pt roman
+    prose ('…World Religions appears as one of our selections…') — so the flow's
+    paragraph takes its style from the first line (10pt = 'body') while the
+    gate's PDF side takes the char-weighted size (9.747, which the extractor's
+    0.5pt pstyle quantizer stores as 9.5 — exactly the 'small' boundary). The
+    two sides bucket the same paragraph differently, and the gate would only
+    agree if the paragraph were left SPLIT mid-phrase — the very defect it
+    exists to catch. Page-scoped; note is the render evidence and is REQUIRED.
+    A stale entry (a page that no longer mismatches) fails the gate.
+    """
+    page: int
+    note: str
+
+
+@dataclass(slots=True)
 class CharStyleFlags:
     smallcaps: bool = False
     symbol: bool = False
@@ -367,6 +407,8 @@ class PdfBookConfig:
     # qa
     qa_lost_space_allow: list[LostSpaceAllow] = field(default_factory=list)
     qa_duplicate_allow: list[DuplicateAllow] = field(default_factory=list)
+    qa_heading_allow: list[HeadingAllow] = field(default_factory=list)
+    qa_signature_allow: list[SignatureAllow] = field(default_factory=list)
     qa_garble_chars: str = ""  # per-book gate-20 residue chars (e.g. "³´«")
 
     # adjudications (gate 22)
@@ -851,7 +893,26 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
 
     qa = data.get("qa", {})
     _check_keys("qa", qa, {"lost_space_allow", "garble_chars",
-                           "duplicate_allow"})
+                           "duplicate_allow", "heading_allow",
+                           "signature_allow"})
+    for al in qa.get("heading_allow", []) or []:
+        _check_keys("qa.heading_allow[]", al, {"snippet", "note"})
+        if not al.get("snippet"):
+            raise ConfigError("qa.heading_allow requires the exact snippet")
+        if not al.get("note"):
+            raise ConfigError("qa.heading_allow requires a note "
+                              "(render-verified heading evidence)")
+        cfg.qa_heading_allow.append(
+            HeadingAllow(snippet=al["snippet"], note=al["note"]))
+    for al in qa.get("signature_allow", []) or []:
+        _check_keys("qa.signature_allow[]", al, {"page", "note"})
+        if not al.get("page"):
+            raise ConfigError("qa.signature_allow requires the page")
+        if not al.get("note"):
+            raise ConfigError("qa.signature_allow requires a note "
+                              "(render-verified evidence)")
+        cfg.qa_signature_allow.append(
+            SignatureAllow(page=int(al["page"]), note=al["note"]))
     for al in qa.get("duplicate_allow", []) or []:
         _check_keys("qa.duplicate_allow[]", al, {"snippet", "note"})
         if not al.get("snippet"):

@@ -338,21 +338,32 @@ _TOC_LINE = re.compile(
     r"(?P<folio>\d{1,4}|[ivxlcdm]{1,8})\s*$", re.I)
 
 
-def _trailing_folio_entry(ln: PdfLine) -> tuple[str, str] | None:
+def _trailing_folio_entry(ln: PdfLine, decode=None) -> tuple[str, str] | None:
     """(title, label) for a printed-TOC line.
 
     Two shapes in the wild: folio separated by leader dots INSIDE a shared
     span ('Foreword . . . . x' — BoK), or folio as its own gap-separated run
-    with no leaders (Me and Rumi)."""
-    text = ln.text().strip()
+    with no leaders (Me and Rumi).
+
+    ``decode`` maps a PUA-bearing string to its verified readings. PWC sets its
+    printed Contents in Minion's OLDSTYLE FIGURES, which the font encodes in the
+    PUA (U+F643-F64C = 0-9), so every folio reads as private-use junk and no
+    line looks like an entry at all — the whole Contents would ship as one fused
+    prose paragraph. The build passes glyphs.pua_map here (the agent's
+    render-verified judgment); the analyzer has no config yet and passes None,
+    so its printed-TOC witness abstains rather than guessing."""
+    def _d(s: str) -> str:
+        return decode(s) if decode else s
+
+    text = _d(ln.text()).strip()
     m = _TOC_LINE.match(text)
     if m and len(m.group("title")) >= 2:
         return m.group("title"), m.group("folio").lower()
     if len(ln.runs) >= 2:
         last = ln.runs[-1]
-        lt = last.text.strip().rstrip(".")
+        lt = _d(last.text).strip().rstrip(".")
         if lt and (lt.isdigit() or _ROMAN.match(lt)) and _plausible_folio(lt):
-            body = "".join(r.text for r in ln.runs[:-1]).strip()
+            body = _d("".join(r.text for r in ln.runs[:-1])).strip()
             body = re.sub(r"[.․·\s]+$", "", body)
             if len(body) >= 2 and last.x0 - ln.runs[-2].x1 >= 6:
                 return body, lt.lower()

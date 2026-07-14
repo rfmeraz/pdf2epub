@@ -1,0 +1,5177 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/pdf2epub/books/pray-without-ceasing/package/Pray Without Ceasing.pdf",
+  "sha256": "67d07b5adcb859f79eba15244de8bd32de4320c5173c499c85b3ae94c9eab456",
+  "producer": "",
+  "n_pages": 250,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "AbbotOldStyle",
+    "raw_family": "AbbotOldStyle",
+    "size": 42.0,
+    "color": "#ffffff"
+   },
+   "1": {
+    "id": 1,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 20.0,
+    "color": "#fec12f"
+   },
+   "2": {
+    "id": 2,
+    "family": "ACaslonPro-Regular",
+    "raw_family": "ACaslonPro-Regular",
+    "size": 11.0,
+    "color": "#fec12f"
+   },
+   "3": {
+    "id": 3,
+    "family": "ACaslonPro-Regular",
+    "raw_family": "ACaslonPro-Regular",
+    "size": 13.0,
+    "color": "#fec12f"
+   },
+   "4": {
+    "id": 4,
+    "family": "ACaslonPro-Semibold",
+    "raw_family": "ACaslonPro-Semibold",
+    "size": 15.0,
+    "color": "#fec12f"
+   },
+   "5": {
+    "id": 5,
+    "family": "ACaslonPro-SemiboldItali",
+    "raw_family": "ACaslonPro-SemiboldItali",
+    "size": 15.0,
+    "color": "#fec12f"
+   },
+   "6": {
+    "id": 6,
+    "family": "ACaslonPro-Regular",
+    "raw_family": "ACaslonPro-Regular",
+    "size": 15.0,
+    "color": "#fec12f"
+   },
+   "7": {
+    "id": 7,
+    "family": "ACaslonPro-Semibold",
+    "raw_family": "ACaslonPro-Semibold",
+    "size": 13.0,
+    "color": "#fec12f"
+   },
+   "8": {
+    "id": 8,
+    "family": "ACaslonPro-Semibold",
+    "raw_family": "ACaslonPro-Semibold",
+    "size": 11.0,
+    "color": "#fec12f"
+   },
+   "9": {
+    "id": 9,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 14.0,
+    "color": "#ffffff"
+   },
+   "10": {
+    "id": 10,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 18.0,
+    "color": "#ffffff"
+   },
+   "11": {
+    "id": 11,
+    "family": "Present-Black",
+    "raw_family": "Present-Black",
+    "size": 17.0,
+    "color": "#231f20"
+   },
+   "12": {
+    "id": 12,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "13": {
+    "id": 13,
+    "family": "MinionPro-It",
+    "raw_family": "MinionPro-It",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "14": {
+    "id": 14,
+    "family": "Present-Black",
+    "raw_family": "Present-Black",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "15": {
+    "id": 15,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "16": {
+    "id": 16,
+    "family": "Present-Black",
+    "raw_family": "Present-Black",
+    "size": 16.0,
+    "color": "#231f20"
+   },
+   "17": {
+    "id": 17,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "18": {
+    "id": 18,
+    "family": "MinionPro-It",
+    "raw_family": "MinionPro-It",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "19": {
+    "id": 19,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 9.5,
+    "color": "#231f20"
+   },
+   "20": {
+    "id": 20,
+    "family": "WoodtypeOrnaments-Two",
+    "raw_family": "WoodtypeOrnaments-Two",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "21": {
+    "id": 21,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 24.0,
+    "color": "#231f20"
+   },
+   "22": {
+    "id": 22,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 16.0,
+    "color": "#231f20"
+   },
+   "23": {
+    "id": 23,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "24": {
+    "id": 24,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 14.0,
+    "color": "#231f20"
+   },
+   "25": {
+    "id": 25,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 7.5,
+    "color": "#231f20"
+   },
+   "26": {
+    "id": 26,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 6.0,
+    "color": "#231f20"
+   },
+   "27": {
+    "id": 27,
+    "family": "MinionPro-It",
+    "raw_family": "MinionPro-It",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "28": {
+    "id": 28,
+    "family": "MinionPro-It",
+    "raw_family": "MinionPro-It",
+    "size": 10.5,
+    "color": "#231f20"
+   },
+   "29": {
+    "id": 29,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 20.0,
+    "color": "#231f20"
+   },
+   "30": {
+    "id": 30,
+    "family": "MinionPro-It",
+    "raw_family": "MinionPro-It",
+    "size": 14.0,
+    "color": "#231f20"
+   },
+   "31": {
+    "id": 31,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 14.0,
+    "color": "#231f20"
+   },
+   "32": {
+    "id": 32,
+    "family": "MinionPro-It",
+    "raw_family": "MinionPro-It",
+    "size": 13.0,
+    "color": "#231f20"
+   },
+   "33": {
+    "id": 33,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "34": {
+    "id": 34,
+    "family": "MinionPro-BoldIt",
+    "raw_family": "MinionPro-BoldIt",
+    "size": 10.0,
+    "color": "#231f20"
+   },
+   "35": {
+    "id": 35,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 10.5,
+    "color": "#231f20"
+   },
+   "36": {
+    "id": 36,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 13.0,
+    "color": "#231f20"
+   },
+   "37": {
+    "id": 37,
+    "family": "MinionPro-BoldIt",
+    "raw_family": "MinionPro-BoldIt",
+    "size": 14.0,
+    "color": "#231f20"
+   },
+   "38": {
+    "id": 38,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 20.0,
+    "color": "#231f20"
+   },
+   "39": {
+    "id": 39,
+    "family": "MinionPro-Bold",
+    "raw_family": "MinionPro-Bold",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "40": {
+    "id": 40,
+    "family": "MinionPro-Regular",
+    "raw_family": "MinionPro-Regular",
+    "size": 7.0,
+    "color": "#231f20"
+   },
+   "41": {
+    "id": 41,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "42": {
+    "id": 42,
+    "family": "MinionPro-BoldIt",
+    "raw_family": "MinionPro-BoldIt",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "43": {
+    "id": 43,
+    "family": "WorldWisdomFont",
+    "raw_family": "WorldWisdomFont",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "44": {
+    "id": 44,
+    "family": "WorldWisdomFont-Italic",
+    "raw_family": "WorldWisdomFont-Italic",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "45": {
+    "id": 45,
+    "family": "WorldWisdomFont-Italic",
+    "raw_family": "WorldWisdomFont-Italic",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "46": {
+    "id": 46,
+    "family": "WorldWisdomFont",
+    "raw_family": "WorldWisdomFont",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "47": {
+    "id": 47,
+    "family": "ACaslonPro-Regular",
+    "raw_family": "ACaslonPro-Regular",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "48": {
+    "id": 48,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 10.0,
+    "color": "#5b0200"
+   },
+   "49": {
+    "id": 49,
+    "family": "ACaslonPro-Regular",
+    "raw_family": "ACaslonPro-Regular",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "50": {
+    "id": 50,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "51": {
+    "id": 51,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 9.0,
+    "color": "#231f20"
+   },
+   "52": {
+    "id": 52,
+    "family": "Present-Bold",
+    "raw_family": "Present-Bold",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "53": {
+    "id": 53,
+    "family": "ACaslonPro-Regular",
+    "raw_family": "ACaslonPro-Regular",
+    "size": 11.0,
+    "color": "#5b0200"
+   },
+   "54": {
+    "id": 54,
+    "family": "ACaslonPro-Semibold",
+    "raw_family": "ACaslonPro-Semibold",
+    "size": 12.0,
+    "color": "#5b0200"
+   },
+   "55": {
+    "id": 55,
+    "family": "TimesNewRomanPSMT",
+    "raw_family": "TimesNewRomanPSMT",
+    "size": 12.0,
+    "color": "#ffffff"
+   },
+   "56": {
+    "id": 56,
+    "family": "AbbotOldStyle",
+    "raw_family": "AbbotOldStyle",
+    "size": 24.0,
+    "color": "#ffffff"
+   },
+   "57": {
+    "id": 57,
+    "family": "Present-Bold",
+    "raw_family": "Present-Bold",
+    "size": 11.0,
+    "color": "#ffffff"
+   },
+   "58": {
+    "id": 58,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "59": {
+    "id": 59,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "60": {
+    "id": 60,
+    "family": "ACaslonPro-Semibold",
+    "raw_family": "ACaslonPro-Semibold",
+    "size": 12.0,
+    "color": "#231f20"
+   },
+   "61": {
+    "id": 61,
+    "family": "KeplMM-Or1-643-356-",
+    "raw_family": "KeplMM-Or1-643-356-",
+    "size": 11.0,
+    "color": "#231f20"
+   },
+   "62": {
+    "id": 62,
+    "family": "ACaslonPro-Italic",
+    "raw_family": "ACaslonPro-Italic",
+    "size": 14.0,
+    "color": "#fec12f"
+   }
+  },
+  "outline": [
+   {
+    "level": 1,
+    "title": "CONTENTS",
+    "target_page": 8
+   },
+   {
+    "level": 1,
+    "title": "Patrick Laude introduction",
+    "target_page": 10
+   },
+   {
+    "level": 1,
+    "title": "I. FOUNDATIONAL TEXTS",
+    "target_page": 22
+   },
+   {
+    "level": 2,
+    "title": "Bhagavad Gītā He Who Thinks of Me Constantly",
+    "target_page": 24
+   },
+   {
+    "level": 2,
+    "title": "Chaitanya I Shall Repeat Thy Name",
+    "target_page": 25
+   },
+   {
+    "level": 2,
+    "title": "Kabīr Recite the Name of the Lord",
+    "target_page": 27
+   },
+   {
+    "level": 2,
+    "title": "Mīrābāī I am Fascinated by Thy Name",
+    "target_page": 29
+   },
+   {
+    "level": 2,
+    "title": "Tulsīdās Comfort in this World and the Next",
+    "target_page": 31
+   },
+   {
+    "level": 2,
+    "title": "Sukhāvatīvyūha Glorify the Name of the Lord Amitābha",
+    "target_page": 32
+   },
+   {
+    "level": 2,
+    "title": "Hōnen The Buddha of Boundless Light & Taking Refuge",
+    "target_page": 33
+   },
+   {
+    "level": 2,
+    "title": "Shinran Passages on the Pure Land Way",
+    "target_page": 43
+   },
+   {
+    "level": 2,
+    "title": "Zohar The Holy One Speaks His Name",
+    "target_page": 47
+   },
+   {
+    "level": 2,
+    "title": "Abraham Abulafia The Light of the Intellect & The Question Of Prophecy",
+    "target_page": 49
+   },
+   {
+    "level": 2,
+    "title": "Rabbi Isaac of Akko Gazing at the Letters & Climbing the Ladder",
+    "target_page": 54
+   },
+   {
+    "level": 2,
+    "title": "Philokalia St. Philotheos of Sinai, Ilias the Presbyter, St. Symeon the New Theologian, & St. Gregory of Sinai",
+    "target_page": 56
+   },
+   {
+    "level": 2,
+    "title": "The Way of a Pilgrim Unceasing Interior Prayer",
+    "target_page": 62
+   },
+   {
+    "level": 2,
+    "title": "The Cloud of Unknowing Strike Down Every Kind of Thought",
+    "target_page": 69
+   },
+   {
+    "level": 2,
+    "title": "St. Bernardino of Siena The Sermon for Palm Sunday",
+    "target_page": 72
+   },
+   {
+    "level": 2,
+    "title": "St. Jean Eudes The Name Admirable Above All Names",
+    "target_page": 75
+   },
+   {
+    "level": 2,
+    "title": "Jean-Pierre de Caussade The Sacrament of the Present Moment",
+    "target_page": 76
+   },
+   {
+    "level": 2,
+    "title": "Ibn ‘Atā’ Allāh Al-Iskandarī The Key to Salvation",
+    "target_page": 78
+   },
+   {
+    "level": 1,
+    "title": "II. CONTEMPORARY DOCTRINAL ESSAYS",
+    "target_page": 88
+   },
+   {
+    "level": 2,
+    "title": "Frithjof Schuon Modes of Prayer & Communion and Invocation",
+    "target_page": 90
+   },
+   {
+    "level": 2,
+    "title": "Titus Burckhardt Rites",
+    "target_page": 100
+   },
+   {
+    "level": 2,
+    "title": "Martin Lings The Method",
+    "target_page": 104
+   },
+   {
+    "level": 2,
+    "title": "Leo Schaya The Great Name of God",
+    "target_page": 108
+   },
+   {
+    "level": 2,
+    "title": "Marco Pallis Nembutsu as Remembrance",
+    "target_page": 122
+   },
+   {
+    "level": 2,
+    "title": "D.T. Suzuki The Shin Teaching of Buddhism",
+    "target_page": 138
+   },
+   {
+    "level": 2,
+    "title": "Archimandrite Lev Gillet On the Practical Use of the Jesus Prayer",
+    "target_page": 145
+   },
+   {
+    "level": 2,
+    "title": "Mir Valiuddin Some Important Dhikrs",
+    "target_page": 155
+   },
+   {
+    "level": 1,
+    "title": "III. CONTEMPORARY TESTIMONIES",
+    "target_page": 164
+   },
+   {
+    "level": 2,
+    "title": "Thomas Yellowtail Always Praying and Thinking of God",
+    "target_page": 166
+   },
+   {
+    "level": 2,
+    "title": "Srī Ramakrishna Pray to God with a Yearning Heart",
+    "target_page": 167
+   },
+   {
+    "level": 2,
+    "title": "Swami Ramdas Constant Repetition of the Divine Name",
+    "target_page": 169
+   },
+   {
+    "level": 2,
+    "title": "Mahatma Gandhi Prayer",
+    "target_page": 172
+   },
+   {
+    "level": 2,
+    "title": "Vandana Mataji Japa-Sādhanā",
+    "target_page": 174
+   },
+   {
+    "level": 2,
+    "title": "Ramana Maharshi Advaita and Japa",
+    "target_page": 176
+   },
+   {
+    "level": 2,
+    "title": "Swami Abhishiktananda (Henri Le Saux) The Prayer of the Name",
+    "target_page": 178
+   },
+   {
+    "level": 2,
+    "title": "Gōjun Shichiri Sayings on Tariki",
+    "target_page": 185
+   },
+   {
+    "level": 2,
+    "title": "Gao Xingjian Namo Amitofu",
+    "target_page": 194
+   },
+   {
+    "level": 2,
+    "title": "William Johnston Breathing and Rhythm in Christian and Buddhist Prayer",
+    "target_page": 199
+   },
+   {
+    "level": 2,
+    "title": "Father Lorenzo Sales The Unceasing Act of Love of Sister Mary Consolata",
+    "target_page": 202
+   },
+   {
+    "level": 2,
+    "title": "Shaykh Ahmad Al-'Alawī Treatise on the Invocation of the Divine Name",
+    "target_page": 216
+   },
+   {
+    "level": 2,
+    "title": "Simone Weil The Love of Religious Practices",
+    "target_page": 227
+   },
+   {
+    "level": 2,
+    "title": "Glossary",
+    "target_page": 230
+   },
+   {
+    "level": 2,
+    "title": "Acknowledgments",
+    "target_page": 234
+   },
+   {
+    "level": 2,
+    "title": "Biographical Note",
+    "target_page": 239
+   },
+   {
+    "level": 2,
+    "title": "Index",
+    "target_page": 240
+   }
+  ],
+  "links": [],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   90,
+   72,
+   432,
+   648
+  ],
+  "warnings": [
+   "1 image-only page(s) (no usable text layer): [228] — OCR is out of scope; ship as figure pages only if content is verifiable from renders",
+   "engine agreement below 90 on 11 page(s): [1, 240, 241, 242, 243, 244, 245, 246, 247, 248, 250] — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "MinionPro-Regular@11",
+  "body_size": 11.0,
+  "clusters": [
+   {
+    "pstyle": "MinionPro-Regular@11",
+    "family": "MinionPro-Regular",
+    "size": 11.0,
+    "n_lines": 6085,
+    "n_chars": 428965,
+    "n_pages": 221,
+    "first_page": 2,
+    "samples": [
+     "“Patrick Laude has provided a rich resource that is at once spiritual and",
+     "scholarly. Extraordinary foundational texts on the unceasing invocation of",
+     "the Divine Name are complemented by illuminating analytical essays on the"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "MinionPro-Regular@9",
+    "family": "MinionPro-Regular",
+    "size": 9.0,
+    "n_lines": 490,
+    "n_chars": 38783,
+    "n_pages": 67,
+    "first_page": 7,
+    "samples": [
+     "Pray Without Ceasing: The Way of the Invocation in World Religions",
+     "© 2006 World Wisdom, Inc.",
+     "All rights reserved."
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "MinionPro-It@10",
+    "family": "MinionPro-It",
+    "size": 10.0,
+    "n_lines": 393,
+    "n_chars": 31838,
+    "n_pages": 40,
+    "first_page": 4,
+    "samples": [
+     "Pray Without Ceasing: The Way of the Invocation in World Religions appears as one",
+     "The Bhagavad Gītā (The Song of the Blessed One) is part of the Hindu epic the",
+     "Mahābhārata. The Bhagavad Gītā relates the discourse given by Krishna to Arjuna"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "MinionPro-Regular@10",
+    "family": "MinionPro-Regular",
+    "size": 10.0,
+    "n_lines": 325,
+    "n_chars": 21570,
+    "n_pages": 37,
+    "first_page": 4,
+    "samples": [
+     "The Library of Perennial Philosophy is dedicated to the exposition of the timeless",
+     "Truth underlying the diverse religions. This Truth, often referred to as the Sophia Pe-",
+     "rennis—or Perennial Wisdom—finds its expression in the revealed Scriptures as well"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "WorldWisdomFont@11",
+    "family": "WorldWisdomFont",
+    "size": 11.0,
+    "n_lines": 392,
+    "n_chars": 15286,
+    "n_pages": 10,
+    "first_page": 240,
+    "samples": [
+     "Abhishiktananda, Swami, 157-163, Arabic, 70, 83, 198",
+     "216; see Le Saux, Fr. HenriAraboth, 95-96, 98-99",
+     "Abraham (Patriarch), 85, 89, 91Aramaic, 26, 73"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-It@11",
+    "family": "MinionPro-It",
+    "size": 11.0,
+    "n_lines": 77,
+    "n_chars": 4124,
+    "n_pages": 36,
+    "first_page": 2,
+    "samples": [
+     "— John Chryssavgis, author of In the Heart of the Desert,",
+     "The Spirituality of the Desert Fathers and Mothers",
+     "— Virginia Gray Henry, author of Beads of Faith: Pathways"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-It@11/center",
+    "family": "MinionPro-It",
+    "size": 11.0,
+    "n_lines": 390,
+    "n_chars": 4063,
+    "n_pages": 222,
+    "first_page": 6,
+    "samples": [
+     "Pray Without Ceasing",
+     "Pray Without Ceasing",
+     "Pray Without Ceasing"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "MinionPro-Regular@10.5",
+    "family": "MinionPro-Regular",
+    "size": 10.5,
+    "n_lines": 24,
+    "n_chars": 1823,
+    "n_pages": 1,
+    "first_page": 32,
+    "samples": [
+     "And all the beings who have been born, who are born, who will be born in this",
+     "Buddha-field, they all are fixed on the right method of salvation, until they have",
+     "won Nirvāna. And why? Because there is here no place for and no conception"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.5pt)"
+   },
+   {
+    "pstyle": "ACaslonPro-Regular@11",
+    "family": "ACaslonPro-Regular",
+    "size": 11.0,
+    "n_lines": 23,
+    "n_chars": 1241,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "This deﬁ nitive anthology on the way of invocatory prayer presents for the ﬁ rst",
+     "time 24 foundational texts from each of the world’s great religions, accompa-",
+     "nied by 22 essays by some of the most renowned scholars and spiritual author-"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-Bold@14/center",
+    "family": "MinionPro-Bold",
+    "size": 14.0,
+    "n_lines": 45,
+    "n_chars": 1033,
+    "n_pages": 44,
+    "first_page": 8,
+    "samples": [
+     "HE WHO THINKS OF ME CONSTANTLY",
+     "I SHALL REPEAT THY NAME",
+     "RECITE THE NAME OF THE LORD"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "MinionPro-Regular@11/center",
+    "family": "MinionPro-Regular",
+    "size": 11.0,
+    "n_lines": 53,
+    "n_chars": 976,
+    "n_pages": 42,
+    "first_page": 13,
+    "samples": [
+     "The Way of a Pilgrim",
+     "The Way of a Pilgrim",
+     "The Way of a Pilgrim"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "MinionPro-It@13/center",
+    "family": "MinionPro-It",
+    "size": 13.0,
+    "n_lines": 41,
+    "n_chars": 622,
+    "n_pages": 41,
+    "first_page": 24,
+    "samples": [
+     "Abraham Abulafia",
+     "Abraham Abulafia",
+     "Rabbi Isaac of Akko"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "WorldWisdomFont-Italic@12",
+    "family": "WorldWisdomFont-Italic",
+    "size": 12.0,
+    "n_lines": 8,
+    "n_chars": 463,
+    "n_pages": 1,
+    "first_page": 249,
+    "samples": [
+     "The Essential Vedānta: A New Source Book of Advaita Vedānta,",
+     "For God’s Greater Glory: Gems of Jesuit Spirituality,",
+     "The Golden Chain: An Anthology of Pythagorean and Platonic"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-It@9",
+    "family": "MinionPro-It",
+    "size": 9.0,
+    "n_lines": 6,
+    "n_chars": 423,
+    "n_pages": 5,
+    "first_page": 19,
+    "samples": [
+     "the Ecclesiastical Hierarchy, chap. III).",
+     "mind and thought” (The Ascent to Contemplative Wisdom, p. 247).",
+     "5 Of the Love of God, Bk. 6, ch. 3."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@9",
+    "family": "ACaslonPro-Italic",
+    "size": 9.0,
+    "n_lines": 3,
+    "n_chars": 282,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "An Anthology of Spiritual Poetry and co-author of Frithjof Schuon: Life and Teachings."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "MinionPro-It@14/center",
+    "family": "MinionPro-It",
+    "size": 14.0,
+    "n_lines": 6,
+    "n_chars": 241,
+    "n_pages": 3,
+    "first_page": 22,
+    "samples": [
+     "Every religious practice, every rite, all liturgy",
+     "is a form of the recitation of the name of the Lord.",
+     "God and His Name are one."
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "MinionPro-Regular@10/center",
+    "family": "MinionPro-Regular",
+    "size": 10.0,
+    "n_lines": 3,
+    "n_chars": 157,
+    "n_pages": 1,
+    "first_page": 248,
+    "samples": [
+     "www.DictionaryofSpiritualTerms.org.",
+     "This on-line Dictionary of Spiritual Terms provides extensive",
+     "definitions, examples and related terms in other languages."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "ACaslonPro-Semibold@15",
+    "family": "ACaslonPro-Semibold",
+    "size": 15.0,
+    "n_lines": 3,
+    "n_chars": 154,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "Selections from Gandhi, Gao Xingjian, Hōnen, St. Jean Eudes,",
+     "Kabīr,  the Philokalia, Ramakrishna, Ramana Maharshi,",
+     "D.T. Suzuki, Simone Weil, and the Zohar"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 15.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "ACaslonPro-Regular@9",
+    "family": "ACaslonPro-Regular",
+    "size": 9.0,
+    "n_lines": 4,
+    "n_chars": 143,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "PATRICK LAUDE is a Professor at Georgetown University. His works include",
+     "ISBN-13: 978-1-933316-14-7",
+     "ISBN-10: 1-933316-14-4"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@11",
+    "family": "ACaslonPro-Italic",
+    "size": 11.0,
+    "n_lines": 3,
+    "n_chars": 89,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "Bhagavad GītāMīrābāī",
+     "Chaitanya Sukhāvatīvyūha",
+     "The Cloud of UnknowingThe Way of a Pilgrim"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Present-Black@16/center",
+    "family": "Present-Black",
+    "size": 16.0,
+    "n_lines": 4,
+    "n_chars": 88,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "The Library of Perennial Philosophy",
+     "Treasures of the World’s Religions"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MinionPro-Bold@11/center",
+    "family": "MinionPro-Bold",
+    "size": 11.0,
+    "n_lines": 3,
+    "n_chars": 83,
+    "n_pages": 2,
+    "first_page": 8,
+    "samples": [
+     "I. FOUNDATIONAL TEXTS",
+     "II. CONTEMPORARY DOCTRINAL ESSAYS",
+     "III. CONTEMPORARY TESTIMONIES"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "MinionPro-Bold@20/center",
+    "family": "MinionPro-Bold",
+    "size": 20.0,
+    "n_lines": 7,
+    "n_chars": 83,
+    "n_pages": 3,
+    "first_page": 22,
+    "samples": [
+     "FOUNDATIONAL TEXTS",
+     "DOCTRINAL ESSAYS",
+     "CONTEMPORARY TESTIMONIES"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "MinionPro-Bold@14",
+    "family": "MinionPro-Bold",
+    "size": 14.0,
+    "n_lines": 2,
+    "n_chars": 79,
+    "n_pages": 2,
+    "first_page": 199,
+    "samples": [
+     "BREATHING AND RHYTHM IN CHRISTIAN AND",
+     "THE UNCEASING ACT OF LOVE OF SISTER MARY"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-Regular@9.5",
+    "family": "MinionPro-Regular",
+    "size": 9.5,
+    "n_lines": 1,
+    "n_chars": 67,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "of our selections in the Treasures of the World’s Religions series."
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.5pt)"
+   },
+   {
+    "pstyle": "MinionPro-Regular@16/center",
+    "family": "MinionPro-Regular",
+    "size": 16.0,
+    "n_lines": 4,
+    "n_chars": 67,
+    "n_pages": 1,
+    "first_page": 6,
+    "samples": [
+     "The Way of the Invocation",
+     "in World Religions"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MinionPro-It@10.5/center",
+    "family": "MinionPro-It",
+    "size": 10.5,
+    "n_lines": 5,
+    "n_chars": 60,
+    "n_pages": 5,
+    "first_page": 12,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.5pt)"
+   },
+   {
+    "pstyle": "WorldWisdomFont@11/center",
+    "family": "WorldWisdomFont",
+    "size": 11.0,
+    "n_lines": 7,
+    "n_chars": 56,
+    "n_pages": 1,
+    "first_page": 243,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Present-Black@17",
+    "family": "Present-Black",
+    "size": 17.0,
+    "n_lines": 2,
+    "n_chars": 54,
+    "n_pages": 1,
+    "first_page": 249,
+    "samples": [
+     "Titles in the Treasures of the World’s",
+     "Religions series"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 17.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "WorldWisdomFont-Italic@11",
+    "family": "WorldWisdomFont-Italic",
+    "size": 11.0,
+    "n_lines": 3,
+    "n_chars": 53,
+    "n_pages": 2,
+    "first_page": 243,
+    "samples": [
+     "Sefer Yetzirah, 26, 28, 33"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-BoldIt@14/center",
+    "family": "MinionPro-BoldIt",
+    "size": 14.0,
+    "n_lines": 4,
+    "n_chars": 50,
+    "n_pages": 4,
+    "first_page": 56,
+    "samples": [
+     "ADVAITA AND JAPA"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@14",
+    "family": "ACaslonPro-Italic",
+    "size": 14.0,
+    "n_lines": 2,
+    "n_chars": 45,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "Th e Way of the Invocation",
+     "in World Religions"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@20",
+    "family": "ACaslonPro-Italic",
+    "size": 20.0,
+    "n_lines": 1,
+    "n_chars": 44,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "The Way of the Invocation in World Religions"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "ACaslonPro-Semibold@12/center",
+    "family": "ACaslonPro-Semibold",
+    "size": 12.0,
+    "n_lines": 2,
+    "n_chars": 36,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "Foundational Texts",
+     "Contemporary Texts"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "MinionPro-Bold@13",
+    "family": "MinionPro-Bold",
+    "size": 13.0,
+    "n_lines": 1,
+    "n_chars": 35,
+    "n_pages": 1,
+    "first_page": 35,
+    "samples": [
+     "TAKING REFUGE IN THE RIGHT PRACTICE"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "MinionPro-Regular@14/center",
+    "family": "MinionPro-Regular",
+    "size": 14.0,
+    "n_lines": 3,
+    "n_chars": 31,
+    "n_pages": 3,
+    "first_page": 22,
+    "samples": [],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "Present-Black@17/center",
+    "family": "Present-Black",
+    "size": 17.0,
+    "n_lines": 1,
+    "n_chars": 30,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [
+     "About the Editor and This Book"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 17.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@10",
+    "family": "ACaslonPro-Italic",
+    "size": 10.0,
+    "n_lines": 1,
+    "n_chars": 30,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "Religion/Comparative Mysticism"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@18",
+    "family": "ACaslonPro-Italic",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 23,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "Edited by Patrick Laude"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "ACaslonPro-Italic@12/center",
+    "family": "ACaslonPro-Italic",
+    "size": 12.0,
+    "n_lines": 1,
+    "n_chars": 22,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "Contributions include:"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "MinionPro-Bold@24/center",
+    "family": "MinionPro-Bold",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 20,
+    "n_pages": 1,
+    "first_page": 6,
+    "samples": [
+     "PRAY WITHOUT CEASING"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "AbbotOldStyle@24",
+    "family": "AbbotOldStyle",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 20,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [
+     "Pray Without Ceasing"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "AbbotOldStyle@42",
+    "family": "AbbotOldStyle",
+    "size": 42.0,
+    "n_lines": 2,
+    "n_chars": 19,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 42.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Present-Bold@12",
+    "family": "Present-Bold",
+    "size": 12.0,
+    "n_lines": 1,
+    "n_chars": 12,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Present-Bold@11",
+    "family": "Present-Bold",
+    "size": 11.0,
+    "n_lines": 2,
+    "n_chars": 12,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "WoodtypeOrnaments-Two@18/center",
+    "family": "WoodtypeOrnaments-Two",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 5,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "MinionPro-It@13",
+    "family": "MinionPro-It",
+    "size": 13.0,
+    "n_lines": 1,
+    "n_chars": 5,
+    "n_pages": 1,
+    "first_page": 35,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "TimesNewRomanPSMT@12",
+    "family": "TimesNewRomanPSMT",
+    "size": 12.0,
+    "n_lines": 1,
+    "n_chars": 5,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "KeplMM-Or1-643-356-@11/center",
+    "family": "KeplMM-Or1-643-356-",
+    "size": 11.0,
+    "n_lines": 1,
+    "n_chars": 2,
+    "n_pages": 1,
+    "first_page": 250,
+    "samples": [],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "Pray Without Ceasing",
+    "count": 12,
+    "pages": [
+     11,
+     13,
+     15,
+     17,
+     19,
+     231,
+     235,
+     237
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#arco Pallis",
+    "count": 8,
+    "pages": [
+     122,
+     124,
+     126,
+     128,
+     130,
+     132,
+     134,
+     136
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Nembutsu as Remembrance",
+    "count": 8,
+    "pages": [
+     123,
+     125,
+     127,
+     129,
+     131,
+     133,
+     135,
+     137
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Hōnen",
+    "count": 7,
+    "pages": [
+     33,
+     34,
+     35,
+     36,
+     38,
+     40,
+     42
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#eo Schaya",
+    "count": 7,
+    "pages": [
+     108,
+     110,
+     112,
+     114,
+     116,
+     118,
+     120
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Great Name of Go#",
+    "count": 7,
+    "pages": [
+     109,
+     111,
+     113,
+     115,
+     117,
+     119,
+     121
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Unceasing Act of Love of Sister Mary Consolata",
+    "count": 7,
+    "pages": [
+     203,
+     205,
+     207,
+     209,
+     211,
+     213,
+     215
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Frithjof Schuon",
+    "count": 6,
+    "pages": [
+     90,
+     92,
+     93,
+     94,
+     96,
+     98
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Archimandrite Lev Gillet",
+    "count": 6,
+    "pages": [
+     145,
+     146,
+     148,
+     150,
+     152,
+     154
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Father Lorenzo Sales",
+    "count": 6,
+    "pages": [
+     204,
+     206,
+     208,
+     210,
+     212,
+     214
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ntroduction",
+    "count": 5,
+    "pages": [
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#bn 'Atā' Allāh Al-Iskandarī",
+    "count": 5,
+    "pages": [
+     78,
+     80,
+     82,
+     84,
+     86
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#r Valiuddin",
+    "count": 5,
+    "pages": [
+     155,
+     156,
+     158,
+     160,
+     162
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Gōjun Shichir#",
+    "count": 5,
+    "pages": [
+     185,
+     186,
+     188,
+     190,
+     192
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Treatise on the Invocation of the Divine Name",
+    "count": 5,
+    "pages": [
+     217,
+     219,
+     221,
+     223,
+     225
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Shaykh Ahmad Al-'Alawī",
+    "count": 5,
+    "pages": [
+     218,
+     220,
+     222,
+     224,
+     226
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Way of a Pilgr#",
+    "count": 4,
+    "pages": [
+     62,
+     64,
+     66,
+     68
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Key to Salvation",
+    "count": 4,
+    "pages": [
+     79,
+     81,
+     83,
+     85
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#. T. Suzuk#",
+    "count": 4,
+    "pages": [
+     138,
+     140,
+     142,
+     144
+    ],
+    "band": "top"
+   },
+   {
+    "text": "On the Practical Use of the Jesus Prayer",
+    "count": 4,
+    "pages": [
+     147,
+     149,
+     151,
+     153
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Swami Abhishiktananda (Henri Le Saux)",
+    "count": 4,
+    "pages": [
+     178,
+     180,
+     182,
+     184
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Sayings on Tarik#",
+    "count": 4,
+    "pages": [
+     187,
+     189,
+     191,
+     193
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#nde#",
+    "count": 4,
+    "pages": [
+     242,
+     244,
+     246,
+     248
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#.",
+    "count": 3,
+    "pages": [
+     22,
+     88,
+     164
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Taking Refuge in the Right Practice",
+    "count": 3,
+    "pages": [
+     37,
+     39,
+     41
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Shinran",
+    "count": 3,
+    "pages": [
+     43,
+     44,
+     46
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Abraham Abulafia",
+    "count": 3,
+    "pages": [
+     49,
+     50,
+     52
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Philokalia",
+    "count": 3,
+    "pages": [
+     57,
+     59,
+     61
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Unceasing Interior Prayer",
+    "count": 3,
+    "pages": [
+     63,
+     65,
+     67
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ommunion and Invocation",
+    "count": 3,
+    "pages": [
+     95,
+     97,
+     99
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Shin Teaching of Buddhis#",
+    "count": 3,
+    "pages": [
+     139,
+     141,
+     143
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Some Important Dhikrs",
+    "count": 3,
+    "pages": [
+     157,
+     159,
+     161
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Prayer of the Name",
+    "count": 3,
+    "pages": [
+     179,
+     181,
+     183
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Gao Xingjian",
+    "count": 3,
+    "pages": [
+     194,
+     196,
+     198
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 86.5,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": null,
+  "folio_mismatches": [],
+  "label_source_proposal": "printed-folios",
+  "printed_folios": {
+   "6": "iii",
+   "10": "vii",
+   "11": "viii",
+   "12": "ix",
+   "13": "x",
+   "14": "xi",
+   "15": "xii",
+   "16": "xiii",
+   "17": "xiv",
+   "18": "xv",
+   "19": "xvi",
+   "20": "xvii",
+   "24": "3",
+   "25": "4",
+   "26": "5",
+   "27": "6",
+   "28": "7",
+   "29": "8",
+   "30": "9",
+   "31": "10",
+   "32": "11",
+   "33": "12",
+   "34": "13",
+   "35": "14",
+   "36": "15",
+   "37": "16",
+   "38": "17",
+   "39": "18",
+   "40": "19",
+   "41": "20",
+   "42": "21",
+   "43": "22",
+   "44": "23",
+   "45": "24",
+   "46": "25",
+   "47": "26",
+   "48": "27",
+   "49": "28",
+   "50": "29",
+   "51": "30",
+   "52": "31",
+   "53": "32",
+   "54": "33",
+   "55": "34",
+   "56": "35",
+   "57": "36",
+   "58": "37",
+   "59": "38",
+   "60": "39",
+   "61": "40",
+   "62": "41",
+   "63": "42",
+   "64": "43",
+   "65": "44",
+   "66": "45",
+   "67": "46",
+   "68": "47",
+   "69": "48",
+   "70": "49",
+   "71": "50",
+   "72": "51",
+   "73": "52",
+   "74": "53",
+   "75": "54",
+   "76": "55",
+   "77": "56",
+   "78": "57",
+   "79": "58",
+   "80": "59",
+   "81": "60",
+   "82": "61",
+   "83": "62",
+   "84": "63",
+   "85": "64",
+   "86": "65",
+   "90": "69",
+   "91": "70",
+   "92": "71",
+   "93": "72",
+   "94": "73",
+   "95": "74",
+   "96": "75",
+   "97": "76",
+   "98": "77",
+   "99": "78",
+   "100": "79",
+   "101": "80",
+   "102": "81",
+   "103": "82",
+   "104": "83",
+   "105": "84",
+   "106": "85",
+   "107": "86",
+   "108": "87",
+   "109": "88",
+   "110": "89",
+   "111": "90",
+   "112": "91",
+   "113": "92",
+   "114": "93",
+   "115": "94",
+   "116": "95",
+   "117": "96",
+   "118": "97",
+   "119": "98",
+   "120": "99",
+   "121": "100",
+   "122": "101",
+   "123": "102",
+   "124": "103",
+   "125": "104",
+   "126": "105",
+   "127": "106",
+   "128": "107",
+   "129": "108",
+   "130": "109",
+   "131": "110",
+   "132": "111",
+   "133": "112",
+   "134": "113",
+   "135": "114",
+   "136": "115",
+   "137": "116",
+   "138": "117",
+   "139": "118",
+   "140": "119",
+   "141": "120",
+   "142": "121",
+   "143": "122",
+   "144": "123",
+   "145": "124",
+   "146": "125",
+   "147": "126",
+   "148": "127",
+   "149": "128",
+   "150": "129",
+   "151": "130",
+   "152": "131",
+   "153": "132",
+   "154": "133",
+   "155": "134",
+   "156": "135",
+   "157": "136",
+   "158": "137",
+   "159": "138",
+   "160": "139",
+   "161": "140",
+   "162": "141",
+   "166": "145",
+   "167": "146",
+   "168": "147",
+   "169": "148",
+   "170": "149",
+   "171": "150",
+   "172": "151",
+   "173": "152",
+   "174": "153",
+   "175": "154",
+   "176": "155",
+   "177": "156",
+   "178": "157",
+   "179": "158",
+   "180": "159",
+   "181": "160",
+   "182": "161",
+   "183": "162",
+   "184": "163",
+   "185": "164",
+   "186": "165",
+   "187": "166",
+   "188": "167",
+   "189": "168",
+   "190": "169",
+   "191": "170",
+   "192": "171",
+   "193": "172",
+   "194": "173",
+   "195": "174",
+   "196": "175",
+   "197": "176",
+   "198": "177",
+   "199": "178",
+   "200": "179",
+   "201": "180",
+   "202": "181",
+   "203": "182",
+   "204": "183",
+   "205": "184",
+   "206": "185",
+   "207": "186",
+   "208": "187",
+   "209": "188",
+   "210": "189",
+   "211": "190",
+   "212": "191",
+   "213": "192",
+   "214": "193",
+   "215": "194",
+   "216": "195",
+   "217": "196",
+   "218": "197",
+   "219": "198",
+   "220": "199",
+   "221": "200",
+   "222": "201",
+   "223": "202",
+   "224": "203",
+   "225": "204",
+   "226": "205",
+   "227": "206",
+   "230": "209",
+   "231": "210",
+   "232": "211",
+   "234": "213",
+   "235": "214",
+   "236": "215",
+   "237": "216",
+   "238": "217",
+   "239": "218",
+   "240": "219",
+   "241": "220",
+   "242": "221",
+   "243": "222",
+   "244": "223",
+   "245": "224",
+   "246": "225",
+   "247": "226",
+   "248": "227"
+  },
+  "headings": [
+   {
+    "page": 1,
+    "pstyle": "AbbotOldStyle@42",
+    "text": "Pray"
+   },
+   {
+    "page": 1,
+    "pstyle": "AbbotOldStyle@42",
+    "text": "Without Ceasing"
+   },
+   {
+    "page": 1,
+    "pstyle": "ACaslonPro-Italic@20",
+    "text": "The Way of the Invocation in World Religions"
+   },
+   {
+    "page": 1,
+    "pstyle": "ACaslonPro-Semibold@15",
+    "text": "Selections from Gandhi, Gao Xingjian, Hōnen, St. Jean Eudes,"
+   },
+   {
+    "page": 1,
+    "pstyle": "ACaslonPro-Semibold@15",
+    "text": "Kabīr,  the Philokalia, Ramakrishna, Ramana Maharshi,"
+   },
+   {
+    "page": 1,
+    "pstyle": "ACaslonPro-Semibold@15",
+    "text": "D.T. Suzuki, Simone Weil, and the Zohar"
+   },
+   {
+    "page": 1,
+    "pstyle": "ACaslonPro-Italic@18",
+    "text": "Edited by Patrick Laude"
+   },
+   {
+    "page": 2,
+    "pstyle": "Present-Black@17/center",
+    "text": "About the Editor and This Book"
+   },
+   {
+    "page": 4,
+    "pstyle": "Present-Black@16/center",
+    "text": "World Wisdom"
+   },
+   {
+    "page": 4,
+    "pstyle": "Present-Black@16/center",
+    "text": "The Library of Perennial Philosophy"
+   },
+   {
+    "page": 4,
+    "pstyle": "WoodtypeOrnaments-Two@18/center",
+    "text": "\u0001\u0002\u0003\u0004\u0005"
+   },
+   {
+    "page": 4,
+    "pstyle": "Present-Black@16/center",
+    "text": "Treasures of the World’s Religions"
+   },
+   {
+    "page": 4,
+    "pstyle": "Present-Black@16/center",
+    "text": "Series"
+   },
+   {
+    "page": 6,
+    "pstyle": "MinionPro-Bold@24/center",
+    "text": "PRAY WITHOUT CEASING"
+   },
+   {
+    "page": 6,
+    "pstyle": "MinionPro-Regular@16/center",
+    "text": "The Way of the Invocation"
+   },
+   {
+    "page": 6,
+    "pstyle": "MinionPro-Regular@16/center",
+    "text": "in World Religions"
+   },
+   {
+    "page": 6,
+    "pstyle": "MinionPro-Regular@16/center",
+    "text": "Edited by"
+   },
+   {
+    "page": 6,
+    "pstyle": "MinionPro-Regular@16/center",
+    "text": "PATRICK LAUDE"
+   },
+   {
+    "page": 8,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "CONTENTS"
+   },
+   {
+    "page": 8,
+    "pstyle": "MinionPro-Bold@11/center",
+    "text": "I. FOUNDATIONAL TEXTS"
+   },
+   {
+    "page": 8,
+    "pstyle": "MinionPro-Bold@11/center",
+    "text": "II. CONTEMPORARY DOCTRINAL ESSAYS"
+   },
+   {
+    "page": 9,
+    "pstyle": "MinionPro-Bold@11/center",
+    "text": "III. CONTEMPORARY TESTIMONIES"
+   },
+   {
+    "page": 10,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "INTRODUCTION"
+   },
+   {
+    "page": 11,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 13,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 13,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 15,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 16,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 17,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 19,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 19,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 22,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "I."
+   },
+   {
+    "page": 22,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "FOUNDATIONAL TEXTS"
+   },
+   {
+    "page": 22,
+    "pstyle": "MinionPro-It@14/center",
+    "text": "Every religious practice, every rite, all liturgy"
+   },
+   {
+    "page": 22,
+    "pstyle": "MinionPro-It@14/center",
+    "text": "is a form of the recitation of the name of the Lord."
+   },
+   {
+    "page": 22,
+    "pstyle": "MinionPro-Regular@14/center",
+    "text": "simone weil"
+   },
+   {
+    "page": 24,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "HE WHO THINKS OF ME CONSTANTLY"
+   },
+   {
+    "page": 24,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Bhagavad Gītā"
+   },
+   {
+    "page": 25,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "I SHALL REPEAT THY NAME"
+   },
+   {
+    "page": 25,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Chaitanya"
+   },
+   {
+    "page": 26,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Chaitanya"
+   },
+   {
+    "page": 27,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "RECITE THE NAME OF THE LORD"
+   },
+   {
+    "page": 27,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Kabīr"
+   },
+   {
+    "page": 28,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Kabīr"
+   },
+   {
+    "page": 29,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "I AM FASCINATED BY THY NAME"
+   },
+   {
+    "page": 29,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Mīrābāī"
+   },
+   {
+    "page": 30,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Mīrābāī"
+   },
+   {
+    "page": 31,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "COMFORT IN THIS WORLD AND THE NEXT"
+   },
+   {
+    "page": 31,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Tulsīdās"
+   },
+   {
+    "page": 32,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "GLORIFY THE NAME OF THE LORD AMITĀBHA"
+   },
+   {
+    "page": 32,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Sukhāvatīvyūha"
+   },
+   {
+    "page": 33,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE BUDDHA OF BOUNDLESS LIGHT"
+   },
+   {
+    "page": 33,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Hōnen"
+   },
+   {
+    "page": 34,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Hōnen"
+   },
+   {
+    "page": 36,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Hōnen"
+   },
+   {
+    "page": 37,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Taking Refuge in the Right Practice"
+   },
+   {
+    "page": 38,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Hōnen"
+   },
+   {
+    "page": 39,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Taking Refuge in the Right Practice"
+   },
+   {
+    "page": 40,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Hōnen"
+   },
+   {
+    "page": 41,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Taking Refuge in the Right Practice"
+   },
+   {
+    "page": 42,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Hōnen"
+   },
+   {
+    "page": 43,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "PASSAGES ON THE PURE LAND WAY"
+   },
+   {
+    "page": 43,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Shinran"
+   },
+   {
+    "page": 43,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "PREFACE"
+   },
+   {
+    "page": 43,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "TEACHING"
+   },
+   {
+    "page": 44,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shinran"
+   },
+   {
+    "page": 44,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "PRACTICE"
+   },
+   {
+    "page": 45,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Passages on the Pure Land Way"
+   },
+   {
+    "page": 46,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shinran"
+   },
+   {
+    "page": 47,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE HOLY ONE SPEAKS HIS NAME"
+   },
+   {
+    "page": 47,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Zohar"
+   },
+   {
+    "page": 48,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Zohar"
+   },
+   {
+    "page": 49,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE LIGHT OF THE INTELLECT"
+   },
+   {
+    "page": 49,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Abraham Abulafia"
+   },
+   {
+    "page": 50,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Abraham Abulafia"
+   },
+   {
+    "page": 51,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Light of the Intellect"
+   },
+   {
+    "page": 52,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE QUESTION OF PROPHECY"
+   },
+   {
+    "page": 52,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Abraham Abulafia"
+   },
+   {
+    "page": 53,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Question of Prophecy"
+   },
+   {
+    "page": 54,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "GAZING AT THE LETTERS"
+   },
+   {
+    "page": 54,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Rabbi Isaac of Akko"
+   },
+   {
+    "page": 55,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "CLIMBING THE LADDER"
+   },
+   {
+    "page": 55,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Rabbi Isaac of Akko"
+   },
+   {
+    "page": 56,
+    "pstyle": "MinionPro-BoldIt@14/center",
+    "text": "PHILOKALIA"
+   },
+   {
+    "page": 56,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "St. Philotheos of Sinai"
+   },
+   {
+    "page": 56,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Ilias the Presbyter"
+   },
+   {
+    "page": 57,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Philokalia"
+   },
+   {
+    "page": 57,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "St. Symeon the New Theologian"
+   },
+   {
+    "page": 58,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "St. Symeon the New Theologian"
+   },
+   {
+    "page": 59,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Philokalia"
+   },
+   {
+    "page": 60,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "St. Gregory of Sinai"
+   },
+   {
+    "page": 60,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "St. Gregory of Sinai"
+   },
+   {
+    "page": 61,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Philokalia"
+   },
+   {
+    "page": 62,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "UNCEASING INTERIOR PRAYER"
+   },
+   {
+    "page": 62,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "The Way of a Pilgrim"
+   },
+   {
+    "page": 63,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Unceasing Interior Prayer"
+   },
+   {
+    "page": 64,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "The Way of a Pilgrim"
+   },
+   {
+    "page": 65,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Unceasing Interior Prayer"
+   },
+   {
+    "page": 66,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "The Way of a Pilgrim"
+   },
+   {
+    "page": 67,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Unceasing Interior Prayer"
+   },
+   {
+    "page": 68,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "The Way of a Pilgrim"
+   },
+   {
+    "page": 69,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "STRIKE DOWN EVERY KIND OF THOUGHT"
+   },
+   {
+    "page": 69,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "The Cloud of Unknowing"
+   },
+   {
+    "page": 70,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "The Cloud of Unknowing"
+   },
+   {
+    "page": 71,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Strike Down Every Kind of Thought"
+   },
+   {
+    "page": 72,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE SERMON FOR PALM SUNDAY"
+   },
+   {
+    "page": 72,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "St. Bernardino of Siena"
+   },
+   {
+    "page": 73,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Sermon for Palm Sunday"
+   },
+   {
+    "page": 74,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "St. Bernardino of Siena"
+   },
+   {
+    "page": 75,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE NAME ADMIRABLE ABOVE ALL NAMES"
+   },
+   {
+    "page": 75,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "St. Jean Eudes"
+   },
+   {
+    "page": 76,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE SACRAMENT OF THE PRESENT MOMENT"
+   },
+   {
+    "page": 76,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Jean-Pierre de Caussade"
+   },
+   {
+    "page": 77,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Sacrament of the Present Moment"
+   },
+   {
+    "page": 78,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE KEY TO SALVATION"
+   },
+   {
+    "page": 78,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Ibn ‘Atā’ Allāh Al-Iskandarī"
+   },
+   {
+    "page": 78,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "BENEFITS OF THE INVOCATION IN GENERAL"
+   },
+   {
+    "page": 79,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Key to Salvation"
+   },
+   {
+    "page": 80,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Ibn ‘Atā’ Allāh Al-Iskandarī"
+   },
+   {
+    "page": 81,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Key to Salvation"
+   },
+   {
+    "page": 82,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Ibn ‘Atā’ Allāh Al-Iskandarī"
+   },
+   {
+    "page": 82,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "ON CHOOSING THE TYPE OF REMEMBRANCE"
+   },
+   {
+    "page": 83,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Key to Salvation"
+   },
+   {
+    "page": 84,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Ibn ‘Atā’ Allāh Al-Iskandarī"
+   },
+   {
+    "page": 85,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Key to Salvation"
+   },
+   {
+    "page": 86,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Ibn ‘Atā’ Allāh Al-Iskandarī"
+   },
+   {
+    "page": 88,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "II."
+   },
+   {
+    "page": 88,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "CONTEMPORARY"
+   },
+   {
+    "page": 88,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "DOCTRINAL ESSAYS"
+   },
+   {
+    "page": 88,
+    "pstyle": "MinionPro-It@14/center",
+    "text": "God and His Name are one."
+   },
+   {
+    "page": 88,
+    "pstyle": "MinionPro-Regular@14/center",
+    "text": "ramakrishna"
+   },
+   {
+    "page": 90,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "MODES OF PRAYER"
+   },
+   {
+    "page": 90,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 91,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Modes of Prayer"
+   },
+   {
+    "page": 92,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 93,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "COMMUNION AND INVOCATION"
+   },
+   {
+    "page": 93,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 94,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 95,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Communion and Invocation"
+   },
+   {
+    "page": 95,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*     *     *"
+   },
+   {
+    "page": 96,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 97,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Communion and Invocation"
+   },
+   {
+    "page": 98,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 99,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Communion and Invocation"
+   },
+   {
+    "page": 100,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "RITES"
+   },
+   {
+    "page": 100,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Titus Burckhardt"
+   },
+   {
+    "page": 101,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Rites"
+   },
+   {
+    "page": 102,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Titus Burckhardt"
+   },
+   {
+    "page": 103,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Rites"
+   },
+   {
+    "page": 104,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE METHOD"
+   },
+   {
+    "page": 104,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Martin Lings"
+   },
+   {
+    "page": 105,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Method"
+   },
+   {
+    "page": 106,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Martin Lings"
+   },
+   {
+    "page": 107,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Method"
+   },
+   {
+    "page": 108,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE GREAT NAME OF GOD"
+   },
+   {
+    "page": 108,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 109,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Great Name of God"
+   },
+   {
+    "page": 110,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 111,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Great Name of God"
+   },
+   {
+    "page": 111,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*     *     *"
+   },
+   {
+    "page": 112,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 113,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Great Name of God"
+   },
+   {
+    "page": 114,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 115,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Great Name of God"
+   },
+   {
+    "page": 116,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 117,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Great Name of God"
+   },
+   {
+    "page": 118,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 119,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Great Name of God"
+   },
+   {
+    "page": 120,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Leo Schaya"
+   },
+   {
+    "page": 122,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "NEMBUTSU AS REMEMBRANCE1"
+   },
+   {
+    "page": 122,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 123,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 124,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 124,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*     *     *"
+   },
+   {
+    "page": 125,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 126,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 127,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 128,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 129,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 130,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 131,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 132,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 133,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 133,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*     *     *"
+   },
+   {
+    "page": 134,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 135,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 136,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Marco Pallis"
+   },
+   {
+    "page": 137,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nembutsu as Remembrance"
+   },
+   {
+    "page": 138,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE SHIN TEACHING OF BUDDHISM"
+   },
+   {
+    "page": 138,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "D. T. Suzuki"
+   },
+   {
+    "page": 140,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "D. T. Suzuki"
+   },
+   {
+    "page": 142,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "D. T. Suzuki"
+   },
+   {
+    "page": 143,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Shin Teaching of Buddhism"
+   },
+   {
+    "page": 144,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "D. T. Suzuki"
+   },
+   {
+    "page": 145,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "ON THE PRACTICAL USE OF THE JESUS PRAYER"
+   },
+   {
+    "page": 145,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Archimandrite Lev Gillet"
+   },
+   {
+    "page": 145,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "1. THE FORM OF THE PRAYER"
+   },
+   {
+    "page": 146,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Archimandrite Lev Gillet"
+   },
+   {
+    "page": 146,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "2. EPISODE OR METHOD?"
+   },
+   {
+    "page": 147,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "On the Practical Use of the Jesus Prayer"
+   },
+   {
+    "page": 148,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Archimandrite Lev Gillet"
+   },
+   {
+    "page": 148,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "3. THE FIRST STEPS: ADORATION AND SALVATION"
+   },
+   {
+    "page": 148,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "4. INCARNATION"
+   },
+   {
+    "page": 149,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "On the Practical Use of the Jesus Prayer"
+   },
+   {
+    "page": 149,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "5. TRANSFIGURATION"
+   },
+   {
+    "page": 150,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Archimandrite Lev Gillet"
+   },
+   {
+    "page": 150,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "6. THE BODY OF CHRIST"
+   },
+   {
+    "page": 151,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "On the Practical Use of the Jesus Prayer"
+   },
+   {
+    "page": 152,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Archimandrite Lev Gillet"
+   },
+   {
+    "page": 152,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "7. THE SUPPER OF THE LORD"
+   },
+   {
+    "page": 153,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "On the Practical Use of the Jesus Prayer"
+   },
+   {
+    "page": 153,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "8. THE NAME AND THE SPIRIT"
+   },
+   {
+    "page": 154,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Archimandrite Lev Gillet"
+   },
+   {
+    "page": 154,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "9. TOWARDS THE FATHER"
+   },
+   {
+    "page": 155,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "SOME IMPORTANT DHIKRS"
+   },
+   {
+    "page": 155,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Mir Valiuddin"
+   },
+   {
+    "page": 156,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Mir Valiuddin"
+   },
+   {
+    "page": 157,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Some Important Dhikrs"
+   },
+   {
+    "page": 158,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Mir Valiuddin"
+   },
+   {
+    "page": 158,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "BRAIN"
+   },
+   {
+    "page": 158,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "HEART             NAVEL"
+   },
+   {
+    "page": 159,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Some Important Dhikrs"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Mir Valiuddin"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Akhfā"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Khafī"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Sirr"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Rūh"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Qalb"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "The Throne (‘Arsh)"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Nafs"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Fire"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Air"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Water"
+   },
+   {
+    "page": 160,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Earth"
+   },
+   {
+    "page": 161,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Some Important Dhikrs"
+   },
+   {
+    "page": 162,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Mir Valiuddin"
+   },
+   {
+    "page": 164,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "III."
+   },
+   {
+    "page": 164,
+    "pstyle": "MinionPro-Bold@20/center",
+    "text": "CONTEMPORARY TESTIMONIES"
+   },
+   {
+    "page": 164,
+    "pstyle": "MinionPro-It@14/center",
+    "text": "In this Kali Age salvation is not gained by"
+   },
+   {
+    "page": 164,
+    "pstyle": "MinionPro-It@14/center",
+    "text": "knowledge, karma, and worship,"
+   },
+   {
+    "page": 164,
+    "pstyle": "MinionPro-It@14/center",
+    "text": "but only by taking shelter in the Name."
+   },
+   {
+    "page": 164,
+    "pstyle": "MinionPro-Regular@14/center",
+    "text": "tulsds"
+   },
+   {
+    "page": 166,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "ALWAYS PRAYING AND THINKING OF GOD"
+   },
+   {
+    "page": 166,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Thomas Yellowtail"
+   },
+   {
+    "page": 167,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "PRAY TO GOD WITH A YEARNING HEART"
+   },
+   {
+    "page": 167,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Srī Ramakrishna"
+   },
+   {
+    "page": 168,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Srī Ramakrishna"
+   },
+   {
+    "page": 169,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "CONSTANT REPETITION OF THE DIVINE NAME"
+   },
+   {
+    "page": 169,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Swami Ramdas"
+   },
+   {
+    "page": 170,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Swami Ramdas"
+   },
+   {
+    "page": 170,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 170,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 171,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Constant Repetition of the Divine Name"
+   },
+   {
+    "page": 172,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "PRAYER"
+   },
+   {
+    "page": 172,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Mahatma Gandhi"
+   },
+   {
+    "page": 174,
+    "pstyle": "MinionPro-BoldIt@14/center",
+    "text": "JAPA-SĀDHANĀ"
+   },
+   {
+    "page": 174,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Vandana Mataji"
+   },
+   {
+    "page": 175,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Japa-Sādhanā"
+   },
+   {
+    "page": 176,
+    "pstyle": "MinionPro-BoldIt@14/center",
+    "text": "ADVAITA AND JAPA"
+   },
+   {
+    "page": 176,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Ramana Maharshi"
+   },
+   {
+    "page": 176,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 177,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Advaita and Japa"
+   },
+   {
+    "page": 177,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 177,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 177,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "*    *    *"
+   },
+   {
+    "page": 178,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE PRAYER OF THE NAME"
+   },
+   {
+    "page": 178,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Swami Abhishiktananda (Henri Le Saux)"
+   },
+   {
+    "page": 179,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Prayer of the Name"
+   },
+   {
+    "page": 180,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Swami Abhishiktananda (Henri Le Saux)"
+   },
+   {
+    "page": 181,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Prayer of the Name"
+   },
+   {
+    "page": 182,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Swami Abhishiktananda (Henri Le Saux)"
+   },
+   {
+    "page": 183,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Prayer of the Name"
+   },
+   {
+    "page": 184,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Swami Abhishiktananda (Henri Le Saux)"
+   },
+   {
+    "page": 185,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "SAYINGS ON TARIKI"
+   },
+   {
+    "page": 185,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Gōjun Shichiri"
+   },
+   {
+    "page": 186,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Gōjun Shichiri"
+   },
+   {
+    "page": 187,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Sayings on Tariki"
+   },
+   {
+    "page": 188,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Gōjun Shichiri"
+   },
+   {
+    "page": 189,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Sayings on Tariki"
+   },
+   {
+    "page": 190,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Gōjun Shichiri"
+   },
+   {
+    "page": 191,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Sayings on Tariki"
+   },
+   {
+    "page": 192,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Gōjun Shichiri"
+   },
+   {
+    "page": 193,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Sayings on Tariki"
+   },
+   {
+    "page": 194,
+    "pstyle": "MinionPro-BoldIt@14/center",
+    "text": "NAMO AMITOFU"
+   },
+   {
+    "page": 194,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Gao Xingjian"
+   },
+   {
+    "page": 195,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Namo Amitofu"
+   },
+   {
+    "page": 196,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Gao Xingjian"
+   },
+   {
+    "page": 197,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "Namo Amitofu"
+   },
+   {
+    "page": 198,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Gao Xingjian"
+   },
+   {
+    "page": 199,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "BUDDHIST PRAYER"
+   },
+   {
+    "page": 199,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "William Johnston"
+   },
+   {
+    "page": 200,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "William Johnston"
+   },
+   {
+    "page": 201,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Breathing and Rhythm in Christian and Buddhist Prayer"
+   },
+   {
+    "page": 202,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "CONSOLATA"
+   },
+   {
+    "page": 202,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 202,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "THE ACT OF LOVE AND VOCAL PRAYER"
+   },
+   {
+    "page": 203,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 204,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 204,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "THE ACT OF LOVE AND MEDITATION"
+   },
+   {
+    "page": 205,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 206,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 207,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 207,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "THE ACT OF LOVE AND SPIRITUAL READING"
+   },
+   {
+    "page": 208,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 209,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 210,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 211,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 211,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "THE ACT OF LOVE AND THE SPIRITUAL RETREAT"
+   },
+   {
+    "page": 212,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 212,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "THE ACT OF LOVE IN VARIOUS SPIRITUAL STATES"
+   },
+   {
+    "page": 213,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 214,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Father Lorenzo Sales"
+   },
+   {
+    "page": 215,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "The Unceasing Act of Love of Sister Mary Consolata"
+   },
+   {
+    "page": 216,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "TREATISE ON THE INVOCATION"
+   },
+   {
+    "page": 216,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "OF THE DIVINE NAME"
+   },
+   {
+    "page": 216,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Shaykh Ahmad Al-‘Alawī"
+   },
+   {
+    "page": 217,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Treatise on the Invocation of the Divine Name"
+   },
+   {
+    "page": 218,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shaykh Ahmad Al-‘Alawī"
+   },
+   {
+    "page": 219,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Treatise on the Invocation of the Divine Name"
+   },
+   {
+    "page": 220,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shaykh Ahmad Al-‘Alawī"
+   },
+   {
+    "page": 221,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Treatise on the Invocation of the Divine Name"
+   },
+   {
+    "page": 222,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shaykh Ahmad Al-‘Alawī"
+   },
+   {
+    "page": 223,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Treatise on the Invocation of the Divine Name"
+   },
+   {
+    "page": 224,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shaykh Ahmad Al-‘Alawī"
+   },
+   {
+    "page": 225,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Treatise on the Invocation of the Divine Name"
+   },
+   {
+    "page": 226,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Shaykh Ahmad Al-‘Alawī"
+   },
+   {
+    "page": 227,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "THE LOVE OF RELIGIOUS PRACTICES"
+   },
+   {
+    "page": 227,
+    "pstyle": "MinionPro-It@13/center",
+    "text": "Simone Weil"
+   },
+   {
+    "page": 230,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "GLOSSARY"
+   },
+   {
+    "page": 231,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 232,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Glossary"
+   },
+   {
+    "page": 234,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "ACKNOWLEDGMENTS"
+   },
+   {
+    "page": 234,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "I. FOUNDATIONAL TEXTS:"
+   },
+   {
+    "page": 235,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 236,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Acknowledgments"
+   },
+   {
+    "page": 236,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "II. CONTEMPORARY DOCTRINAL ESSAYS:"
+   },
+   {
+    "page": 237,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 237,
+    "pstyle": "MinionPro-Regular@11/center",
+    "text": "III. CONTEMPORARY TESTIMONIES:"
+   },
+   {
+    "page": 238,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Acknowledgments"
+   },
+   {
+    "page": 239,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "BIOGRAPHICAL NOTE"
+   },
+   {
+    "page": 240,
+    "pstyle": "MinionPro-Bold@14/center",
+    "text": "INDEX"
+   },
+   {
+    "page": 241,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 242,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Index"
+   },
+   {
+    "page": 243,
+    "pstyle": "WorldWisdomFont@11/center",
+    "text": "199, 205"
+   },
+   {
+    "page": 243,
+    "pstyle": "WorldWisdomFont@11/center",
+    "text": "181, 193"
+   },
+   {
+    "page": 243,
+    "pstyle": "WorldWisdomFont@11/center",
+    "text": "Isaac Luria, 93"
+   },
+   {
+    "page": 243,
+    "pstyle": "WorldWisdomFont@11/center",
+    "text": "Isaiah, 90, 158"
+   },
+   {
+    "page": 244,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Index"
+   },
+   {
+    "page": 245,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 246,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Index"
+   },
+   {
+    "page": 247,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 248,
+    "pstyle": "MinionPro-It@11/center",
+    "text": "Index"
+   },
+   {
+    "page": 249,
+    "pstyle": "Present-Black@17",
+    "text": "Titles in the Treasures of the World’s"
+   },
+   {
+    "page": 249,
+    "pstyle": "Present-Black@17",
+    "text": "Religions series"
+   },
+   {
+    "page": 250,
+    "pstyle": "ACaslonPro-Italic@12/center",
+    "text": "Contributions include:"
+   },
+   {
+    "page": 250,
+    "pstyle": "AbbotOldStyle@24",
+    "text": "Pray Without Ceasing"
+   },
+   {
+    "page": 250,
+    "pstyle": "ACaslonPro-Semibold@12/center",
+    "text": "Foundational Texts"
+   },
+   {
+    "page": 250,
+    "pstyle": "ACaslonPro-Semibold@12/center",
+    "text": "Contemporary Texts"
+   },
+   {
+    "page": 250,
+    "pstyle": "KeplMM-Or1-643-356-@11/center",
+    "text": "\u0001"
+   }
+  ],
+  "toc_pages": [],
+  "toc_entries": [],
+  "toc_witness_table": [
+   {
+    "outline": "CONTENTS",
+    "level": 1,
+    "target": 8,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Patrick Laude introduction",
+    "level": 1,
+    "target": 10,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "I. FOUNDATIONAL TEXTS",
+    "level": 1,
+    "target": 22,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Bhagavad Gītā He Who Thinks of Me Constantly",
+    "level": 2,
+    "target": 24,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chaitanya I Shall Repeat Thy Name",
+    "level": 2,
+    "target": 25,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Kabīr Recite the Name of the Lord",
+    "level": 2,
+    "target": 27,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Mīrābāī I am Fascinated by Thy Name",
+    "level": 2,
+    "target": 29,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Tulsīdās Comfort in this World and the Next",
+    "level": 2,
+    "target": 31,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Sukhāvatīvyūha Glorify the Name of the Lord Amitābha",
+    "level": 2,
+    "target": 32,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Hōnen The Buddha of Boundless Light & Taking Refuge",
+    "level": 2,
+    "target": 33,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Shinran Passages on the Pure Land Way",
+    "level": 2,
+    "target": 43,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Zohar The Holy One Speaks His Name",
+    "level": 2,
+    "target": 47,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Abraham Abulafia The Light of the Intellect & The Question Of Prophecy",
+    "level": 2,
+    "target": 49,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Rabbi Isaac of Akko Gazing at the Letters & Climbing the Ladder",
+    "level": 2,
+    "target": 54,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Philokalia St. Philotheos of Sinai, Ilias the Presbyter, St. Symeon the New Theologian, & St. Gregory of Sinai",
+    "level": 2,
+    "target": 56,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Way of a Pilgrim Unceasing Interior Prayer",
+    "level": 2,
+    "target": 62,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "The Cloud of Unknowing Strike Down Every Kind of Thought",
+    "level": 2,
+    "target": 69,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "St. Bernardino of Siena The Sermon for Palm Sunday",
+    "level": 2,
+    "target": 72,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "St. Jean Eudes The Name Admirable Above All Names",
+    "level": 2,
+    "target": 75,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Jean-Pierre de Caussade The Sacrament of the Present Moment",
+    "level": 2,
+    "target": 76,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Ibn ‘Atā’ Allāh Al-Iskandarī The Key to Salvation",
+    "level": 2,
+    "target": 78,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "II. CONTEMPORARY DOCTRINAL ESSAYS",
+    "level": 1,
+    "target": 88,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Frithjof Schuon Modes of Prayer & Communion and Invocation",
+    "level": 2,
+    "target": 90,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Titus Burckhardt Rites",
+    "level": 2,
+    "target": 100,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Martin Lings The Method",
+    "level": 2,
+    "target": 104,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Leo Schaya The Great Name of God",
+    "level": 2,
+    "target": 108,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Marco Pallis Nembutsu as Remembrance",
+    "level": 2,
+    "target": 122,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "D.T. Suzuki The Shin Teaching of Buddhism",
+    "level": 2,
+    "target": 138,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Archimandrite Lev Gillet On the Practical Use of the Jesus Prayer",
+    "level": 2,
+    "target": 145,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Mir Valiuddin Some Important Dhikrs",
+    "level": 2,
+    "target": 155,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "III. CONTEMPORARY TESTIMONIES",
+    "level": 1,
+    "target": 164,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Thomas Yellowtail Always Praying and Thinking of God",
+    "level": 2,
+    "target": 166,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Srī Ramakrishna Pray to God with a Yearning Heart",
+    "level": 2,
+    "target": 167,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Swami Ramdas Constant Repetition of the Divine Name",
+    "level": 2,
+    "target": 169,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Mahatma Gandhi Prayer",
+    "level": 2,
+    "target": 172,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Vandana Mataji Japa-Sādhanā",
+    "level": 2,
+    "target": 174,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Ramana Maharshi Advaita and Japa",
+    "level": 2,
+    "target": 176,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Swami Abhishiktananda (Henri Le Saux) The Prayer of the Name",
+    "level": 2,
+    "target": 178,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Gōjun Shichiri Sayings on Tariki",
+    "level": 2,
+    "target": 185,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Gao Xingjian Namo Amitofu",
+    "level": 2,
+    "target": 194,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "William Johnston Breathing and Rhythm in Christian and Buddhist Prayer",
+    "level": 2,
+    "target": 199,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Father Lorenzo Sales The Unceasing Act of Love of Sister Mary Consolata",
+    "level": 2,
+    "target": 202,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Shaykh Ahmad Al-'Alawī Treatise on the Invocation of the Divine Name",
+    "level": 2,
+    "target": 216,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Simone Weil The Love of Religious Practices",
+    "level": 2,
+    "target": 227,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Glossary",
+    "level": 2,
+    "target": 230,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Acknowledgments",
+    "level": 2,
+    "target": 234,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Biographical Note",
+    "level": 2,
+    "target": 239,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Index",
+    "level": 2,
+    "target": 240,
+    "printed": null,
+    "heading_on_target": true
+   }
+  ],
+  "toc_source_proposal": "outline",
+  "footnote_pages": [
+   7,
+   11,
+   14,
+   17,
+   18,
+   19,
+   33,
+   34,
+   58,
+   59,
+   60,
+   69,
+   70,
+   71,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   100,
+   102,
+   103,
+   104,
+   105,
+   109,
+   110,
+   111,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   120,
+   122,
+   123,
+   124,
+   125,
+   126,
+   127,
+   132,
+   134,
+   135,
+   136,
+   203,
+   205,
+   206,
+   207,
+   208,
+   209,
+   211,
+   212,
+   215,
+   219,
+   220,
+   221,
+   222
+  ],
+  "footnote_marker_census": {
+   "digit": 108
+  },
+  "footnote_samples": [
+   {
+    "page": 7,
+    "text": "Pray Without Ceasing: The Way of the Invocation in World Religions © 2006 World Wisdom, Inc. All rights reserved. No part of this book may be used or "
+   },
+   {
+    "page": 11,
+    "text": "1 Daisetz Teitaro Suzuki, An Introduction to Zen Buddhism, New York, Grove Press, 1964,  p. 52. 2 See Upanishads du Yoga, edited by Jean Varenne, Pari"
+   },
+   {
+    "page": 14,
+    "text": "3 The Way of a Pilgrim, translated and annotated by Gleb Pokrovsky, Vermont, Woodstock,  2001, p. 55."
+   },
+   {
+    "page": 17,
+    "text": "4 This did not prevent Shankara from engaging in Hindu devotions, nor from his full  recognition of the spiritual validity of japa, as he eloquently t"
+   },
+   {
+    "page": 18,
+    "text": "5 This is what Taitetsu Unno beautifully suggests when he refers to the distinction between  “growing rice,” “watching rice grow,” and “listening to r"
+   }
+  ],
+  "footnote_policy_proposal": "markers",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 13.2,
+  "indent_histogram": {
+   "18": 278,
+   "37": 1
+  },
+  "indent_threshold_proposal": 13.5,
+  "eol_hyphen_count": 42,
+  "lost_space_count": 1,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [],
+  "pua_census": [
+   {
+    "char": "",
+    "hex": "U+F646",
+    "count": 9,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F647",
+    "count": 10,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F649",
+    "count": 6,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F64B",
+    "count": 9,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F644",
+    "count": 29,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F643",
+    "count": 4,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F66E",
+    "count": 4,
+    "families": [
+     "MinionPro-It",
+     "MinionPro-Regular"
+    ],
+    "pages": [
+     8,
+     9,
+     164
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F645",
+    "count": 11,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F648",
+    "count": 13,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F64A",
+    "count": 7,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F64C",
+    "count": 5,
+    "families": [
+     "MinionPro-It"
+    ],
+    "pages": [
+     8,
+     9
+    ]
+   },
+   {
+    "char": "",
+    "hex": "U+F685",
+    "count": 1,
+    "families": [
+     "MinionPro-Regular"
+    ],
+    "pages": [
+     164
+    ]
+   }
+  ],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 11,
+  "verse_suspect_pages": [
+   {
+    "page": 7,
+    "lines": [
+     0,
+     6
+    ],
+    "n_lines": 7,
+    "base": [
+     15.8
+    ],
+    "turns": [
+     46.2,
+     53.2,
+     62.2,
+     72.7,
+     89.0,
+     105.4
+    ],
+    "first": "Pray Without Ceasing: The Way of the Invocation in World Rel"
+   },
+   {
+    "page": 24,
+    "lines": [
+     11,
+     31
+    ],
+    "n_lines": 21,
+    "base": [
+     18.0
+    ],
+    "turns": [],
+    "first": "And at the hour of death, he who dies "
+   },
+   {
+    "page": 48,
+    "lines": [
+     1,
+     11
+    ],
+    "n_lines": 11,
+    "base": [
+     18.0
+    ],
+    "turns": [],
+    "first": "Who sees the mighty ones "
+   },
+   {
+    "page": 162,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "base": [
+     18.0
+    ],
+    "turns": [],
+    "first": "Though the heart did not know the reality,"
+   },
+   {
+    "page": 246,
+    "lines": [
+     23,
+     25
+    ],
+    "n_lines": 3,
+    "base": [
+     10.8
+    ],
+    "turns": [
+     183.3
+    ],
+    "first": "73, 75, 77, 80, 83, 94, 102-103, "
+   },
+   {
+    "page": 246,
+    "lines": [
+     27,
+     29
+    ],
+    "n_lines": 3,
+    "base": [
+     10.8
+    ],
+    "turns": [
+     183.3
+    ],
+    "first": "126, 137-138, 146, 150, 158, "
+   },
+   {
+    "page": 246,
+    "lines": [
+     49,
+     51
+    ],
+    "n_lines": 3,
+    "base": [
+     10.8
+    ],
+    "turns": [
+     183.3
+    ],
+    "first": "124-128, 130, 132, 134, 145-146, "
+   },
+   {
+    "page": 246,
+    "lines": [
+     53,
+     56
+    ],
+    "n_lines": 4,
+    "base": [
+     10.8
+    ],
+    "turns": [
+     172.5
+    ],
+    "first": "183, 187, 192-193, 204-205, 211, "
+   },
+   {
+    "page": 247,
+    "lines": [
+     28,
+     30
+    ],
+    "n_lines": 3,
+    "base": [
+     10.8
+    ],
+    "turns": [
+     172.5
+    ],
+    "first": "97, 110, 113, 125-127, 131, 139, "
+   },
+   {
+    "page": 247,
+    "lines": [
+     45,
+     52
+    ],
+    "n_lines": 8,
+    "base": [
+     10.8
+    ],
+    "turns": [
+     172.5,
+     183.3
+    ],
+    "first": "91-96, 98-99, 104, 109, 116, "
+   },
+   {
+    "page": 250,
+    "lines": [
+     13,
+     16
+    ],
+    "n_lines": 4,
+    "base": [
+     32.0
+    ],
+    "turns": [],
+    "first": "St. Bernardino of Siena Rabbi Isaac of Akko"
+   },
+   {
+    "page": 250,
+    "lines": [
+     18,
+     25
+    ],
+    "n_lines": 8,
+    "base": [
+     34.3
+    ],
+    "turns": [],
+    "first": "Shaykh Ahmad Al-‘AlawīVandana Mataji "
+   }
+  ],
+  "quote_suspect_pages": [
+   {
+    "page": 4,
+    "lines": [
+     19,
+     23
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": 18.0,
+    "first": "great spiritual authorities of the past on fundamental theme"
+   },
+   {
+    "page": 30,
+    "lines": [
+     13,
+     16
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "(exploits), dhāma (abode), gunas (attributes), is like unto "
+   },
+   {
+    "page": 31,
+    "lines": [
+     15,
+     18
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "performed marvelous feats by using the Name. The Name is lik"
+   },
+   {
+    "page": 35,
+    "lines": [
+     4,
+     19
+    ],
+    "n_lines": 16,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "As to establishing faith with respect to practice, we should"
+   },
+   {
+    "page": 35,
+    "lines": [
+     21,
+     36
+    ],
+    "n_lines": 16,
+    "left_inset": 18.0,
+    "right_inset": 18.1,
+    "first": "to recite single-mindedly and wholeheartedly the name of A-m"
+   },
+   {
+    "page": 38,
+    "lines": [
+     21,
+     28
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "If we perform the rightly (established) and the auxiliary pr"
+   },
+   {
+    "page": 39,
+    "lines": [
+     1,
+     9
+    ],
+    "n_lines": 9,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "When sentient beings arouse themselves to practice and alway"
+   },
+   {
+    "page": 40,
+    "lines": [
+     3,
+     9
+    ],
+    "n_lines": 7,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "Now the “ten recitations of the Buddha’s name” in this Kuan "
+   },
+   {
+    "page": 41,
+    "lines": [
+     34,
+     41
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "The Wang-sheng li-tsan says:"
+   },
+   {
+    "page": 42,
+    "lines": [
+     2,
+     19
+    ],
+    "n_lines": 18,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "perform miscellaneous practices, it is rare for even one or "
+   },
+   {
+    "page": 42,
+    "lines": [
+     21,
+     28
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": 18.3,
+    "first": "seen and heard that everywhere practitioners, whether monks "
+   },
+   {
+    "page": 42,
+    "lines": [
+     30,
+     40
+    ],
+    "n_lines": 11,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "this well. Those who already in this lifetime desire birth i"
+   },
+   {
+    "page": 44,
+    "lines": [
+     27,
+     33
+    ],
+    "n_lines": 7,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "The Buddha-tathagatas throughout the ten quarters, countless"
+   },
+   {
+    "page": 79,
+    "lines": [
+     13,
+     20
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": 18.4,
+    "first": "A tradition states,"
+   },
+   {
+    "page": 82,
+    "lines": [
+     27,
+     30
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 18.4,
+    "first": "If you say, “That is so only at the beginning of faith, but "
+   },
+   {
+    "page": 84,
+    "lines": [
+     27,
+     31
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": 18.4,
+    "first": "Because Abū Bakr gave all his wealth to the point where not "
+   },
+   {
+    "page": 105,
+    "lines": [
+     13,
+     26
+    ],
+    "n_lines": 14,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "The Qur’ān is, like the world, at the same time one and mult"
+   },
+   {
+    "page": 139,
+    "lines": [
+     12,
+     37
+    ],
+    "n_lines": 26,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "The nembutsu as practiced by the jiriki followers puts the B"
+   },
+   {
+    "page": 140,
+    "lines": [
+     9,
+     40
+    ],
+    "n_lines": 32,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "What, then, is the significance of Amida’s Vow?"
+   },
+   {
+    "page": 141,
+    "lines": [
+     1,
+     11
+    ],
+    "n_lines": 11,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "see that the substance of Buddhahood is the act [or fact] of"
+   },
+   {
+    "page": 141,
+    "lines": [
+     13,
+     18
+    ],
+    "n_lines": 6,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "to practice good deeds if we wish to be assured of our rebir"
+   },
+   {
+    "page": 141,
+    "lines": [
+     28,
+     40
+    ],
+    "n_lines": 13,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "To quote further the author of the Anjin-ketsujō-shō: "
+   },
+   {
+    "page": 142,
+    "lines": [
+     23,
+     34
+    ],
+    "n_lines": 12,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "By jiriki is meant that the devotees, each according to his "
+   },
+   {
+    "page": 142,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "in Amida’s Original Vow and are assured of their rebirth in "
+   },
+   {
+    "page": 143,
+    "lines": [
+     1,
+     5
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "all kinds of evil passions and destined to be sinful. Nor ar"
+   },
+   {
+    "page": 161,
+    "lines": [
+     18,
+     20
+    ],
+    "n_lines": 3,
+    "left_inset": 18.0,
+    "right_inset": 18.2,
+    "first": "Spiritual grace is overflowing from the Being—who is single "
+   },
+   {
+    "page": 250,
+    "lines": [
+     12,
+     16
+    ],
+    "n_lines": 5,
+    "left_inset": 34.5,
+    "right_inset": 50.1,
+    "first": "Abraham Abulaﬁ a Ibn ‘Atā’ Allāh Al-Iskandarī"
+   }
+  ],
+  "list_marker_pages": [
+   {
+    "page": 25,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 6,
+    "first": "1. Praise be to the name of Lord Krishna, which purifies the"
+   },
+   {
+    "page": 26,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "7. O Lord! without Thee, a moment of separation hangs upon m"
+   },
+   {
+    "page": 27,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "1. The true Name is like none other name!"
+   },
+   {
+    "page": 29,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "1. My Lord: I am fascinated by Thy Name,"
+   },
+   {
+    "page": 30,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "3. I repeat the Name of the Lord Rāma, day in and day out. "
+   },
+   {
+    "page": 56,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "96. Not all have the same purpose in prayer: one man has one"
+   },
+   {
+    "page": 57,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 5,
+    "first": "100. Unless the words of prayer penetrate to the soul’s dept"
+   },
+   {
+    "page": 156,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 6,
+    "first": "1.  “Remember Me and I will remember you” (2:152);"
+   },
+   {
+    "page": 185,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "1. According to the other schools of Buddhism, good is pract"
+   },
+   {
+    "page": 186,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "5. There are some people who think that they understand what"
+   },
+   {
+    "page": 187,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "9. In case we are depending on others, for instance, if we a"
+   },
+   {
+    "page": 188,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 6,
+    "first": "11. [Referring to children the reverend master said,] “Carri"
+   },
+   {
+    "page": 189,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "17. The lamp itself has no light until it is lighted, it shi"
+   },
+   {
+    "page": 190,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 5,
+    "first": "19. Such old Chinese remedies as kakkontō (arrowroot infusio"
+   },
+   {
+    "page": 191,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 7,
+    "first": "24. Knowledge is the outcome of reasoning and knows no limit"
+   },
+   {
+    "page": 192,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 5,
+    "first": "31. We are told to believe deeply in the mercy of Amida, but"
+   },
+   {
+    "page": 193,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "36. We must pay fair prices for things that belong to others"
+   },
+   {
+    "page": 235,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "18.  "
+   }
+  ],
+  "column_suspect_pages": [],
+  "low_agreement_pages": [
+   {
+    "page": 1,
+    "score": 18.9
+   },
+   {
+    "page": 240,
+    "score": 58.2
+   },
+   {
+    "page": 241,
+    "score": 57.5
+   },
+   {
+    "page": 242,
+    "score": 59.5
+   },
+   {
+    "page": 243,
+    "score": 58.8
+   },
+   {
+    "page": 244,
+    "score": 59.3
+   },
+   {
+    "page": 245,
+    "score": 60.4
+   },
+   {
+    "page": 246,
+    "score": 57.6
+   },
+   {
+    "page": 247,
+    "score": 58.6
+   },
+   {
+    "page": 248,
+    "score": 76.5
+   },
+   {
+    "page": 250,
+    "score": 57.3
+   }
+  ],
+  "image_only_pages": [
+   228
+  ],
+  "cover_proposal": {
+   "mode": "synthesize",
+   "reason": "page 1 is text (240 chars, 9 images) — no cover in PDF"
+  },
+  "flagged_pages": [
+   1,
+   7,
+   8,
+   11,
+   24,
+   48,
+   164,
+   228,
+   240,
+   241,
+   242,
+   243,
+   244,
+   245,
+   246,
+   247,
+   248
+  ],
+  "warnings": []
+ }
+}
