@@ -97,11 +97,40 @@ def expand_ligatures(text: str) -> tuple[str, int]:
 _INRUN_HYPHEN = re.compile(r"([A-Za-zÀ-ſ])- ([a-zà-ÿ])")
 
 
-def inline_dehyphenate(text: str) -> tuple[str, int]:
+def inline_dehyphenate(text: str, mode: str = "lower-only",
+                       keep: "frozenset[str] | set[str]" = frozenset()
+                       ) -> tuple[str, int]:
     """Some PDFs store a whole paragraph as ONE content line, with the print
     line-breaks appearing as literal 'word- word' seams (I&B introduction and
-    essay). Same lower-only doctrine as the line joiner, applied in-run."""
-    return _INRUN_HYPHEN.subn(r"\1\2", text)
+    essay). Same lower-only doctrine as the line joiner, applied in-run —
+    including its per-book keep-list, matched on the same reconstructed
+    'lastword-nextword'.
+
+    NB text alone cannot tell a stored line break from a PRINTED space of the
+    same shape: sufism p.125 really does set '(al- Bātin)', while Keys stores
+    'non- Buddhist' for a page that prints 'non-Buddhist'. Only the glyph
+    geometry separates them, so the extractor drops the layout-CANCELLED ones
+    before this ever runs (extract.mupdf.repair_span_text) — leaving here only
+    seams whose space the layout really gave room to. Keep this rule narrow
+    for that reason: a capitalized continuation is left alone, since the only
+    such seam in the corpus is one print genuinely sets."""
+    if mode == "off" or not keep:
+        return _INRUN_HYPHEN.subn(r"\1\2", text)
+    out: list[str] = []
+    n = 0
+    pos = 0
+    for m in _INRUN_HYPHEN.finditer(text):
+        left = re.search(r"[A-Za-zÀ-ſ’']*$", text[:m.end(1)]).group(0)
+        right = re.match(r"[A-Za-zÀ-ſ’']*", text[m.start(2):]).group(0)
+        out.append(text[pos:m.start()])
+        if f"{left}-{right}".lower() in keep:
+            out.append(f"{m.group(1)}-{m.group(2)}")
+        else:
+            out.append(m.group(1) + m.group(2))
+            n += 1
+        pos = m.end()
+    out.append(text[pos:])
+    return "".join(out), n
 
 
 def swap_quote_sides(text: str) -> tuple[str, int]:

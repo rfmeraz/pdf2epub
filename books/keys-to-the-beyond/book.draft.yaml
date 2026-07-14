@@ -1,0 +1,108 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "Keys to the Beyond Frithjof Schuons Cross-Traditional Language of Transcendence .pdf"
+  sha256: "a4ac119194cd4c0eff7a9ebdce3cb7d77691eccda8de63eec137597932057cd7"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: FILL-ME-IN
+  creators: []                # [{name: ..., role: aut|trl|edt|...}]
+  publisher: ""               # from the copyright page; no default
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> identifier/urn:uuid
+  isbn_print:
+  identifier: b581f4b0-0185-44f8-8ce6-258d7967c927   # persistent EPUB id; keep STABLE across revisions
+  released:                   # YYYY-MM-DD of this EPUB revision (dcterms:modified)
+  date:
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (1 image(s), 0 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 2}   # FILL-ME-IN: no arabic folio '1' found
+  body:  {first: 3, last: 406}   # FILL-ME-IN
+  exclude: []
+  label_source: pdf-page-labels   # folio-vs-label agreement: 100.0%
+  label_overrides: {}
+  role_overrides: []          # e.g. {page: 3, role: title-page}
+
+furniture:
+  top_band: 45.7
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 176p): '# | Keys to the Beyon#'
+  # repeated (top, 24p): 'Necessary Sufism and the Archetype of Islam | #'
+  # repeated (top, 20p): 'The AvatĀric Mystery | #'
+  # repeated (top, 16p): 'Trinitarian Metaphysics | #'
+  # repeated (top, 14p): 'The Nature of Things and the Human Margin | #'
+  # repeated (top, 14p): 'The Yin-Yang Perspective and Visual Metaphysics | #'
+  # repeated (top, 13p): 'UpĀya: Religion as Relatively Absolute | #'
+  # repeated (top, 13p): 'The Divine Feminine | #'
+
+styles:                       # JP-P1 — review every non-high confidence row
+  body_pstyle: "MinionPro-Regular@10.5"
+  pstyle_map:
+    "MinionPro-Regular@10.5": {role: p}   # high: dominant text cluster
+    "MinionPro-Regular@9": {role: p}   # low: smaller than body (9.0pt)
+    "MinionPro-Regular@9.5": {role: p}   # low: smaller than body (9.5pt)
+    "MinionPro-It@9": {role: p}   # low: smaller than body (9.0pt)
+    "MinionPro-Regular@10": {role: p}   # low: smaller than body (10.0pt)
+    "MinionPro-It@9.5": {role: p}   # low: smaller than body (9.5pt)
+    "MinionPro-It@10.5": {role: p}   # low: body-like
+    "MinionPro-Regular@16/center": {role: h1}   # medium: size 16.0pt >= 1.35x body
+    "MinionPro-Regular@10.5/center": {role: h3}   # low: centered, body-sized
+    "MinionPro-Regular@18/center": {role: h1}   # medium: size 18.0pt >= 1.35x body
+    "MinionPro-SemiboldIt@14/center": {role: h2}   # medium: 14.0pt centered
+    "MinionPro-Bold@9/center": {role: p}   # low: smaller than body (9.0pt)
+    "MinionPro-Regular@10/center": {role: p}   # low: smaller than body (10.0pt)
+    "MinionPro-Regular@13.5/center": {role: h2}   # medium: 13.5pt centered
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: false     # set true once the map is reviewed
+
+flow:
+  indent_threshold: 18.0
+  gap_factor: 1.6             # median leading measured: 13.0pt
+  dehyphenate: lower-only
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides: []               # {page, line(RAW extract idx), action, note}
+
+footnotes:                    # JP-P4
+  policy: markers   # regions on 303 pages; census {'digit': 584}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses, see report
+  source: outline   # outline=17 printed=16 links=0
+  printed_pages: [8]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  figure_pages: []
+
+output: {slug: keys-to-the-beyond, include_ncx: true}

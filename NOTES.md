@@ -1353,3 +1353,87 @@ joiner cannot read a short centered turnover as a continuation.
 
 Verification baseline: `pytest -q` **370 passed**; `ruff check` clean; six-book
 corpus (+ F&S) all `Overall: PASS`.
+
+## Keys to the Beyond — a calibre PDF whose own boxes and encoding lied (2026-07-14)
+
+Six defects here were INVISIBLE to all 26 gates and surfaced only from a blind
+reader or a render. Both witnesses read the same broken ToUnicode, so the
+engine-disagreement score and gate 2 saw two agreeing witnesses; gate 2 is
+recall-only, so leaked furniture and mis-scoped notes cost it nothing. **When a
+book's own encoding is wrong, only the RENDER is ground truth.**
+
+- **A CropBox outside the MediaBox slides the TrimBox off its own text.**
+  MuPDF's `transformation_matrix` is MediaBox-referenced, but text coordinates
+  live in `page.rect` = the CROPBOX normalized to origin 0. They agree only
+  while CropBox == MediaBox. Calibre wrote CropBox y0=9 ABOVE MediaBox y0=24,
+  so the stored trim sat 24pt below the text it bounds; every chapter-opening
+  DROP FOLIO fell outside the 50pt bottom folio band, went unstripped, and —
+  being 10pt, below the 9pt note region — broke the note-region walk on its
+  FIRST line. All 12 chapter openings shipped their footnotes as body prose
+  with a bare folio and an unlinked marker. `trim_in_text_space()` re-anchors
+  on the CropBox; a no-op for a conventional PDF. **Highest-value fix here:
+  check `p.trim` against `page.rect` on any new producer.**
+- **Dot diacritics can be encoded as a bare period.** Keys draws Ṣ/ḥ/ṛ/ṅ as base
+  glyph + a dot glyph whose ToUnicode says U+002E, so the text layer reads
+  `S.ah.īh.` where print sets `Ṣaḥīḥ`. Neither engine can see it (both read the
+  same map) and gate 20 sees no U+FFFD. Discriminator is geometric and exact:
+  the dot is drawn OFF the baseline and INSIDE the base's advance; a real period
+  sits ON the baseline after it. 28 hits in Keys, **0 across the other six books'
+  ~450k spans**. Scan per LINE — a raised dot gets its own span. Which side the
+  dot falls on is the PRINT's call (`Muṡṭafā` takes a dot-above where the
+  standard sets it below): ship what is drawn.
+- **NFC-normalize ONLY what you repaired.** A blanket `normalize("NFC")` on every
+  span silently re-encoded BoK (which stores `ḥ` pre-decomposed as h+U+0323 and
+  has always shipped it that way). Whether the corpus should ship NFC is a real
+  question — but not a text repair's to decide.
+- **A space the LAYOUT cancelled is not a printed space.** Keys stores
+  `non- Buddhist` for a page that prints `non-Buddhist`: the next glyph is drawn
+  at/before the space's own start, so the space took no room. sufism p.125 really
+  does set `(al- Bātin)` — identical in TEXT, opposite in geometry (there the
+  next glyph clears the space). Text alone cannot tell them apart, so the repair
+  belongs in the extractor, scoped to the hyphen seam (a general phantom-space
+  rule would also eat BoK's 1195 kerned post-period spaces).
+- **`_ps_root` again: Adobe abbreviates the style token.** `-It` for italic and
+  `-Regular` for upright means neither `Italic` nor `Roman` appears, so the twins
+  never folded and every wrap line an italic term happened to dominate broke its
+  paragraph and stranded a hyphen. Strip a SEPARATOR-anchored trailing style
+  token too (`SemiboldIt` must not fold into the upright). This is the second
+  time this helper has cost a corpus-wide defect — **check `_ps_root` against a
+  new book's cluster list**.
+- **The cross-run hyphen repair needs the line break's SPACE.** Runs that ABUT
+  are a real compound whose hyphen merely coincides with a style change
+  (`Krishna-` roman + `līlā` italic). Across the whole corpus the pattern occurs
+  4 times and ALL 4 are compounds — the rule had never once done its intended
+  job, and had shipped `nodharma` in I&B through that book's own proofread.
+- **Note markers RUN ON.** A bare page-citation turnover (`130.` closing
+  `…nn. 22,`) is marker-shaped, and the phantom note it forged BLOCKED the
+  page-ordered ref queue for every real note behind it — 2 turnovers cost 11
+  unmatched markers. Geometry cannot see this (a note's last line may legitimately
+  fill the measure — p.22 note 21) and neither can the text pattern: only the
+  sequence. Also: a CENTERED page-bottom line is never a note (the printer's key
+  `10 9 8 7…` dragged the whole copyright page in).
+- **`indent_threshold` must sit BETWEEN the book's indent scales, not on one.**
+  The init proposal derives it from the BODY histogram alone; Keys' index
+  turnover column sits at exactly 18pt, so the proposed 18.0 made
+  `entry_break` (`x0 < col_left + threshold`) a knife-edge — turnovers measuring
+  77.36 vs 77.38 fell on opposite sides and ~42 index entries lost their
+  locators to a phantom break. Check the proposal against the INDEX/list stops.
+- **Index sub-entry levels are a 9pt ladder and `flow.columns` flattens them**
+  (KNOWN LIMITATION, same as sufism). Keys marks a sub-entry base with a leading
+  WIDE SPACE (line x0 stays at the column left, first GLYPH is +9), so level 2
+  breaks correctly — but level 3's base and level 2's turnover share x0 exactly,
+  and no flat rule separates them. Text, order and locator links are all intact;
+  only the sub-entry line structure inside a top-level entry runs on.
+- **A scholarly book quotes itself.** Gate 25's duplicated-span witness assumes a
+  >=400-char verbatim repeat is pipeline damage; Laude prints the same Schuon
+  paragraph in two chapters' notes. New `qa.duplicate_allow` (snippet + note,
+  stale entries FAIL) — the `qa.lost_space_allow` pattern.
+- **The GT furniture strip must reassemble a head poppler SPLIT.** poppler emits
+  a recto head as `Title` / `|` / `267` where MuPDF fuses it, so no single line
+  matched the template and the head survived into the witness — where, being
+  identical to the chapter TITLE, it anchored the page-probe on the chapter
+  OPENING and forged a gate-25 reorder. Match the leading/trailing RUN; joining
+  is what keeps a chapter-opening title (bare of folio and separator) safe.
+
+Verification baseline: `pytest -q` **391 passed**; seven-book corpus all
+`Overall: PASS`. Only I&B's EPUB changed (the `no-dharma` fix, print-verified).

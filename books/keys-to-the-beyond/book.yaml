@@ -1,0 +1,269 @@
+# pdf2epub book.yaml — Keys to the Beyond (Patrick Laude), SUNY Press 2020.
+# Judgments recorded by the structure-inference agent from analysis evidence +
+# page renders (and the ML layout witness, which agreed on footnotes/furniture
+# and MIS-called the Contents page (p8) a "Table" — dropped, see images:).
+# SUNY series in Western Esoteric Traditions; a single-author monograph set
+# entirely in Minion Pro. See CONVERSIONS.md for the decision log.
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "Keys to the Beyond Frithjof Schuons Cross-Traditional Language of Transcendence .pdf"
+  sha256: "a4ac119194cd4c0eff7a9ebdce3cb7d77691eccda8de63eec137597932057cd7"
+
+metadata:                     # JP-P5 — verified on p4 (title) + p5 (copyright) renders
+  title: "Keys to the Beyond"
+  subtitle: "Frithjof Schuon's Cross-Traditional Language of Transcendence"
+  creators:
+    - {name: "Patrick Laude", role: aut}      # p4 title page; p5 LCCN "Laude, Patrick, 1958– author."
+  publisher: "State University of New York Press"   # p5: "Published by State University of New York Press, Albany"
+  language: en
+  additional_languages: []    # transliterated Arabic/Sanskrit/Greek are romanized (Latin); RTL chars: 0
+  isbn_epub:                  # SUNY's OWN ebook ISBN (9781438479002, p5) identifies THEIR
+                              # EPUB, not this conversion -> never reused; urn:uuid ships (FLAGGED)
+  isbn_print: "978-1-4384-7899-9"   # p5 "ISBN 9781438478999 (hardcover : alk. paper)"; back-cover EAN agrees
+  identifier: b581f4b0-0185-44f8-8ce6-258d7967c927   # persistent EPUB id (draft urn:uuid; FLAGGED)
+  released: "2026-07-14"      # dcterms:modified = this EPUB revision
+  date: "2020"                # p5: "© 2020 State University of New York"
+  cover: assets/cover.jpg     # rendered from PDF page 1 (full designed cover: Schuon's
+                              # "Apparition of the Buffalo Calf Maiden", 1959)
+  cover_render: {page: 1, box: trim, dpi: 300}
+
+pages:                        # JP-P2 — folio-vs-/PageLabels agreement 100.0%; printed folio = pdf page - 11
+  cover: [1]
+  front: {first: 2, last: 11}   # half-title(2), series(3), title(4), copyright(5),
+                                # dedication(6), epigraph(7), contents(8), blank(9),
+                                # acknowledgments ix(10), blank(11)
+  body:  {first: 12, last: 405} # printed folio '1' begins on p12 (Introduction);
+                                # runs through the index (printed 394 = p405)
+  exclude: [406]                # p406 = physical BACK COVER (image-only: blurb, endorsement,
+                                # author bio, SUNY logo, ISBN barcode) — marketing paratext,
+                                # no text layer. Verified on p406 render.
+  label_source: pdf-page-labels   # agreement 100.0%
+  label_overrides: {}
+  role_overrides: []          # not needed: the p2/p4 display clusters are page-exclusive (see styles)
+
+furniture:
+  top_band: 45.7              # running heads: folio|book title (verso) / chapter title|folio (recto).
+                              # Chapter-opening pages carry NO running head — the folio sits at the
+                              # FOOT (p12/p38 renders), outside the band; it is a folio line and is
+                              # dropped as such.
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+
+styles:                       # JP-P1 — all 20 clusters mapped (fail_on_unmapped: true)
+  body_pstyle: "MinionPro-Regular@10.5"
+  pstyle_map:
+    # --- body / front / back-matter prose ---
+    "MinionPro-Regular@10.5":        {role: p}   # dominant body text
+    "MinionPro-It@10.5":             {role: p}   # inline italic body (ps-twin of the above)
+    "MinionPro-Regular@9":           {role: p}   # footnotes (split geometrically) + p5 copyright prose
+    "MinionPro-It@9":                {role: p}   # italic titles inside footnotes + p5 cover credit
+    "MinionPro-Regular@9.5":         {role: p}   # p7 epigraph + ALL back matter (bibliographies, index)
+    "MinionPro-It@9.5":              {role: p}   # italic work-titles in the bibliographies
+    # --- furniture (top-band-stripped; role p so any leak reads as prose, not a phantom heading) ---
+    "MinionPro-Regular@10":          {role: p}   # running heads "2 | Keys to the Beyond"
+    "MinionPro-Regular@10/center":   {role: p}   # drop folios on chapter-opening pages
+    # --- headings ---
+    "MinionPro-Regular@18/center":   {role: h1}  # front/back-matter titles: Contents, Acknowledgments,
+                                                 # Introduction, Conclusion, Bibliography x2, Index
+    "MinionPro-Regular@13.5/center": {role: h1}  # the chapter NUMBER ("1".."10") — opens the chapter
+                                                 # heading paragraph; the title line joins onto it via
+                                                 # flow.overrides, giving one h1 that matches the outline
+    "MinionPro-Regular@16/center":   {role: h1}  # chapter titles (joined onto the number; also the
+                                                 # ps-twin of MinionPro-It@16 — italic title words)
+    # --- half-title (p2) / title page (p4): both clusters are page-exclusive ---
+    "MinionPro-Semibold@15/center":  {role: half-title}   # p2 "KEYS TO THE BEYOND"
+    "MinionPro-Semibold@25/center":  {role: title-page}   # p4 "KEYS TO THE BEYOND"
+    "MinionPro-SemiboldIt@14/center": {role: title-page}  # p4 subtitle (2 lines)
+    "MinionPro-Semibold@16/center":  {role: title-page}   # p4 "PATRICK LAUDE"
+    # --- series page (p3) ---
+    "MinionPro-Regular@10.5/center": {role: p}   # p3 "SUNY series…"/"David Appelbaum, editor" AND the
+                                                 # 3 p317 poem lines the extractor read as centred —
+                                                 # NOT h3 (the init proposal): a heading role here would
+                                                 # forge phantom headings out of verse. blocks.verse wins.
+    "AGaramondPro-Regular@10.5/center": {role: p}   # p3 rule "—————" under the series masthead
+    # --- dedication (p6) ---
+    "MinionPro-It@11.5/center":      {role: p}   # "In Memoriam Sharlyn Romaine" (no dedication role in
+                                                 # the vocabulary; ships as its own centred paragraph)
+    # --- copyright page (p5) ---
+    "MinionPro-Bold@9/center":       {role: p}   # "Library of Congress Cataloging-in-Publication Data"
+    "MinionPro-Regular@9/center":    {role: p}   # printer's key "10  9  8  7  6  5  4  3  2  1"
+  charstyles: {}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  # Must separate BOTH indent scales, so it sits between them, not at an edge:
+  #   * body first-line indent  = 24pt (histogram {'24': 384}) -> threshold < 24
+  #   * index turnover column   = 18pt from the column left    -> threshold < 18
+  # The init proposal (18.0, derived from the body histogram alone) landed
+  # EXACTLY on the index's turnover column: entry_break is `x0 < col_left +
+  # indent_threshold`, so with col_left 59.38 the stop was 77.38 and turnovers
+  # measuring 77.36 vs 77.38 fell on opposite sides of it — sub-point jitter
+  # decided whether an index entry kept its locators ('361-362, 361n11' broke
+  # off its own entry on p.375). 12 keeps ~6pt of clearance on both sides.
+  indent_threshold: 12.0
+  gap_factor: 1.6             # median leading measured: 13.0pt
+  dehyphenate: lower-only
+  keep_hyphens:
+    # Real compounds whose hyphen happened to fall at a print line break;
+    # lower-only would strip it and rewrite the word. Each is ATTESTED
+    # hyphenated MID-LINE elsewhere in this same book (count below) — the
+    # book is its own witness, which a render of a line-break hyphen can
+    # never be. Audited by hooking dehyphenate_join over all 768 joins and
+    # testing every result against the book's own hyphenated attestations;
+    # these 12 are the complete set.
+    - "yin-yang"            # 108x hyphenated. The 12 closed 'yinyang' are all
+                            #   Robin Wang's BOOK TITLE, its citations, or text
+                            #   quoted from it; the author's own form is hyphenated
+                            #   (it is chapter 8's title). Breaks: pp.274/283/287/293 + index
+    - "supra-ontological"   # 19x
+    - "onto-cosmological"   # 13x (broke in the index, p.382: 'ontocosmological')
+    - "non-dual"            # 23x
+    - "super-ontological"   # 9x
+    - "non-difference"      # 11x
+    - "vis-à-vis"           # 12x; standard hyphenated phrase (breaks after 'vis-à-')
+    - "two-fold"            # 3x, all author's prose ('This two-fold aspect').
+                            #   The 1 closed 'twofold' sits INSIDE a Schuon quotation
+    - "inner-most"          # the book's own INDEX prints 'and the inner-most layers
+                            #   of the human heart' mid-line TWICE (pp.377/387), for
+                            #   this very page — print settles it, though the book
+                            #   writes 'innermost' in other phrases
+    - "English-speaking"    # 2x; breaks in an index entry
+    - "meta-history"        # Corbin's term, 'dialogue in meta-history'
+    - "Lao-tzu’s"           # proper name (NB curly apostrophe, as extracted)
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: true     # centred runs here are wrapped HEADINGS that must rejoin
+                              # ("Bibliography of the"/"Works of Frithjof Schuon"). The p4 title-page
+                              # blocks are separated by pstyle changes + a 152.8pt gap, so they stay
+                              # distinct; the p317 poem is protected by its blocks.verse spec.
+  reattach_dropcaps: true     # no drop caps detected; harmless
+  overrides:                  # {page, line(RAW extract idx), action, note}
+    # --- p5 copyright page. Its blocks are set RAGGED RIGHT (the only such
+    # page in the book), so every print line ends short of the measure and the
+    # justified-prose joiner reads each as a paragraph end — breaking single
+    # sentences mid-clause ('…in any manner whatsoever' | 'without written
+    # permission…'). The LCCN entries compound it: their turnovers are indented
+    # with a leading SPACE, not a position, so x0 stays at the body left and
+    # the indent rule cannot see them either. Drive the print blocks explicitly.
+    - {page: 5, line: 1,  action: join, note: "cover credit is one paragraph (2/4)"}
+    - {page: 5, line: 2,  action: join, note: "cover credit is one paragraph (3/4)"}
+    - {page: 5, line: 3,  action: join, note: "cover credit is one paragraph (4/4)"}
+    - {page: 5, line: 9,  action: join, note: "'No part of this book…' reservation is one paragraph (2/5)"}
+    - {page: 5, line: 11, action: join, note: "'No part of this book…' reservation is one paragraph (4/5)"}
+    - {page: 5, line: 14, action: join, note: "'www.sunypress.edu' closes the 'For information, contact…' block"}
+    - {page: 5, line: 18, action: join, note: "LCCN 'Title:' turnover '…transcendence / Patrick Laude.'"}
+    - {page: 5, line: 22, action: join, note: "LCCN 'Identifiers:' turnover '…9781438478999 (hardcover…'"}
+    - {page: 5, line: 24, action: join, note: "LCCN 'Subjects:' turnover '…interpretation. | Metaphysics…'"}
+    - {page: 5, line: 26, action: join, note: "LCCN 'Classification:' turnover '…200.92—dc23'"}
+
+    # --- p7 epigraph (JP-P9): a justified prose quote + attribution, NOT verse.
+    # The verse witness flagged p7 base[24.2]/turns[44.4] — the "turn" is the
+    # attribution's deeper indent, not a couplet drop (render-verified).
+    - {page: 7, line: 0, action: "role:epigraph", note: "p7 epigraph: Schuon's 1958 letter to Martin Lings, justified inset quote (x0 83.2, right edge locked 349.3) — an epigraph is a role judgment, not blocks.verse"}
+    - {page: 7, line: 7, action: "role:epigraph", note: "p7 epigraph attribution '—Frithjof Schuon, letter to Martin Lings, November 20, 1958' (x0 103.4); keeps the print block together"}
+
+    # --- chapter openings: join the title line onto the chapter NUMBER so each
+    # chapter ships ONE h1 matching its outline entry ("1 Ātman, Māyā and the
+    # Relatively Absolute"). Without this the 13.5pt number and the 16pt title
+    # are separate paragraphs (pstyle change) and split.at_roles=[h1] would
+    # strand a file containing only the digit. RAW idx 1 = number, 2 = title.
+    - {page: 38,  line: 1, action: join, note: "ch.1 title 'Ātman, Māyā and the Relatively Absolute' joins its number '1'"}
+    - {page: 64,  line: 1, action: join, note: "ch.2 title 'The Avatāric Mystery' joins its number '2'"}
+    - {page: 106, line: 1, action: join, note: "ch.3 title 'Upāya: Religion as Relatively Absolute' joins its number '3'"}
+    - {page: 134, line: 1, action: join, note: "ch.4 title 'The Nature of Things and the Human Margin' joins its number '4'"}
+    - {page: 164, line: 1, action: join, note: "ch.5 title 'Trinitarian Metaphysics' joins its number '5'"}
+    - {page: 198, line: 1, action: join, note: "ch.6 title 'Necessary Sufism and the Archetype of Islam' joins its number '6'"}
+    - {page: 248, line: 1, action: join, note: "ch.7 title 'The Divine Feminine' joins its number '7'"}
+    - {page: 276, line: 1, action: join, note: "ch.8 title 'The Yin-Yang Perspective and Visual Metaphysics' joins its number '8'"}
+    - {page: 306, line: 1, action: join, note: "ch.9 title 'The “Tantric” Spiritualization of Sexuality' joins its number '9'"}
+    - {page: 334, line: 1, action: join, note: "ch.10 title 'Esoteric Ecumenism' joins its number '10'"}
+
+    # p374 idx 2: the bibliography's INTRO sentence sits at the entry stop (x0
+    # 59.4) and would otherwise be swept up as list item 1 by the hang spec.
+    # It is prose heading the list, not an entry (render-verified).
+    - {page: 374, line: 2, action: "class:prose", note: "'First editions in French and German, and first editions of English translations.' introduces the list — not a bibliography entry"}
+
+  columns:
+    # Two-column back-of-book INDEX (printed 375-394). The engine-agreement score
+    # flags exactly these 20 pages (54-58%) — the columned-fusion signature.
+    # Column lefts cluster at x0 59 / 221 on both verso and recto (binding shift
+    # is only ~0.3pt, so ONE spec is margin-consistent — unlike sufism-v-a-q).
+    # index: true links each printed locator to its pg-<label> anchor (DAISY).
+    - {pages: ["386-405"], count: 2, index: true, note: "index, printed 375-394; gutter between col-1 right edge and x=221 — verified on p386/p395/p405 renders"}
+
+footnotes:                    # JP-P4 — verified on p13/p38 renders (superscript digit refs,
+                              # rule-separated 9pt region at the foot)
+  policy: markers   # regions on 303 pages; census {'digit': 584} — no asterisk/symbol notes
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses: outline(17) | printed p8(16) | links(0)
+  source: outline   # outline matches the printed Contents 1:1 (+ a 'Contents' self-entry) and
+                    # 0/17 entries lack a heading on their target page; the printed TOC carries
+                    # no link targets (links: 0), so the outline is the stronger witness
+  printed_pages: [8]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 1                # the printed Contents is FLAT: Acknowledgments, Introduction,
+                              # chapters 1-10, Conclusion, 2 bibliographies, Index
+
+glyphs:                       # JP-P6 — PUA census EMPTY; the transliteration diacritics
+                              # (Ā ā ī ū ṛ ṣ ś ḥ ḍ ṭ ʾ ʿ) are real Latin Unicode
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL system fonts only; no CJK/RTL live text
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8 — 0 CJK pages, 0 RTL chars
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+blocks:                       # JP-P9 — every spec render-verified
+  verse:
+    # Schuon POEMS quoted line-for-line, ragged right, optically centred as a
+    # block (so each poem has its OWN inset) — single-level, turns: [] (I&B
+    # convention). These are the only two set poems in the book: a scan of every
+    # body page for inset runs found exactly these two ragged-right blocks, and
+    # the only other poem mentions (p107/p137/p322) are prose references.
+    - {pages: [317], base: [42.2], turns: [], note: "p317 (printed 306) 8-line poem 'The wheel of the world turns…' from Songs without Names (note 16); x0 101.2 constant, right edge ragged 303-321 — verified on render"}
+    - {pages: [355], base: [25.2], turns: [], note: "p355 (printed 344) 4-line poem 'Intolerant or tolerant?…' from Songs without Names VII–XII (note 34); x0 84.2 constant, right edge ragged 181-350 — verified on render"}
+  quotes:
+    # Real print block quotes: JUSTIFIED both edges (right edge locked at 349.5,
+    # the opposite signal of the ragged verse above), inset 24pt each side from
+    # the page's own body edges. NB 24pt is also the body first-line indent —
+    # these earn the justified-cluster witness across 11-14 consecutive lines.
+    - {pages: [149, 353], left_inset: 24, right_inset: 24, note: "p149 (printed 138) Schuon, The Transcendent Unity of Religions 104-5 (14 lines); p353 (printed 342) an 11-line Schuon quote — both justified 83.2..349.5, verified on renders"}
+  lists:
+    # The two bibliographies are marker-less HANGING-INDENT apparatus: the entry
+    # line sits at the body left (x0 59.2/59.4, the recto/verso stop pair) and
+    # every turnover drops to x0 83.4 — hang = 24.0pt exactly. Without the spec
+    # the prose joiner reads each indented turnover as a NEW paragraph (indent
+    # 24 > indent_threshold 18) and shatters every wrapped entry.
+    - {pages: ["374-376"], marker: hang, hang: 24, note: "Bibliography of the Works of Frithjof Schuon (printed 363-365) — hanging indent, entries x0 59.2/59.4, turnovers x0 83.4; verified on p374 render"}
+    - {pages: ["378-385"], marker: hang, hang: 24, note: "Bibliography (printed 367-374) — hanging indent, entries x0 59.2/59.4, turnovers x0 83.2/83.4; verified on p378 render"}
+
+images:                       # JP-P4b — no figures, plates or tables in the text.
+  raster_dpi: 300             # The layout witness proposed p8 as a "Table" (conf 0.865): the render
+  max_pixels: 1600            # shows it is the printed CONTENTS page (flowed text, rebuilt from the
+  figure_pages: []            # outline) — dropped. Its p1/p406 "Picture" boxes are the cover art and
+  figure_regions: []          # the back cover, handled by cover_render / pages.exclude.
+
+qa:
+  # Gate 25's duplicated-span witness assumes a >=400-char verbatim repeat is
+  # pipeline damage. This book falsifies that twice: Laude quotes the SAME
+  # Schuon passage in two chapters' notes. Both verified on the print renders
+  # of BOTH pages — the text is not duplicated by the build, it is duplicated
+  # by the author. (A stale entry fails the gate, so these can never quietly
+  # license real duplication.)
+  duplicate_allow:
+    - snippet: "For a religion to be considered as intrinsically orthodox it must be founded upon a fully adequate doctrine of the Absolute"
+      note: "printed twice: ch.4 note 24 (p.141 = PDF 152) and ch.10 note 19 (p.334 = PDF 345, a longer cut of the same quotation). Both renders verified 2026-07-14."
+    - snippet: "In a permanent confrontation of two beings, there must be two equilibrium-producing openings"
+      note: "printed twice: ch.5 note (p.157 = PDF 168) and ch.9 note (p.289 = PDF 300, reintroduced with 'This appears, for instance, in the conjugal relationship:'). Both renders verified 2026-07-14."
+
+output: {slug: keys-to-the-beyond, include_ncx: true}

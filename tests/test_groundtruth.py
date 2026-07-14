@@ -1,7 +1,8 @@
 """Ground-truth note excision: the squeeze match tolerates the flow's
 dehyphenation vs poppler's kept line-break hyphens."""
 
-from pdf2epub.qa.groundtruth import _find_fuzzyish
+from pdf2epub.analyze import furniture_template
+from pdf2epub.qa.groundtruth import _find_fuzzyish, split_head_run_indexes
 
 
 def test_find_fuzzyish_exact():
@@ -50,3 +51,38 @@ def test_excise_note_space_delimiter():
 def test_excise_note_absent_returns_none():
     from pdf2epub.qa.groundtruth import _excise_note
     assert _excise_note("nothing here at all", "a wholly absent note body", "1") is None
+
+
+# ---- running heads poppler splits across the separator (gate 25 reorder)
+
+CANON = {furniture_template(t).strip("#").strip() for t in (
+    "The Yin-Yang Perspective and Visual Metaphysics | 267",
+    "266 | Keys to the Beyond",
+)}
+
+
+def test_split_head_run_dropped():
+    """poppler emits the recto head as 'Title' / '|' / '267' where MuPDF fuses
+    it; the joined run matches the template, so all three lines go."""
+    lines = ["The Yin-Yang Perspective and Visual Metaphysics", "|", "267",
+             "are contingent on the sun that actualizes their predominance.",
+             "It flows from this primordial symbolism that the unity."]
+    assert split_head_run_indexes(lines, CANON) == {0, 1, 2}
+
+
+def test_chapter_opening_title_survives():
+    """The chapter TITLE is the same text as its running head, bare of folio
+    and separator — it must NOT be mistaken for furniture and stripped."""
+    lines = ["The Yin-Yang Perspective and Visual Metaphysics",
+             "The autochthonous Chinese tradition is a vast treasury.",
+             "Its intellectual and artistic treasures gave rise to much."]
+    assert split_head_run_indexes(lines, CANON) == set()
+
+
+def test_single_line_head_left_to_the_per_line_test():
+    """A head poppler keeps whole is the caller's 1-line job — the run matcher
+    must not claim it (and must not eat the body line beside it)."""
+    lines = ["266 | Keys to the Beyond",
+             "intellectual and artistic treasures to which it gave rise",
+             "brought about such a complex and sophisticated culture."]
+    assert split_head_run_indexes(lines, CANON) == set()

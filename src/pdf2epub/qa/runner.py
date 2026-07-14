@@ -390,7 +390,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     char_slices = slice_page_chars(body_docs, in_flow)
     epub_pages = {pno: normalize(_unsub(txt)) for pno, txt in char_slices.items()}
     fid = check_fidelity(gt.pages, epub_pages, in_flow, coverage_candidate,
-                         cov.per_page, sl.ok, sl.detail)
+                         cov.per_page, sl.ok, sl.detail,
+                         dup_allow=cfg.qa_duplicate_allow)
     gates.append(("25 page fidelity", fid.ok, fid.lines))
 
     # ---- gate 25b (advisory): every engine-disputed page (excluded from gate 2)

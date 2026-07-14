@@ -841,8 +841,9 @@ def _fline(runs):
 
 
 class _Lw:
-    def __init__(self, ln):
+    def __init__(self, ln, ps="Serif@9"):
         self.ln = ln
+        self.ps = ps
 
 
 def test_note_start_and_marker_smaller_font():
@@ -864,6 +865,90 @@ def test_note_start_and_marker_smaller_font():
     cont = _fline([_frun("at once patriarchal and mercantile", SMALL,
                          72, 300, 573)])
     assert _note_start(_Lw(cont), "digits", doc) is False
+
+
+def test_note_marker_turnover_breaking_the_run_is_not_a_note(tmp_path):
+    """Printed note numbers run on: a page's next note is the previous + 1. A
+    marker-SHAPED turnover that breaks the run is a bare page citation ('130.'
+    closing '…nn. 22,', Keys p.302) — it must join the note it ends, not forge
+    a phantom whose unmatchable marker blocks the page-ordered ref queue."""
+    body = [_line("Body text carrying the markers for these notes.", 100)]
+    notes = [
+        _fline([_frun("51", SUP, 72, 78, 560),
+                _frun(" Schuon, From the Divine to the Human, nn. 22,",
+                      SMALL, 78, 362, 560)]),
+        # a real turnover: its head looks exactly like a marker
+        _fline([_frun("130. ", SMALL, 72, 90, 573)]),
+        # ...whereas 52 continues the run and IS the next note
+        _fline([_frun("52", SUP, 72, 78, 586),
+                _frun(" Wang, Yinyang, 225.", SMALL, 78, 200, 586)]),
+    ]
+    doc = _doc([_page(1, body + notes)])
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(doc, cfg, say=lambda m: None)
+    assert len(res.flow.notes) == 2, list(res.flow.notes)
+    texts = ["".join(i.text for p in n.paragraphs for i in p.items
+                     if isinstance(i, TextRun))
+             for n in res.flow.notes.values()]
+    assert "130." in texts[0]          # the turnover joined note 51
+    assert "Wang, Yinyang" in texts[1]  # note 52 still opened its own note
+    assert res.counts["note-marker-nonsequential"] == 1
+
+
+def test_noteref_seam_restores_lost_space_before_word(tmp_path):
+    """Prepress can drop the word space AFTER a marker ('expression.37Accor-
+    dingly', Keys p.207). Print never sets a letter flush against a note
+    marker — gate 11b holds it to be always an artifact — so the seam is
+    repaired; a marker followed by punctuation keeps its flush setting."""
+    body = [_fline([_frun("Ghazali's powerful expression.", BODY, 72, 184, 100),
+                    _frun("37", SUP, 184, 190, 100, sup=True),
+                    _frun("Accordingly, the demands of Unicity.", BODY,
+                          190, 360, 100)])]
+    notes = [_fline([_frun("37", SUP, 72, 78, 560),
+                     _frun(" Schuon, Sufism, 106.", SMALL, 78, 200, 560)])]
+    doc = _doc([_page(1, body + notes)])
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(doc, cfg, say=lambda m: None)
+    para = next(b for b in res.flow.blocks
+                if isinstance(b, Paragraph) and any(isinstance(i, NoteRef)
+                                                    for i in b.items))
+    j = next(k for k, i in enumerate(para.items) if isinstance(i, NoteRef))
+    assert para.items[j + 1].text.startswith(" "), \
+        [getattr(i, "text", "<ref>") for i in para.items]
+    assert res.counts["noteref-seam-space"] == 1
+
+
+def test_noteref_seam_keeps_flush_punctuation(tmp_path):
+    """The repair is scoped to a WORD after the marker: a marker followed by
+    punctuation is set flush in print and must stay that way."""
+    body = [_fline([_frun("a striking phrase", BODY, 72, 150, 100),
+                    _frun("37", SUP, 150, 156, 100, sup=True),
+                    _frun(", and the demands of Unicity.", BODY,
+                          156, 360, 100)])]
+    notes = [_fline([_frun("37", SUP, 72, 78, 560),
+                     _frun(" Schuon, Sufism, 106.", SMALL, 78, 200, 560)])]
+    doc = _doc([_page(1, body + notes)])
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="digits")
+    res = build_flow(doc, cfg, say=lambda m: None)
+    para = next(b for b in res.flow.blocks
+                if isinstance(b, Paragraph) and any(isinstance(i, NoteRef)
+                                                    for i in b.items))
+    j = next(k for k, i in enumerate(para.items) if isinstance(i, NoteRef))
+    assert para.items[j + 1].text.startswith(",")
+    assert res.counts.get("noteref-seam-space", 0) == 0
+
+
+def test_note_start_rejects_centered_line():
+    """Print hangs note markers at the region's left edge, so a CENTERED
+    page-bottom line is colophon furniture. A copyright page set wholly
+    sub-body-size reads as one note region; its impression line ('10 9 8 …',
+    Keys p.5) must not be the marker that drags the page in."""
+    from pdf2epub.flowbuilder import _note_start
+    doc = _doc([])
+    key = _fline([_frun("10  9  8  7  6  5  4  3  2  1", SMALL, 163, 266, 555)])
+    assert _note_start(_Lw(key, ps="Serif@9/center"), "digits", doc) is False
+    # the same text flush left in a real note region is still a note start
+    assert _note_start(_Lw(key, ps="Serif@9"), "digits", doc) is True
 
 
 def test_footnote_extracted_and_joined(tmp_path):
@@ -2855,3 +2940,57 @@ def test_forced_quote_ships_without_body_anchors(tmp_path):
     quote = [p for p in _paras(res.flow) if p.block_class == "quote"]
     assert len(quote) == 1
     assert quote[0].text().startswith("A forced quotation")
+
+
+def test_ps_root_folds_abbreviated_adobe_style_tokens():
+    """Adobe abbreviates the italic token and names the upright '-Regular', so
+    neither 'Italic' nor 'Roman' appears: the twins stayed distinct and every
+    wrap line a long italic term dominated broke its paragraph (Keys p.2
+    'peren-'/'nialist Weltanschauung'). Weight must still separate."""
+    from pdf2epub.flowbuilder import _ps_root
+    # the Adobe pair folds
+    assert _ps_root("MinionPro-It@10.5") == _ps_root("MinionPro-Regular@10.5")
+    assert _ps_root("ACaslonPro-Italic@10.5") == _ps_root("ACaslonPro-Regular@10.5")
+    # the spellings already handled keep folding
+    assert _ps_root("NewBaskerville-Italic@10.5") == \
+        _ps_root("NewBaskerville-Roman@10.5")
+    assert _ps_root("TimesNewRomanPS-ItalicMT@11") == _ps_root("TimesNewRomanPSMT@11")
+    # 'SemiboldIt' is weight+style: separator-anchored, so it does NOT fold
+    # into the plain upright, and WEIGHT/SIZE never fold
+    assert _ps_root("MinionPro-SemiboldIt@16") != _ps_root("MinionPro-Regular@16")
+    assert _ps_root("MinionPro-Bold@10.5") != _ps_root("MinionPro-Regular@10.5")
+    assert _ps_root("MinionPro-Regular@9") != _ps_root("MinionPro-Regular@10.5")
+
+
+def test_cross_run_hyphen_seam_needs_the_line_break_space():
+    """The cross-run seam repair closes a print line break stored inside one
+    content line ('particu-' + ' lar', I&B). A seam with NO space is a real
+    COMPOUND whose hyphen coincides with a style change ('Krishna-' roman +
+    'līlā' italic, Keys p.306) — stripping it would rewrite the word."""
+    from collections import Counter
+
+    from pdf2epub.flowbuilder import _mk_runs
+    from pdf2epub.pdfmodel import PdfLine, PdfRun
+
+    class _C:
+        shifted_cmap_repair = False
+        shifted_cmap_highmap = False
+        fffd_repairs = []
+        charstyles = {}
+        pua_map = {}
+
+    def mk(*pairs):
+        runs = [PdfRun(text=t, font_id=f, x0=0, y0=0, x1=10, y1=10)
+                for t, f in pairs]
+        ln = PdfLine(runs=runs, x0=0, y0=0, x1=10, y1=10)
+        c = Counter()
+        return "".join(r.text for r in _mk_runs(ln, _C(), _doc([]), c)), c
+
+    # I&B: the seam carries the line break's space -> dehyphenate
+    txt, c = mk(("particu-", SMALL), (" lar", BODY))
+    assert txt == "particular", txt
+    assert c["seam-dehyphenated"] == 1
+    # Keys: the runs ABUT -> a compound; the hyphen must survive
+    txt, c = mk(("Krishna-", BODY), ("līlā", SMALL))
+    assert txt == "Krishna-līlā", txt
+    assert c["seam-dehyphenated"] == 0

@@ -99,6 +99,11 @@ class PdfDoc:
     # top-left origin, ints) — shared by the engine-agreement score and the
     # QA ground truth so both witnesses read the same page region
     trim_crop_box: tuple[int, int, int, int] | None = None
+    # dot diacritics recomposed from a base glyph + a period-encoded dot
+    # (see extract.mupdf.compose_dot_diacritics) — reported by extract
+    subscript_dots: int = 0
+    # spaces the layout cancelled at a hyphen seam, dropped at extract
+    cancelled_spaces: int = 0
     warnings: list[str] = field(default_factory=list)
 
     def page(self, number: int) -> PdfPage:

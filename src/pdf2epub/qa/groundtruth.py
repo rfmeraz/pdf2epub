@@ -40,6 +40,38 @@ class GroundTruth:
         return "\n".join(self.pages[p] for p in sorted(self.pages))
 
 
+def split_head_run_indexes(lines: list[str], canon: set[str]) -> set[int]:
+    """Indexes of a running head poppler SPLIT across its separator.
+
+    MuPDF fuses a head into one line ('The Yin-Yang Perspective … | 267');
+    poppler may emit it as 'The Yin-Yang Perspective …' / '|' / '267', so no
+    single poppler line carries the template and the whole head survives into
+    the witness. That head text is identical to the chapter TITLE, so it
+    anchored the page-probe on the chapter opening and forged a gate-25
+    reorder (Keys p.278).
+
+    Match the leading/trailing RUN instead: the largest run (<= 3 lines) whose
+    JOINED template is a known furniture template is the head. Joining is
+    exactly what keeps a chapter-opening title safe — bare of folio and
+    separator, a title only ever matches the 1-line form, which the template's
+    surviving separator rejects. Single-line heads stay the per-line caller's
+    job."""
+    def is_furn(*parts: str) -> bool:
+        return furniture_template(" ".join(parts)).strip("#").strip() in canon
+
+    drop: set[int] = set()
+    n = len(lines)
+    for k in (3, 2):
+        if k < n and is_furn(*lines[:k]):
+            drop |= set(range(k))
+            break
+    for k in (3, 2):
+        if k < n and is_furn(*lines[n - k:]):
+            drop |= set(range(n - k, n))
+            break
+    return drop
+
+
 def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
                        note_texts_by_page: dict[int, list[tuple[str, str]]],
                        stripped_lines: dict[int, list[str]] | None = None,
@@ -64,6 +96,7 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
             break
         raw = raw_pages[pno - 1]
         lines = [ln for ln in raw.split("\n") if ln.strip()]
+        drop_idx = split_head_run_indexes(lines, canon)
         kept = []
         # the flow's exact stripped lines for this page (fused MuPDF forms
         # like '14book of knowledge'; poppler splits folio and head, so also
@@ -83,6 +116,8 @@ def build_ground_truth(pdf: Path, cfg: PdfBookConfig, doc: PdfDoc,
         region_tokens = {t for s in page_regions for t in s.split()}
         from ..textfix import probe_text
         for i, ln in enumerate(lines):
+            if i in drop_idx:
+                continue
             n = normalize(ln)
             if page_regions:
                 if n in page_regions or (

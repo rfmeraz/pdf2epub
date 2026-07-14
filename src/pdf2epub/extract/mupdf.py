@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+import unicodedata
 from pathlib import Path
 
 import fitz  # PyMuPDF
@@ -95,6 +96,139 @@ def _decode_label(label: str | None) -> str | None:
             return m.group(0)
 
     return _HEX_STRING.sub(_sub, label)
+
+
+_DOT_BELOW = "̣"
+_DOT_ABOVE = "̇"
+
+
+def repair_span_text(pagedict: dict) -> tuple[int, int]:
+    """Rebuild each span's ``text`` from its GLYPHS, repairing two things only
+    the glyph geometry can see. Returns (dots composed, cancelled spaces dropped).
+
+    1. DOT diacritics the font encodes as a bare period.
+
+    Keys sets its Arabic/Sanskrit emphatics (Ṣaḥīḥ, Ḥajjāj, Bṛhad-Āraṇyaka-
+    Upaniṣad, saṃvṛti, Śaṅkarācārya) as base glyph + a separate dot glyph
+    whose ToUnicode says U+002E. The text layer therefore reads 'S.ah.īh.'
+    where the page plainly prints 'Ṣaḥīḥ' — the book's own words, garbled by
+    its own encoding. Both engines read that same ToUnicode, so gate 2 sees
+    two agreeing witnesses and gate 20 sees no U+FFFD: only a reader (six
+    flagged it) or the render can catch this.
+
+    The discriminator is geometric and exact: the dot is drawn off the text
+    baseline and INSIDE the base letter's advance, where a real period sits ON
+    the baseline after it. Measured over the whole corpus it fires 28 times in
+    Keys (26 below, 2 above — all on the emphatic set) and NEVER on the other
+    six books' thousands of periods.
+
+    Which side the dot falls on is the PRINT's to say, not ours: 'Śaṅkarācārya'
+    takes ṅ, and p.376's 'Muṡṭafā' takes a dot-above the standard would set
+    below — both ship exactly as drawn (never rewrite the book's words).
+
+    The repair is deterministic and additive: the base keeps its own glyph and
+    gains U+0323/U+0307, then NFC folds the pair to the printed character.
+
+    The dot's advance is narrower than the base it sits under, so MuPDF may
+    emit a PHANTOM SPACE for the leftover gap ('H. ajjāj' — even the garbled
+    reading splits the name). It is recognizable as the dot's own: it carries
+    the dot's own off-baseline box and ends within the base letter's advance,
+    where a word space sits on the text baseline clear of the letter.
+
+    Scanning is per LINE, not per span: a raised dot is far enough off the
+    baseline that MuPDF gives it a span of its own ('…Śan' | '.' | 'karācārya'),
+    so a per-span walk never sees it beside its base. The mark is appended to
+    the BASE's span, where NFC can fold it.
+
+    2. A space the layout CANCELLED after a hyphen (see inline).
+    """
+    n = 0
+    n_sp = 0
+    for block in pagedict.get("blocks", []):
+        for line in block.get("lines", []):
+            spans = [s for s in line.get("spans", []) if s.get("chars") is not None]
+            if not spans:
+                continue
+            flat = [(si, ch) for si, s in enumerate(spans) for ch in s["chars"]]
+            out: list[list[str]] = [[] for _ in spans]
+            fixed: set[int] = set()
+            i = 0
+            while i < len(flat):
+                si, ch = flat[i]
+                pi, prev = flat[i - 1] if i else (None, None)
+                dy = (ch["bbox"][1] - prev["bbox"][1]) if prev is not None else 0.0
+                if ch["c"] == "." and prev is not None \
+                        and prev["c"].isalpha() and abs(dy) > 1.0 \
+                        and ch["bbox"][0] < prev["bbox"][2] - 0.2:
+                    out[pi].append(_DOT_BELOW if dy > 0 else _DOT_ABOVE)
+                    fixed.add(pi)
+                    n += 1
+                    i += 1
+                    if i < len(flat):
+                        _, nxt = flat[i]
+                        if not nxt["c"].strip() \
+                                and abs(nxt["bbox"][1] - ch["bbox"][1]) < 0.1 \
+                                and nxt["bbox"][2] <= prev["bbox"][2] + 0.3:
+                            i += 1   # the dot's own leftover advance
+                    continue
+                # a space the LAYOUT CANCELLED after a hyphen: the next glyph
+                # is drawn at (or before) the space's own start, so it took no
+                # room and print shows 'non-Buddhist' though the stream stores
+                # 'non- Buddhist'. Keys does this at all 12 of its in-run
+                # hyphen seams (cross-religious, self-contradictory, onto-
+                # cosmological, Indo-European…) — the render is unambiguous.
+                # The test is the space's OWN geometry, which is the only thing
+                # that separates these from a printed space at the same shape:
+                # sufism p.125 really does set '(al- Bātin)', and there the
+                # next glyph clears the space. Scoped to the hyphen seam on
+                # purpose — a general phantom-space rule would also eat BoK's
+                # 1195 kerned post-period spaces.
+                if ch["c"] == " " and prev is not None and prev["c"] == "-" \
+                        and i + 1 < len(flat):
+                    _, nxt = flat[i + 1]
+                    if nxt["c"].isalpha() \
+                            and nxt["bbox"][0] <= ch["bbox"][0] + 0.5:
+                        n_sp += 1
+                        i += 1
+                        continue
+                out[si].append(ch["c"])
+                i += 1
+            for si, (span, chunk) in enumerate(zip(spans, out)):
+                text = "".join(chunk)
+                # NFC only where a mark was actually added — a blanket
+                # normalize would silently RE-ENCODE every other book (BoK
+                # stores its 'ḥ' pre-decomposed as h+U+0323 and has always
+                # shipped it that way). Whether the corpus should ship NFC is
+                # a separate decision, not this repair's to make.
+                span["text"] = (unicodedata.normalize("NFC", text)
+                                if si in fixed else text)
+    return n, n_sp
+
+
+def trim_in_text_space(page) -> tuple[float, float, float, float]:
+    """The TrimBox in the SAME top-origin space as this page's text.
+
+    ``transformation_matrix`` is MediaBox-referenced, but the text coordinates
+    the trim has to bound live in ``page.rect`` — the CROPBOX normalized to
+    origin 0. The two spaces coincide only while CropBox == MediaBox. A PDF
+    that puts its CropBox elsewhere slides the trim off its own text by the
+    difference: Keys (calibre) writes CropBox y0=9 ABOVE MediaBox y0=24, and
+    the 24pt slide pushed every chapter-opening DROP FOLIO out of the bottom
+    folio band. Unstripped, that 10pt folio then sat below the 9pt note region
+    and broke the region walk on its first line — so all 12 chapter openings
+    shipped their footnotes as body prose, with a bare folio and an unlinked
+    marker. No gate saw it (coverage is recall-only); every blind reader did.
+
+    Re-anchor on the CropBox: a no-op for a conventional PDF.
+    """
+    trim_rect = fitz.Rect(page.trimbox) * page.transformation_matrix
+    trim_rect.normalize()
+    crop_dev = fitz.Rect(page.cropbox) * page.transformation_matrix
+    crop_dev.normalize()
+    dx, dy = page.rect.x0 - crop_dev.x0, page.rect.y0 - crop_dev.y0
+    trim_rect = trim_rect + (dx, dy, dx, dy)
+    return (round(trim_rect.x0, 2), round(trim_rect.y0, 2),
+            round(trim_rect.x1, 2), round(trim_rect.y1, 2))
 
 
 def parse_page_dict(pagedict: dict, trim: tuple[float, float, float, float],
@@ -185,6 +319,8 @@ class MuPdfEngine:
         )
         table = _FontTable()
         crop_votes: dict[tuple[int, int, int, int], int] = {}
+        n_dots = 0
+        n_spaces = 0
 
         # outline (\x00 padding seen in the wild: BoK InDesign CS6)
         for level, title, page_no in doc.get_toc(simple=True):
@@ -198,19 +334,21 @@ class MuPdfEngine:
             number = page.number + 1
             if page.rotation:
                 out.warnings.append(f"page {number} is rotated {page.rotation}° — review renders")
-            # TrimBox -> top-origin page space
             trim_pdf = fitz.Rect(page.trimbox)
-            trim_rect = trim_pdf * page.transformation_matrix
-            trim_rect.normalize()
-            trim = (round(trim_rect.x0, 2), round(trim_rect.y0, 2),
-                    round(trim_rect.x1, 2), round(trim_rect.y1, 2))
+            trim = trim_in_text_space(page)
             # poppler-crop vote: TrimBox in MediaBox top-left coordinates
             media = fitz.Rect(page.mediabox)
             vote = (round(trim_pdf.x0 - media.x0), round(media.y1 - trim_pdf.y1),
                     round(trim_pdf.width), round(trim_pdf.height))
             crop_votes[vote] = crop_votes.get(vote, 0) + 1
 
-            pagedict = page.get_text("dict")
+            # rawdict (glyph-level) so the dot-below repair can see the
+            # geometry; span text is rebuilt identically when nothing fires
+            # (verified span-for-span across the corpus)
+            pagedict = page.get_text("rawdict")
+            d_n, s_n = repair_span_text(pagedict)
+            n_dots += d_n
+            n_spaces += s_n
             lines, clipped = parse_page_dict(pagedict, trim, table)
             n_chars = sum(len(ln.text()) for ln in lines)
             n_images = len(page.get_images(full=False))
@@ -253,5 +391,7 @@ class MuPdfEngine:
         out.fonts = table.fonts
         if crop_votes:
             out.trim_crop_box = max(crop_votes, key=crop_votes.get)
+        out.subscript_dots = n_dots
+        out.cancelled_spaces = n_spaces
         doc.close()
         return out

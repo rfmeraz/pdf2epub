@@ -100,7 +100,19 @@ def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
     is caught by the head-run test: a superscript, or a smaller-font, leading
     digit/asterisk. A shifted-CMap note line carries its marker as shifted
     bytes — probe through the repair (per run) or the second essay's
-    footnotes fuse into one giant note per page (I&B '2. Surah refers…')."""
+    footnotes fuse into one giant note per page (I&B '2. Surah refers…').
+
+    A CENTERED page-bottom line is colophon furniture, never a note: print
+    hangs every note marker at the region's left edge. A copyright page set
+    wholly sub-body-size reads as one big note region, and its impression
+    line ('10 9 8 7 6 5 4 3 2 1', Keys p.5) was the marker that dragged the
+    page in — forging a phantom note no body marker can match.
+
+    NB the marker-shaped turnover ('130.' under '…nn. 22,') is caught by the
+    RUN test in the grouping pass, not here: geometry cannot see it (a note's
+    last line may legitimately fill the measure — Keys p.22 note 21)."""
+    if L.ps.endswith("/center"):
+        return False
     txt = _probe_line(L, cfg)
     if marker == "digits":
         if _NOTE_START_DIGIT.match(txt):
@@ -406,10 +418,33 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if region:
                     kept = kept[:len(kept) - len(region)]
                     cur: list[_L] = []
+                    prev_num: int | None = None
                     for L in region:
-                        if _note_start(L, cfg.footnote_marker, doc, cfg) and cur:
-                            notes_here.append(cur)
-                            cur = []
+                        starts = _note_start(L, cfg.footnote_marker, doc, cfg)
+                        num = None
+                        if starts and cfg.footnote_marker == "digits":
+                            mk = _note_marker(L, cfg.footnote_marker, cfg)
+                            num = int(mk) if mk.isdigit() else None
+                            # Printed note numbers RUN ON: a page's next note
+                            # is the previous one + 1. A marker-shaped line
+                            # that breaks the run is a bare page-citation
+                            # turnover ('130.' closing '…nn. 22,', Keys p.302;
+                            # '197. "Unduldsam…"', p.355), and the phantom note
+                            # it forged then blocked the page-ordered ref queue
+                            # for every real note behind it (11 warnings from
+                            # 2 turnovers). Geometry can't see this and the
+                            # text pattern can't either — only the sequence.
+                            # The region's FIRST marker has no run to break.
+                            if num is not None and prev_num is not None \
+                                    and num != prev_num + 1:
+                                starts = False
+                                counts["note-marker-nonsequential"] += 1
+                        if starts:
+                            if cur:
+                                notes_here.append(cur)
+                                cur = []
+                            if num is not None:
+                                prev_num = num
                         cur.append(L)
                     if cur:
                         notes_here.append(cur)
@@ -501,7 +536,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 elif L.ps != body_ps and "center" in L.ps:
                     paras.append(Paragraph(
                         style=L.ps,
-                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts,
+                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc, counts), cfg, counts,
                                              L.page),
                         src=SourceRef(f"p{L.page:04d}", L.idx)))
                 elif starts_entry:
@@ -533,7 +568,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                         code="toc-line-unparsed"))
                     paras.append(Paragraph(
                         style=L.ps,
-                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc), cfg, counts,
+                        items=_apply_textfix(_mk_runs(L.ln, cfg, doc, counts), cfg, counts,
                                              L.page),
                         src=SourceRef(f"p{L.page:04d}", L.idx)))
             toc_paras[pno] = paras
@@ -1356,10 +1391,19 @@ def _ps_root(ps: str) -> str:
     with an explicit '-Roman' style token (NewBaskerville-Roman vs
     NewBaskerville-Italic) must fold too, or a full-line inline italic phrase
     (a Latin/Arabic gloss mid-paragraph) reads as a pstyle change and splits
-    the paragraph, stranding a lowercase-initial block."""
+    the paragraph, stranding a lowercase-initial block.
+
+    Adobe's naming defeats both spellings: it ABBREVIATES the italic token
+    ('MinionPro-It') and calls the upright one '-Regular', so neither 'Italic'
+    nor 'Roman' appears and the twins stayed distinct — every Keys wrap line a
+    long italic term happened to dominate ('nialist Weltanschauung.3', p.2)
+    broke its paragraph and stranded the hyphen of 'peren-/nialist'. Drop a
+    trailing style token too. It must be SEPARATOR-anchored: 'SemiboldIt' is a
+    weight+style pair that must not fold into the plain upright."""
     fam, _, rest = ps.partition("@")
-    fam = re.sub(r"[^A-Za-z0-9]", "",
-                 fam.replace("Italic", "").replace("Roman", ""))
+    fam = fam.replace("Italic", "").replace("Roman", "")
+    fam = re.sub(r"[-_ ](It|Rg|Regular)$", "", fam)
+    fam = re.sub(r"[^A-Za-z0-9]", "", fam)
     return f"{fam}@{rest}"
 
 
@@ -1664,7 +1708,8 @@ def _collapse_cross_run_spaces(para: Paragraph) -> None:
             prev_run = None
 
 
-def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc) -> list[TextRun]:
+def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc,
+             counts: Counter | None = None) -> list[TextRun]:
     out: list[TextRun] = []
     for r in ln.runs:
         f = doc.fonts.get(r.font_id)
@@ -1686,20 +1731,30 @@ def _mk_runs(ln: PdfLine, cfg: PdfBookConfig, doc: PdfDoc) -> list[TextRun]:
     # cross-run hyphen seams INSIDE one extracted line: an italic run ending
     # 'particu-' with the roman continuation ' lar' following (I&B stores
     # whole paragraphs as single content lines). Same lower-only doctrine.
+    #
+    # The seam must carry the print line-break's SPACE. Runs that ABUT are a
+    # real COMPOUND whose hyphen merely coincides with a style change
+    # ('Krishna-' roman + 'līlā' italic, Keys p.306 and its index entry) —
+    # stripping that hyphen rewrites the author's word, which no textfix may
+    # do. inline_dehyphenate demands the same space in-run ('word- word'); it
+    # is only invisible to it here because the runs split the seam.
     for a, b in zip(out, out[1:]):
         base = a.text.rstrip()
         nxt = b.text.lstrip()
-        if base.endswith("-") and len(base) > 1 and base[-2].isalpha() \
+        if (a.text != base or b.text != nxt) \
+                and base.endswith("-") and len(base) > 1 and base[-2].isalpha() \
                 and nxt[:1].islower():
             a.text = base[:-1]
             b.text = nxt
+            if counts is not None:
+                counts["seam-dehyphenated"] += 1
     return out
 
 
 def _append_line(para: Paragraph, L: _L, cfg: PdfBookConfig, doc: PdfDoc,
                  counts: Counter, glue: bool = False,
                  verse: bool = False) -> None:
-    runs = _mk_runs(L.ln, cfg, doc)
+    runs = _mk_runs(L.ln, cfg, doc, counts)
     runs = _apply_textfix(runs, cfg, counts, L.page)
     if para.items and isinstance(para.items[-1], TextRun):
         prevrun = para.items[-1]
@@ -1789,7 +1844,7 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
         t, n_lig = expand_ligatures(t)
         counts["ligatures"] += n_lig
         from .textfix import inline_dehyphenate
-        t, n_inl = inline_dehyphenate(t)
+        t, n_inl = inline_dehyphenate(t, cfg.dehyphenate, cfg.keep_hyphens)
         counts["inline-dehyphenated"] += n_inl
         if cfg.restore_spaces:
             t, n_sp = restore_spaces(t)
@@ -1885,7 +1940,7 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
                      role="footnote")
     first = True
     for L in group:
-        runs = _mk_runs(L.ln, cfg, doc)
+        runs = _mk_runs(L.ln, cfg, doc, counts)
         runs = _apply_textfix(runs, cfg, counts, L.page)
         if first:
             # strip the printed marker (the emitter numbers the endnote list).
@@ -1966,6 +2021,20 @@ def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                     b.items[i] = NoteRef(note_id)
                     if trail:
                         b.items.insert(i + 1, TextRun(" "))
+                    elif i + 1 < len(b.items) \
+                            and isinstance(b.items[i + 1], TextRun) \
+                            and b.items[i + 1].text[:1].isalnum():
+                        # prepress dropped the word space AFTER the marker:
+                        # print never sets a letter flush against a note
+                        # marker, and this book's other 573 seams all carry
+                        # the space as a real char opening the following run
+                        # ('…roots.²| It is only…'), with the same 0pt
+                        # advance gap — only p.207 'expression.³⁷Accordingly'
+                        # lost it. Gate 11b holds a letter/digit after a
+                        # noteref to be always an artifact, so repair it here
+                        # (deterministic textfix; the words are untouched).
+                        b.items.insert(i + 1, TextRun(" "))
+                        counts["noteref-seam-space"] += 1
                     # print sets the superscript FLUSH against the preceding
                     # text: drop the marker run's own leading space and the
                     # previous run's trailing one ('them.\u2019 [24]' shipped

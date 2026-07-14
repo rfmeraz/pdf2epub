@@ -68,7 +68,11 @@ def extract(pdf: Path, say=print, engine_name: str = "mupdf",
     image_only = [p.number for p in doc.pages if p.image_only]
     say(f"extract[{engine.name}]: {doc.n_pages} pages, {len(doc.fonts)} font clusters, "
         f"{len(doc.outline)} outline entries, {len(doc.links)} internal links, "
-        f"{n_clipped} lines clipped outside trim")
+        f"{n_clipped} lines clipped outside trim"
+        + (f", {doc.subscript_dots} dot diacritic(s) recomposed"
+           if doc.subscript_dots else "")
+        + (f", {doc.cancelled_spaces} layout-cancelled space(s) dropped"
+           if doc.cancelled_spaces else ""))
     if image_only:
         msg = (f"{len(image_only)} image-only page(s) (no usable text layer): "
                f"{image_only[:10]}{'…' if len(image_only) > 10 else ''} — OCR is out of "

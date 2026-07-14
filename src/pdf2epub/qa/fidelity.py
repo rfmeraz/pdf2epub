@@ -125,7 +125,8 @@ def _order_inversions(per_page, th: FidelityThresholds) -> list[str]:
 def check_fidelity(gt_pages: dict[int, str], epub_pages: dict[int, str],
                    in_flow: list[int], candidate: str, per_page,
                    sl_ok: bool, sl_detail: str,
-                   th: FidelityThresholds = FidelityThresholds()) -> FidelityResult:
+                   th: FidelityThresholds = FidelityThresholds(),
+                   dup_allow: list | None = None) -> FidelityResult:
     if not sl_ok:
         # can't align pages ⇒ fidelity is unverifiable ⇒ FAIL (never advisory)
         return FidelityResult(False, [f"page slicing failed — fidelity "
@@ -164,15 +165,27 @@ def check_fidelity(gt_pages: dict[int, str], epub_pages: dict[int, str],
             if precision < th.precision_min:
                 failures.append(f"p.{pno}: precision {precision:.3f} < "
                                 f"{th.precision_min} (extra/duplicated text on page)")
-    dup = _duplicate_spans(candidate, th)
+    # qa.duplicate_allow: render-verified as-printed repeats (a book quoting
+    # one passage twice). An allow licenses only the span it sits inside, and
+    # a stale entry FAILS — it can never quietly cover real duplication.
+    allows = list(dup_allow or [])
+    dup_all = _duplicate_spans(candidate, th)
+    dup = [s for s in dup_all
+           if not any(a.snippet in s for a in allows)]
+    used = {a.snippet for a in allows if any(a.snippet in s for s in dup_all)}
+    stale = [f"stale qa.duplicate_allow (no such duplicated span): "
+             f"{a.snippet[:60]!r}" for a in allows if a.snippet not in used]
     for span in dup[:5]:
         failures.append(f"duplicated span ({len(span)} chars): {span[:80]!r}…")
+    failures += stale[:4]
     inversions = _order_inversions(per_page, th)
     failures += inversions[:5]
 
     ok = not failures
     lines = [f"{len(recalls)} pages checked; {len(failures)} failures "
              f"({len(dup)} dup spans, {len(inversions)} order inversions); "
+             f"allowed repeats: {len(dup_all) - len(dup)} "
+             f"({len(stale)} stale); "
              f"min recall {min(recalls, default=1):.3f}, "
              f"min precision {min(precisions, default=1):.3f}"]
     lines += failures[:12]

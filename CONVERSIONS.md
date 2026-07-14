@@ -777,3 +777,63 @@ Consistent with prior books' deferral (over-fire risk of a shared close-rule):
 Heaven` p55), 2 transliteration-elision spaces (`wa’ s-sifât`, `wa’ shshahâdati`),
 2 verse-range spaces (`17- 18`, `27- 30`), `aspects , two` (space-before-comma),
 `“ Hear` (space-after-open-quote). All in-source; render shows the closed form.
+
+## Keys to the Beyond — Patrick Laude (SUNY Press, 2020) — 2026-07-14
+
+- source sha256 `a4ac119194cd4c0eff7a9ebdce3cb7d77691eccda8de63eec137597932057cd7`
+  (406pp; **producer: calibre 4.8.0** — the first non-InDesign producer in the
+  corpus, and the source of this book's two hardest defects)
+- 584 footnotes, 2-column linked index (printed 375–394), 2 bibliographies,
+  2 Schuon poems, 2 blockquotes, cover rendered from p1. `Overall: PASS`.
+
+### Structure decisions worth remembering
+- **The p7 "verse" is an EPIGRAPH.** The witness measured base 24.2 / turns 44.4
+  — but the "turn" is the attribution's deeper indent, not a couplet drop, and
+  the block is JUSTIFIED. `role:epigraph` overrides, not `blocks.verse`.
+- **The layout witness called the Contents page (p8) a "Table"** (conf 0.865).
+  The render says otherwise. It flags; it never decides.
+- **Verse vs quote separated by the right edge, as designed**: p149/p353 lock at
+  x1=349.5 (quotes); p317/p355 scatter 181–350 (Schuon poems, optically centred
+  so each has its OWN inset: base 42.2 and 25.2).
+- **`indent_threshold` 12.0, not the proposed 18.0** — see NOTES: the proposal
+  comes from the BODY histogram (24pt) and landed exactly on the index's 18pt
+  turnover column, making `entry_break` a knife-edge that cost ~42 index entries
+  their locators.
+- Both bibliographies are marker-less hanging apparatus → `blocks.lists`
+  `marker: hang, hang: 24`. The chapter NUMBER is its own 13.5pt cluster: joined
+  onto the title via overrides so each chapter ships ONE h1 matching its outline
+  entry (two h1s would strand a file containing only the digit).
+- 12 `keep_hyphens`, each attested hyphenated mid-line in this same book (audited
+  by hooking `dehyphenate_join` over all 752 joins). `inner-most` is settled by
+  the book's own INDEX, which prints the phrase hyphenated twice.
+- `qa.duplicate_allow` (new): Laude prints the same Schuon paragraph in two
+  chapters' notes — gate 25's ≥400-char repeat witness assumes damage.
+
+### Reading QA — 2 rounds (mandatory /proofread-epub)
+- Round 1 (55 packets, 53 blind readers): **every reader on a chapter-opening
+  page independently reported the same thing** — a bare folio in the prose, the
+  page's footnote as body text, and an unlinked bare-digit marker. Root cause was
+  an extractor bug (CropBox outside MediaBox → trim slid 24pt → drop folio
+  unstripped → note-region walk broken on its first line). All 12 chapter
+  openings; **10 footnotes were missing from the apparatus and no gate saw it.**
+  Also confirmed: the `S.ah.īh.` transliteration garble (6 readers) and the
+  `non- Buddhist` seams.
+- Round 2 (52 changed packets re-read): **zero new confirmed findings.** The
+  chapter-opening packets return `[]`. Every remaining finding was REFUTED
+  against the print — this volume carries its own typos, all verified in-source:
+  `hererodoxy`, `noumemon`, `Jehowah`, `Blakesleee`, `After after`, `that that`,
+  `should not to be confused`, `hinder the recognition the Absolute`,
+  `each of the great tradition`, `principal non-manifestation`, `( nafas-`,
+  `ParamaŚiva`, `overcivilized`, `if one say so`, `multistratified`,
+  `herebelow` (closed mid-line here, `here-below` elsewhere), and
+  `323–350passim` (the index's own lost space, print-verified at 900dpi).
+- **A near-miss worth recording**: fixing `non- Buddhist` by text alone would
+  have rewritten sufism's `(al- Bātin)`, which print really sets with a space.
+  Identical in TEXT, opposite in GEOMETRY. The render caught it; the fix moved
+  to the extractor.
+
+### Known limitation (documented, not a defect)
+Index sub-entry levels are a 9pt ladder; `flow.columns` flattens level 3 into
+its level-2 parent (level 3's base and level 2's turnover share x0 exactly).
+Same as sufism. Text, order and locator links are intact — only the sub-entry
+line structure inside a top-level entry runs on.

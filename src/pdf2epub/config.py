@@ -220,6 +220,21 @@ class LostSpaceAllow:
 
 
 @dataclass(slots=True)
+class DuplicateAllow:
+    """A render-verified as-printed match of gate 25's duplicated-span witness:
+    a long verbatim repeat the PRINT really carries. The witness assumes a
+    >=400-char repeat is pipeline damage (a duplicated page/chapter), which a
+    scholarly book falsifies by quoting one passage twice — Keys quotes the
+    same Schuon paragraph in ch.4 n.24 and ch.10 n.19 (pp.141/334). The
+    snippet must occur INSIDE the flagged span; note is the render evidence
+    and is REQUIRED. Per-book, like qa_lost_space_allow (an agent judgment);
+    a stale entry fails the gate, so a repeat that later stops printing twice
+    cannot silently license real duplication."""
+    snippet: str
+    note: str
+
+
+@dataclass(slots=True)
 class Adjudication:
     """Records the decision on a content-risk build warning that config
     cannot resolve structurally (warnqueue codes). Without pages the entry
@@ -351,6 +366,7 @@ class PdfBookConfig:
 
     # qa
     qa_lost_space_allow: list[LostSpaceAllow] = field(default_factory=list)
+    qa_duplicate_allow: list[DuplicateAllow] = field(default_factory=list)
     qa_garble_chars: str = ""  # per-book gate-20 residue chars (e.g. "³´«")
 
     # adjudications (gate 22)
@@ -834,7 +850,17 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
             note=ls["note"]))
 
     qa = data.get("qa", {})
-    _check_keys("qa", qa, {"lost_space_allow", "garble_chars"})
+    _check_keys("qa", qa, {"lost_space_allow", "garble_chars",
+                           "duplicate_allow"})
+    for al in qa.get("duplicate_allow", []) or []:
+        _check_keys("qa.duplicate_allow[]", al, {"snippet", "note"})
+        if not al.get("snippet"):
+            raise ConfigError("qa.duplicate_allow requires the exact snippet")
+        if not al.get("note"):
+            raise ConfigError("qa.duplicate_allow requires a note "
+                              "(render-verified as-printed evidence)")
+        cfg.qa_duplicate_allow.append(
+            DuplicateAllow(snippet=al["snippet"], note=al["note"]))
     for al in qa.get("lost_space_allow", []) or []:
         _check_keys("qa.lost_space_allow[]", al, {"snippet", "note"})
         if not al.get("snippet"):

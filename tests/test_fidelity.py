@@ -36,11 +36,12 @@ def _assemble(in_flow, epub, gt, preamble="", trailer=""):
     return candidate, per_page
 
 
-def _run(epub, gt=None, preamble="", trailer=""):
+def _run(epub, gt=None, preamble="", trailer="", dup_allow=None):
     in_flow = list(range(N))
     gt = gt or {i: _page(i) for i in range(N)}
     candidate, per_page = _assemble(in_flow, epub, gt, preamble, trailer)
-    return check_fidelity(gt, epub, in_flow, candidate, per_page, True, "", TH)
+    return check_fidelity(gt, epub, in_flow, candidate, per_page, True, "", TH,
+                          dup_allow=dup_allow)
 
 
 def test_clean_baseline_passes():
@@ -78,6 +79,44 @@ def test_duplicate_after_final_anchor_fails_on_dup():
     res = _run(epub, trailer=_page(4))            # page repeated after last anchor
     assert not res.ok
     assert any("duplicated span" in ln for ln in res.lines), res.lines
+
+
+class _Allow:
+    def __init__(self, snippet):
+        self.snippet = snippet
+
+
+def test_duplicate_allow_licenses_an_as_printed_repeat():
+    """A book that quotes one passage twice (Keys: the same Schuon paragraph
+    in ch.4 n.24 and ch.10 n.19) is not damaged. A render-verified
+    qa.duplicate_allow licenses THAT span only."""
+    epub = {i: _page(i) for i in range(N)}
+    repeat = _page(4)                              # the 'quotation' printed twice
+    res = _run(epub, trailer=repeat)
+    assert not res.ok                              # unlicensed → still fails
+    res = _run(epub, trailer=repeat, dup_allow=[_Allow(repeat[:120])])
+    assert res.ok, res.lines
+    assert any("allowed repeats: 1" in ln for ln in res.lines), res.lines
+
+
+def test_duplicate_allow_does_not_license_other_duplication():
+    """An allow covers only the span it sits inside — a DIFFERENT duplicated
+    span still fails, so one as-printed repeat can't blanket the gate."""
+    epub = {i: _page(i) for i in range(N)}
+    allowed, other = _page(4), _page(7)
+    res = _run(epub, preamble=allowed, trailer=other,
+               dup_allow=[_Allow(allowed[:120])])
+    assert not res.ok
+    assert any("duplicated span" in ln for ln in res.lines), res.lines
+
+
+def test_stale_duplicate_allow_fails():
+    """A stale allow fails: a repeat that stops printing twice must never
+    leave a live licence behind that could cover real duplication."""
+    epub = {i: _page(i) for i in range(N)}
+    res = _run(epub, dup_allow=[_Allow("a passage that is not duplicated")])
+    assert not res.ok
+    assert any("stale qa.duplicate_allow" in ln for ln in res.lines), res.lines
 
 
 def test_dropped_page_fails_on_recall():

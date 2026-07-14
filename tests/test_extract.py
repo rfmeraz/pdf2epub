@@ -158,3 +158,137 @@ def test_page_shift_vetoed_by_global_full_lines():
     assert geo.col_left == 72.0
     assert geo.shift(2) == 0.0          # vetoed: global-full prose present
     assert geo.shift(3) == 18.0         # genuine: nothing stands at col_left
+
+
+# ---- TrimBox must land in the same space as the text (chapter-opening folios)
+
+def _fitz_page(media, crop, trim):
+    """A stand-in with the geometry fitz derives for these boxes: rect is the
+    CROPBOX at origin 0; transformation_matrix flips y about the MEDIABOX."""
+    import fitz
+
+    class _P:
+        mediabox = fitz.Rect(*media)
+        cropbox = fitz.Rect(*crop)
+        trimbox = fitz.Rect(*trim)
+        rect = fitz.Rect(0, 0, crop[2] - crop[0], crop[3] - crop[1])
+        transformation_matrix = fitz.Matrix(1, 0, 0, -1, -crop[0],
+                                            media[1] + media[3])
+    return _P()
+
+
+def test_trim_in_text_space_conventional_pdf_is_unchanged():
+    """CropBox == MediaBox: the trim already lands on its text — no-op."""
+    from pdf2epub.extract.mupdf import trim_in_text_space
+    page = _fitz_page(media=(0, 0, 432, 648), crop=(0, 0, 432, 648),
+                      trim=(0, 0, 432, 648))
+    assert trim_in_text_space(page) == (0.0, 0.0, 432.0, 648.0)
+
+
+def test_trim_in_text_space_offset_cropbox_is_reanchored():
+    """Keys (calibre): CropBox y0=9 sits ABOVE MediaBox y0=24. The
+    MediaBox-referenced matrix would put the trim 24pt below the text it
+    bounds — pushing chapter-opening drop folios out of the folio band, whose
+    unstripped 10pt line then broke the 9pt footnote-region walk."""
+    from pdf2epub.extract.mupdf import trim_in_text_space
+    page = _fitz_page(media=(24, 24, 474, 690), crop=(36.6, 9, 468.6, 657),
+                      trim=(36.6, 9, 468.6, 657))
+    x0, y0, x1, y1 = trim_in_text_space(page)
+    # the trim must equal page.rect — the space the text lines live in
+    assert (round(x0), round(y0), round(x1), round(y1)) == (0, 0, 432, 648)
+
+
+# ---- dot-below diacritics the font encodes as a bare period
+
+def _rawspan(*chars, font="MinionPro-Regular", size=9.5):
+    """chars: (glyph, x0, y0, x1) — y1 is derived; bbox is (x0,y0,x1,y1)."""
+    return {"font": font, "size": size, "flags": 0, "color": 0,
+            "bbox": (chars[0][1], chars[0][2], chars[-1][3], chars[0][2] + 10),
+            "chars": [{"c": c, "bbox": (x0, y0, x1, y0 + 10)}
+                      for c, x0, y0, x1 in chars]}
+
+
+def _rawpage(*spans):
+    return {"blocks": [{"type": 0, "lines": [{"dir": (1.0, 0.0),
+                                              "spans": list(spans)}]}]}
+
+
+def test_compose_dot_diacritics_recomposes_the_printed_letter():
+    """Keys draws its emphatics as base glyph + a dot glyph whose ToUnicode
+    says '.', so the text layer reads 'S.ah.īh.' where print shows 'Ṣaḥīḥ'.
+    The dot sits BELOW the baseline and INSIDE the base letter's advance."""
+    from pdf2epub.extract.mupdf import repair_span_text
+    page = _rawpage(_rawspan(
+        ("S", 190.8, 376.7, 195.3), (".", 191.9, 378.7, 194.1),   # dot below S
+        ("a", 195.2, 376.7, 199.9),
+        ("h", 199.8, 376.7, 204.6), (".", 201.0, 378.7, 203.3),   # dot below h
+    ))
+    n = repair_span_text(page)[0]
+    assert n == 2
+    assert page["blocks"][0]["lines"][0]["spans"][0]["text"] == "Ṣaḥ"
+
+
+def test_compose_dot_diacritics_leaves_a_real_period_alone():
+    """A sentence period sits ON the baseline and AFTER the letter — it must
+    survive untouched, or every citation in the corpus would be mangled."""
+    from pdf2epub.extract.mupdf import repair_span_text
+    page = _rawpage(_rawspan(
+        ("ā", 178.3, 376.7, 182.5),
+        (".", 184.7, 376.7, 186.9),        # same baseline, clear of 'ā'
+        (" ", 186.9, 376.7, 189.0),
+        ("S", 190.8, 376.7, 195.3),
+    ))
+    assert repair_span_text(page)[0] == 0
+    assert page["blocks"][0]["lines"][0]["spans"][0]["text"] == "ā. S"
+
+
+def test_compose_dot_diacritics_needs_an_alpha_base():
+    """A dot under a digit or punctuation is not a diacritic."""
+    from pdf2epub.extract.mupdf import repair_span_text
+    page = _rawpage(_rawspan(("7", 100.0, 376.7, 104.0),
+                             (".", 101.0, 378.7, 103.2)))
+    assert repair_span_text(page)[0] == 0
+
+
+def test_compose_dot_diacritics_drops_the_dots_phantom_space():
+    """The dot's advance is narrower than its base, so MuPDF emits a leftover
+    space carrying the DOT's lowered baseline and ending inside the base's
+    advance ('H. ajjāj'). It is the dot's, not a word space."""
+    from pdf2epub.extract.mupdf import repair_span_text
+    page = _rawpage(_rawspan(
+        ("H", 162.79, 376.73, 170.07),
+        (".", 165.49, 378.73, 167.65),      # dot below H
+        (" ", 167.65, 378.73, 169.55),      # dot's leftover advance, inside H
+        ("a", 169.55, 376.73, 173.72),
+        ("j", 173.54, 376.73, 175.98),
+    ))
+    assert repair_span_text(page)[0] == 1
+    assert page["blocks"][0]["lines"][0]["spans"][0]["text"] == "Ḥaj"
+
+
+def test_compose_dot_diacritics_keeps_a_real_word_space():
+    """A word space after a composed letter sits on the TEXT baseline and
+    clear of the base — 'Ṣaḥ Muslim' must keep its space."""
+    from pdf2epub.extract.mupdf import repair_span_text
+    page = _rawpage(_rawspan(
+        ("h", 206.96, 376.72, 211.81),
+        (".", 208.21, 378.72, 210.44),      # dot below h
+        (" ", 212.00, 376.72, 214.00),      # text baseline, clear of 'h'
+        ("M", 215.00, 376.72, 223.00),
+    ))
+    assert repair_span_text(page)[0] == 1
+    assert page["blocks"][0]["lines"][0]["spans"][0]["text"] == "ḥ M"
+
+
+def test_compose_dot_diacritics_handles_a_dot_ABOVE():
+    """Which side the dot falls on is the print's to say: Keys sets ṅ in
+    'Śaṅkarācārya' (correct Sanskrit) and a dot-ABOVE ṡ in 'Muṡṭafā' where the
+    standard would set it below. Both ship exactly as drawn."""
+    from pdf2epub.extract.mupdf import repair_span_text
+    page = _rawpage(_rawspan(
+        ("n", 329.76, 439.22, 334.68),
+        (".", 331.39, 433.98, 333.44),      # dot ABOVE n, inside its advance
+        ("k", 334.34, 439.22, 338.80),
+    ))
+    assert repair_span_text(page)[0] == 1
+    assert page["blocks"][0]["lines"][0]["spans"][0]["text"] == "ṅk"

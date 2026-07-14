@@ -1,0 +1,67 @@
+# Gate-24 regression assertions — keys-to-the-beyond (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+#
+# Every cell pins a print-verified defect this conversion found and fixed. Most
+# of them survived all 26 gates and were caught only by a blind reader or a
+# render — which is exactly why they need a machine-checkable tripwire.
+#
+# NB `absent` is unavailable for the two biggest ones: a returning chapter-
+# opening footnote leaks its text back into the BODY (a structure loss, not a
+# residue), and gate 3's note/ref counts + these `present` cells are what hold
+# them. The folio leak IS expressible, so it gets an `absent`.
+
+# --- the TrimBox/CropBox mismatch: all 12 chapter-opening pages lost their
+# footnotes to an unstripped drop folio (extract.mupdf.trim_in_text_space).
+# The note text belongs in the NOTES file, so the body page must not carry it;
+# the bare folio must not either.
+- {page: "1",   type: absent, text: "Toshihiko Izutsu, Sufism and Taoism: A Comparative Study",
+   note: "ch-opening footnote 1 must stay in the apparatus, not leak into the Introduction's body"}
+- {page: "27",  type: absent, text: "Schuon, The Eye of the Heart (Bloomington, IN: World Wisdom, 1997), 70.",
+   note: "ch.1 opening footnote must stay in the apparatus (drop-folio blocked the note-region walk)"}
+- {page: "153", type: absent, text: "Schuon, Understanding Islam (Bloomington, IN: World Wisdom, 2011), 13.",
+   note: "ch.5 opening footnote must stay in the apparatus"}
+- {page: "237", type: absent, text: "Jean Hani, The Black Virgin: A Marian Mystery",
+   note: "ch.7 opening footnote must stay in the apparatus"}
+
+# --- dot diacritics the font encodes as a bare period (repair_span_text).
+# present-of-correct, not absent-of-garbled: it also catches a dropped glyph.
+- {page: "367", type: present, text: "Ṣaḥīḥ Muslim",
+   note: "dot-below recomposed; text layer says 'S.ah.īh.', print sets Ṣaḥīḥ"}
+- {page: "367", type: present, text: "Muslim ibn Ḥajjāj",
+   note: "dot-below + the dot's phantom space (text layer: 'H. ajjāj')"}
+- {page: "376", type: present, text: "Muṡṭafā",
+   note: "dot-ABOVE, in its own span (text layer: 'Mus.t.afā'); an index entry, so
+          sliceable — the other dot-above (Śaṅkarācārya) sits in a footnote, and
+          note text has no page slice for gate 24 to match against"}
+
+# --- spaces the layout cancelled at a hyphen seam (repair_span_text): print
+# sets these closed, the stream stores 'non- Buddhist'.
+- {page: "111", type: present, text: "non-Buddhist commentators",
+   note: "layout-cancelled space at the hyphen seam"}
+- {page: "8",   type: present, text: "cross-religious and trans-religious hermeneutics",
+   note: "layout-cancelled space; 'cross-' is a compound prefix print keeps"}
+- {page: "135", type: present, text: "Indo-European",
+   note: "layout-cancelled space at the hyphen seam"}
+- {page: "182", type: present, text: "self-contradictory",
+   note: "layout-cancelled space; 'self-' is a compound prefix print keeps"}
+
+# --- real compounds whose hyphen fell at a LINE break (flow.keep_hyphens);
+# each is attested hyphenated mid-line elsewhere in the book.
+- {page: "266", type: present, text: "yin-yang",
+   note: "keep_hyphens: 108x hyphenated; the closed 'yinyang' is Wang's title only"}
+- {page: "89",  type: present, text: "onto-cosmological",
+   note: "keep_hyphens + a layout-cancelled space; 13x hyphenated elsewhere"}
+- {page: "1",   type: present, text: "perennialist Weltanschauung",
+   note: "the ps-twin fold (MinionPro-Regular/-It): the wrap line once split its paragraph and stranded 'peren-'"}
+
+# --- the cross-run hyphen seam: a compound whose hyphen meets a style change
+- {page: "306", type: present, text: "Krishna-līlā",
+   note: "roman 'Krishna-' + italic 'līlā' abut: a compound, not a line break"}
+
+# --- the noteref seam (prepress dropped the word space after the marker)
+- {page: "207", type: present, text: "powerful expression",
+   note: "gate 11b's seam: 'expression.[n]Accordingly' shipped fused"}
+
+# The phantom-note fix (page-citation turnovers like '130.' forging notes that
+# blocked the ref queue) is NOT expressible here: its evidence lives in the
+# notes file, which has no page slice. Gate 3's note==ref count holds it.

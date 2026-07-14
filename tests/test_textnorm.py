@@ -58,3 +58,26 @@ def test_shifted_cmap_mixed_encoding_repairs():
     # the genuine shifted J (followed by letters, never a space) survives
     t3, _ = repair_shifted_cmap(sh("al-Juzjani"), {})
     assert t3 == "al-Juzjani"
+
+
+def test_inline_dehyphenate_lower_only_and_the_keep_list():
+    """The in-run seam follows the joiner's lower-only doctrine and its
+    per-book keep-list. It stays narrow on purpose: text alone cannot tell a
+    stored line break from a printed space of the same shape, so the extractor
+    drops the layout-cancelled ones first (repair_span_text) and a capitalized
+    continuation — the only such seam in the corpus is one print really sets —
+    is left exactly as found."""
+    from pdf2epub.textfix import inline_dehyphenate
+    assert inline_dehyphenate("a tradi- tion of thought") == \
+        ("a tradition of thought", 1)
+    # a printed space before a capital is NOT ours to close (sufism 'al- Bātin')
+    assert inline_dehyphenate("the Inward (al- Bātin)")[0] == \
+        "the Inward (al- Bātin)"
+    # the per-book keep-list keeps the hyphen and still closes the seam
+    assert inline_dehyphenate("other onto- cosmological realities",
+                              "lower-only", frozenset({"onto-cosmological"}))[0] \
+        == "other onto-cosmological realities"
+    # ...scoped to its own compound
+    assert inline_dehyphenate("a tradi- tion of onto- cosmological realms",
+                              "lower-only", frozenset({"onto-cosmological"}))[0] \
+        == "a tradition of onto-cosmological realms"
