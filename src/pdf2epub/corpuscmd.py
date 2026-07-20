@@ -160,10 +160,13 @@ def load_baseline(books_dir: Path) -> dict:
 
 
 def write_baseline(books_dir: Path, rows: list[CorpusRow]) -> Path:
-    entries = {r.config: {"config_sha256": r.config_sha256,
-                          "pdf_sha256": r.pdf_sha256,
-                          "metrics": r.metrics}
-               for r in rows if r.metrics is not None}
+    """MERGE this run's rows into the existing baseline: an --only subset or
+    a failed build must never silently delete the other configs' entries."""
+    entries = load_baseline(books_dir)
+    entries.update({r.config: {"config_sha256": r.config_sha256,
+                               "pdf_sha256": r.pdf_sha256,
+                               "metrics": r.metrics}
+                    for r in rows if r.metrics is not None})
     p = baseline_path(books_dir)
     p.write_text(json.dumps({"baseline_version": BASELINE_VERSION,
                              "entries": entries},
@@ -179,7 +182,7 @@ def run_corpus(books_dir: Path, *, only: list[str] | None = None,
                build_fn=None, qa_fn=None) -> int:
     """Rebuild + QA the corpus; return 0 only if every config builds and
     passes QA (and, with --strict, ships byte-identical)."""
-    from .config import ConfigError, load_config
+    from .config import load_config
     if build_fn is None:
         from .build import run_build as build_fn
     if qa_fn is None:
@@ -198,13 +201,16 @@ def run_corpus(books_dir: Path, *, only: list[str] | None = None,
         print(f"== {cfg_path} ==", flush=True)
         try:
             cfg = load_config(cfg_path, require_complete=True)
-        except ConfigError as e:
-            row.build = "FAIL"
+        except (Exception, SystemExit) as e:   # ConfigError, raw YAML parse
+            row.build = "FAIL"                 # errors — continue past either
             row.detail = f"config: {e}"
             continue
         row.slug = cfg.slug
         row.config_sha256 = cfg.config_sha256
-        row.pdf_sha256 = cfg.sha256
+        # fingerprint the ACTUAL source file, not the optional source.sha256
+        # pin: an unpinned PDF swap must read "inputs changed", never as a
+        # comparable rule delta
+        row.pdf_sha256 = _sha(cfg.pdf_path()) or ""
         epub = cfg.build_dir / f"{cfg.slug}.epub"
         pre = _sha(epub)
         try:
@@ -218,8 +224,11 @@ def run_corpus(books_dir: Path, *, only: list[str] | None = None,
             continue                           # never QA/grade a stale artifact
         row.build = "ok"
         row.bytes_ = classify_bytes(pre, _sha(epub), partial=bool(upto))
+        # the metrics sidecar is written at the FLOW stage: an extract-only
+        # probe never refreshed it, so a pre-existing file is stale — never
+        # report (or re-seed) another run's counters as this one's
         mpath = cfg.build_dir / f"{cfg.slug}.build_metrics.json"
-        if mpath.exists():
+        if upto != "extract" and mpath.exists():
             row.metrics = json.loads(mpath.read_text())
         if upto or no_qa:
             continue

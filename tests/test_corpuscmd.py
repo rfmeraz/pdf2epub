@@ -236,3 +236,64 @@ def test_metrics_without_baseline_prompts_seeding(tmp_path, capsys):
                     qa_fn=_ok_qa())
     assert rc == 0
     assert "no baseline entry" in capsys.readouterr().out
+
+
+# ------------------------------------------------- review #26 regressions
+
+def test_malformed_yaml_is_a_row_not_an_abort(tmp_path, capsys):
+    # yaml.safe_load errors are NOT ConfigError — must still continue
+    books = _mk_corpus(tmp_path, ("alpha", "beta"))
+    (books / "alpha" / "book.yaml").write_text("{{{ not yaml")
+    qa = _ok_qa()
+    rc = run_corpus(books, build_fn=_ok_build(), qa_fn=qa)
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert "config:" in out
+    assert len(qa.calls) == 1 and "beta" in str(qa.calls[0])   # continued
+
+
+def test_only_subset_baseline_update_merges(tmp_path):
+    import json
+    books = _mk_corpus(tmp_path, ("alpha", "beta"))
+    run_corpus(books, no_qa=True, build_fn=_metrics_build(5), qa_fn=_ok_qa(),
+               update_baseline=True)
+    run_corpus(books, no_qa=True, only=["alpha"],
+               build_fn=_metrics_build(9), qa_fn=_ok_qa(),
+               update_baseline=True)
+    entries = json.loads((books / "corpus_baseline.json").read_text())["entries"]
+    # the un-run config's entry survives; the run one is updated
+    assert any("beta" in k for k in entries)
+    alpha = next(v for k, v in entries.items() if "alpha" in k)
+    assert alpha["metrics"]["flow"]["space-rule-after-punct"] == 9
+
+
+def test_extract_only_probe_ignores_stale_metrics(tmp_path, capsys):
+    import json
+    books = _mk_corpus(tmp_path, ("alpha",))
+    bdir = books / "alpha" / "build"
+    bdir.mkdir(parents=True)
+    (bdir / "alpha.build_metrics.json").write_text(json.dumps(
+        {"pages": 200, "flow": {"space-rule-after-punct": 99},
+         "config": {"flow_overrides": 1}}))
+    rc = run_corpus(books, upto="extract", build_fn=_ok_build(),
+                    qa_fn=_ok_qa(), update_baseline=True)
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "99" not in out                      # stale counters not reported
+    entries = json.loads((books / "corpus_baseline.json").read_text())["entries"]
+    assert entries == {}                        # and never seeded as fresh
+
+
+def test_unpinned_pdf_swap_reads_inputs_changed(tmp_path, capsys):
+    # _MIN has no source.sha256 pin: the fingerprint must come from the FILE
+    books = _mk_corpus(tmp_path, ("alpha",))
+    pdf = books / "alpha" / "p" / "b.pdf"
+    pdf.parent.mkdir(parents=True)
+    pdf.write_bytes(b"PDF-v1")
+    run_corpus(books, no_qa=True, build_fn=_metrics_build(5), qa_fn=_ok_qa(),
+               update_baseline=True)
+    pdf.write_bytes(b"PDF-v2-different")
+    capsys.readouterr()
+    run_corpus(books, no_qa=True, build_fn=_metrics_build(12), qa_fn=_ok_qa())
+    out = capsys.readouterr().out
+    assert "not comparable" in out and "5 -> 12" not in out
