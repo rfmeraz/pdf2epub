@@ -17,7 +17,7 @@
      "warnings": 3
     },
     "flow": {
-     "anchor-inline": 180,
+     "anchor-inline": 185,
      "column-lines": 1174,
      "column-pages": 15,
      "column-spanners": 2,
@@ -69,7 +69,7 @@
      "warnings": 3
     },
     "flow": {
-     "anchor-inline": 180,
+     "anchor-inline": 185,
      "column-lines": 1174,
      "column-pages": 15,
      "column-spanners": 2,
@@ -139,6 +139,52 @@
    },
    "pdf_sha256": "1f713dd182720d52657abb8056ae693f45839d97e6673dda9a7f3671a166cba1"
   },
+  "books/frithjof-schuon-life-and-teachings/book.yaml": {
+   "config_sha256": "6c4983e0cc10780813fb3272aef64282bc13817a4945c5d9022e7f684283b80f",
+   "metrics": {
+    "config": {
+     "adjudications": 2,
+     "flow_overrides": 60,
+     "keep_hyphens": 6
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 1
+    },
+    "flow": {
+     "anchor-inline": 120,
+     "column-lines": 410,
+     "column-pages": 6,
+     "column-spanners": 1,
+     "ctrl-stripped": 0,
+     "dehyphenated": 966,
+     "figure-regions": 6,
+     "furniture-baseline": 9,
+     "furniture-folio": 14,
+     "furniture-head": 166,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 462,
+     "list-lines": 2087,
+     "list-marker-gap": 7,
+     "list-paras": 552,
+     "quote-lines": 395,
+     "quote-paras": 38,
+     "quote-runs": 44,
+     "stray-grave-stripped": 0,
+     "toc-continuation": 1,
+     "verse-groups": 8,
+     "verse-lines": 72,
+     "verse-stanzas": 11,
+     "wrongscript-repaired": 0
+    },
+    "pages": 211
+   },
+   "pdf_sha256": "c0eb9f273586511043238f1a4abab597ee79a2a3e13aa799c900c2a8c2717fc0"
+  },
   "books/harmonious-unity/book.yaml": {
    "config_sha256": "963d98bb513389cad8e291d2885cee4ca23de6595ada30fbee2ddcbd6b86cf6b",
    "metrics": {
@@ -198,7 +244,7 @@
      "cmap-repaired-runs": 349,
      "cmap-unknown-chars": 0,
      "ctrl-stripped": 46,
-     "dehyphenated": 806,
+     "dehyphenated": 807,
      "fffd-replaced": 474,
      "figure-pages": 1,
      "furniture-baseline": 5,
@@ -212,8 +258,8 @@
      "note-continuation": 6,
      "noterefs": 229,
      "override-drop": 2,
-     "quote-lines": 697,
-     "quote-paras": 94,
+     "quote-lines": 696,
+     "quote-paras": 93,
      "quote-runs": 84,
      "stray-grave-stripped": 0,
      "verse-groups": 24,
@@ -373,8 +419,8 @@
      "noterefs": 108,
      "pua-punct-seam": 0,
      "pua-substituted": 2,
-     "quote-lines": 268,
-     "quote-paras": 35,
+     "quote-lines": 259,
+     "quote-paras": 26,
      "quote-runs": 21,
      "region-lines": 13,
      "stray-grave-stripped": 0,
@@ -405,12 +451,12 @@
      "warnings": 1
     },
     "flow": {
-     "anchor-inline": 118,
+     "anchor-inline": 121,
      "column-lines": 606,
      "column-pages": 8,
      "column-spanners": 6,
      "ctrl-stripped": 0,
-     "dehyphenated": 515,
+     "dehyphenated": 517,
      "figure-pages": 1,
      "furniture-baseline": 1,
      "furniture-folio": 201,

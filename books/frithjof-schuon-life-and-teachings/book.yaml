@@ -1,0 +1,357 @@
+# pdf2epub book.yaml — DRAFT written by init; every judgment below is a
+# proposal traced to analysis/structure_report.md. FILL-ME-IN markers fail
+# the build until the agent decides them (by LOOKING at analysis/pages/).
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "Frithjof Schuon Life and Teachings.pdf"
+  sha256: "c0eb9f273586511043238f1a4abab597ee79a2a3e13aa799c900c2a8c2717fc0"
+
+metadata:                     # JP-P5 — read title/copyright page renders
+  title: "Frithjof Schuon: Life and Teachings"
+  creators:                   # verified on p.4 title render + p.5 copyright render
+    - {name: Jean-Baptiste Aymard, role: aut}
+    - {name: Patrick Laude, role: aut}
+    - {name: Seyyed Hossein Nasr, role: aui}   # Foreword
+  publisher: "State University of New York Press"   # p.5: Published by State University of New York Press, Albany
+  language: en
+  additional_languages: [de]  # Schuon's German poems quoted in ch.2 (pp.56-57, 67)
+  isbn_epub:                  # never invented; empty -> identifier/urn:uuid
+  isbn_print: "0-7914-6205-6" # p.5 copyright render (alk. paper)
+  identifier: cf849a73-d17f-4cc5-875a-4234c9d5a0b3   # persistent EPUB id; keep STABLE across revisions
+  released: "2026-07-20"      # dcterms:modified = this EPUB revision
+  date: "2004"                # © 2004 State University of New York
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (2 image(s), 119 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 15}   # roman folios
+  body:  {first: 16, last: 211}   # printed folio '1' seen on p.16
+  exclude: []
+  label_source: pdf-page-labels   # folio-vs-label agreement: 100.0%
+  label_overrides: {}
+  role_overrides:             # verified on p0002/p0003/p0004 renders
+    - {page: 2, role: half-title}   # 'FRITHJOF SCHUON' alone mid-page
+    - {page: 3, role: title-page}   # series masthead: 'SUNY series in Western Esoteric Traditions'
+    - {page: 4, role: title-page}   # full title page (24pt title, authors, ❖ row, press line)
+
+furniture:
+  top_band: 46.6
+  repeat_min_pages: 3
+  extra: []
+  keep: []
+  # repeated (top, 88p): '#Frithjof Schuon'
+  # repeated (top, 23p): 'A Biographical Approach#'
+  # repeated (top, 22p): 'Notes to Chapter #'
+  # repeated (top, 13p): 'Esoterism and Tradition#'
+  # repeated (top, 11p): 'A Spiritual Portrait#'
+  # repeated (top, 9p): '#etaphysical and Spiritual Aesthetics#'
+  # repeated (top, 3p): 'FRITHJOF SCHUON'
+
+styles:                       # JP-P1 — all 20 extract clusters mapped (fail_on_unmapped: true)
+  body_pstyle: "Goudy@10"
+  pstyle_map:
+    # --- body prose ---
+    "Goudy@10": {role: p}          # dominant text cluster
+    "Goudy-Italic@10": {role: p}   # inline/block italic: epigraph quotes, verse, captions (p.21), biblio titles
+    "Goudy@9": {role: p}           # copyright page (p.5) + 2-col index (pp.206-211)
+    "Goudy-Italic@9": {role: p}    # italic index entries (p.209)
+    "Goudy-Bold@9": {role: p}      # p.5 'Library of Congress Cataloging-in-Publication Data'
+    "Goudy@9/center": {role: p}    # p.5 printer's key
+    # --- headings ---
+    "Goudy@16/center": {role: h1}  # 14 section titles: Contents, Foreword, Acks, Intro, ch.1-4,
+                                   # Conclusion, App.1-2 ('Frithjof Schuon'), Notes, Bibliography, Index
+    "Goudy@12/center": {role: h1}  # kickers 'CHAPTER ONE'..'FOUR' / 'APPENDIX 1'-'2' / p.6 epigraph-page
+                                   # head; each opener's title line JOINS its kicker via flow.overrides
+                                   # so every opener ships ONE h1 (split.at_roles: [h1]).
+                                   # p.2/p.4 instances overridden by pages.role_overrides.
+    "Goudy-Italic@12/center": {role: h2}   # appendix subtitles under the joined h1 (pp.144/148)
+    "Goudy@10/center": {role: h3}  # body section heads (e.g. 'RELIGIO PERENNIS' p.56) + Notes chapter
+                                   # subheads ('CHAPTER 1. A BIOGRAPHICAL APPROACH'); drop folios on
+                                   # opener pages are stripped by the folio matcher, p.3/p.4 lines by
+                                   # role_overrides
+    # --- centered italic one-offs ---
+    "Goudy-Italic@10/center": {role: p}    # figure captions (pp.29/63/68/133/134) + p.70 Dante epigraph line
+    "Goudy-Italic@11/center": {role: p}    # p.4 'Foreword by / Seyyed Hossein Nasr' (role_overrides wins)
+    "Goudy-Italic@16/center": {role: p}    # p.4 'Life and Teachings' (role_overrides wins)
+    "Goudy@24/center": {role: p}           # p.4 'FRITHJOF SCHUON' display line (role_overrides wins)
+    # --- ornaments ---
+    "ZapfDingbats@10/center": {role: p}    # '❖ ❖ ❖' rows: title page + section dividers — content, kept
+    # --- cover page 1 only (pages.cover excludes it from the flow; defensive) ---
+    "Futura-Condensed@18/center": {role: drop}
+    "Futura-Book@20/center": {role: drop}
+    "Bodoni-BoldItalic@12.5/center": {role: drop}
+    "Bodoni-Book@64/center": {role: drop}
+    "Bodoni-Book@62/center": {role: drop}
+  charstyles: {}              # no smallcaps/symbol charstyle fonts in this book
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 15.0
+  gap_factor: 1.6             # median leading measured: 12.0pt
+  dehyphenate: lower-only
+  keep_hyphens:               # proofread round 2: real compounds whose hyphen fell
+                              # at a line/page seam; lower-only stripped it. Each
+                              # verified on its print render.
+    - "so-called"             # p.25->26 PAGE seam 'so-'/'called' (V2c render)
+    - "quasi-secretary"       # p.45 line seam 'quasi-'/'secretary' — lexical compound (V3b render)
+    - "vis-à-vis"             # p.97 line seam 'vis-'/'à-vis' — lexical hyphen (V6b render)
+    - "jîvan-mukta"           # p.190->191 line seam 'jîvan-'/'mukta' — book prints the compound hyphenated mid-line twice nearby (V11f render)
+    - "Japanese-like"         # p.163 line seam 'Japanese-'/'like' — compound adjective, note 95 (V10d render); parse lowercases entries
+    - "light-colored"         # p.58 line seam 'light-'/'colored' in the Biès portrait quotation — standard compound (round-2 packet 012, high ×2)
+  restore_spaces: false       # lost-space hits: 1
+  join_center_lines: true
+  reattach_dropcaps: true
+  overrides:                  # {page, line(RAW extract idx), action, note}
+    # every opener ships ONE h1: the title line joins its 12pt kicker
+    # (Goudy@12/center -> h1); keys-to-the-beyond precedent
+    - {page: 6, line: 1, action: join, note: "'ROCK AND LIGHTNING' joins 'FRITHJOF SCHUON' — one h1 for the epigraph page (p0006 render)"}
+    - {page: 20, line: 1, action: join, note: "ch.1 title 'A Biographical Approach' joins its 'CHAPTER ONE' kicker (p0020 render)"}
+    - {page: 70, line: 1, action: join, note: "ch.2 title 'A Spiritual Portrait' joins 'CHAPTER TWO' (p.70 lines dump)"}
+    - {page: 94, line: 1, action: join, note: "ch.3 title 'Esoterism and Tradition' joins 'CHAPTER THREE' (p.94 lines dump)"}
+    - {page: 122, line: 1, action: join, note: "ch.4 title 'Metaphysical and Spiritual Aesthetics' joins 'CHAPTER FOUR' (p.122 lines dump)"}
+    - {page: 144, line: 1, action: join, note: "app.1 'Frithjof Schuon' joins 'APPENDIX 1'; italic subtitle stays h2 (p.144 lines dump)"}
+    - {page: 148, line: 1, action: join, note: "app.2 'Frithjof Schuon' joins 'APPENDIX 2' (p.148 lines dump)"}
+    # DROP-CAP WRAP JOINS: chapter/section openers set a 2-line initial cap;
+    # the wrap line beside it indents 18-21pt, which the joiner reads as a
+    # paragraph START, splitting the opener mid-sentence (p0020 visual sheet:
+    # '…of Germanic' / 'origin but of Valaisan…'). The analyzer found no
+    # drop-cap pages (the caps extract at body size), so reattach never armed.
+    # Every join below verified mid-sentence on its lines dump.
+    - {page: 14, line: 2, action: join, note: "Acks opener wrap 'the translation and editing…' joins its first line (p.14 lines dump)"}
+    - {page: 16, line: 2, action: join, note: "Intro opener wrap 'writings provide…' joins (p.16 lines dump)"}
+    - {page: 20, line: 14, action: join, note: "ch.1 opener wrap 'origin but of Valaisan stock…' joins (p0020 visual sheet)"}
+    - {page: 70, line: 5, action: join, note: "ch.2 opener wrap 'would like to devote…' joins (p.70 lines dump)"}
+    - {page: 94, line: 10, action: join, note: "ch.3 opener wrap 'matter, as is clearly apparent…' joins (p.94 lines dump)"}
+    - {page: 142, line: 2, action: join, note: "Conclusion opener wrap 'taneously compared…' joins mid-word (p.142 lines dump)"}
+    - {page: 144, line: 4, action: join, note: "app.1 opener wrap 'that is, the function of Revealer…' joins (p.144 lines dump)"}
+    - {page: 148, line: 4, action: join, note: "app.2 opener wrap 'He is\" (St. Irenaeus)…' joins (p.148 lines dump)"}
+    # ATTRIBUTION BREAKS: quote-block attributions ('—Frithjof Schuon, …')
+    # fused inline onto the quote's last line (p0006 visual sheet); print sets
+    # each on its own line
+    - {page: 6, line: 18, action: break, note: "'—Frithjof Schuon, Language of the Self' on its own line as printed (p0006 render + visual sheet)"}
+    - {page: 6, line: 23, action: break, note: "'—Frithjof Schuon, Understanding Islam' attribution break (p0006 render)"}
+    - {page: 6, line: 27, action: break, note: "'—Frithjof Schuon, Lights on the Ancient Worlds' attribution break (p0006 render)"}
+    - {page: 70, line: 3, action: break, note: "'—Dante, Vita Nuova' attribution on its own line (p.70 lines dump)"}
+    - {page: 94, line: 8, action: break, note: "'—Frithjof Schuon, In the Face of the Absolute' attribution break (p.94 lines dump)"}
+    # p.192's Notes subhead 'CHAPTER 4. METAPHYSICAL AND SPIRITUAL
+    # AESTHETICS' is letter-spaced caps at x0 65.6 — exactly the notes hang
+    # column, and too wide for the centered-line detector — so the list
+    # pass absorbed it into note 64 (round-1 proofread). class:prose pops
+    # it out; it ships as its own paragraph (heading role unattainable
+    # here: a role: override still hang-joins).
+    - {page: 192, line: 35, action: "class:prose", note: "Notes ch.4 subhead freed from note 64's item (p.192 lines dump, packet 033)"}
+    # front-matter layout fixes, print-verified (proofread round 2)
+    - {page: 3, line: 1, action: break, note: "series page: 'David Appelbaum, editor' is its own centered line in print — join_center_lines fused it onto the series title (V1a render)"}
+    - {page: 5, line: 6, action: join, note: "copyright rights notice is ONE ragged block in print; the short-line rule split every line (V1b render)"}
+    - {page: 5, line: 7, action: join, note: "rights notice line 3 joins (V1b render)"}
+    - {page: 5, line: 8, action: join, note: "rights notice line 4 joins (V1b render)"}
+    - {page: 5, line: 9, action: join, note: "rights notice line 5 joins (V1b render)"}
+    - {page: 5, line: 11, action: join, note: "'90 State Street…' is the address block's second hard line, one block in print (V1b render)"}
+    - {page: 5, line: 22, action: join, note: "'III. Series.' is the CIP tracing line's turnover (V1b render)"}
+    # ch.2 section head set so wide the centered-line detector missed it
+    # (x 58.9-354.5 on the 44.6-368.7 measure) — shipped as plain p while
+    # its siblings (PNEUMATIKOS etc.) are h3 (V5a render)
+    - {page: 74, line: 11, action: "role:h3", note: "'SPIRITUAL MASTER, METAPHYSICIAN AND FEDELE D'AMORE' is a centered section heading like PNEUMATIKOS (V5a render)"}
+    # SHORT colon-ended intro lines at the paragraph indent (== the quote
+    # inset) whose own right edge fits the quote measure: the justified
+    # cluster hands them the quote margin and they classify as quote lines
+    # (round-2 packets 008/010/012/014). Each verified body prose on render.
+    - {page: 28, line: 31, action: "class:prose", note: "'On June 5, 1931, Guénon replied courteously:' — body intro to the letter (round-2 packet 008)"}
+    - {page: 43, line: 14, action: "class:prose", note: "'On November 9, 1946, Guénon wrote further:' — body intro (round-2 packet 010)"}
+    - {page: 59, line: 12, action: "class:prose", note: "'Overwhelmed, a visitor once wrote:' — body intro (round-2 packet 012)"}
+    - {page: 71, line: 37, action: "class:prose", note: "'Just over a year later he explained to Jenny:' — body intro (round-2 packet 014)"}
+    # Bibliography EDITION lines that fused onto the previous edition/title:
+    # print sets one edition per line, but a coincidental ragged-right pair
+    # in the hang-column run misderives the block margin so the short-line
+    # break signal never fires (round-2 packet 034; p0200-p0202 renders).
+    - {page: 200, line: 10, action: break, note: "'Bari: Laterza, 1949' own line (p0200 render)"}
+    - {page: 200, line: 12, action: break, note: "'London: Faber and Faber, 1953' own line"}
+    - {page: 200, line: 17, action: break, note: "'Interlaken: Ansata-Verlag, 1979' own line"}
+    - {page: 200, line: 20, action: break, note: "'Madrid: Heliodoro, 1980' own line (second-level indent in print)"}
+    - {page: 201, line: 19, action: break, note: "'Paris: Dervy-Livres, 1979' own line"}
+    - {page: 201, line: 26, action: break, note: "'Rome: Ed. Mediterranee, 1981' own line"}
+    - {page: 201, line: 27, action: break, note: "'Paris: Maisonneuve & Larose, 1992' own line"}
+    - {page: 201, line: 28, action: break, note: "'Bloomington, Ind.: World Wisdom Books, 1995' own line"}
+    - {page: 201, line: 29, action: break, note: "'Paris: L'Âge d'Homme, forthcoming' own line"}
+    - {page: 201, line: 35, action: break, note: "'New York: Roy Publishers, 1963, 1964' own line"}
+    - {page: 202, line: 7, action: break, note: "'Lisbon: Dom Quixote, 1989' own line"}
+    - {page: 202, line: 14, action: break, note: "'Madrid: Taurus, 1980' own line"}
+    - {page: 202, line: 34, action: break, note: "'Madrid: Taurus, 1982' own line"}
+    - {page: 202, line: 36, action: break, note: "'São Paulo: Ed. Pensamento, 1987' own line"}
+    # ch.4 epigraph: 2 text lines + attribution — too short for the justified
+    # right-edge cluster witness (the quotes spec passes it over), so force it
+    - {page: 122, line: 2, action: "class:quote", note: "ch.4 epigraph 'The beautiful has its ontological roots…' opens the blockquote (p.122 lines dump; same shape as classified p.94 epigraph)"}
+    - {page: 122, line: 3, action: join, note: "ch.4 epigraph line 2 joins line 1 — one paragraph as printed (first visual pass shipped it split)"}
+    - {page: 122, line: 4, action: break, note: "attribution '—Frithjof Schuon, Logic and Transcendence' on its own line as printed (first visual pass shipped it fused inline)"}
+    # CENTERED poems (no common left edge — blocks.verse base cannot fit;
+    # class:verse forces line-for-line shipping, me-and-rumi precedent)
+    - {page: 76, line: 15, action: "class:verse", note: "'Autumn leaves—what does this image mean?' — centered quatrain from one of Schuon's last poems; was fusing into a phantom h3 via Goudy@10/center (p0076 crop render)"}
+    - {page: 76, line: 16, action: "class:verse", note: "'Poems arrive late to my ear,' centered poem line 2 (p.76 lines dump)"}
+    - {page: 76, line: 17, action: "class:verse", note: "'I know not how—their source is Light and Love—' centered poem line 3 (p.76 lines dump)"}
+    - {page: 76, line: 18, action: "class:verse", note: "'Tutti li miei penser parlan d'Amore.' — italic Dante line closing the quatrain (p.76 lines dump)"}
+    - {page: 79, line: 8, action: "class:verse", note: "Psalm 77 quotation line 1 'I cried unto God with my voice…' (p.79 lines dump)"}
+    - {page: 79, line: 9, action: "class:verse", note: "Psalm 77 line 'And he gave ear unto me.' — centered; was fusing into a phantom h3 (p.79 lines dump)"}
+    - {page: 79, line: 10, action: "class:verse", note: "Psalm 77 line (p.79 lines dump)"}
+    - {page: 79, line: 11, action: "class:verse", note: "Psalm 77 line (p.79 lines dump)"}
+    - {page: 79, line: 12, action: "class:verse", note: "Psalm 77 line (p.79 lines dump)"}
+    - {page: 79, line: 13, action: "class:verse", note: "Psalm 77 closing line 'I remembered God and was troubled.' (p.79 lines dump)"}
+  columns:
+    # Two-column back-of-book index, printed 191-196. The engine-agreement
+    # score flags exactly these six pages (55-59%) — the columned-fusion
+    # signature. index: true links printed locators to pg-<label> anchors.
+    - {pages: ["206-211"], count: 2, index: true, note: "index; col lefts ~45/217pt on p0206/p0211 renders"}
+
+footnotes:                    # JP-P4
+  policy: none   # regions on 0 pages; census {'digit': 399}
+  marker: digits
+
+toc:                          # JP-P3 — three witnesses: outline=48 printed=13 links=0
+  # source: printed, NOT outline — the outline carries junk the print never
+  # had: 25 A-Z index letters with no printed letter headings (p0206/p0211
+  # renders show blank-line groups only), a 'CHAPTER 4' Notes entry with no
+  # printed subhead (p.192-197 lines dumps: the printed Notes jumps ch.3 ->
+  # CONCLUSION), and half-title/'Contents' self-entries. The 13 printed
+  # entries all have real headings on their printed pages. The nav itself is
+  # built from emitted headings either way (57 entries, depth 2).
+  source: printed
+  printed_pages: [8]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 2
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+blocks:                       # JP-P9 — all specs render-verified
+  verse:
+    - {pages: [20], base: [35.6], turns: [],
+       note: "Rûmî 'Rubâ’iyat' epigraph poem under the ch.1 opener — ragged italic lines at 35.6pt inset; the attribution line (offset 153.5) is deliberately NOT a turn: it flows as its own indented paragraph (p0020 render)"}
+    - {pages: [25, 56, 57], base: [59.6], turns: [],
+       note: "Schuon's German poems + English translations at 59.6pt inset: p.25 'Trägt mich Dein sanfter Arm…' (verse-suspect confirmed on p.25 lines dump — ragged italic German + parenthesized translation), pp.56-57 Port-Vendres poem (p.56 lines dump)"}
+    - {pages: [67, 69], base: [62.6], turns: [],
+       note: "German swan-song stanza 'Ich wollte dieses Buch…' + closing line (p0067 render) and its English translation on p.69 'I have wished for long…' (p.69 lines dump — same 62.6 base; some lines cluster as /center noise but classify geometrically)"}
+    # CENTERED poems have no common left edge; these specs exist so the
+    # class:verse overrides (flow.overrides) can force their lines — the
+    # classifier only considers spec-covered pages. base = each block's
+    # leftmost line, nominal.
+    - {pages: [76], base: [58.4], turns: [],
+       note: "'Autumn leaves…' centered quatrain — lines 15-18 forced via class:verse (p0076 crop render)"}
+    - {pages: [79], base: [32.3], turns: [],
+       note: "Psalm 77 quotation, centered — lines 8-13 forced via class:verse (p.79 lines dump)"}
+  quotes:
+    - {pages: [6, 94, 122], left_inset: 36, right_inset: 36,
+       note: "epigraph blocks: justified italic Schuon quotations at ~36pt insets with deeper-indented attribution lines (p0006 render, p.94/p.122 lines dumps; measured left 35.6)"}
+    - {pages: ["23-24", "26-28", "30-34", 36, 41, 43, "47-48", 50, "52-53", "58-59", "65-66", "71-73", 77, 79, 86, "88-90"], left_inset: 20, right_inset: 20,
+       note: "justified letter/quotation excerpts inset 20/20 through ch.1-3 (p0023/p0028 renders); the base-19.6 verse-suspect groups on these pages are these same blocks' ragged final lines — quotes, not verse. p.89 added round 1 of proofread: its 2-line quote START ('The Blessed Virgin…', p.89 lines 37-38) had no cluster witness and the 89->90 continuation severed mid-word ('predes-/tined')"}
+  lists:
+    # Endnotes pp.152-198 (printed 137-183): decimal notes with RIGHT-ALIGNED
+    # markers — 1-digit at x0 51.6, 2-digit 46.6, 3-digit 44.6; turnovers at
+    # 64.6 (66.6 in the pp.179-182 wide-gutter region, within tol of the
+    # 44.6+18 and 46.6+18 hang columns). ONE spec with explicit stops: the
+    # round-1 proofread found every note wrapping one of the old five-way
+    # partition's boundaries severed mid-sentence (notes 3/12/56/89/96/13
+    # on the readers' pages), and the cluster filter cannot keep the small
+    # 1-digit stop on its own (marker x0 census, lines dumps pp.152/153/
+    # 163/167/179).
+    - {pages: ["152-198"], marker: decimal, stops: [44.6, 46.6, 51.6], hang: 18, tol: 2.5,
+       note: "all endnotes, one contiguous spec; explicit render-verified stops for the three digit-width alignments; hang 18 reaches the 64.6/66.6 turnover columns from the 2-/3-digit stops. tol 2.5, NOT 2: the pp.179-182 wide-gutter turnovers sit exactly 2.0pt off the 64.6 hang column and float epsilon pushed |66.6-64.6| just past 2.0, splitting every note there (round-2 packet 031)"}
+    # Bibliography pp.200-204 (printed 185-189): marker-less hanging apparatus —
+    # year heads + entry titles at the column edge, per-edition lines and
+    # wrapped turnovers 20pt deeper (2nd-level wraps 40pt). hang-join keeps
+    # each entry (title + its editions) one <li>; I&B precedent.
+    - {pages: ["200-204"], marker: hang, hang: 20,
+       note: "bibliography hanging entries; entries/year-heads at 44.6, editions+turnovers 64.6, deep wraps 84.6 (p0201 render, p.200/202-204 lines dumps)"}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  figure_pages: []
+  figure_regions:             # six photo/painting plates; captions stay live text
+    - page: 21
+      rect: [41.81, 63.08, 370.86, 558.62]
+      alt: "Frithjof Schuon as a child in Basel, 1916: black-and-white studio portrait of a boy with bowl-cut hair wearing a sailor suit."
+      note: "layout-witness Picture p.21; verified on p0021 render; caption line flows below"
+    - page: 29
+      rect: [41.91, 68.13, 367.19, 556.91]
+      alt: "Schuon in Paris, 1932: black-and-white portrait photograph of Schuon with long dark hair and a full beard, in a dark coat."
+      note: "layout-witness Picture p.29; verified on p0029 render; caption line flows below"
+    - page: 63
+      rect: [40.34, 67.91, 368.01, 557.35]
+      alt: "Schuon in Bloomington, 1990: photograph of the elderly white-bearded Schuon standing outdoors among autumn trees, wearing a long patterned scarf over a gray coat."
+      note: "layout-witness Picture p.63; verified on p0063 render; caption line flows below"
+    - page: 68
+      rect: [45.31, 66.1, 372.57, 559.17]
+      alt: "Schuon at his desk, 1998: photograph of the elderly Schuon bent over a notebook, writing with a pen; papers and small pictures cover the desk."
+      note: "layout-witness Picture p.68 (kept the higher-confidence of two near-identical boxes); verified on p0068 render; caption line flows below"
+    - page: 133
+      rect: [44.53, 71.57, 368.85, 517.84]
+      alt: "Pte San Win and the Descent of the Sacred Pipe, painting by Frithjof Schuon, 1967: the White Buffalo Calf Woman appears twice beneath a rainbow and a crescent moon — on a cloud bearing the sacred pipe, and standing in a flowering meadow — while a chief in a feathered headdress sits in prayer among rocks below and a white buffalo stands at the horizon."
+      note: "layout-witness Picture p.133; verified on p0133 render; two-line caption flows below"
+    - page: 134
+      rect: [44.7, 71.71, 368.77, 452.42]
+      alt: "Painting by Frithjof Schuon, 1961: an American Indian man in a feathered headdress stands before two tipis with arms raised over a fire, watched by three seated figures wrapped in blankets under a pale sun."
+      note: "layout-witness Picture p.134; verified on p0134 render; caption + body prose flow below"
+
+adjudications:
+  - {warning: "list-marker-gap",
+     note: "All 11 gaps are numbering RESTARTS at Notes chapter boundaries (verified: p.152 Intro '1.'→ch.1 '1.', p.167 ch.1 '145.'→ch.2 '1.' under the 'CHAPTER 2' subhead, pp.183/192/198 likewise on their lines dumps) plus cross-page sequencing artifacts of the five-way notes spec partition (the tracker follows each spec's page list, so interleaved chapters read as gaps, e.g. '13 follows 89' on p.169). Every flagged marker line is a true note entry at its stop; items verified bounded on pp.167/168 lines dumps."}
+  - {warning: "index-locator-unlinked",
+     note: "The printed index really reads 'Buddhism, …, 143, 515' — '515' visible as the turnover on the p0207 render (top crop); an original printing artifact (the book has only 196 printed pages). Ships as printed, unlinked."}
+
+qa:
+  lost_space_allow:
+    # gate 11 matches on NORMALIZED text (curly quotes folded straight)
+    - {snippet: "wife,\"May", note: "p.47 (printed 32) really prints 'his wife,”May I not die now?' — close-quote hard against the comma, no space before May; verified on p47 render crop"}
+  # Gate 16: the book sets its section heads in body-size ALL CAPS centered
+  # (Goudy@10/center) — no size/family evidence, and the printed TOC lists
+  # chapters only, so none has TOC corroboration. Convention verified on
+  # p0026 ('EX ORIENTE LUX') and p0042 ('QUAESTIONES DISPUTATAE') thumbs +
+  # p.56/p.76 lines dumps; the h3 map itself is JP-P1-reviewed.
+  heading_allow:
+    - {snippet: "EX ORIENTE LUX", note: "ch.1 section head, p0026 thumb"}
+    - {snippet: "THE SHAYKH", note: "ch.1 section head, p.35"}
+    - {snippet: "WAR YEARS", note: "ch.1 section head, p.39"}
+    - {snippet: "QUAESTIONES DISPUTATAE", note: "ch.1 section head, p0042 thumb"}
+    - {snippet: "BIRTH OF AN ŒUVRE", note: "ch.1 section head, p.49"}
+    - {snippet: "ESOTERIC ECUMENICISM AND TRANSCENDENT UNITY OF RELIGIONS", note: "ch.1 section head, p.53"}
+    - {snippet: "RELIGIO PERENNIS", note: "ch.1 section head, p.56 lines dump"}
+    - {snippet: "STATIONS OF WISDOM", note: "ch.1 section head, p.60"}
+    - {snippet: "THE FAR WEST", note: "ch.1 section head, p.62"}
+    - {snippet: "THE SWAN SONG", note: "ch.1 section head, p.66"}
+    - {snippet: "PNEUMATIKOS", note: "ch.2 section head, p.71"}
+    - {snippet: "SPIRITUAL MASTER, METAPHYSICIAN AND FEDELE D’AMORE", note: "ch.2 section head, p.74 — role:h3 override (V5a render); too wide for the centered detector"}
+    - {snippet: "PILGRIM OF THE ABSOLUTE", note: "ch.2 section head, p.76 lines dump"}
+    - {snippet: "WISDOM AND METAPHYSICS", note: "ch.2 section head, p.81"}
+    - {snippet: "AN ESOTERIC LINEAGE", note: "ch.2 section head, p.84"}
+    - {snippet: "TRANSCENDENCE AND IMMANENCE", note: "ch.2 section head, p.87"}
+    - {snippet: "THE MOTHER OF ALL PROPHETS", note: "ch.2 section head, p.90"}
+    - {snippet: "DEFINING ESOTERISM", note: "ch.3 section head, p.97"}
+    - {snippet: "ESOTERISM AND EXOTERISM", note: "ch.3 section head, p.100"}
+    - {snippet: "SPIRITUAL AND PSYCHIC INTEGRATION", note: "ch.3 section head, p.104"}
+    - {snippet: "RELIGIO PERENNIS AND SYNCRETISM", note: "ch.3 section head, p.107"}
+    - {snippet: "THEMES OF MEDITATION", note: "ch.3 section head, p.110"}
+    - {snippet: "VIRTUES AND MORALISM", note: "ch.3 section head, p.113"}
+    - {snippet: "PERSPECTIVES ON REALITY", note: "ch.3 section head, p.116"}
+    - {snippet: "ESOTERISM AND PLURALISM", note: "ch.3 section head, p.119"}
+    - {snippet: "METAPHYSICS OF BEAUTY", note: "ch.4 section head, p.123"}
+    - {snippet: "THE PATH OF BEAUTY", note: "ch.4 section head, p.127"}
+    - {snippet: "POETRY", note: "ch.4 section head, p.131"}
+    - {snippet: "PAINTING", note: "ch.4 section head, p.135"}
+    - {snippet: "IMMANENCE AND FEMININITY", note: "ch.4 section head, p.138"}
+
+output: {slug: frithjof-schuon-life-and-teachings, include_ncx: true}

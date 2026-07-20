@@ -1548,3 +1548,39 @@ empty delta. Deferred by design: gate-registry extraction rides the next
 QA/content feature (the corpus snapshots are its characterization net); the
 raw source fingerprint report rides the next conversion; `_parse_allow`
 rides the next allow-knob.
+
+## Schuon: Life and Teachings (2026-07-20) — lessons
+
+- **Text-less figure regions are silent losers**: a figure_region containing no
+  text lines never triggers the in-loop Figure emission — the image renders,
+  the manifest carries it, epubcheck passes, and NOTHING ships a reference.
+  Gate 5 listed the orphans as info without failing. Fixed in flowbuilder
+  (in-place emission + caption paragraphs); consider promoting unreferenced
+  manifest images to a failing check.
+- **justified_rights is a BLOCK oracle, not a line oracle**: candidates must
+  also fit the measure themselves (own x1 ≤ rt+tol) or body first-lines at
+  the quote inset inherit the cluster margin. The same failure shape hid in
+  TWO shipped books (PWC ×9, I&B ×1) — the corpus counter delta
+  (quote-paras 35→26) was the tell worth reading, not noise.
+- **Short colon-ended intro lines beat every geometric test** ('On June 5,
+  1931, Guénon replied courteously:'): at the inset, inside the measure,
+  adjacent to the run. Only class:prose (render-verified) settles them —
+  4 in this book. A future heuristic could veto run-FIRST short lines ending
+  ':' but the corpus sample is too small to trust yet.
+- **Spec boundaries sever cross-page continuations by design** ("a different
+  spec ends the item") — so page-partitioning one apparatus into multiple
+  list specs is self-harm. blocks.lists now takes explicit `stops:` (RAW x0)
+  for >2-stop apparatuses (right-aligned 1/2/3-digit note numbers). Mind
+  float epsilon at exact-tol offsets (2.0pt off at tol 2 FAILED).
+- **PROTOCOL whitelist candidates** (recurring refutations): packets flatten
+  <sup>, so blind readers report every endnote marker as a bare-digit
+  noteref-anomaly — say markers render superscript. Spaced opening quotes
+  and spaced superscript refs recur as PRINT quirks in this era of SUNY
+  typesetting; readers keep flagging them (12+ refuted here).
+- **corpus reruns after code fixes must re-check the PASS table, not just
+  deltas** — and never pipe corpus through `head` (SIGPIPE kills the run
+  mid-book).
+
+Verification baseline: pytest -q **447 passed**; full corpus at this commit:
+10/10 built, 10/10 QA PASS, baseline updated (BoK contents link + PWC/I&B
+quote heals + anchor-order improvements accepted as intentional).

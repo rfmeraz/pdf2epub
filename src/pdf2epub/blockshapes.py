@@ -499,8 +499,13 @@ def quote_shape_runs(lines, left_anchor: float, right_anchor: float,
         if sz is not None and sz > body_size + 1.0:
             cand.append(False)
             continue
+        # the line's OWN right edge must fit the quote measure too:
+        # justified_rights assigns the BLOCK's clustered margin, so a body
+        # paragraph's first line (indent == the quote inset, full measure)
+        # adjacent to a real quote inherits the cluster's rt and passed —
+        # Schuon L&T shipped ~20 intro/exit lines inside blockquotes
         cand.append(abs(ln.x0 - lt) <= tol and rights[i] is not None
-                    and abs(rights[i] - rt) <= tol)
+                    and abs(rights[i] - rt) <= tol and ln.x1 <= rt + tol)
     # indented first lines of quote paragraphs: x0 in (lt+6 .. lt+30),
     # right edge inside the quote measure, adjacent to a base candidate.
     # A body paragraph's own indent sits at lt itself (body-left + indent =

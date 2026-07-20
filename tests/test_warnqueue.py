@@ -243,3 +243,35 @@ def test_config_adjudications_parsing(tmp_path):
         p.write_text("source: {folder: p, pdf: b.pdf}\n"
                      "qa: {lost_space_allowx: []}")
         load_config(p)
+
+
+def test_index_locator_warning_derives_and_adjudicates(tmp_path):
+    # QA parity (Schuon L&T): the build's queue carries index-locator-unlinked
+    # from the index-locator pass; gate 22's re-derivation must too, or an
+    # adjudication covering it reads stale at QA time while warnings.md shows
+    # the warning it covers. The runner now runs link_index_locators after
+    # build_flow; this pins the mechanism: a res.warns entry with that code
+    # derives into the queue and its adjudication matches (not stale).
+    from collections import Counter
+
+    from pdf2epub.core.model import FlowDoc, PageAnchor
+    from pdf2epub.flowbuilder import FlowResult
+    from pdf2epub.index_locators import link_index_locators
+
+    entry = Paragraph(style="s", role="index",
+                      items=[TextRun("Buddhism, 515", RunFormat())],
+                      src=SourceRef("p0207", 0))
+    flow = FlowDoc(blocks=[PageAnchor(1, "1"), entry], notes={},
+                   style_usage=Counter(), text_dests={})
+    res = FlowResult(flow=flow)
+    cfg = _cfg(tmp_path)
+    link_index_locators(res, cfg, say=lambda m: None)
+    assert any(w.code == "index-locator-unlinked" for w in res.warns)
+
+    aw = derive_warnings(_doc([_page(1)]), res, flow, cfg)
+    assert any(w.code == "index-locator-unlinked" for w in aw)
+    cfg.adjudications = [Adjudication(warning="index-locator-unlinked",
+                                      pages=[], note="as printed")]
+    open_, adjudicated, stale = apply_adjudications(aw, cfg)
+    assert not stale
+    assert any(w.code == "index-locator-unlinked" for w in adjudicated)

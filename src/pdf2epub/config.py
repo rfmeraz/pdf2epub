@@ -141,6 +141,13 @@ class ListSpec:
     marker: str = "decimal"   # decimal | bullet
     hang: float = 0.0
     tol: float = 3.0
+    # explicit entry stops (RAW x0, the `pdf2epub lines` space): a
+    # render-verified judgment that BYPASSES clustering. Needed when the
+    # marker widths yield >2 genuine stops (Schuon L&T notes: right-aligned
+    # 1/2/3-digit numbers at 51.6/46.6/44.6 — the 0.25*top cluster filter
+    # drops the small chapter-start cluster, and partitioning the pages
+    # into per-stop specs severed every note wrapping a spec boundary)
+    stops: list[float] = field(default_factory=list)
     note: str = ""
 
 
@@ -866,7 +873,7 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
             note=qs["note"]))
     for ls in bl.get("lists", []) or []:
         _check_keys("blocks.lists[]",
-                    ls, {"pages", "marker", "hang", "tol", "note"})
+                    ls, {"pages", "marker", "hang", "tol", "stops", "note"})
         if not ls.get("note"):
             raise ConfigError("blocks.lists requires a note "
                               "(render-verified evidence)")
@@ -889,6 +896,7 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
             pages=pages, marker=marker,
             hang=float(ls.get("hang", 0.0)),
             tol=float(ls.get("tol", 3.0)),
+            stops=[float(s) for s in (ls.get("stops", []) or [])],
             note=ls["note"]))
 
     qa = data.get("qa", {})

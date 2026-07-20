@@ -1,0 +1,31 @@
+# Gate-24 regression assertions — frithjof-schuon-life-and-teachings
+# (see src/pdf2epub/qa/assertions.py). A TEST fixture, not a build input.
+# Each cell pins a print-verified proofread fix so a change that re-breaks it
+# fails LOUDLY. Operands copied from the SHIPPED normalized text; pages are
+# printed labels (aria-label).
+
+# --- keep_hyphens / suspended-hyphen repairs (print-verified renders) ---
+- {page: "30", type: present, text: "quasi-secretary",
+   note: "V3b: 'quasi-'/'secretary' line seam kept its lexical hyphen"}
+- {page: "81", type: present, text: "vis-à-vis other creeds",
+   note: "V6b: 'vis-'/'à-vis' line seam kept its lexical hyphen (print p.97 top; the paragraph STARTS on label 81 — slicing is paragraph-granular)"}
+- {page: "148", type: present, text: "Japanese-like paintings",
+   note: "V10d: note 95 'Japanese-'/'like' seam kept its compound hyphen"}
+- {page: "98", type: present, text: "pseudo- and neoesoterism",
+   note: "V7e: suspended hyphen before 'and' is the author's (print p.114 mid-line; paragraph starts on label 98)"}
+- {page: "185", type: present, text: "Tage- und Nächtebuch",
+   note: "bibliography prints the suspended German hyphen with space; inline dehyphenation once fused it to 'Tageund' (packets 029/034)"}
+
+# --- structural repairs (single-block membership is the witness) ---
+- {page: "13", type: block_present,
+   text: "In a letter to Jenny (April 9, 1931), which he surmounts with a very traditional Bismillâh al-Rahmân al-Rahîm",
+   note: "quote-exit fix: the body intro line after the 1931 letter was absorbed into the blockquote and its continuation severed (packet 008/009; blockshapes own-x1 rule)"}
+- {page: "iv", type: block_present,
+   text: "in any manner whatsoever without written permission",
+   note: "V1b: the copyright rights notice is ONE block in print; the short-line rule split every line"}
+- {page: "191", type: block_present,
+   text: "Adda Ben Tounes, Shaykh, 18–19, 21, 24, 37, 62, 140–141, 156",
+   note: "packet 035: index turnovers (9pt hang) split from their entries; column entry test tightened"}
+- {page: "185", type: block_present,
+   text: "Frieburg i. Br.: Aurum Verlag, 1989 [Urbesinnung: Das Denken des Eigentlichen].",
+   note: "packet 034: bibliography deep wraps split mid-bracket by list_sub; marker:hang now joins them"}

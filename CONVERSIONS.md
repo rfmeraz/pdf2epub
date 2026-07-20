@@ -915,3 +915,82 @@ and all repaired in `extract.mupdf` from glyph geometry alone:
   `wu-liang-shou`, `tailor-made`): the book prints them ONCE, at the break, so
   neither the render nor the book can settle them. 6 attested ones are in
   `flow.keep_hyphens`.
+
+## Frithjof Schuon: Life and Teachings — Aymard & Laude (SUNY Press, 2004) — 2026-07-20
+
+Source `package/Frithjof Schuon Life and Teachings.pdf` sha256 `c0eb9f27358651…`,
+211pp, Acrobat Distiller 5.0.5. Six shipped photo/painting plates, German verse,
+letter-heavy biography with 500+ endnotes, year-headed bibliography, 2-col index.
+
+### Structure decisions worth remembering
+- **TOC source: printed, not outline** — the outline carries junk the print
+  never had (25 A–Z index letters with no printed letter headings, a phantom
+  Notes 'CHAPTER 4' subhead entry, half-title/Contents self-entries). The 13
+  printed entries all have real headings; the nav is heading-built either way.
+- **Chapter kickers joined into the h1** ('CHAPTER ONE' + title → one h1 via
+  flow.overrides join, keys-to-the-beyond precedent): the splitter fires per
+  paragraph, so an h2 kicker before the h1 orphans at the previous file's tail.
+  Ditto 'APPENDIX 1/2' + 'Frithjof Schuon'.
+- **Endnote numbers are RIGHT-ALIGNED** — 1/2/3-digit markers sit at three
+  stops (51.6/46.6/44.6). New `blocks.lists.stops:` (explicit, RAW x0) carries
+  the judgment: the cluster filter drops the small 1-digit cluster, and
+  partitioning pages into per-stop specs severed every note wrapping a spec
+  boundary (round-2 readers found notes 3/12/56/89/96/13 split mid-sentence).
+  tol 2.5 NOT 2: the pp.179-182 wide-gutter turnovers are exactly 2.0pt off
+  the hang column and float epsilon pushed them out.
+- **Bibliography = marker:hang** (I&B precedent) with 14 render-verified
+  `break` overrides: editions print one per line, but coincidental ragged-edge
+  pairs misderive block_right so the short-line break signal never fires.
+- **Photo plates are TEXT-LESS figure_regions** — no line carries the region,
+  so the in-loop Figure emission never fired and all six plates shipped as
+  orphaned images (no gate caught it; gate 5 listed them only as info). Code
+  fix: emit in place with the caption line(s) as live paragraphs beside the
+  figure. Print order kept (gate 25's monotonic witness is the doctrine) — the
+  running sentence around a plate stays split exactly as the page turn splits it.
+- The Notes ch.4 subhead is letter-spaced caps at the hang column and too wide
+  for the centered detector — absorbed into note 64 until a class:prose
+  override; it ships as a plain paragraph (role: overrides still hang-join).
+
+### Pipeline fixes landed here (all with unit tests; corpus re-verified)
+1. blockshapes.quote_shape_runs: a quote candidate's OWN x1 must fit the quote
+   measure — justified_rights hands body first-lines the block's clustered
+   margin, and ~20 intro/exit lines shipped inside blockquotes. Healed PWC (9
+   sites its own proofread missed) and I&B (1).
+2. flowbuilder: text-less figure_regions emit their Figure + caption in place.
+3. flowbuilder: marker:hang specs treat deeper-than-hang lines as turnovers
+   (list_sub split bibliography wraps mid-word: 'Ein-'/'führung').
+4. flowbuilder: columned-entry test tightened to min(indent_threshold, 6) —
+   this index's 9pt hanging turnovers all split as entries at 15.
+5. flowbuilder: blank-page anchors flush before the printed-TOC run (pagelist
+   'vi' shipped after 'vii'); QA runner now runs link_index_locators so gate
+   22's re-derived queue matches the build's (a locator adjudication read
+   stale); emit/ordercheck contents matchers fold punctuation and match
+   enumeration-stripped titles (kicker-joined h1s), tie-broken by printed page.
+6. textfix: SUSPENDED HYPHENS before bare conjunctions (and/or/und/oder/et/ou)
+   survive both dehyphenation paths — 'pseudo- and neoesoterism', 'Tage- und
+   Nächtebuch' had fused to 'pseudoand'/'Tageund'.
+
+### Reading QA — 3 rounds (35 packets, ~85k words, 31 readers + 8 verifiers)
+- Round 1: ~90 findings → the 5 systemic roots above + keep_hyphens
+  (so-called, quasi-secretary, vis-à-vis, jîvan-mukta, Japanese-like,
+  light-colored), 4 absorbed colon-intro lines (class:prose), copyright-page
+  joins, series-page break, p.74 heading role:h3, quote spec +pp.65-66/89.
+- Round 3: ZERO new confirmed findings. 9 gate-24 cells seeded.
+- REFUTED against print (the book's own quirks, preserved verbatim): 'is not
+  be interpreted', 'in iself', 'never been lost', 'allow it reach', 'not all
+  mysterious', 'eternel present', 'properly so which', 'even more that',
+  'Bloomingon', 'Theospohical', 'Editons', 'Sapientae', 'dansle', '221.The',
+  'S.Ibrahîm', 'L' Oeil', '1997(poems', index '515'/'x1'/'19–10'/'120 142'/
+  '162–3', spaced opening quotes ('" the/In/If/he/isolated/to see'), spaced
+  noterefs ('nature 4', '1934. 23', '(the Praised) 32'), reversed close quote
+  p.60, unclosed quotes pp.73/88/166, missing em dash p.66, unclosed paren
+  p.64. The blind readers' noteref-anomaly chorus (bare digits) is the
+  packets flattening <sup> — markers ship as superscripts; policy: none by
+  design (all notes are endnotes, unlinked as printed).
+
+### QA outcome
+epubcheck clean; qa Overall: PASS (26 gates; 447 unit tests); visual gate 18
+graded across 14 sheets ×2 passes, 6 figures dHash distance 0; corpus 10/10
+QA PASS with baseline updated. Flagged for human review: urn:uuid identifier
+(no ebook ISBN printed), cover from PDF p.1 render, kicker-joined h1 texts,
+plate-interrupted sentences kept in print order.

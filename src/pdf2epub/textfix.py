@@ -118,6 +118,11 @@ def expand_ligatures(text: str) -> tuple[str, int]:
 
 _INRUN_HYPHEN = re.compile(r"([A-Za-zÀ-ſ])- ([a-zà-ÿ])")
 
+# bare coordinating conjunctions that mark a SUSPENDED hyphen ('pseudo- and
+# neo-esoterism', 'Tage- und Nächtebuch'): the hyphen+space are the author's,
+# never a stored line break — shared by the line joiner and the in-run rule
+_SUSPENDED_CONJ = frozenset({"and", "or", "nor", "und", "oder", "et", "ou"})
+
 
 def inline_dehyphenate(text: str, mode: str = "lower-only",
                        keep: "frozenset[str] | set[str]" = frozenset()
@@ -136,7 +141,7 @@ def inline_dehyphenate(text: str, mode: str = "lower-only",
     seams whose space the layout really gave room to. Keep this rule narrow
     for that reason: a capitalized continuation is left alone, since the only
     such seam in the corpus is one print genuinely sets."""
-    if mode == "off" or not keep:
+    if mode == "off":
         return _INRUN_HYPHEN.subn(r"\1\2", text)
     out: list[str] = []
     n = 0
@@ -145,7 +150,9 @@ def inline_dehyphenate(text: str, mode: str = "lower-only",
         left = re.search(r"[A-Za-zÀ-ſ’']*$", text[:m.end(1)]).group(0)
         right = re.match(r"[A-Za-zÀ-ſ’']*", text[m.start(2):]).group(0)
         out.append(text[pos:m.start()])
-        if f"{left}-{right}".lower() in keep:
+        if right.lower() in _SUSPENDED_CONJ:
+            out.append(m.group(0))  # suspended hyphen: author's own mark
+        elif f"{left}-{right}".lower() in keep:
             out.append(f"{m.group(1)}-{m.group(2)}")
         else:
             out.append(m.group(1) + m.group(2))
@@ -405,6 +412,12 @@ def dehyphenate_join(prev: str, nxt: str, mode: str = "lower-only",
         # reconstructed 'lastword-nextword', case-insensitive
         if keep and f"{last_word}-{next_word}".lower() in keep:
             return base, "", False
+        # a SUSPENDED hyphen before a bare coordinating conjunction is the
+        # author's own mark, not a line break: 'pseudo- and neo-esoterism',
+        # 'Tage- und Nächtebuch' (Schuon L&T pp.98/185 print both). Keep the
+        # hyphen AND the space — dehyphenating fused them to 'pseudoand'.
+        if next_word.lower() in _SUSPENDED_CONJ:
+            return base, " ", False
         if nxt.lstrip()[:1].islower() and not chain \
                 and not arabic_article \
                 and not _KEEP_HYPHEN_PREFIX.search(base):

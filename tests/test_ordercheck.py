@@ -102,3 +102,28 @@ def test_grouping_entry_must_not_steal_exact_heading():
     assert res.ok, res.violations
     assert res.matched_entries == 1  # 'Index' exact; 'Indexes' is an info note
     assert any("Indexes" in n for n in res.notes)
+
+
+def test_numbered_entry_matches_kicker_joined_heading_over_notes_echo():
+    # Schuon L&T: printed entry '1. A Biographical Approach' (p.5) must claim
+    # the kicker-joined chapter h1, not the Notes subhead echoing the title
+    # on p.137 — equal containment scores resolve by printed-page agreement
+    seq = [
+        ("page", "5"), ("heading", "CHAPTER ONE A Biographical Approach"),
+        ("page", "137"), ("heading", "CHAPTER 1. A BIOGRAPHICAL APPROACH"),
+    ]
+    toc = [("1. A Biographical Approach", "5")]
+    res = check_heading_pages(seq, toc, ["5", "137"])
+    assert res.ok and res.matched_entries == 1
+
+
+def test_punct_folded_prefix_prefers_page_agreeing_heading():
+    # 'Appendix 1: Frithjof Schuon: ...' vs joined h1 'APPENDIX 1 Frithjof
+    # Schuon' (p.129) and the bare Notes subhead 'APPENDIX 1' (p.183)
+    seq = [
+        ("page", "129"), ("heading", "APPENDIX 1 Frithjof Schuon"),
+        ("page", "183"), ("heading", "APPENDIX 1"),
+    ]
+    toc = [("Appendix 1: Frithjof Schuon: General Considerations on Spiritual Functions", "129")]
+    res = check_heading_pages(seq, toc, ["129", "183"])
+    assert res.ok and res.matched_entries == 1

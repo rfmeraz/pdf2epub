@@ -652,6 +652,10 @@ class Emitter:
         def link_for(idx: int) -> str:
             text = self._contents_entries[idx]
             t = text.lower().strip()
+            # a numbered entry ("4. Title") may target a heading that joined
+            # its printed kicker ("CHAPTER FOUR Title"): the enumeration-less
+            # entry text contained anywhere in the heading is a strong match
+            t_sans_enum = re.sub(r"^[0-9ivxlcdm]+[.):]\s+", "", t)
             best, best_score = None, 0.0
             for htext, fname, hid in self.heading_index:
                 h = htext.lower().strip()
@@ -659,6 +663,8 @@ class Emitter:
                 # a TOC entry often extends the heading ("Foreword by ...")
                 # or abbreviates it; treat prefix containment as a strong match
                 if h and (t.startswith(h) or h.startswith(t)):
+                    score = max(score, 90.0)
+                if len(t_sans_enum) >= 8 and t_sans_enum in h:
                     score = max(score, 90.0)
                 if score > best_score:
                     best, best_score = (fname, hid), score

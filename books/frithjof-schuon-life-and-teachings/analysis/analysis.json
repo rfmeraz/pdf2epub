@@ -1,0 +1,4630 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/pdf2epub/books/frithjof-schuon-life-and-teachings/package/Frithjof Schuon Life and Teachings.pdf",
+  "sha256": "c0eb9f273586511043238f1a4abab597ee79a2a3e13aa799c900c2a8c2717fc0",
+  "producer": "Acrobat Distiller 5.0.5 (Windows)",
+  "n_pages": 211,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "Bodoni-Book",
+    "raw_family": "Bodoni-Book",
+    "size": 62.0,
+    "color": "#231f20"
+   },
+   "1": {
+    "id": 1,
+    "family": "Bodoni-Book",
+    "raw_family": "Bodoni-Book",
+    "size": 64.0,
+    "color": "#231f20"
+   },
+   "2": {
+    "id": 2,
+    "family": "Futura-Book",
+    "raw_family": "Futura-Book",
+    "size": 20.0,
+    "color": "#231f20"
+   },
+   "3": {
+    "id": 3,
+    "family": "Futura-Condensed",
+    "raw_family": "Futura-Condensed",
+    "size": 18.0,
+    "color": "#231f20"
+   },
+   "4": {
+    "id": 4,
+    "family": "Bodoni-BoldItalic",
+    "raw_family": "Bodoni-BoldItalic",
+    "size": 12.5,
+    "color": "#231f20"
+   },
+   "5": {
+    "id": 5,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 12.0,
+    "color": "#000000"
+   },
+   "6": {
+    "id": 6,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "7": {
+    "id": 7,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 24.0,
+    "color": "#000000"
+   },
+   "8": {
+    "id": 8,
+    "family": "Goudy-Italic",
+    "raw_family": "Goudy-Italic",
+    "size": 16.0,
+    "color": "#000000"
+   },
+   "9": {
+    "id": 9,
+    "family": "ZapfDingbats",
+    "raw_family": "ZapfDingbats",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "10": {
+    "id": 10,
+    "family": "Goudy-Italic",
+    "raw_family": "Goudy-Italic",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "11": {
+    "id": 11,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "12": {
+    "id": 12,
+    "family": "Goudy-Bold",
+    "raw_family": "Goudy-Bold",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "13": {
+    "id": 13,
+    "family": "Goudy-Italic",
+    "raw_family": "Goudy-Italic",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "14": {
+    "id": 14,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 16.0,
+    "color": "#000000"
+   },
+   "15": {
+    "id": 15,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 27.0,
+    "color": "#000000"
+   },
+   "16": {
+    "id": 16,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 7.0,
+    "color": "#000000"
+   },
+   "17": {
+    "id": 17,
+    "family": "Goudy-Italic",
+    "raw_family": "Goudy-Italic",
+    "size": 9.5,
+    "color": "#000000"
+   },
+   "18": {
+    "id": 18,
+    "family": "Goudy-Italic",
+    "raw_family": "Goudy-Italic",
+    "size": 12.0,
+    "color": "#000000"
+   },
+   "19": {
+    "id": 19,
+    "family": "Goudy",
+    "raw_family": "Goudy",
+    "size": 8.5,
+    "color": "#000000"
+   },
+   "20": {
+    "id": 20,
+    "family": "Goudy-Italic",
+    "raw_family": "Goudy-Italic",
+    "size": 9.0,
+    "color": "#000000"
+   }
+  },
+  "outline": [
+   {
+    "level": 1,
+    "title": "FRITHJOF SCHUON",
+    "target_page": 2
+   },
+   {
+    "level": 1,
+    "title": "Contents",
+    "target_page": 8
+   },
+   {
+    "level": 1,
+    "title": "Foreword",
+    "target_page": 10
+   },
+   {
+    "level": 1,
+    "title": "Acknowledgments",
+    "target_page": 14
+   },
+   {
+    "level": 1,
+    "title": "Introduction",
+    "target_page": 16
+   },
+   {
+    "level": 1,
+    "title": "1. A Biographical Approach",
+    "target_page": 20
+   },
+   {
+    "level": 1,
+    "title": "2. A Spiritual Portrait",
+    "target_page": 70
+   },
+   {
+    "level": 1,
+    "title": "3. Esoterism and Tradition",
+    "target_page": 94
+   },
+   {
+    "level": 1,
+    "title": "4. Metaphysical and Spiritual Aesthetics",
+    "target_page": 122
+   },
+   {
+    "level": 1,
+    "title": "Conclusion",
+    "target_page": 142
+   },
+   {
+    "level": 1,
+    "title": "APPENDIX 1: Frithjof Schuon: General Considerations on Spiritual Functions",
+    "target_page": 144
+   },
+   {
+    "level": 1,
+    "title": "APPENDIX 2: Frithjof Schuon: Christian Gnosis",
+    "target_page": 148
+   },
+   {
+    "level": 1,
+    "title": "Notes",
+    "target_page": 152
+   },
+   {
+    "level": 2,
+    "title": "INTRODUCTION",
+    "target_page": 152
+   },
+   {
+    "level": 2,
+    "title": "CHAPTER 1",
+    "target_page": 152
+   },
+   {
+    "level": 2,
+    "title": "CHAPTER 2",
+    "target_page": 167
+   },
+   {
+    "level": 2,
+    "title": "CHAPTER 3",
+    "target_page": 183
+   },
+   {
+    "level": 2,
+    "title": "CHAPTER 4",
+    "target_page": 192
+   },
+   {
+    "level": 2,
+    "title": "CONCLUSION",
+    "target_page": 198
+   },
+   {
+    "level": 2,
+    "title": "APPENDIX 1",
+    "target_page": 198
+   },
+   {
+    "level": 2,
+    "title": "APPENDIX 2",
+    "target_page": 198
+   },
+   {
+    "level": 1,
+    "title": "Bibliography of Works by Frithjof Schuon",
+    "target_page": 200
+   },
+   {
+    "level": 1,
+    "title": "Index",
+    "target_page": 206
+   },
+   {
+    "level": 2,
+    "title": "A",
+    "target_page": 206
+   },
+   {
+    "level": 2,
+    "title": "B",
+    "target_page": 206
+   },
+   {
+    "level": 2,
+    "title": "C",
+    "target_page": 207
+   },
+   {
+    "level": 2,
+    "title": "D",
+    "target_page": 207
+   },
+   {
+    "level": 2,
+    "title": "E",
+    "target_page": 207
+   },
+   {
+    "level": 2,
+    "title": "F",
+    "target_page": 207
+   },
+   {
+    "level": 2,
+    "title": "G",
+    "target_page": 207
+   },
+   {
+    "level": 2,
+    "title": "H",
+    "target_page": 208
+   },
+   {
+    "level": 2,
+    "title": "I",
+    "target_page": 208
+   },
+   {
+    "level": 2,
+    "title": "J",
+    "target_page": 208
+   },
+   {
+    "level": 2,
+    "title": "K",
+    "target_page": 208
+   },
+   {
+    "level": 2,
+    "title": "L",
+    "target_page": 208
+   },
+   {
+    "level": 2,
+    "title": "M",
+    "target_page": 209
+   },
+   {
+    "level": 2,
+    "title": "N",
+    "target_page": 209
+   },
+   {
+    "level": 2,
+    "title": "O",
+    "target_page": 209
+   },
+   {
+    "level": 2,
+    "title": "P",
+    "target_page": 209
+   },
+   {
+    "level": 2,
+    "title": "Q",
+    "target_page": 209
+   },
+   {
+    "level": 2,
+    "title": "R",
+    "target_page": 209
+   },
+   {
+    "level": 2,
+    "title": "S",
+    "target_page": 210
+   },
+   {
+    "level": 2,
+    "title": "T",
+    "target_page": 210
+   },
+   {
+    "level": 2,
+    "title": "U",
+    "target_page": 210
+   },
+   {
+    "level": 2,
+    "title": "V",
+    "target_page": 210
+   },
+   {
+    "level": 2,
+    "title": "W",
+    "target_page": 211
+   },
+   {
+    "level": 2,
+    "title": "Y",
+    "target_page": 211
+   },
+   {
+    "level": 2,
+    "title": "Z",
+    "target_page": 211
+   }
+  ],
+  "links": [],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   0,
+   81,
+   413,
+   639
+  ],
+  "warnings": [
+   "engine agreement below 90 on 6 page(s): [206, 207, 208, 209, 210, 211] — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "Goudy@10",
+  "body_size": 10.0,
+  "clusters": [
+   {
+    "pstyle": "Goudy@10",
+    "family": "Goudy",
+    "size": 10.0,
+    "n_lines": 6741,
+    "n_chars": 486274,
+    "n_pages": 183,
+    "first_page": 8,
+    "samples": [
+     "Foreword by Seyyed Hossein Nasrix",
+     "Acknowledgmentsxiii",
+     "1. A Biographical Approach5"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "Goudy-Italic@10",
+    "family": "Goudy-Italic",
+    "size": 10.0,
+    "n_lines": 404,
+    "n_chars": 15211,
+    "n_pages": 187,
+    "first_page": 6,
+    "samples": [
+     "The “Thunder-Bird” (Wakinyan-Tanka) whose abode is in the",
+     "West, and who protects earth and its vegetation against drought and",
+     "death, is said to flash lightning from its eyes and to thunder with its"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Goudy@9",
+    "family": "Goudy",
+    "size": 9.0,
+    "n_lines": 241,
+    "n_chars": 10429,
+    "n_pages": 7,
+    "first_page": 5,
+    "samples": [
+     "State University of New York Press, Albany",
+     "© 2004 State University of New York",
+     "All rights reserved"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Goudy@10/center",
+    "family": "Goudy",
+    "size": 10.0,
+    "n_lines": 72,
+    "n_chars": 1500,
+    "n_pages": 52,
+    "first_page": 3,
+    "samples": [
+     "SUNY series in Western Esoteric Traditions",
+     "David Appelbaum, editor",
+     "JEAN-BAPTISTE AYMARD"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Goudy-Italic@10/center",
+    "family": "Goudy-Italic",
+    "size": 10.0,
+    "n_lines": 7,
+    "n_chars": 297,
+    "n_pages": 6,
+    "first_page": 29,
+    "samples": [
+     "Schuon in Paris, 1932. Personal collection, Catherine Schuon.",
+     "Da kam—ein wacher Traum—die Jungfrau süß,",
+     "Ich wollte dieses Buch schon lang beschliessen—"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Goudy@16/center",
+    "family": "Goudy",
+    "size": 16.0,
+    "n_lines": 14,
+    "n_chars": 236,
+    "n_pages": 14,
+    "first_page": 8,
+    "samples": [
+     "A Biographical Approach",
+     "A Spiritual Portrait",
+     "Esoterism and Tradition"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Goudy@12/center",
+    "family": "Goudy",
+    "size": 12.0,
+    "n_lines": 10,
+    "n_chars": 149,
+    "n_pages": 9,
+    "first_page": 2,
+    "samples": [
+     "STATE UNIVERSITY OF NEW YORK PRESS",
+     "ROCK AND LIGHTNING"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "Goudy-Italic@12/center",
+    "family": "Goudy-Italic",
+    "size": 12.0,
+    "n_lines": 2,
+    "n_chars": 63,
+    "n_pages": 2,
+    "first_page": 144,
+    "samples": [
+     "General Considerations on Spiritual Functions1",
+     "Christian Gnosis1"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "Goudy-Bold@9",
+    "family": "Goudy-Bold",
+    "size": 9.0,
+    "n_lines": 1,
+    "n_chars": 50,
+    "n_pages": 1,
+    "first_page": 5,
+    "samples": [
+     "Library of Congress Cataloging-in-Publication Data"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Futura-Condensed@18/center",
+    "family": "Futura-Condensed",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 38,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "Jean-Baptiste Aymard and Patrick Laude"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Goudy-Italic@9",
+    "family": "Goudy-Italic",
+    "size": 9.0,
+    "n_lines": 1,
+    "n_chars": 38,
+    "n_pages": 1,
+    "first_page": 209,
+    "samples": [
+     "Les Amis de l’Islam, 19, 37New Age, 83"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Futura-Book@20/center",
+    "family": "Futura-Book",
+    "size": 20.0,
+    "n_lines": 1,
+    "n_chars": 31,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "L i f e a n d T e a c h i n g s"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 20.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Bodoni-BoldItalic@12.5/center",
+    "family": "Bodoni-BoldItalic",
+    "size": 12.5,
+    "n_lines": 1,
+    "n_chars": 31,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "Foreword by Seyyed Hossein Nasr"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.5pt centered"
+   },
+   {
+    "pstyle": "Goudy-Italic@11/center",
+    "family": "Goudy-Italic",
+    "size": 11.0,
+    "n_lines": 2,
+    "n_chars": 31,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "Seyyed Hossein Nasr"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "11.0pt centered"
+   },
+   {
+    "pstyle": "ZapfDingbats@10/center",
+    "family": "ZapfDingbats",
+    "size": 10.0,
+    "n_lines": 3,
+    "n_chars": 30,
+    "n_pages": 3,
+    "first_page": 4,
+    "samples": [
+     "❖  ❖  ❖  ❖  ❖  ❖"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "Goudy@9/center",
+    "family": "Goudy",
+    "size": 9.0,
+    "n_lines": 1,
+    "n_chars": 29,
+    "n_pages": 1,
+    "first_page": 5,
+    "samples": [
+     "10  9  8  7  6  5  4  3  2  1"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Goudy-Italic@16/center",
+    "family": "Goudy-Italic",
+    "size": 16.0,
+    "n_lines": 1,
+    "n_chars": 18,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "Life and Teachings"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Goudy@24/center",
+    "family": "Goudy",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 15,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Bodoni-Book@64/center",
+    "family": "Bodoni-Book",
+    "size": 64.0,
+    "n_lines": 1,
+    "n_chars": 11,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 64.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Bodoni-Book@62/center",
+    "family": "Bodoni-Book",
+    "size": 62.0,
+    "n_lines": 1,
+    "n_chars": 8,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 62.0pt >= 1.8x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "#Frithjof Schuon",
+    "count": 88,
+    "pages": [
+     11,
+     13,
+     17,
+     23,
+     25,
+     27,
+     31,
+     33
+    ],
+    "band": "top"
+   },
+   {
+    "text": "A Biographical Approach#",
+    "count": 23,
+    "pages": [
+     22,
+     24,
+     26,
+     28,
+     30,
+     32,
+     34,
+     36
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Notes to Chapter #",
+    "count": 22,
+    "pages": [
+     154,
+     156,
+     158,
+     160,
+     162,
+     164,
+     166,
+     168
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Esoterism and Tradition#",
+    "count": 13,
+    "pages": [
+     96,
+     98,
+     100,
+     102,
+     104,
+     106,
+     108,
+     110
+    ],
+    "band": "top"
+   },
+   {
+    "text": "A Spiritual Portrait#",
+    "count": 11,
+    "pages": [
+     72,
+     74,
+     76,
+     78,
+     80,
+     82,
+     84,
+     86
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#etaphysical and Spiritual Aesthetics#",
+    "count": 9,
+    "pages": [
+     124,
+     126,
+     128,
+     130,
+     132,
+     134,
+     136,
+     138
+    ],
+    "band": "top"
+   },
+   {
+    "text": "FRITHJOF SCHUON",
+    "count": 3,
+    "pages": [
+     2,
+     4,
+     6
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 46.6,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 100.0,
+  "folio_mismatches": [],
+  "label_source_proposal": "pdf-page-labels",
+  "printed_folios": {
+   "8": "vii",
+   "10": "ix",
+   "11": "x",
+   "12": "xi",
+   "13": "xii",
+   "14": "xiii",
+   "16": "1",
+   "17": "2",
+   "18": "3",
+   "20": "5",
+   "22": "7",
+   "23": "8",
+   "24": "9",
+   "25": "10",
+   "26": "11",
+   "27": "12",
+   "28": "13",
+   "30": "15",
+   "31": "16",
+   "32": "17",
+   "33": "18",
+   "34": "19",
+   "35": "20",
+   "36": "21",
+   "37": "22",
+   "38": "23",
+   "39": "24",
+   "40": "25",
+   "41": "26",
+   "42": "27",
+   "43": "28",
+   "44": "29",
+   "45": "30",
+   "46": "31",
+   "47": "32",
+   "48": "33",
+   "49": "34",
+   "50": "35",
+   "51": "36",
+   "52": "37",
+   "53": "38",
+   "54": "39",
+   "55": "40",
+   "56": "41",
+   "57": "42",
+   "58": "43",
+   "59": "44",
+   "60": "45",
+   "61": "46",
+   "62": "47",
+   "64": "49",
+   "65": "50",
+   "66": "51",
+   "67": "52",
+   "69": "54",
+   "70": "55",
+   "71": "56",
+   "72": "57",
+   "73": "58",
+   "74": "59",
+   "75": "60",
+   "76": "61",
+   "77": "62",
+   "78": "63",
+   "79": "64",
+   "80": "65",
+   "81": "66",
+   "82": "67",
+   "83": "68",
+   "84": "69",
+   "85": "70",
+   "86": "71",
+   "87": "72",
+   "88": "73",
+   "89": "74",
+   "90": "75",
+   "91": "76",
+   "92": "77",
+   "94": "79",
+   "95": "80",
+   "96": "81",
+   "97": "82",
+   "98": "83",
+   "99": "84",
+   "100": "85",
+   "101": "86",
+   "102": "87",
+   "103": "88",
+   "104": "89",
+   "105": "90",
+   "106": "91",
+   "107": "92",
+   "108": "93",
+   "109": "94",
+   "110": "95",
+   "111": "96",
+   "112": "97",
+   "113": "98",
+   "114": "99",
+   "115": "100",
+   "116": "101",
+   "117": "102",
+   "118": "103",
+   "119": "104",
+   "120": "105",
+   "121": "106",
+   "122": "107",
+   "123": "108",
+   "124": "109",
+   "125": "110",
+   "126": "111",
+   "127": "112",
+   "128": "113",
+   "129": "114",
+   "130": "115",
+   "131": "116",
+   "132": "117",
+   "134": "119",
+   "135": "120",
+   "136": "121",
+   "137": "122",
+   "138": "123",
+   "139": "124",
+   "140": "125",
+   "142": "127",
+   "144": "129",
+   "145": "130",
+   "146": "131",
+   "148": "133",
+   "149": "134",
+   "150": "135",
+   "152": "137",
+   "153": "138",
+   "154": "139",
+   "155": "140",
+   "156": "141",
+   "157": "142",
+   "158": "143",
+   "159": "144",
+   "160": "145",
+   "161": "146",
+   "162": "147",
+   "163": "148",
+   "164": "149",
+   "165": "150",
+   "166": "151",
+   "167": "152",
+   "168": "153",
+   "169": "154",
+   "170": "155",
+   "171": "156",
+   "172": "157",
+   "173": "158",
+   "174": "159",
+   "175": "160",
+   "176": "161",
+   "177": "162",
+   "178": "163",
+   "179": "164",
+   "180": "165",
+   "181": "166",
+   "182": "167",
+   "183": "168",
+   "184": "169",
+   "185": "170",
+   "186": "171",
+   "187": "172",
+   "188": "173",
+   "189": "174",
+   "190": "175",
+   "191": "176",
+   "192": "177",
+   "193": "178",
+   "194": "179",
+   "195": "180",
+   "196": "181",
+   "197": "182",
+   "198": "183",
+   "200": "185",
+   "201": "186",
+   "202": "187",
+   "203": "188",
+   "204": "189",
+   "206": "191",
+   "207": "192",
+   "208": "193",
+   "209": "194",
+   "210": "195",
+   "211": "196"
+  },
+  "headings": [
+   {
+    "page": 1,
+    "pstyle": "Bodoni-Book@62/center",
+    "text": "FRITHJOF"
+   },
+   {
+    "page": 1,
+    "pstyle": "Bodoni-Book@64/center",
+    "text": "S C H U O N"
+   },
+   {
+    "page": 1,
+    "pstyle": "Futura-Book@20/center",
+    "text": "L i f e a n d T e a c h i n g s"
+   },
+   {
+    "page": 1,
+    "pstyle": "Futura-Condensed@18/center",
+    "text": "Jean-Baptiste Aymard and Patrick Laude"
+   },
+   {
+    "page": 1,
+    "pstyle": "Bodoni-BoldItalic@12.5/center",
+    "text": "Foreword by Seyyed Hossein Nasr"
+   },
+   {
+    "page": 2,
+    "pstyle": "Goudy@12/center",
+    "text": "FRITHJOF SCHUON"
+   },
+   {
+    "page": 3,
+    "pstyle": "Goudy@10/center",
+    "text": "SUNY series in Western Esoteric Traditions"
+   },
+   {
+    "page": 3,
+    "pstyle": "Goudy@10/center",
+    "text": "David Appelbaum, editor"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy@24/center",
+    "text": "FRITHJOF SCHUON"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy-Italic@16/center",
+    "text": "Life and Teachings"
+   },
+   {
+    "page": 4,
+    "pstyle": "ZapfDingbats@10/center",
+    "text": "❖  ❖  ❖  ❖  ❖  ❖"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy@10/center",
+    "text": "JEAN-BAPTISTE AYMARD"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy@10/center",
+    "text": "AND"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy@10/center",
+    "text": "PATRICK LAUDE"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy-Italic@11/center",
+    "text": "Foreword by"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy-Italic@11/center",
+    "text": "Seyyed Hossein Nasr"
+   },
+   {
+    "page": 4,
+    "pstyle": "Goudy@12/center",
+    "text": "STATE UNIVERSITY OF NEW YORK PRESS"
+   },
+   {
+    "page": 6,
+    "pstyle": "Goudy@12/center",
+    "text": "FRITHJOF SCHUON"
+   },
+   {
+    "page": 6,
+    "pstyle": "Goudy@12/center",
+    "text": "ROCK AND LIGHTNING"
+   },
+   {
+    "page": 8,
+    "pstyle": "Goudy@16/center",
+    "text": "Contents"
+   },
+   {
+    "page": 10,
+    "pstyle": "Goudy@16/center",
+    "text": "Foreword"
+   },
+   {
+    "page": 14,
+    "pstyle": "Goudy@16/center",
+    "text": "Acknowledgments"
+   },
+   {
+    "page": 16,
+    "pstyle": "Goudy@16/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 20,
+    "pstyle": "Goudy@12/center",
+    "text": "CHAPTER ONE"
+   },
+   {
+    "page": 20,
+    "pstyle": "Goudy@16/center",
+    "text": "A Biographical Approach"
+   },
+   {
+    "page": 24,
+    "pstyle": "ZapfDingbats@10/center",
+    "text": "❖  ❖  ❖"
+   },
+   {
+    "page": 25,
+    "pstyle": "Goudy@10/center",
+    "text": "I dissolve and blossom in the perfume of thy soul."
+   },
+   {
+    "page": 26,
+    "pstyle": "Goudy@10/center",
+    "text": "EX ORIENTE LUX"
+   },
+   {
+    "page": 29,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "Schuon in Paris, 1932. Personal collection, Catherine Schuon."
+   },
+   {
+    "page": 35,
+    "pstyle": "Goudy@10/center",
+    "text": "THE SHAYKH"
+   },
+   {
+    "page": 39,
+    "pstyle": "Goudy@10/center",
+    "text": "WAR YEARS"
+   },
+   {
+    "page": 42,
+    "pstyle": "Goudy@10/center",
+    "text": "QUAESTIONES DISPUTATAE"
+   },
+   {
+    "page": 49,
+    "pstyle": "Goudy@10/center",
+    "text": "BIRTH OF AN ŒUVRE"
+   },
+   {
+    "page": 53,
+    "pstyle": "Goudy@10/center",
+    "text": "ESOTERIC ECUMENICISM AND"
+   },
+   {
+    "page": 53,
+    "pstyle": "Goudy@10/center",
+    "text": "TRANSCENDENT UNITY OF RELIGIONS"
+   },
+   {
+    "page": 56,
+    "pstyle": "Goudy@10/center",
+    "text": "RELIGIO PERENNIS"
+   },
+   {
+    "page": 56,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "Da kam—ein wacher Traum—die Jungfrau süß,"
+   },
+   {
+    "page": 57,
+    "pstyle": "Goudy@10/center",
+    "text": "A bouquet of flowers had been brought to me—"
+   },
+   {
+    "page": 57,
+    "pstyle": "Goudy@10/center",
+    "text": "Then came—a waking dream—the Virgin sweet,"
+   },
+   {
+    "page": 58,
+    "pstyle": "Goudy@10/center",
+    "text": "STATIONS OF WISDOM"
+   },
+   {
+    "page": 60,
+    "pstyle": "Goudy@10/center",
+    "text": "THE FAR WEST"
+   },
+   {
+    "page": 66,
+    "pstyle": "Goudy@10/center",
+    "text": "THE SWAN SONG"
+   },
+   {
+    "page": 67,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "Ich wollte dieses Buch schon lang beschliessen—"
+   },
+   {
+    "page": 67,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "Lasst uns dem Ruf des Höchsten Folge leisten—"
+   },
+   {
+    "page": 69,
+    "pstyle": "Goudy@10/center",
+    "text": "I could not do so; I had to go on writing poems."
+   },
+   {
+    "page": 69,
+    "pstyle": "Goudy@10/center",
+    "text": "For there are other preoccupations, other duties;"
+   },
+   {
+    "page": 69,
+    "pstyle": "Goudy@10/center",
+    "text": "Be that as it may, whatever we may wish to do:"
+   },
+   {
+    "page": 69,
+    "pstyle": "Goudy@10/center",
+    "text": "Let us be obedient to the call of the Most High."
+   },
+   {
+    "page": 70,
+    "pstyle": "Goudy@12/center",
+    "text": "CHAPTER TWO"
+   },
+   {
+    "page": 70,
+    "pstyle": "Goudy@16/center",
+    "text": "A Spiritual Portrait"
+   },
+   {
+    "page": 70,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "All my thoughts speak of love."
+   },
+   {
+    "page": 70,
+    "pstyle": "Goudy@10/center",
+    "text": "PNEUMATIKOS"
+   },
+   {
+    "page": 76,
+    "pstyle": "Goudy@10/center",
+    "text": "Autumn leaves—what does this image mean?"
+   },
+   {
+    "page": 76,
+    "pstyle": "Goudy@10/center",
+    "text": "Poems arrive late to my ear,"
+   },
+   {
+    "page": 76,
+    "pstyle": "Goudy@10/center",
+    "text": "I know not how—their source is Light and Love—"
+   },
+   {
+    "page": 76,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "Tutti li miei penser parlan d’Amore."
+   },
+   {
+    "page": 76,
+    "pstyle": "Goudy@10/center",
+    "text": "PILGRIM OF THE ABSOLUTE"
+   },
+   {
+    "page": 79,
+    "pstyle": "Goudy@10/center",
+    "text": "And he gave ear unto me."
+   },
+   {
+    "page": 79,
+    "pstyle": "Goudy@10/center",
+    "text": "In the day of my trouble I sought the Lord:"
+   },
+   {
+    "page": 79,
+    "pstyle": "Goudy@10/center",
+    "text": "My sore ran in the night and ceased not:"
+   },
+   {
+    "page": 79,
+    "pstyle": "Goudy@10/center",
+    "text": "My soul refused to be comforted."
+   },
+   {
+    "page": 79,
+    "pstyle": "Goudy@10/center",
+    "text": "I remembered God and was troubled."
+   },
+   {
+    "page": 80,
+    "pstyle": "Goudy@10/center",
+    "text": "WISDOM AND METAPHYSICS"
+   },
+   {
+    "page": 82,
+    "pstyle": "Goudy@10/center",
+    "text": "AN ESOTERIC LINEAGE"
+   },
+   {
+    "page": 85,
+    "pstyle": "Goudy@10/center",
+    "text": "TRANSCENDENCE AND IMMANENCE"
+   },
+   {
+    "page": 89,
+    "pstyle": "Goudy@10/center",
+    "text": "THE MOTHER OF ALL PROPHETS"
+   },
+   {
+    "page": 91,
+    "pstyle": "ZapfDingbats@10/center",
+    "text": "❖  ❖  ❖"
+   },
+   {
+    "page": 94,
+    "pstyle": "Goudy@12/center",
+    "text": "CHAPTER THREE"
+   },
+   {
+    "page": 94,
+    "pstyle": "Goudy@16/center",
+    "text": "Esoterism and Tradition"
+   },
+   {
+    "page": 95,
+    "pstyle": "Goudy@10/center",
+    "text": "ESOTERISM AND TRADITION"
+   },
+   {
+    "page": 97,
+    "pstyle": "Goudy@10/center",
+    "text": "DEFINING ESOTERISM"
+   },
+   {
+    "page": 100,
+    "pstyle": "Goudy@10/center",
+    "text": "ESOTERISM AND EXOTERISM"
+   },
+   {
+    "page": 105,
+    "pstyle": "Goudy@10/center",
+    "text": "SPIRITUAL AND PSYCHIC INTEGRATION"
+   },
+   {
+    "page": 107,
+    "pstyle": "Goudy@10/center",
+    "text": "RELIGIO PERENNIS AND SYNCRETISM"
+   },
+   {
+    "page": 109,
+    "pstyle": "Goudy@10/center",
+    "text": "THEMES OF MEDITATION"
+   },
+   {
+    "page": 111,
+    "pstyle": "Goudy@10/center",
+    "text": "VIRTUES AND MORALISM"
+   },
+   {
+    "page": 112,
+    "pstyle": "Goudy@10/center",
+    "text": "PERSPECTIVES ON REALITY"
+   },
+   {
+    "page": 118,
+    "pstyle": "Goudy@10/center",
+    "text": "ESOTERISM AND PLURALISM"
+   },
+   {
+    "page": 122,
+    "pstyle": "Goudy@12/center",
+    "text": "CHAPTER FOUR"
+   },
+   {
+    "page": 122,
+    "pstyle": "Goudy@16/center",
+    "text": "Metaphysical and Spiritual Aesthetics"
+   },
+   {
+    "page": 123,
+    "pstyle": "Goudy@10/center",
+    "text": "METAPHYSICS OF BEAUTY"
+   },
+   {
+    "page": 125,
+    "pstyle": "Goudy@10/center",
+    "text": "THE PATH OF BEAUTY"
+   },
+   {
+    "page": 128,
+    "pstyle": "Goudy@10/center",
+    "text": "POETRY"
+   },
+   {
+    "page": 130,
+    "pstyle": "Goudy@10/center",
+    "text": "PAINTING"
+   },
+   {
+    "page": 133,
+    "pstyle": "Goudy-Italic@10/center",
+    "text": "With permission of the Schuon Estate."
+   },
+   {
+    "page": 135,
+    "pstyle": "Goudy@10/center",
+    "text": "IMMANENCE AND FEMININITY"
+   },
+   {
+    "page": 142,
+    "pstyle": "Goudy@16/center",
+    "text": "Conclusion"
+   },
+   {
+    "page": 144,
+    "pstyle": "Goudy@12/center",
+    "text": "APPENDIX 1"
+   },
+   {
+    "page": 144,
+    "pstyle": "Goudy@16/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 144,
+    "pstyle": "Goudy-Italic@12/center",
+    "text": "General Considerations on Spiritual Functions1"
+   },
+   {
+    "page": 148,
+    "pstyle": "Goudy@12/center",
+    "text": "APPENDIX 2"
+   },
+   {
+    "page": 148,
+    "pstyle": "Goudy@16/center",
+    "text": "Frithjof Schuon"
+   },
+   {
+    "page": 148,
+    "pstyle": "Goudy-Italic@12/center",
+    "text": "Christian Gnosis1"
+   },
+   {
+    "page": 152,
+    "pstyle": "Goudy@16/center",
+    "text": "Notes"
+   },
+   {
+    "page": 152,
+    "pstyle": "Goudy@10/center",
+    "text": "INTRODUCTION"
+   },
+   {
+    "page": 152,
+    "pstyle": "Goudy@10/center",
+    "text": "CHAPTER 1. A BIOGRAPHICAL APPROACH"
+   },
+   {
+    "page": 167,
+    "pstyle": "Goudy@10/center",
+    "text": "CHAPTER 2. A SPIRITUAL PORTRAIT"
+   },
+   {
+    "page": 183,
+    "pstyle": "Goudy@10/center",
+    "text": "CHAPTER 3. ESOTERISM AND TRADITION"
+   },
+   {
+    "page": 198,
+    "pstyle": "Goudy@10/center",
+    "text": "CONCLUSION"
+   },
+   {
+    "page": 198,
+    "pstyle": "Goudy@10/center",
+    "text": "APPENDIX 1"
+   },
+   {
+    "page": 198,
+    "pstyle": "Goudy@10/center",
+    "text": "APPENDIX 2"
+   },
+   {
+    "page": 200,
+    "pstyle": "Goudy@16/center",
+    "text": "Bibliography of Works by Frithjof Schuon"
+   },
+   {
+    "page": 206,
+    "pstyle": "Goudy@16/center",
+    "text": "Index"
+   }
+  ],
+  "toc_pages": [
+   8
+  ],
+  "toc_entries": [
+   {
+    "page": 8,
+    "text": "Foreword by Seyyed Hossein Nasr",
+    "label": "ix",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Acknowledgments",
+    "label": "xiii",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Introduction",
+    "label": "1",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "1. A Biographical Approach",
+    "label": "5",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "2. A Spiritual Portrait",
+    "label": "55",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "3. Esoterism and Tradition",
+    "label": "79",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "4. Metaphysical and Spiritual Aesthetics",
+    "label": "107",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Conclusion",
+    "label": "127",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Spiritual Functions",
+    "label": "129",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Appendix 2: Frithjof Schuon: Christian Gnosis",
+    "label": "133",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Notes",
+    "label": "137",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Bibliography of Works by Frithjof Schuon",
+    "label": "185",
+    "target": null
+   },
+   {
+    "page": 8,
+    "text": "Index",
+    "label": "191",
+    "target": null
+   }
+  ],
+  "toc_witness_table": [
+   {
+    "outline": "FRITHJOF SCHUON",
+    "level": 1,
+    "target": 2,
+    "printed": "Appendix 2: Frithjof Schuon: Christian Gnosis",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Contents",
+    "level": 1,
+    "target": 8,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Foreword",
+    "level": 1,
+    "target": 10,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Acknowledgments",
+    "level": 1,
+    "target": 14,
+    "printed": "Acknowledgments",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Introduction",
+    "level": 1,
+    "target": 16,
+    "printed": "Introduction",
+    "heading_on_target": true
+   },
+   {
+    "outline": "1. A Biographical Approach",
+    "level": 1,
+    "target": 20,
+    "printed": "1. A Biographical Approach",
+    "heading_on_target": true
+   },
+   {
+    "outline": "2. A Spiritual Portrait",
+    "level": 1,
+    "target": 70,
+    "printed": "2. A Spiritual Portrait",
+    "heading_on_target": true
+   },
+   {
+    "outline": "3. Esoterism and Tradition",
+    "level": 1,
+    "target": 94,
+    "printed": "3. Esoterism and Tradition",
+    "heading_on_target": true
+   },
+   {
+    "outline": "4. Metaphysical and Spiritual Aesthetics",
+    "level": 1,
+    "target": 122,
+    "printed": "4. Metaphysical and Spiritual Aesthetics",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Conclusion",
+    "level": 1,
+    "target": 142,
+    "printed": "Conclusion",
+    "heading_on_target": true
+   },
+   {
+    "outline": "APPENDIX 1: Frithjof Schuon: General Considerations on Spiritual Functions",
+    "level": 1,
+    "target": 144,
+    "printed": "Spiritual Functions",
+    "heading_on_target": true
+   },
+   {
+    "outline": "APPENDIX 2: Frithjof Schuon: Christian Gnosis",
+    "level": 1,
+    "target": 148,
+    "printed": "Appendix 2: Frithjof Schuon: Christian Gnosis",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Notes",
+    "level": 1,
+    "target": 152,
+    "printed": "Notes",
+    "heading_on_target": true
+   },
+   {
+    "outline": "INTRODUCTION",
+    "level": 2,
+    "target": 152,
+    "printed": "Introduction",
+    "heading_on_target": true
+   },
+   {
+    "outline": "CHAPTER 1",
+    "level": 2,
+    "target": 152,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "CHAPTER 2",
+    "level": 2,
+    "target": 167,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "CHAPTER 3",
+    "level": 2,
+    "target": 183,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "CHAPTER 4",
+    "level": 2,
+    "target": 192,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "CONCLUSION",
+    "level": 2,
+    "target": 198,
+    "printed": "Conclusion",
+    "heading_on_target": true
+   },
+   {
+    "outline": "APPENDIX 1",
+    "level": 2,
+    "target": 198,
+    "printed": "Appendix 2: Frithjof Schuon: Christian Gnosis",
+    "heading_on_target": true
+   },
+   {
+    "outline": "APPENDIX 2",
+    "level": 2,
+    "target": 198,
+    "printed": "Appendix 2: Frithjof Schuon: Christian Gnosis",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Bibliography of Works by Frithjof Schuon",
+    "level": 1,
+    "target": 200,
+    "printed": "Bibliography of Works by Frithjof Schuon",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Index",
+    "level": 1,
+    "target": 206,
+    "printed": "Index",
+    "heading_on_target": true
+   },
+   {
+    "outline": "A",
+    "level": 2,
+    "target": 206,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "B",
+    "level": 2,
+    "target": 206,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "C",
+    "level": 2,
+    "target": 207,
+    "printed": "Acknowledgments",
+    "heading_on_target": false
+   },
+   {
+    "outline": "D",
+    "level": 2,
+    "target": 207,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "E",
+    "level": 2,
+    "target": 207,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "F",
+    "level": 2,
+    "target": 207,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "G",
+    "level": 2,
+    "target": 207,
+    "printed": "Acknowledgments",
+    "heading_on_target": false
+   },
+   {
+    "outline": "H",
+    "level": 2,
+    "target": 208,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "I",
+    "level": 2,
+    "target": 208,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "J",
+    "level": 2,
+    "target": 208,
+    "printed": "Appendix 2: Frithjof Schuon: Christian Gnosis",
+    "heading_on_target": false
+   },
+   {
+    "outline": "K",
+    "level": 2,
+    "target": 208,
+    "printed": "Acknowledgments",
+    "heading_on_target": false
+   },
+   {
+    "outline": "L",
+    "level": 2,
+    "target": 208,
+    "printed": "Acknowledgments",
+    "heading_on_target": false
+   },
+   {
+    "outline": "M",
+    "level": 2,
+    "target": 209,
+    "printed": "Acknowledgments",
+    "heading_on_target": false
+   },
+   {
+    "outline": "N",
+    "level": 2,
+    "target": 209,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "O",
+    "level": 2,
+    "target": 209,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "P",
+    "level": 2,
+    "target": 209,
+    "printed": "1. A Biographical Approach",
+    "heading_on_target": false
+   },
+   {
+    "outline": "Q",
+    "level": 2,
+    "target": 209,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "R",
+    "level": 2,
+    "target": 209,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "S",
+    "level": 2,
+    "target": 210,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "T",
+    "level": 2,
+    "target": 210,
+    "printed": "Acknowledgments",
+    "heading_on_target": false
+   },
+   {
+    "outline": "U",
+    "level": 2,
+    "target": 210,
+    "printed": "Introduction",
+    "heading_on_target": false
+   },
+   {
+    "outline": "V",
+    "level": 2,
+    "target": 210,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "W",
+    "level": 2,
+    "target": 211,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "Y",
+    "level": 2,
+    "target": 211,
+    "printed": "Foreword by Seyyed Hossein Nasr",
+    "heading_on_target": false
+   },
+   {
+    "outline": "Z",
+    "level": 2,
+    "target": 211,
+    "printed": null,
+    "heading_on_target": false
+   }
+  ],
+  "toc_source_proposal": "outline",
+  "footnote_pages": [],
+  "footnote_marker_census": {
+   "digit": 399
+  },
+  "footnote_samples": [],
+  "footnote_policy_proposal": "none",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 12.0,
+  "indent_histogram": {
+   "3": 4,
+   "5": 3,
+   "7": 34,
+   "13": 2,
+   "14": 1,
+   "17": 3,
+   "18": 9,
+   "19": 1,
+   "20": 2140,
+   "21": 2,
+   "22": 131,
+   "29": 1,
+   "32": 1,
+   "40": 9
+  },
+  "indent_threshold_proposal": 15.0,
+  "eol_hyphen_count": 976,
+  "lost_space_count": 1,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [],
+  "pua_census": [],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 0,
+  "verse_suspect_pages": [
+   {
+    "page": 6,
+    "lines": [
+     2,
+     27
+    ],
+    "n_lines": 26,
+    "base": [
+     35.6
+    ],
+    "turns": [
+     97.6,
+     129.2,
+     131.4
+    ],
+    "first": "The “Thunder-Bird” (Wakinyan-Tanka) whose abode is in the"
+   },
+   {
+    "page": 20,
+    "lines": [
+     2,
+     12
+    ],
+    "n_lines": 11,
+    "base": [
+     35.6
+    ],
+    "turns": [
+     153.5
+    ],
+    "first": "He is one who speaks from the experience of what he has seen"
+   },
+   {
+    "page": 28,
+    "lines": [
+     1,
+     8
+    ],
+    "n_lines": 8,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "in a sweet and sun-filled illusion, until an invisible sword"
+   },
+   {
+    "page": 28,
+    "lines": [
+     21,
+     27
+    ],
+    "n_lines": 7,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "You have several times mentioned in your books the possibili"
+   },
+   {
+    "page": 30,
+    "lines": [
+     1,
+     10
+    ],
+    "n_lines": 10,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "those who, as you say, may have been absorbed by the East, w"
+   },
+   {
+    "page": 34,
+    "lines": [
+     9,
+     16
+    ],
+    "n_lines": 8,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "Since the name of Sidi ‘Îsâ Nûr ad-Dîn (Frithjof Schuon) has"
+   },
+   {
+    "page": 56,
+    "lines": [
+     31,
+     39
+    ],
+    "n_lines": 9,
+    "base": [
+     59.6
+    ],
+    "turns": [],
+    "first": "Und blieb mit mir, verborgen tief im Innern"
+   },
+   {
+    "page": 57,
+    "lines": [
+     5,
+     9
+    ],
+    "n_lines": 5,
+    "base": [
+     59.6
+    ],
+    "turns": [],
+    "first": "And remained, hidden deep within me,"
+   },
+   {
+    "page": 58,
+    "lines": [
+     1,
+     9
+    ],
+    "n_lines": 9,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "The two-fold definition of the religio perennis—discernment "
+   },
+   {
+    "page": 58,
+    "lines": [
+     17,
+     36
+    ],
+    "n_lines": 20,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "Schuon had the face of a spiritual man: a face which one has"
+   },
+   {
+    "page": 66,
+    "lines": [
+     1,
+     5
+    ],
+    "n_lines": 5,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "nature of All-Possibility requires of man an attitude of con"
+   },
+   {
+    "page": 67,
+    "lines": [
+     33,
+     36
+    ],
+    "n_lines": 4,
+    "base": [
+     62.6
+    ],
+    "turns": [],
+    "first": "Ich konnte nicht; ich musste weiter dichten."
+   },
+   {
+    "page": 72,
+    "lines": [
+     1,
+     11
+    ],
+    "n_lines": 11,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "I have already told you that I feel Hindu, like a branch of "
+   },
+   {
+    "page": 86,
+    "lines": [
+     11,
+     23
+    ],
+    "n_lines": 13,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "Our modern civilization, the metaphysical secularization whi"
+   },
+   {
+    "page": 90,
+    "lines": [
+     1,
+     8
+    ],
+    "n_lines": 8,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "tined seat of immanent wisdom. In Buddhism there is an entir"
+   },
+   {
+    "page": 122,
+    "lines": [
+     2,
+     4
+    ],
+    "n_lines": 3,
+    "base": [
+     35.6
+    ],
+    "turns": [
+     113.1
+    ],
+    "first": "The beautiful has its ontological roots far beyond all that "
+   },
+   {
+    "page": 201,
+    "lines": [
+     35,
+     38
+    ],
+    "n_lines": 4,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "New York: Roy Publishers, 1963, 1964. "
+   },
+   {
+    "page": 202,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "base": [
+     19.6
+    ],
+    "turns": [],
+    "first": "Beirut, Dr al-muttaida li’l-Nashr, 1980 [atta nafhama al-Isl"
+   }
+  ],
+  "quote_suspect_pages": [
+   {
+    "page": 8,
+    "lines": [
+     11,
+     14
+    ],
+    "n_lines": 4,
+    "left_inset": 14.6,
+    "right_inset": 0.0,
+    "first": "Appendix 2: Frithjof Schuon: Christian Gnosis133"
+   },
+   {
+    "page": 23,
+    "lines": [
+     31,
+     40
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "It was in the music room at school: the teacher asked each o"
+   },
+   {
+    "page": 24,
+    "lines": [
+     6,
+     18
+    ],
+    "n_lines": 13,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "What was precious about Titus Burckhardt’s personality was t"
+   },
+   {
+    "page": 26,
+    "lines": [
+     28,
+     38
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "I tried to console myself with cupfuls of sweet coffee, I st"
+   },
+   {
+    "page": 27,
+    "lines": [
+     10,
+     27
+    ],
+    "n_lines": 18,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "There are hours whose messages touch us more deeply than wor"
+   },
+   {
+    "page": 28,
+    "lines": [
+     1,
+     9
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "in a sweet and sun-filled illusion, until an invisible sword"
+   },
+   {
+    "page": 28,
+    "lines": [
+     13,
+     28
+    ],
+    "n_lines": 16,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "One Tuesday evening, on returning home after speaking with"
+   },
+   {
+    "page": 28,
+    "lines": [
+     31,
+     37
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "On June 5, 1931, Guénon replied courteously: "
+   },
+   {
+    "page": 30,
+    "lines": [
+     1,
+     11
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "those who, as you say, may have been absorbed by the East, w"
+   },
+   {
+    "page": 31,
+    "lines": [
+     13,
+     27
+    ],
+    "n_lines": 15,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Have I ever said that the path to God passes through Mecca? "
+   },
+   {
+    "page": 32,
+    "lines": [
+     23,
+     31
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "At the back of the shop sat the proprietor: an Arab with an "
+   },
+   {
+    "page": 32,
+    "lines": [
+     34,
+     39
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "One could compare the meeting with such a spiritual messenge"
+   },
+   {
+    "page": 33,
+    "lines": [
+     1,
+     20
+    ],
+    "n_lines": 20,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "with his silver beard, visionary eyes and long hands, the ge"
+   },
+   {
+    "page": 34,
+    "lines": [
+     9,
+     17
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Since the name of Sidi ‘Îsâ Nûr ad-Dîn (Frithjof Schuon) has"
+   },
+   {
+    "page": 36,
+    "lines": [
+     8,
+     16
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "In this collection of metaphysical fragments the most divers"
+   },
+   {
+    "page": 36,
+    "lines": [
+     24,
+     36
+    ],
+    "n_lines": 13,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "I attest . . . that we have had the visit of that person of "
+   },
+   {
+    "page": 41,
+    "lines": [
+     1,
+     10
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Intelligence is metaphysical by definition—there is no other"
+   },
+   {
+    "page": 43,
+    "lines": [
+     14,
+     21
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "On November 9, 1946, Guénon wrote further:"
+   },
+   {
+    "page": 47,
+    "lines": [
+     34,
+     40
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Toward the end, he kept asking them [his wife and one of his"
+   },
+   {
+    "page": 48,
+    "lines": [
+     13,
+     21
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Every happening is an opening towards the Truth. Allâh plays"
+   },
+   {
+    "page": 50,
+    "lines": [
+     18,
+     34
+    ],
+    "n_lines": 17,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "My first paintings depicted two Red Indian women, one clothe"
+   },
+   {
+    "page": 52,
+    "lines": [
+     21,
+     30
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "At the last majlis Shaykh al-Mahdî asked Shaykh ‘Îsâ to give"
+   },
+   {
+    "page": 53,
+    "lines": [
+     10,
+     16
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "‘inwardly’ every religion is the doctrine of the one Self an"
+   },
+   {
+    "page": 58,
+    "lines": [
+     1,
+     9
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "The two-fold definition of the religio perennis—discernment "
+   },
+   {
+    "page": 58,
+    "lines": [
+     17,
+     36
+    ],
+    "n_lines": 20,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Schuon had the face of a spiritual man: a face which one has"
+   },
+   {
+    "page": 59,
+    "lines": [
+     12,
+     20
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Overwhelmed, a visitor once wrote: "
+   },
+   {
+    "page": 66,
+    "lines": [
+     1,
+     6
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "nature of All-Possibility requires of man an attitude of con"
+   },
+   {
+    "page": 71,
+    "lines": [
+     12,
+     21
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "I endlessly contemplate the Infinite. In the day it embraces"
+   },
+   {
+    "page": 71,
+    "lines": [
+     27,
+     37
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "When you have seen the Divine face to face you have no more "
+   },
+   {
+    "page": 72,
+    "lines": [
+     1,
+     12
+    ],
+    "n_lines": 12,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "I have already told you that I feel Hindu, like a branch of "
+   },
+   {
+    "page": 72,
+    "lines": [
+     31,
+     39
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "the pneumatic is in a certain way the incarnation of a spiri"
+   },
+   {
+    "page": 73,
+    "lines": [
+     1,
+     6
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "nonetheless quite different from that of ordinary men, prodi"
+   },
+   {
+    "page": 77,
+    "lines": [
+     1,
+     11
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "I wished not only to love God, I wished also to know Him, an"
+   },
+   {
+    "page": 79,
+    "lines": [
+     25,
+     37
+    ],
+    "n_lines": 13,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "When I go down to the lake in the morning, and when from afa"
+   },
+   {
+    "page": 86,
+    "lines": [
+     11,
+     24
+    ],
+    "n_lines": 14,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Our modern civilization, the metaphysical secularization whi"
+   },
+   {
+    "page": 86,
+    "lines": [
+     30,
+     37
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "The sense of beauty actualized by visual or auditory percept"
+   },
+   {
+    "page": 88,
+    "lines": [
+     30,
+     39
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "Given the spiritual degeneration of humanity, the highest po"
+   },
+   {
+    "page": 90,
+    "lines": [
+     1,
+     9
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "tined seat of immanent wisdom. In Buddhism there is an entir"
+   },
+   {
+    "page": 90,
+    "lines": [
+     16,
+     27
+    ],
+    "n_lines": 12,
+    "left_inset": 20.0,
+    "right_inset": 20.0,
+    "first": "It is not I who have chosen the Virgin, it is she who has ch"
+   },
+   {
+    "page": 94,
+    "lines": [
+     2,
+     7
+    ],
+    "n_lines": 6,
+    "left_inset": 36.2,
+    "right_inset": 36.0,
+    "first": "In esoterism there are two principles which may be actualize"
+   },
+   {
+    "page": 152,
+    "lines": [
+     6,
+     24
+    ],
+    "n_lines": 19,
+    "left_inset": 13.0,
+    "right_inset": 0.0,
+    "first": "hundreds of letters and unpublished doctrinal writings or ar"
+   },
+   {
+    "page": 153,
+    "lines": [
+     5,
+     10
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "“the one who disturbs the peace.” This makes one think of Gu"
+   },
+   {
+    "page": 153,
+    "lines": [
+     12,
+     17
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "teric point of view and with an amazing knowledge of the ori"
+   },
+   {
+    "page": 153,
+    "lines": [
+     38,
+     41
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "zur Urbesinnung (Guiding Thoughts for Meditation on the Real"
+   },
+   {
+    "page": 154,
+    "lines": [
+     2,
+     5
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "(Seyyed, “Lord”) indicates. Later he became a mufti in Teher"
+   },
+   {
+    "page": 154,
+    "lines": [
+     18,
+     25
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "Mostaghanem, I was treated with extreme ill will by the civi"
+   },
+   {
+    "page": 154,
+    "lines": [
+     30,
+     35
+    ],
+    "n_lines": 6,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "Shahâda,” December 1933; “Ad-Dîn,” March 1936, etc. In Janua"
+   },
+   {
+    "page": 155,
+    "lines": [
+     2,
+     12
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "which appeared a short time later (August-September 1934), S"
+   },
+   {
+    "page": 155,
+    "lines": [
+     14,
+     17
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "component sections (called “books”) was written in Besançon "
+   },
+   {
+    "page": 155,
+    "lines": [
+     19,
+     29
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "191, 1935. We may note in passing that in the June 1934 numb"
+   },
+   {
+    "page": 155,
+    "lines": [
+     31,
+     38
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "Adda never removed this function from him, which he had the "
+   },
+   {
+    "page": 156,
+    "lines": [
+     7,
+     10
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "Traditionnelles, November-December 1939), Schuon, speaking o"
+   },
+   {
+    "page": 156,
+    "lines": [
+     13,
+     24
+    ],
+    "n_lines": 12,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "the Shaykh Al-Mahdî, the successor to Shaykh Adda: “God may "
+   },
+   {
+    "page": 156,
+    "lines": [
+     39,
+     42
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "whose disciple he became with the name of Pramânanda Nath, r"
+   },
+   {
+    "page": 157,
+    "lines": [
+     1,
+     23
+    ],
+    "n_lines": 23,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "Krishna Menon a long letter of doctrinal clarification in wh"
+   },
+   {
+    "page": 157,
+    "lines": [
+     29,
+     32
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "Schuon’s six themes of meditation are also expounded in the "
+   },
+   {
+    "page": 157,
+    "lines": [
+     35,
+     42
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "one single prayer. Repetition is situated in time, but praye"
+   },
+   {
+    "page": 158,
+    "lines": [
+     1,
+     5
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "eration; whenever he reproaches himself for being worthless,"
+   },
+   {
+    "page": 158,
+    "lines": [
+     21,
+     29
+    ],
+    "n_lines": 9,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "by Marco Pallis (he said he was “exasperated” and declared t"
+   },
+   {
+    "page": 158,
+    "lines": [
+     34,
+     42
+    ],
+    "n_lines": 9,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "Guénon exchanged at that time the tone is one of courteous d"
+   },
+   {
+    "page": 159,
+    "lines": [
+     4,
+     8
+    ],
+    "n_lines": 5,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "1950 (English translation 1997). As a gesture of appeasement"
+   },
+   {
+    "page": 159,
+    "lines": [
+     13,
+     20
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "(Paris: Guy Trédaniel, 1978). In 1978, Schuon pointed out in"
+   },
+   {
+    "page": 159,
+    "lines": [
+     23,
+     42
+    ],
+    "n_lines": 20,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "of any pretension to being considered as “ the spiritual mas"
+   },
+   {
+    "page": 160,
+    "lines": [
+     1,
+     7
+    ],
+    "n_lines": 7,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "a simple apprentice, who in fact never turned up, because—an"
+   },
+   {
+    "page": 160,
+    "lines": [
+     21,
+     33
+    ],
+    "n_lines": 13,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "refused to open and which he handed over to the Countess Val"
+   },
+   {
+    "page": 161,
+    "lines": [
+     6,
+     15
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "of the nineteenth century, in his style of writing and in th"
+   },
+   {
+    "page": 161,
+    "lines": [
+     21,
+     29
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "first book on René Guénon and the brother of the traditional"
+   },
+   {
+    "page": 161,
+    "lines": [
+     32,
+     40
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "earthly—it is because femininity incarnates Rahmah and Haqîq"
+   },
+   {
+    "page": 162,
+    "lines": [
+     2,
+     11
+    ],
+    "n_lines": 10,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "for hours, I understood better than ever how contemplative I"
+   },
+   {
+    "page": 162,
+    "lines": [
+     27,
+     38
+    ],
+    "n_lines": 12,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "cle on “The Nature and Function of the Spiritual Master” to "
+   },
+   {
+    "page": 163,
+    "lines": [
+     1,
+     16
+    ],
+    "n_lines": 16,
+    "left_inset": 20.0,
+    "right_inset": 0.1,
+    "first": "penetrated by a flavor of quasi-esoterism of an emotional ch"
+   },
+   {
+    "page": 163,
+    "lines": [
+     23,
+     27
+    ],
+    "n_lines": 5,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "encounters and impressions, and a “Sufi diary” in which he r"
+   },
+   {
+    "page": 164,
+    "lines": [
+     10,
+     18
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "tion of the exoteric Law, did not understand. Schuon writes,"
+   },
+   {
+    "page": 164,
+    "lines": [
+     23,
+     28
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "edited and translated under the direction of Michel Chodkiew"
+   },
+   {
+    "page": 165,
+    "lines": [
+     4,
+     7
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "itual way needs a traditional framework. . . . By submitting"
+   },
+   {
+    "page": 165,
+    "lines": [
+     14,
+     25
+    ],
+    "n_lines": 12,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "had some importance. The Houston Colloquium in 1973, the pub"
+   },
+   {
+    "page": 166,
+    "lines": [
+     4,
+     9
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "Dorset: Element, 1986). This work is a remarkable synthesis "
+   },
+   {
+    "page": 166,
+    "lines": [
+     14,
+     23
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "the prosecutor’s decision and calling the legal action “unfa"
+   },
+   {
+    "page": 166,
+    "lines": [
+     39,
+     42
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "that the human body, the Imago Dei, “invites to adoration by"
+   },
+   {
+    "page": 167,
+    "lines": [
+     1,
+     7
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "Masks (Bloomington, Ind.: World Wisdom Books, 1992), 89. Sch"
+   },
+   {
+    "page": 167,
+    "lines": [
+     9,
+     14
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "published in 1997, and four little books of his German poems"
+   },
+   {
+    "page": 167,
+    "lines": [
+     16,
+     23
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "it man gives voice to his essence” quoted by Louis Aragon, L"
+   },
+   {
+    "page": 167,
+    "lines": [
+     29,
+     36
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "expression, used by Schuon himself in a letter, quite justly"
+   },
+   {
+    "page": 168,
+    "lines": [
+     1,
+     6
+    ],
+    "n_lines": 6,
+    "left_inset": 18.0,
+    "right_inset": -0.1,
+    "first": "indirectly Divine” Logic and Transcendence, (New York: Harpe"
+   },
+   {
+    "page": 168,
+    "lines": [
+     12,
+     20
+    ],
+    "n_lines": 9,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "not without meaning. Pierre Hadot, in his remarkable Plotinu"
+   },
+   {
+    "page": 168,
+    "lines": [
+     28,
+     42
+    ],
+    "n_lines": 15,
+    "left_inset": 18.0,
+    "right_inset": -0.1,
+    "first": "somatics, enclosed in the material world, the psychics, whos"
+   },
+   {
+    "page": 169,
+    "lines": [
+     1,
+     14
+    ],
+    "n_lines": 14,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "although judged heretical, “the gnosticism of Valentinus rep"
+   },
+   {
+    "page": 169,
+    "lines": [
+     16,
+     19
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "when he writes in an almost autobiographical way, in Form an"
+   },
+   {
+    "page": 169,
+    "lines": [
+     21,
+     26
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "366–367. Ptolemy, the disciple of Valentinus, develops in hi"
+   },
+   {
+    "page": 169,
+    "lines": [
+     33,
+     40
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "was also in this spirit that Schuon, who had a great admirat"
+   },
+   {
+    "page": 170,
+    "lines": [
+     4,
+     22
+    ],
+    "n_lines": 19,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "lation and doubt concerning himself, but he will also know s"
+   },
+   {
+    "page": 170,
+    "lines": [
+     24,
+     27
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.1,
+    "first": "object and who therefore advances slowly but firmly while ho"
+   },
+   {
+    "page": 170,
+    "lines": [
+     29,
+     33
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "others. Self-respect (French fierté) is knowing what one is "
+   },
+   {
+    "page": 170,
+    "lines": [
+     39,
+     42
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "du pays tamoul, (Paris: Editions Présence, 1970), 83. Doubtl"
+   },
+   {
+    "page": 171,
+    "lines": [
+     7,
+     13
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "Corbin in his writings on Sufism. The term fedeli d’amore is"
+   },
+   {
+    "page": 171,
+    "lines": [
+     24,
+     38
+    ],
+    "n_lines": 15,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "Alida Martin remarkably well emphasized “the solar character"
+   },
+   {
+    "page": 172,
+    "lines": [
+     5,
+     18
+    ],
+    "n_lines": 14,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "God admired greenery, and beautiful faces filled him with wo"
+   },
+   {
+    "page": 172,
+    "lines": [
+     26,
+     38
+    ],
+    "n_lines": 13,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "ized formal beauty as formal beauty is exteriorized music. S"
+   },
+   {
+    "page": 173,
+    "lines": [
+     1,
+     15
+    ],
+    "n_lines": 15,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "“They have a heart in the sense that they are capable of fee"
+   },
+   {
+    "page": 173,
+    "lines": [
+     18,
+     25
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "respond to the vow of Guénon, which called in Orient et Occi"
+   },
+   {
+    "page": 173,
+    "lines": [
+     27,
+     34
+    ],
+    "n_lines": 8,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "for Mostaghanem, that Guénon published his first article on "
+   },
+   {
+    "page": 174,
+    "lines": [
+     1,
+     14
+    ],
+    "n_lines": 14,
+    "left_inset": 18.0,
+    "right_inset": 0.1,
+    "first": "then, in my soul, many beautiful things have happened that m"
+   },
+   {
+    "page": 174,
+    "lines": [
+     22,
+     25
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "he gives a shock to the mind so that it may turn inward, as "
+   },
+   {
+    "page": 175,
+    "lines": [
+     11,
+     19
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "humains, Jean Borella notes, however, that this written work"
+   },
+   {
+    "page": 175,
+    "lines": [
+     27,
+     35
+    ],
+    "n_lines": 9,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "metaphysician, may have sometimes been the victim of attitud"
+   },
+   {
+    "page": 176,
+    "lines": [
+     9,
+     17
+    ],
+    "n_lines": 9,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "what he signifies to me. . . . I have twice received his imp"
+   },
+   {
+    "page": 176,
+    "lines": [
+     24,
+     27
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "mard, 1972) 9–146 and Rûzbehân, Le dévoilement des secrets, "
+   },
+   {
+    "page": 176,
+    "lines": [
+     31,
+     40
+    ],
+    "n_lines": 10,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "According to Henry Corbin “every sufi ‘realising’ the esoter"
+   },
+   {
+    "page": 177,
+    "lines": [
+     5,
+     26
+    ],
+    "n_lines": 22,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "the true representative of quintessential esoterism in the f"
+   },
+   {
+    "page": 177,
+    "lines": [
+     29,
+     42
+    ],
+    "n_lines": 14,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "Burckhardt (Ibrahîm ‘Izz ed-Dîn) mentioned in his unpublishe"
+   },
+   {
+    "page": 178,
+    "lines": [
+     11,
+     14
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "that this is one of the forms taken on by the Shaykh (as cer"
+   },
+   {
+    "page": 178,
+    "lines": [
+     19,
+     23
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "said, “The isolated will be the first” and in answer to the "
+   },
+   {
+    "page": 179,
+    "lines": [
+     1,
+     10
+    ],
+    "n_lines": 10,
+    "left_inset": 22.0,
+    "right_inset": -0.0,
+    "first": "world without which the world could not exist,” stressed Sch"
+   },
+   {
+    "page": 179,
+    "lines": [
+     12,
+     17
+    ],
+    "n_lines": 6,
+    "left_inset": 22.0,
+    "right_inset": -0.1,
+    "first": "is ‘what it is’; it is only with regard to Manifestation tha"
+   },
+   {
+    "page": 179,
+    "lines": [
+     20,
+     28
+    ],
+    "n_lines": 9,
+    "left_inset": 22.0,
+    "right_inset": -0.1,
+    "first": "understand Schuon’s attraction to the Native American world,"
+   },
+   {
+    "page": 179,
+    "lines": [
+     30,
+     42
+    ],
+    "n_lines": 13,
+    "left_inset": 22.0,
+    "right_inset": -0.1,
+    "first": "1986) and L’Interprète des Désirs (Tarjumân al-Ashwâq) (Pari"
+   },
+   {
+    "page": 180,
+    "lines": [
+     9,
+     17
+    ],
+    "n_lines": 9,
+    "left_inset": 22.0,
+    "right_inset": 0.0,
+    "first": "Schuon also pointed out, when speaking of the reason for the"
+   },
+   {
+    "page": 180,
+    "lines": [
+     19,
+     22
+    ],
+    "n_lines": 4,
+    "left_inset": 22.0,
+    "right_inset": 0.0,
+    "first": "of the True,” he also qualifies, in Esoterism as Principle a"
+   },
+   {
+    "page": 180,
+    "lines": [
+     24,
+     27
+    ],
+    "n_lines": 4,
+    "left_inset": 22.0,
+    "right_inset": 0.0,
+    "first": "(Bloomington, Ind.: World Wisdom Books, 1982), 95. This is a"
+   },
+   {
+    "page": 180,
+    "lines": [
+     38,
+     42
+    ],
+    "n_lines": 5,
+    "left_inset": 22.0,
+    "right_inset": 0.0,
+    "first": "pointed out that “ he to whom it is given to penetrate that "
+   },
+   {
+    "page": 181,
+    "lines": [
+     17,
+     36
+    ],
+    "n_lines": 20,
+    "left_inset": 22.0,
+    "right_inset": -0.0,
+    "first": "splendor of the True,’ and she is ‘black but beautiful’ beca"
+   },
+   {
+    "page": 181,
+    "lines": [
+     38,
+     42
+    ],
+    "n_lines": 5,
+    "left_inset": 22.0,
+    "right_inset": -0.0,
+    "first": "143–144. To the Guénonian concept of Tradition, Schuon prefe"
+   },
+   {
+    "page": 182,
+    "lines": [
+     2,
+     6
+    ],
+    "n_lines": 5,
+    "left_inset": 22.0,
+    "right_inset": -0.0,
+    "first": "which would be absurd—but a quintessence of the revealed rel"
+   },
+   {
+    "page": 182,
+    "lines": [
+     10,
+     33
+    ],
+    "n_lines": 24,
+    "left_inset": 22.0,
+    "right_inset": -0.0,
+    "first": "a particular meaning. As Eva de Vitray notes in La prière en"
+   },
+   {
+    "page": 182,
+    "lines": [
+     37,
+     42
+    ],
+    "n_lines": 6,
+    "left_inset": 22.0,
+    "right_inset": -0.0,
+    "first": "tic message implied that Jesus appeared in a divine form as "
+   },
+   {
+    "page": 183,
+    "lines": [
+     3,
+     19
+    ],
+    "n_lines": 17,
+    "left_inset": 13.0,
+    "right_inset": 0.0,
+    "first": "appear, in some respects, to reveal more affinity with the o"
+   },
+   {
+    "page": 183,
+    "lines": [
+     21,
+     27
+    ],
+    "n_lines": 7,
+    "left_inset": 13.0,
+    "right_inset": 0.0,
+    "first": "butions: Traditionalism, by Kenneth Oldmeadow (Colombo, Sri "
+   },
+   {
+    "page": 183,
+    "lines": [
+     31,
+     41
+    ],
+    "n_lines": 11,
+    "left_inset": 13.0,
+    "right_inset": 0.0,
+    "first": "the imperative demands of the Truth, otherwise no Justice wo"
+   },
+   {
+    "page": 184,
+    "lines": [
+     6,
+     13
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "occultist about it. For him, it seems that the notion of a s"
+   },
+   {
+    "page": 184,
+    "lines": [
+     15,
+     18
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "terminacy; this latter appears in the variety of orthodox pe"
+   },
+   {
+    "page": 184,
+    "lines": [
+     20,
+     26
+    ],
+    "n_lines": 7,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "apparent contradictions in the following terms: “I commented"
+   },
+   {
+    "page": 184,
+    "lines": [
+     28,
+     34
+    ],
+    "n_lines": 7,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "appropriate method of realization. But the esoterism of a pa"
+   },
+   {
+    "page": 184,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "part, of the exoterism, but represents, on the contrary, a q"
+   },
+   {
+    "page": 185,
+    "lines": [
+     2,
+     5
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "tially’—of the ‘objective supernatural,’ but once it is thus"
+   },
+   {
+    "page": 185,
+    "lines": [
+     7,
+     12
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "consists in picking and choosing what one likes in a religio"
+   },
+   {
+    "page": 185,
+    "lines": [
+     14,
+     19
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "tional framework is not a complete master (although a true m"
+   },
+   {
+    "page": 185,
+    "lines": [
+     21,
+     27
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "credo—above the essence—Universal Truth—and accepts the latt"
+   },
+   {
+    "page": 185,
+    "lines": [
+     29,
+     33
+    ],
+    "n_lines": 5,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "primordial humanity from the point of view both of wisdom an"
+   },
+   {
+    "page": 185,
+    "lines": [
+     36,
+     42
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "rites—on condition of sufficient spiritual maturity—is to be"
+   },
+   {
+    "page": 186,
+    "lines": [
+     1,
+     6
+    ],
+    "n_lines": 6,
+    "left_inset": 18.0,
+    "right_inset": 0.1,
+    "first": "ferentiated—and necessarily relative—wills and is expressed "
+   },
+   {
+    "page": 186,
+    "lines": [
+     10,
+     14
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "candle and put it under a bushel,’ while on the other hand ‘"
+   },
+   {
+    "page": 186,
+    "lines": [
+     16,
+     20
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "constructions, one would remain silent. Moreover, one all to"
+   },
+   {
+    "page": 186,
+    "lines": [
+     25,
+     33
+    ],
+    "n_lines": 9,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "as sacred and as a kind of panacea in many traditional civil"
+   },
+   {
+    "page": 186,
+    "lines": [
+     35,
+     42
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "covered, should the occasion arise, by means of detailed res"
+   },
+   {
+    "page": 187,
+    "lines": [
+     2,
+     5
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "core or fruit which can grow and possess existence only with"
+   },
+   {
+    "page": 187,
+    "lines": [
+     13,
+     25
+    ],
+    "n_lines": 13,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "terism: the formal system, which offers symbols and means; t"
+   },
+   {
+    "page": 187,
+    "lines": [
+     27,
+     42
+    ],
+    "n_lines": 16,
+    "left_inset": 20.0,
+    "right_inset": 0.1,
+    "first": "there always occurs an overflowing, a surging vibration that"
+   },
+   {
+    "page": 188,
+    "lines": [
+     6,
+     13
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "element into a particular traditional formalism; this proble"
+   },
+   {
+    "page": 188,
+    "lines": [
+     15,
+     29
+    ],
+    "n_lines": 15,
+    "left_inset": 18.0,
+    "right_inset": 0.1,
+    "first": "entails awareness of the qualitative spiritual gap that lies"
+   },
+   {
+    "page": 189,
+    "lines": [
+     1,
+     11
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": -1.4,
+    "first": "does not reveal all possible aspects, or in other words, the"
+   },
+   {
+    "page": 189,
+    "lines": [
+     20,
+     30
+    ],
+    "n_lines": 11,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "describes in the following terms: “As for lightning, it is c"
+   },
+   {
+    "page": 191,
+    "lines": [
+     5,
+     14
+    ],
+    "n_lines": 10,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "itual solitude: “Solitude is the gateway to Inwardness, and "
+   },
+   {
+    "page": 191,
+    "lines": [
+     20,
+     24
+    ],
+    "n_lines": 5,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "vision spirituelle des choses. Puisque les liens subtils ent"
+   },
+   {
+    "page": 191,
+    "lines": [
+     26,
+     29
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "or on peut aller en enfer avec tous les développements et to"
+   },
+   {
+    "page": 191,
+    "lines": [
+     34,
+     40
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": -0.0,
+    "first": "most powerful shamans in Sioux religion. Hehaka Sapa (Black "
+   },
+   {
+    "page": 192,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "thus [in Islam] engenders in the soul the qualities of rock "
+   },
+   {
+    "page": 192,
+    "lines": [
+     21,
+     28
+    ],
+    "n_lines": 8,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "mand may lead to wretchedness by referring to the implicatio"
+   },
+   {
+    "page": 192,
+    "lines": [
+     31,
+     35
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "both to a certain need of causality and to specific intellec"
+   },
+   {
+    "page": 193,
+    "lines": [
+     4,
+     13
+    ],
+    "n_lines": 10,
+    "left_inset": 13.0,
+    "right_inset": 0.0,
+    "first": "lations. It can be found only indirectly and imperfectly in "
+   },
+   {
+    "page": 193,
+    "lines": [
+     15,
+     26
+    ],
+    "n_lines": 12,
+    "left_inset": 13.0,
+    "right_inset": -0.0,
+    "first": "giving preference to the personal over the traditional, for "
+   },
+   {
+    "page": 193,
+    "lines": [
+     28,
+     41
+    ],
+    "n_lines": 14,
+    "left_inset": 13.0,
+    "right_inset": 0.0,
+    "first": "involved in the conception and realization of Images of Prim"
+   },
+   {
+    "page": 194,
+    "lines": [
+     2,
+     7
+    ],
+    "n_lines": 6,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "Schuon, this gift was the ‘discernment of forms.’ He has the"
+   },
+   {
+    "page": 194,
+    "lines": [
+     9,
+     14
+    ],
+    "n_lines": 6,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "that tend to reduce or veil the esoteric dimension are also "
+   },
+   {
+    "page": 194,
+    "lines": [
+     19,
+     22
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "reflecting the Infinite, it realizes a mode of mystery . . ."
+   },
+   {
+    "page": 194,
+    "lines": [
+     24,
+     35
+    ],
+    "n_lines": 12,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "[Beauty] reveals itself as beatific Plenitude and Harmony of"
+   },
+   {
+    "page": 195,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "another sense it always gives more than it is. In the first "
+   },
+   {
+    "page": 195,
+    "lines": [
+     15,
+     18
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "tual alchemy, whose matter is the soul and which realizes, i"
+   },
+   {
+    "page": 195,
+    "lines": [
+     20,
+     25
+    ],
+    "n_lines": 6,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "instinct of sacrifice, sobriety, restraint; the creator comp"
+   },
+   {
+    "page": 195,
+    "lines": [
+     36,
+     39
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "extent that it becomes an end in itself. Deviated white magi"
+   },
+   {
+    "page": 196,
+    "lines": [
+     4,
+     7
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "incommensurability between human means and divine ends. Grac"
+   },
+   {
+    "page": 196,
+    "lines": [
+     26,
+     29
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": 0.0,
+    "first": "give us a foretaste of that which now ‘we cannot hear’; and "
+   },
+   {
+    "page": 196,
+    "lines": [
+     38,
+     40
+    ],
+    "n_lines": 3,
+    "left_inset": 38.0,
+    "right_inset": 20.0,
+    "first": "Do not condemn my nudity too quickly, / Man is he who trembl"
+   },
+   {
+    "page": 197,
+    "lines": [
+     10,
+     14
+    ],
+    "n_lines": 5,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "of certain canvases. In an unpublished text, Schuon refers t"
+   },
+   {
+    "page": 197,
+    "lines": [
+     23,
+     26
+    ],
+    "n_lines": 4,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "not spectacle, it is tied to magic and to religion, to work "
+   },
+   {
+    "page": 197,
+    "lines": [
+     28,
+     34
+    ],
+    "n_lines": 7,
+    "left_inset": 20.0,
+    "right_inset": 0.0,
+    "first": "“magisterial studies of doctrine in which the often poetic r"
+   },
+   {
+    "page": 198,
+    "lines": [
+     2,
+     5
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "imate and even necessary role of secondary protections on mo"
+   },
+   {
+    "page": 198,
+    "lines": [
+     19,
+     22
+    ],
+    "n_lines": 4,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "sent it to Guénon, who approved of it, adding here and there"
+   },
+   {
+    "page": 198,
+    "lines": [
+     24,
+     28
+    ],
+    "n_lines": 5,
+    "left_inset": 18.0,
+    "right_inset": -0.0,
+    "first": "North American Indians who, with their feathered headdress, "
+   },
+   {
+    "page": 201,
+    "lines": [
+     25,
+     29
+    ],
+    "n_lines": 5,
+    "left_inset": 20.0,
+    "right_inset": 9.4,
+    "first": "London: John Murray, 1961 [Stations of Wisdom]."
+   }
+  ],
+  "list_marker_pages": [
+   {
+    "page": 8,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "1. A Biographical Approach5"
+   },
+   {
+    "page": 152,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 2,
+    "first": "1. From the Divine to the Human, (Bloomington, Ind.: World W"
+   },
+   {
+    "page": 153,
+    "marker": "decimal",
+    "left": 7.0,
+    "n_items": 8,
+    "first": "2. His full name was Fred Frithjof Schuon. Etymologically, “"
+   },
+   {
+    "page": 153,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 2,
+    "first": "10. Guénon had embarked for Egypt on March 5, 1930, and had "
+   },
+   {
+    "page": 154,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 11,
+    "first": "12. This was Seyyed Hassan Imâmî, a descendant of the Prophe"
+   },
+   {
+    "page": 155,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 5,
+    "first": "23. In the special number of Le Voile d’Isis devoted to the "
+   },
+   {
+    "page": 156,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 13,
+    "first": "28. From a French translation by Michel Vâlsan."
+   },
+   {
+    "page": 157,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 6,
+    "first": "41. February 17, 1940, unpublished data."
+   },
+   {
+    "page": 158,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 9,
+    "first": "47. For there is no action without intention. These intentio"
+   },
+   {
+    "page": 159,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 6,
+    "first": "56. Schuon’s second book, The Eye of the Heart, was publishe"
+   },
+   {
+    "page": 160,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 9,
+    "first": "62. In his letter to Laurant, he wrote, “I wonder where, for"
+   },
+   {
+    "page": 161,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 8,
+    "first": "71. “Some Criticisms” in Dossier H René Guénon."
+   },
+   {
+    "page": 162,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 11,
+    "first": "79. In a letter dated August 15, 1954, he wrote, “Contemplat"
+   },
+   {
+    "page": 163,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 13,
+    "first": "90. Stations of Wisdom (Bloomington, Ind.: World Wisdom Book"
+   },
+   {
+    "page": 164,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 13,
+    "first": "103. Lights on the Ancient Worlds (Bloomington, Ind.: World "
+   },
+   {
+    "page": 165,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 13,
+    "first": "116. Esoterism as Principle and as Way (Bedfont, Middlesex: "
+   },
+   {
+    "page": 166,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 14,
+    "first": "129. Nasr, Seyyed Hossein, The Essential Writings of Frithjo"
+   },
+   {
+    "page": 167,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "143. Some poems in English by Schuon, under the title of Roa"
+   },
+   {
+    "page": 167,
+    "marker": "decimal",
+    "left": 7.0,
+    "n_items": 3,
+    "first": "1. “Notes on the Light of the Eastern religions,” Dominican "
+   },
+   {
+    "page": 168,
+    "marker": "decimal",
+    "left": 5.0,
+    "n_items": 6,
+    "first": "4. From a letter of 1928 we know that Schuon as a youth had "
+   },
+   {
+    "page": 168,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "10. Letter of December 9, 1929, translated from German."
+   },
+   {
+    "page": 169,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 6,
+    "first": "13. Esoterism as Principle and as Way, p. 165. The same expr"
+   },
+   {
+    "page": 170,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 6,
+    "first": "19. In the manner of the great mystics, he will pass through"
+   },
+   {
+    "page": 171,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 8,
+    "first": "25. One cannot, indeed, fail to find in the microcosmic refl"
+   },
+   {
+    "page": 172,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 5,
+    "first": "33. According to ‘Â’ishah, the favorite wife of Muhammad, “T"
+   },
+   {
+    "page": 173,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 6,
+    "first": "38. “Herbstlaub” (Autumn Foliage) translated from German."
+   },
+   {
+    "page": 174,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 9,
+    "first": "44. Even the ultra-Guénonian Charles-André Gilis admits that"
+   },
+   {
+    "page": 175,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 12,
+    "first": "53. Esoterism as Principle and as Way, 138."
+   },
+   {
+    "page": 176,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 14,
+    "first": "65. Esoterism as Principle and as Way, 33."
+   },
+   {
+    "page": 177,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 3,
+    "first": "79. Al-Khidr, archetype of the “ever living spiritual master"
+   },
+   {
+    "page": 178,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 15,
+    "first": "82. According to the tradition, Khidr has no fixed abode; he"
+   },
+   {
+    "page": 179,
+    "marker": "decimal",
+    "left": 5.0,
+    "n_items": 3,
+    "first": "97. “The Supreme Principle, in itself, is neither transcende"
+   },
+   {
+    "page": 180,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 12,
+    "first": "101. See Pierre Hadot, Plotin ou la simplicité de regard (Pa"
+   },
+   {
+    "page": 181,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 14,
+    "first": "113. “Normes et paradoxes dans l’Alchimie initiatique,” Conn"
+   },
+   {
+    "page": 182,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 6,
+    "first": "127. This is certainly not a “super religion” as has been wr"
+   },
+   {
+    "page": 183,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 5,
+    "first": "1. Paradoxically, and perhaps surprisingly for some of his r"
+   },
+   {
+    "page": 184,
+    "marker": "decimal",
+    "left": 5.0,
+    "n_items": 4,
+    "first": "6. Esoterism as Principle and as Way, 7. "
+   },
+   {
+    "page": 184,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "10. “Thus esoterism as such is metaphysics, to which is nece"
+   },
+   {
+    "page": 185,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 7,
+    "first": "13. “The ‘subjective supernatural’ has need—‘accidentally’ a"
+   },
+   {
+    "page": 186,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 6,
+    "first": "20. As if deviations could not come in many guises, includin"
+   },
+   {
+    "page": 187,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 5,
+    "first": "26. “Religion is like a walnut, to use the Sufi image, with "
+   },
+   {
+    "page": 188,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 8,
+    "first": "31. “The seeds of esoterism are everywhere present, sparks c"
+   },
+   {
+    "page": 189,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 10,
+    "first": "39. See Stations of Wisdom, 147–152."
+   },
+   {
+    "page": 191,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 8,
+    "first": "49. For Schuon, a collectivity is legitimate only to the ext"
+   },
+   {
+    "page": 192,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 8,
+    "first": "57. The same could be said of Ramana Maharshi’s “Father,” th"
+   },
+   {
+    "page": 193,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 3,
+    "first": "2. “My doctrinal message is to be found in my French books a"
+   },
+   {
+    "page": 194,
+    "marker": "decimal",
+    "left": 5.0,
+    "n_items": 5,
+    "first": "5. “At the moment of sanctity a saint is given a special gif"
+   },
+   {
+    "page": 194,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 4,
+    "first": "10. “Tiphereth, the ‘Beauty’ of God, is His infinite Unity, "
+   },
+   {
+    "page": 195,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 11,
+    "first": "14. Enneads, V, 8, 13, 2."
+   },
+   {
+    "page": 196,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 13,
+    "first": "25. This correspondence in no way excludes the freedom of gr"
+   },
+   {
+    "page": 197,
+    "marker": "decimal",
+    "left": 2.0,
+    "n_items": 12,
+    "first": "38. Published in Bern in 1947."
+   },
+   {
+    "page": 198,
+    "marker": "decimal",
+    "left": 0.0,
+    "n_items": 5,
+    "first": "50. And the “stark naked” truth, one could say. This does no"
+   },
+   {
+    "page": 198,
+    "marker": "decimal",
+    "left": 5.0,
+    "n_items": 4,
+    "first": "1. Logic and Transcendence (London: Perennial Books, 1984), "
+   }
+  ],
+  "column_suspect_pages": [],
+  "low_agreement_pages": [
+   {
+    "page": 206,
+    "score": 58.9
+   },
+   {
+    "page": 207,
+    "score": 55.4
+   },
+   {
+    "page": 208,
+    "score": 58.1
+   },
+   {
+    "page": 209,
+    "score": 56.5
+   },
+   {
+    "page": 210,
+    "score": 55.7
+   },
+   {
+    "page": 211,
+    "score": 57.2
+   }
+  ],
+  "image_only_pages": [],
+  "cover_proposal": {
+   "mode": "render",
+   "page": 1,
+   "reason": "page 1 is image-dominated (2 image(s), 119 chars)"
+  },
+  "flagged_pages": [
+   1,
+   6,
+   8,
+   16,
+   20,
+   28,
+   206,
+   207,
+   208,
+   209,
+   210,
+   211
+  ],
+  "warnings": []
+ }
+}

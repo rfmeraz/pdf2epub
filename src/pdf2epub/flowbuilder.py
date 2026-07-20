@@ -779,6 +779,10 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         # the hang column) fall below the cluster threshold.
         spec_stops: list[list[float]] = []
         for si, ls in enumerate(cfg.blocks_lists):
+            if ls.stops:
+                # explicit render-verified stops (RAW x0) bypass clustering
+                spec_stops.append(sorted(ls.stops))
+                continue
             rx = LIST_MARKERS.get(ls.marker)  # None: marker-less 'hang'
             xs: list[float] = []
             for pg in ls.pages:
@@ -895,12 +899,22 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                                       for hc in hang_cols)
                     if not L.list_hang and ls.hang > 0 and \
                             L.ln.x0 > max(hang_cols) + 3.0:
-                        # DEEPER than the hang column = a first-line indent
-                        # WITHIN the item: a sub-lemma paragraph opens here
-                        # (M&R sets lemma glosses at hang+9; 20+ fused after
-                        # full-width lines the geometric rules cannot see —
-                        # every one starts its own line in print)
-                        L.list_sub = True
+                        if ls.marker == "hang":
+                            # a marker-less hanging apparatus has no
+                            # sub-blocks: EVERY line right of the entry stop
+                            # continues the entry, however deep (Schuon L&T
+                            # bibliography wraps its edition lines 20pt past
+                            # the turnover column — list_sub split them
+                            # mid-word: 'Ein-' / 'führung')
+                            L.list_hang = True
+                        else:
+                            # DEEPER than the hang column = a first-line
+                            # indent WITHIN the item: a sub-lemma paragraph
+                            # opens here (M&R sets lemma glosses at hang+9;
+                            # 20+ fused after full-width lines the geometric
+                            # rules cannot see — every one starts its own
+                            # line in print)
+                            L.list_sub = True
             carried_open = bool(lines) and \
                 lines[-1].block_class in ("list", "verse") and in_item
         stale_l = [i for i in range(len(cfg.blocks_lists))
@@ -1106,6 +1120,11 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
 
         if pno in toc_paras:
             close_para()
+            # a blank page before the printed-TOC page must not leave its
+            # anchor pending past the run — pagelist order is label order
+            for a2 in pending_anchors:
+                res.flow.blocks.append(a2)
+            pending_anchors.clear()
             res.flow.blocks.append(anchor)
             res.flow.blocks.extend(toc_paras[pno])
             prev_L = None
@@ -1119,6 +1138,67 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         # keep_text figure pages already emitted their anchor above
         anchor_placed = (pno in fig_page_map and fig_page_map[pno].keep_text)
         prev_dropcap = False
+
+        # ---- text-less figure regions (photo/painting plates): no line
+        # carries L.region, so the in-loop emission below never fires — the
+        # rendered image shipped but nothing referenced it (Schuon L&T: all
+        # six plates orphaned). Emit the figure IN PLACE (print order — page
+        # fidelity's monotonic witness is the doctrine, figure_pages the
+        # precedent) with its caption line(s) — lines starting just below
+        # the region — as their own paragraphs beside it, never fused into
+        # a paragraph running across the plate page.
+        textless = [ri for ri, fr2 in enumerate(cfg.figure_regions)
+                    if fr2.page == pno and ri not in emitted_regions
+                    and not any(L2.region == ri for L2 in lines)]
+        if textless:
+            cap_band = 3.0 * med_lead
+            cap_idx: set[int] = set()
+            plate: list = []
+            for ri in sorted(textless,
+                             key=lambda r: cfg.figure_regions[r].rect[1]):
+                fr2 = cfg.figure_regions[ri]
+                emitted_regions.add(ri)
+                plate.append(Figure(
+                    image_key=f"region-{fr2.page:04d}-{ri}.png",
+                    source_basename=f"region-{fr2.page:04d}-{ri}.png",
+                    pdf_page=fr2.page, page_ordinal=fr2.page,
+                    y_pt=fr2.rect[1], x_pt=fr2.rect[0],
+                    width_pt=fr2.rect[2] - fr2.rect[0],
+                    height_pt=fr2.rect[3] - fr2.rect[1],
+                    role="figure", alt=fr2.alt))
+                counts["figure-regions"] += 1
+                for j, L2 in enumerate(lines):
+                    if j in cap_idx or L2.region >= 0:
+                        continue
+                    if fr2.rect[3] - 1.0 <= L2.ln.y0 <= fr2.rect[3] + cap_band:
+                        cap_idx.add(j)
+                        cap = Paragraph(
+                            style=L2.ps,
+                            items=_apply_textfix(
+                                _mk_runs(L2.ln, cfg, doc, counts), cfg,
+                                counts, L2.page),
+                            src=SourceRef(f"p{L2.page:04d}", L2.idx))
+                        _collapse_cross_run_spaces(cap)
+                        res.para_lines.setdefault(
+                            (cap.src.story_id, cap.src.psr_index),
+                            []).append((L2.page, L2.idx))
+                        plate.append(cap)
+            if cap_idx:
+                lines = [L2 for j, L2 in enumerate(lines) if j not in cap_idx]
+            close_para()
+            if not anchor_placed:
+                ins = len(res.flow.blocks)
+                for a2 in pending_anchors:
+                    res.flow.blocks.insert(ins, a2)
+                    ins += 1
+                res.flow.blocks.insert(ins, anchor)
+                pending_anchors.clear()
+                anchor_placed = True
+            res.flow.blocks.extend(plate)
+            prev_L = None
+            if not lines:
+                continue
+
         for L in lines:
             if L.region >= 0:
                 # the region's text ships as a cropped raster; emit its
@@ -1677,7 +1757,13 @@ def _column_resplit(kept: list[_L], splits: list[float], doc: PdfDoc,
                               body_size=geo.body_size)
         for L in col_lines[c]:
             L.ps = line_pstyle(L.ln, doc, cgeo, None)
-            L.entry_break = L.ln.x0 < cgeo.col_left + cfg.indent_threshold
+            # entries sit AT the column left (the re-split doctrine); a
+            # hanging turnover indents less than the body indent_threshold
+            # on tight index columns (Schuon L&T: 9pt — every wrapped entry
+            # split), so the entry test is a tight column-left match, capped
+            # by the threshold for narrow-indent columns
+            L.entry_break = L.ln.x0 <= cgeo.col_left + \
+                min(cfg.indent_threshold, 6.0)
     counts["column-pages"] += 1
     counts["column-lines"] += sum(len(cl) for cl in col_lines)
     return out

@@ -26,6 +26,8 @@ unit-testable without an EPUB:
 
 from __future__ import annotations
 
+import re
+
 from dataclasses import dataclass, field
 
 from rapidfuzz import fuzz
@@ -56,10 +58,25 @@ class OrderResult:
 # pure logic (unit-testable)
 
 
+def _fold_punct(s: str) -> str:
+    """Lowercased, punctuation folded to single spaces ('Appendix 1:' ==
+    'APPENDIX 1')."""
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", s.lower()).split())
+
+
 def _match(entry_title: str, heading: str) -> float:
     t, h = entry_title.lower().strip(), heading.lower().strip()
     score = fuzz.ratio(t, h)
-    if h and (t.startswith(h) or h.startswith(t)):
+    tf, hf = _fold_punct(t), _fold_punct(h)
+    if hf and (tf.startswith(hf) or hf.startswith(tf)):
+        score = max(score, 90.0)
+    # a numbered entry ("4. Title") may target a heading that joined its
+    # printed kicker ("CHAPTER FOUR Title"): the enumeration-less entry text
+    # contained anywhere in the heading is a strong match too. Ambiguity with
+    # a Notes subhead echoing the title ("CHAPTER 4. TITLE") resolves at the
+    # caller: equal scores prefer the heading on the entry's printed page.
+    t_enum = re.sub(r"^[0-9ivxlcdm]+\s+", "", tf)
+    if len(t_enum) >= 8 and t_enum in hf:
         score = max(score, 90.0)
     return score
 

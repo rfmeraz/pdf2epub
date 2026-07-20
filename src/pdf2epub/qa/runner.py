@@ -96,6 +96,13 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
     doc: PdfDoc = extract(cfg.pdf_path(), say=quiet, agreement=True)
     res = build_flow(doc, cfg, say=quiet)
     flow = res.flow
+    # the build runs the index-locator pass after the flow; gate 22 re-derives
+    # the build's warning queue from res.warns, so QA must run it too or an
+    # index-locator-unlinked adjudication reads stale here while warnings.md
+    # carries the very warning it covers
+    from ..index_locators import link_index_locators
+
+    link_index_locators(res, cfg, say=quiet)
     labels = _page_labels(doc, cfg, [])
     in_flow = cfg.in_flow_pages(doc.n_pages)
 

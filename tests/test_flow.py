@@ -3147,3 +3147,190 @@ def test_restore_spaces_per_rule_tally_matches_aggregate():
                                  tally=tally)
     assert k == 1 and tally.get("space-rule-seam-quote") == 1
     assert sum(tally.values()) == 2
+
+
+def test_blank_page_anchor_flushes_before_printed_toc(tmp_path):
+    # a blank page directly before the printed-TOC page must flush its
+    # deferred anchor BEFORE the toc run — pagelist order is label order
+    # (Schuon L&T: blank p.7 'vi' was emitted after the p.8 Contents run)
+    pages = [
+        _page(1, [_line("body text before the blank page ends here.", 300)]),
+        _page(2, []),                       # blank: anchor deferred
+        _page(3, [_line("Contents", 200, x0=180.0, width=90.0)]),
+    ]
+    cfg = _cfg(tmp_path)
+    cfg.toc_printed_pages = [3]
+    cfg.toc_handling = "rebuild"
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    anchors = [b.ordinal for b in res.flow.blocks if isinstance(b, PageAnchor)]
+    assert anchors == [1, 2, 3]
+
+
+def test_textless_figure_region_ships_in_place(tmp_path):
+    # A photo plate (figure_region containing NO text lines) must still ship
+    # its Figure — Schuon L&T shipped all six plates as orphaned images while
+    # the caption fused INTO the paragraph running across the plate page.
+    # The figure emits in place (print order — page fidelity's monotonic
+    # witness) and the caption becomes its own paragraph beside it.
+    from pdf2epub.config import FigureRegion
+    from pdf2epub.core.model import Figure
+
+    pages = [
+        _page(1, [_line("a paragraph running to the right margin and it", 520,
+                        width=290.0)]),
+        _page(2, [_line("Caption under the photo.", 560, x0=120.0,
+                        width=150.0)]),   # only line on the plate page
+        _page(3, [_line("continuing the same sentence on page three now.", 72),
+                  _line("A second paragraph follows the seam here.", 100,
+                        x0=92.0)]),
+    ]
+    cfg = _cfg(tmp_path, figure_regions=[
+        FigureRegion(page=2, rect=(60.0, 60.0, 380.0, 545.0),
+                     alt="Portrait photograph")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    blocks = [b for b in res.flow.blocks if isinstance(b, (Paragraph, Figure))]
+    kinds = [type(b).__name__ for b in blocks]
+    assert kinds == ["Paragraph", "Figure", "Paragraph",
+                     "Paragraph", "Paragraph"], kinds
+    assert blocks[1].image_key == "region-0002-0.png"
+    assert blocks[1].alt == "Portrait photograph"
+    # the caption is its own paragraph, never fused into the running text
+    assert blocks[2].text() == "Caption under the photo."
+    assert "Caption" not in blocks[0].text()
+    assert res.counts.get("figure-regions") == 1
+    # anchors stay in page order around the plate
+    from pdf2epub.qa.visual import _flow_anchors
+    assert [a.ordinal for a in _flow_anchors(res.flow)] == [1, 2, 3]
+
+
+def test_textless_figure_region_between_paragraphs_emits_in_place(tmp_path):
+    # no open paragraph at the plate: figure + caption emit immediately
+    from pdf2epub.config import FigureRegion
+    from pdf2epub.core.model import Figure
+
+    pages = [
+        _page(1, [_line("A complete short paragraph ends here.", 520,
+                        width=180.0)]),
+        _page(2, [_line("Caption under the photo.", 560, x0=120.0,
+                        width=150.0)]),
+        _page(3, [_line("A new paragraph starts on page three now.", 72,
+                        x0=92.0)]),
+    ]
+    cfg = _cfg(tmp_path, figure_regions=[
+        FigureRegion(page=2, rect=(60.0, 60.0, 380.0, 545.0), alt="Photo")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    blocks = [b for b in res.flow.blocks if isinstance(b, (Paragraph, Figure))]
+    kinds = [type(b).__name__ for b in blocks]
+    assert kinds == ["Paragraph", "Figure", "Paragraph", "Paragraph"], kinds
+    assert blocks[2].text() == "Caption under the photo."
+
+
+def test_column_turnover_under_indent_threshold_joins(tmp_path):
+    # Schuon L&T index: turnovers indent only 9pt — under indent_threshold —
+    # and every wrapped entry split. Entries sit AT the column left; the
+    # entry test is a tight column-left match.
+    from pdf2epub.config import ColumnSpec
+
+    pages = [_page(1, [
+        _runline([("Adda Ben Tounes, Shaykh, 18-19, 21, 24,", 72.0, 190.0),
+                  ("Baruzi, Jean, 154", 222.0, 320.0)], 130),
+        _runline([("37, 62, 140-141, 156", 81.0, 170.0),
+                  ("Beatrice, 63", 222.0, 330.0)], 142),
+        _runline([("Advaitin, 82", 72.0, 140.0),
+                  ("Benares, 16", 222.0, 310.0)], 154),
+    ])]
+    cfg = _cfg(tmp_path, flow_columns=[ColumnSpec(pages=[1], count=2)])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    texts = [p.text() for p in _paras(res.flow)]
+    assert texts == [
+        "Adda Ben Tounes, Shaykh, 18-19, 21, 24, 37, 62, 140-141, 156",
+        "Advaitin, 82",
+        "Baruzi, Jean, 154",
+        "Beatrice, 63",
+        "Benares, 16",
+    ]
+
+
+def test_hang_list_deep_wrap_joins_entry(tmp_path):
+    # marker-less hanging apparatus: a runover 20pt PAST the turnover column
+    # (a wrapped edition line) continues the entry — list_sub split it
+    # mid-word (Schuon L&T bibliography: 'Ein-' / 'führung')
+    from pdf2epub.config import ListSpec
+
+    pages = [_page(1, [
+        _line("1935", 100, x0=72.0, width=22.0),
+        _line("Leitgedanken zur Urbesinnung, Zurich. Orell", 115, x0=72.0,
+              width=280.0),
+        _line("Frieburg i. Br.: Aurum Verlag, 1989 [Urbesinnung: Das", 130,
+              x0=92.0, width=276.0),
+        _line("Eigentlichen].", 145, x0=112.0, width=70.0),
+    ])]
+    cfg = _cfg(tmp_path, blocks_lists=[
+        ListSpec(pages=[1], marker="hang", hang=20.0, note="t")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    texts = [p.text() for p in _paras(res.flow)]
+    assert texts[0] == "1935"
+    assert texts[1].startswith("Leitgedanken zur Urbesinnung")
+    assert texts[1].endswith("Eigentlichen].")
+    assert len(texts) == 2
+
+
+def test_list_explicit_stops_bypass_clustering(tmp_path):
+    # right-aligned 1/2/3-digit note numbers give three genuine stops; the
+    # cluster filter drops the smallest, so explicit render-verified stops
+    # carry the judgment (Schuon L&T notes)
+    from pdf2epub.config import ListSpec
+
+    pages = [_page(1, [
+        _line("1. First note text that runs on for a while", 100, x0=79.0,
+              width=280.0),
+        _line("continuation of the first note at the hang", 112, x0=92.0,
+              width=270.0),
+        _line("22. Second note text also runs onward here", 124, x0=74.0,
+              width=280.0),
+        _line("333. Third note text at the deepest stop", 136, x0=72.0,
+              width=280.0),
+    ])]
+    cfg = _cfg(tmp_path, blocks_lists=[
+        ListSpec(pages=[1], marker="decimal", hang=13.0, tol=2.0,
+                 stops=[72.0, 74.0, 79.0], note="t")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    texts = [p.text() for p in _paras(res.flow)]
+    assert len(texts) == 3
+    assert texts[0].startswith("1. First") and texts[0].endswith("the hang")
+    assert texts[1].startswith("22. Second")
+    assert texts[2].startswith("333. Third")
+
+
+def test_quote_run_rejects_full_measure_neighbor(tmp_path):
+    # a body paragraph's FIRST line indents exactly to the quote inset and
+    # runs the FULL measure; justified_rights hands it the quote block's
+    # clustered margin, so it classified as quote (Schuon L&T shipped ~20
+    # intro/exit lines inside blockquotes). The line's own right edge must
+    # fit the quote measure.
+    from pdf2epub.config import QuoteSpec
+
+    pages = [_page(1, [
+        _line("body paragraph before the quotation ends here now.", 88,
+              x0=72.0, width=290.0),
+        _line("the first justified quotation line runs along here", 112,
+              x0=92.0, width=250.0),
+        _line("the second justified quotation line runs the same", 124,
+              x0=92.0, width=250.0),
+        _line("the third quote line is ragged and stops", 136,
+              x0=92.0, width=180.0),
+        _line("In a letter to Jenny he explains at full measure how", 160,
+              x0=92.0, width=270.0),
+        _line("the paragraph continues at the body margin as usual.", 172,
+              x0=72.0, width=290.0),
+    ])]
+    cfg = _cfg(tmp_path, blocks_quotes=[
+        QuoteSpec(pages=[1], left_inset=20.0, right_inset=20.0, note="t")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    paras = _paras(res.flow)
+    q = [p for p in paras if p.block_class == "quote"]
+    assert len(q) == 1
+    assert q[0].text().startswith("the first justified")
+    assert q[0].text().endswith("ragged and stops")
+    body = [p for p in paras if p.block_class != "quote"]
+    assert any(p.text().startswith("In a letter to Jenny") for p in body)

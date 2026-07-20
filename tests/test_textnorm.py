@@ -81,3 +81,24 @@ def test_inline_dehyphenate_lower_only_and_the_keep_list():
     assert inline_dehyphenate("a tradi- tion of onto- cosmological realms",
                               "lower-only", frozenset({"onto-cosmological"}))[0] \
         == "a tradition of onto-cosmological realms"
+
+
+def test_suspended_hyphen_conjunction_survives_join():
+    # 'pseudo- and neo-esoterism' / 'Tage- und Nächtebuch': the hyphen and
+    # space before a bare coordinating conjunction are the author's own
+    # (Schuon L&T pp.98/185 print both); dehyphenation fused them
+    from pdf2epub.textfix import dehyphenate_join, inline_dehyphenate
+
+    base, sep, dehy = dehyphenate_join("many forms of pseudo-", "and neo-esoterism", "lower-only")
+    assert (base, sep, dehy) == ("many forms of pseudo-", " ", False)
+    base, sep, dehy = dehyphenate_join("Sulamith and Tage-", "und Nächtebuch", "lower-only")
+    assert (base, sep, dehy) == ("Sulamith and Tage-", " ", False)
+    # ordinary line-break hyphens still strip
+    base, sep, dehy = dehyphenate_join("tradi-", "tional culture", "lower-only")
+    assert (base, sep, dehy) == ("tradi", "", True)
+
+    # the in-run rule honors the same idiom
+    text, n = inline_dehyphenate("Tage- und Nächtebuch [poems].", "lower-only")
+    assert text == "Tage- und Nächtebuch [poems]." and n == 0
+    text, n = inline_dehyphenate("a com- munity of readers", "lower-only")
+    assert text == "a community of readers" and n == 1
