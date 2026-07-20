@@ -4,117 +4,96 @@ Convert a print-oriented book PDF into a validated, reflowable EPUB 3 with a
 hyperlinked table of contents. The PDF is the sole input; the pipeline does not
 require an InDesign project, publisher source files, or Adobe software.
 
-## The problem, and the approach
+## The problem
 
-A print-oriented PDF places glyphs at fixed coordinates on fixed-size pages and
-carries almost none of the logical structure a reflowable EPUB needs: no paragraphs,
-no heading levels, no notion of a footnote or a poem or a table. (Some PDFs include
+A print-oriented PDF places letters at fixed coordinates on fixed-size pages and
+carries almost none of the structure a reflowable ebook needs: no paragraphs, no
+heading levels, no notion of a footnote or a poem or a table. (Some PDFs include
 bookmarks or internal links, which the pipeline uses when present, but those do not
-describe the body text.) That structure has to be recovered — what is a heading, where
-a paragraph actually breaks, which lines are a footnote, which are verse, what reading
-order a two-column index has. Books typeset by different houses in different decades
-hide it differently, so no single fixed rule set handles every book.
+describe the body text.) That structure has to be recovered — and books typeset by
+different houses in different decades hide it differently, so no single fixed rule
+set handles every book.
 
-pdf2epub splits the job into five stages so the hard part — the judgment calls — is
-separated from the mechanism, written down, and checked:
+pdf2epub's answer is to separate the judgment calls from the mechanism. Mechanical
+steps do everything reproducibly; an AI agent makes only the structural judgments,
+every one written down in a single reviewable file (`book.yaml`); and multiple
+independent checks catch what any single reading of the PDF would miss.
 
-1. **Extract + analyze** (deterministic) — read the PDF and gather evidence.
-2. **Infer the structure** (the agent) — read the evidence, look at the pages, and
-   record every judgment in one file, `book.yaml`.
-3. **Build** (deterministic) — turn *(PDF + book.yaml)* into an EPUB, the same way
-   every time.
-4. **QA** (deterministic) — grade the EPUB against an independent extraction of the
-   same PDF.
-5. **Proofread** (the agent) — read the finished book for damage the deterministic
-   gates can't catch: the kind that only shows up on reading for meaning.
+## How it works, step by step
 
-The human drops in the PDF, starts the conversion, and inspects the finished EPUB;
-every judgment in between is the agent's, recorded in `book.yaml` where a person can
-review or override it.
+1. **Read the PDF twice** (`init`). One tool (PyMuPDF) pulls out every piece of
+   text along with its font, size, style, and exact position on the page, plus the
+   PDF's bookmarks, internal links, and page numbering. A second, independent tool
+   (poppler) reads the same pages. The two outputs are compared page by page —
+   where they disagree, that page is flagged as "extraction is uncertain here"
+   rather than silently trusting either one.
 
-Because every judgment lives in `book.yaml`, a build is reproducible and auditable:
-you can see why the converter did what it did, and change any decision in one place.
+2. **Gather evidence about the book's design** (`init`, continued). An analysis
+   step groups the text by font and size (body text tends to be one cluster,
+   chapter titles another, footnotes a third), detects repeating page decorations
+   like running headers and page numbers, locates the printed table of contents and
+   cross-checks it against the bookmarks, finds where footnotes sit on each page,
+   and counts unusual characters (like custom honorific symbols). This is all just
+   evidence — no decisions yet. It lands in `analysis/`, next to a draft
+   `book.yaml`. (Optionally, `--layout` adds a vision layout model as a third,
+   advisory witness for tables and figures.)
 
-## The stages in detail
+3. **An AI agent decides what the book's structure is.** This is the one judgment
+   step. A conversion agent (Claude, via the `/convert-pdf` skill) reads the
+   evidence and the rendered page images and decides things like: this font cluster
+   means "chapter title," the real book starts on page 9, footnotes are marked with
+   asterisks, this block is poetry, the index is set in two columns, this image is
+   the cover. Every single decision is written into `book.yaml`. Nothing downstream
+   guesses — it only applies what is recorded there, so a person can review or
+   override any decision in one place.
 
-**1. `init` — extract and analyze.** Reads the PDF with PyMuPDF: text spans with
-their font, size, style, and position (clipped to the trim box), plus bookmarks,
-internal links, and page labels. Every page is independently re-read with poppler and
-the two extractions are scored against each other — a disagreement flags the page for
-review, but the engines never vote on the text. From this it derives evidence: font
-clusters with proposed roles (heading, body, footnote…), running-head and
-page-number furniture, footnote regions, the printed table of contents cross-checked
-against the bookmarks and link targets, a census of special (private-use) glyphs, and
-page thumbnails. It writes `analysis/structure_report.md` and a draft `book.yaml`.
-(Optionally, `--layout` adds a vision layout model as a third, advisory witness for
-tables and figures.)
+4. **Rebuild the text as a book, not pages** (`build`). Using those recorded
+   decisions — and no further judgment — the build strips page headers and footers,
+   pulls footnotes out of the page flow, and joins lines back into paragraphs:
+   removing end-of-line hyphens, repairing spaces the PDF lost, reattaching
+   decorative first letters, and stitching paragraphs that continue across page
+   breaks. It classifies special blocks (poems keep their line breaks, indented
+   quotations become real quotations, numbered entries become real lists), puts
+   two-column sections back into reading order, ships true tables and diagrams as
+   cropped images with agent-written descriptions, rebuilds the table of contents
+   as live links, and drops an invisible anchor where each print page began, so
+   page references still work.
 
-**2. The agent infers the structure.** A conversion agent (Claude, via the
-`/convert-pdf` skill) reads the evidence, looks at the page renders, and fills in
-`book.yaml`: which font cluster is which heading level, where the front matter ends,
-which table-of-contents source to trust, how footnotes are marked, what each
-private-use glyph means, where verse and block quotes and lists sit, which pages are
-multi-column, what the cover is. This inference step is the central design decision —
-it is where the book-specific judgment is made once and written down, so the build
-that follows can be purely mechanical.
+5. **Write the EPUB** (`build`, continued). The cleaned-up structure is turned into
+   standard web-style chapter files with matching styles, a navigation menu, and
+   open-licensed fonts (never fonts copied from the PDF), then zipped into an EPUB.
+   This step is fully deterministic — the same PDF and the same `book.yaml` always
+   produce the byte-identical file. Anything ambiguous along the way is written to
+   `build/warnings.md` as a coded queue with ready-to-paste fixes — content is
+   never dropped silently.
 
-**3. `build` — deterministic assembly.** From *(PDF + book.yaml)*, with no further
-judgment, the build:
+6. **Check it automatically** (`qa`). The EPUB must pass 26 automated gates,
+   starting with the standard validator (epubcheck) and mostly comparing the
+   finished book back to an independent extraction of the PDF — a separate witness,
+   not the converter's own output. Is every page's text present, in order, and
+   nowhere duplicated? Do headings, italics, and centered lines match the print
+   typography? Did footnotes land where they should? Is every image intact (each
+   shipped figure is compared against a re-render of its source region)? Did poems
+   keep their line breaks (a loss character-counting cannot see)? Is it
+   screen-reader ready? And every warning the build raised must be explicitly
+   resolved, or the gate fails. A domain gate even validates a "Qurʾānic verses
+   cited" index against the Qurʾān's fixed structure. `qa --visual` adds
+   side-by-side print-vs-EPUB contact sheets for grading by eye, and
+   `--reference <epub>` scores against a known-good EPUB.
 
-- strips running heads and page numbers, and splits footnotes off the body;
-- classifies semantic blocks from the geometry recorded in `book.yaml` — **verse**
-  (print line breaks preserved as real lines, shipped as `z3998:verse`), **block
-  quotes** (justified inset blocks become real `<blockquote>`s), and **lists**
-  (marker lines become real `<ol>`/`<ul>`);
-- joins the remaining lines into paragraphs (dehyphenating line breaks, reattaching
-  drop caps, restoring spaces lost at run seams);
-- re-orders multi-column back matter (indexes and similar apparatus) into reading
-  order;
-- ships true tables and diagrams as cropped images with agent-written alt text;
-- marks every printed-page boundary and rebuilds the table of contents with live
-  links;
-- emits XHTML + CSS, subsets OFL fonts, and packages a byte-reproducible EPUB.
+7. **Have it actually read** (`proofread`, mandatory). Finally, "blind reader"
+   agents — who never saw the PDF — read the finished EPUB in chunks and report
+   anything that reads wrongly: a garbled word, a missing space, a paragraph that
+   stops mid-sentence, a poem flattened into prose. Each report is verified against
+   images of the printed page. Real problems are fixed by changing `book.yaml` or
+   the pipeline code and rebuilding — the book's words are never hand-edited — and
+   the changed sections are re-read until a pass comes back clean.
 
-Anything ambiguous is written to `build/warnings.md` as a coded, severity-ranked
-queue with ready-to-paste fixes, so content is not dropped without surfacing a
-warning. Judgments already recorded in `book.yaml` resolve their own warnings.
-
-**4. `qa` — automated grading (26 gates).** The EPUB is checked against an
-independent poppler extraction of the same PDF, so QA grades the conversion against a
-separate witness rather than against the converter's own output. The gates cover:
-
-- **Validity** — epubcheck passes.
-- **Text** — the shipped text is measured for coverage of the source; no garbled
-  characters, no leaked furniture, no lost spaces at note markers.
-- **Structure** — footnotes land correctly, navigation and reading order hold (each
-  table-of-contents entry's heading is on its printed page), and verse keeps its line
-  breaks (a structure loss that character-coverage cannot see — a flattened poem loses
-  no characters, only its line breaks).
-- **Fidelity** — the shipped CSS and markup match the source geometry: headings are
-  set as headings rather than emphasized body text, emphasis is preserved, centered
-  paragraphs correspond to centered source lines, and each page's block signature
-  (size buckets plus centering) matches print.
-- **Images** — every shipped figure is compared (by perceptual hash) against a
-  re-render of its source region, since a blank or corrupt image is content loss no
-  text gate would catch.
-- **Adjudication** — the build fails if any risky-page warning went unaddressed, so
-  `Overall: PASS` confirms the warning queue was resolved.
-
-A domain gate also validates a shipped "Qurʾānic verses cited" index against the
-Qurʾān's fixed structure. `qa --visual` adds side-by-side print-vs-EPUB contact
-sheets for an agent to grade by eye, and `--reference <epub>` scores against a known-
-good EPUB.
-
-**5. `proofread` — reading QA (mandatory).** The finished EPUB is re-rendered as
-per-section reading packets. An agent fans out one blind reader per packet, looking
-for damage a gate cannot judge — fused or split paragraphs, missing spaces, garbled
-words, flattened verse — verifies every finding against the print render, and fixes
-accepted ones only through `book.yaml` or code, never by editing text. Rebuild and
-re-read the changed sections until a pass comes back clean.
-
-A conversion is done when the build ends `epubcheck: clean`, QA ends `Overall:
-PASS`, and the proofread loop ends with no new confirmed findings (or the remainder
-is escalated in a handoff report).
+A conversion is done when the build ends `epubcheck: clean`, QA ends
+`Overall: PASS`, and the proofread loop ends with no new confirmed findings (or the
+remainder is escalated in a handoff report). The human's whole role: drop in the
+PDF, start the conversion, and inspect the finished EPUB in a reader — every
+judgment in between is the agent's, recorded in `book.yaml`.
 
 ## Running it
 
@@ -180,7 +159,7 @@ see exactly where a change took effect):
 
 **Where the judgment lives.** Everything *before* `book.yaml` — extract and analyze —
 only observes and measures the PDF; it never decides. Everything *after* it — the
-whole build and all 24 QA gates — is a pure function of *(PDF, book.yaml)*: same
+whole build and all 26 QA gates — is a pure function of *(PDF, book.yaml)*: same
 inputs, same bytes out, no clock, no randomness. So the judgment calls are confined
 to one small, human-readable file, written by the agent and open to review. The agent
 re-enters only where a program cannot decide — reading the proofread packets and
