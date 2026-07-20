@@ -3128,3 +3128,22 @@ def test_cross_run_hyphen_seam_needs_the_line_break_space():
     txt, c = mk(("Krishna-", BODY), ("līlā", SMALL))
     assert txt == "Krishna-līlā", txt
     assert c["seam-dehyphenated"] == 0
+
+
+def test_restore_spaces_per_rule_tally_matches_aggregate():
+    # telemetry must be a pure observer: same repairs, per-rule attribution
+    from pdf2epub.textfix import restore_space_seam
+    tally = {}
+    t, n = restore_spaces('say,"If I went.Then', tally)
+    assert t == 'say, "If I went. Then' and n == 2
+    assert sum(tally.values()) == n
+    assert all(k.startswith("space-rule-") for k in tally)
+    t2, n2 = restore_spaces('say,"If I went.Then')   # tally-less: identical
+    assert (t2, n2) == (t, n)
+    tally = {}
+    _, _, k = restore_space_seam("believer.", "This", tally=tally)
+    assert k == 1 and sum(tally.values()) == 1
+    _, _, k = restore_space_seam("cucumbers for a copper. ", "”He beat",
+                                 tally=tally)
+    assert k == 1 and tally.get("space-rule-seam-quote") == 1
+    assert sum(tally.values()) == 2

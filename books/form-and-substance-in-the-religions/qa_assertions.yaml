@@ -1,0 +1,30 @@
+# Gate-24 regression assertions — form-and-substance-in-the-religions (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized text.
+# Backfilled 2026-07-19 from the 2026-07-13 conversion's accepted proofread findings
+# (CONVERSIONS.md ledger); every operand re-verified against the shipped EPUB text.
+
+# strip_stray_grave: the lone ToUnicode grave after 'itself' stripped; the broken
+# form must never return (` is not in _QUOTE_MAP, so it survives normalize)
+- {page: "49", type: absent,  text: "itself`.", note: "stray ToUnicode grave stripped (textfix.strip_stray_grave)"}
+- {page: "49", type: present, text: "Subjectivity itself. Objective", note: "grave site reads clean"}
+
+# note-region gap-break: the sub-body-size copyright page's cataloging block was
+# swallowed into a phantom note and silently dropped; presence guards the fix
+- {page: "iv", type: present, text: "Cataloging-in-Publication Data", note: "copyright cataloging block ships (note-region gap-break fix)"}
+
+# TOC wrapped-numbered-entry: ch.6's folio turnover once fused ch5+ch6 and shipped
+# a bogus standalone 'Onomatology' entry; the joined entry must stay one block
+- {page: "v", type: block_present, text: "6. The Cross of Space and Time in Koranic Onomatology", note: "wrapped TOC entry joined (flowbuilder folio-turnover fix)"}
+
+# _ps_root roman/italic fold: the full-line italic gloss once split its paragraph
+# into 3 lowercase-initial blocks; this span crosses the gloss->roman seam
+- {page: "99", type: block_present, text: "sed nescis unde veniat aut quo vadat), and thereby the", note: "italic-gloss paragraph unsplit (_ps_root Roman fold)"}
+
+# keep_hyphens: render/reader-verified compounds broken at a line, hyphen kept
+- {page: "104", type: present, text: "three-dimensionality", note: "keep_hyphens compound survives dehyphenation"}
+- {page: "115", type: present, text: "prayer-niche", note: "keep_hyphens compound survives dehyphenation"}
+- {page: "210", type: present, text: "multi-dimensional", note: "keep_hyphens compound survives dehyphenation"}
+
+# proofread round 3: the BY THE SAME AUTHOR list ships one block per book (title +
+# publication turnover joined); guards the round-2 over-split regression
+- {page: "256", type: block_present, text: "Language of the Self, 1959 Revised Edition, World Wisdom Books, 1999", note: "book-list entry is one block (p265 break/join overrides)"}

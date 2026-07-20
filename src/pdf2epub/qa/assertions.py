@@ -256,10 +256,17 @@ def fixture_path(cfg) -> Path:
 
 def run_assertions(path: Path, sl: SliceResult, labels: dict[int, str],
                    in_flow: list[int]) -> AssertionOutcome:
-    """Load + evaluate the fixture at ``path``. Missing file -> PASS (no cells);
-    parse/schema error -> FAIL; slicing failure -> advisory-skip."""
+    """Load + evaluate the fixture at ``path``. Missing file -> FAIL (the
+    fixture is a tracked per-book deliverable; an authored empty file is the
+    recorded "no print-verified fixes yet" decision — a missing one is the
+    process hole); parse/schema error -> FAIL; slicing failure ->
+    advisory-skip."""
     if not path.exists():
-        return AssertionOutcome(True, [f"no assertions configured ({path})"])
+        return AssertionOutcome(False, [
+            f"fixture missing: {path} — every converted book tracks its "
+            "gate-24 regression fixture. Create it ([] records 'no "
+            "print-verified fixes yet'); proofread lands one cell per "
+            "accepted finding."])
     try:
         raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     except yaml.YAMLError as e:

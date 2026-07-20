@@ -1487,3 +1487,64 @@ Verification baseline: `pytest -q` **413 passed**; eight-book corpus (9 EPUBs)
 all `Overall: PASS`. Six EPUBs changed, every change an improvement re-QA'd:
 BoK +11 linked Contents entries, Keys/I&B intra-word splits, BoK/F&S/sufism
 number ranges.
+
+## Generality hardening: the manual disciplines became infrastructure (2026-07-19)
+
+A corpus-wide evaluation (three-way exploration + external review, both
+critically incorporated) concluded the architecture is sound — no rewrite —
+but two load-bearing MANUAL disciplines would not scale with the corpus:
+"probe every global rule against all configs" lived only in this file, and
+nothing enforced that a conversion leaves its gate-24 fixture (F&S shipped
+without one; the BoK arabic variant too). Both are now mechanical:
+
+- **Gate 24 FAILS on a missing fixture** (assertions.py). An authored `[]` is
+  the recorded "no print-verified fixes yet" decision; missing is the process
+  hole. init scaffolds `[]` and never clobbers (test). Backfilled F&S with 9
+  cells from the 2026-07-13 accepted findings, every operand re-verified
+  against shipped text (stray grave p49, cataloging block p.iv, wrapped TOC
+  entry, `_ps_root` gloss seam p99, keep_hyphens ×3, p265 book list as
+  block_present); BoK arabic variant = authored `[]` (base cells pin honorific
+  READINGS the variant intentionally ships as glyphs — they don't transfer).
+- **QA sidecars are keyed by epub stem** — `<slug>.qa.json` /
+  `<slug>.qa_report.md` / `<slug>.qa_visual/` / `<slug>.proofread/`, the
+  manifest convention (warnings keys by CONFIG stem; qa artifacts describe a
+  built EPUB, so epub stem is right). Latent last-run-wins: the two BoK
+  configs shared build/qa.json since the variant shipped. Legacy unkeyed
+  files are unlinked on write.
+- **`pdf2epub corpus`** (corpuscmd.py): rebuild every tracked config
+  (books/*/book*.yaml minus drafts — membership IS the convention, no second
+  list to sync), byte-compare the shipped EPUB (byte-reproducible builds
+  make a byte change the behavior change), run QA, print the matrix.
+  Contracts: build/QA failure marks the row and CONTINUES, nonzero exit at
+  end (what CI gates on); `--upto flow` is the probe loop for drafting
+  textfix rules (bytes/QA n/a — never grade a stale artifact); byte changes
+  REPORT by default (the healing signal — six-EPUBs-improved was a feature),
+  `--strict` fails them (local only: byte-compare needs this machine's
+  fonts); manifest churn is EXPECTED on sequential in-place rebuilds (the
+  manifest hashes the dirty worktree → order-dependent) — the EPUB compare
+  is the signal.
+- **Per-rule telemetry**: `_INSERT_PATTERNS` entries are named;
+  restore_spaces/restore_space_seam take an observer `tally` (identity
+  proven by test — tally-less call byte-equal) writing `space-rule-*` into
+  flow counts → `build/<slug>.build_metrics.json` (written at the flow
+  stage, so probe runs produce it; also carries the extract repair counters
+  + judgment sizes) → corpus prints deltas vs the tracked
+  `books/corpus_baseline.json`. Baseline entries are keyed by config sha +
+  PDF sha: a judgment edit reads "inputs changed — not comparable", never as
+  a rule regression. "Rule X now fires 12× in Keys, 0 before" is now a
+  printed line, not an agent's memory.
+- CI's corpus job calls `pdf2epub corpus` (advisory: that runner installs
+  neither the configs' fonts nor Ace — noted in the job; it gates on
+  build+QA verdicts, never --strict).
+- Judgment-volume snapshot the metrics now print per run: overrides/100pp
+  ranges 5.7 (Keys) to 78.8 (I&B) — the corpus scaling trend is finally a
+  number.
+
+Verification baseline: `pytest -q` **430 passed**, ruff clean; full corpus at
+HEAD: **9/9 built, 9/9 byte-identical, 9/9 QA PASS**, zero failing gates
+(the byte-identity across all nine also proves the telemetry is a pure
+observer); baseline seeded; a repeat single-book run shows byte-identical +
+empty delta. Deferred by design: gate-registry extraction rides the next
+QA/content feature (the corpus snapshots are its characterization net); the
+raw source fingerprint report rides the next conversion; `_parse_allow`
+rides the next allow-knob.

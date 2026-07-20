@@ -76,15 +76,37 @@ _SPACE_AMP_RIGHT = re.compile(r"((?<=[a-z ])&)([A-Z])")
 # CLOSING quote is never legitimate, so the swap is deterministic
 _QUOTE_SPACE_SWAP = re.compile(r"([.!?,;:]) ([”’])")
 
+# named so the per-rule tally (flow counts `space-rule-<name>`, corpus
+# telemetry) can report WHICH rule fired where across the corpus — the
+# "probe all configs" evidence for every new rule, mechanized
 _INSERT_PATTERNS = (
-    _SPACE_AFTER_PUNCT, _SPACE_AFTER_QUOTE, _SPACE_AFTER_BRACKET,
-    _SPACE_COMMA_LOWER, _SPACE_PUNCT_OPENQ, _SPACE_CLOSEQ,
-    _SPACE_AFTER_CITE, _SPACE_BEFORE_PAREN, _SPACE_AFTER_STAR,
-    _SPACE_NUM_DOT_CAP, _SPACE_NUM_DOT_ONECAP, _SPACE_AFTER_SEMI,
-    _SPACE_NUM_COMMA_CAP, _SPACE_NUM_COMMA_YEAR, _SPACE_CLOSEQ_DOT,
-    _SPACE_STAR_LETTER,
-    _SPACE_AMP_LEFT, _SPACE_AMP_RIGHT,
+    ("after-punct", _SPACE_AFTER_PUNCT),
+    ("after-quote", _SPACE_AFTER_QUOTE),
+    ("after-bracket", _SPACE_AFTER_BRACKET),
+    ("comma-lower", _SPACE_COMMA_LOWER),
+    ("punct-openq", _SPACE_PUNCT_OPENQ),
+    ("closeq", _SPACE_CLOSEQ),
+    ("after-cite", _SPACE_AFTER_CITE),
+    ("before-paren", _SPACE_BEFORE_PAREN),
+    ("after-star", _SPACE_AFTER_STAR),
+    ("num-dot-cap", _SPACE_NUM_DOT_CAP),
+    ("num-dot-onecap", _SPACE_NUM_DOT_ONECAP),
+    ("after-semi", _SPACE_AFTER_SEMI),
+    ("num-comma-cap", _SPACE_NUM_COMMA_CAP),
+    ("num-comma-year", _SPACE_NUM_COMMA_YEAR),
+    ("closeq-dot", _SPACE_CLOSEQ_DOT),
+    ("star-letter", _SPACE_STAR_LETTER),
+    ("amp-left", _SPACE_AMP_LEFT),
+    ("amp-right", _SPACE_AMP_RIGHT),
 )
+
+_TALLY_PREFIX = "space-rule-"
+
+
+def _tally(tally: dict | None, name: str, k: int) -> None:
+    if tally is not None and k:
+        key = _TALLY_PREFIX + name
+        tally[key] = tally.get(key, 0) + k
 
 
 def expand_ligatures(text: str) -> tuple[str, int]:
@@ -142,17 +164,20 @@ def swap_quote_sides(text: str) -> tuple[str, int]:
     return _QUOTE_SPACE_SWAP.subn(r"\1\2 ", text)
 
 
-def restore_spaces(text: str) -> tuple[str, int]:
+def restore_spaces(text: str, tally: dict | None = None) -> tuple[str, int]:
     # the swap runs FIRST so 'way. ”Then' reads 'way.” Then' before the
     # insert patterns examine the seam
     text, n = _QUOTE_SPACE_SWAP.subn(r"\1\2 ", text)
-    for pat in _INSERT_PATTERNS:
+    _tally(tally, "quote-swap", n)
+    for name, pat in _INSERT_PATTERNS:
         text, k = pat.subn(r"\1 \2", text)
         n += k
+        _tally(tally, name, k)
     return text, n
 
 
-def restore_space_seam(prev: str, nxt: str) -> tuple[str, str, int]:
+def restore_space_seam(prev: str, nxt: str,
+                       tally: dict | None = None) -> tuple[str, str, int]:
     """Repair a lost space that straddles a run boundary. restore_spaces runs
     per run, so a fusion at a roman/italic seam ('believer.' + 'This', MR
     prepress) is invisible to it. Same patterns, applied to a 3+3-char window
@@ -169,16 +194,19 @@ def restore_space_seam(prev: str, nxt: str) -> tuple[str, str, int]:
     n_l = nxt.lstrip(" ")
     if p_r[-1:] in ".!?,;:" and n_l[:1] in "”’" and \
             (len(p_r) != len(prev) or len(n_l) != len(nxt)):
+        _tally(tally, "seam-quote", 1)
         return p_r, n_l[0] + " " + n_l[1:].lstrip(" "), 1
     if len(prev) >= 3 and prev[-1] in "”’" and prev[-2] == " " \
             and prev[-3] in ".!?,;:":
+        _tally(tally, "seam-quote", 1)
         return prev[:-2] + prev[-1], " " + nxt.lstrip(" "), 1
     tail = prev[-3:]
     window = tail + nxt[:3]
     seam = len(tail)
-    for pat in _INSERT_PATTERNS:
+    for name, pat in _INSERT_PATTERNS:
         for m in pat.finditer(window):
             if m.start() < seam < m.end():
+                _tally(tally, "seam-" + name, 1)
                 cut = m.end(1)
                 if cut <= seam:
                     k = len(prev) - (seam - cut)

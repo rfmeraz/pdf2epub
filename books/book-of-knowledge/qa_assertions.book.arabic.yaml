@@ -1,0 +1,7 @@
+# Gate-24 regression assertions — book-of-knowledge, book.arabic.yaml variant
+# (see qa/assertions.py). A TEST fixture, not a build input.
+# Authored empty: the Arabic-glyph variant has no print-verified fixes of its own
+# yet — the base config's cells pin honorific READINGS the variant intentionally
+# ships as Arabic glyphs, so they do not transfer. Proofread lands cells here as
+# variant-specific findings are accepted.
+[]

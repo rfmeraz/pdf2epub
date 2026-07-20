@@ -1707,7 +1707,8 @@ def _restore_cross_run_spaces(para: Paragraph, counts: Counter) -> None:
                 it.text = " & "
                 counts["spaces-restored-crossrun"] += 2
             if prev_run is not None:
-                a, b, n = restore_space_seam(prev_run.text, it.text)
+                a, b, n = restore_space_seam(prev_run.text, it.text,
+                                             tally=counts)
                 if n:
                     prev_run.text, it.text = a, b
                     counts["spaces-restored-crossrun"] += n
@@ -1914,7 +1915,7 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
         t, n_inl = inline_dehyphenate(t, cfg.dehyphenate, cfg.keep_hyphens)
         counts["inline-dehyphenated"] += n_inl
         if cfg.restore_spaces:
-            t, n_sp = restore_spaces(t)
+            t, n_sp = restore_spaces(t, tally=counts)
             counts["spaces-restored"] += n_sp
         # PUA substitution, splitting the run when a mapped char carries lang
         if _PUA_RE.search(t):

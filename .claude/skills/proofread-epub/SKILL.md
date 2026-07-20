@@ -12,7 +12,7 @@ garble, fused headings — reader-level defects derived joins can't see.
 ## Step 1 — Build the desk
 
 - `~/pyenv/bin/pdf2epub proofread books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml`
-- Read `build/proofread/manifest.json`: packet list (ids, word counts, page
+- Read `build/<slug>.proofread/manifest.json`: packet list (ids, word counts, page
   ranges, per-packet sha256), the ordinal `anchors` list (label → physical
   page; labels COLLIDE across roman/arabic — always resolve within the
   packet's `anchor_k` range), and the whitelist facts.
@@ -20,13 +20,13 @@ garble, fused headings — reader-level defects derived joins can't see.
 ## Step 2 — Fan out blind readers
 
 - One subagent per packet (batch packets under ~500 words together). Prompt:
-  "Read <abs path>/build/proofread/PROTOCOL.md fully, then read
+  "Read <abs path>/build/<slug>.proofread/PROTOCOL.md fully, then read
   <abs packet path>. Apply the protocol exactly. Your ENTIRE final message
   must be the JSON object it specifies." Nothing else — readers are BLIND:
   no known defects, no other packets' findings, no book history.
 - Parse each reply (tolerate a ```json fence). A reply that fails to parse:
   re-run that packet once, then record reader-error. Assign finding ids
-  `NNN-01…`; write the aggregate to `build/proofread/findings.json` with
+  `NNN-01…`; write the aggregate to `build/<slug>.proofread/findings.json` with
   `verdict/fix_layer/fix` set to null.
 
 ## Step 3 — Verify every finding against print
@@ -74,7 +74,9 @@ Fix layer by defect class:
   the book-level analog of "misfire → code fix + unit test" for defects a unit
   test can't reach. Only seed classes that survive `normalize` (see
   qa/assertions.py: NOT quote/dash shape, extra-space, or soft-hyphen) and
-  copy the operand from the SHIPPED text.
+  copy the operand from the SHIPPED text. Gate 24 FAILS when the fixture
+  file is missing — init scaffolds an empty `[]`; every shipped config must
+  have one (`qa_assertions.<stem>.yaml` for variants).
 - Rebuild (`epubcheck: clean`), `qa` must end `Overall: PASS`, re-run
   `proofread`, re-read ONLY packets whose sha256 changed in the manifest.
   Stop at zero new confirmed findings or after 3 rounds — remaining

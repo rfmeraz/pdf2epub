@@ -1,4 +1,4 @@
-"""Command-line interface: init / build / qa."""
+"""Command-line interface: init / build / qa / corpus."""
 
 from __future__ import annotations
 
@@ -55,10 +55,39 @@ def main(argv: list[str] | None = None) -> int:
                       help="Reference EPUB for the comparison scorecard")
     p_qa.add_argument("--visual", action="store_true",
                       help="Gate 18: sampled print-vs-EPUB contact sheets + "
-                           "glyph/figure pixel checks into build/qa_visual/ "
+                           "glyph/figure pixel checks into "
+                           "build/<slug>.qa_visual/ "
                            "(informational, agent-graded)")
     p_qa.add_argument("--visual-pages", type=int, default=14, metavar="N",
                       help="Visual sample size target (clamped 6..24)")
+
+    p_corpus = sub.add_parser(
+        "corpus", help="Rebuild + QA every tracked book config (books/*/"
+                       "book*.yaml minus drafts); byte-compare shipped EPUBs "
+                       "and report the per-config matrix")
+    p_corpus.add_argument("--books", type=Path, default=Path("books"),
+                          help="Corpus root (default: books)")
+    p_corpus.add_argument("--only", action="append", metavar="SLUG",
+                          help="Limit to workspace dir name (or dir/stem for "
+                               "a variant config); repeatable/comma lists")
+    p_corpus.add_argument(
+        "--upto",
+        choices=["extract", "flow", "map", "images", "xhtml"],
+        help="Fast probe: stop each build after this stage (bytes/QA n/a)")
+    p_corpus.add_argument("--no-qa", action="store_true",
+                          help="Build + byte-compare only")
+    p_corpus.add_argument("--no-epubcheck", action="store_true",
+                          help="Skip the epubcheck gate inside each build")
+    p_corpus.add_argument("--strict", action="store_true",
+                          help="Exit nonzero on any byte change (local use: "
+                               "byte-compare is authoritative only on the "
+                               "machine whose fonts built the shipped EPUBs)")
+    p_corpus.add_argument("--json", type=Path, default=None, metavar="PATH",
+                          help="Also write the matrix as JSON")
+    p_corpus.add_argument("--update-baseline", action="store_true",
+                          help="Write books/corpus_baseline.json from this "
+                               "run's build metrics (the tracked reference "
+                               "for per-rule counter deltas)")
 
     p_proof = sub.add_parser(
         "proofread", help="Emit reading-QA packets from the shipped EPUB "
@@ -121,6 +150,14 @@ def main(argv: list[str] | None = None) -> int:
 
         return run_qa(args.epub, args.config, reference=args.reference,
                       visual=args.visual, visual_pages=args.visual_pages)
+    if args.command == "corpus":
+        from .corpuscmd import run_corpus
+
+        only = [t for tok in (args.only or []) for t in tok.split(",") if t]
+        return run_corpus(args.books, only=only or None, upto=args.upto,
+                          no_qa=args.no_qa, epubcheck=not args.no_epubcheck,
+                          strict=args.strict, json_out=args.json,
+                          update_baseline=args.update_baseline)
     if args.command == "proofread":
         from .proofread import run_proofread
 

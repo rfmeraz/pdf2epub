@@ -98,11 +98,31 @@ def run_init(pdf_or_folder: Path, workspace: Path, *,
         target = workspace / "book.draft-new.yaml"
         print(f"book.yaml exists — draft written to {target.name} instead")
     target.write_text(draft)
+    if scaffold_fixture(workspace):
+        print("scaffolded qa_assertions.yaml (empty — proofread lands one "
+              "cell per accepted finding)")
     print(f"init done: {analysis_dir/'structure_report.md'}")
     print(f"draft config: {target}")
     print("next: the agent reads the report, LOOKS at analysis/pages/*.png, and "
           "finalizes every FILL-ME-IN and low-confidence judgment in book.yaml")
     return 0
+
+
+def scaffold_fixture(workspace: Path) -> bool:
+    """Seed an empty gate-24 fixture so a first QA run pre-proofread is not
+    blocked (missing fixture -> gate 24 FAIL). NEVER overwrites: an existing
+    fixture holds print-verified cells. Returns True if written."""
+    fixture = workspace / "qa_assertions.yaml"
+    if fixture.exists():
+        return False
+    fixture.write_text(
+        f"# Gate-24 regression assertions — {workspace.name} "
+        "(see qa/assertions.py).\n"
+        "# A TEST fixture, not a build input. Operands copied from SHIPPED\n"
+        "# normalized text. [] records 'no print-verified fixes yet';\n"
+        "# proofread lands one cell per accepted finding.\n"
+        "[]\n")
+    return True
 
 
 def _rel_source(pdf: Path, workspace: Path) -> tuple[str, str]:

@@ -127,6 +127,7 @@ Drop the PDF at `books/<slug>/package/` (and separate cover art, if any, at
 ~/pyenv/bin/pdf2epub qa    books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml [--reference <epub>] [--visual]
 ~/pyenv/bin/pdf2epub proofread books/<slug>/build/<slug>.epub --config books/<slug>/book.yaml
 ~/pyenv/bin/pdf2epub lines books/<slug>/book.yaml <page> [--render]   # raw line indexes, for overrides
+~/pyenv/bin/pdf2epub corpus [--only <slug>] [--upto flow] [--strict]  # rebuild+QA every tracked book; byte-compare shipped EPUBs
 bash scripts/bootstrap.sh   # one-time setup: pip deps, epubcheck jar, fonts
 ```
 

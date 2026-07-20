@@ -421,7 +421,9 @@ def run_proofread(epub: Path, config: Path, say=print) -> int:
                           "mapping unavailable")
         anchors = []
 
-    out_dir = epub.parent / "proofread"
+    # keyed by epub stem (the manifest convention) so variant configs'
+    # packet sets don't overwrite each other in the shared build dir
+    out_dir = epub.parent / f"{epub.stem}.proofread"
     packets_dir = out_dir / "packets"
     packets_dir.mkdir(parents=True, exist_ok=True)
     for old in packets_dir.glob("*.md"):
@@ -549,7 +551,8 @@ def run_lines(config: Path, pages: list[str], render: bool = False,
         if render:
             from .thumbs import render_page
 
-            out = cfg.build_dir / "proofread" / "renders" / f"p{pno:04d}.png"
+            out = (cfg.build_dir / f"{cfg.slug}.proofread" / "renders"
+                   / f"p{pno:04d}.png")
             render_page(cfg.pdf_path(), pno, out, dpi=dpi, clip_trim=True)
             say(f"render: {out}")
         say("")

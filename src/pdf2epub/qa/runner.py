@@ -10,8 +10,9 @@ agent-graded contact sheets and is always informational.
 
 Ground truth and expectations are re-derived deterministically from
 (source PDF, book.yaml) — the same inputs the build used — via an
-INDEPENDENT poppler text path. Writes qa_report.md + qa.json next to the
-EPUB and prints 'Overall: PASS' only when every gating check passes."""
+INDEPENDENT poppler text path. Writes <stem>.qa_report.md + <stem>.qa.json
+next to the EPUB (keyed by epub stem — variant configs share the build dir)
+and prints 'Overall: PASS' only when every gating check passes."""
 
 from __future__ import annotations
 
@@ -463,7 +464,8 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
         from .visual import run_visual
 
         vres = run_visual(epub, cfg, doc, flow, res, labels, disputed_pages,
-                          undecidable_note_pages, epub.parent / "qa_visual",
+                          undecidable_note_pages,
+                          epub.parent / f"{epub.stem}.qa_visual",
                           cap=visual_pages, say=quiet)
         gates.append(("18 visual sample (info)", None, vres.gate_lines))
 
@@ -477,11 +479,16 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
         out_lines.append("")
         print(f"gate {name}: {badge}" + (f" | {lines[0]}" if lines else ""))
     out_lines.append(f"Overall: {'PASS' if overall else 'FAIL'}")
-    report = epub.parent / "qa_report.md"
+    # keyed by epub stem (the manifest convention): variant configs build
+    # distinct EPUBs into the SAME build dir, and unkeyed sidecars let the
+    # last QA run silently overwrite the other's record
+    report = epub.parent / f"{epub.stem}.qa_report.md"
     report.write_text("\n".join(out_lines) + "\n")
-    (epub.parent / "qa.json").write_text(json.dumps(
+    (epub.parent / f"{epub.stem}.qa.json").write_text(json.dumps(
         [{"gate": n, "ok": ok, "detail": ls} for n, ok, ls in gates], indent=1,
         ensure_ascii=False))
+    for legacy in (epub.parent / "qa_report.md", epub.parent / "qa.json"):
+        legacy.unlink(missing_ok=True)   # pre-keying leftovers mislead
     print(f"report: {report}")
     print(f"Overall: {'PASS' if overall else 'FAIL'}")
     return 0 if overall else 1

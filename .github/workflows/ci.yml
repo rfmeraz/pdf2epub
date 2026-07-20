@@ -93,12 +93,10 @@ jobs:
           mv "epubcheck-${EPUBCHECK_VERSION}/lib" vendor/epubcheck/lib
           echo "${EPUBCHECK_SHA256}  vendor/epubcheck/epubcheck.jar" | sha256sum -c -
       - run: pip install -e ".[dev]"
+      # ADVISORY, not equivalent to local verification: this runner installs
+      # neither the fonts the configs reference (e.g. the BoK Arabic variant's
+      # Amiri path) nor Ace (gate 26 skips it), and byte-compare is
+      # authoritative only on the machine whose fonts built the shipped
+      # EPUBs — so no --strict here; the job gates on build + QA verdicts.
       - name: Build + QA the corpus
-        run: |
-          set -e
-          for cfg in books/*/book*.yaml; do
-            case "$cfg" in *draft*) continue;; esac
-            slug=$(python -c "import sys,yaml;print(yaml.safe_load(open('$cfg'))['output']['slug'])")
-            pdf2epub build "$cfg"
-            pdf2epub qa "books/$(basename $(dirname $cfg))/build/$slug.epub" --config "$cfg"
-          done
+        run: pdf2epub corpus --books books

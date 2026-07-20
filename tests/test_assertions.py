@@ -137,9 +137,12 @@ def test_stale_messages_are_sorted():
 
 # ----------------------------------------------------------- file-level paths
 
-def test_missing_fixture_passes(tmp_path):
+def test_missing_fixture_fails(tmp_path):
+    # the fixture is a tracked per-book deliverable: absent -> FAIL (an
+    # authored [] is the recorded "no fixes yet" decision; missing is the
+    # process hole)
     ao = run_assertions(tmp_path / "nope.yaml", _sl({1: ["x"]}), {1: "1"}, [1])
-    assert ao.verdict is True and "no assertions configured" in ao.lines[0]
+    assert ao.verdict is False and "fixture missing" in ao.lines[0]
 
 
 def test_empty_fixture_passes(tmp_path):
@@ -147,6 +150,29 @@ def test_empty_fixture_passes(tmp_path):
     p.write_text("")
     ao = run_assertions(p, _sl({1: ["x"]}), {1: "1"}, [1])
     assert ao.verdict is True and "0 assertions" in ao.lines[0]
+
+
+def test_empty_list_fixture_passes(tmp_path):
+    p = tmp_path / "qa_assertions.yaml"
+    p.write_text("[]\n")
+    ao = run_assertions(p, _sl({1: ["x"]}), {1: "1"}, [1])
+    assert ao.verdict is True and "0 assertions" in ao.lines[0]
+
+
+def test_init_scaffold_never_clobbers(tmp_path):
+    # init seeds [] for a new workspace; an existing fixture (print-verified
+    # cells) must survive a re-init untouched
+    from pdf2epub.initcmd import scaffold_fixture
+    assert scaffold_fixture(tmp_path) is True
+    scaffolded = (tmp_path / "qa_assertions.yaml").read_text()
+    ao = run_assertions(tmp_path / "qa_assertions.yaml",
+                        _sl({1: ["x"]}), {1: "1"}, [1])
+    assert ao.verdict is True   # the scaffold itself evaluates clean
+    (tmp_path / "qa_assertions.yaml").write_text(
+        '- {page: "1", type: present, text: "x", note: "verified"}\n')
+    assert scaffold_fixture(tmp_path) is False
+    assert "verified" in (tmp_path / "qa_assertions.yaml").read_text()
+    assert (tmp_path / "qa_assertions.yaml").read_text() != scaffolded
 
 
 def test_parse_error_fails_loud(tmp_path):

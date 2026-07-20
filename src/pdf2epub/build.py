@@ -93,6 +93,7 @@ def run_build(config_path: Path, dump_ir: bool = False, upto: str | None = None,
     ctx.say(f"flow: {len(ctx.flow.blocks)} blocks, {len(ctx.flow.notes)} notes; "
             + ", ".join(f"{k}={v}" for k, v in sorted(res.counts.items())))
     ctx.ir_dump("flow", flowdoc_to_dict(ctx.flow))
+    _write_build_metrics(ctx, res)
     if upto == "flow":
         _write_warnings(ctx)
         return 0
@@ -243,6 +244,36 @@ def _text_width_pt(ctx) -> float:
     geo = column_geometry(ctx.pdf_doc)
     w = geo.col_right - geo.col_left
     return w if w > 50 else 360.0
+
+
+def _write_build_metrics(ctx, res) -> None:
+    """Deterministic per-config telemetry sidecar (<slug>.build_metrics.json):
+    extraction repair counters + flow counts (incl. per-rule space-rule-*
+    tallies) + config-judgment sizes. Written right after the flow stage so
+    `--upto flow` probe runs produce it; read by `pdf2epub corpus` for
+    cross-book rule-hit deltas. Sorted keys, no wall-clock — byte-stable
+    for identical inputs."""
+    doc, cfg = ctx.pdf_doc, ctx.cfg
+    metrics = {
+        "pages": doc.n_pages,
+        "extract": {
+            "subscript_dots": doc.subscript_dots,
+            "cancelled_spaces": doc.cancelled_spaces,
+            "ligature_pads": doc.ligature_pads,
+            "bidi_moved": doc.bidi_moved,
+            "warnings": len(doc.warnings),
+        },
+        "flow": dict(sorted(res.counts.items())),
+        "config": {
+            "flow_overrides": len(cfg.flow_overrides),
+            "keep_hyphens": len(cfg.keep_hyphens),
+            "adjudications": len(cfg.adjudications),
+        },
+    }
+    cfg.build_dir.mkdir(parents=True, exist_ok=True)
+    (cfg.build_dir / f"{cfg.slug}.build_metrics.json").write_text(
+        json.dumps(metrics, indent=1, sort_keys=True, ensure_ascii=False)
+        + "\n")
 
 
 def _write_warnings(ctx) -> None:

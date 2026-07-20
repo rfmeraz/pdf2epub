@@ -1,0 +1,433 @@
+{
+ "baseline_version": 1,
+ "entries": {
+  "books/book-of-knowledge/book.arabic.yaml": {
+   "config_sha256": "cc3ef03b59f7e36c6783def7cb38749ffefc734fa76f3d89aea268d75c8293a6",
+   "metrics": {
+    "config": {
+     "adjudications": 3,
+     "flow_overrides": 41,
+     "keep_hyphens": 0
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 3
+    },
+    "flow": {
+     "anchor-inline": 180,
+     "column-lines": 1174,
+     "column-pages": 15,
+     "column-spanners": 2,
+     "ctrl-stripped": 0,
+     "dehyphenated": 314,
+     "dropcaps": 39,
+     "figure-regions": 1,
+     "furniture-baseline": 76,
+     "furniture-folio": 18,
+     "furniture-head": 232,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 40,
+     "list-lines": 43,
+     "list-paras": 40,
+     "note-continuation": 7,
+     "noterefs": 671,
+     "pua-dropped": 27,
+     "pua-substituted": 976,
+     "quote-lines": 86,
+     "quote-paras": 7,
+     "quote-runs": 9,
+     "region-lines": 22,
+     "stray-grave-stripped": 0,
+     "toc-continuation": 15,
+     "verse-groups": 11,
+     "verse-lines": 51,
+     "verse-stanzas": 12,
+     "verse-suspect": 1,
+     "wrongscript-repaired": 8
+    },
+    "pages": 338
+   },
+   "pdf_sha256": "48ea4f71a48e94390a19ffa705f992bb2853bb0c70f3d5e8f63c9df24086704d"
+  },
+  "books/book-of-knowledge/book.yaml": {
+   "config_sha256": "dac4ab916abd301c53bd4c583f36b3175c9c4b66e7769baf61b8ed11ebf86a19",
+   "metrics": {
+    "config": {
+     "adjudications": 2,
+     "flow_overrides": 41,
+     "keep_hyphens": 0
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 3
+    },
+    "flow": {
+     "anchor-inline": 180,
+     "column-lines": 1174,
+     "column-pages": 15,
+     "column-spanners": 2,
+     "ctrl-stripped": 0,
+     "dehyphenated": 314,
+     "dropcaps": 39,
+     "figure-regions": 1,
+     "furniture-baseline": 76,
+     "furniture-folio": 18,
+     "furniture-head": 232,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 40,
+     "list-lines": 43,
+     "list-paras": 40,
+     "note-continuation": 7,
+     "noterefs": 671,
+     "pua-dropped": 27,
+     "pua-punct-seam": 13,
+     "pua-substituted": 976,
+     "quote-lines": 86,
+     "quote-paras": 7,
+     "quote-runs": 9,
+     "region-lines": 22,
+     "stray-grave-stripped": 0,
+     "toc-continuation": 15,
+     "verse-groups": 11,
+     "verse-lines": 51,
+     "verse-stanzas": 12,
+     "verse-suspect": 1,
+     "wrongscript-repaired": 8
+    },
+    "pages": 338
+   },
+   "pdf_sha256": "48ea4f71a48e94390a19ffa705f992bb2853bb0c70f3d5e8f63c9df24086704d"
+  },
+  "books/form-and-substance-in-the-religions/book.yaml": {
+   "config_sha256": "51021e3656039c52dfdcc88d730fdbda0137f5899be6dceae885aff97811f97e",
+   "metrics": {
+    "config": {
+     "adjudications": 1,
+     "flow_overrides": 43,
+     "keep_hyphens": 13
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 1
+    },
+    "flow": {
+     "anchor-inline": 189,
+     "ctrl-stripped": 0,
+     "dehyphenated": 1120,
+     "furniture-folio": 251,
+     "furniture-head": 232,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "note-continuation": 31,
+     "noterefs": 334,
+     "stray-grave-stripped": 1,
+     "toc-continuation": 1,
+     "wrongscript-repaired": 0
+    },
+    "pages": 266
+   },
+   "pdf_sha256": "1f713dd182720d52657abb8056ae693f45839d97e6673dda9a7f3671a166cba1"
+  },
+  "books/harmonious-unity/book.yaml": {
+   "config_sha256": "963d98bb513389cad8e291d2885cee4ca23de6595ada30fbee2ddcbd6b86cf6b",
+   "metrics": {
+    "config": {
+     "adjudications": 1,
+     "flow_overrides": 50,
+     "keep_hyphens": 0
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 2
+    },
+    "flow": {
+     "anchor-inline": 32,
+     "ctrl-stripped": 0,
+     "dehyphenated": 355,
+     "dropcaps": 62,
+     "figure-pages": 69,
+     "furniture-baseline": 3,
+     "furniture-folio": 136,
+     "furniture-head": 58,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 77,
+     "list-lines": 223,
+     "list-paras": 77,
+     "override-drop": 25,
+     "softhyphen-stripped": 0,
+     "stray-grave-stripped": 0,
+     "toc-continuation": 2,
+     "wrongscript-repaired": 0
+    },
+    "pages": 152
+   },
+   "pdf_sha256": "53e5953d23a8b16ab122f084ee4f609fee33838028f862662569c56c5550b687"
+  },
+  "books/islam-and-buddhism/book.yaml": {
+   "config_sha256": "81a58a0c52822f9d46d4a1865ebd9aac00b70bc67d32b5f4d4b6df3a78ab2738",
+   "metrics": {
+    "config": {
+     "adjudications": 1,
+     "flow_overrides": 134,
+     "keep_hyphens": 0
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 1,
+     "subscript_dots": 0,
+     "warnings": 1
+    },
+    "flow": {
+     "anchor-inline": 114,
+     "cmap-repaired-runs": 349,
+     "cmap-unknown-chars": 0,
+     "ctrl-stripped": 46,
+     "dehyphenated": 806,
+     "fffd-replaced": 474,
+     "figure-pages": 1,
+     "furniture-baseline": 5,
+     "furniture-folio": 159,
+     "furniture-head": 139,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 96,
+     "list-lines": 200,
+     "list-paras": 96,
+     "note-continuation": 6,
+     "noterefs": 229,
+     "override-drop": 2,
+     "quote-lines": 697,
+     "quote-paras": 94,
+     "quote-runs": 84,
+     "stray-grave-stripped": 0,
+     "verse-groups": 24,
+     "verse-lines": 130,
+     "verse-stanzas": 21,
+     "wrongscript-repaired": 0
+    },
+    "pages": 170
+   },
+   "pdf_sha256": "e2a52793b24a3fc8a17c440de72135d0e4fc269bdb4b151535168fca94fafbbd"
+  },
+  "books/keys-to-the-beyond/book.yaml": {
+   "config_sha256": "0b0cc3814068eeebda2b707fae5853a9e1fa0664f9c411461c5976d4313c7bc8",
+   "metrics": {
+    "config": {
+     "adjudications": 0,
+     "flow_overrides": 23,
+     "keep_hyphens": 12
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 12,
+     "ligature_pads": 5,
+     "subscript_dots": 28,
+     "warnings": 2
+    },
+    "flow": {
+     "anchor-inline": 326,
+     "column-lines": 1539,
+     "column-pages": 20,
+     "column-spanners": 1,
+     "ctrl-stripped": 0,
+     "dehyphenated": 663,
+     "furniture-baseline": 2,
+     "furniture-folio": 16,
+     "furniture-head": 371,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 217,
+     "list-lines": 365,
+     "list-paras": 217,
+     "note-continuation": 20,
+     "note-marker-nonsequential": 2,
+     "noteref-seam-space": 1,
+     "noterefs": 584,
+     "quote-lines": 25,
+     "quote-paras": 2,
+     "quote-runs": 2,
+     "stray-grave-stripped": 0,
+     "verse-groups": 2,
+     "verse-lines": 12,
+     "verse-stanzas": 2,
+     "wrongscript-repaired": 0
+    },
+    "pages": 406
+   },
+   "pdf_sha256": "a4ac119194cd4c0eff7a9ebdce3cb7d77691eccda8de63eec137597932057cd7"
+  },
+  "books/me-and-rumi/book.yaml": {
+   "config_sha256": "86df4ceb5b0510a27e68cfd3a892f415a23566fd63295ca5088d48bfab9ab134",
+   "metrics": {
+    "config": {
+     "adjudications": 3,
+     "flow_overrides": 57,
+     "keep_hyphens": 0
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 2
+    },
+    "flow": {
+     "anchor-inline": 175,
+     "ctrl-stripped": 0,
+     "dehyphenated": 793,
+     "figure-pages": 1,
+     "furniture-baseline": 16,
+     "furniture-folio": 4,
+     "furniture-head": 329,
+     "inline-dehyphenated": 0,
+     "ligatures": 843,
+     "list-items": 233,
+     "list-lines": 1325,
+     "list-marker-gap": 2,
+     "list-paras": 374,
+     "override-drop": 3,
+     "quote-side-swaps": 18,
+     "space-rule-after-bracket": 14,
+     "space-rule-after-cite": 83,
+     "space-rule-after-punct": 2905,
+     "space-rule-after-semi": 3,
+     "space-rule-before-paren": 22,
+     "space-rule-closeq": 159,
+     "space-rule-closeq-dot": 1,
+     "space-rule-comma-lower": 543,
+     "space-rule-num-comma-cap": 2,
+     "space-rule-num-comma-year": 1,
+     "space-rule-num-dot-cap": 101,
+     "space-rule-num-dot-onecap": 7,
+     "space-rule-punct-openq": 91,
+     "space-rule-quote-swap": 1,
+     "space-rule-seam-after-punct": 69,
+     "space-rule-seam-amp-right": 1,
+     "space-rule-seam-closeq": 3,
+     "space-rule-seam-comma-lower": 9,
+     "space-rule-seam-num-dot-cap": 2,
+     "space-rule-seam-star-letter": 13,
+     "spaces-restored": 3933,
+     "spaces-restored-crossrun": 99,
+     "stray-grave-stripped": 0,
+     "verse-groups": 95,
+     "verse-lines": 309,
+     "verse-stanzas": 99,
+     "verse-suspect": 7,
+     "wrongscript-repaired": 0
+    },
+    "pages": 441
+   },
+   "pdf_sha256": "445fe4e1ea8fa64264730004992ba733eac566ffa506837d86b1b0c2373d1309"
+  },
+  "books/pray-without-ceasing/book.yaml": {
+   "config_sha256": "501bb9f8041b6b725a4c052b4eb88c551eb8e5f852151acbddb1b7586577bbb6",
+   "metrics": {
+    "config": {
+     "adjudications": 3,
+     "flow_overrides": 34,
+     "keep_hyphens": 6
+    },
+    "extract": {
+     "bidi_moved": 11,
+     "cancelled_spaces": 0,
+     "ligature_pads": 2590,
+     "subscript_dots": 0,
+     "warnings": 2
+    },
+    "flow": {
+     "anchor-inline": 130,
+     "column-lines": 622,
+     "column-pages": 9,
+     "column-spanners": 6,
+     "ctrl-stripped": 5,
+     "dehyphenated": 29,
+     "figure-regions": 2,
+     "furniture-baseline": 8,
+     "furniture-folio": 228,
+     "furniture-head": 171,
+     "inline-dehyphenated": 0,
+     "ligatures": 6,
+     "list-items": 65,
+     "list-lines": 412,
+     "list-marker-gap": 3,
+     "list-paras": 86,
+     "note-continuation": 9,
+     "note-marker-nonsequential": 1,
+     "noterefs": 108,
+     "pua-punct-seam": 0,
+     "pua-substituted": 2,
+     "quote-lines": 268,
+     "quote-paras": 35,
+     "quote-runs": 21,
+     "region-lines": 13,
+     "stray-grave-stripped": 0,
+     "toc-continuation": 8,
+     "verse-groups": 5,
+     "verse-lines": 67,
+     "verse-stanzas": 9,
+     "verse-suspect": 1,
+     "wrongscript-repaired": 0
+    },
+    "pages": 250
+   },
+   "pdf_sha256": "67d07b5adcb859f79eba15244de8bd32de4320c5173c499c85b3ae94c9eab456"
+  },
+  "books/sufism-veil-and-quintessence/book.yaml": {
+   "config_sha256": "80d0196147b3647a16ca3d7f715e77b0b3117aff9492669082bd6bf0852d2d02",
+   "metrics": {
+    "config": {
+     "adjudications": 1,
+     "flow_overrides": 44,
+     "keep_hyphens": 8
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 7,
+     "subscript_dots": 0,
+     "warnings": 1
+    },
+    "flow": {
+     "anchor-inline": 118,
+     "column-lines": 606,
+     "column-pages": 8,
+     "column-spanners": 6,
+     "ctrl-stripped": 0,
+     "dehyphenated": 515,
+     "figure-pages": 1,
+     "furniture-baseline": 1,
+     "furniture-folio": 201,
+     "furniture-head": 185,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "note-continuation": 14,
+     "noterefs": 170,
+     "pua-dropped": 5,
+     "softhyphen-stripped": 1129,
+     "stray-grave-stripped": 0,
+     "toc-continuation": 1,
+     "wrongscript-repaired": 0
+    },
+    "pages": 218
+   },
+   "pdf_sha256": "5a4c08c2d379aac5f73641fdc4da1f863c6f4e6148ff4effe81d43d3a11cc71c"
+  }
+ }
+}

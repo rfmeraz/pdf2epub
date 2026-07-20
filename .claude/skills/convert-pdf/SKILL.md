@@ -138,10 +138,10 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
 
 - Run `~/pyenv/bin/pdf2epub qa <epub> --config <book.yaml> --visual`. Gate 18
   samples 10-20 pages (every pstyle cluster, drop caps, PUA glyphs, figures,
-  disputed pages, seeded-random) and writes `build/qa_visual/`: side-by-side
-  contact sheets (print LEFT, EPUB slice RIGHT), PUA glyph crop pairs, figure
-  dHash verdicts, and `manifest.md` — your grading sheet.
-- Read `build/qa_visual/manifest.md`, then Read EVERY `sheets/p####.png` and
+  disputed pages, seeded-random) and writes `build/<slug>.qa_visual/`:
+  side-by-side contact sheets (print LEFT, EPUB slice RIGHT), PUA glyph crop
+  pairs, figure dHash verdicts, and `manifest.md` — your grading sheet.
+- Read `build/<slug>.qa_visual/manifest.md`, then Read EVERY `sheets/p####.png` and
   grade each checklist item against the print panel (content may start/end
   mid-paragraph — grade typography and presence, not pagination). Read every
   `glyphs/u*.png` pair (source glyph vs substituted reading). Any figure
@@ -156,7 +156,7 @@ LOOK at renders with the Read tool (`analysis/pages/p####.png`, thumbnails in
 Invoke the `proofread-epub` skill on the built EPUB. The gates prove the
 words arrived and still look right; this step proves the book READS right:
 deterministic packets from the shipped EPUB (`pdf2epub proofread`), one
-blind reader subagent per packet under `build/proofread/PROTOCOL.md`,
+blind reader subagent per packet under `build/<slug>.proofread/PROTOCOL.md`,
 adversarial verification of every finding against print renders
 (`pdf2epub lines <config> <page> --render`), and fixes only via
 flow.overrides/config/code. Do not proceed to Step 5 until the proofread
