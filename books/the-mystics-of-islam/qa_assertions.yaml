@@ -1,5 +1,31 @@
 # Gate-24 regression assertions — the-mystics-of-islam (see qa/assertions.py).
-# A TEST fixture, not a build input. Operands copied from SHIPPED
-# normalized text. [] records 'no print-verified fixes yet';
-# proofread lands one cell per accepted finding.
-[]
+# A TEST fixture, not a build input. Operands copied from SHIPPED normalized
+# text and verified against the print render. proofread lands one cell per
+# accepted finding.
+#
+# Disputed-page defenses (gate 25b): the index (physical pp.138-143 = printed
+# 125-130) is engine-disputed — dense transliteration where the two extractors
+# disagree on diacritics/spacing — but the shipped text is correct. One
+# distinctive render-verified entry pins each page against a future garble.
+- {page: "125", pno: 138, type: present, text: "Alexander of Aphrodisias, 107",
+   note: "index p.125 render verified; disputed-page defense"}
+- {page: "126", pno: 139, type: present, text: "Fitzgerald, Edward, 68",
+   note: "index p.126 render verified; disputed-page defense"}
+- {page: "127", pno: 140, type: present, text: "Junayd of Baghdad, 25, 38",
+   note: "index p.127 render verified; disputed-page defense"}
+- {page: "128", pno: 141, type: present, text: "MacDonald, Professor D. B., 15",
+   note: "index p.128 render verified; disputed-page defense"}
+- {page: "129", pno: 142, type: present, text: "Qadîb al-Bân, 102",
+   note: "index p.129 render verified; disputed-page defense"}
+- {page: "130", pno: 143, type: present, text: "Whinfield, E. H., 46",
+   note: "index p.130 render verified; disputed-page defense"}
+
+# --- /proofread-epub round 1 (2026-07-21) confirmed fixes ---
+- {page: "68", pno: 81, type: present, text: "In respect of God not-being is nothing",
+   note: "keep_hyphens: 'not-being' hyphen kept at the line break (was 'notbeing'); p.68 render"}
+- {page: "43", pno: 56, type: block_present,
+   text: "A moral transformation of the soul through the extinction of all its passions and desires.",
+   note: "list item 1 continuation rejoined (flush-left continuation was split off); p.43 render"}
+- {page: "75", pno: 88, type: block_present,
+   text: "Love, quâ love, is one and the same reality to those Arab lovers and to me",
+   note: "the 'Love, quâ love' prose quotation is a blockquote, not absorbed into the poem's verse; p.75 render"}

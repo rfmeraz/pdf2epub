@@ -92,7 +92,7 @@ flow:
   dehyphenate: lower-only
   keep_hyphens: [many-sided, passing-away, self-constraint,
                  self-mortification, book-learning, God-given, unheard-of,
-                 God-man, so-called]
+                 God-man, so-called, not-being]
   restore_spaces: false       # lost-space hits: 0
   join_center_lines: false    # centered display units remain distinct
   reattach_dropcaps: true
@@ -107,6 +107,19 @@ flow:
     - {page: 118, line: 1, action: "role:h2", note: "chapter title below Chapter VI"}
     - {page: 144, line: 0, action: "role:h1",
        note: "author biography is independent back matter, not an Index subsection"}
+    # --- /proofread-epub round 1 (2026-07-21) fixes ---
+    # p.43 (phys 56) 'stages of fanâ' list: each numbered item's continuation
+    # is set FLUSH-left (x0=60), left of the '1.' entry stop (x0=77), so the
+    # list member test drops it and it split into its own paragraph. Rejoin
+    # each item's first continuation line (the rest follow geometrically).
+    - {page: 56, line: 21, action: "join", note: "item 1 continuation 'extinction of all its passions…' (p.43 render)"}
+    - {page: 56, line: 23, action: "join", note: "item 2 continuation 'all objects of perception…' (p.43 render)"}
+    - {page: 56, line: 28, action: "join", note: "item 3 continuation 'stage of fanâ is reached…' (p.43 render)"}
+    # p.75 (phys 88): the 'My heart has become capable…' poem's verse spec
+    # over-extended past the poem, absorbing Nicholson's prose intro and the
+    # following prose quotation into the blockquote. Stop it at the poem.
+    - {page: 88, line: 20, action: "class:prose", note: "'Commenting on the last verse, the poet writes:' is prose, not verse (p.75 render)"}
+    - {page: 88, line: 21, action: "class:quote", note: "'Love, quâ love…' is a prose quotation (blockquote), not verse (p.75 render)"}
     # Short or ragged inset quotations have the same 10pt measure as verse
     # and no repeated right edge for the automatic quote witness. These
     # render-verified overrides preserve their printed quotation structure.

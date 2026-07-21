@@ -11,3 +11,34 @@
 - {page: "268", type: present, text: "Qūt al-qulūb", note: "Arabic-article dehyphenation kept the hyphen (not Qut alqulub)"}
 - {page: "184", type: present, text: "ʿĀmir",        note: "wrong-script repair: Latin Ā (U+0100), not Greek Ᾱ"}
 - {page: "275-276", type: order, text: "35:8", text2: "35:28", note: "Qurʾānic index monotone across the columned seam (B2)"}
+
+# --- disputed-page defenses (gate 25b): the back-matter index (physical
+# pp.322-336 = printed 275-289) is engine-disputed; each entry render-verified.
+# Labels 275-276 (the Qurʾānic Verses Cited index) are already defended by the
+# order cell above; these pin the general index pages 277-289.
+- {page: "277", pno: 324, type: present, text: "Abū Ḥafṣ al-Nīsābūrī, 206",
+   note: "index p.277 render verified; disputed-page defense"}
+- {page: "278", pno: 325, type: present, text: "al-Bisṭāmī, Abū Yazīd, 99, 100",
+   note: "index p.278 render verified; disputed-page defense"}
+- {page: "279", pno: 326, type: present, text: "al-Ḍaḥḥāk b. Muzāḥim, 180, 192",
+   note: "index p.279 render verified; disputed-page defense"}
+- {page: "280", pno: 327, type: present, text: "Farqad al-Sabakhī, 89",
+   note: "index p.280 render verified; disputed-page defense"}
+- {page: "281", pno: 328, type: present, text: "Hārūn al-Rashīd, 72, 74",
+   note: "index p.281 render verified; disputed-page defense"}
+- {page: "282", pno: 329, type: present, text: "Ibrāhīm b. Adham, 185, 186, 204, 205, 206",
+   note: "index p.282 render verified; disputed-page defense"}
+- {page: "283", pno: 330, type: present, text: "Luqmān, 13, 215",
+   note: "index p.283 render verified; disputed-page defense"}
+- {page: "284", pno: 331, type: present, text: "Makḥūl al-Dimashqī, 201",
+   note: "index p.284 render verified; disputed-page defense"}
+- {page: "285", pno: 332, type: present, text: "Qārūn, 177",
+   note: "index p.285 render verified; disputed-page defense"}
+- {page: "286", pno: 333, type: present, text: "Sahl al-Tustarī, 178, 211, 224, 233, 244",
+   note: "index p.286 render verified; disputed-page defense"}
+- {page: "287", pno: 334, type: present, text: "Shaqīq al-Balkhī, 190, 192",
+   note: "index p.287 render verified; disputed-page defense"}
+- {page: "288", pno: 335, type: present, text: "Usāma b. Zayd, 173",
+   note: "index p.288 render verified; disputed-page defense"}
+- {page: "289", pno: 336, type: present, text: "Yūsuf b. Asbāṭ, 204, 245",
+   note: "index p.289 render verified; disputed-page defense"}

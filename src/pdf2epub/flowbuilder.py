@@ -2322,7 +2322,12 @@ def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                     trail = it.text[len(it.text.rstrip()):]
                     b.items[i] = NoteRef(note_id)
                     if trail:
-                        b.items.insert(i + 1, TextRun(" "))
+                        # a verse line ending in a marker ('…clean.¹') parks
+                        # the U+2028 line separator on the marker run; rstrip
+                        # ate it, so re-insert the SEPARATOR (not a space) or
+                        # the two verse lines fuse (Mystics p.87/88 Rumi)
+                        b.items.insert(i + 1, TextRun(
+                            "\u2028" if "\u2028" in trail else " "))
                     elif i + 1 < len(b.items) \
                             and isinstance(b.items[i + 1], TextRun) \
                             and b.items[i + 1].text[:1].isalnum():

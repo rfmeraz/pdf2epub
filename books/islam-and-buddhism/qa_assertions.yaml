@@ -11,3 +11,64 @@
 - {page: "126", type: present, text: "constantly",   note: "line-end hyphen→'J' repair (was conJ stantly)"}
 - {page: "126", type: block_present, text: "Trustworthy persons have related that Kuyūk", note: "al-Jūzjānī hadith stays one block (space→'=' + I16 shatter)"}
 - {page: "115", type: present, text: "al-nihal",     note: "article hyphen kept at line break (Kitāb al-milal wa al-nihal)"}
+
+# --- the 'gyn' repair (textfix.is_shifted_run 3-char telltale rule): the
+# italic etymology of 'kin' shipped as the un-repaired shift 'J\Q'. present-of-
+# correct — a regression re-breaks it to 'J\Q' and this FAILs.
+- {page: "131", pno: 156, type: present, text: "the same root with gyn, which means",
+   note: "shifted-CMap 3-char run 'J\\Q'→'gyn' repaired; p.131 render verified"}
+
+# --- disputed-page defenses (gate 25b): the appendix essay 'Buddha in the
+# Qurʾān?' (physical pp.138-161 = printed 113-136) + Bibliography (164-168 =
+# 139-143) are engine-disputed (shifted-CMap); each render-verified. Labels
+# 115/126/139 are already pinned above.
+- {page: "113", pno: 138, type: present, text: "the Dalai Lama emphasizes similar virtues",
+   note: "essay body p.113 render verified; disputed-page defense"}
+- {page: "114", pno: 139, type: present, text: "an Iraqi bookseller and author of the famous work",
+   note: "essay body p.114 render verified; disputed-page defense"}
+- {page: "116", pno: 141, type: present, text: "Shaykh Ibn Taymiyyah (d. 1255) believed that the Sabians",
+   note: "essay body p.116 render verified; disputed-page defense"}
+- {page: "117", pno: 142, type: present, text: "the Sabians of Asia Minor relied upon planets",
+   note: "essay body p.117 render verified; disputed-page defense"}
+- {page: "118", pno: 143, type: present, text: "The first Buddha to manifest in the world is known as Shakyamuni",
+   note: "essay body p.118 render verified; disputed-page defense"}
+- {page: "119", pno: 144, type: present, text: "a distance of approximately 700 years",
+   note: "essay body p.119 render verified; disputed-page defense"}
+- {page: "120", pno: 145, type: present, text: "Khidr the Green Ancient was my companion during that time",
+   note: "essay body p.120 render verified; disputed-page defense"}
+- {page: "121", pno: 146, type: present, text: "the story of Gautama Buddha, a prince who fled his palace",
+   note: "essay body p.121 render verified; disputed-page defense"}
+- {page: "122", pno: 147, type: present, text: "Imam al-Shahrastānī could see the parallels between the teachings of the Buddha",
+   note: "essay body p.122 render verified; disputed-page defense (paragraph opens on this page)"}
+- {page: "123", pno: 148, type: present, text: "Hsuan Tsang, visiting Balkh around the year 630",
+   note: "essay body p.123 render verified; disputed-page defense"}
+- {page: "124", pno: 149, type: present, text: "Book of Lands (Arabic: Kitab al-Buldan) by al-Hamadhani",
+   note: "essay body p.124 render verified; disputed-page defense"}
+- {page: "125", pno: 150, type: present, text: "Thomas W. Arnold, a British orientalist and professor of Islamic Studies",
+   note: "essay body p.125 render verified; disputed-page defense"}
+- {page: "127", pno: 152, type: present, text: "He was born a Christian, raised a Buddhist as a young boy",
+   note: "essay body p.127 render verified; disputed-page defense"}
+- {page: "128", pno: 153, type: present, text: "Complicating matters for Muslim-Buddhist relations is the reality that many Muslims tend to conflate veneration",
+   note: "essay body p.128 render verified; disputed-page defense (paragraph opens on this page)"}
+- {page: "129", pno: 154, type: present, text: "took jizyah from the Magians of Hajar and Oman",
+   note: "essay body p.129 render verified; disputed-page defense"}
+- {page: "130", pno: 155, type: present, text: "seek Common Ground between Islam and Buddhism",
+   note: "essay body p.130 render verified; disputed-page defense"}
+- {page: "132", pno: 157, type: present, text: "the Asian sages from the Buddha to Confucius",
+   note: "essay body p.132 render verified; disputed-page defense"}
+- {page: "133", pno: 158, type: present, text: "My own teacher, Shaykh Abdullah Bin Bayyah, once explained to me",
+   note: "essay body p.133 render verified; disputed-page defense"}
+- {page: "134", pno: 159, type: present, text: "Whoever hurts a non-Muslim citizen hurts me, and whoever hurts me has vexed God",
+   note: "essay body p.134 render verified; disputed-page defense"}
+- {page: "135", pno: 160, type: present, text: "why did you deprive My servant and your brother",
+   note: "essay body p.135 render verified; disputed-page defense"}
+- {page: "136", pno: 161, type: present, text: "the A Common Word initiative and the present Common Ground project",
+   note: "essay body p.136 render verified; disputed-page defense"}
+- {page: "140", pno: 165, type: present, text: "Glasse, Cyril. The New Encyclopedia of Islam. Walnut Creek, CA: AltaMira Press, 2003",
+   note: "bibliography p.140 render verified; disputed-page defense"}
+- {page: "141", pno: 166, type: present, text: "Ikram, S.M. History of Muslim Civilization in India and Pakistan",
+   note: "bibliography p.141 render verified; disputed-page defense"}
+- {page: "142", pno: 167, type: present, text: "Pallis, Marco. A Buddhist Spectrum",
+   note: "bibliography p.142 render verified; disputed-page defense"}
+- {page: "143", pno: 168, type: present, text: "Watt, W. Montgomery. The Faith and Practice of Al-Ghazali",
+   note: "bibliography p.143 render verified; disputed-page defense"}

@@ -65,3 +65,46 @@
 # The phantom-note fix (page-citation turnovers like '130.' forging notes that
 # blocked the ref queue) is NOT expressible here: its evidence lives in the
 # notes file, which has no page slice. Gate 3's note==ref count holds it.
+
+# --- disputed-page defenses (gate 25b): the back-matter index (physical
+# pp.386-405 = printed 375-394) is engine-disputed (a calibre PDF whose boxes
+# and encoding lied); each entry render-verified. Label 376 (physical 387) is
+# already pinned by the Muṡṭafā cell above.
+- {page: "375", pno: 386, type: present, text: "Saguna Brahman and Nirguna Brahman, 328n11",
+   note: "index p.375 render verified; disputed-page defense"}
+- {page: "377", pno: 388, type: present, text: "Brzezinski, Jan, 308n19",
+   note: "index p.377 render verified; disputed-page defense"}
+- {page: "378", pno: 389, type: present, text: "Evola, Julius, 295n1",
+   note: "index p.378 render verified; disputed-page defense"}
+- {page: "379", pno: 390, type: present, text: "Hegel, G.W.F., 54, 54n2, 102",
+   note: "index p.379 render verified; disputed-page defense"}
+- {page: "380", pno: 391, type: present, text: "Idel, Moseh, 297",
+   note: "index p.380 render verified; disputed-page defense"}
+- {page: "381", pno: 392, type: present, text: "McGinn, Bernard, 174",
+   note: "index p.381 render verified; disputed-page defense"}
+- {page: "382", pno: 393, type: present, text: "Merell-Wolff, Franklin, 260n60",
+   note: "index p.382 render verified; disputed-page defense"}
+- {page: "383", pno: 394, type: present, text: "Panikkar, Raimon, 34n16",
+   note: "index p.383 render verified; disputed-page defense"}
+- {page: "384", pno: 395, type: present, text: "Prothero, Stephen, 325n1",
+   note: "index p.384 render verified; disputed-page defense"}
+- {page: "385", pno: 396, type: present, text: "Schäfer, Peter, 258n55",
+   note: "index p.385 render verified; disputed-page defense"}
+- {page: "386", pno: 397, type: present, text: "the fundamental ambiguity inherent in the experience of sexual pleasure, 299n8",
+   note: "index p.386 render verified; disputed-page defense"}
+- {page: "387", pno: 398, type: present, text: "on falling upward into knowledge, 200, 200n21",
+   note: "index p.387 render verified; disputed-page defense"}
+- {page: "388", pno: 399, type: present, text: "on the rapid expansion of Islam, 210-211, 211n44",
+   note: "index p.388 render verified; disputed-page defense"}
+- {page: "389", pno: 400, type: present, text: "on the resemblance of the word lā to a pair of scissors, 213",
+   note: "index p.389 render verified; disputed-page defense"}
+- {page: "390", pno: 401, type: present, text: "Shah-Kazemi, Reza, 222",
+   note: "index p.390 render verified; disputed-page defense"}
+- {page: "391", pno: 402, type: present, text: "Suzuki, Daisetz Teitaro: on four aspects of Buddha, 72-73",
+   note: "index p.391 render verified; disputed-page defense"}
+- {page: "392", pno: 403, type: present, text: "the Fourth Lateran Council (1215), 181-182",
+   note: "index p.392 render verified; disputed-page defense"}
+- {page: "393", pno: 404, type: present, text: "Weil, Simone, 17-18",
+   note: "index p.393 render verified; disputed-page defense"}
+- {page: "394", pno: 405, type: present, text: "Zhou Dunyi (1017-1073), 277",
+   note: "index p.394 render verified; disputed-page defense"}

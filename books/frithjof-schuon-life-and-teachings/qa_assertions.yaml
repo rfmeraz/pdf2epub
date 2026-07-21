@@ -29,3 +29,18 @@
 - {page: "185", type: block_present,
    text: "Frieburg i. Br.: Aurum Verlag, 1989 [Urbesinnung: Das Denken des Eigentlichen].",
    note: "packet 034: bibliography deep wraps split mid-bracket by list_sub; marker:hang now joins them"}
+
+# --- disputed-page defenses (gate 25b): the index (physical pp.206-211 =
+# printed 191-196) is engine-disputed; each shipped entry render-verified ---
+- {page: "191", pno: 206, type: present, text: "Abhinavagupta, 90, 157",
+   note: "index p.191 render verified; disputed-page defense"}
+- {page: "192", pno: 207, type: present, text: "Chittick, William C., 177",
+   note: "index p.192 render verified; disputed-page defense"}
+- {page: "193", pno: 208, type: present, text: "Gilis, Charles-André, 159",
+   note: "index p.193 render verified; disputed-page defense"}
+- {page: "194", pno: 209, type: present, text: "Le Saux, Henri, 36, 59, 65, 155",
+   note: "index p.194 render verified; disputed-page defense"}
+- {page: "195", pno: 210, type: present, text: "Revel, Jean Francois, 155",
+   note: "index p.195 render verified; disputed-page defense"}
+- {page: "196", pno: 211, type: present, text: "Vitray-Meyerovitch, Eva de, 167",
+   note: "index p.196 render verified; disputed-page defense"}

@@ -3,8 +3,9 @@
 One entry per finished conversion: date, source PDF (sha256), decisions worth remembering,
 QA outcome, and anything the next conversion should learn from. Ten books are converted
 (eleven tracked configs — book-of-knowledge also ships an Arabic-glyph variant);
-`pdf2epub corpus` rebuilds and QAs all of them. Nine are finished through the mandatory
-reading QA; **the-mystics-of-islam's proofread pass is still pending** (see its entry).
+`pdf2epub corpus` rebuilds and QAs all of them, all through the mandatory reading QA
+(the-mystics-of-islam had its /proofread-epub round 1 on 2026-07-21; a few
+lower-impact structural items are noted there for a round 2).
 
 ## sufism-veil-and-quintessence — 2026-07-09
 
@@ -995,10 +996,11 @@ QA PASS with baseline updated. Flagged for human review: urn:uuid identifier
 (no ebook ISBN printed), cover from PDF p.1 render, kicker-joined h1 texts,
 plate-interrupted sentences kept in print order.
 
-## The Mystics of Islam — Reynold A. Nicholson (World Wisdom, 2002) — 2026-07-20 — **INCOMPLETE: proofread pending**
+## The Mystics of Islam — Reynold A. Nicholson (World Wisdom, 2002) — 2026-07-20
 
-*(Ledger entry reconstructed 2026-07-21 from the tracked artifacts — book.yaml,
-build metrics, commit 638e141 — the conversion session predates it.)*
+*(Structure/QA reconstructed 2026-07-21 from the tracked artifacts — book.yaml,
+build metrics, commit 638e141 — the conversion session predates it; the
+disputed-page defenses and proofread pass below were done 2026-07-21.)*
 
 Source: `The Mystics of Islam (2003).pdf`, sha256 `d9515c30…f805403`, 145 pages
 (printed folio 1 = p14). A quotation- and verse-dense Sufi anthology: nearly the whole
@@ -1023,15 +1025,39 @@ pp.134–137).
 895 quote lines / 155 quote paras / 75 runs; 447 verse lines / 57 groups / 55 stanzas;
 24 list items; 33 noterefs; 394 dehyphenated; 6 column pages (430 lines); 9 keep_hyphens.
 
-### QA outcome — automated only; the mandatory reading QA has NOT run
-epubcheck clean; qa Overall: PASS; baseline entry seeded 2026-07-21 with the
-review-#90 reseed; corpus 11/11 QA PASS. **But the mandatory `/proofread-epub`
-blind-reader pass is not recorded**: `pdf2epub proofread` packets were generated
-(build/the-mystics-of-islam.proofread/, 145pp in packets + PROTOCOL.md), yet no
-reader pass, findings, or verification exist in any tracked artifact, and the
-gate-24 fixture is still the scaffolded `[]`. Per the canonical process a
-conversion is NOT done until the reading QA ends clean or escalates — this book
-is converted-and-QA'd but **unproofread**; run the proofread pass (and land its
-accepted findings as fixture cells) before treating it as finished. Also open:
-gate 25b lists engine-disputed pp.138–143 without a machine-checkable defense
-(advisory).
+### QA outcome
+epubcheck clean; qa Overall: PASS; corpus 11/11 QA PASS. The engine-disputed
+index (physical pp.138–143 = printed 125–130) now carries gate-25b defenses:
+six render-verified assertion cells, one distinctive index entry per page
+(gate 25b 0 undefended).
+
+### Reading QA — /proofread-epub round 1 (2026-07-21)
+21 packets, 18 blind readers (~40k words); 32 findings raised. Adjudicated
+against the print renders:
+
+- **Fixed (4 confirmed defect classes; each celled in qa_assertions.yaml):**
+  - *verse-noteref fusion* (p.87/88 Rumi): a verse line ending in a footnote
+    marker (`…clean.¹`) parked its U+2028 line separator on the marker run;
+    `_attach_noterefs` rstripped it and re-inserted a *space*, fusing the two
+    verse lines. **Code fix** (preserve the separator) + unit test — general,
+    helps any verse-with-noteref book.
+  - *bad-dehyphenation* (p.68): `not-being` → `keep_hyphens`.
+  - *list-continuation split* (p.43 stages-of-fanâ): each numbered item's
+    flush-left continuation (x0 left of the `1.` stop) dropped out of the list
+    member test and split off → `flow.overrides` `join` ×3.
+  - *verse over-extension* (p.75): the "My heart has become capable…" poem's
+    verse spec absorbed Nicholson's prose intro and the following prose
+    quotation → `class:prose` + `class:quote` overrides.
+- **Refuted as-printed** (the print is ground truth; this 1914 text has genuine
+  internal inconsistencies): p.64 quatrain line-break ("…the sun Lies ruined,"
+  IS how the print sets it); "The Muslim *Legend of the Moslem Saints*"; the
+  diacritic cluster — the render at p.51 shows the print itself writing both
+  *ma‘rifat* and *mârifat*, and p.102 "Qadîb al-Bân", so the flagged
+  "inconsistencies" are the original's, faithfully reproduced.
+- **Deferred to round 2** (confirmed or unadjudicated, lower impact): a few
+  cross-page saying/`[bracket]`-gloss fusions (Niffarî, pp.55–56/37), the
+  Mohammed/Traditions index sub-entry run-on (p.128), five bibliography
+  annotation-tail splits (pp.121/123 — same flush-continuation shape as the
+  p.43 list), the p.95 verse turn, and a handful of low-confidence punctuation
+  items (a missing index comma "15 22" p.130, "p. 164" note seam). None is a
+  content-loss risk; they want another proofread round.

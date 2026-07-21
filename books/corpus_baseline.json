@@ -241,7 +241,7 @@
     },
     "flow": {
      "anchor-inline": 114,
-     "cmap-repaired-runs": 349,
+     "cmap-repaired-runs": 350,
      "cmap-unknown-chars": 0,
      "ctrl-stripped": 46,
      "dehyphenated": 807,
@@ -476,12 +476,12 @@
    "pdf_sha256": "5a4c08c2d379aac5f73641fdc4da1f863c6f4e6148ff4effe81d43d3a11cc71c"
   },
   "books/the-mystics-of-islam/book.yaml": {
-   "config_sha256": "101a35f3f00f8970fbe880d93b11d97a3b8f7c8a94014e50cbea639b363985e2",
+   "config_sha256": "70894c63ba7c1aaa46a03dcd94ebac6caecac8c0afc8b8ac15625546238a7ee4",
    "metrics": {
     "config": {
      "adjudications": 1,
-     "flow_overrides": 486,
-     "keep_hyphens": 9
+     "flow_overrides": 491,
+     "keep_hyphens": 10
     },
     "extract": {
      "bidi_moved": 0,
@@ -496,22 +496,22 @@
      "column-pages": 6,
      "column-spanners": 2,
      "ctrl-stripped": 0,
-     "dehyphenated": 394,
+     "dehyphenated": 393,
      "furniture-folio": 129,
      "furniture-head": 119,
      "inline-dehyphenated": 0,
      "ligatures": 0,
      "list-items": 24,
      "list-lines": 71,
-     "list-paras": 48,
+     "list-paras": 45,
      "note-continuation": 2,
      "noterefs": 33,
-     "quote-lines": 895,
+     "quote-lines": 896,
      "quote-paras": 155,
      "quote-runs": 75,
      "stray-grave-stripped": 0,
      "verse-groups": 57,
-     "verse-lines": 447,
+     "verse-lines": 445,
      "verse-stanzas": 55,
      "wrongscript-repaired": 0
     },

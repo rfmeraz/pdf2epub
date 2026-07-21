@@ -171,3 +171,18 @@
 - {page: "38", type: present, text: "you should he completely detached",
    note: "AS PRINTED — p59 render. Pinned so a future 'repair' cannot silently
           rewrite the book's own words"}
+
+# --- disputed-page defenses (gate 25b) for the index pages NOT already covered
+# above (219/220/225 are pinned by the cells above; these add 221-224, 226-227).
+- {page: "221", pno: 242, type: present, text: "Gandhi, Mahatma, 151-152, 216",
+   note: "index p.221 render verified; disputed-page defense"}
+- {page: "222", pno: 243, type: present, text: "Gillet, Archimandrite Lev, 124-133, 216",
+   note: "index p.222 render verified; disputed-page defense"}
+- {page: "223", pno: 244, type: present, text: "Johnston, William, 178-179, 217",
+   note: "index p.223 render verified; disputed-page defense"}
+- {page: "224", pno: 245, type: present, text: "Moses Cordovero, 29, 30, 214",
+   note: "index p.224 render verified; disputed-page defense"}
+- {page: "226", pno: 247, type: present, text: "Thomas Aquinas, Saint, 182, 186",
+   note: "index p.226 render verified; disputed-page defense"}
+- {page: "227", pno: 248, type: present, text: "Yellowtail, Thomas, 145, 216",
+   note: "index p.227 render verified; disputed-page defense"}

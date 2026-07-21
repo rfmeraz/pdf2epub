@@ -1,7 +1,40 @@
 # Gate-24 regression assertions — book-of-knowledge, book.arabic.yaml variant
 # (see qa/assertions.py). A TEST fixture, not a build input.
-# Authored empty: the Arabic-glyph variant has no print-verified fixes of its own
-# yet — the base config's cells pin honorific READINGS the variant intentionally
-# ships as Arabic glyphs, so they do not transfer. Proofread lands cells here as
-# variant-specific findings are accepted.
-[]
+# The base config's cells pin honorific READINGS the variant intentionally ships
+# as Arabic glyphs, so they do not transfer; proofread lands variant-specific
+# findings here.
+#
+# Disputed-page defenses (gate 25b): the back-matter index (physical pp.322-336
+# = printed 275-289) is engine-disputed. Entries verified against the print
+# render for THIS variant's shipped text; snippets are honorific-free plain
+# names so they hold regardless of the glyph substitutions elsewhere.
+- {page: "275", pno: 322, type: present, text: "24:35, 248, 263",
+   note: "Qurʾānic Verses Cited p.275 render verified (arabic variant); disputed-page defense"}
+- {page: "276", pno: 323, type: present, text: "58:11, 3, 152",
+   note: "Qurʾānic Verses Cited p.276 render verified (arabic variant); disputed-page defense"}
+- {page: "277", pno: 324, type: present, text: "Abraham, 7, 68",
+   note: "index p.277 render verified (arabic variant); disputed-page defense"}
+- {page: "278", pno: 325, type: present, text: "Antichrist, 171",
+   note: "index p.278 render verified (arabic variant); disputed-page defense"}
+- {page: "279", pno: 326, type: present, text: "David, 10, 176",
+   note: "index p.279 render verified (arabic variant); disputed-page defense"}
+- {page: "280", pno: 327, type: present, text: "Gabriel, 49, 79",
+   note: "index p.280 render verified (arabic variant); disputed-page defense"}
+- {page: "281", pno: 328, type: present, text: "Hārūn al-Rashīd, 72, 74",
+   note: "index p.281 render verified (arabic variant); disputed-page defense"}
+- {page: "282", pno: 329, type: present, text: "Jesus, 18, 86, 101",
+   note: "index p.282 render verified (arabic variant); disputed-page defense"}
+- {page: "283", pno: 330, type: present, text: "Luqmān, 13, 215",
+   note: "index p.283 render verified (arabic variant); disputed-page defense"}
+- {page: "284", pno: 331, type: present, text: "Moses, 68, 102, 145",
+   note: "index p.284 render verified (arabic variant); disputed-page defense"}
+- {page: "285", pno: 332, type: present, text: "Ramaḍān, 33, 63, 102",
+   note: "index p.285 render verified (arabic variant); disputed-page defense"}
+- {page: "286", pno: 333, type: present, text: "Sahl al-Tustarī, 178, 211",
+   note: "index p.286 render verified (arabic variant); disputed-page defense"}
+- {page: "287", pno: 334, type: present, text: "Solomon, 10, 68, 73",
+   note: "index p.287 render verified (arabic variant); disputed-page defense"}
+- {page: "288", pno: 335, type: present, text: "Usāma b. Zayd, 173",
+   note: "index p.288 render verified (arabic variant); disputed-page defense"}
+- {page: "289", pno: 336, type: present, text: "Zayd b. Thābit, 143, 234",
+   note: "index p.289 render verified (arabic variant); disputed-page defense"}

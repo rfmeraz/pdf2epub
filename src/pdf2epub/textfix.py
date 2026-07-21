@@ -246,6 +246,16 @@ def is_shifted_run(text: str, highmap: dict[str, str] | None = None) -> bool:
     if _SHIFTED_WORD_RE.fullmatch(t):
         shifted = "".join(chr(ord(c) + 0x1D) for c in t)
         return bool(re.fullmatch(r"[A-Za-z][a-z]+", shifted))
+    # a THREE-char isolated run is normally too short to tell a shifted word
+    # from a Roman numeral ('III' un-shifts to the word-shaped 'fff'), so the
+    # regex above requires >=4. But '[' '\' ']' (0x5b-0x5d) are the shifted
+    # forms of x/y/z and never occur inside a real alphabetic token, so a
+    # 3-char in-range run holding one is unambiguously shifted — I&B p.131
+    # italic 'gyn' shipped as 'J\Q' (the un-repaired etymology of 'kin').
+    if len(t) == 3 and re.fullmatch(r"[\x24-\x5f]{3}", t) \
+            and any("\x5b" <= c <= "\x5d" for c in t):
+        shifted = "".join(chr(ord(c) + 0x1D) for c in t)
+        return bool(re.fullmatch(r"[A-Za-z][a-z]+", shifted))
     # highmap-aware word shape: 'VDED¶' (= 'sabaʾ', I&B p.140) mixes shifted
     # letters with verified-highmap diacritics, so the fullmatch above misses
     # it. Same precision bar: >=4 in-range chars whose un-shift alone is a

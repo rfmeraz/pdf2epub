@@ -367,6 +367,34 @@ def test_cross_page_quote_continues(tmp_path):
     assert len(_paras(res.flow)) == 2
 
 
+def test_verse_line_noteref_keeps_line_separator():
+    # a verse line ending in a footnote marker parks the U+2028 line separator
+    # on the marker run; _attach_noterefs must re-insert the SEPARATOR (not a
+    # space) or the two verse lines fuse (Mystics p.87 Rumi couplet)
+    from collections import Counter
+
+    from pdf2epub.core.model import FlowDoc, Note, Paragraph, RunFormat, SourceRef, TextRun
+    from pdf2epub.flowbuilder import _attach_noterefs
+
+    SEP = "\u2028"
+    para = Paragraph(
+        style="s",
+        items=[TextRun("Thou freest, and makest the tablets clean."),
+               TextRun("5" + SEP, RunFormat(position="superscript")),
+               TextRun("Spirits are set free every night from this cage,")],
+        src=SourceRef("p0100", 0))
+    para.block_class = "verse"
+    flow = FlowDoc(blocks=[para],
+                   notes={"n1": Note(note_id="n1", paragraphs=[])},
+                   style_usage=Counter(), text_dests={})
+    _attach_noterefs(flow, [(100, "5", "n1")], {("p0100", 0): 100},
+                     11.0, Counter())
+    txt = para.text()
+    assert SEP + "Spirits are set free" in txt      # separator preserved
+    assert "clean. Spirits" not in txt              # not fused to a space
+    assert "clean.Spirits" not in txt
+
+
 def test_noteref_keeps_join_separator(tmp_path):
     # the marker run carries the join separator appended by _append_line;
     # replacing it with a NoteRef must leave a space run behind, or the
@@ -524,6 +552,19 @@ def test_is_shifted_run_wordshape():
     # junk, digits to capitals, lowercase is outside the shifted range
     for real in ("BIBLIOGRAPHY", "COPYRIGHT", "2004", "$40,50%", "Fig.7",
                  "plain text", "NNW-by-W"):
+        assert not is_shifted_run(real), real
+
+
+def test_is_shifted_run_three_char_telltale():
+    from pdf2epub.textfix import is_shifted_run, repair_shifted_cmap
+
+    # I&B p.131 italic 'gyn' shipped as 'J\\Q' — a 3-char run the >=4 rule
+    # missed; the '\\' (shifted 'y') is the telltale that makes it unambiguous
+    assert is_shifted_run("J\\Q")
+    assert repair_shifted_cmap("J\\Q", {})[0] == "gyn"
+    # 3-char tokens WITHOUT a [ \\ ] telltale must never be touched — Roman
+    # numerals un-shift to word-shaped junk (III->fff) and would corrupt
+    for real in ("III", "VII", "XII", "USA", "FBI", "WKH", "50%", "(a)"):
         assert not is_shifted_run(real), real
 
 

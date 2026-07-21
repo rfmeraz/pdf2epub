@@ -10,3 +10,22 @@
 - {page: "ix",  type: present, text: "vis-à-vis",         note: "keep_hyphens compound (not visàvis)"}
 - {page: "73",  type: present, text: "lightning-like",   note: "keep_hyphens compound (not lightninglike)"}
 - {page: "90",  type: present, text: "non-theological",  note: "keep_hyphens compound (not nontheological)"}
+
+# --- disputed-page defenses (gate 25b): the two-column index (physical
+# pp.206-213 = printed 187-194) is engine-disputed; each entry render-verified.
+- {page: "187", pno: 206, type: present, text: "Athanasian Creed, 161",
+   note: "index p.187 render verified; disputed-page defense"}
+- {page: "188", pno: 207, type: present, text: "Coomaraswamy, Ananda, 98, 168",
+   note: "index p.188 render verified; disputed-page defense"}
+- {page: "189", pno: 208, type: present, text: "Heraclitus, 89, 165",
+   note: "index p.189 render verified; disputed-page defense"}
+- {page: "190", pno: 209, type: present, text: "Khayyam, Omar, 19, 153",
+   note: "index p.190 render verified; disputed-page defense"}
+- {page: "191", pno: 210, type: present, text: "Massignon, Louis, 76, 164",
+   note: "index p.191 render verified; disputed-page defense"}
+- {page: "192", pno: 211, type: present, text: "Pythagoras, 89, 165",
+   note: "index p.192 render verified; disputed-page defense"}
+- {page: "193", pno: 212, type: present, text: "Tiruvalluvar, 85, 165",
+   note: "index p.193 render verified; disputed-page defense"}
+- {page: "194", pno: 213, type: present, text: "Yoga-Vasishtha, 28, 155",
+   note: "index p.194 render verified; disputed-page defense"}

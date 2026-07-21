@@ -1652,3 +1652,57 @@ quote heals + anchor-order improvements accepted as intentional).
 Verification: pytest -q **458 passed**; full corpus **11/11 built, 11/11 QA
 PASS**; every byte change confirmed against a clean-HEAD diff as an intended
 heal (baseline NOT yet re-seeded — see above).
+
+## Disputed-page defenses + Mystics proofread + two heals (2026-07-21)
+
+Two follow-on tasks after review #96: defend every gate-25b engine-disputed
+page across the corpus, and run the mandatory reading QA for the-mystics-of-islam
+(which had shipped un-proofread).
+
+- **25b disputed-page defenses — all 11 configs now 0 undefended.** ~100
+  back-matter index/bibliography/notes pages (BoK ×2 variants, I&B, Keys,
+  Sufism, PWC, Schuon, Mystics) were engine-disputed (shifted-CMap or dense
+  transliteration the two extractors decode differently) and excluded from
+  gate-25 fidelity. Each now carries a render-verified gate-24 `present` cell
+  pinning one distinctive entry. **Method that scales and stays honest:** dump
+  the shipped normalized per-page text, render each page, and pick a snippet
+  that is BOTH an exact substring of the shipped text AND legible/correct in the
+  print render — copy it from the dump (never retype from the image; diacritics).
+  The gate hard-checks presence, so a wrong snippet fails loudly; the render
+  check is what stops pinning plausible-but-garbled text. Fanned out one
+  verifier subagent per config; spot-checked. Watch the block-vs-char slice:
+  gate 24 matches on the BLOCK slice (a paragraph belongs to the page it
+  *starts* on), so a snippet from a paragraph that opened on the previous page
+  fails — pick one whose paragraph opens on the target page (two I&B essay cells
+  hit this).
+- **A real garble the defense pass caught: I&B p.131 `gyn` → `J\Q`.** The
+  shifted-CMap 3-char italic word 'gyn' (etymology of 'kin') shipped un-repaired
+  because `_SHIFTED_WORD_RE` requires ≥4 in-range chars (precision: 'III'
+  un-shifts to the word-shaped 'fff'). Added a 3-char branch gated on a `[`/`\`/`]`
+  telltale (the shifted forms of x/y/z, which never occur inside a real
+  alphabetic token) — catches `J\Q` without touching Roman numerals/acronyms.
+- **Verse line ending in a noteref FUSES with the next line.** `_append_line`
+  parks the verse U+2028 separator on the *last run* of a verse line — which,
+  for '…clean.¹', is the superscript marker run ('1 '). `_attach_noterefs`
+  did `trail = text[len(rstrip):]` (U+2028 is whitespace → eaten) and
+  re-inserted a plain space, so the two verse lines rendered as one (Mystics
+  p.87/88 Rumi). Fix: re-insert the SEPARATOR, not a space, when trail holds a
+  U+2028. General code fix + unit test; gate 23 verse-line count moved 444→445.
+- **Proofread refutes are as important as fixes.** Mystics' 1914 text has
+  genuine internal inconsistencies — the p.51 render shows the PRINT itself
+  setting both *ma‘rifat* and *mârifat*; the p.64 quatrain really breaks at
+  "…the sun Lies ruined,". A blind reader flags these as garble/mis-break; the
+  render refutes them (author's own / sic). Fixing them would corrupt the book.
+- **First-line-indented "lists" break the hang-list model.** The Mystics
+  stages-of-fanâ list sets its numbered entries at a first-line INDENT (x0=77)
+  with continuations FLUSH-left (x0=60, *left* of the entry stop). The list
+  member test (`x0 >= min(stops)-tol`) drops the flush continuation and it
+  splits off. Same shape orphaned five bibliography annotation tails. Round-1
+  patch was `flow.overrides join`; a general fix (recognize a below-stop flush
+  continuation as an item continuation) is the durable answer — deferred.
+
+Verification: pytest -q **464 passed**, ruff clean; corpus **11/11 built,
+11/11 QA PASS, all gate-25b 0 undefended**. Byte changes: I&B (gyn), Mystics
+(proofread fixes), and any verse-with-noteref book (the U+2028 heal) — all
+intended. Mystics proofread round 1 complete; a few lower-impact structural
+items deferred to round 2 (see CONVERSIONS.md).
