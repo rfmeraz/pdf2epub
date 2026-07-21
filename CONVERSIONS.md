@@ -1,10 +1,9 @@
 # Conversion ledger
 
 One entry per finished conversion: date, source PDF (sha256), decisions worth remembering,
-QA outcome, and anything the next conversion should learn from.
-
-(No conversions yet — the four validation books land here as they finish:
-book-of-knowledge, harmonious-unity, islam-and-buddhism, me-and-rumi.)
+QA outcome, and anything the next conversion should learn from. Ten books are converted
+(eleven tracked configs — book-of-knowledge also ships an Arabic-glyph variant);
+`pdf2epub corpus` rebuilds and QAs all of them.
 
 ## sufism-veil-and-quintessence — 2026-07-09
 
@@ -994,3 +993,36 @@ graded across 14 sheets ×2 passes, 6 figures dHash distance 0; corpus 10/10
 QA PASS with baseline updated. Flagged for human review: urn:uuid identifier
 (no ebook ISBN printed), cover from PDF p.1 render, kicker-joined h1 texts,
 plate-interrupted sentences kept in print order.
+
+## The Mystics of Islam — Reynold A. Nicholson (World Wisdom, 2002) — 2026-07-20
+
+*(Ledger entry reconstructed 2026-07-21 from the tracked artifacts — book.yaml,
+build metrics, commit 638e141 — the conversion session predates it.)*
+
+Source: `The Mystics of Islam (2003).pdf`, sha256 `d9515c30…f805403`, 145 pages
+(printed folio 1 = p14). A quotation- and verse-dense Sufi anthology: nearly the whole
+body (pp.14–133) is covered by ONE blocks.quotes spec (17pt insets, 10pt justified
+quotations), with 44 verse pages across two specs (base 17.2, turns 34.1, mixed
+convention) and two lists (numbered stages of illumination p.56; bibliography hangs
+pp.134–137).
+
+### Structure judgments
+- Printed Contents (p.6) definitive; outline is flat and padded with non-heading
+  Series/Copyright bookmarks → `nav_depth: 1`, rebuild, strip page numbers.
+- Footnotes: mixed markers — 30 numbered notes + three publisher's asterisk notes.
+- No PUA, no embedded fonts, no figure pages/regions; one adjudication
+  (embedded-image-uncovered p.4 — title-page colophon, all semantic text live).
+- **The heaviest per-line classification in the corpus**: 486 flow.overrides
+  (335/100pp — the previous high was I&B at 78.8): 401 `class:quote` (short quoted
+  sayings the justified-inset witness can't see), 67 `class:verse`, 10 `class:prose`.
+  The commit also landed semantic-block code fixes (blockshapes/flowbuilder) with
+  119 lines of new flow tests.
+
+### Flow metrics (build_metrics.json)
+895 quote lines / 155 quote paras / 75 runs; 447 verse lines / 57 groups / 55 stanzas;
+24 list items; 33 noterefs; 394 dehyphenated; 6 column pages (430 lines); 9 keep_hyphens.
+
+### QA outcome
+epubcheck clean; qa Overall: PASS. Gate-24 fixture is an authored `[]` (no
+print-verified fixes yet — proofread findings land cells as they come). Baseline entry
+seeded 2026-07-21 with the review-#90 reseed; corpus 11/11 QA PASS.

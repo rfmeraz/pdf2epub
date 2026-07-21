@@ -42,6 +42,8 @@ proceeds with safe defaults + handoff flags.
 ~/pyenv/bin/pdf2epub lines books/<slug>/book.yaml <page> [--render]   # RAW line indexes for flow.overrides
 ~/pyenv/bin/pdf2epub kindle books/<slug>/build/<slug>.epub [--out <path>]   # EPUB -> Kindle AZW3 via Calibre (post-process; optional)
 ~/pyenv/bin/pdf2epub corpus [--only <slug>] [--upto flow] [--strict] [--update-baseline]   # rebuild+QA all tracked configs; byte-compare + per-rule counter deltas — run before shipping any global rule
+~/pyenv/bin/pdf2epub validate books/<slug>/book.yaml   # full config load + completeness checks, no build
+~/pyenv/bin/pdf2epub verify books/<slug>/build/<slug>.epub   # EPUB <-> provenance-manifest hash + input-drift check
 
 ~/pyenv/bin/pytest -q                 # unit tests
 bash scripts/bootstrap.sh             # one-time machine setup (pip, epubcheck jar, fonts)
@@ -114,11 +116,19 @@ which no deterministic gate has.
 - book.yaml unknown keys are build errors; flow.overrides address RAW extract line indexes.
 - Commit messages: no AI attribution trailers (user preference).
 
-## Test books
+## Test corpus
 
-Five books validate the pipeline (see CONVERSIONS.md): book-of-knowledge (bookmark-rich,
-PUA honorifics — also an Arabic-glyph variant `book.arabic.yaml`, so six shipped EPUBs total),
-harmonious-unity (PDF-only rerun of idml2epub's test book — its idml2epub
-EPUB is the `qa --reference` benchmark, not an input), islam-and-buddhism (printed-TOC-only,
-digit footnotes), me-and-rumi (prepress quirks, lost spaces, asterisk footnotes),
-sufism-veil-and-quintessence (World Wisdom imprint back-matter relinking, engine-disputed pages).
+Ten converted books validate the pipeline — eleven tracked configs, since book-of-knowledge
+also ships an Arabic-glyph variant `book.arabic.yaml` (see CONVERSIONS.md for each book's
+ledger entry; `pdf2epub corpus` rebuilds and QAs them all). Each earned its place by
+teaching the pipeline something: book-of-knowledge (bookmark-rich, PUA honorifics,
+Qurʾānic-verse index), harmonious-unity (PDF-only rerun of idml2epub's test book — its
+idml2epub EPUB is the `qa --reference` benchmark, not an input), islam-and-buddhism
+(printed-TOC-only, digit footnotes, shifted-CMap repair), me-and-rumi (prepress quirks,
+lost spaces, asterisk footnotes), sufism-veil-and-quintessence (World Wisdom imprint
+back-matter relinking, engine-disputed pages), form-and-substance-in-the-religions
+(keep_hyphens compounds), keys-to-the-beyond (calibre-produced PDF whose boxes and
+encoding lied), pray-without-ceasing (phantom-space producer, four geometries),
+frithjof-schuon-life-and-teachings (photo plates as textless figure regions, five-way
+notes partition), the-mystics-of-islam (quotation/verse-dense; heaviest per-line
+classification — 486 overrides).

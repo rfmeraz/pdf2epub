@@ -96,8 +96,8 @@ is used for *verification and evidence*, never merged into the flow.
 
 ## Acceptance criteria
 
-- On the four current test books: census runs, OCR witness never fires (no disputed
-  pages beyond the already-adjudicated ones), builds byte-identical.
+- On the tracked corpus (`pdf2epub corpus`): census runs, OCR witness never fires (no
+  disputed pages beyond the already-adjudicated ones), builds byte-identical.
 - On a deliberately-degraded fixture (strip ToUnicode from a test PDF with `pikepdf` or
   render pages to images): census names the pathology; witness produces per-page text;
   structure report shows the three-way diff; build without judgments fails loudly

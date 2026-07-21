@@ -205,52 +205,27 @@ review's ordering is adopted where its argument is strong and adjusted where I d
 `[R]` reliability items live in [reliability-hardening.md](reliability-hardening.md), `[Q]` in
 [qa-methodology.md](qa-methodology.md), `[F]` are features.
 
-**SHIPPED 2026-07-12** (Tier 0 + most of Tier 1): config integrity (0a), test hermeticity (0b),
-transactional builds + provenance (0c/3), the page-aligned **fidelity gate 25** (Tier 1 #1),
-the **a11y readiness gate 26** (Tier 1 #2, automated portion — manual certification still
-deferred), CI + markers + hashed lockfile + ruff (Tier 1 #3), and the config validator +
-identity/revision metadata (Tier 1 #4). Corpus re-shipped: all six EPUBs rebuilt, `Overall:
-PASS`. Still open below: a11y **manual certification** + `conformsTo`; §6 body cross-refs;
-typogrify-lite; the PDF-era census (ocr-witness step 1); process limits (§5); tables/RTL/math.
+**Tier 0 + Tier 1 — ALL SHIPPED 2026-07-12** (compressed; full records in
+[reliability-hardening.md](reliability-hardening.md) / [qa-methodology.md](qa-methodology.md)):
+config integrity `0a` (FILL-ME-IN enforcement + dead-field removal — *ranked above the
+review's #4 placement because it was cheap and struck at the config-as-judgment
+doctrine*), test hermeticity `0b`, transactional build `0c`, the page-aligned **fidelity
+gate 25** `#1` (the review's "priority zero" — a gate that can't fail on a duplicated
+book is false assurance), the **a11y readiness gate 26** `#2` (*kept high, NOT demoted to
+the review's #5* — the EAA legal forcing function; `conformsTo` still gated behind the
+deferred manual certification), CI + tiers + lockfile + provenance manifest `#3`, and the
+config validator + identity/revision metadata `#4` (explicitly NOT a Pydantic rewrite).
+The whole corpus re-shipped with these: every EPUB rebuilt, `Overall: PASS`.
 
-**Tier 0 — cheap correctness fixes, do first (each ~hours, they're effectively bugs):**
-
-0a. `[R]` **Config integrity** ([reliability-hardening.md §1](reliability-hardening.md)) —
-    enforce FILL-ME-IN (the promise at `initcmd.py:5` is currently a lie; 3/5 tracked drafts
-    load with `title: FILL-ME-IN`), and reject/remove the seven dead config fields. Protects
-    the "config = applied judgment" doctrine directly; near-free. *Ranked above the review's
-    #4 placement because it's cheap and strikes at a core doctrine.*
-0b. `[R]` **Test hermeticity** ([reliability-hardening.md §4](reliability-hardening.md)) —
-    drop the `idml2epub` sibling-repo import in `test_lang.py:35`; fix `test_cdp.py` to skip on
-    Chrome *launch* failure, not just absence. Two isolated bug-fixes; the CI/lockfile buildout
-    (same §) is the larger follow-on in Tier 1.
-0c. `[R]` **Transactional build** ([reliability-hardening.md §2](reliability-hardening.md)) —
-    package to a temp path, `os.replace` only after epubcheck passes. Small; stops an invalid/
-    stale EPUB from sitting at the canonical path.
-
-**Tier 1 — top substantive items, ahead of new features:**
-
-1. `[Q]` **Page-aligned fidelity gate** ([qa-methodology.md §3](qa-methodology.md)) — the
-   review's "priority zero", and I agree it's the #1 substantive item. Recall+precision+order+
-   duplication over the existing page anchors; folds in the disputed-page machine-defense
-   requirement (66k/27k/13.6k chars currently defended by one heading assertion). Cheap
-   (anchors exist), and it closes a hole in the project's central "validated" claim — a gate
-   that can't fail on a duplicated book is false assurance.
-2. `[F]` **A11y — automated readiness gate** ([semantic-polish.md #2](semantic-polish.md)) —
-   **kept high, NOT demoted to the review's #5.** It has an external legal forcing function
-   (EU Accessibility Act in force 2025-06-28) and is ~80% built; the Ace gate + alt-coverage +
-   metadata is small. Refinement adopted from the review: ship *automated readiness* now but
-   assert `dcterms:conformsTo` ONLY behind a recorded *manual* certification (Ace can't verify
-   WCAG alone) — so this splits into a near-term gate (here) and a later certification workflow.
-3. `[R]` **CI + test tiers + lockfile + provenance manifest** ([reliability-hardening.md
-   §4](reliability-hardening.md), [§2](reliability-hardening.md)) — the substrate that keeps
-   items 0–2 from silently regressing, plus the `{slug}.manifest.json` the byte-reproducible
-   claim implies. Medium effort; foundational.
-4. `[R]` **Config validator + schema_version + package identity/revision metadata**
-   ([reliability-hardening.md §1](reliability-hardening.md), [§3](reliability-hardening.md)) —
-   `pdf2epub config validate`; persistent book identifier (not slug-derived UUID);
-   `dcterms:modified` from a release epoch, not the print year. Incremental on the existing
-   parser — explicitly NOT a Pydantic rewrite.
+**SHIPPED 2026-07-13 → 07-21** (most of Tier 2 #6): the corpus **doubled** — five new
+conversions (form-and-substance 07-13, keys-to-the-beyond 07-14, pray-without-ceasing
+07-14, frithjof-schuon 07-20, the-mystics-of-islam 07-20; see CONVERSIONS.md), each
+landing corpus-general pipeline fixes — and the aggregate-metrics half shipped 2026-07-19
+as **`pdf2epub corpus`** (rebuild + QA every tracked config, byte-compare, per-rule
+counter deltas vs a tracked baseline; gate 24 now fails on a missing fixture). Ten books /
+eleven tracked configs. Still open below: a11y **manual certification** + `conformsTo`;
+§6 body cross-refs; typogrify-lite; the PDF-era census (ocr-witness step 1); process
+limits (§5); tables/RTL/math.
 
 **Tier 2 — features & continuous quality:**
 
@@ -258,8 +233,10 @@ typogrify-lite; the PDF-era census (ocr-witness step 1); process limits (§5); t
    it is **already spec'd as [ocr-witness.md](ocr-witness.md) step 1** (pure metadata reading,
    always-on). Pull it forward independently of the OCR witness: cheap legacy-backlist
    insurance, a fact on page one of the structure report.
-6. **Broader holdout corpus + aggregate quality metrics** — build/QA more real titles, track
-   aggregate fidelity over time; continuous, medium value.
+6. **Broader holdout corpus + aggregate quality metrics** — **largely SHIPPED** (see
+   "SHIPPED 2026-07-13 → 07-21" above: corpus doubled to ten books, `pdf2epub corpus`
+   tracks byte-changes + per-rule counter deltas). What remains is continuous: keep
+   converting titles; each conversion's fixes are probed corpus-wide before shipping.
 7. `[F]` **§6 body cross-references** — auto-link "see p. N" / "fig. 3" / "ch. 2"; the cheapest
    open *feature*, reusing the exact `RunFormat.link → resolve_crossref_links` chain the index
    locators now use (high-precision, per-book opt-in, WARN-and-skip the rest). Below the
@@ -283,5 +260,6 @@ typogrify-lite; the PDF-era census (ocr-witness step 1); process limits (§5); t
 
 **Cross-cutting (not a numbered slot):** the maintainability extraction
 ([reliability-hardening.md §6](reliability-hardening.md)) — flowbuilder/emitter/config/QA-runner
-concentration — is gated on characterization tests (Tier 1 item 3) and done *alongside* the
+concentration — now has its characterization net (the 2026-07-19 corpus snapshots:
+byte-compare + counter deltas across eleven configs) and is done *alongside* the
 first big content feature, never as a standalone rewrite.

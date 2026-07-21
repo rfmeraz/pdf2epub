@@ -1,119 +1,69 @@
 # Semantic-EPUB polish package
 
-Status: spec'd, not implemented. Three independent items, individually shippable, in
-priority order. Shared goal: close the gap between "passes epubcheck" and "excellent
+Status: **#1 SHIPPED 2026-07-11; #2 automated readiness SHIPPED 2026-07-12 (gate 26)**;
+open: #2's manual-certification workflow (required before any `conformsTo` claim) and
+#3 typogrify-lite. Shared goal: close the gap between "passes epubcheck" and "excellent
 semantic EPUB" using machinery the pipeline already has (page anchors, endnote
 apparatus, textfix counting).
 
-## 1. Linked index locators
+## 1. Linked index locators — SHIPPED
 
-**IMPLEMENTED 2026-07-11** (`src/pdf2epub/index_locators.py`; opt-in via
-`flow.columns[].index: true` or the new `index` role; DAISY `<section
-epub:type="index">` container; guarded page-anchor linking + advisory
-`index-locator-unlinked`; BoK ships 3770 linked locators, epubcheck clean, gates
-4/19/Overall PASS). Deferred: aria-label on ranges, roman-numeral fm locators,
-and Me & Rumi's index pages (a separate conversion effort that now inherits
-this). See NOTES.md "Linked index locators + Kindle output (2026-07-11)".
+**Shipped 2026-07-11** (`src/pdf2epub/index_locators.py`; opt-in via
+`flow.columns[].index: true` or the `index` role; DAISY `<section epub:type="index"
+role="doc-index">` container per https://kb.daisy.org/publishing/docs/html/indexes.html;
+guarded page-anchor linking through the existing `pg-<label>` registry + advisory
+`index-locator-unlinked` for locators outside the page-list). BoK ships 3770 linked
+locators; epubcheck clean, gates 4/19/Overall PASS. Numbers remain the printed text —
+linking wraps, never rewrites. The IDPF EPUB Indexes package machinery was deliberately
+NOT implemented (dead spec; DAISY KB concurs). See NOTES.md "Linked index locators +
+Kindle output (2026-07-11)".
 
-**Problem.** Back-of-book indexes ship (via `flow.columns`) as plain paragraphs whose
-page numbers are dead text. The DAISY knowledge base's recommended shape is an index
-whose every locator hyperlinks to an anchor at the referenced location
-(https://kb.daisy.org/publishing/docs/html/indexes.html) — and we already emit an
-anchor for every printed page (`epub:type="pagebreak"`, complete monotone page-list,
-exact inline seams since 2026-07-09). This is the highest-leverage polish item: it
-makes the shipped index *better than print* and is the prerequisite for shipping
-Me & Rumi's currently-excluded 62 index pages (375–436) well.
+**Deferred residuals:** aria-label on ranges (`49–51` → "49 to 51"), roman-numeral
+front-matter locators (kept unlinked, counted), and Me & Rumi's currently-excluded 62
+index pages (375–436) — a separate conversion effort that now inherits the linking for
+free.
 
-**Design.**
-- At emit time, for paragraphs on `flow.columns` pages (and any paragraph carrying a
-  new `index-entry` role), tokenize trailing/embedded locator lists: `\d+(?:[–-]\d+)?`
-  sequences separated by `, ` after the entry text. Wrap each in
-  `<a href="<file>#pg-<label>">` resolved through the existing page-anchor registry
-  (emitter's `pagebreaks` records + nav page-list builder in `core/nav.py:104-110`).
-- Ranges link to the FIRST page's anchor with an accessible label:
-  `<a href="...#pg-49" aria-label="49 to 51">49–51</a>` (DAISY pattern).
-- Locators referencing pages outside the page-list (roman-numeral fm refs, "n." note
-  suffixes like `189n.4`) keep the printed text unlinked — WARN once per book with
-  counts (`index-locator-unlinked`, ADVISORY).
-- Container semantics: the index section's wrapper gains `epub:type="index"
-  role="doc-index"`. Do NOT implement the IDPF EPUB Indexes package machinery — the
-  spec is dead in the field (DAISY KB: "no need to follow the package document
-  identification requirements").
-- Numbers must remain the printed text (never-rewrite); linking wraps, never rewrites.
+## 2. EAA / accessibility conformance — automated readiness SHIPPED; certification OPEN
 
-**QA.** New check inside an existing gate or a small new gate: every emitted index
-locator link resolves to an existing id (epubcheck catches broken hrefs, but pre-empt
-with a targeted check listing per-page counts); gate 19 (Qurʾānic index) is unaffected
-— it reads text, and its (sura, verse, pages) parse must be taught to see through `<a>`
-wrappers (it uses text extraction, so likely no change; verify).
-
-**Integration points**: `core/emit_xhtml.py` (locator tokenizer at contents/columns
-emission), `core/nav.py` (anchor registry already exists), `qa/quran.py` (verify
-parse), `warnqueue.py` (advisory code), tests: BoK pp.322–336 fixture (132 verse-index
-entries + general index with sub-entries and turnover joins — real geometry in
-`books/book-of-knowledge/build/ir/`).
-
-**Acceptance**: BoK rebuild ships both indexes fully linked (spot-verify 35:8→35:28
-seam entries land on pp.322–323 anchors); M&R indexes conversion (separate effort)
-inherits it for free.
-
-## 2. EAA / accessibility conformance
-
-**Automated readiness SHIPPED 2026-07-12 as gate 26** (`src/pdf2epub/qa/a11y.py` + `qa/ace.py`,
-pinned via `tools/ace/package.json`): stricter alt coverage (role=presentation OR non-empty alt,
-not qa_imagecheck's permissive empty-is-decorative) + accessibility-metadata presence + Ace by
-DAISY gating on critical/serious (absence skips, a crash/timeout FAILS). The baseline surfaced a
-real **serious** `epub-pagesource` violation on every page-numbered book — fixed by emitting
-`<meta property="pageBreakSource">` + the `printPageNumbers` feature (packager); 3 moderate
-`heading-order` findings remain (non-gating, documented). All six books PASS. **`dcterms:conformsTo`
-is deliberately NOT emitted** — the manual-certification workflow below is still required for a
-conformance claim and remains deferred.
-
-**Problem.** The European Accessibility Act has been in force for products/services
-since 2025-06-28; the W3C's EPUB-a11y↔EAA mapping (Group Note 2025-08-28,
+**Automated readiness shipped 2026-07-12 as gate 26** (`src/pdf2epub/qa/a11y.py` +
+`qa/ace.py`, pinned via `tools/ace/package.json`): stricter alt coverage
+(role=presentation OR non-empty alt — not qa_imagecheck's permissive
+empty-is-decorative) + accessibility-metadata presence + Ace by DAISY gating on
+critical/serious (absence skips; a crash/timeout FAILS — the epubcheck-jar precedent).
+The baseline run surfaced a real **serious** `epub-pagesource` violation on every
+page-numbered book — fixed by emitting `<meta property="pageBreakSource">` + the
+`printPageNumbers` feature in the packager. Context: the European Accessibility Act has
+been in force since 2025-06-28; the W3C's EPUB-a11y↔EAA mapping (Group Note 2025-08-28,
 https://www.w3.org/TR/epub-a11y-eaa-mapping/) concludes EPUB Accessibility 1.1 + WCAG
-satisfies the ebook requirements. We are close but not declared: `packager.py:102-115`
-already writes accessMode/accessModeSufficient/accessibilityFeature/accessibilityHazard
-(+ pageNavigation/pageBreakMarkers when anchors exist).
+satisfies the ebook requirements.
 
-**Design.**
-- Add to the OPF: `dcterms:conformsTo` = `EPUB Accessibility 1.1 - WCAG 2.1 Level AA`
-  (only when the automated checks below pass AND a manual certification is recorded — see the
-  readiness-vs-certification split under Acceptance), `schema:accessibilitySummary` (already optional —
-  make the convert-pdf skill record one per book), and verify `dc:source` carries the
-  print ISBN (pagination source requirement, https://www.w3.org/TR/epub-a11y-11/).
-- New QA gate: run **Ace by DAISY** (https://daisy.org/activities/software/ace/) when
-  installed (`npx @daisy/ace`), fail on Ace "critical"/"serious" violations, skip with
-  an info line when the binary is absent (epubcheck-jar precedent in
-  `scripts/bootstrap.sh` — add Ace install there).
-- Language declarations: already strong (`lang`/`xml:lang` on html + inline `:lang`
-  spans). Heading hierarchy: gate 6/audit already police h1–h3 sanity.
-- ONIX codelist 196 metadata is out of scope (no ONIX feed exists for these books).
-
-**Automated readiness ≠ a conformance claim (2026-07-12 review refinement).** Ace by DAISY
-explicitly cannot verify all of WCAG — image alt *appropriateness*, reading-order sense,
-heading *meaning*, table semantics need human inspection; DAISY and W3C both require manual
-evaluation of the *complete publication* before a WCAG conformance claim
+**`dcterms:conformsTo` is deliberately NOT emitted.** Ace explicitly cannot verify all
+of WCAG — image-alt *appropriateness*, reading-order sense, heading *meaning* need
+human inspection; DAISY and W3C both require manual evaluation of the complete
+publication before a conformance claim
 (https://kb.daisy.org/publishing/docs/epub/validation/ace.html;
-https://www.w3.org/TR/epub-a11y-11/). So split this item in two, and DO NOT assert
-`dcterms:conformsTo` from a green Ace run alone:
-- **Automated readiness (ship first):** the Ace gate above + metadata + alt-text *coverage*
-  (every non-decorative image has non-empty alt) + language/heading checks. This gates the
-  build and is fully machine-checkable. It emits `schema:accessibilityFeature`/`accessMode`
-  metadata but stops short of `conformsTo`.
-- **Manual certification workflow (before any `conformsTo`):** a per-book checklist step
-  (alt-text adequacy, reading order, table/figure semantics, navigation) recorded like a
-  proofread finding, tied to a specific EPUB revision (the §3 build epoch / manifest). Only a
-  passed, recorded certification writes `dcterms:conformsTo` — so the claim is auditable, not
-  asserted by a tool that admits it can't check everything. The convert-pdf/proofread skills
-  gain the checklist; over-claiming conformance is itself an accessibility (and legal) risk.
+https://www.w3.org/TR/epub-a11y-11/). Gate 26 is a readiness floor, not a conformance
+claim — over-claiming conformance is itself an accessibility (and legal) risk.
 
-**Acceptance**: all five shipped books re-validate through Ace clean (or with documented,
-adjudicated exceptions); the automated-readiness metadata + alt coverage gate passes; epubcheck
-stays clean (it validates the a11y metadata vocabulary); `conformsTo` appears ONLY on books
-with a recorded manual certification against the shipped revision.
+**Open: manual certification workflow (before any `conformsTo`).**
+- A per-book checklist step (alt-text adequacy, reading order, table/figure semantics,
+  navigation) recorded like a proofread finding, tied to a specific EPUB revision (the
+  provenance manifest / release epoch from reliability-hardening §2–§3).
+- Only a passed, recorded certification writes `dcterms:conformsTo` = `EPUB
+  Accessibility 1.1 - WCAG 2.1 Level AA` — the claim is auditable, not asserted by a
+  tool that admits it can't check everything.
+- `schema:accessibilitySummary` stays agent-written per book (like alt text — never
+  auto-generated); verify `dc:source` carries the print ISBN (pagination-source
+  requirement, https://www.w3.org/TR/epub-a11y-11/).
+- The convert-pdf/proofread skills gain the checklist step.
+- ONIX codelist 196 metadata remains out of scope (no ONIX feed exists for these books).
 
-## 3. typogrify-lite (presentation-codepoint polish)
+**Acceptance (certification):** `conformsTo` appears ONLY on books with a recorded
+manual certification against the shipped revision; epubcheck stays clean (it validates
+the a11y metadata vocabulary); a re-build after certification invalidates the record
+until re-certified (revision-tied by construction).
+
+## 3. typogrify-lite (presentation-codepoint polish) — OPEN
 
 **Problem.** The "beautiful" layer that distinguishes Standard Ebooks output:
 word joiner U+2060 before em-dashes (no line starting with a dash), hair spaces
@@ -131,9 +81,9 @@ repairs, inserting ONLY zero-width/space-class presentation codepoints:
   "correction" risks corrupting the apparatus), hyphens/dashes substitution, ellipsis
   char replacement. Insertion-only, of invisible codepoints.
 - Every insertion counted per class in the build log (`restore_spaces` precedent);
-  `normalize()` must strip U+2060/U+200A so gate 2/11 comparisons are unaffected
-  (verify `\s` covers U+200A — yes — and add U+2060 to the translate map, it is NOT
-  whitespace).
+  `normalize()` must strip U+2060/U+200A so coverage/lost-space comparisons are
+  unaffected (verify `\s` covers U+200A — yes — and add U+2060 to the translate map,
+  it is NOT whitespace).
 
 **Never-rewrite compliance**: zero visible-glyph changes; reversible by stripping two
 codepoints; counted; opt-in per book.
