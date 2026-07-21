@@ -1086,3 +1086,20 @@ titles, so only their text distinguishes them.
   epubcheck clean. Also regenerated the manifest/QA that had drifted from the
   on-disk epub. The corpus advisory now flags Sufism (22 numbered-letter
   appendix entries) as the next candidate.
+
+## sufism-veil-and-quintessence — 2026-07-21 re-ship (TOC: drop appendix dividers)
+
+Acting on the `nav-numeric-bloat` advisory the M&R change raised. Sufism's nav
+listed 22 bare integers (`1`–`22`) — the numbered selection dividers inside the
+"Selections from Letters and Other Previously Unpublished Writings" appendix.
+
+- **Render-verified before fixing** (the appendix-letters case is not identical
+  to passage markers, so I checked): printed Contents (render p6) lists the
+  appendix as ONE entry ("Selections from Letters… 133"), not the numbers; the
+  appendix opener (render p152) shows a centered bold `1`, its excerpt, then a
+  centered bold `2` — standalone in-body section dividers, same class as M&R's
+  passage numbers.
+- **Fix:** `toc.drop_numeric_nav_entries: true`. Nav/ncx 54→32 (only nav.xhtml +
+  toc.ncx change inside the epub; body byte-identical). gate 4 `toc=32`; gate 7
+  `16/16` (nav extra 16); gate 7b PASS; the `nav-numeric-bloat` advisory flips
+  OPEN→auto-resolved; Overall PASS, epubcheck clean.

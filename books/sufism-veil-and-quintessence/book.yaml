@@ -211,6 +211,11 @@ toc:                          # JP-P3 — printed TOC (p6) chosen: it lists the 
   standalone_lines:           # proofread 2026-07-11: 'Appendix' (p6) carries no
     - "Appendix"              # folio -> was fused onto 'Hypostatic Dimensions of
                               # Unity' as a fake turnover; it's its own entry
+  drop_numeric_nav_entries: true   # the 22 bare-integer selection dividers (1..22)
+                              # in the 'Selections from Letters' appendix (render
+                              # p152) are in-body markers; the printed Contents
+                              # (render p6) lists the appendix as ONE entry, not
+                              # the numbers. Keep them as body <h3>, drop from nav.
 
 glyphs:                       # JP-P6 — verified on renders
   pua_map:

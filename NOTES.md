@@ -1742,8 +1742,10 @@ text, so they flooded the TOC (a nav longer than the book's page count).
   numeric entries, so a 1/1 nav never trips) that names the fix and always
   prints the nav-vs-Contents sizes. Keying on numeric *count* (not raw
   `nav_extra`) keeps it silent on legitimately deep navs (Mystics/Schuon/PWC =
-  0 numeric); it fires on exactly one other book — Sufism's 22 numbered-letter
-  appendix entries — which is the durable pointer to fix that next.
+  0 numeric); the advisory pointed at exactly one other book — Sufism's 22
+  numbered-letter appendix dividers — now fixed too (render-verified: printed
+  Contents p6 lists the appendix as ONE entry; p152 shows the bare '1'/'2'…
+  section dividers inside it). It stays the durable pointer for any future book.
 - **The deeper gap: the nav had no *judgment* step.** The body gets a mandatory
   reading-QA proofread; the nav had only machine checks and no adjudication
   touchpoint — which is *why* this shipped. Gate 7b (QA-time) surfaces the
@@ -1752,8 +1754,8 @@ text, so they flooded the TOC (a nav longer than the book's page count).
   **`nav-numeric-bloat` advisory** in `warnqueue.py`: when ≥10 numeric-only
   headings would enter the nav it lands in `build/warnings.md` (the queue the
   agent reviews during conversion) naming `toc.drop_numeric_nav_entries`, and
-  **auto-resolves once that flag records the decision** (M&R shows it
-  auto-resolved; Sufism shows it OPEN). Advisory, never content-risk — a bloated
+  **auto-resolves once that flag records the decision** (both M&R and Sufism
+  now show it auto-resolved). Advisory, never content-risk — a bloated
   nav is extra entries, not lost content, so it never gates. This — plus the
   config flag as the recorded judgment — is the nav's first adjudication step,
   not a full interactive review; correctness stays pinned structurally (the
@@ -1763,6 +1765,7 @@ text, so they flooded the TOC (a nav longer than the book's page count).
   unchanged (564 — headings still in body). Overall PASS, epubcheck clean.
 
 Verification: pytest -q **475 passed**, ruff clean; corpus **11/11 byte-identical,
-11/11 QA PASS**, only me-and-rumi.epub changed vs HEAD (the 3 session-start
-drifted epubs rebuilt back to their committed bytes). The `nav-numeric-bloat`
-advisory is QA/warnings-only — no epub bytes move.
+11/11 QA PASS**. Shipped in two steps: M&R first (nav/ncx the only epub diff),
+then Sufism after render-verification (its appendix dividers, nav 54→32, same
+nav/ncx-only diff). The `nav-numeric-bloat` advisory is QA/warnings-only — no
+epub bytes move.

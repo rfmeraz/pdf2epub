@@ -436,7 +436,7 @@
    "pdf_sha256": "67d07b5adcb859f79eba15244de8bd32de4320c5173c499c85b3ae94c9eab456"
   },
   "books/sufism-veil-and-quintessence/book.yaml": {
-   "config_sha256": "80d0196147b3647a16ca3d7f715e77b0b3117aff9492669082bd6bf0852d2d02",
+   "config_sha256": "92fd71c5ce2531811336d1510de5d653ef6586e872555235895cc82d01e82ac2",
    "metrics": {
     "config": {
      "adjudications": 1,
