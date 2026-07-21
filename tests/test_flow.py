@@ -3455,6 +3455,60 @@ def test_quote_run_rejects_full_measure_neighbor(tmp_path):
     assert any(p.text().startswith("In a letter to Jenny") for p in body)
 
 
+def test_class_list_override_on_region_line_is_stale(tmp_path):
+    # a class:list on a figure-region line silently no-ops (the region skip
+    # runs before stamping) — it must fail as stale, not be marked applied at
+    # collection time (review #96)
+    from pdf2epub.config import FigureRegion, ListSpec
+
+    pages = [_page(1, [
+        _line("caption text inside the region", 150, x0=90.0, width=150.0),
+        _line("1. first numbered item at the stop", 300, x0=90.0, width=200.0),
+        _line("2. second numbered item at the stop", 313, x0=90.0,
+              width=210.0),
+    ])]
+    cfg = _cfg(tmp_path,
+               figure_regions=[FigureRegion(page=1,
+                                            rect=(60.0, 140.0, 380.0, 200.0),
+                                            alt="plate")],
+               blocks_lists=[ListSpec(pages=[1], marker="decimal", hang=18.0,
+                                      note="t")],
+               flow_overrides=[FlowOverride(page=1, line=0,
+                                            action="class:list")])
+    with pytest.raises(SystemExit, match="stale flow.overrides"):
+        build_flow(_doc(pages), cfg, say=lambda m: None)
+
+
+def test_class_quote_override_on_list_line_is_stale(tmp_path):
+    # the list pass claims the line first (it does not consult class:quote);
+    # the quote pass then BLOCKS the already-list line, and quote_shape_runs
+    # drops it despite forced=True — the override did nothing and must fail
+    # as stale instead of being marked applied at collection (review #96)
+    from pdf2epub.config import ListSpec, QuoteSpec
+
+    pages = [_page(1, [
+        _line("body context establishing the column geometry width", 74),
+        _line("more body context running to the right margin here", 87),
+        _line("a real justified quotation line keeps the spec live", 112,
+              x0=90.0, width=254.0),
+        _line("and a second quotation line makes the cluster real", 124,
+              x0=90.0, width=254.0),
+        _line("1. first numbered item sits at the list stop here", 148,
+              x0=90.0, width=250.0),
+        _line("2. second numbered item also at the list stop now", 161,
+              x0=90.0, width=250.0),
+    ])]
+    cfg = _cfg(tmp_path,
+               blocks_lists=[ListSpec(pages=[1], marker="decimal", hang=18.0,
+                                      note="t")],
+               blocks_quotes=[QuoteSpec(pages=[1], left_inset=18.0,
+                                        right_inset=18.0, note="t")],
+               flow_overrides=[FlowOverride(page=1, line=5,
+                                            action="class:quote")])
+    with pytest.raises(SystemExit, match="stale flow.overrides"):
+        build_flow(_doc(pages), cfg, say=lambda m: None)
+
+
 def test_class_quote_override_without_quote_spec_is_stale(tmp_path):
     # a class:quote override on a page a blocks.verse spec covers but no
     # blocks.quotes spec does was silently marked applied by the verse pass —

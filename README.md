@@ -27,8 +27,9 @@ independent checks catch what any single reading of the PDF would miss.
    (poppler) reads the same pages. The two outputs are compared page by page, and a
    page whose two readings disagree materially (a similarity score below 90) is
    flagged as "extraction is uncertain here" for the agent's render-review queue,
-   rather than silently trusting either one. Near-empty pages (fewer than about 40
-   characters) score too noisily to compare and are left unscored.
+   rather than silently trusting either one. A page is left unscored only when both
+   readings contain fewer than 40 characters — that little text scores too noisily
+   to compare.
 
 2. **Gather evidence about the book's design** (`init`, continued). An analysis
    step groups the text by font and size (body text tends to be one cluster,
@@ -79,9 +80,13 @@ independent checks catch what any single reading of the PDF would miss.
    typography? Did footnotes land where they should? Is every image intact (each
    shipped figure is compared against a re-render of its source region)? Did poems
    keep their line breaks (a loss character-counting cannot see)? The page-by-page
-   fidelity check grades the ordinary body text; the printed table of contents,
-   figure images, and pages the two engines disputed fall outside it and are
-   covered by their own dedicated gates instead. An accessibility gate checks
+   fidelity check grades the ordinary body text; the printed table of contents and
+   figure images fall outside it and are covered by their own dedicated gates. Pages
+   where the two extraction engines disputed each other are also excluded from
+   fidelity scoring — neither reading is trustworthy ground truth there — and are
+   instead reported for render review and adjudication; an advisory check lists any
+   such page that lacks a machine-checkable defense (a per-page assertion or figure
+   treatment), but QA can pass with those still open. An accessibility gate checks
    readiness — alt-text coverage, accessibility metadata, and (when the Ace by DAISY
    tool is available) its critical and serious findings — which is a floor that does
    not by itself establish screen-reader readiness or replace a manual review. The

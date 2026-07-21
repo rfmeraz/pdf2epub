@@ -672,17 +672,27 @@ class Emitter:
         f = self._contents_file
         unmatched = []
 
+        # document page order from the emitted anchors (files in spine order):
+        # agreement accepts the entry's target page or its PREDECESSOR only —
+        # paragraph-granular markers can place a heading's nearest anchor one
+        # page early, never late (qa_ordercheck's allowed set, mirrored). The
+        # ordered-label walk also covers roman folios, which the old
+        # abs(int-diff) test rejected outright while it wrongly accepted the
+        # FOLLOWING decimal page.
+        page_order: list[str] = []
+        seen_labels: set[str] = set()
+        for of in self.files:
+            for label, _pid in of.pagebreaks:
+                if label not in seen_labels:
+                    seen_labels.add(label)
+                    page_order.append(label)
+        prev_of = {page_order[i]: page_order[i - 1]
+                   for i in range(1, len(page_order))}
+
         def _page_agrees(hlabel: str | None, tlabel: str | None) -> bool:
-            # page markers are placed with paragraph granularity, so a heading
-            # may sit on the printed page or the one just before it
             if hlabel is None or tlabel is None:
                 return False
-            if hlabel == tlabel:
-                return True
-            try:
-                return abs(int(hlabel) - int(tlabel)) <= 1
-            except ValueError:
-                return False
+            return hlabel == tlabel or prev_of.get(tlabel) == hlabel
 
         def link_for(idx: int) -> str:
             text = self._contents_entries[idx]

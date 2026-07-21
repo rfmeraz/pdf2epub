@@ -23,11 +23,11 @@ Use `pdf2epub init` to generate analysis and a draft configuration. A completed 
 
 ## Coding Style & Naming Conventions
 
-Follow standard Python conventions: four-space indentation, `snake_case` for functions and modules, `PascalCase` for classes, and uppercase constants. Prefer type hints, small deterministic functions, and `pathlib.Path` for filesystem work. Keep imports grouped as standard library, third-party, then local. No formatter or linter is currently configured, so match neighboring code and keep diffs focused. Preserve byte-reproducibility: do not introduce timestamps, randomness, or environment-dependent output.
+Follow standard Python conventions: four-space indentation, `snake_case` for functions and modules, `PascalCase` for classes, and uppercase constants. Prefer type hints, small deterministic functions, and `pathlib.Path` for filesystem work. Keep imports grouped as standard library, third-party, then local. Ruff is configured in `pyproject.toml` (rules E4/E7/E9/F/I only — line length is deliberately unenforced) and CI runs `ruff check src/ tests/`; run it before committing. No formatter is configured, so match neighboring code and keep diffs focused. Preserve byte-reproducibility: do not introduce timestamps, randomness, or environment-dependent output.
 
 ## Testing Guidelines
 
-Tests use pytest and must be named `test_*.py`; test functions should describe observable behavior. Add or update focused unit tests for pipeline changes. For print-verified per-book fixes, also update `books/<slug>/qa_assertions.yaml` so QA gate 24 catches regressions — the fixture is mandatory per book (gate 24 fails when it is missing; an authored `[]` records "no print-verified fixes yet"). Never rewrite source-book wording to satisfy a test; fixes must be deterministic transformations or explicit configuration.
+Tests use pytest and must be named `test_*.py`; test functions should describe observable behavior. Add or update focused unit tests for pipeline changes. For print-verified per-book fixes, also update the gate-24 fixture so QA catches regressions: `books/<slug>/qa_assertions.yaml` for the base `book.yaml`, and `qa_assertions.<stem>.yaml` for a variant config (e.g. `book.arabic.yaml` → `qa_assertions.book.arabic.yaml` — the `warnings.<stem>.md` rule). The fixture is mandatory per config (gate 24 fails when it is missing; an authored `[]` records "no print-verified fixes yet"). Never rewrite source-book wording to satisfy a test; fixes must be deterministic transformations or explicit configuration.
 
 ## Commit & Pull Request Guidelines
 

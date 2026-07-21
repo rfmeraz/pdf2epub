@@ -861,6 +861,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 act = ov.get((L.page, L.idx))
                 if act in ("class:list", "class:prose"):
                     consumed.add((L.page, L.idx))
+                # class:prose's sole effect is the skip below — applied on
+                # sight. class:list is applied only where the line is
+                # actually STAMPED below: on a figure-region or
+                # verse-classified line it silently no-ops via the continues,
+                # and must fail as stale instead (the verse-pass doctrine,
+                # review #90/#96).
+                if act == "class:prose":
                     class_applied.add((L.page, L.idx))
                 if L.region >= 0 or act == "class:prose":
                     in_item = False
@@ -898,6 +905,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if member and "/center" in L.ps:
                     L.ps = L.ps.replace("/center", "")
                 L.block_class = "list"
+                if act == "class:list":
+                    class_applied.add((L.page, L.idx))
                 counts["list-lines"] += 1
                 if is_entry:
                     L.list_entry = True
@@ -989,6 +998,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 act = ov.get((L.page, L.idx))
                 if act in ("class:quote", "class:prose"):
                     consumed.add((L.page, L.idx))
+                # class:prose's sole effect is the blocked entry — applied on
+                # sight. class:quote is applied only where the run stamping
+                # below actually classifies the line: blocked beats forced in
+                # quote_shape_runs, so a class:quote on a figure-region or an
+                # already-verse/list line silently no-ops and must fail as
+                # stale instead (the verse-pass doctrine, review #90/#96).
+                if act == "class:prose":
                     class_applied.add((L.page, L.idx))
                 blocked.append(L.region >= 0
                                or L.block_class in ("verse", "list")
@@ -1034,6 +1050,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 counts["quote-runs"] += 1
                 for x in range(r.start, r.end):
                     lines[x].block_class = "quote"
+                    if ov.get((lines[x].page, lines[x].idx)) == "class:quote":
+                        class_applied.add((lines[x].page, lines[x].idx))
                     counts["quote-lines"] += 1
             prev_ends_quote = bool(lines) and \
                 lines[-1].block_class == "quote"

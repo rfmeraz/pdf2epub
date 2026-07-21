@@ -3,7 +3,8 @@
 One entry per finished conversion: date, source PDF (sha256), decisions worth remembering,
 QA outcome, and anything the next conversion should learn from. Ten books are converted
 (eleven tracked configs — book-of-knowledge also ships an Arabic-glyph variant);
-`pdf2epub corpus` rebuilds and QAs all of them.
+`pdf2epub corpus` rebuilds and QAs all of them. Nine are finished through the mandatory
+reading QA; **the-mystics-of-islam's proofread pass is still pending** (see its entry).
 
 ## sufism-veil-and-quintessence — 2026-07-09
 
@@ -994,7 +995,7 @@ QA PASS with baseline updated. Flagged for human review: urn:uuid identifier
 (no ebook ISBN printed), cover from PDF p.1 render, kicker-joined h1 texts,
 plate-interrupted sentences kept in print order.
 
-## The Mystics of Islam — Reynold A. Nicholson (World Wisdom, 2002) — 2026-07-20
+## The Mystics of Islam — Reynold A. Nicholson (World Wisdom, 2002) — 2026-07-20 — **INCOMPLETE: proofread pending**
 
 *(Ledger entry reconstructed 2026-07-21 from the tracked artifacts — book.yaml,
 build metrics, commit 638e141 — the conversion session predates it.)*
@@ -1022,7 +1023,15 @@ pp.134–137).
 895 quote lines / 155 quote paras / 75 runs; 447 verse lines / 57 groups / 55 stanzas;
 24 list items; 33 noterefs; 394 dehyphenated; 6 column pages (430 lines); 9 keep_hyphens.
 
-### QA outcome
-epubcheck clean; qa Overall: PASS. Gate-24 fixture is an authored `[]` (no
-print-verified fixes yet — proofread findings land cells as they come). Baseline entry
-seeded 2026-07-21 with the review-#90 reseed; corpus 11/11 QA PASS.
+### QA outcome — automated only; the mandatory reading QA has NOT run
+epubcheck clean; qa Overall: PASS; baseline entry seeded 2026-07-21 with the
+review-#90 reseed; corpus 11/11 QA PASS. **But the mandatory `/proofread-epub`
+blind-reader pass is not recorded**: `pdf2epub proofread` packets were generated
+(build/the-mystics-of-islam.proofread/, 145pp in packets + PROTOCOL.md), yet no
+reader pass, findings, or verification exist in any tracked artifact, and the
+gate-24 fixture is still the scaffolded `[]`. Per the canonical process a
+conversion is NOT done until the reading QA ends clean or escalates — this book
+is converted-and-QA'd but **unproofread**; run the proofread pass (and land its
+accepted findings as fixture cells) before treating it as finished. Also open:
+gate 25b lists engine-disputed pp.138–143 without a machine-checkable defense
+(advisory).
