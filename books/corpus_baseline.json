@@ -38,7 +38,7 @@
      "pua-dropped": 27,
      "pua-substituted": 976,
      "quote-lines": 86,
-     "quote-paras": 7,
+     "quote-paras": 8,
      "quote-runs": 9,
      "region-lines": 22,
      "stray-grave-stripped": 0,
@@ -91,7 +91,7 @@
      "pua-punct-seam": 13,
      "pua-substituted": 976,
      "quote-lines": 86,
-     "quote-paras": 7,
+     "quote-paras": 8,
      "quote-runs": 9,
      "region-lines": 22,
      "stray-grave-stripped": 0,
@@ -172,7 +172,7 @@
      "list-marker-gap": 7,
      "list-paras": 552,
      "quote-lines": 395,
-     "quote-paras": 38,
+     "quote-paras": 40,
      "quote-runs": 44,
      "stray-grave-stripped": 0,
      "toc-continuation": 1,
@@ -259,7 +259,7 @@
      "noterefs": 229,
      "override-drop": 2,
      "quote-lines": 696,
-     "quote-paras": 93,
+     "quote-paras": 91,
      "quote-runs": 84,
      "stray-grave-stripped": 0,
      "verse-groups": 24,
@@ -420,7 +420,7 @@
      "pua-punct-seam": 0,
      "pua-substituted": 2,
      "quote-lines": 259,
-     "quote-paras": 26,
+     "quote-paras": 30,
      "quote-runs": 21,
      "region-lines": 13,
      "stray-grave-stripped": 0,
@@ -474,6 +474,50 @@
     "pages": 218
    },
    "pdf_sha256": "5a4c08c2d379aac5f73641fdc4da1f863c6f4e6148ff4effe81d43d3a11cc71c"
+  },
+  "books/the-mystics-of-islam/book.yaml": {
+   "config_sha256": "101a35f3f00f8970fbe880d93b11d97a3b8f7c8a94014e50cbea639b363985e2",
+   "metrics": {
+    "config": {
+     "adjudications": 1,
+     "flow_overrides": 486,
+     "keep_hyphens": 9
+    },
+    "extract": {
+     "bidi_moved": 0,
+     "cancelled_spaces": 0,
+     "ligature_pads": 0,
+     "subscript_dots": 0,
+     "warnings": 1
+    },
+    "flow": {
+     "anchor-inline": 82,
+     "column-lines": 430,
+     "column-pages": 6,
+     "column-spanners": 2,
+     "ctrl-stripped": 0,
+     "dehyphenated": 394,
+     "furniture-folio": 129,
+     "furniture-head": 119,
+     "inline-dehyphenated": 0,
+     "ligatures": 0,
+     "list-items": 24,
+     "list-lines": 71,
+     "list-paras": 48,
+     "note-continuation": 2,
+     "noterefs": 33,
+     "quote-lines": 895,
+     "quote-paras": 155,
+     "quote-runs": 75,
+     "stray-grave-stripped": 0,
+     "verse-groups": 57,
+     "verse-lines": 447,
+     "verse-stanzas": 55,
+     "wrongscript-repaired": 0
+    },
+    "pages": 145
+   },
+   "pdf_sha256": "d9515c3071384355d5bf12814f7ac533f45f58909977ebffbeaddc255f805403"
   }
  }
 }

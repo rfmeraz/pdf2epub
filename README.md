@@ -24,9 +24,11 @@ independent checks catch what any single reading of the PDF would miss.
 1. **Read the PDF twice** (`init`). One tool (PyMuPDF) pulls out every piece of
    text along with its font, size, style, and exact position on the page, plus the
    PDF's bookmarks, internal links, and page numbering. A second, independent tool
-   (poppler) reads the same pages. The two outputs are compared page by page —
-   where they disagree, that page is flagged as "extraction is uncertain here"
-   rather than silently trusting either one.
+   (poppler) reads the same pages. The two outputs are compared page by page, and a
+   page whose two readings disagree materially (a similarity score below 90) is
+   flagged as "extraction is uncertain here" for the agent's render-review queue,
+   rather than silently trusting either one. Near-empty pages (fewer than about 40
+   characters) score too noisily to compare and are left unscored.
 
 2. **Gather evidence about the book's design** (`init`, continued). An analysis
    step groups the text by font and size (body text tends to be one cluster,
@@ -67,19 +69,28 @@ independent checks catch what any single reading of the PDF would miss.
    `build/warnings.md` as a coded queue with ready-to-paste fixes — content is
    never dropped silently.
 
-6. **Check it automatically** (`qa`). The EPUB must pass 26 automated gates,
-   starting with the standard validator (epubcheck) and mostly comparing the
-   finished book back to an independent extraction of the PDF — a separate witness,
-   not the converter's own output. Is every page's text present, in order, and
+6. **Check it automatically** (`qa`). The EPUB is run through a battery of
+   automated gates (26 of them), starting with the standard validator (epubcheck)
+   and mostly comparing the finished book back to an independent extraction of the
+   PDF — a separate witness, not the converter's own output. Every gating check that
+   applies to the book must pass; a few checks are advisory, or run only when the
+   feature they cover is present. Is every page's text present, in order, and
    nowhere duplicated? Do headings, italics, and centered lines match the print
    typography? Did footnotes land where they should? Is every image intact (each
    shipped figure is compared against a re-render of its source region)? Did poems
-   keep their line breaks (a loss character-counting cannot see)? Is it
-   screen-reader ready? And every warning the build raised must be explicitly
-   resolved, or the gate fails. A domain gate even validates a "Qurʾānic verses
-   cited" index against the Qurʾān's fixed structure. `qa --visual` adds
-   side-by-side print-vs-EPUB contact sheets for grading by eye, and
-   `--reference <epub>` scores against a known-good EPUB.
+   keep their line breaks (a loss character-counting cannot see)? The page-by-page
+   fidelity check grades the ordinary body text; the printed table of contents,
+   figure images, and pages the two engines disputed fall outside it and are
+   covered by their own dedicated gates instead. An accessibility gate checks
+   readiness — alt-text coverage, accessibility metadata, and (when the Ace by DAISY
+   tool is available) its critical and serious findings — which is a floor that does
+   not by itself establish screen-reader readiness or replace a manual review. The
+   build's own warnings are policed too: those that carry a real content risk, and
+   any stale adjudications, must be resolved or the gate fails (purely advisory
+   warnings need not be). A domain gate even validates a "Qurʾānic verses cited"
+   index against the Qurʾān's fixed structure. `qa --visual` adds side-by-side
+   print-vs-EPUB contact sheets for grading by eye, and `--reference <epub>` scores
+   against a known-good EPUB.
 
 7. **Have it actually read** (`proofread`, mandatory). Finally, "blind reader"
    agents — who never saw the PDF — read the finished EPUB in chunks and report

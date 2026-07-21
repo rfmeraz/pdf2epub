@@ -3453,3 +3453,114 @@ def test_quote_run_rejects_full_measure_neighbor(tmp_path):
     assert q[0].text().endswith("ragged and stops")
     body = [p for p in paras if p.block_class != "quote"]
     assert any(p.text().startswith("In a letter to Jenny") for p in body)
+
+
+def test_class_quote_override_without_quote_spec_is_stale(tmp_path):
+    # a class:quote override on a page a blocks.verse spec covers but no
+    # blocks.quotes spec does was silently marked applied by the verse pass —
+    # it only blocked the line from verse; with no quote classifier to stamp
+    # it, the override did nothing and must now fail as stale (finding #1)
+    cfg = _verse_cfg(tmp_path, [1],
+                     flow_overrides=[FlowOverride(page=1, line=0,
+                                                  action="class:quote")])
+    with pytest.raises(SystemExit, match="stale flow.overrides"):
+        build_flow(_doc([_page(1, _p46_lines())]), cfg, say=lambda *a: None)
+
+
+def test_class_prose_override_in_verse_pass_still_applies(tmp_path):
+    # class:prose is the verse pass's own block verb (its only effect is to
+    # keep the line out of verse), so it stays "applied" there — no false
+    # stale error even without any quote/list spec
+    lines = _p46_lines()
+    cfg = _verse_cfg(tmp_path, [1],
+                     flow_overrides=[FlowOverride(page=1, line=0,
+                                                  action="class:prose")])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    assert any(p.block_class == "verse" for p in _paras(res.flow))
+
+
+def test_same_page_flush_quote_breaks_on_short_line(tmp_path):
+    # two flush-left justified quote paragraphs share the block's left edge and
+    # its clustered right margin; the first ends on a short final line and the
+    # second opens flush at normal leading. Neither the first-line-indent nor
+    # the paragraph-gap witness fires, so they fused — the short-line boundary,
+    # measured against the quote's OWN margin (block_right), must break them
+    # (finding #2).
+    from pdf2epub.config import QuoteSpec
+
+    pages = [_page(1, [
+        _line("body context establishing the wide column geometry now", 74,
+              x0=72.0, width=290.0),
+        _line("more body context running along to the right margin here", 87,
+              x0=72.0, width=290.0),
+        _line("the first quotation paragraph runs to the block margin", 112,
+              x0=92.0, width=250.0),   # x1=342, full to the block margin
+        _line("continuing full to the same right block margin as here", 124,
+              x0=92.0, width=250.0),   # x1=342
+        _line("and it ends short.", 136, x0=92.0, width=70.0),   # x1=162 short
+        _line("the second quotation paragraph opens flush at the left", 148,
+              x0=92.0, width=250.0),   # x1=342
+        _line("and runs on to the same block right margin as before.", 160,
+              x0=92.0, width=248.0),   # x1=340
+        _line("body resumes at the margin after the quotation ends now.", 184,
+              x0=72.0, width=290.0),
+    ])]
+    cfg = _cfg(tmp_path, blocks_quotes=[
+        QuoteSpec(pages=[1], left_inset=18.0, right_inset=18.0, note="t")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    quote = [p for p in _paras(res.flow) if p.block_class == "quote"]
+    assert len(quote) == 2
+    assert quote[0].text().startswith("the first quotation")
+    assert quote[0].text().rstrip().endswith("ends short.")
+    assert quote[1].text().startswith("the second quotation")
+
+
+def test_inline_star_skips_unrelated_symbol(tmp_path):
+    # an ordinary asterisk (spaced arithmetic) precedes the real footnote
+    # marker in the same body run; the noteref must land on the marker's flush
+    # star, not steal the unrelated one while the marker stays in the text
+    # (finding #3).
+    body = [
+        PdfLine(runs=[PdfRun(
+            text="The product 3 * 5 and then the note.* keeps going here",
+            font_id=BODY, x0=72, y0=100, x1=360, y1=112)],
+            x0=72, y0=100, x1=360, y1=112),
+        _line("* Editor's note text sits at the foot", 580, font=SMALL),
+    ]
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="mixed")
+    res = build_flow(_doc([_page(1, body)]), cfg, say=lambda m: None)
+    para = _paras(res.flow)[0]
+    refs = [it for it in para.items if isinstance(it, NoteRef)]
+    assert len(refs) == 1
+    assert "3 * 5" in para.text()            # the unrelated star is untouched
+    assert "the note. keeps going" in para.text()  # marker consumed, right spot
+
+
+def test_textless_figure_between_prose_above_and_below(tmp_path):
+    # a text-less figure region printed BELOW two prose lines and ABOVE two
+    # more must emit at its Y position, not ahead of the prose above it
+    # (finding #5). Old behavior emitted every plate before all of the page's
+    # text.
+    from pdf2epub.config import FigureRegion
+    from pdf2epub.core.model import Figure
+
+    pages = [_page(1, [
+        _line("first line of prose printed above the plate now here", 100,
+              x0=72.0, width=290.0),
+        _line("second line of prose above the plate continues here", 113,
+              x0=72.0, width=290.0),
+        _line("first line of prose printed below the plate here now", 345,
+              x0=72.0, width=290.0),
+        _line("second line below the plate continues the paragraph", 358,
+              x0=72.0, width=290.0),
+    ])]
+    cfg = _cfg(tmp_path, figure_regions=[
+        FigureRegion(page=1, rect=(60.0, 130.0, 380.0, 300.0),
+                     alt="A mid-page plate")])
+    res = build_flow(_doc(pages), cfg, say=lambda m: None)
+    blocks = [b for b in res.flow.blocks if isinstance(b, (Paragraph, Figure))]
+    kinds = [type(b).__name__ for b in blocks]
+    assert kinds == ["Paragraph", "Figure", "Paragraph"], kinds
+    assert "above the plate" in blocks[0].text()
+    assert blocks[1].image_key == "region-0001-0.png"
+    assert "below the plate" in blocks[2].text()

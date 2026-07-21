@@ -695,6 +695,16 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 if act in ("class:verse", "class:quote", "class:list",
                            "class:prose"):
                     consumed.add((L.page, L.idx))
+                # class:quote / class:list are only BLOCKED here (below) so
+                # they stay verse-ineligible — applying them is their own
+                # classifier's job. Marking them applied in the verse pass let
+                # a class:quote/class:list on a page with no blocks.quotes /
+                # blocks.lists spec silently no-op (the line was merely kept
+                # out of verse) instead of failing as a stale override. Their
+                # own passes mark them applied. class:verse is this pass's own
+                # verb and class:prose's sole effect is the block above — both
+                # are legitimately "applied" here.
+                if act in ("class:verse", "class:prose"):
                     class_applied.add((L.page, L.idx))
                 # the justified veto only counts clusters near the body/
                 # quote right edge: a COUPLET whose two lines chance within
@@ -1162,22 +1172,24 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
         textless = [ri for ri, fr2 in enumerate(cfg.figure_regions)
                     if fr2.page == pno and ri not in emitted_regions
                     and not any(L2.region == ri for L2 in lines)]
+        # each plate carries its region-TOP y so the line walk below emits it
+        # at its vertical position, not ahead of prose printed above it
+        pending_plates: list[tuple[float, list]] = []
         if textless:
             cap_band = 3.0 * med_lead
             cap_idx: set[int] = set()
-            plate: list = []
             for ri in sorted(textless,
                              key=lambda r: cfg.figure_regions[r].rect[1]):
                 fr2 = cfg.figure_regions[ri]
                 emitted_regions.add(ri)
-                plate.append(Figure(
+                plate: list = [Figure(
                     image_key=f"region-{fr2.page:04d}-{ri}.png",
                     source_basename=f"region-{fr2.page:04d}-{ri}.png",
                     pdf_page=fr2.page, page_ordinal=fr2.page,
                     y_pt=fr2.rect[1], x_pt=fr2.rect[0],
                     width_pt=fr2.rect[2] - fr2.rect[0],
                     height_pt=fr2.rect[3] - fr2.rect[1],
-                    role="figure", alt=fr2.alt))
+                    role="figure", alt=fr2.alt)]
                 counts["figure-regions"] += 1
                 for j, L2 in enumerate(lines):
                     if j in cap_idx or L2.region >= 0:
@@ -1195,8 +1207,12 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                             (cap.src.story_id, cap.src.psr_index),
                             []).append((L2.page, L2.idx))
                         plate.append(cap)
+                pending_plates.append((fr2.rect[1], plate))
             if cap_idx:
                 lines = [L2 for j, L2 in enumerate(lines) if j not in cap_idx]
+
+        def _emit_plate(plate: list) -> None:
+            nonlocal anchor_placed, prev_L
             close_para()
             if not anchor_placed:
                 ins = len(res.flow.blocks)
@@ -1208,10 +1224,13 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 anchor_placed = True
             res.flow.blocks.extend(plate)
             prev_L = None
-            if not lines:
-                continue
 
         for L in lines:
+            # emit any text-less plate whose region top is at or above this
+            # line before the line itself (top-of-page plates, whose top sits
+            # above every line, still emit before all text as they did before)
+            while pending_plates and pending_plates[0][0] <= L.ln.y0:
+                _emit_plate(pending_plates.pop(0)[1])
             if L.region >= 0:
                 # the region's text ships as a cropped raster; emit its
                 # Figure at the first region line, in flow position
@@ -1318,11 +1337,28 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     # while a wrapped continuation returns left. Applying the
                     # body-column ragged-line rule here split every short first
                     # line from its continuation and fused the following
-                    # paragraph onto it. Use the two print-local witnesses.
+                    # paragraph onto it. Use the print-local witnesses.
                     first_line = L.ln.x0 - prev_L.ln.x0 >= \
                         cfg.indent_threshold - 2.0
                     para_gap = L.ln.y0 - prev_L.ln.y0 > 1.2 * med_lead
-                    brk = first_line or para_gap
+                    # A flush-left quotation (no first-line indent, normal
+                    # leading between paragraphs) shows neither witness, so two
+                    # such paragraphs separated only by a short final line fused.
+                    # The short-line test is trustworthy ONLY against the quote's
+                    # OWN justified right margin (block_right): a ragged quote
+                    # has none, and measuring its naturally-short lines against
+                    # the body column would re-shatter the block (the reason the
+                    # column rule was dropped here). Require the next line to
+                    # return to (or left of) the previous left edge — a genuine
+                    # flush paragraph start, not a deeper wrap.
+                    col_w = geo.col_right - geo.col_left
+                    prev_short = (
+                        prev_L.block_right is not None
+                        and prev_L.ln.x1 < prev_L.block_right
+                        - max(18.0, 0.06 * col_w)
+                        and not prev_L.ln.text().rstrip().endswith(_CONT_DASHES)
+                        and L.ln.x0 <= prev_L.ln.x0 + 2.0)
+                    brk = first_line or para_gap or prev_short
             elif prev_L is not None and \
                     prev_L.block_class != L.block_class and \
                     ("quote" in (prev_L.block_class, L.block_class)
@@ -1434,6 +1470,11 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 res.role_overrides_by_line[(L.page, L.idx)] = act.split(":", 1)[1]
                 consumed.add((L.page, L.idx))
             prev_L = L
+        # plates below all text on the page (or a page with no text lines at
+        # all) flush here, still in print order
+        for _, plate in pending_plates:
+            _emit_plate(plate)
+        pending_plates = []
         if not anchor_placed:
             # page contributed only continuation text: paragraph-granular
             # anchor lands before the next new block
@@ -2099,6 +2140,12 @@ def _apply_textfix(runs: list[TextRun], cfg: PdfBookConfig,
             continue
         run.text = t
         out.append(run)
+    # tag every run with its source page (all runs from one call share the
+    # line's page) so _attach_noterefs can scope an inline marker match; keeps
+    # a page already set by an earlier pass over the same runs
+    for r in out:
+        if r.src_page is None:
+            r.src_page = page
     return out
 
 
@@ -2164,6 +2211,28 @@ def _note_paragraphs(group: list[_L], cfg: PdfBookConfig, doc: PdfDoc,
     return [para]
 
 
+def _inline_marker_pos(s: str) -> int:
+    """Index of the first footnote-marker-shaped '*'/'†'/'‡' in ``s``, or -1.
+
+    A footnote call is set flush against the word it annotates ('word.*') and
+    is never buried inside a word: it must attach to a preceding non-space
+    character (excludes a leading bullet '* item' and spaced arithmetic
+    '3 * 5') and must not be immediately followed by an alphanumeric
+    (excludes 'a*b'). Combined with the note's-page scoping in
+    _attach_noterefs, this stops an unrelated symbol from stealing the ref
+    while the real marker stays in the text."""
+    for pos, ch in enumerate(s):
+        if ch not in "*†‡":
+            continue
+        if pos == 0 or s[pos - 1].isspace():
+            continue
+        nxt = s[pos + 1: pos + 2]
+        if nxt.isalnum():
+            continue
+        return pos
+    return -1
+
+
 def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                      para_last_page: dict[tuple[str, int], int],
                      body_size: float, counts: Counter) -> list[tuple[int, str, str]]:
@@ -2200,10 +2269,12 @@ def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                 small = (it.fmt.point_size or body_size) <= 0.85 * body_size
                 sup = it.fmt.position == "superscript"
                 inline_star = -1
-                if target == "*" and not (sup or small):
-                    inline_star = next(
-                        (pos for pos, ch in enumerate(it.text)
-                         if ch in "*†‡"), -1)
+                if target == "*" and not (sup or small) \
+                        and it.src_page == head_page:
+                    # scope to the note's OWN page (a paragraph may span pages,
+                    # and an ordinary star on an earlier page must not be taken
+                    # for this page's marker) and require a marker SHAPE
+                    inline_star = _inline_marker_pos(it.text)
                 if ((sup or small) and t and (
                         t == target or (target == "*" and t in ("*", "†", "‡")))) \
                         or inline_star >= 0:

@@ -14,8 +14,6 @@ import re
 from dataclasses import dataclass, field
 from xml.sax.saxutils import escape, quoteattr
 
-from rapidfuzz import fuzz
-
 from .model import (
     Figure,
     FlowDoc,
@@ -94,7 +92,12 @@ class Emitter:
         self._head_seq = 0
         self._note_order: list[str] = []
         self._noteref_file: dict[str, str] = {}
-        self.heading_index: list[tuple[str, str, str]] = []  # (text, file, hid)
+        # (text, file, hid, page_label): the page_label is the nearest page
+        # marker at-or-before the heading, used to disambiguate a contents
+        # entry between duplicate headings (an appendix title echoed as a
+        # Notes subhead) by its printed target page
+        self.heading_index: list[tuple[str, str, str, str | None]] = []
+        self._cur_page_label: str | None = None  # running, updated per page marker
 
     # ---------------- file management ----------------
 
@@ -358,7 +361,7 @@ class Emitter:
             text = p.text().replace(" ", " ").strip()
             f.body_parts.append(f'<{role} id="{hid}" class="{classes}">{inner}</{role}>')
             f.headings.append((role, hid, text))
-            self.heading_index.append((text, f.file_name, hid))
+            self.heading_index.append((text, f.file_name, hid, self._cur_page_label))
         elif role == "blockquote":
             f.body_parts.append(f'<blockquote class="{classes}"><p>{inner}</p></blockquote>')
         elif role == "epigraph":
@@ -408,6 +411,7 @@ class Emitter:
                 # recorded in document order so the nav page-list and the
                 # QA ordinal pairing keep working unchanged
                 pid = f"pg-{it.label}"
+                self._cur_page_label = it.label
                 if self.cur is not None:
                     self.cur.pagebreaks.append((it.label, pid))
                 parts.append(
@@ -452,6 +456,7 @@ class Emitter:
         for b in run:
             if isinstance(b, PageAnchor):
                 pid = f"pg-{b.label}"
+                self._cur_page_label = b.label
                 parts.append(
                     f'<div id="{pid}" class="pagebreak" epub:type="pagebreak" '
                     f'role="doc-pagebreak" aria-label={quoteattr(b.label)}>'
@@ -487,6 +492,7 @@ class Emitter:
 
         def _anchor_span(label: str) -> str:
             pid = f"pg-{label}"
+            self._cur_page_label = label
             f.pagebreaks.append((label, pid))
             return (f'<span id="{pid}" class="pagebreak" '
                     f'epub:type="pagebreak" role="doc-pagebreak" '
@@ -538,6 +544,7 @@ class Emitter:
         for b in run:
             if isinstance(b, PageAnchor):
                 pid = f"pg-{b.label}"
+                self._cur_page_label = b.label
                 parts.append(
                     f'<div id="{pid}" class="pagebreak" epub:type="pagebreak" '
                     f'role="doc-pagebreak" aria-label={quoteattr(b.label)}>'
@@ -578,6 +585,7 @@ class Emitter:
     def _emit_pagebreak(self, a: PageAnchor) -> None:
         f = self._ensure_file()
         pid = f"pg-{a.label}"
+        self._cur_page_label = a.label
         f.body_parts.append(
             f'<div id="{pid}" class="pagebreak" epub:type="pagebreak" '
             f'role="doc-pagebreak" aria-label={quoteattr(a.label)}></div>'
@@ -619,6 +627,7 @@ class Emitter:
         f.body_parts.append('<section epub:type="toc" role="doc-toc">')
         f.body_parts.append('<h1 class="contents-head">Contents</h1>')
         self._contents_entries = []  # plain entry texts, TOCLINK order
+        self._contents_targets = []  # printed target label per entry (or None)
         for b in run:
             if isinstance(b, PageAnchor):
                 self._emit_pagebreak(b)
@@ -632,12 +641,18 @@ class Emitter:
                 self._emit_paragraph(b)
                 continue
             text = b.text()
+            # the printed folio (the entry's target page) disambiguates a
+            # duplicate-heading link later; parse it whether or not it is
+            # stripped from the displayed entry
+            mt = re.search(r"\t+([ivxlcdm0-9]+)\s*$", text, flags=re.I)
+            target = mt.group(1) if mt else None
             if self.cfg.strip_toc_page_numbers:
                 text = re.sub(r"\t+[ivxlcdm0-9]+\s*$", "", text, flags=re.I)
             text = text.replace("\t", " ").replace(" ", " ").strip()
             if not text or text.lower() == "contents":
                 continue
             self._contents_entries.append(text)
+            self._contents_targets.append(target)
             f.body_parts.append(f'<p class="toc-entry">{{TOCLINK:{len(self._contents_entries)-1}}}</p>')
         f.body_parts.append("</section>")
         self._contents_file = f
@@ -646,31 +661,49 @@ class Emitter:
         """Second pass: replace TOCLINK placeholders with real links."""
         if not hasattr(self, "_contents_file"):
             return
+        # the punctuation-folding matcher gate 25's reading-order check uses,
+        # so a link and its order verification agree on what matches what: an
+        # entry "Appendix 1: Frithjof Schuon: …" folds to the same shape as
+        # the heading "APPENDIX 1 Frithjof Schuon" (the colon no longer blocks
+        # the prefix match) instead of scoring under it a bare "APPENDIX 1"
+        # Notes subhead
+        from .qa_ordercheck import MATCH_THRESHOLD, _match
+
         f = self._contents_file
         unmatched = []
 
+        def _page_agrees(hlabel: str | None, tlabel: str | None) -> bool:
+            # page markers are placed with paragraph granularity, so a heading
+            # may sit on the printed page or the one just before it
+            if hlabel is None or tlabel is None:
+                return False
+            if hlabel == tlabel:
+                return True
+            try:
+                return abs(int(hlabel) - int(tlabel)) <= 1
+            except ValueError:
+                return False
+
         def link_for(idx: int) -> str:
             text = self._contents_entries[idx]
-            t = text.lower().strip()
-            # a numbered entry ("4. Title") may target a heading that joined
-            # its printed kicker ("CHAPTER FOUR Title"): the enumeration-less
-            # entry text contained anywhere in the heading is a strong match
-            t_sans_enum = re.sub(r"^[0-9ivxlcdm]+[.):]\s+", "", t)
-            best, best_score = None, 0.0
-            for htext, fname, hid in self.heading_index:
-                h = htext.lower().strip()
-                score = fuzz.ratio(t, h)
-                # a TOC entry often extends the heading ("Foreword by ...")
-                # or abbreviates it; treat prefix containment as a strong match
-                if h and (t.startswith(h) or h.startswith(t)):
-                    score = max(score, 90.0)
-                if len(t_sans_enum) >= 8 and t_sans_enum in h:
-                    score = max(score, 90.0)
+            target = self._contents_targets[idx] \
+                if idx < len(self._contents_targets) else None
+            best_score = 0.0
+            cands: list[tuple[str, str, str | None]] = []  # (file, hid, page)
+            for htext, fname, hid, hpage in self.heading_index:
+                score = _match(text, htext)
                 if score > best_score:
-                    best, best_score = (fname, hid), score
+                    best_score, cands = score, [(fname, hid, hpage)]
+                elif score == best_score:
+                    cands.append((fname, hid, hpage))
             display = escape(text)
-            if best and best_score >= 85:
-                return f'<a href="{best[0]}#{best[1]}">{display}</a>'
+            if cands and best_score >= MATCH_THRESHOLD:
+                # a heading may repeat (an appendix title echoed as a Notes
+                # subhead): among equally-good matches prefer the one printed
+                # on the entry's own target page
+                pick = next((c for c in cands if _page_agrees(c[2], target)),
+                            cands[0])
+                return f'<a href="{pick[0]}#{pick[1]}">{display}</a>'
             unmatched.append(text)
             return display
 

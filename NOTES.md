@@ -1584,3 +1584,71 @@ rides the next allow-knob.
 Verification baseline: pytest -q **447 passed**; full corpus at this commit:
 10/10 built, 10/10 QA PASS, baseline updated (BoK contents link + PWC/I&B
 quote heals + anchor-order improvements accepted as intentional).
+
+## Review #90 (2026-07-21) — seven correctness/doc fixes
+
+- **class: overrides must be marked applied by their OWN classifier, not a
+  bystander pass.** The verse pass added `class:quote`/`class:list` to
+  `class_applied` merely because it BLOCKED those lines from verse — so a
+  class:quote on a page with no blocks.quotes spec passed the stale check
+  while doing nothing (the line was only kept out of verse, never stamped a
+  quote). Fix: verse pass marks only its own `class:verse` (+ `class:prose`,
+  whose sole effect IS the block); quote/list defer to their passes → a
+  missing spec now fails as stale. No corpus output change (class_applied
+  feeds only the stale gate). The two live class:quote overrides (Schuon 122,
+  Mystics 17-18) are both inside their books' quote specs, so safe.
+- **The same-page quote joiner had no short-line witness.** Two flush-left
+  justified quote paragraphs (no first-line indent, normal leading) separated
+  only by a short final line fused — neither the indent nor the gap witness
+  fires. Added `prev_short` measured against the quote's OWN justified margin
+  (`block_right`), guarded on `block_right is not None` (a ragged quote has no
+  cluster → measuring its naturally-short lines against col_right would
+  re-shatter it) and on the next line returning to the prev x0. `justified_rights`
+  assigns the cluster margin to EVERY line in a same-x0 run incl. the short
+  trailing one, so the guard fires exactly where wanted. Real heals: I&B split
+  a garbled fused Sūrat al-Ikhlās (112) — the old fusion joined verse-1 "…is
+  One" onto verse-2 "God,…" into "is One God" (a MISREADING); PWC split a
+  rhetorical question from its answer.
+- **Inline `*`/`†`/`‡` note matching was context- and page-blind.** It replaced
+  the FIRST star in any eligible run. Now `TextRun.src_page` (set in
+  `_apply_textfix`, never emitted, `compare=False` so bytes are untouched)
+  scopes the match to the note's own page, and `_inline_marker_pos` requires a
+  marker SHAPE — attached to a preceding non-space, not glued into a following
+  word — so spaced arithmetic '3 * 5' and leading bullets are skipped. me-and-rumi
+  (the only inline-star book) noteref count unchanged.
+- **Contents-link resolution now folds punctuation and honours the printed
+  folio.** Reusing qa_ordercheck's `_match`/`MATCH_THRESHOLD` (fold '[^a-z0-9]+'
+  → spaces) plus a page-agreement tiebreak among equal scores. Two pre-existing
+  MIS-links fixed: Schuon's 'Appendix 1/2' entries (a colon blocked the prefix
+  match so the shorter 'APPENDIX 1' Notes subhead won) and — surprise —
+  harmonious-unity's 'Chinese Text' (two headings; the entry's folio 112 now
+  picks the page-112 heading, not the page-43 one). Needed a running
+  `_cur_page_label` updated at ALL five pagebreak-emission sites and recorded
+  in `heading_index`.
+- **Text-less figure plates now emit at their Y, not ahead of all page text.**
+  The Schuon fix emitted every plate before the first line; a mid-page figure
+  with prose above it would jump the prose. Now plates are Y-anchored and
+  drained in the line walk. Byte-identical for the corpus (all six Schuon
+  plates are top-of-page, so they still drain before the first line).
+- README: the extraction step now says pages are flagged on MATERIAL
+  disagreement (<90) and discloses that <40-char pages are unscored; the QA
+  step no longer claims all 26 gates gate unconditionally, documents fidelity's
+  TOC/figure/disputed-page exclusions, frames gate 26 as automated readiness
+  (not a screen-reader claim), and limits the warning-resolution claim to
+  content-risk + stale adjudications.
+
+- **THE BASELINE WAS STALE — and byte-CHANGED ≠ my change.** A prior commit
+  altered flowbuilder without re-seeding `corpus_baseline.json`, so rebuilding
+  at clean HEAD already diverged from the tracked baseline (I&B quote-paras:
+  baseline 93, clean-HEAD build **88**, committed epub 93). The corpus delta
+  (93→91) therefore mixed pre-existing drift with my +3. The only reliable way
+  to isolate a change's true effect is **diff a clean-HEAD build against the
+  patched build** (`git stash push src/…; build; unzip; stash pop; build;
+  diff`), NOT trust the baseline delta. Doing so proved my real footprint was
+  exactly four edits (I&B Qurʾān, PWC question, Schuon appendix links,
+  harmonious 'Chinese Text'); the rest of the CHANGED column was inherited
+  drift. Re-seed the baseline (and the committed epubs) when shipping this.
+
+Verification: pytest -q **458 passed**; full corpus **11/11 built, 11/11 QA
+PASS**; every byte change confirmed against a clean-HEAD diff as an intended
+heal (baseline NOT yet re-seeded — see above).

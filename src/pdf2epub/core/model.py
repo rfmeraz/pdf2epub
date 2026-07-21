@@ -50,6 +50,11 @@ PLAIN = RunFormat()
 class TextRun:
     text: str
     fmt: RunFormat = field(default_factory=RunFormat)
+    # 1-based physical page the run's text was extracted from. Set by
+    # _apply_textfix; never emitted and excluded from equality/hashing so it
+    # cannot affect byte-reproducible output. Read only by _attach_noterefs to
+    # scope an inline footnote-marker match to the note's own page.
+    src_page: int | None = field(default=None, compare=False)
 
 
 @dataclass(slots=True)
