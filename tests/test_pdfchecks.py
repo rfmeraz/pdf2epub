@@ -3,10 +3,31 @@
 from pdf2epub.qa.pdfchecks import (
     check_furniture_leak,
     check_toc_agreement,
+    count_numeric_nav_entries,
     hyphen_residue,
     lost_space_count,
     pua_residue,
 )
+
+
+def test_count_numeric_nav_entries():
+    # a clean, named nav -> gate 7b GATE passes (empty), advisory quiet
+    clean = [(1, "Foreword"), (3, "Childhood"), (3, "My Teaching Career")]
+    assert count_numeric_nav_entries(clean) == []
+
+    # passage-number pollution -> the offenders, in doc order (the gate names
+    # these when a drop was requested; the advisory counts them)
+    dirty = clean + [(3, "1."), (3, "2."), (3, "19.*")]
+    leaked = count_numeric_nav_entries(dirty)
+    assert leaked == ["1.", "2.", "19.*"]
+    # gating decision = any leak; advisory floor = 10 (so 3 stays quiet, and a
+    # lone 1/1 never fires)
+    assert bool(leaked) and len(leaked) < 10
+    assert count_numeric_nav_entries([(3, "1.")]) == ["1."]  # 1/1: below floor
+
+    # the sufism shape: 22 bare integers clears the advisory floor
+    sufism = clean + [(3, str(i)) for i in range(1, 23)]
+    assert len(count_numeric_nav_entries(sufism)) == 22 >= 10
 
 
 def test_toc_agreement():

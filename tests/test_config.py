@@ -41,7 +41,7 @@ flow:
     - {page: 44, line: 12, action: "break", note: evidence}
     - {page: 50, line: 3, action: "role:blockquote", note: verse}
 footnotes: {policy: markers, marker: asterisk}
-toc: {source: printed, printed_pages: [6, 7], nav_depth: 2}
+toc: {source: printed, printed_pages: [6, 7], nav_depth: 2, drop_numeric_nav_entries: true}
 glyphs:
   pua_map:
     "\\uF048": {action: char, char: "\\uFDFA", lang: ar, note: verified p.44}
@@ -76,7 +76,14 @@ def test_full_config_round_trip(tmp_path):
     assert cfg.figure_pages[0].pages == [88, 89, 90, 92]
     assert cfg.in_flow_pages(5) == [3, 4, 5]  # cover 1 + excluded 2 dropped
     assert cfg.fonts_embed[0].lang == "ar"
+    assert cfg.toc_drop_numeric_nav_entries is True
     assert cfg.sha256 == "abc123"
+
+
+def test_toc_drop_numeric_defaults_false(tmp_path):
+    p = tmp_path / "book.yaml"
+    p.write_text("source: {folder: p, pdf: b.pdf}\ntoc: {source: printed}")
+    assert load_config(p).toc_drop_numeric_nav_entries is False
 
 
 @pytest.mark.parametrize("snippet,err", [
@@ -84,6 +91,10 @@ def test_full_config_round_trip(tmp_path):
     ("source: {folder: p, pdf: b.pdf}\nflow: {overrides: [{page: 1, line: 2, action: nope}]}",
      "action invalid"),
     ("source: {folder: p, pdf: b.pdf}\ntoc: {source: bookmarks}", "toc.source invalid"),
+    ("source: {folder: p, pdf: b.pdf}\ntoc: {drop_numeric_nav_entries: \"false\"}",
+     "must be a boolean"),
+    ("source: {folder: p, pdf: b.pdf}\ntoc: {drop_numeric_nav_entries: nope}",
+     "must be a boolean"),
     ("source: {folder: p, pdf: b.pdf}\nglyphs: {pua_map: {\"\\uF048\": {action: char}}}",
      "requires 'char'"),
     ("source: {folder: p}", "source.pdf is required"),

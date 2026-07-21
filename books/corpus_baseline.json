@@ -319,7 +319,7 @@
    "pdf_sha256": "a4ac119194cd4c0eff7a9ebdce3cb7d77691eccda8de63eec137597932057cd7"
   },
   "books/me-and-rumi/book.yaml": {
-   "config_sha256": "86df4ceb5b0510a27e68cfd3a892f415a23566fd63295ca5088d48bfab9ab134",
+   "config_sha256": "4b8e8a727758e2473cd20dd354fcc60d9ab632a1c8cee02b5198044f9bfa31f5",
    "metrics": {
     "config": {
      "adjudications": 3,

@@ -78,8 +78,11 @@ order, textfix, printed-TOC rebuild, exact page anchors — inline at the run se
 page begins mid-paragraph). `core/` is the
 back-end forked from idml2epub: role application, CJK lang tagging, XHTML emitter, synthetic
 CSS, nav, OFL font subsetting, deterministic packager, and the EPUB-generic QA gates.
-`qa/` runs 26 gates (incl. 11 lost-space, 11b noteref-seam, 19 Qurʾānic-citation validation
-against the fixed 114-sura structure, 20 garble residue in shipped text, 21 figure-image
+`qa/` runs 26 gates (incl. 11 lost-space, 11b noteref-seam, 7b numeric-nav — bare passage/
+appendix numbers in the nav: a config-conditional GATE when `toc.drop_numeric_nav_entries` is
+set (0 numeric-only entries must ship) and a numeric-nav advisory otherwise, since gate 7's
+one-directional agreement never flags a nav dwarfing the printed Contents; 19 Qurʾānic-citation
+validation against the fixed 114-sura structure, 20 garble residue in shipped text, 21 figure-image
 integrity vs re-rendered source regions, 22 warnings-adjudicated — the build's coded
 warning queue re-derived via `warnqueue.py`, failing on open content-risk items —
 23 verse integrity: the flow's classified verse line count vs shipped `span.vl` spans,

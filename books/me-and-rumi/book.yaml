@@ -204,6 +204,10 @@ toc:
   strip_page_numbers: true
   nav_depth: 1         # chapters are TOC-only groupings with no physical
                        # headings; nav mirrors parts + passage structure
+  drop_numeric_nav_entries: true   # the ~532 bare passage numbers (1., 2., …,
+                       # 19.*) are in-text markers the printed Contents (pp.8-9)
+                       # never lists; keep them as body <h3>, drop from nav/ncx.
+                       # Leaves the 32 named sections (gate 7b enforces 0 leak).
 
 glyphs:
   pua_map: {}

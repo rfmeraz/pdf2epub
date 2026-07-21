@@ -379,6 +379,10 @@ class PdfBookConfig:
     # divider like "Appendix"), not a wrapped-title continuation of the line
     # above; matched on stripped text. Render-verified per book.
     toc_standalone_lines: list[str] = field(default_factory=list)
+    # drop numeric-only nav/ncx entries (bare passage numbers like "1.", "19.*"
+    # that the printed Contents never lists but share a heading pstyle). Opt-in
+    # per book: the headings stay in the body, only the TOC/nav drops them.
+    toc_drop_numeric_nav_entries: bool = False
 
     # glyphs (JP-P6)
     pua_map: dict[str, PuaRule] = field(default_factory=dict)
@@ -730,7 +734,7 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
     tc = data.get("toc", {})
     _check_keys("toc", tc, {"source", "printed_pages", "handling",
                             "strip_page_numbers", "nav_depth",
-                            "standalone_lines"})
+                            "standalone_lines", "drop_numeric_nav_entries"})
     cfg.toc_source = tc.get("source", cfg.toc_source)
     if cfg.toc_source not in ("outline", "printed", "links"):
         raise ConfigError(f"toc.source invalid: {cfg.toc_source}")
@@ -739,6 +743,13 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
     cfg.strip_toc_page_numbers = bool(tc.get("strip_page_numbers", True))
     cfg.nav_depth = int(tc.get("nav_depth", cfg.nav_depth))
     cfg.toc_standalone_lines = list(tc.get("standalone_lines", []) or [])
+    # strict bool: YAML gives a real bool for true/false, but a quoted "false"
+    # or a stray "no" must fail loudly, never coerce to True via bool("false").
+    ndrop = tc.get("drop_numeric_nav_entries", cfg.toc_drop_numeric_nav_entries)
+    if not isinstance(ndrop, bool):
+        raise ConfigError(
+            f"toc.drop_numeric_nav_entries must be a boolean, got {ndrop!r}")
+    cfg.toc_drop_numeric_nav_entries = ndrop
 
     gl = data.get("glyphs", {})
     _check_keys("glyphs", gl, {"pua_map", "fail_on_unmapped_pua", "gt_strip_phrases",

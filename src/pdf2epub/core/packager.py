@@ -152,7 +152,7 @@ def _opf(cfg, manifest: list[tuple[str, str, str, str]], spine_ids: list[str],
 
 def _ncx(cfg, result: EmitResult) -> str:
     files = result.files + ([result.notes_file] if result.notes_file else [])
-    entries = _toc_entries(files)
+    entries = _toc_entries(files, drop_numeric=cfg.toc_drop_numeric_nav_entries)
     L = [
         '<?xml version="1.0" encoding="utf-8"?>',
         '<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">',

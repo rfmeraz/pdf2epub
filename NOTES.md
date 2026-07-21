@@ -1706,3 +1706,63 @@ Verification: pytest -q **464 passed**, ruff clean; corpus **11/11 built,
 (proofread fixes), and any verse-with-noteref book (the U+2028 heal) — all
 intended. Mystics proofread round 1 complete; a few lower-impact structural
 items deferred to round 2 (see CONVERSIONS.md).
+
+## Numeric-only nav filter + gate 7b (2026-07-21, M&R)
+
+M&R's rebuilt nav carried **564 entries** — but the print Contents (pp.8-9)
+lists only the ~29 named sections. The extra **532** were bare passage numbers
+(`1.`…`254.`, plus one `19.*`): in-text markers set as centered smallcaps
+headings, so they land in the same pstyle (`Bembo-SC@11/center → h3`) as real
+section titles. Nothing downstream can tell `1.` from `Childhood` except the
+text, so they flooded the TOC (a nav longer than the book's page count).
+
+- **The signal was already in hand; only a check was missing.** The analyzer
+  had parsed the printed Contents into `analysis.toc_entries` (29 named, zero
+  numbers), and **gate 7 already printed `nav extra: 556`** — but gate 7 is
+  one-directional (it asserts printed-Contents ⊆ nav, never that the nav isn't
+  wildly *larger*), so a 17× overshoot passed clean. The lesson: a subset gate
+  is not a parsimony gate.
+- **Fix: opt-in `toc.drop_numeric_nav_entries`** (default False → every other
+  book byte-identical; corpus confirmed 8/8 untouched books identical). Filters
+  numeric-only titles (`^\d+\.?\**$`, via `nav.is_numeric_nav_title`) out of the
+  **shared** `_toc_entries` — the one chokepoint feeding both `nav.xhtml` and
+  `toc.ncx`. Headings **stay as `<h3>` in the body**; only the TOC drops them
+  (proven: the only two files that changed inside the epub are nav.xhtml +
+  toc.ncx; body byte-identical). Strict-bool load: a quoted `"false"` must raise,
+  never coerce True via `bool("false")`.
+- **Gate 7 is a weak guardrail here — pin the survivors directly.** At
+  `nav_depth: 1`, `_source_entries` gates only the 8 *outdented* printed-TOC
+  entries (`source_total=8`), so gate 7 verifies 8 of the 32 survivors, not all.
+  The exact 32-entry nav/ncx sequence is pinned by a unit test instead.
+- **New check, one predicate, two modes (gate 7b).** When the flag is set it
+  **GATES** (shipped nav must have 0 numeric-only entries — "you asked to drop
+  them, prove they're gone"; the correct owner of a *structural* invariant,
+  since gate-24 assertions are page-text-scoped and blind to a nav-only change).
+  When the flag is off it is a low-noise **advisory** (fires only at ≥10
+  numeric entries, so a 1/1 nav never trips) that names the fix and always
+  prints the nav-vs-Contents sizes. Keying on numeric *count* (not raw
+  `nav_extra`) keeps it silent on legitimately deep navs (Mystics/Schuon/PWC =
+  0 numeric); it fires on exactly one other book — Sufism's 22 numbered-letter
+  appendix entries — which is the durable pointer to fix that next.
+- **The deeper gap: the nav had no *judgment* step.** The body gets a mandatory
+  reading-QA proofread; the nav had only machine checks and no adjudication
+  touchpoint — which is *why* this shipped. Gate 7b (QA-time) surfaces the
+  signal but doesn't route it to the per-book adjudication queue where
+  structural judgments get *recorded*. So the real closure is a build-time
+  **`nav-numeric-bloat` advisory** in `warnqueue.py`: when ≥10 numeric-only
+  headings would enter the nav it lands in `build/warnings.md` (the queue the
+  agent reviews during conversion) naming `toc.drop_numeric_nav_entries`, and
+  **auto-resolves once that flag records the decision** (M&R shows it
+  auto-resolved; Sufism shows it OPEN). Advisory, never content-risk — a bloated
+  nav is extra entries, not lost content, so it never gates. This — plus the
+  config flag as the recorded judgment — is the nav's first adjudication step,
+  not a full interactive review; correctness stays pinned structurally (the
+  exact 32-entry sequence is asserted, all targets verified to resolve).
+- **Result:** M&R nav/ncx 564→32; gate 4 `toc=32` (no longer > pagelist 374);
+  gate 7 `nav extra: 556→24`; gate 7b PASS (0 leaked); gate 16 heading census
+  unchanged (564 — headings still in body). Overall PASS, epubcheck clean.
+
+Verification: pytest -q **475 passed**, ruff clean; corpus **11/11 byte-identical,
+11/11 QA PASS**, only me-and-rumi.epub changed vs HEAD (the 3 session-start
+drifted epubs rebuilt back to their committed bytes). The `nav-numeric-bloat`
+advisory is QA/warnings-only — no epub bytes move.

@@ -1061,3 +1061,28 @@ against the print renders:
   p.43 list), the p.95 verse turn, and a handful of low-confidence punctuation
   items (a missing index comma "15 22" p.130, "p. 164" note seam). None is a
   content-loss risk; they want another proofread round.
+
+## me-and-rumi — 2026-07-21 re-ship (TOC: drop bare passage numbers)
+
+Review found the rebuilt nav listing all **532** bare passage numbers
+(`1.`…`254.`, plus `19.*`) alongside the 32 named sections — a 564-entry TOC
+the print Contents (pp.8-9, ~29 named entries) never intended. The passage
+numbers are centered-smallcaps headings sharing a pstyle with real section
+titles, so only their text distinguishes them.
+
+- **Fix:** new opt-in `toc.drop_numeric_nav_entries: true` — drops numeric-only
+  titles (`^\d+\.?\**$`) from nav.xhtml + toc.ncx while leaving them as `<h3>`
+  in the reading text. Nav/ncx 564→32; the surviving 32 = the 25 non-index
+  printed-Contents sections + 3 part titles + "The Text and Translation" +
+  the 3 Notes parts. See NOTES.md "Numeric-only nav filter + gate 7b" for the
+  mechanism, the new gate 7b (config-conditional GATE + numeric-nav advisory),
+  and why gate 7 (`nav extra: 556`) hadn't caught this.
+- **Scoped:** the only two files that changed inside the epub are nav.xhtml and
+  toc.ncx (body byte-identical to the prior, proofread ship — so no body
+  reading-QA regression is possible; the reading-QA surface is TOC navigation,
+  verified: all 32 targets resolve, structure mirrors the print Contents).
+- **QA:** gate 4 `toc=32 ncx=32` (no longer > pagelist 374); gate 7 `nav extra:
+  24`, PASS; gate 7b PASS (0 numeric leaked, drop requested); Overall PASS,
+  epubcheck clean. Also regenerated the manifest/QA that had drifted from the
+  on-disk epub. The corpus advisory now flags Sufism (22 numbered-letter
+  appendix entries) as the next candidate.

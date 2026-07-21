@@ -18,6 +18,7 @@ import re
 from dataclasses import dataclass, field
 
 from .core.model import Paragraph, TextRun
+from .core.nav import is_numeric_nav_title
 
 CONTENT_RISK = "content-risk"
 ADVISORY = "advisory"
@@ -53,6 +54,10 @@ CODES: dict[str, str] = {
     "index-locator-unlinked": ADVISORY,  # an index page-number locator had no
     #   matching page anchor (out-of-range, roman front-matter, or an "n."
     #   note suffix); the number ships as plain text, just not hyperlinked
+    "nav-numeric-bloat": ADVISORY,  # many bare-number headings ('1.', '19.*')
+    #   would list in the nav/ncx though a printed Contents omits them — the
+    #   judgment prompt gate 7 (subset-only) never raised; auto-resolves once
+    #   toc.drop_numeric_nav_entries records the decision
 }
 
 
@@ -176,6 +181,21 @@ def derive_warnings(doc, res, flow, cfg) -> list[AdjWarning]:
                 "unmapped-pstyles", CONTENT_RISK,
                 f"pstyles not in styles.pstyle_map (role "
                 f"'{cfg.unmapped_role}' assumed): " + ", ".join(unmapped)))
+        # numeric-only headings ('1.', '19.*') that would flood the nav/ncx —
+        # the judgment prompt the nav lacked (gate 7 only checks subset, never
+        # bloat). Book-level, so page-less; auto-resolves once the flag records
+        # the decision. Count the flow headings that WOULD become nav entries.
+        n_numeric_heads = sum(
+            1 for b in flow.blocks
+            if isinstance(b, Paragraph) and (b.role or "") in ("h1", "h2", "h3")
+            and is_numeric_nav_title(b.text()))
+        if n_numeric_heads >= 10:
+            out.append(AdjWarning(
+                "nav-numeric-bloat", ADVISORY,
+                f"{n_numeric_heads} numeric-only headings (bare passage/appendix "
+                "numbers) would list in the nav/ncx though a printed Contents "
+                "omits them; set toc.drop_numeric_nav_entries: true to drop them "
+                "from the TOC (they stay in the body)"))
 
     for pno in uncovered_image_pages(doc, cfg):
         out.append(AdjWarning(
@@ -201,6 +221,12 @@ def auto_resolve(warnings: list[AdjWarning], cfg) -> int:
     cover_excl = set(cfg.pages_cover) | set(cfg.pages_exclude)
     n = 0
     for w in warnings:
+        if w.code == "nav-numeric-bloat":
+            # book-level (page-less): the config flag IS the recorded judgment
+            if cfg.toc_drop_numeric_nav_entries:
+                w.resolved_by = "toc.drop_numeric_nav_entries set"
+                n += 1
+            continue
         page = w.pages[0] if w.pages else None
         if page is None:
             continue

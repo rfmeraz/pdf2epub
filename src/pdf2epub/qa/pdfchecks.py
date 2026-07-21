@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 
 from rapidfuzz import fuzz
 
+from ..core.nav import is_numeric_nav_title
 from ..core.textnorm import normalize
 
 _SLUG_PATTERNS = [
@@ -68,6 +69,12 @@ def check_toc_agreement(nav_entries: list[tuple[int, str]],
             res.missing.append(title)
     res.nav_extra = max(0, len(nav_entries) - res.matched)
     return res
+
+
+def count_numeric_nav_entries(nav_entries: list[tuple[int, str]]) -> list[str]:
+    """Numeric-only nav titles (bare passage/appendix numbers) in doc order —
+    the ones a printed Contents never lists. Empty when the nav is clean."""
+    return [t for _, t in nav_entries if is_numeric_nav_title(t)]
 
 
 def check_furniture_leak(paragraph_texts: list[str],

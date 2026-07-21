@@ -8,18 +8,36 @@ complete and monotone by construction (every printed page got an anchor).
 
 from __future__ import annotations
 
+import re
 from xml.sax.saxutils import escape
 
 from .emit_xhtml import EmitResult, OutFile
 
 _LEVEL = {"h1": 1, "h2": 2, "h3": 3}
 
+# a "numeric-only" nav title: a bare passage/appendix number, optionally with a
+# trailing dot and/or fused footnote asterisks ("1.", "254.", "19.*", "22").
+# These are in-text structural markers a book's printed Contents never lists;
+# they share a heading pstyle with real section titles, so only the text tells
+# them apart. Never matches a lettered title ("Childhood", "Part 2.").
+NUMERIC_NAV_TITLE = re.compile(r"\d+\.?\**")
 
-def _toc_entries(files: list[OutFile]) -> list[tuple[int, str, str]]:
-    """(level, title, href) in document order."""
+
+def is_numeric_nav_title(text: str) -> bool:
+    """True iff the stripped title is numeric-only (see NUMERIC_NAV_TITLE)."""
+    return NUMERIC_NAV_TITLE.fullmatch(text.strip()) is not None
+
+
+def _toc_entries(files: list[OutFile],
+                 drop_numeric: bool = False) -> list[tuple[int, str, str]]:
+    """(level, title, href) in document order. When ``drop_numeric``, skip
+    numeric-only titles (bare passage numbers) so they never enter nav/ncx —
+    the heading stays in the body, only the TOC drops it."""
     out = []
     for f in files:
         for role, hid, text in f.headings:
+            if drop_numeric and is_numeric_nav_title(text):
+                continue
             out.append((_LEVEL.get(role, 1), text, f"{f.file_name}#{hid}"))
     return out
 
@@ -70,7 +88,7 @@ def _nest(entries: list[tuple[int, str, str]]) -> str:
 
 def build_nav_xhtml(result: EmitResult, cfg, has_cover: bool) -> str:
     files = result.files + ([result.notes_file] if result.notes_file else [])
-    entries = _toc_entries(files)
+    entries = _toc_entries(files, drop_numeric=cfg.toc_drop_numeric_nav_entries)
 
     pagelist_items = []
     for f in files:

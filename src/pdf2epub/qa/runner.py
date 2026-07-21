@@ -278,6 +278,28 @@ def run_qa(epub: Path, config: Path, reference: Path | None = None,
                   [f"{agree.matched}/{agree.source_total} source entries in nav "
                    f"(nav extra: {agree.nav_extra})"] + agree.missing[:6]))
 
+    # ---- gate 7b: numeric nav entries — bare passage/appendix numbers a
+    # printed Contents never lists (they share a heading pstyle with real
+    # titles, so only the text tells them apart). When toc.drop_numeric_nav_
+    # entries is set this GATES ("you asked to drop them -> prove they're
+    # gone"); otherwise it is a low-noise advisory that names the fix, plus an
+    # always-on nav-vs-Contents size datapoint (surfaces overshoot magnitude
+    # without a firing threshold — gate 7's one-directional check misses it).
+    numeric_nav = pdfchecks.count_numeric_nav_entries(nav_entries)
+    n_num = len(numeric_nav)
+    size_info = (f"nav={len(nav_entries)} vs printed Contents "
+                 f"source_total={agree.source_total}")
+    if cfg.toc_drop_numeric_nav_entries:
+        gates.append(("7b numeric nav entries", not numeric_nav,
+                      [f"{n_num} numeric-only nav entries (drop requested); "
+                       f"{size_info}"]
+                      + [f"leaked: {t}" for t in numeric_nav[:6]]))
+    else:
+        fires = n_num >= 10   # absolute floor: a 1/1 nav never trips the advice
+        detail = (f"{n_num} numeric-only nav entries; {size_info}"
+                  + ("; consider toc.drop_numeric_nav_entries" if fires else ""))
+        gates.append(("7b numeric nav entries (info)", None, [detail]))
+
     # ---- gate 8: furniture leak (toc-entry <p>s legitimately mirror the
     # running-head text — they ARE the heading titles)
     _skip_cls = ("toc-entry", "titletext", "contents-head")

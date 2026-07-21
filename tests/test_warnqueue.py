@@ -108,6 +108,43 @@ def test_flow_warns_and_scans(tmp_path):
     assert "__toc__" not in by["unmapped-pstyles"].msg
 
 
+def _head(text, role="h3"):
+    return Paragraph(style="SC@11", role=role,
+                     items=[TextRun(text, RunFormat())],
+                     src=SourceRef("p0001", 0))
+
+
+def test_nav_numeric_bloat_prompt_and_autoresolve(tmp_path):
+    # >=10 numeric-only headings among the flow's h1/h2/h3 -> the judgment
+    # prompt the nav lacked (gate 7 only checked subset, never bloat)
+    blocks = [_head("Childhood")] + [_head(f"{i}.") for i in range(1, 13)]
+    doc, flow = _doc([_page(1)]), _flow(blocks)
+
+    cfg = _cfg(tmp_path)                                  # flag OFF (default)
+    aw = derive_warnings(doc, None, flow, cfg)
+    bloat = [w for w in aw if w.code == "nav-numeric-bloat"]
+    assert len(bloat) == 1
+    w = bloat[0]
+    assert w.severity == "advisory" and w.pages == [] and w.open
+    assert "12 numeric-only headings" in w.msg
+    assert auto_resolve(aw, cfg) >= 0 and w.open       # stays open, prompts
+
+    cfg_on = _cfg(tmp_path, toc_drop_numeric_nav_entries=True)
+    aw2 = derive_warnings(doc, None, flow, cfg_on)
+    w2 = next(x for x in aw2 if x.code == "nav-numeric-bloat")
+    auto_resolve(aw2, cfg_on)                            # flag records decision
+    assert not w2.open and w2.resolved_by == "toc.drop_numeric_nav_entries set"
+
+
+def test_nav_numeric_bloat_below_threshold(tmp_path):
+    # <10 numeric headings, and numeric NON-headings, do not fire
+    blocks = ([_head(f"{i}.") for i in range(1, 6)]      # 5 numeric heads
+              + [_head("My Travels")]                    # named head — never counts
+              + [_head("7.", role="p")])                 # numeric but not a heading
+    aw = derive_warnings(_doc([_page(1)]), None, _flow(blocks), _cfg(tmp_path))
+    assert not any(w.code == "nav-numeric-bloat" for w in aw)
+
+
 def test_rtl_census_expected_vs_unexpected():
     ar = RunFormat(lang="ar")
     zh = RunFormat(lang="zh")
