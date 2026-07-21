@@ -92,6 +92,7 @@ class VerseSpec:
     pages: list[int]
     base: list[float]
     turns: list[float] = field(default_factory=list)
+    mixed: bool = False  # accept ragged base-only runs alongside turn runs
     tol: float = 2.0
     stanza_gap: float = 1.4  # × median leading opens a new stanza
     note: str = ""
@@ -365,7 +366,7 @@ class PdfBookConfig:
 
     # footnotes (JP-P4)
     footnote_policy: str = "none"   # none | markers
-    footnote_marker: str = "digits"  # digits | asterisk
+    footnote_marker: str = "digits"  # digits | asterisk | mixed
     footnote_region_max_size: float = 0.0  # pt; 0 = body size - 1.5
 
     # toc (JP-P3)
@@ -722,7 +723,7 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
     if cfg.footnote_policy not in ("none", "markers"):
         raise ConfigError(f"footnotes.policy invalid: {cfg.footnote_policy}")
     cfg.footnote_marker = fn.get("marker", cfg.footnote_marker)
-    if cfg.footnote_marker not in ("digits", "asterisk"):
+    if cfg.footnote_marker not in ("digits", "asterisk", "mixed"):
         raise ConfigError(f"footnotes.marker invalid: {cfg.footnote_marker}")
     cfg.footnote_region_max_size = float(fn.get("region_max_size", 0.0))
 
@@ -821,7 +822,8 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
     _check_keys("blocks", bl, {"verse", "quotes", "lists"})
     for vs in bl.get("verse", []) or []:
         _check_keys("blocks.verse[]", vs,
-                    {"pages", "base", "turns", "tol", "stanza_gap", "note"})
+                    {"pages", "base", "turns", "mixed", "tol",
+                     "stanza_gap", "note"})
         if not vs.get("note"):
             raise ConfigError("blocks.verse requires a note "
                               "(render-verified evidence)")
@@ -843,6 +845,7 @@ def load_config(path: Path, require_complete: bool = False) -> PdfBookConfig:
                               f"figure_pages: {sorted(clash)[:8]}")
         cfg.blocks_verse.append(VerseSpec(
             pages=pages, base=base, turns=turns,
+            mixed=bool(vs.get("mixed", False)),
             tol=float(vs.get("tol", 2.0)),
             stanza_gap=float(vs.get("stanza_gap", 1.4)),
             note=vs["note"]))

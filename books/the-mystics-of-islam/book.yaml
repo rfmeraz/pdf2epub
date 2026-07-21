@@ -1,0 +1,656 @@
+# pdf2epub book.yaml — The Mystics of Islam (Reynold A. Nicholson).
+# Judgments recorded from analysis evidence and page renders, 2026-07-20.
+
+schema_version: 1
+
+source:
+  folder: "package"
+  pdf: "The Mystics of Islam (2003).pdf"
+  sha256: "d9515c3071384355d5bf12814f7ac533f45f58909977ebffbeaddc255f805403"
+
+metadata:                     # JP-P5 — verified on p4/p5 renders
+  title: "The Mystics of Islam"
+  creators:
+    - {name: "Reynold A. Nicholson", role: aut}
+  publisher: "World Wisdom, Inc."
+  language: en
+  additional_languages: []
+  isbn_epub:                  # never invented; empty -> identifier/urn:uuid
+  isbn_print: "978-0-941532-48-8"
+  identifier: 89f5cd9c-63b4-41ed-b38f-821399905792   # persistent EPUB id; keep STABLE across revisions
+  released: "2026-07-20"      # dcterms:modified for this EPUB revision
+  date: "2002"
+  cover: assets/cover.jpg     # produced by cover_render at build time
+  cover_render: {page: 1, box: trim, dpi: 300}
+  # cover evidence: page 1 is image-dominated (6 image(s), 38 chars)
+
+pages:                        # JP-P2 — confirm against thumbs
+  cover: [1]
+  front: {first: 2, last: 13}   # roman folios
+  body:  {first: 14, last: 144}   # printed folio '1' begins on p14; bio on p144
+  exclude: [145]                  # physical back cover: marketing copy/barcode
+  label_source: pdf-page-labels   # folio-vs-label agreement: 99.2%
+  label_overrides: {}
+  role_overrides:
+    - {page: 4, role: title-page}
+
+furniture:
+  top_band: 42.9
+  repeat_min_pages: 3
+  extra:
+    - "Bibliography"            # running head on the short bibliography section
+  keep: []
+  # repeated (top, 63p): 'The Mystics of Isla#'
+  # repeated (top, 12p): 'The Gnosis'
+  # repeated (top, 10p): '#ntroduction'
+  # repeated (top, 9p): 'Saints and Miracles'
+  # repeated (top, 8p): 'The Path'
+  # repeated (top, 8p): 'The Unitive State'
+  # repeated (top, 7p): '#ne Love'
+  # repeated (top, 6p): '#hapter #'
+
+styles:                       # JP-P1 — all 28 observed clusters mapped
+  body_pstyle: "NewBaskerville-Roman@11"
+  pstyle_map:
+    "NewBaskerville-Roman@11": {role: p}   # high: dominant text cluster
+    "NewBaskerville-Roman@10": {role: p}       # inset quotations / index text
+    "NewBaskerville-Roman@9": {role: p}        # footnotes split geometrically; series-page prose
+    "NewBaskerville-Italic@11/center": {role: p} # running heads, furniture-stripped
+    "NewBaskerville-Italic@11": {role: p}      # inline emphasis
+    "NewBaskerville-Roman@8": {role: p}        # copyright/LCCN text
+    "NewBaskerville-Italic@9": {role: p}       # italic runs in footnotes
+    "NewBaskerville-Italic@10": {role: p}      # inset verse emphasis
+    "NewBaskerville-Bold@13/center": {role: h2} # body section headings
+    "NewBaskerville-Bold@13": {role: h2}       # mixed-style section headings
+    "NewBaskerville-BoldItali@13/center": {role: h1} # chapter-number kicker; joined to the title below
+    "NewBaskerville-Roman@18/center": {role: h1} # preface/chapter/back-matter heads
+    "Present-Black@14/center": {role: p}        # series-page display
+    "WoodtypeOrnaments-Two@24/center": {role: drop} # series-page ornament
+    # title page (p4)
+    "Benguiat-Book@28": {role: title-page}
+    "Benguiat-Book@16/center": {role: title-page}
+    "Benguiat-Book@12/center": {role: title-page}
+    # cover and excluded back-cover type
+    "Benguiat-Normal@18": {role: drop}
+    "Benguiat-Normal@30": {role: drop}
+    "Benguiat-Normal@58": {role: drop}
+    "Benguiat-Medium@7": {role: drop}
+    "Benguiat-Medium@9": {role: drop}
+    "Benguiat-Medium@10": {role: drop}
+    "Benguiat-Medium@10/center": {role: drop}
+    "Benguiat-Normal@10": {role: drop}
+    "OCRB@8": {role: drop}
+    "OCRB@9": {role: drop}
+    "Present@15": {role: drop}
+  charstyles: {}              # font-level flags, e.g. Bembo-SC: {smallcaps: true}
+  unmapped_role: p
+  fail_on_unmapped: true
+
+flow:
+  indent_threshold: 3.8
+  gap_factor: 1.6             # median leading measured: 13.1pt
+  dehyphenate: lower-only
+  keep_hyphens: [many-sided, passing-away, self-constraint,
+                 self-mortification, book-learning, God-given, unheard-of,
+                 God-man, so-called]
+  restore_spaces: false       # lost-space hits: 0
+  join_center_lines: false    # centered display units remain distinct
+  reattach_dropcaps: true
+  overrides:                  # {page, line(RAW extract idx), action, note}
+    # Each chapter number and title is a distinct centered display line in
+    # print. Keep the number as the file-opening h1 and nest its title as h2.
+    - {page: 34, line: 1, action: "role:h2", note: "chapter title below Chapter I"}
+    - {page: 50, line: 1, action: "role:h2", note: "chapter title below Chapter II"}
+    - {page: 62, line: 1, action: "role:h2", note: "chapter title below Chapter III"}
+    - {page: 86, line: 1, action: "role:h2", note: "chapter title below Chapter IV"}
+    - {page: 100, line: 1, action: "role:h2", note: "chapter title below Chapter V"}
+    - {page: 118, line: 1, action: "role:h2", note: "chapter title below Chapter VI"}
+    - {page: 144, line: 0, action: "role:h1",
+       note: "author biography is independent back matter, not an Index subsection"}
+    # Short or ragged inset quotations have the same 10pt measure as verse
+    # and no repeated right edge for the automatic quote witness. These
+    # render-verified overrides preserve their printed quotation structure.
+    - {page: 17, line: 28, action: "class:quote", note: "short quoted saying"}
+    - {page: 17, line: 29, action: "class:quote", note: "short quoted saying"}
+    - {page: 18, line: 1, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 2, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 3, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 4, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 5, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 6, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 7, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 8, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 9, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 10, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 11, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 12, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 13, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 14, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 15, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 16, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 17, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 18, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 19, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 20, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 21, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 22, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 18, line: 23, action: "class:quote", note: "series of quoted sayings"}
+    - {page: 21, line: 5, action: "class:quote", note: "Christian hermit's reply"}
+    - {page: 21, line: 6, action: "class:quote", note: "Christian hermit's reply"}
+    - {page: 21, line: 7, action: "class:quote", note: "Christian hermit's reply"}
+    - {page: 21, line: 9, action: "class:quote", note: "Christian hermit's reply"}
+    - {page: 21, line: 10, action: "class:quote", note: "Christian hermit's reply"}
+    - {page: 21, line: 11, action: "class:quote", note: "Christian hermit's reply"}
+    - {page: 21, line: 8, action: "class:prose", note: "prose introduction between hermit quotations"}
+    - {page: 23, line: 16, action: "class:quote", note: "Manichaean maxim"}
+    - {page: 23, line: 17, action: "class:quote", note: "Manichaean maxim"}
+    - {page: 23, line: 18, action: "class:quote", note: "Manichaean maxim"}
+    - {page: 25, line: 9, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 10, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 11, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 12, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 13, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 14, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 15, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 16, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 17, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 18, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 25, line: 19, action: "class:quote", note: "Bâyazîd sayings"}
+    - {page: 28, line: 6, action: "class:quote", note: "Koran quotations"}
+    - {page: 28, line: 7, action: "class:quote", note: "Koran quotations"}
+    - {page: 28, line: 8, action: "class:quote", note: "Koran quotations"}
+    - {page: 28, line: 9, action: "class:quote", note: "Koran quotations"}
+    - {page: 28, line: 10, action: "class:quote", note: "Koran quotations"}
+    - {page: 28, line: 11, action: "class:quote", note: "Koran quotations"}
+    - {page: 30, line: 26, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 27, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 28, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 29, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 30, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 31, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 32, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 33, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 34, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 30, line: 35, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 1, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 2, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 3, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 4, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 5, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 6, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 7, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 8, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 9, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 10, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 11, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 12, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 13, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 14, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 15, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 16, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 17, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 31, line: 18, action: "class:quote", note: "definitions of Sûfism"}
+    - {page: 35, line: 1, action: "class:quote", note: "definition of mystical states"}
+    - {page: 35, line: 2, action: "class:quote", note: "definition of mystical states"}
+    - {page: 35, line: 3, action: "class:quote", note: "definition of mystical states"}
+    - {page: 37, line: 2, action: "class:quote", note: "single-line maxim"}
+    - {page: 41, line: 6, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 7, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 8, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 9, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 10, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 11, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 12, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 13, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 14, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 15, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 16, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 17, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 18, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 19, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 41, line: 20, action: "class:quote", note: "maxims for dervishes"}
+    - {page: 53, line: 1, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 2, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 3, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 4, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 5, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 6, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 7, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 8, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 9, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 10, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 11, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 12, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 13, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 14, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 15, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 16, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 17, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 18, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 19, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 20, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 21, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 22, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 23, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 24, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 25, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 26, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 27, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 28, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 29, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 30, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 31, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 32, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 33, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 34, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 35, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 36, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 37, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 38, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 39, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 40, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 53, line: 41, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 1, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 2, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 3, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 4, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 5, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 6, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 7, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 8, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 9, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 10, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 11, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 12, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 13, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 14, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 15, action: "class:quote", note: "cross-page Hujwîrî quotation"}
+    - {page: 54, line: 23, action: "class:prose", note: "commentator label between quotations"}
+    - {page: 60, line: 1, action: "class:quote", note: "short saying on music"}
+    - {page: 60, line: 2, action: "class:quote", note: "short saying on music"}
+    - {page: 60, line: 3, action: "class:quote", note: "short saying on music"}
+    - {page: 60, line: 6, action: "class:quote", note: "short saying on audition"}
+    - {page: 60, line: 7, action: "class:quote", note: "short saying on audition"}
+    - {page: 60, line: 8, action: "class:quote", note: "short saying on audition"}
+    - {page: 65, line: 32, action: "class:quote", note: "short Niffarî saying"}
+    - {page: 65, line: 33, action: "class:quote", note: "short Niffarî saying"}
+    - {page: 66, line: 8, action: "class:quote", note: "single maxim before Revelation of the Sea"}
+    - {page: 66, line: 9, action: "class:quote", note: "single maxim before Revelation of the Sea"}
+    - {page: 67, line: 1, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 2, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 3, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 4, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 5, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 6, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 7, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 8, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 9, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 10, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 11, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 12, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 13, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 14, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 15, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 16, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 17, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 18, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 19, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 20, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 21, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 22, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 23, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 24, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 25, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 26, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 27, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 28, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 29, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 30, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 31, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 32, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 33, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 34, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 35, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 67, line: 36, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 1, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 2, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 3, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 4, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 5, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 6, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 7, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 8, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 9, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 10, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 11, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 12, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 13, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 14, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 15, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 16, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 17, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 18, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 19, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 20, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 21, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 22, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 23, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 24, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 25, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 26, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 27, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 28, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 29, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 30, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 31, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 32, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 33, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 68, line: 34, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 1, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 2, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 3, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 4, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 5, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 6, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 7, action: "class:quote", note: "Revelation of the Sea"}
+    - {page: 69, line: 17, action: "class:quote", note: "Dhu 'l-Nûn saying"}
+    - {page: 69, line: 18, action: "class:quote", note: "Dhu 'l-Nûn saying"}
+    - {page: 69, line: 19, action: "class:quote", note: "Dhu 'l-Nûn saying"}
+    - {page: 69, line: 20, action: "class:quote", note: "Dhu 'l-Nûn saying"}
+    - {page: 74, line: 1, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 2, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 3, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 4, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 5, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 6, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 7, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 8, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 9, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 10, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 11, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 12, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 13, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 14, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 15, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 16, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 17, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 18, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 74, line: 19, action: "class:quote", note: "Niffarî prose quotation, not verse"}
+    - {page: 78, line: 17, action: "class:prose", note: "prose introduction to Hujwîrî quotation"}
+    - {page: 91, line: 35, action: "class:prose", note: "prose introduction to Emerson quotation"}
+    - {page: 95, line: 3, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 4, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 5, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 6, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 7, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 8, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 9, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 10, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 11, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 12, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 13, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 14, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 15, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 16, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 17, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 18, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 19, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 20, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 21, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 22, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 23, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 24, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 25, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 26, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 95, line: 27, action: "class:quote", note: "prose sayings, not verse"}
+    - {page: 97, line: 3, action: "class:quote", note: "Augustine prose quotation, not verse"}
+    - {page: 97, line: 4, action: "class:quote", note: "Augustine prose quotation, not verse"}
+    - {page: 97, line: 5, action: "class:quote", note: "Augustine prose quotation, not verse"}
+    - {page: 97, line: 30, action: "class:prose", note: "prose introduction between Rûmî poems"}
+    - {page: 101, line: 1, action: "class:verse", note: "cross-page Rûmî poem"}
+    - {page: 101, line: 2, action: "class:verse", note: "cross-page Rûmî poem"}
+    - {page: 101, line: 3, action: "class:verse", note: "cross-page Rûmî poem"}
+    - {page: 101, line: 4, action: "class:verse", note: "cross-page Rûmî poem"}
+    - {page: 101, line: 5, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 101, line: 6, action: "class:verse", note: "cross-page Rûmî poem"}
+    - {page: 101, line: 7, action: "class:verse", note: "cross-page Rûmî poem"}
+    - {page: 108, line: 24, action: "class:verse",
+       note: "opening line of the Bâyazîd poem uses the quote first-line indent; remaining lines match the single-level verse spec"}
+    - {page: 109, line: 1, action: "class:prose", note: "prose introduction to the poet's conclusion"}
+    - {page: 109, line: 20, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 21, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 22, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 23, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 24, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 25, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 26, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 27, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 28, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 29, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 30, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 31, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 109, line: 32, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 105, line: 29, action: "class:quote", note: "continuation of Khadir quotation"}
+    - {page: 110, line: 1, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 2, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 3, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 4, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 5, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 6, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 7, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 8, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 9, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 10, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 11, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 12, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 13, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 14, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 15, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 16, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 17, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 18, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 19, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 20, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 21, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 22, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 23, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 24, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 25, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 26, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 27, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 28, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 29, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 30, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 31, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 32, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 33, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 34, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 35, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 36, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 37, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 38, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 39, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 110, line: 40, action: "class:quote", note: "Khurqânî prose account, not verse"}
+    - {page: 111, line: 1, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 2, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 3, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 4, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 5, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 6, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 7, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 8, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 9, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 10, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 11, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 12, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 13, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 14, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 15, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 16, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 17, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 18, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 19, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 20, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 21, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 22, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 23, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 24, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 25, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 26, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 27, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 28, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 29, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 30, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 31, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 32, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 33, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 34, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 35, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 36, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 111, line: 37, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 1, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 2, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 3, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 4, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 5, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 6, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 7, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 8, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 9, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 10, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 11, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 12, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 13, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 14, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 15, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 16, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 112, line: 17, action: "class:quote", note: "Khurqânî sayings"}
+    - {page: 113, line: 35, action: "class:quote", note: "final line of hypnotic-process quotation"}
+    - {page: 115, line: 4, action: "class:prose", note: "prose introduction between quotations"}
+    - {page: 117, line: 14, action: "class:verse", note: "Attâr verse"}
+    - {page: 117, line: 15, action: "class:verse", note: "Attâr verse"}
+    - {page: 117, line: 16, action: "class:verse", note: "Attâr verse turnover"}
+    - {page: 117, line: 17, action: "class:verse", note: "Attâr Persian verse"}
+    - {page: 117, line: 18, action: "class:verse", note: "Attâr Persian verse"}
+    - {page: 138, line: 2, action: "join", note: "continuation of parenthetical Index note"}
+    # Mixed-convention poems: the page spec is single-level and these
+    # explicit turnover lines complete the render-verified verse groups.
+    - {page: 120, line: 7, action: "class:verse", note: "Hallâj poem turnover"}
+    - {page: 120, line: 9, action: "class:verse", note: "Hallâj poem turnover"}
+    - {page: 120, line: 5, action: "class:prose", note: "prose introduction to the first Hallâj poem"}
+    - {page: 120, line: 10, action: "class:prose", note: "prose introduction 'And again:' between poems"}
+    - {page: 121, line: 24, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 121, line: 26, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 121, line: 28, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 121, line: 30, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 121, line: 32, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 121, line: 34, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 121, line: 36, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 122, line: 2, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 4, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 6, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 8, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 10, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 12, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 14, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 16, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 122, line: 18, action: "class:verse", note: "cross-page Rûmî ode turnover"}
+    - {page: 126, line: 26, action: "class:prose", note: "prose introduction to the Hallâj verses"}
+    - {page: 126, line: 27, action: "class:verse", note: "Hallâj verse line"}
+    - {page: 126, line: 28, action: "class:verse", note: "Hallâj verse line"}
+    - {page: 126, line: 29, action: "class:verse", note: "Hallâj verse line"}
+    - {page: 126, line: 30, action: "class:verse", note: "Hallâj verse line"}
+    - {page: 126, line: 31, action: "class:verse", note: "Hallâj verse line"}
+    - {page: 126, line: 32, action: "class:verse", note: "Hallâj verse line"}
+    - {page: 127, line: 4, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 6, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 8, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 10, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 12, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 14, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 15, action: "class:verse", note: "short continuation 'I grew.'"}
+    - {page: 127, line: 17, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 19, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 21, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 23, action: "class:verse", note: "Rûmî ode turnover"}
+    - {page: 127, line: 28, action: "class:verse", note: "cosmic-consciousness poem turnover"}
+    - {page: 127, line: 30, action: "class:verse", note: "cosmic-consciousness poem turnover"}
+    - {page: 127, line: 31, action: "class:verse", note: "continued turnover 'the music,'"}
+    - {page: 127, line: 33, action: "class:verse", note: "cosmic-consciousness poem turnover"}
+    - {page: 127, line: 36, action: "class:verse", note: "cosmic-consciousness poem turnover"}
+    - {page: 127, line: 38, action: "class:verse", note: "cosmic-consciousness poem turnover"}
+    - {page: 127, line: 40, action: "class:verse", note: "cosmic-consciousness poem turnover"}
+    - {page: 128, line: 2, action: "class:verse", note: "cross-page poem turnover"}
+    - {page: 128, line: 3, action: "class:verse", note: "continued turnover 'first to last,'"}
+    - {page: 128, line: 5, action: "class:verse", note: "cross-page poem turnover"}
+    - {page: 131, line: 31, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 131, line: 33, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 131, line: 34, action: "class:verse", note: "short continuation 'and I.'"}
+    - {page: 131, line: 36, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 132, line: 4, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 132, line: 7, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 132, line: 9, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 132, line: 11, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+    - {page: 132, line: 13, action: "class:verse", note: "cross-page Rûmî poem turnover"}
+  columns:
+    # Two-column index. Split by binding-side geometry; index:true links
+    # printed locators to retained print-page anchors.
+    - {pages: [138, 140, 142], count: 2, index: true,
+       note: "index, even physical pages; render-verified"}
+    - {pages: [139, 141, 143], count: 2, index: true,
+       note: "index, odd physical pages; render-verified"}
+
+footnotes:                    # JP-P4
+  policy: markers   # 30 numbered notes plus three publisher's asterisk notes
+  marker: mixed
+
+toc:                          # JP-P3 — authored printed Contents is definitive
+  source: printed   # outline adds non-heading Series/Copyright bookmarks; links=0
+  printed_pages: [6]
+  handling: rebuild
+  strip_page_numbers: true
+  nav_depth: 1                # the PDF outline is flat
+
+glyphs:                       # JP-P6 — verify EACH on its render, then set action
+  pua_map: {}
+  fail_on_unmapped_pua: true
+
+fonts:                        # JP-P7 — OFL only, from system files, never from the PDF
+  embed: []
+  subset: true
+
+languages: {cjk_han_only: zh, overrides: []}   # JP-P8
+
+blocks:                       # JP-P9 — render-verified geometry
+  verse:
+    - {pages: [55, 61, 62, 70, 71, 74, 75, 76, 77,
+               80, 81, 83, 86, 88, 89, 90, 91, 93, 94, 95,
+               96, 97, 101, 117, 119],
+       base: [17.2], turns: [34.1], mixed: true,
+       note: "ragged poems/couplets at the standard inset; page renders and raw line geometry reviewed; these pages mix indented turnovers with consecutive base lines"}
+    - {pages: [59, 63, 73, 82, 100, 108, 118, 120, 121, 122,
+               126, 127, 128, 129, 130, 131, 132, 109, 110],
+       base: [17.2], turns: [],
+       note: "single-level and mixed-convention verse groups; render and line-dump verified, with exceptional turnover lines explicitly classified above"}
+  quotes:
+    - {pages: ["14-133"], left_inset: 17, right_inset: 17,
+       note: "10pt justified inset quotations throughout the body; representative renders p20/p73/p94 reviewed"}
+  lists:
+    - {pages: [56], marker: decimal, hang: 17,
+       note: "numbered stages of illumination; render-verified"}
+    - {pages: ["134-137"], marker: hang, hang: 17,
+       note: "bibliography entries with 17pt hanging turnovers; p134 render verified"}
+
+split: {at_roles: [h1], warn_over_files: 90}
+
+images:                       # JP-P4b
+  raster_dpi: 300
+  max_pixels: 1600
+  figure_pages: []
+  figure_regions: []
+
+adjudications:
+  - {warning: "embedded-image-uncovered", pages: [4],
+     note: "World Wisdom title-page colophon; all semantic text remains live. Render-verified."}
+
+output: {slug: the-mystics-of-islam, include_ncx: true}

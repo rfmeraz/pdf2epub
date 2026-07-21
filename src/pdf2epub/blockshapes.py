@@ -84,6 +84,7 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
                        size_of=None, blocked=None, forced=None,
                        allow_turn_start: bool = False,
                        carry_levels: list[str] | None = None,
+                       mixed: bool = False,
                        ) -> tuple[list[VerseGroup], VerseGroup | None]:
     """Calibrated classification of one page's kept lines against a
     blocks.verse spec. ``lines`` are PdfLine-likes (.x0/.x1/.y0); ``size_of``
@@ -147,7 +148,7 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
         j = i
         while j < n and levels[j] is not None:
             j += 1
-        if turns:
+        if turns and not mixed:
             # two-level convention: strict base/turn ALTERNATION. Split the
             # candidate run at consecutive-same-level seams — a note
             # paragraph's first line sits at the verse base offset in the
@@ -195,7 +196,11 @@ def verse_shape_groups(lines, eff_left: float, ref_right: float,
         # A page-top run continuing the previous page's verse is accepted
         # as-is (accepted verse above) or on the UNION with the carried
         # pending tail (its base line is on that page).
-        single_level = not turns
+        # A mixed convention uses both alternating base/turn couplets and
+        # consecutive base-only lines on the same page. Its candidate run
+        # stays intact above and uses ragged-right acceptance; detected turn
+        # levels are still retained for emission indentation.
+        single_level = not turns or mixed
 
         def _ragged(idxs) -> bool:
             if any(forced[x] for x in idxs):

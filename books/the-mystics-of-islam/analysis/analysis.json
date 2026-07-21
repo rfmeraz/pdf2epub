@@ -1,0 +1,3094 @@
+{
+ "doc": {
+  "pdf_path": "/home/rfmeraz/projects/pdf2epub/books/the-mystics-of-islam/package/The Mystics of Islam (2003).pdf",
+  "sha256": "d9515c3071384355d5bf12814f7ac533f45f58909977ebffbeaddc255f805403",
+  "producer": "",
+  "n_pages": 145,
+  "fonts": {
+   "0": {
+    "id": 0,
+    "family": "Benguiat-Normal",
+    "raw_family": "Benguiat-Normal",
+    "size": 30.0,
+    "color": "#ffffff"
+   },
+   "1": {
+    "id": 1,
+    "family": "Benguiat-Normal",
+    "raw_family": "Benguiat-Normal",
+    "size": 58.0,
+    "color": "#ffffff"
+   },
+   "2": {
+    "id": 2,
+    "family": "Benguiat-Normal",
+    "raw_family": "Benguiat-Normal",
+    "size": 18.0,
+    "color": "#ffffff"
+   },
+   "3": {
+    "id": 3,
+    "family": "Present-Black",
+    "raw_family": "Present-Black",
+    "size": 14.0,
+    "color": "#000000"
+   },
+   "4": {
+    "id": 4,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "5": {
+    "id": 5,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "6": {
+    "id": 6,
+    "family": "WoodtypeOrnaments-Two",
+    "raw_family": "WoodtypeOrnaments-Two",
+    "size": 24.0,
+    "color": "#000000"
+   },
+   "7": {
+    "id": 7,
+    "family": "Benguiat-Book",
+    "raw_family": "Benguiat-Book",
+    "size": 28.0,
+    "color": "#000000"
+   },
+   "8": {
+    "id": 8,
+    "family": "Benguiat-Book",
+    "raw_family": "Benguiat-Book",
+    "size": 16.0,
+    "color": "#000000"
+   },
+   "9": {
+    "id": 9,
+    "family": "Benguiat-Book",
+    "raw_family": "Benguiat-Book",
+    "size": 12.0,
+    "color": "#000000"
+   },
+   "10": {
+    "id": 10,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 8.0,
+    "color": "#000000"
+   },
+   "11": {
+    "id": 11,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 18.0,
+    "color": "#000000"
+   },
+   "12": {
+    "id": 12,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "13": {
+    "id": 13,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 11.0,
+    "color": "#000000"
+   },
+   "14": {
+    "id": 14,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 7.0,
+    "color": "#000000"
+   },
+   "15": {
+    "id": 15,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "16": {
+    "id": 16,
+    "family": "NewBaskerville-Roman",
+    "raw_family": "NewBaskerville-Roman",
+    "size": 6.5,
+    "color": "#000000"
+   },
+   "17": {
+    "id": 17,
+    "family": "NewBaskerville-Bold",
+    "raw_family": "NewBaskerville-Bold",
+    "size": 13.0,
+    "color": "#000000"
+   },
+   "18": {
+    "id": 18,
+    "family": "NewBaskerville-Bold",
+    "raw_family": "NewBaskerville-Bold",
+    "size": 8.5,
+    "color": "#000000"
+   },
+   "19": {
+    "id": 19,
+    "family": "NewBaskerville-Italic",
+    "raw_family": "NewBaskerville-Italic",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "20": {
+    "id": 20,
+    "family": "NewBaskerville-BoldItali",
+    "raw_family": "NewBaskerville-BoldItali",
+    "size": 13.0,
+    "color": "#000000"
+   },
+   "21": {
+    "id": 21,
+    "family": "Benguiat-Medium",
+    "raw_family": "Benguiat-Medium",
+    "size": 10.0,
+    "color": "#991518"
+   },
+   "22": {
+    "id": 22,
+    "family": "Benguiat-Medium",
+    "raw_family": "Benguiat-Medium",
+    "size": 7.0,
+    "color": "#000000"
+   },
+   "23": {
+    "id": 23,
+    "family": "Benguiat-Medium",
+    "raw_family": "Benguiat-Medium",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "24": {
+    "id": 24,
+    "family": "Benguiat-Medium",
+    "raw_family": "Benguiat-Medium",
+    "size": 10.0,
+    "color": "#000000"
+   },
+   "25": {
+    "id": 25,
+    "family": "Benguiat-Medium",
+    "raw_family": "Benguiat-Medium",
+    "size": 9.0,
+    "color": "#991518"
+   },
+   "26": {
+    "id": 26,
+    "family": "OCRB",
+    "raw_family": "OCRB",
+    "size": 8.0,
+    "color": "#000000"
+   },
+   "27": {
+    "id": 27,
+    "family": "OCRB",
+    "raw_family": "OCRB",
+    "size": 9.0,
+    "color": "#000000"
+   },
+   "28": {
+    "id": 28,
+    "family": "Present",
+    "raw_family": "Present",
+    "size": 15.0,
+    "color": "#000000"
+   },
+   "29": {
+    "id": 29,
+    "family": "Benguiat-Normal",
+    "raw_family": "Benguiat-Normal",
+    "size": 10.0,
+    "color": "#000000"
+   }
+  },
+  "outline": [
+   {
+    "level": 1,
+    "title": "Series Page",
+    "target_page": 2
+   },
+   {
+    "level": 1,
+    "title": "Title Page",
+    "target_page": 4
+   },
+   {
+    "level": 1,
+    "title": "Copyright Page",
+    "target_page": 5
+   },
+   {
+    "level": 1,
+    "title": "Table of Content",
+    "target_page": 6
+   },
+   {
+    "level": 1,
+    "title": "Preface",
+    "target_page": 8
+   },
+   {
+    "level": 1,
+    "title": "Introduction",
+    "target_page": 14
+   },
+   {
+    "level": 1,
+    "title": "Chapter I. The Path",
+    "target_page": 34
+   },
+   {
+    "level": 1,
+    "title": "Chapter II. Illumination and Ecstasy",
+    "target_page": 50
+   },
+   {
+    "level": 1,
+    "title": "Chapter III. The Gnosis",
+    "target_page": 62
+   },
+   {
+    "level": 1,
+    "title": "Chapter IV. Divine Love",
+    "target_page": 86
+   },
+   {
+    "level": 1,
+    "title": "Chapter V. Saints and Miracles",
+    "target_page": 100
+   },
+   {
+    "level": 1,
+    "title": "Chapter VI. The Unitive State",
+    "target_page": 118
+   },
+   {
+    "level": 1,
+    "title": "Bibliography",
+    "target_page": 134
+   },
+   {
+    "level": 1,
+    "title": "Index",
+    "target_page": 138
+   },
+   {
+    "level": 1,
+    "title": "Biographical Note",
+    "target_page": 144
+   }
+  ],
+  "links": [],
+  "uri_link_count": 0,
+  "trim_crop_box": [
+   18,
+   18,
+   396,
+   612
+  ],
+  "warnings": [
+   "engine agreement below 90 on 8 page(s): [1, 138, 139, 140, 141, 142, 143, 145] — review these pages against renders before trusting their text"
+  ]
+ },
+ "analysis": {
+  "body_pstyle": "NewBaskerville-Roman@11",
+  "body_size": 11.0,
+  "clusters": [
+   {
+    "pstyle": "NewBaskerville-Roman@11",
+    "family": "NewBaskerville-Roman",
+    "size": 11.0,
+    "n_lines": 2706,
+    "n_chars": 146829,
+    "n_pages": 121,
+    "first_page": 6,
+    "samples": [
+     "II. Illumination and Ecstasy37",
+     "III. The Gnosis49",
+     "IV. Divine Love73"
+    ],
+    "role": "p",
+    "confidence": "high",
+    "reason": "dominant text cluster"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@10",
+    "family": "NewBaskerville-Roman",
+    "size": 10.0,
+    "n_lines": 1559,
+    "n_chars": 70876,
+    "n_pages": 92,
+    "first_page": 17,
+    "samples": [
+     "Love is not to be learned from men: it is one of God’s",
+     "gifts and comes of His grace.",
+     "None refrains from the lusts of this world save him in"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@9",
+    "family": "NewBaskerville-Roman",
+    "size": 9.0,
+    "n_lines": 106,
+    "n_chars": 5669,
+    "n_pages": 28,
+    "first_page": 2,
+    "samples": [
+     "The Library of Perennial Philosophy is dedicated to the exposition of",
+     "the timeless Truth underlying the diverse religions. This Truth, often",
+     "referred to as the Sophia Perennis—or Perennial Wisdom—finds its expres-"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "family": "NewBaskerville-Italic",
+    "size": 11.0,
+    "n_lines": 210,
+    "n_chars": 1845,
+    "n_pages": 110,
+    "first_page": 8,
+    "samples": [
+     "The Mystics of Islam",
+     "The Mystics of Islam",
+     "The Mystics of Islam"
+    ],
+    "role": "h3",
+    "confidence": "low",
+    "reason": "centered, body-sized"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@11",
+    "family": "NewBaskerville-Italic",
+    "size": 11.0,
+    "n_lines": 52,
+    "n_chars": 1147,
+    "n_pages": 26,
+    "first_page": 10,
+    "samples": [
+     "tics of Islam spring.",
+     "a complete work, the Book of Hierotheus on the Hidden Mysteries",
+     "The Mystics of Islam"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "Benguiat-Medium@9",
+    "family": "Benguiat-Medium",
+    "size": 9.0,
+    "n_lines": 16,
+    "n_chars": 736,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [
+     "“R.A. Nicholson’s The Mystics of Islam was",
+     "the first book in the West to offer a lucid",
+     "and sympathetic picture of Islamic"
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (9.0pt), frequent"
+   },
+   {
+    "pstyle": "Benguiat-Medium@10",
+    "family": "Benguiat-Medium",
+    "size": 10.0,
+    "n_lines": 11,
+    "n_chars": 585,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [
+     "The Mystics of Islam by R.A. Nicholson is widely",
+     "recognized as a classic and definitive introduction to the",
+     "heart of the Islamic tradition. Sufism, which unifies the ways"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@8",
+    "family": "NewBaskerville-Roman",
+    "size": 8.0,
+    "n_lines": 11,
+    "n_chars": 441,
+    "n_pages": 1,
+    "first_page": 5,
+    "samples": [
+     "Library of Congress Cataloging-in-Publication Data",
+     "Nicholson, Reynold Alleyne, 1868-1945.",
+     "The mystics of Islam / by Reynold A. Nicholson."
+    ],
+    "role": "footnote",
+    "confidence": "low",
+    "reason": "small (8.0pt), frequent"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@9",
+    "family": "NewBaskerville-Italic",
+    "size": 9.0,
+    "n_lines": 5,
+    "n_chars": 317,
+    "n_pages": 5,
+    "first_page": 22,
+    "samples": [
+     "in Zeitschrift fûr Assyriologie, xxii. 317ff.",
+     "4. Shaikh Muhammad Iqbal, The Development of Metaphysics in Persia",
+     "5. “The Way” of a Mohammedan Mystic, by W. H. T. Gairdner (Leipzig,"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Italic@10",
+    "family": "NewBaskerville-Italic",
+    "size": 10.0,
+    "n_lines": 11,
+    "n_chars": 309,
+    "n_pages": 6,
+    "first_page": 117,
+    "samples": [
+     "(tu tâ kay gûr-i mardân-râ parastî",
+     "bi-gird-i kâr-i mardân gard u rastî.)",
+     "shape, “Ana ’l-Haqq.”"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "family": "NewBaskerville-Bold",
+    "size": 13.0,
+    "n_lines": 14,
+    "n_chars": 185,
+    "n_pages": 14,
+    "first_page": 20,
+    "samples": [
+     "II. Neoplatonism",
+     "III. Gnosticism3",
+     "The Revelation of the Sea"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "family": "NewBaskerville-Roman",
+    "size": 18.0,
+    "n_lines": 11,
+    "n_chars": 133,
+    "n_pages": 11,
+    "first_page": 6,
+    "samples": [
+     "Illumination and Ecstasy",
+     "Saints and Miracles",
+     "The Unitive State"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Present-Black@14/center",
+    "family": "Present-Black",
+    "size": 14.0,
+    "n_lines": 3,
+    "n_chars": 72,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [
+     "The Library of Perennial Philosophy",
+     "Spiritual Classics Series"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "14.0pt centered"
+   },
+   {
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "family": "NewBaskerville-BoldItali",
+    "size": 13.0,
+    "n_lines": 6,
+    "n_chars": 59,
+    "n_pages": 6,
+    "first_page": 34,
+    "samples": [],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "13.0pt centered"
+   },
+   {
+    "pstyle": "Benguiat-Medium@10/center",
+    "family": "Benguiat-Medium",
+    "size": 10.0,
+    "n_lines": 2,
+    "n_chars": 40,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [
+     "What is the spiritual essence of Islam?"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "Benguiat-Medium@7",
+    "family": "Benguiat-Medium",
+    "size": 7.0,
+    "n_lines": 1,
+    "n_chars": 21,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [
+     "Religion/Islam/Sufism"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (7.0pt)"
+   },
+   {
+    "pstyle": "OCRB@8",
+    "family": "OCRB",
+    "size": 8.0,
+    "n_lines": 2,
+    "n_chars": 21,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (8.0pt)"
+   },
+   {
+    "pstyle": "Benguiat-Normal@18",
+    "family": "Benguiat-Normal",
+    "size": 18.0,
+    "n_lines": 1,
+    "n_chars": 20,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [
+     "Reynold A. Nicholson"
+    ],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 18.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Benguiat-Book@28",
+    "family": "Benguiat-Book",
+    "size": 28.0,
+    "n_lines": 1,
+    "n_chars": 20,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "The Mystics of Islam"
+    ],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 28.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Benguiat-Book@12/center",
+    "family": "Benguiat-Book",
+    "size": 12.0,
+    "n_lines": 1,
+    "n_chars": 20,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [
+     "REYNOLD A. NICHOLSON"
+    ],
+    "role": "h2",
+    "confidence": "medium",
+    "reason": "12.0pt centered"
+   },
+   {
+    "pstyle": "NewBaskerville-Bold@13",
+    "family": "NewBaskerville-Bold",
+    "size": 13.0,
+    "n_lines": 2,
+    "n_chars": 20,
+    "n_pages": 2,
+    "first_page": 37,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "body-like"
+   },
+   {
+    "pstyle": "OCRB@9",
+    "family": "OCRB",
+    "size": 9.0,
+    "n_lines": 1,
+    "n_chars": 18,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [
+     "ISBN 0-941532-48-8"
+    ],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (9.0pt)"
+   },
+   {
+    "pstyle": "Benguiat-Normal@58",
+    "family": "Benguiat-Normal",
+    "size": 58.0,
+    "n_lines": 2,
+    "n_chars": 15,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 58.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Present@15",
+    "family": "Present",
+    "size": 15.0,
+    "n_lines": 1,
+    "n_chars": 12,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 15.0pt >= 1.35x body"
+   },
+   {
+    "pstyle": "Benguiat-Normal@10",
+    "family": "Benguiat-Normal",
+    "size": 10.0,
+    "n_lines": 1,
+    "n_chars": 6,
+    "n_pages": 1,
+    "first_page": 145,
+    "samples": [],
+    "role": "p",
+    "confidence": "low",
+    "reason": "smaller than body (10.0pt)"
+   },
+   {
+    "pstyle": "WoodtypeOrnaments-Two@24/center",
+    "family": "WoodtypeOrnaments-Two",
+    "size": 24.0,
+    "n_lines": 1,
+    "n_chars": 5,
+    "n_pages": 1,
+    "first_page": 2,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 24.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Benguiat-Normal@30",
+    "family": "Benguiat-Normal",
+    "size": 30.0,
+    "n_lines": 1,
+    "n_chars": 3,
+    "n_pages": 1,
+    "first_page": 1,
+    "samples": [],
+    "role": "title-page",
+    "confidence": "medium",
+    "reason": "size 30.0pt >= 1.8x body"
+   },
+   {
+    "pstyle": "Benguiat-Book@16/center",
+    "family": "Benguiat-Book",
+    "size": 16.0,
+    "n_lines": 1,
+    "n_chars": 2,
+    "n_pages": 1,
+    "first_page": 4,
+    "samples": [],
+    "role": "h1",
+    "confidence": "medium",
+    "reason": "size 16.0pt >= 1.35x body"
+   }
+  ],
+  "repeated_lines": [
+   {
+    "text": "The Mystics of Isla#",
+    "count": 63,
+    "pages": [
+     4,
+     5,
+     9,
+     11,
+     15,
+     17,
+     19,
+     21
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Gnosis",
+    "count": 12,
+    "pages": [
+     62,
+     64,
+     66,
+     68,
+     70,
+     72,
+     74,
+     76
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ntroduction",
+    "count": 10,
+    "pages": [
+     14,
+     16,
+     18,
+     20,
+     22,
+     24,
+     26,
+     28
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Saints and Miracles",
+    "count": 9,
+    "pages": [
+     100,
+     102,
+     104,
+     106,
+     108,
+     110,
+     112,
+     114
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Path",
+    "count": 8,
+    "pages": [
+     34,
+     36,
+     38,
+     40,
+     42,
+     44,
+     46,
+     48
+    ],
+    "band": "top"
+   },
+   {
+    "text": "The Unitive State",
+    "count": 8,
+    "pages": [
+     118,
+     120,
+     122,
+     124,
+     126,
+     128,
+     130,
+     132
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#ne Love",
+    "count": 7,
+    "pages": [
+     86,
+     88,
+     90,
+     92,
+     94,
+     96,
+     98
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#hapter #",
+    "count": 6,
+    "pages": [
+     34,
+     50,
+     62,
+     86,
+     100,
+     118
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#umination and Ecstacy",
+    "count": 5,
+    "pages": [
+     52,
+     54,
+     56,
+     58,
+     60
+    ],
+    "band": "top"
+   },
+   {
+    "text": "Preface",
+    "count": 3,
+    "pages": [
+     8,
+     10,
+     12
+    ],
+    "band": "top"
+   },
+   {
+    "text": "#nde#",
+    "count": 3,
+    "pages": [
+     138,
+     140,
+     142
+    ],
+    "band": "top"
+   }
+  ],
+  "top_band": 42.9,
+  "bottom_band": 0.0,
+  "folio_agreement_pct": 99.2,
+  "folio_mismatches": [
+   {
+    "page": 145,
+    "printed": "95",
+    "label": "Back cover"
+   }
+  ],
+  "label_source_proposal": "pdf-page-labels",
+  "printed_folios": {
+   "8": "vii",
+   "9": "viii",
+   "10": "ix",
+   "11": "x",
+   "12": "xi",
+   "14": "1",
+   "15": "2",
+   "16": "3",
+   "17": "4",
+   "18": "5",
+   "19": "6",
+   "20": "7",
+   "21": "8",
+   "22": "9",
+   "23": "10",
+   "24": "11",
+   "25": "12",
+   "26": "13",
+   "27": "14",
+   "28": "15",
+   "29": "16",
+   "30": "17",
+   "31": "18",
+   "32": "19",
+   "34": "21",
+   "35": "22",
+   "36": "23",
+   "37": "24",
+   "38": "25",
+   "39": "26",
+   "40": "27",
+   "41": "28",
+   "42": "29",
+   "43": "30",
+   "44": "31",
+   "45": "32",
+   "46": "33",
+   "47": "34",
+   "48": "35",
+   "50": "37",
+   "51": "38",
+   "52": "39",
+   "53": "40",
+   "54": "41",
+   "55": "42",
+   "56": "43",
+   "57": "44",
+   "58": "45",
+   "59": "46",
+   "60": "47",
+   "61": "48",
+   "62": "49",
+   "63": "50",
+   "64": "51",
+   "65": "52",
+   "66": "53",
+   "67": "54",
+   "68": "55",
+   "69": "56",
+   "70": "57",
+   "71": "58",
+   "72": "59",
+   "73": "60",
+   "74": "61",
+   "75": "62",
+   "76": "63",
+   "77": "64",
+   "78": "65",
+   "79": "66",
+   "80": "67",
+   "81": "68",
+   "82": "69",
+   "83": "70",
+   "84": "71",
+   "86": "73",
+   "87": "74",
+   "88": "75",
+   "89": "76",
+   "90": "77",
+   "91": "78",
+   "92": "79",
+   "93": "80",
+   "94": "81",
+   "95": "82",
+   "96": "83",
+   "97": "84",
+   "98": "85",
+   "100": "87",
+   "101": "88",
+   "102": "89",
+   "103": "90",
+   "104": "91",
+   "105": "92",
+   "106": "93",
+   "107": "94",
+   "108": "95",
+   "109": "96",
+   "110": "97",
+   "111": "98",
+   "112": "99",
+   "113": "100",
+   "114": "101",
+   "115": "102",
+   "116": "103",
+   "117": "104",
+   "118": "105",
+   "119": "106",
+   "120": "107",
+   "121": "108",
+   "122": "109",
+   "123": "110",
+   "124": "111",
+   "125": "112",
+   "126": "113",
+   "127": "114",
+   "128": "115",
+   "129": "116",
+   "130": "117",
+   "131": "118",
+   "132": "119",
+   "134": "121",
+   "135": "122",
+   "136": "123",
+   "138": "125",
+   "139": "126",
+   "140": "127",
+   "141": "128",
+   "142": "129",
+   "143": "130",
+   "145": "95"
+  },
+  "headings": [
+   {
+    "page": 1,
+    "pstyle": "Benguiat-Normal@30",
+    "text": "The"
+   },
+   {
+    "page": 1,
+    "pstyle": "Benguiat-Normal@58",
+    "text": "Mystics of"
+   },
+   {
+    "page": 1,
+    "pstyle": "Benguiat-Normal@58",
+    "text": "Islam"
+   },
+   {
+    "page": 1,
+    "pstyle": "Benguiat-Normal@18",
+    "text": "Reynold A. Nicholson"
+   },
+   {
+    "page": 2,
+    "pstyle": "Present-Black@14/center",
+    "text": "World Wisdom"
+   },
+   {
+    "page": 2,
+    "pstyle": "Present-Black@14/center",
+    "text": "The Library of Perennial Philosophy"
+   },
+   {
+    "page": 2,
+    "pstyle": "WoodtypeOrnaments-Two@24/center",
+    "text": "MKYkm"
+   },
+   {
+    "page": 2,
+    "pstyle": "Present-Black@14/center",
+    "text": "Spiritual Classics Series"
+   },
+   {
+    "page": 4,
+    "pstyle": "Benguiat-Book@28",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 4,
+    "pstyle": "Benguiat-Book@16/center",
+    "text": "by"
+   },
+   {
+    "page": 4,
+    "pstyle": "Benguiat-Book@12/center",
+    "text": "REYNOLD A. NICHOLSON"
+   },
+   {
+    "page": 6,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Contents"
+   },
+   {
+    "page": 8,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Preface"
+   },
+   {
+    "page": 9,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 10,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Preface"
+   },
+   {
+    "page": 11,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 12,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Preface"
+   },
+   {
+    "page": 14,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 15,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 16,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 17,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 18,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 19,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 20,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 20,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "I. Christianity"
+   },
+   {
+    "page": 21,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 21,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "II. Neoplatonism"
+   },
+   {
+    "page": 22,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 22,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "III. Gnosticism3"
+   },
+   {
+    "page": 23,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 24,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 24,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "IV. Buddhism"
+   },
+   {
+    "page": 25,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 26,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 27,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 28,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 29,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 30,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 31,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 32,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Introduction"
+   },
+   {
+    "page": 34,
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "text": "Chapter I"
+   },
+   {
+    "page": 34,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "The Path"
+   },
+   {
+    "page": 35,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 35,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Repentance"
+   },
+   {
+    "page": 36,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 38,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 39,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 39,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Poverty"
+   },
+   {
+    "page": 40,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 41,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 41,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "The nafs"
+   },
+   {
+    "page": 42,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 42,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Mortification"
+   },
+   {
+    "page": 43,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 43,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Trust in God"
+   },
+   {
+    "page": 44,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 45,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 45,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Recollection"
+   },
+   {
+    "page": 46,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 48,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Path"
+   },
+   {
+    "page": 50,
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "text": "Chapter II"
+   },
+   {
+    "page": 50,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Illumination and Ecstasy"
+   },
+   {
+    "page": 52,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Illumination and Ecstacy"
+   },
+   {
+    "page": 54,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Illumination and Ecstacy"
+   },
+   {
+    "page": 56,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Illumination and Ecstacy"
+   },
+   {
+    "page": 57,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 58,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Illumination and Ecstacy"
+   },
+   {
+    "page": 59,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 60,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Illumination and Ecstacy"
+   },
+   {
+    "page": 62,
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "text": "Chapter III"
+   },
+   {
+    "page": 62,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 63,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 64,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 65,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 66,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 66,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "The Revelation of the Sea"
+   },
+   {
+    "page": 68,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 69,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 70,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 72,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 73,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 74,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 76,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 77,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 78,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 79,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 80,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 81,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 82,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 84,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Gnosis"
+   },
+   {
+    "page": 86,
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "text": "Chapter IV"
+   },
+   {
+    "page": 86,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 87,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 88,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 89,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 90,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 92,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 93,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 94,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 96,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 98,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Divine Love"
+   },
+   {
+    "page": 100,
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "text": "Chapter V"
+   },
+   {
+    "page": 100,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 101,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 102,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 103,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 104,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 105,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 106,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 107,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 108,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 110,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 112,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 114,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 116,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Saints and Miracles"
+   },
+   {
+    "page": 117,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 118,
+    "pstyle": "NewBaskerville-BoldItali@13/center",
+    "text": "Chapter VI"
+   },
+   {
+    "page": 118,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 119,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 120,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 121,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 122,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 123,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 124,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 126,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 128,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 129,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 130,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 131,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 132,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Unitive State"
+   },
+   {
+    "page": 134,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Bibliography"
+   },
+   {
+    "page": 134,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "General"
+   },
+   {
+    "page": 135,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 135,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Translations"
+   },
+   {
+    "page": 136,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Bibliography"
+   },
+   {
+    "page": 138,
+    "pstyle": "NewBaskerville-Roman@18/center",
+    "text": "Index"
+   },
+   {
+    "page": 139,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 140,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Index"
+   },
+   {
+    "page": 141,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 142,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "Index"
+   },
+   {
+    "page": 143,
+    "pstyle": "NewBaskerville-Italic@11/center",
+    "text": "The Mystics of Islam"
+   },
+   {
+    "page": 144,
+    "pstyle": "NewBaskerville-Bold@13/center",
+    "text": "Reynold A. Nicholson"
+   },
+   {
+    "page": 145,
+    "pstyle": "Present@15",
+    "text": "World Wisdom"
+   }
+  ],
+  "toc_pages": [
+   6
+  ],
+  "toc_entries": [
+   {
+    "page": 6,
+    "text": "Preface",
+    "label": "vii",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Introduction",
+    "label": "1",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "I. The Path",
+    "label": "21",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "II. Illumination and Ecstasy",
+    "label": "37",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "III. The Gnosis",
+    "label": "49",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "IV. Divine Love",
+    "label": "73",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "V. Saints and Miracles",
+    "label": "87",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "VI. The Unitive State",
+    "label": "105",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Bibliography",
+    "label": "121",
+    "target": null
+   },
+   {
+    "page": 6,
+    "text": "Index",
+    "label": "125",
+    "target": null
+   }
+  ],
+  "toc_witness_table": [
+   {
+    "outline": "Series Page",
+    "level": 1,
+    "target": 2,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Title Page",
+    "level": 1,
+    "target": 4,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Copyright Page",
+    "level": 1,
+    "target": 5,
+    "printed": null,
+    "heading_on_target": false
+   },
+   {
+    "outline": "Table of Content",
+    "level": 1,
+    "target": 6,
+    "printed": null,
+    "heading_on_target": true
+   },
+   {
+    "outline": "Preface",
+    "level": 1,
+    "target": 8,
+    "printed": "Preface",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Introduction",
+    "level": 1,
+    "target": 14,
+    "printed": "Introduction",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter I. The Path",
+    "level": 1,
+    "target": 34,
+    "printed": "I. The Path",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter II. Illumination and Ecstasy",
+    "level": 1,
+    "target": 50,
+    "printed": "II. Illumination and Ecstasy",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter III. The Gnosis",
+    "level": 1,
+    "target": 62,
+    "printed": "III. The Gnosis",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter IV. Divine Love",
+    "level": 1,
+    "target": 86,
+    "printed": "IV. Divine Love",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter V. Saints and Miracles",
+    "level": 1,
+    "target": 100,
+    "printed": "V. Saints and Miracles",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Chapter VI. The Unitive State",
+    "level": 1,
+    "target": 118,
+    "printed": "VI. The Unitive State",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Bibliography",
+    "level": 1,
+    "target": 134,
+    "printed": "Bibliography",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Index",
+    "level": 1,
+    "target": 138,
+    "printed": "Index",
+    "heading_on_target": true
+   },
+   {
+    "outline": "Biographical Note",
+    "level": 1,
+    "target": 144,
+    "printed": null,
+    "heading_on_target": false
+   }
+  ],
+  "toc_source_proposal": "outline",
+  "footnote_pages": [
+   2,
+   5,
+   14,
+   17,
+   18,
+   19,
+   22,
+   23,
+   24,
+   55,
+   56,
+   59,
+   64,
+   69,
+   100,
+   101,
+   102,
+   103,
+   104,
+   108,
+   109,
+   113,
+   118,
+   119,
+   120,
+   122,
+   123,
+   129,
+   130
+  ],
+  "footnote_marker_census": {
+   "digit": 30,
+   "*-inline": 2
+  },
+  "footnote_samples": [
+   {
+    "page": 2,
+    "text": "This series includes seminal, but often neglected, works of unique spiritual insight from leading religious authors of both the East and West. Ranging"
+   },
+   {
+    "page": 5,
+    "text": "The Mystics of Islam by Reynold A. Nicholson © 2002 World Wisdom, Inc. All rights reserved. No part of this book may be used or reproduced in any mann"
+   },
+   {
+    "page": 14,
+    "text": "1. Al-Haqq is the term generally used by Sûfîs when they refer to God."
+   },
+   {
+    "page": 17,
+    "text": "* Editor’s Note: Every Muslim accepts the fact that the Qur’an is God’s Word, revealed through the Archangel Gabriel to the Prophet Muhammad, the Mess"
+   },
+   {
+    "page": 18,
+    "text": "2. Compare Plato, Phaedrus (Jowett’s translation): “For sight is the keenest of our bodily senses; though not by that is wisdom seen; her loveliness w"
+   }
+  ],
+  "footnote_policy_proposal": "markers",
+  "footnote_marker_proposal": "digits",
+  "median_leading": 13.1,
+  "indent_histogram": {
+   "5": 136,
+   "6": 5,
+   "17": 180,
+   "18": 4,
+   "39": 1,
+   "40": 1,
+   "41": 1,
+   "43": 1,
+   "45": 1,
+   "47": 1
+  },
+  "indent_threshold_proposal": 3.8,
+  "eol_hyphen_count": 323,
+  "lost_space_count": 0,
+  "restore_spaces_proposal": false,
+  "dropcap_pages": [],
+  "pua_census": [],
+  "cjk_pages": [],
+  "figure_pages_proposal": [],
+  "rtl_chars": 0,
+  "verse_suspect_pages": [
+   {
+    "page": 80,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "base": [
+     17.2
+    ],
+    "turns": [
+     34.1
+    ],
+    "first": "The man of God is made wise by the Truth, The man of"
+   },
+   {
+    "page": 101,
+    "lines": [
+     1,
+     7
+    ],
+    "n_lines": 7,
+    "base": [
+     17.2
+    ],
+    "turns": [
+     34.1
+    ],
+    "first": "No sorrow, no brooding over gain and loss,"
+   },
+   {
+    "page": 117,
+    "lines": [
+     14,
+     18
+    ],
+    "n_lines": 5,
+    "base": [
+     17.2
+    ],
+    "turns": [],
+    "first": "How long will you worship at the tombs of holy men?"
+   },
+   {
+    "page": 118,
+    "lines": [
+     2,
+     11
+    ],
+    "n_lines": 10,
+    "base": [
+     17.1
+    ],
+    "turns": [],
+    "first": "The story admits of being told up to this point,"
+   },
+   {
+    "page": 122,
+    "lines": [
+     1,
+     18
+    ],
+    "n_lines": 18,
+    "base": [
+     17.2
+    ],
+    "turns": [
+     34.1
+    ],
+    "first": "Then He became Jesus and ascended to the dome of"
+   },
+   {
+    "page": 126,
+    "lines": [
+     25,
+     32
+    ],
+    "n_lines": 8,
+    "base": [
+     17.2
+    ],
+    "turns": [],
+    "first": "regard the inward sense and the outward expression."
+   },
+   {
+    "page": 128,
+    "lines": [
+     1,
+     9
+    ],
+    "n_lines": 9,
+    "base": [
+     17.2
+    ],
+    "turns": [
+     34.1
+    ],
+    "first": "Truth and falsehood, good and evil, ease and difficulty"
+   },
+   {
+    "page": 132,
+    "lines": [
+     1,
+     13
+    ],
+    "n_lines": 13,
+    "base": [
+     17.2
+    ],
+    "turns": [
+     34.1
+    ],
+    "first": "The stars of heaven will come to gaze upon us;"
+   }
+  ],
+  "quote_suspect_pages": [
+   {
+    "page": 18,
+    "lines": [
+     7,
+     9
+    ],
+    "n_lines": 3,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "thereon would die at the sight of its beauty and loveliness"
+   },
+   {
+    "page": 18,
+    "lines": [
+     17,
+     20
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "quivering of trees or to the murmuring of water or to the"
+   },
+   {
+    "page": 20,
+    "lines": [
+     24,
+     34
+    ],
+    "n_lines": 11,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "their faces pale. He asked them, saying, “What hath"
+   },
+   {
+    "page": 21,
+    "lines": [
+     1,
+     3
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "faces were as mirrors of light, and he said, “What has"
+   },
+   {
+    "page": 21,
+    "lines": [
+     6,
+     8
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.4,
+    "first": "Scriptures? The hermit replied: “We find none stronger"
+   },
+   {
+    "page": 23,
+    "lines": [
+     24,
+     33
+    ],
+    "n_lines": 10,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "Reality, from the world of matter and of sense. And every"
+   },
+   {
+    "page": 24,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "wise, the passage through the veils has brought with it for-"
+   },
+   {
+    "page": 24,
+    "lines": [
+     6,
+     14
+    ],
+    "n_lines": 9,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "dervish, is to give him an escape from this prison, an apoc-"
+   },
+   {
+    "page": 25,
+    "lines": [
+     10,
+     12
+    ],
+    "n_lines": 3,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "gnostic has no “state,” because his vestiges are effaced and"
+   },
+   {
+    "page": 25,
+    "lines": [
+     14,
+     17
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "own mirror [i.e. according to the explanation given by his"
+   },
+   {
+    "page": 26,
+    "lines": [
+     14,
+     20
+    ],
+    "n_lines": 7,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "mind and heart, which would otherwise, according to the"
+   },
+   {
+    "page": 30,
+    "lines": [
+     27,
+     29
+    ],
+    "n_lines": 3,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "Sûfî (i.e. being done upon him) which are known to God"
+   },
+   {
+    "page": 31,
+    "lines": [
+     1,
+     5
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "ence, it could be acquired by instruction; but on the con-"
+   },
+   {
+    "page": 31,
+    "lines": [
+     11,
+     13
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "nay, to close the eye to everything imperfect in contem-"
+   },
+   {
+    "page": 37,
+    "lines": [
+     15,
+     35
+    ],
+    "n_lines": 21,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "renouncing the world, they subject him to spiritual disci-"
+   },
+   {
+    "page": 38,
+    "lines": [
+     10,
+     13
+    ],
+    "n_lines": 4,
+    "left_inset": 17.2,
+    "right_inset": 89.8,
+    "first": "Shiblî asked what he must do."
+   },
+   {
+    "page": 41,
+    "lines": [
+     7,
+     9
+    ],
+    "n_lines": 3,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "flogged a man who begged after having satisfied his"
+   },
+   {
+    "page": 44,
+    "lines": [
+     2,
+     5
+    ],
+    "n_lines": 4,
+    "left_inset": 17.2,
+    "right_inset": 17.1,
+    "first": "tice. Whosoever neglects any one of them must needs neg-"
+   },
+   {
+    "page": 44,
+    "lines": [
+     7,
+     16
+    ],
+    "n_lines": 10,
+    "left_inset": 17.2,
+    "right_inset": 17.2,
+    "first": "and your actions you declare God to be One; and that,"
+   },
+   {
+    "page": 44,
+    "lines": [
+     18,
+     20
+    ],
+    "n_lines": 3,
+    "left_inset": 17.2,
+    "right_inset": 17.2,
+    "first": "belief that there is no God except Him, you should trust"
+   },
+   {
+    "page": 44,
+    "lines": [
+     22,
+     27
+    ],
+    "n_lines": 6,
+    "left_inset": 17.2,
+    "right_inset": 17.1,
+    "first": "namely, sincere belief in the unity of God and trust in"
+   },
+   {
+    "page": 46,
+    "lines": [
+     23,
+     38
+    ],
+    "n_lines": 16,
+    "left_inset": 17.1,
+    "right_inset": 17.0,
+    "first": "tence of anything and its non-existence are the same to"
+   },
+   {
+    "page": 47,
+    "lines": [
+     1,
+     14
+    ],
+    "n_lines": 14,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "clinging to his heart, inseparable from it. So far, all is"
+   },
+   {
+    "page": 47,
+    "lines": [
+     17,
+     21
+    ],
+    "n_lines": 5,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "stage is the effacement of the worshipper in the act of wor-"
+   },
+   {
+    "page": 51,
+    "lines": [
+     13,
+     20
+    ],
+    "n_lines": 8,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "seeing on the head of Shiblî a bonnet that would just"
+   },
+   {
+    "page": 51,
+    "lines": [
+     22,
+     28
+    ],
+    "n_lines": 7,
+    "left_inset": 17.0,
+    "right_inset": 17.4,
+    "first": "public, but Junayd was unwilling to consent, for he"
+   },
+   {
+    "page": 51,
+    "lines": [
+     30,
+     34
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "mosque when a pigeon, overcome by the intense heat,"
+   },
+   {
+    "page": 52,
+    "lines": [
+     32,
+     36
+    ],
+    "n_lines": 5,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "punishment thou mayst inflict upon me, do not punish"
+   },
+   {
+    "page": 54,
+    "lines": [
+     1,
+     16
+    ],
+    "n_lines": 16,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "mortification is most firmly grounded in contemplation."
+   },
+   {
+    "page": 54,
+    "lines": [
+     20,
+     23
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "is that You should see in everything the effects of"
+   },
+   {
+    "page": 54,
+    "lines": [
+     25,
+     39
+    ],
+    "n_lines": 15,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "(proximity to God) is that when you look at anything, sen-"
+   },
+   {
+    "page": 55,
+    "lines": [
+     1,
+     5
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "the Ka‘ba, but not the Ka‘ba.” This is the “station” of"
+   },
+   {
+    "page": 60,
+    "lines": [
+     13,
+     16
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "the agitation of ecstasy is manifested and conventional"
+   },
+   {
+    "page": 60,
+    "lines": [
+     25,
+     36
+    ],
+    "n_lines": 12,
+    "left_inset": 17.2,
+    "right_inset": 17.0,
+    "first": "girdî, who had attained to such a high degree of spiritu-"
+   },
+   {
+    "page": 61,
+    "lines": [
+     1,
+     6
+    ],
+    "n_lines": 6,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "Sheikh’s shoulders, the negro bit his cheek so severely that"
+   },
+   {
+    "page": 62,
+    "lines": [
+     28,
+     30
+    ],
+    "n_lines": 3,
+    "left_inset": 17.1,
+    "right_inset": 76.2,
+    "first": "Angel and brute man’s wondrous leaven compose;"
+   },
+   {
+    "page": 65,
+    "lines": [
+     14,
+     25
+    ],
+    "n_lines": 12,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "cleave to Thee, so that when my day (of judgment) comes,"
+   },
+   {
+    "page": 66,
+    "lines": [
+     17,
+     33
+    ],
+    "n_lines": 17,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "God bade me behold the Sea, and I saw the ships sinking"
+   },
+   {
+    "page": 69,
+    "lines": [
+     1,
+     8
+    ],
+    "n_lines": 8,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "[He means to say that everlasting joy is the portion of"
+   },
+   {
+    "page": 69,
+    "lines": [
+     18,
+     21
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "words are the words of God which roll upon their tongues,"
+   },
+   {
+    "page": 71,
+    "lines": [
+     15,
+     24
+    ],
+    "n_lines": 10,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "all phenomena, all limitations and all multiplicity, is the"
+   },
+   {
+    "page": 73,
+    "lines": [
+     6,
+     10
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 58.4,
+    "first": "Love thrilled the chord of love in my soul’s lute,"
+   },
+   {
+    "page": 73,
+    "lines": [
+     28,
+     35
+    ],
+    "n_lines": 8,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "regard Me as the Cause of thy existence, I veil My face and"
+   },
+   {
+    "page": 74,
+    "lines": [
+     4,
+     13
+    ],
+    "n_lines": 10,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "played, else thou wilt laugh and weep; and when thou"
+   },
+   {
+    "page": 74,
+    "lines": [
+     15,
+     20
+    ],
+    "n_lines": 6,
+    "left_inset": 17.2,
+    "right_inset": 17.2,
+    "first": "played and am displaying, thou wilt not prosper; and"
+   },
+   {
+    "page": 75,
+    "lines": [
+     7,
+     20
+    ],
+    "n_lines": 14,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "to any particular creed exclusively, so that you disbelieve "
+   },
+   {
+    "page": 78,
+    "lines": [
+     17,
+     27
+    ],
+    "n_lines": 11,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "“The Law without the Truth,” says Hujwîrî,"
+   },
+   {
+    "page": 84,
+    "lines": [
+     8,
+     11
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "when I love him, I am his ear, so that he hears by Me, and"
+   },
+   {
+    "page": 88,
+    "lines": [
+     22,
+     30
+    ],
+    "n_lines": 9,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "Arab lovers and to me; but the objects of our love are dif-"
+   },
+   {
+    "page": 91,
+    "lines": [
+     7,
+     15
+    ],
+    "n_lines": 9,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "chanced to give it a kiss, as is the way of fathers. The chi"
+   },
+   {
+    "page": 92,
+    "lines": [
+     2,
+     6
+    ],
+    "n_lines": 5,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "and separating in each soul that which is divine from the"
+   },
+   {
+    "page": 94,
+    "lines": [
+     3,
+     9
+    ],
+    "n_lines": 7,
+    "left_inset": 17.0,
+    "right_inset": 89.6,
+    "first": "Was it not I that summoned thee to service?"
+   },
+   {
+    "page": 95,
+    "lines": [
+     4,
+     6
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "to me, bestow it on Thine enemies; and whatever share of"
+   },
+   {
+    "page": 95,
+    "lines": [
+     8,
+     10
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "Hell; and if I worship Thee in hope of Paradise, exclude"
+   },
+   {
+    "page": 95,
+    "lines": [
+     12,
+     18
+    ],
+    "n_lines": 7,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "from Him by their love, they have the essential thing, for"
+   },
+   {
+    "page": 97,
+    "lines": [
+     30,
+     34
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 87.8,
+    "first": "And yet more plainly:"
+   },
+   {
+    "page": 101,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "left_inset": 17.1,
+    "right_inset": 30.6,
+    "first": "No sorrow, no brooding over gain and loss,"
+   },
+   {
+    "page": 103,
+    "lines": [
+     4,
+     11
+    ],
+    "n_lines": 8,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "mutual consent. It is the task of the Awtâd to go round the"
+   },
+   {
+    "page": 104,
+    "lines": [
+     27,
+     33
+    ],
+    "n_lines": 7,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "such-and-such a town, and I set out to visit him. When I"
+   },
+   {
+    "page": 105,
+    "lines": [
+     25,
+     27
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "he (Khadir) staved it in. “What!” cried Moses, “hast thou"
+   },
+   {
+    "page": 105,
+    "lines": [
+     31,
+     34
+    ],
+    "n_lines": 4,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "him. Said Moses, “Hast thou slain him who is free from"
+   },
+   {
+    "page": 106,
+    "lines": [
+     2,
+     8
+    ],
+    "n_lines": 7,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "with which thou couldst not have patience. As to the boat,"
+   },
+   {
+    "page": 109,
+    "lines": [
+     24,
+     32
+    ],
+    "n_lines": 9,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "perfectly true. Strange to relate, on the same night his"
+   },
+   {
+    "page": 113,
+    "lines": [
+     12,
+     23
+    ],
+    "n_lines": 12,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "(spiritual director) in mind, and become mentally"
+   },
+   {
+    "page": 113,
+    "lines": [
+     25,
+     29
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "influence of the long-deceased Pîr or original founder of"
+   },
+   {
+    "page": 113,
+    "lines": [
+     31,
+     33
+    ],
+    "n_lines": 3,
+    "left_inset": 17.0,
+    "right_inset": 17.2,
+    "first": "aid of the Sheikh, up to the Prophet himself, whom he"
+   },
+   {
+    "page": 114,
+    "lines": [
+     10,
+     30
+    ],
+    "n_lines": 21,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "being as though intoxicated, and ordered me to repro-"
+   },
+   {
+    "page": 114,
+    "lines": [
+     33,
+     39
+    ],
+    "n_lines": 7,
+    "left_inset": 17.2,
+    "right_inset": 17.1,
+    "first": "tration of thought (tawajjuh), used to exhibit signs of"
+   },
+   {
+    "page": 115,
+    "lines": [
+     1,
+     4
+    ],
+    "n_lines": 4,
+    "left_inset": 17.0,
+    "right_inset": 17.3,
+    "first": "you desire to rest for a short time, you will not seem to me"
+   },
+   {
+    "page": 115,
+    "lines": [
+     6,
+     22
+    ],
+    "n_lines": 17,
+    "left_inset": 17.0,
+    "right_inset": 17.1,
+    "first": "his master, ‘Alâ ’uddîn ‘Attâr, started to visit the tomb of"
+   },
+   {
+    "page": 116,
+    "lines": [
+     12,
+     17
+    ],
+    "n_lines": 6,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "some friends, he said, “Here is a sofa. It will move round"
+   },
+   {
+    "page": 116,
+    "lines": [
+     19,
+     31
+    ],
+    "n_lines": 13,
+    "left_inset": 17.1,
+    "right_inset": 17.1,
+    "first": "immediately plunged into a long and abstruse discussion."
+   },
+   {
+    "page": 117,
+    "lines": [
+     14,
+     18
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 36.6,
+    "first": "How long will you worship at the tombs of holy men?"
+   },
+   {
+    "page": 124,
+    "lines": [
+     31,
+     36
+    ],
+    "n_lines": 6,
+    "left_inset": 17.2,
+    "right_inset": 17.3,
+    "first": "that when they pass away from their qualities they enter"
+   },
+   {
+    "page": 125,
+    "lines": [
+     1,
+     12
+    ],
+    "n_lines": 12,
+    "left_inset": 17.2,
+    "right_inset": 17.1,
+    "first": "he goes forth from his own will and enters into the will of"
+   },
+   {
+    "page": 125,
+    "lines": [
+     15,
+     30
+    ],
+    "n_lines": 16,
+    "left_inset": 17.2,
+    "right_inset": 17.1,
+    "first": "that when a man’s body is weakened it is possible that he"
+   },
+   {
+    "page": 126,
+    "lines": [
+     2,
+     6
+    ],
+    "n_lines": 5,
+    "left_inset": 17.2,
+    "right_inset": 17.1,
+    "first": "thing that falls into it, and surely the power of God’s will"
+   },
+   {
+    "page": 126,
+    "lines": [
+     16,
+     33
+    ],
+    "n_lines": 18,
+    "left_inset": 17.0,
+    "right_inset": 17.1,
+    "first": "bestows a particle thereof, as a peculiar gift, upon every"
+   },
+   {
+    "page": 129,
+    "lines": [
+     7,
+     12
+    ],
+    "n_lines": 6,
+    "left_inset": 17.1,
+    "right_inset": 17.3,
+    "first": "and he goes in God by his fruitive inclination, in eternal"
+   },
+   {
+    "page": 130,
+    "lines": [
+     24,
+     28
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 144.2,
+    "first": "When my Beloved appears,"
+   },
+   {
+    "page": 131,
+    "lines": [
+     9,
+     17
+    ],
+    "n_lines": 9,
+    "left_inset": 17.1,
+    "right_inset": 17.2,
+    "first": "of Unity and in the station of passing-away (fanâ). One day"
+   },
+   {
+    "page": 136,
+    "lines": [
+     2,
+     6
+    ],
+    "n_lines": 5,
+    "left_inset": 17.0,
+    "right_inset": 4.2,
+    "first": "translation, introduction, and notes by E. H. Whinfield"
+   }
+  ],
+  "list_marker_pages": [
+   {
+    "page": 56,
+    "marker": "decimal",
+    "left": 17.2,
+    "n_items": 3,
+    "first": "1. A moral transformation of the soul through the"
+   }
+  ],
+  "column_suspect_pages": [],
+  "low_agreement_pages": [
+   {
+    "page": 1,
+    "score": 5.3
+   },
+   {
+    "page": 138,
+    "score": 61.2
+   },
+   {
+    "page": 139,
+    "score": 60.5
+   },
+   {
+    "page": 140,
+    "score": 59.9
+   },
+   {
+    "page": 141,
+    "score": 55.5
+   },
+   {
+    "page": 142,
+    "score": 60.9
+   },
+   {
+    "page": 143,
+    "score": 65.3
+   },
+   {
+    "page": 145,
+    "score": 70.6
+   }
+  ],
+  "image_only_pages": [],
+  "cover_proposal": {
+   "mode": "render",
+   "page": 1,
+   "reason": "page 1 is image-dominated (6 image(s), 38 chars)"
+  },
+  "flagged_pages": [
+   1,
+   2,
+   5,
+   6,
+   14,
+   80,
+   101,
+   117,
+   138,
+   139,
+   140,
+   141,
+   142,
+   143,
+   145
+  ],
+  "warnings": []
+ }
+}

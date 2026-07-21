@@ -125,6 +125,28 @@ def test_footnote_split_and_marker_pairing(tmp_path):
     assert len(refs) == 1 and refs[0].note_id == note.note_id
 
 
+def test_mixed_numbered_and_asterisk_footnotes(tmp_path):
+    body = [
+        PdfLine(runs=[PdfRun(text="Body with numbered note", font_id=BODY,
+                             x0=72, y0=100, x1=250, y1=112),
+                      PdfRun(text="1", font_id=SUP, superscript=True,
+                             x0=251, y0=98, x1=256, y1=106),
+                      PdfRun(text=" and editor note.* More", font_id=BODY,
+                             x0=257, y0=100, x1=336, y1=112)],
+                x0=72, y0=98, x1=336, y1=112),
+        _line("1. Numbered note text", 580, font=SMALL),
+        _line("* Editor's note text", 593, font=SMALL),
+    ]
+    cfg = _cfg(tmp_path, footnote_policy="markers", footnote_marker="mixed")
+    res = build_flow(_doc([_page(1, body)]), cfg, say=lambda m: None)
+    assert [n.paragraphs[0].text() for n in res.flow.notes.values()] == [
+        "Numbered note text", "Editor's note text"]
+    refs = [it for p in _paras(res.flow) for it in p.items
+            if isinstance(it, NoteRef)]
+    assert len(refs) == 2
+    assert "editor note. More" in _paras(res.flow)[0].text()
+
+
 def test_footnote_region_stops_at_large_gap(tmp_path):
     # A copyright page set wholly sub-body-size: an LCCN catalog block (with a
     # '1.' subject-heading line) at top, a large vertical gap, then a colophon
@@ -1160,6 +1182,34 @@ def test_verse_p46_couplet_extracted_from_prose(tmp_path):
     assert res.counts["verse-lines"] == 2
 
 
+def test_verse_mixed_accepts_base_only_and_turn_runs(tmp_path):
+    from pdf2epub.config import VerseSpec
+    lines = [
+        _line("Full measure prose anchors the left and right edges", 61,
+              x0=72, width=290),
+        _line("while its continuation also fills the measure.", 74,
+              x0=72, width=290),
+        _line("First consecutive verse line", 94, x0=81, width=140),
+        _line("Second consecutive line is longer", 107, x0=81, width=190),
+        _line("Third consecutive line", 120, x0=81, width=125),
+        _line("Ordinary prose resumes across the full measure here.", 140,
+              x0=72, width=290),
+        _line("Alternating poem base one", 160, x0=81, width=160),
+        _line("alternating turn one", 173, x0=108, width=130),
+        _line("Alternating poem base two", 186, x0=81, width=175),
+        _line("alternating turn two", 199, x0=108, width=120),
+    ]
+    cfg = _cfg(tmp_path, blocks_verse=[VerseSpec(
+        pages=[1], base=[9.0], turns=[36.0], mixed=True,
+        note="render-verified mixed convention")])
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    verse = [p for p in _paras(res.flow) if p.block_class == "verse"]
+    assert len(verse) == 2
+    assert verse[0].text().count("\u2028") == 2
+    assert verse[1].text().count("\u2028") == 3
+    assert verse[1].verse_turns == [1, 3]
+
+
 def test_verse_p46_regression_without_config(tmp_path):
     # the shipped-damage cell: WITHOUT blocks.verse the knife-edge geometry
     # fuses the couplet's first line into the prose paragraph (the closed
@@ -2163,6 +2213,75 @@ def test_quote_verse_precedence_same_page(tmp_path):
     quoted = [p for p in paras if p.block_class == "quote"]
     assert len(verse) == 1 and verse[0].text().startswith("True couplet")
     assert len(quoted) == 1 and quoted[0].text().startswith("A justified")
+
+
+def test_explicit_quote_override_beats_verse_geometry(tmp_path):
+    lines = [
+        _line("Anchor prose at full measure for the modal column", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line to hold the edges", 61,
+              x0=72, width=290),
+        _line("True couplet first line at the base,", 81,
+              x0=81, width=190),
+        _line("and its turn line completes it.", 94,
+              x0=108, width=155),
+        _line("A prose quotation happens to match the base,", 114,
+              x0=81, width=205),
+        _line("and its continuation matches the turn.", 127,
+              x0=108, width=175),
+        _line("Full-measure prose closes the page after both", 147,
+              x0=72, width=290),
+        _line("semantic blocks and anchors the bottom edge.", 160,
+              x0=72, width=290),
+    ]
+    from pdf2epub.config import QuoteSpec
+    cfg = _verse_cfg(tmp_path, [1], blocks_quotes=[QuoteSpec(
+        pages=[1], left_inset=18.0, right_inset=18.0, note="test quotes")])
+    cfg.flow_overrides = [
+        FlowOverride(page=1, line=4, action="class:quote", note="prose quote"),
+        FlowOverride(page=1, line=5, action="class:quote", note="prose quote"),
+    ]
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    paras = _paras(res.flow)
+    verse = [p for p in paras if p.block_class == "verse"]
+    quoted = [p for p in paras if p.block_class == "quote"]
+    assert len(verse) == 1 and verse[0].text().startswith("True couplet")
+    assert len(quoted) == 2
+    assert " ".join(p.text() for p in quoted).startswith("A prose quotation")
+    assert all("prose quotation" not in p.text() for p in verse)
+
+
+def test_forced_quote_wrapped_lines_and_first_line_paragraphs(tmp_path):
+    lines = [
+        _line("Anchor prose at full measure holds the column edge", 48,
+              x0=72, width=290),
+        _line("and a second full-measure line anchors the right.", 61,
+              x0=72, width=290),
+        _line("First quotation opens at its first-line indent", 81,
+              x0=106, width=170),
+        _line("and wraps back to the quotation measure.", 92,
+              x0=90, width=150),
+        _line("Second quotation opens after the printed gap", 109,
+              x0=106, width=175),
+        _line("and its wrapped continuation stays attached.", 120,
+              x0=90, width=155),
+        _line("Full-measure prose resumes after both quotes.", 140,
+              x0=72, width=290),
+    ]
+    cfg = _quote_cfg(tmp_path, [1])
+    cfg.flow_overrides = [
+        FlowOverride(page=1, line=i, action="class:quote", note="print quote")
+        for i in range(2, 6)
+    ]
+    res = build_flow(_doc([_page(1, lines)]), cfg, say=lambda *a: None)
+    quoted = [p.text() for p in _paras(res.flow)
+              if p.block_class == "quote"]
+    assert quoted == [
+        "First quotation opens at its first-line indent and wraps back to "
+        "the quotation measure.",
+        "Second quotation opens after the printed gap and its wrapped "
+        "continuation stays attached.",
+    ]
 
 
 def test_emit_quote_group_with_anchor(tmp_path):

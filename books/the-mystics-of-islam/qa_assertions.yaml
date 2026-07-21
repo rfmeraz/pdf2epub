@@ -1,0 +1,5 @@
+# Gate-24 regression assertions — the-mystics-of-islam (see qa/assertions.py).
+# A TEST fixture, not a build input. Operands copied from SHIPPED
+# normalized text. [] records 'no print-verified fixes yet';
+# proofread lands one cell per accepted finding.
+[]

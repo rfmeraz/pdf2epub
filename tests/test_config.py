@@ -168,11 +168,12 @@ def test_blocks_verse_parsing(tmp_path):
         "source: {folder: p, pdf: b.pdf}\n"
         "blocks:\n"
         "  verse:\n"
-        "    - {pages: [\"28-30\", 35], base: [9], turns: [36], note: couplets}\n")
+        "    - {pages: [\"28-30\", 35], base: [9], turns: [36], mixed: true, note: couplets}\n")
     cfg = load_config(p)
     assert cfg.blocks_verse[0].pages == [28, 29, 30, 35]
     assert cfg.blocks_verse[0].base == [9.0]
     assert cfg.blocks_verse[0].turns == [36.0]
+    assert cfg.blocks_verse[0].mixed is True
     assert cfg.blocks_verse[0].tol == 2.0
     assert cfg.blocks_verse[0].stanza_gap == 1.4
     with pytest.raises(ConfigError, match="requires a note"):

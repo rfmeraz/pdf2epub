@@ -114,10 +114,10 @@ def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
     if L.ps.endswith("/center"):
         return False
     txt = _probe_line(L, cfg)
-    if marker == "digits":
+    if marker in ("digits", "mixed"):
         if _NOTE_START_DIGIT.match(txt):
             return True
-    elif _NOTE_START_STAR.match(txt):
+    if marker in ("asterisk", "mixed") and _NOTE_START_STAR.match(txt):
         return True
     runs = [r for r in L.ln.runs if r.text.strip()]
     if not runs:
@@ -131,9 +131,13 @@ def _note_start(L: "_L", marker: str, doc: PdfDoc, cfg=None) -> bool:
     if not raised:
         return False
     head = _probe_run(r0.text, cfg).strip()
+    digit = head.rstrip(".)").isdigit()
+    star = bool(head) and head[0] in "*†‡"
     if marker == "digits":
-        return head.rstrip(".)").isdigit()
-    return bool(head) and head[0] in "*†‡"
+        return digit
+    if marker == "asterisk":
+        return star
+    return digit or star
 
 
 def _note_marker(L: "_L", marker: str, cfg=None) -> str:
@@ -142,11 +146,11 @@ def _note_marker(L: "_L", marker: str, cfg=None) -> str:
     size down ('8 Let…', where the digit+delimiter text pattern misses) is
     still captured instead of falling back to '*'."""
     txt = _probe_line(L, cfg)
-    if marker == "digits":
+    if marker in ("digits", "mixed"):
         m = _NOTE_START_DIGIT.match(txt)
         if m:
             return m.group(1)
-    else:
+    if marker in ("asterisk", "mixed"):
         m = _NOTE_START_STAR.match(txt)
         if m:
             return m.group(1)
@@ -155,6 +159,11 @@ def _note_marker(L: "_L", marker: str, cfg=None) -> str:
     if marker == "digits":
         d = re.match(r"\d{1,3}", head)
         return d.group(0) if d else "*"
+    if marker == "asterisk":
+        return head[0] if head and head[0] in "*†‡" else "*"
+    d = re.match(r"\d{1,3}", head)
+    if d:
+        return d.group(0)
     return head[0] if head and head[0] in "*†‡" else "*"
 
 
@@ -422,7 +431,7 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     for L in region:
                         starts = _note_start(L, cfg.footnote_marker, doc, cfg)
                         num = None
-                        if starts and cfg.footnote_marker == "digits":
+                        if starts and cfg.footnote_marker in ("digits", "mixed"):
                             mk = _note_marker(L, cfg.footnote_marker, cfg)
                             num = int(mk) if mk.isdigit() else None
                             # Printed note numbers RUN ON: a page's next note
@@ -683,7 +692,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
             blocked, forced = [], []
             for L in lines:
                 act = ov.get((L.page, L.idx))
-                if act in ("class:verse", "class:prose"):
+                if act in ("class:verse", "class:quote", "class:list",
+                           "class:prose"):
                     consumed.add((L.page, L.idx))
                     class_applied.add((L.page, L.idx))
                 # the justified veto only counts clusters near the body/
@@ -700,7 +710,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 forced_line = act == "class:verse"
                 blocked.append(L.region >= 0
                                or (just and not forced_line)
-                               or act == "class:prose")
+                               or act in ("class:quote", "class:list",
+                                          "class:prose"))
                 forced.append(forced_line)
 
             def _size(ln):
@@ -736,7 +747,8 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                 stanza_gap=vs.stanza_gap, size_of=_size,
                 blocked=blocked, forced=forced,
                 allow_turn_start=prev_page_ends_verse,
-                carry_levels=(pending[1].levels if pending else None))
+                carry_levels=(pending[1].levels if pending else None),
+                mixed=vs.mixed)
             if pending and groups and groups[0].start == 0 and \
                     not groups[0].stanza_starts[0]:
                 # the union was accepted: stamp the carried tail on ITS page
@@ -1289,6 +1301,28 @@ def build_flow(doc: PdfDoc, cfg: PdfBookConfig, say=print) -> FlowResult:
                     brk = _break_before(
                         L, prev_L, act, body_ps, cfg, geo, med_lead,
                         open_is_body, pno)
+            elif prev_L is not None and L.block_class == "quote" and \
+                    prev_L.block_class == "quote":
+                if act in ("break", "join"):
+                    brk = act == "break"
+                elif L.page != prev_L.page:
+                    # At a page seam, the generic short-last-line witness
+                    # distinguishes a continuing quotation from a fresh
+                    # paragraph at the top of the next page.
+                    brk = _break_before(
+                        L, prev_L, act, body_ps, cfg, geo, med_lead,
+                        open_is_body, pno)
+                else:
+                    # Inset quotations use a smaller leading than the body.
+                    # Their first lines are indented within the quote measure,
+                    # while a wrapped continuation returns left. Applying the
+                    # body-column ragged-line rule here split every short first
+                    # line from its continuation and fused the following
+                    # paragraph onto it. Use the two print-local witnesses.
+                    first_line = L.ln.x0 - prev_L.ln.x0 >= \
+                        cfg.indent_threshold - 2.0
+                    para_gap = L.ln.y0 - prev_L.ln.y0 > 1.2 * med_lead
+                    brk = first_line or para_gap
             elif prev_L is not None and \
                     prev_L.block_class != L.block_class and \
                     ("quote" in (prev_L.block_class, L.block_class)
@@ -2165,8 +2199,33 @@ def _attach_noterefs(flow: FlowDoc, queue: list[tuple[int, str, str]],
                 t = it.text.strip()
                 small = (it.fmt.point_size or body_size) <= 0.85 * body_size
                 sup = it.fmt.position == "superscript"
-                if (sup or small) and t and (
-                        t == target or (target == "*" and t in ("*", "†", "‡"))):
+                inline_star = -1
+                if target == "*" and not (sup or small):
+                    inline_star = next(
+                        (pos for pos, ch in enumerate(it.text)
+                         if ch in "*†‡"), -1)
+                if ((sup or small) and t and (
+                        t == target or (target == "*" and t in ("*", "†", "‡")))) \
+                        or inline_star >= 0:
+                    if inline_star >= 0:
+                        # Some PDFs set an asterisk marker in the surrounding
+                        # body run ("word.* Next") rather than as a raised or
+                        # smaller run. Split only while a page-local asterisk
+                        # note is at the queue head; this keeps ordinary stars
+                        # untouched and preserves text on both sides.
+                        before = it.text[:inline_star]
+                        after = it.text[inline_star + 1:]
+                        repl: list = []
+                        if before:
+                            repl.append(TextRun(before, it.fmt))
+                        repl.append(NoteRef(note_id))
+                        if after:
+                            repl.append(TextRun(after, it.fmt))
+                        b.items[i:i + 1] = repl
+                        remaining.pop(0)
+                        counts["noterefs"] += 1
+                        i += len(repl)
+                        continue
                     # the line-join separator is parked on the PREVIOUS run's
                     # text (_append_line), i.e. often on this marker run —
                     # replacing it with a NoteRef must not swallow the space
